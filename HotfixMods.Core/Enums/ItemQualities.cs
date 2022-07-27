@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemQualities
+    public enum OverallQualities
     {
         POOR = 0,
         COMMON = 1,

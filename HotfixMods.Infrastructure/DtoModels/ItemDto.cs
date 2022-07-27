@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? RequiredLevel { get; set; }
         public int? ItemLevel { get; set; }
         public ItemBondings? Bonding { get; set; }
-        public ItemQualities? Quality { get; set; }
+        public OverallQualities? Quality { get; set; }
         public ItemMaterial? Material { get; set; }
         public ItemTypeDtoEnum? ItemType { get; set; }
         public int? ModelResourceId0 { get; set; }
@@ -30,5 +30,8 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ComponentLegUpper { get; set; }
         public int? ComponentLegLower { get; set; }
         public int? ComponentFoot { get; set; }
+
+
+        public bool IsUpdate { get; set; }
     }
 }

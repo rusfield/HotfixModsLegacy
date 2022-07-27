@@ -2,18 +2,38 @@
 @using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
 @using HotfixMods.Infrastructure.DtoModels
 
-<MudPaper>
-    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-        <MudTabPanel Text="Properties">
-           <ItemProperties Item="item"/>
-        </MudTabPanel>
-        <MudTabPanel Text="Textures">
-            <ItemTextures Item="item" />
-        </MudTabPanel>
-    </MudTabs>
-</MudPaper>
 
-@code
-{
-    ItemDto item = new ItemDto();
+<MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+    <MudStack Row="true">
+        <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@SaveAsync">Item Lookup</MudButton>
+    </MudStack>
+    <MudStack Row="true">
+        <MudButton Variant="Variant.Outlined" Color="Color.Success">@item.Id</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+        </MudStack>
+    </MudStack>
+    <MudPaper>
+        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <MudTabPanel Text="Properties">
+                <ItemProperties Item="item" />
+            </MudTabPanel>
+            <MudTabPanel Text="Textures">
+                <ItemTextures Item="item" />
+            </MudTabPanel>
+        </MudTabs>
+    </MudPaper>
+
+
+    @code
+    {
+    ItemDto item = new ItemDto()
+        {
+            Id = 123
+        };
+
+
+    async Task SaveAsync()
+    {
+       
+    }
 }

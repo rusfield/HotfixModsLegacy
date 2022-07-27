@@ -29,10 +29,10 @@
             <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Required Level" @bind-Value="_test" />
             <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Level" @bind-Value="_test" />
 
-            <MudSelect Variant="Variant.Outlined" T="ItemQualities?" @bind-Value="Item.Quality" Label="Quality">
-                @foreach (var qualityEnum in Enum.GetValues<ItemQualities>())
+            <MudSelect Variant="Variant.Outlined" T="OverallQualities?" @bind-Value="Item.Quality" Label="Quality">
+                @foreach (var qualityEnum in Enum.GetValues<OverallQualities>())
                 {
-                    <MudSelectItem T="ItemQualities?" Value="@qualityEnum">@qualityEnum.ToDisplayString()</MudSelectItem>
+                    <MudSelectItem T="OverallQualities?" Value="@qualityEnum">@qualityEnum.ToDisplayString()</MudSelectItem>
                 }
             </MudSelect>
             <MudSelect Variant="Variant.Outlined"  T="ItemBondings?" @bind-Value="Item.Bonding" Label="Bonding">
@@ -58,7 +58,7 @@
             Item = new ItemDto()
                 {
                     Bonding = ItemBondings.QUEST_ITEM,
-                    Quality = ItemQualities.RARE
+                    Quality = OverallQualities.RARE
                 };
     }
 

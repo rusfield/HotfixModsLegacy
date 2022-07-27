@@ -1,0 +1,19 @@
+﻿@page "/item"
+@using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
+@using HotfixMods.Infrastructure.DtoModels
+
+<MudPaper>
+    <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+        <MudTabPanel Text="Properties">
+           <ItemProperties Item="item"/>
+        </MudTabPanel>
+        <MudTabPanel Text="Textures">
+            <ItemTextures Item="item" />
+        </MudTabPanel>
+    </MudTabs>
+</MudPaper>
+
+@code
+{
+    ItemDto item = new ItemDto();
+}

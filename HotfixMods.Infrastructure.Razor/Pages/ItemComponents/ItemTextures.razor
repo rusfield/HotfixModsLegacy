@@ -1,0 +1,41 @@
+﻿@using HotfixMods.Infrastructure.DtoModels
+
+<MudGrid>
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Chest" @bind-Value="Item.ComponentTorsoUpper" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Chest" @bind-Value="Item.ComponentTorsoLower" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Legs" @bind-Value="Item.ComponentLegUpper" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Legs" @bind-Value="Item.ComponentLegLower" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4" />
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Arm" @bind-Value="Item.ComponentArmUpper" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Arm" @bind-Value="Item.ComponentArmLower" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Hands" @bind-Value="Item.ComponentHand" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Feet" @bind-Value="Item.ComponentFoot" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="6">
+        <MudStack Row="true">
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model 1" @bind-Value="Item.ModelResourceId0" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Texture 1" @bind-Value="Item.ModelMaterialResourceId0" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="6">
+        <MudStack Row="true">
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model 2" @bind-Value="Item.ModelResourceId1" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Texture 2" @bind-Value="Item.ModelMaterialResourceId1" />
+        </MudStack>
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    [Parameter]
+    public ItemDto? Item { get; set; }
+
+    string cssClass = "pb-2 pt-2";
+}

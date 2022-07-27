@@ -1,0 +1,31 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider IsDarkMode="true" Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="3" Style="width:100%;">
+            <MudIconButton Icon="@Icons.Filled.TableRows" Color="Color.Inherit" Size="Size.Small" Href="/dashboard" />
+            <MudIconButton Icon="@Icons.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" Href="/health" />
+            <MudIconButton Icon="@Icons.Filled.Settings" Color="Color.Inherit" Size="Size.Small" Href="/health" />
+            <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
+            <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit" Href="/creature" />
+            <MudIconButton Icon="@Icons.Filled.Security" Color="Color.Inherit" Size="Size.Large" Href="/item" />
+            <MudIconButton Icon="@Icons.Filled.Flag" Color="Color.Inherit" Size="Size.Large" Href="/fetchdata" />
+            <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
+            <MudText Color="Color.Inherit" Typo="Typo.subtitle2">Hotfix Mods</MudText>
+
+        </MudStack>
+    </MudAppBar>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private MudTheme _theme = new();
+}

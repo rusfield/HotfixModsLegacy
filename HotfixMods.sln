@@ -16,6 +16,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Db2Provider.WowToolsFiles", "HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj", "{06152D6A-03F2-4C5B-8A6D-99F8A124159C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.MySqlProvider.EntityFrameworkCore", "HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj", "{D11D811A-42B4-4347-831C-25AF291AC783}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{06152D6A-03F2-4C5B-8A6D-99F8A124159C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06152D6A-03F2-4C5B-8A6D-99F8A124159C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06152D6A-03F2-4C5B-8A6D-99F8A124159C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D11D811A-42B4-4347-831C-25AF291AC783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D11D811A-42B4-4347-831C-25AF291AC783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D11D811A-42B4-4347-831C-25AF291AC783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D11D811A-42B4-4347-831C-25AF291AC783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9D82ECCA-2464-47B8-AE9C-75690B151FA6} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{06152D6A-03F2-4C5B-8A6D-99F8A124159C} = {F3BD9CB8-05D3-4938-98D4-644EF048FD91}
+		{D11D811A-42B4-4347-831C-25AF291AC783} = {F3BD9CB8-05D3-4938-98D4-644EF048FD91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

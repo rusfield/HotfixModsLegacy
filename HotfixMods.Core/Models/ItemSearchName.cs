@@ -3,6 +3,7 @@ using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace HotfixMods.Core.Models
     {
         [Key]
         public int Id { get; set; }
+        [Column("Display_lang")]
         public string Display { get; set; } //name
         public OverallQualities OverallQuality { get; set; }
         public int RequiredLevel { get; set; }

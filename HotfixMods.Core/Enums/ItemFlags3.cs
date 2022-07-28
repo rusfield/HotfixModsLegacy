@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HotfixMods.Core.Enums
+{
+    [Flags]
+    public enum ItemFlags3 : long
+    {
+        NONE = 0,
+        HANDLE_USE_EFFECT_IMMEDIATELY = 1,
+        ALWAYS_SHOW_ITEM_LEVEL_TOOLTIP = 2,
+        SHOWS_GENERATION_WITH_RANDOM_STATS = 4, // Display <Random additional stats> In Tooltip
+        ACTIVATE_ON_EQUIP_DURING_TRANSMOG = 8,
+        ENFORCE_TRANSMOG_WITH_CHILD_ITEM = 16,
+        SCRAPABLE = 32,
+        BYPASS_REP_REQUIREMENT_TRANSMOG = 64,
+        DISPLAY_ONLY_ON_DEFINED_RACES = 128,
+        REGULATED_COMMODITY = 256,
+        CREATE_LOOT_IMMEDIATELY = 512,
+        GENERATE_LOOT_SPEC_ITEM = 1024,
+        HIDDEN_IN_REWARD_SUMMARIES = 2048,
+        DISALLOW_WHILE_LEVEL_LINKED = 4096,
+        DISALLOW_ENCHANT = 8192,
+        SQUISH_TO_PLAYER_LEVEL = 16384, // SQUISH_USING_ITEM_LEVEL_AS_PLAYER_LEVEL
+        ALWAYS_SHOW_SELL_PRICE_TOOLTIP = 32768,
+        COSMETIC_ITEM = 65536,
+        NO_SPELL_EFFECT_TOOLTIP_PREFIXES = 131072,
+        IGNORE_COSMETIC_COLLECTION_BEHAVIOR = 262144,
+        NPC_ONLY = 524288,
+        UNKNOWN21 = 1048576,
+        UNKNOWN22 = 2097152,
+        UNKNOWN23 = 4194304,
+        UNKNOWN24 = 8388608,
+        UNKNOWN25 = 16777216,
+        UNKNOWN26 = 33554432,
+        UNKNOWN27 = 67108864,
+        UNKNOWN28 = 134217728,
+        UNKNOWN29 = 268435456,
+        UNKNOWN30 = 536870912,
+        UNKNOWN31 = 1073741824,
+        UNKNOWN32 = 2147483648,
+    }
+}

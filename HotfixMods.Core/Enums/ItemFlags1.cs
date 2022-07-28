@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Enums
     [Flags]
     public enum ItemFlags1 : long
     {
-        NONE = 0,
+        DEFAULT = 0,
         HORDE_SPECIFIC = 1,
         ALLIANCE_SPECIFIC = 2,
         DEPRECATED_DONT_IGNORE_BUY_PRICE = 4, // When item uses extended cost, gold is also required (possibly deprecated)

@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Enums
     [Flags]
     public enum ItemFlags2 : long
     {
-        NONE = 0,
+        DEFAULT = 0,
         DONT_DESTROY_ON_QUEST_ACCEPT = 1,
         CAN_BE_UPGRADED = 2,
         UPGRADE_OVERRIDES_DROP_UPGRADE = 4,

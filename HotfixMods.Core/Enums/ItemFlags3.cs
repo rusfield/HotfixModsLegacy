@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Enums
     [Flags]
     public enum ItemFlags3 : long
     {
-        NONE = 0,
+        DEFAULT = 0,
         HANDLE_USE_EFFECT_IMMEDIATELY = 1,
         ALWAYS_SHOW_ITEM_LEVEL_TOOLTIP = 2,
         SHOWS_GENERATION_WITH_RANDOM_STATS = 4, // Display <Random additional stats> In Tooltip

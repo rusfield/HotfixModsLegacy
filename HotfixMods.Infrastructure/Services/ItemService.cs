@@ -9,22 +9,36 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public partial class ItemService
+    public partial class ItemService : Service
     {
-        IDb2Provider _db2Client;
-        IMySqlProvider _mySqlClient;
-        int _verifiedBuild;
-
         public ItemService(IDb2Provider db2Client, IMySqlProvider mySqlClient, int verifiedBuild)
         {
-            _db2Client = db2Client;
-            _mySqlClient = mySqlClient;
+            _db2 = db2Client;
+            _mySql = mySqlClient;
             _verifiedBuild = verifiedBuild;
         }
 
         public async Task SaveItemAsync(ItemDto item)
         {
+            var hotfixId = await GetNextHotfixIdAsync();
+            item.InitHotfixes(hotfixId, _verifiedBuild);
 
+            if (item.IsUpdate)
+            {
+                // TODO:
+            }
+            else
+            {
+                await _mySql.AddAsync(BuildItem(item));
+                await _mySql.AddAsync(BuildItemAppearance(item));
+                await _mySql.AddAsync(BuildItemDisplayInfo(item));
+                await _mySql.AddAsync(BuildItemModifiedAppearance(item));
+                await _mySql.AddAsync(BuildItemSearchName(item));
+                await _mySql.AddAsync(BuildItemSparse(item));
+                await _mySql.AddManyAsync(BuildItemDisplayInfoMaterialRes(item));
+            }
+
+            await _mySql.AddManyAsync(item.GetHotfixes());
         }
     }
 }

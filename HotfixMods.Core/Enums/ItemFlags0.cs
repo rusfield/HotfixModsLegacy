@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Enums
     [Flags]
     public enum ItemFlags0 : long
     {
-        NONE = 0,
+        DEFAULT = 0,
         NO_PICKUP = 1,
         CONJURED = 2,
         HAS_LOOT_TABLE = 4, // Item can be right clicked to open for loot

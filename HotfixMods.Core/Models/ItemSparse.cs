@@ -19,10 +19,10 @@ namespace HotfixMods.Core.Models
         public int Stackable { get; set; } // 1
         public int VendorStackCount { get; set; } // 1
         public int PriceRandomValue { get; set; } // 1
-        public int Flags0 { get; set; }
-        public int Flags1 { get; set; }
-        public int Flags2 { get; set; }
-        public int Flags3 { get; set; }
+        public ItemFlags0 Flags0 { get; set; }
+        public ItemFlags1 Flags1 { get; set; }
+        public ItemFlags2 Flags2 { get; set; }
+        public ItemFlags3 Flags3 { get; set; }
         public int ItemLevel { get; set; }
         public ItemMaterial Material { get; set; }
         public ItemBondings Bonding { get; set; }

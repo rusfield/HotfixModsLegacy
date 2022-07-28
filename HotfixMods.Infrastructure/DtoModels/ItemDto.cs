@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class ItemDto
+    public class ItemDto : Dto
     {
-        public int? Id { get; set; }
         public int? ItemDisplayInfoId { get; set; }
+        public string? Name { get; set; }
         public int? IconId { get; set; }
         public int? RequiredLevel { get; set; }
         public int? ItemLevel { get; set; }
         public ItemBondings? Bonding { get; set; }
-        public OverallQualities? Quality { get; set; }
+        public OverallQualities? OverallQuality { get; set; }
         public ItemMaterial? Material { get; set; }
         public ItemTypeDtoEnum? ItemType { get; set; }
         public int? ModelResourceId0 { get; set; }
@@ -31,8 +31,12 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ComponentLegUpper { get; set; }
         public int? ComponentLegLower { get; set; }
         public int? ComponentFoot { get; set; }
+        public int? ComponentAccessory { get; set; }
+        public ItemFlags0? Flags0 { get; set; }
+        public ItemFlags1?  Flags1 { get; set; }
+        public ItemFlags2? Flags2 { get; set; }
+        public ItemFlags3? Flags3 { get; set; }
+        public ItemDisplayInfoFlags? ItemDisplayInfoFlags { get; set; }
 
-
-        public bool IsUpdate { get; set; }
     }
 }

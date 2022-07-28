@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Enums
     [Flags]
     public enum ItemDisplayInfoFlags : long
     {
-        NONE = 0,
+        DEFAULT = 0,
         EMBLAZONED_TABARD_COMMON = 1,
         NO_SHEATHED_KIT_FOR_SPELL_COMBAT_ANIM = 2,
         HIDE_PANTS_AND_BELT = 4, 

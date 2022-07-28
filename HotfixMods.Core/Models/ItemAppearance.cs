@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models
 {
-    public class ItemAppearance : IDb2
+    public class ItemAppearance : IDb2, IHotfixesSchema
     {
         [Key]
         public int Id { get; set; }

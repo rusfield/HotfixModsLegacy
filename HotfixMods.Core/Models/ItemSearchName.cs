@@ -19,11 +19,9 @@ namespace HotfixMods.Core.Models
         public OverallQualities OverallQuality { get; set; }
         public int RequiredLevel { get; set; }
         public int ItemLevel { get; set; }
-
-        // TODO: Look into 
-        public int Flags0 { get; set; }
-        public int Flags1 { get; set; }
-        public int Flags2 { get; set; }
-        public int Flags3 { get; set; }
+        public ItemFlags0 Flags0 { get; set; }
+        public ItemFlags1 Flags1 { get; set; }
+        public ItemFlags2 Flags2 { get; set; }
+        public ItemFlags3 Flags3 { get; set; }
     }
 }

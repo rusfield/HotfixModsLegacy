@@ -11,6 +11,7 @@ namespace HotfixMods.Infrastructure.DtoModels
     public class ItemDto
     {
         public int? Id { get; set; }
+        public int? ItemDisplayInfoId { get; set; }
         public int? IconId { get; set; }
         public int? RequiredLevel { get; set; }
         public int? ItemLevel { get; set; }

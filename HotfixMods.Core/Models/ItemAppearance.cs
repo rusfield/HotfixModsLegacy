@@ -15,7 +15,8 @@ namespace HotfixMods.Core.Models
         public int Id { get; set; }
         public int ItemDisplayInfoId { get; set; }
         public DisplayTypes DisplayType { get; set; }
-        public int DefaultFileDataId { get; set; }
+        public int DefaultIconFileDataId { get; set; }
         public int UiOrder { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

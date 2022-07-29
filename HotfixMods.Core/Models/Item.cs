@@ -12,11 +12,11 @@ namespace HotfixMods.Core.Models
     {
         public int Id { get; set; }
         public ItemClass ClassId { get; set; }
-        public int SubclassId { get; set; } // A bunch of enums, based on ClassId
+        public int SubClassId { get; set; } // A bunch of enums, based on ClassId
         public ItemMaterial Material { get; set; }
         public InventoryTypes InventoryType { get; set; }
         //public int SheatheType { get; set; } // TODO: Look into
         public int IconFileDataId { get; set; }
-
+        public int VerifiedBuild { get; set; }
     }
 }

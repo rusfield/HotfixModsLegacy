@@ -17,16 +17,15 @@ namespace HotfixMods.Infrastructure.Services
         {
             var result = new List<ItemDisplayInfoMaterialRes>();
 
-            int itemDisplayInfoId = (int)item.ItemDisplayInfoId;
-
             if (!item.ComponentArmLower.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
                     Id = item.Id + (int)ComponentSections.ARM_LOWER,
                     ComponentSection = ComponentSections.ARM_LOWER,
-                    MaterialResourcesId = (int)item.ComponentArmLower,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentArmLower,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.ARM_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -38,8 +37,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.ARM_UPPER,
                     ComponentSection = ComponentSections.ARM_UPPER,
-                    MaterialResourcesId = (int)item.ComponentArmUpper,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentArmUpper,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.ARM_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -51,8 +51,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.TORSO_LOWER,
                     ComponentSection = ComponentSections.TORSO_LOWER,
-                    MaterialResourcesId = (int)item.ComponentTorsoLower,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentTorsoLower,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.TORSO_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -64,8 +65,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.TORSO_UPPER,
                     ComponentSection = ComponentSections.TORSO_UPPER,
-                    MaterialResourcesId = (int)item.ComponentTorsoUpper,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentTorsoUpper,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.TORSO_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -77,8 +79,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.LEG_LOWER,
                     ComponentSection = ComponentSections.LEG_LOWER,
-                    MaterialResourcesId = (int)item.ComponentLegLower,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentLegLower,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.LEG_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -90,8 +93,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.LEG_UPPER,
                     ComponentSection = ComponentSections.LEG_UPPER,
-                    MaterialResourcesId = (int)item.ComponentLegUpper,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentLegUpper,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.LEG_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -103,8 +107,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.HAND,
                     ComponentSection = ComponentSections.HAND,
-                    MaterialResourcesId = (int)item.ComponentHand,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentHand,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.HAND, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -116,8 +121,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.FOOT,
                     ComponentSection = ComponentSections.FOOT,
-                    MaterialResourcesId = (int)item.ComponentFoot,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentFoot,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.FOOT, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -129,8 +135,9 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.ACCESSORY,
                     ComponentSection = ComponentSections.ACCESSORY,
-                    MaterialResourcesId = (int)item.ComponentAccessory,
-                    ItemDisplayInfoId = itemDisplayInfoId
+                    MaterialResourceId = (int)item.ComponentAccessory,
+                    ItemDisplayInfoId = item.Id,
+                    VerifiedBuild = item.GetVerifiedBuild()
                 });
                 item.AddHotfix(item.Id + (int)ComponentSections.ACCESSORY, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
 
@@ -144,10 +151,11 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemAppearance()
             {
                 Id = item.Id,
-                DefaultFileDataId = item.IconId ?? ItemDefaults.IconId,
+                DefaultIconFileDataId = item.IconId ?? ItemDefaults.IconId,
                 DisplayType = GetDisplayType(),
                 ItemDisplayInfoId = item.Id,
-                UiOrder = 0 // CHECK IF OK -- Should be id x 100 according to DB2, but this may result in a very big number
+                UiOrder = item.Id, // CHECK IF OK -- Should be id x 100 according to DB2, but this may result in a very big number
+                VerifiedBuild = item.GetVerifiedBuild()
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemAppearance, HotfixStatuses.VALID);
@@ -163,7 +171,8 @@ namespace HotfixMods.Infrastructure.Services
                 ItemAppearanceId = item.Id,
                 ItemId = item.Id,
                 ItemAppearanceModifierId = 0,
-                OrderIndex = 0
+                OrderIndex = 0,
+                VerifiedBuild = item.GetVerifiedBuild()
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemModifiedAppearance, HotfixStatuses.VALID);
@@ -183,8 +192,11 @@ namespace HotfixMods.Infrastructure.Services
                 Flags2 = item.Flags2 ?? ItemDefaults.Flags2,
                 Flags3 = item.Flags3 ?? ItemDefaults.Flags3,
                 ItemLevel = ItemDefaults.ItemLevel,
-                OverallQuality = item.OverallQuality ?? ItemDefaults.OverallQuality,
-                RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel
+                OverallQualityId = item.OverallQuality ?? ItemDefaults.OverallQuality,
+                RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel,
+                AllowableClass = item.AllowableClasses ?? ItemDefaults.AllowableClasses,
+                AllowableRace = item.AllowableRaces ?? ItemDefaults.AllowableRaces,
+                VerifiedBuild = item.GetVerifiedBuild()
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemSearchName, HotfixStatuses.VALID);
@@ -208,10 +220,17 @@ namespace HotfixMods.Infrastructure.Services
                 Material = item.Material ?? ItemDefaults.Material,
                 OverallQualityId = item.OverallQuality ?? ItemDefaults.OverallQuality,
                 RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel,
+                VerifiedBuild = item.GetVerifiedBuild(),
+                AllowableClass = item.AllowableClasses ?? ItemDefaults.AllowableClasses,
+                AllowableRace = item.AllowableRaces ?? ItemDefaults.AllowableRaces,
 
                 PriceRandomValue = 1,
                 Stackable = 1,
-                VendorStackCount = 1
+                VendorStackCount = 1,
+                Display1 = "",
+                Display2 = "",
+                Display3 = "",
+                Description = ""
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemSparse, HotfixStatuses.VALID);
@@ -228,7 +247,8 @@ namespace HotfixMods.Infrastructure.Services
                 ClassId = GetClass(),
                 InventoryType = GetInventoryType(),
                 Material = item.Material ?? ItemDefaults.Material,
-                SubclassId = GetSubclassId()
+                SubClassId = GetSubclassId(),
+                VerifiedBuild = item.GetVerifiedBuild()
             };
             item.AddHotfix(item.Id, TableHashes.Item, HotfixStatuses.VALID);
 
@@ -244,10 +264,11 @@ namespace HotfixMods.Infrastructure.Services
                 ModelMaterialResourcesId0 = item.ModelMaterialResourceId0 ?? ItemDefaults.ModelMaterialResourcesId,
                 ModelMaterialResourcesId1 = item.ModelMaterialResourceId1 ?? ItemDefaults.ModelMaterialResourcesId,
                 ModelResourcesId0 = item.ModelResourceId0 ?? ItemDefaults.ModelResourceId,
-                ModelResourcesId1 = item.ModelResourceId1 ?? ItemDefaults.ModelResourceId
+                ModelResourcesId1 = item.ModelResourceId1 ?? ItemDefaults.ModelResourceId,
+                VerifiedBuild = item.GetVerifiedBuild()
             };
 
-            item.AddHotfix(item.Id, TableHashes.Item, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ItemDisplayInfo, HotfixStatuses.VALID);
             
             return result;
         }

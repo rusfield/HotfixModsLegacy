@@ -11,12 +11,12 @@ namespace HotfixMods.Infrastructure.Services
     {
         DisplayTypes GetDisplayType()
         {
-            return DisplayTypes.CHEST;
+            return DisplayTypes.HANDS;
         }
 
         InventoryTypes GetInventoryType()
         {
-            return InventoryTypes.CHEST_BODY;
+            return InventoryTypes.HANDS;
         }
 
         ItemClass GetClass()
@@ -26,7 +26,7 @@ namespace HotfixMods.Infrastructure.Services
 
         int GetSubclassId()
         {
-            return 0;
+            return 5;
         }
     }
 }

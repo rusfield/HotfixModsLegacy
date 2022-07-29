@@ -23,6 +23,9 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             // Oracle MySQL
             optionsBuilder.UseMySQL(_connectionString);
 
+            optionsBuilder.EnableDetailedErrors(true);
+            optionsBuilder.EnableSensitiveDataLogging(true);
+
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

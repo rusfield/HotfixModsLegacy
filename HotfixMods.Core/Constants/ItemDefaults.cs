@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,5 +24,7 @@ namespace HotfixMods.Core.Constants
         public const ItemMaterial Material = ItemMaterial.NONE;
         public const int ModelMaterialResourcesId = 0;
         public const int ModelResourceId = 0;
+        public const ItemRaceFlags AllowableRaces = ItemRaceFlags.ALL;
+        public const ItemClassFlags AllowableClasses = ItemClassFlags.ALL;
     }
 }

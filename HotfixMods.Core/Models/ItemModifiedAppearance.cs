@@ -14,5 +14,6 @@ namespace HotfixMods.Core.Models
         public int ItemAppearanceModifierId { get; set; }
         public int ItemAppearanceId { get; set; }
         public int OrderIndex { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

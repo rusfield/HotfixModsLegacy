@@ -25,6 +25,15 @@
 
 	<script src="_framework/blazor.webview.js" autostart="false"></script>
 	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+	<!-- Custom scripts -->
+	<script>
+		window.clipboardCopy = {
+			copyText: function (text) {
+				navigator.clipboard.writeText(text);
+			}
+		};
+	</script>
 </body>
 
 </html>

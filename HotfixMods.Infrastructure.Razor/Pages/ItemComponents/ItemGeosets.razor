@@ -1,0 +1,67 @@
+﻿@using HotfixMods.Infrastructure.DtoModels
+
+<MudGrid>
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 0" @bind-Value="Item.GeosetGroup0" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 1" @bind-Value="Item.GeosetGroup1" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 2" @bind-Value="Item.GeosetGroup2" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 3" @bind-Value="Item.GeosetGroup3" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4" />
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 0" @bind-Value="Item.GeosetGroupAttachment0" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 1" @bind-Value="Item.GeosetGroupAttachment1" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 2" @bind-Value="Item.GeosetGroupAttachment2" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 3" @bind-Value="Item.GeosetGroupAttachment3" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 4" @bind-Value="Item.GeosetGroup4" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 5" @bind-Value="Item.GeosetGroup5" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Type 0" @bind-Value="Item.ModelType0" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Type 1" @bind-Value="Item.ModelType1" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack>
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 4" @bind-Value="Item.GeosetGroupAttachment4" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 5" @bind-Value="Item.GeosetGroupAttachment5" />
+        </MudStack>
+    </MudItem>
+
+
+    @* If helmet*@
+    @if (true)
+    {
+        <MudItem xs="2" />
+        <MudItem xs="4">
+            <MudStack>
+                <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Helmet Vis 0" @bind-Value="Item.HelmetGeosetVis0" />
+            </MudStack>
+        </MudItem>
+        <MudItem xs="4">
+            <MudStack>
+                <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Helmet Vis 1" @bind-Value="Item.HelmetGeosetVis1" />
+            </MudStack>
+        </MudItem>
+        <MudItem xs="2" />
+
+    }
+
+</MudGrid>
+
+
+@code {
+    [Parameter]
+    public ItemDto? Item { get; set; }
+
+    string cssClass = "pb-2 pt-2";
+}

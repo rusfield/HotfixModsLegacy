@@ -13,6 +13,7 @@ using HotfixMods.Core.Enums;
 
 Console.WriteLine("Hello, World!");
 
+/*
 var service = new ItemService(
     new Db2Client(),
     new MySqlClient(
@@ -28,14 +29,16 @@ var service = new ItemService(
 
 var item = new ItemDto()
 {
-    Id = 5000600,
-    IconId = 135031,
-    ComponentArmUpper = 526357,
-    ComponentArmLower = 526356,
+    Id = 10010020,
+    IconId = 132692,
     Bonding = ItemBondings.NOT_BOUND,
     OverallQuality = OverallQualities.UNCOMMON,
     RequiredLevel = 0,
-    Name = "Creation Legs 2",
+    Name = "Skirt and Robes Test",
+    //ComponentTorsoUpper = 44871,
+    //ComponentTorsoLower = 45378,
+    //ComponentLegUpper = 80193,
+    //ComponentLegLower = 80192,
     ItemLevel = 1,
     Flags1 = (ItemFlags1)8192,
     Flags2 = (ItemFlags2)8388608,
@@ -46,3 +49,5 @@ var item = new ItemDto()
 };
 
 await service.SaveItemAsync(item);
+
+*/

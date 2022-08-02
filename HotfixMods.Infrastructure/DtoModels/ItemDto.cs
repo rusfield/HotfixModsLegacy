@@ -13,6 +13,7 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public int? ItemDisplayInfoId { get; set; }
         public string? Name { get; set; }
+        public string? Description { get; set; }
         public int? IconId { get; set; }
         public int? RequiredLevel { get; set; }
         public int? ItemLevel { get; set; }
@@ -33,6 +34,23 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ComponentLegLower { get; set; }
         public int? ComponentFoot { get; set; }
         public int? ComponentAccessory { get; set; }
+        public int? GeosetGroup0 { get; set; }
+        public int? GeosetGroup1 { get; set; }
+        public int? GeosetGroup2 { get; set; }
+        public int? GeosetGroup3 { get; set; }
+        public int? GeosetGroup4 { get; set; }
+        public int? GeosetGroup5 { get; set; }
+        public int? GeosetGroupAttachment0 { get; set; }
+        public int? GeosetGroupAttachment1 { get; set; }
+        public int? GeosetGroupAttachment2 { get; set; }
+        public int? GeosetGroupAttachment3 { get; set; }
+        public int? GeosetGroupAttachment4 { get; set; }
+        public int? GeosetGroupAttachment5 { get; set; }
+        public int? ModelType0 { get; set; }
+        public int? ModelType1 { get; set; }
+        public int? HelmetGeosetVis0 { get; set; }
+        public int? HelmetGeosetVis1 { get; set; }
+
         public ItemFlags0? Flags0 { get; set; }
         public ItemFlags1?  Flags1 { get; set; }
         public ItemFlags2? Flags2 { get; set; }

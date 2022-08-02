@@ -10,7 +10,7 @@
             <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Slot" @bind-Value="_test" />
             <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Chest" @bind-Value="_test" />
             <MudStack Row="true">
-                <MudSelect Variant="Variant.Outlined"  T="string" Label="Type" ValueChanged="OnItemTypeChange">
+                <MudSelect Variant="Variant.Outlined" T="string" Label="Type" ValueChanged="OnItemTypeChange">
                     <MudSelectItem Value="@("ARMOR")">Armor</MudSelectItem>
                     <MudSelectItem Value="@("WEAPON")">Weapon</MudSelectItem>
                 </MudSelect>
@@ -35,7 +35,7 @@
                     <MudSelectItem T="OverallQualities?" Value="@qualityEnum">@qualityEnum.ToDisplayString()</MudSelectItem>
                 }
             </MudSelect>
-            <MudSelect Variant="Variant.Outlined"  T="ItemBondings?" @bind-Value="Item.Bonding" Label="Bonding">
+            <MudSelect Variant="Variant.Outlined" T="ItemBondings?" @bind-Value="Item.Bonding" Label="Bonding">
                 @foreach (var bondingEnum in Enum.GetValues<ItemBondings>())
                 {
                     <MudSelectItem T="ItemBondings?" Value="@bondingEnum">@bondingEnum.ToDisplayString()</MudSelectItem>
@@ -43,6 +43,16 @@
             </MudSelect>
         </MudStack>
     </MudItem>
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <MudTextField @bind-Value="@Item.Name" Label="Name" />
+    </MudItem>
+    <MudItem xs="3" />
+    <MudItem xs="4" />
+    <MudItem xs="4">
+        <MudTextField @bind-Value="@Item.Description" Label="Description" />
+    </MudItem>
+    <MudItem xs="4" />
 
 </MudGrid>
 
@@ -50,17 +60,6 @@
 @code {
     [Parameter]
     public ItemDto? Item { get; set; }
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        return base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-            Item = new ItemDto()
-                {
-                    Bonding = ItemBondings.QUEST_ITEM,
-                    OverallQuality = OverallQualities.RARE
-                };
-    }
 
     int? _test;
     List<ItemTypeDtoEnum> availableItemSubTypes = new List<ItemTypeDtoEnum>();

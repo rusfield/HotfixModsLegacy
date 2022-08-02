@@ -23,7 +23,8 @@ namespace HotfixMods.Core.Models
         // Temp
 
         [Column("ItemDisplayModelType1")]
-        public int ModelType0 { get; set; } = 1;
+        public int ModelType0 { get; set; } = -1;
+        public int GeosetGroup1 { get; set; } = 1;
 
         // TODO: Implement all these
         /*

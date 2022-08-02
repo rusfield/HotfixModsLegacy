@@ -11,19 +11,11 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService : Service
     {
-        public ItemService(IDb2Provider db2Client, IMySqlProvider mySqlClient, int verifiedBuild, int idRangeFrom, int idRangeTo)
-        {
-            _db2 = db2Client;
-            _mySql = mySqlClient;
-            _verifiedBuild = verifiedBuild;
-            _idRangeFrom = idRangeFrom;
-            _idRangeTo = idRangeTo;
-        }
-
+        public ItemService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
         public async Task SaveItemAsync(ItemDto item)
         {
             var hotfixId = await GetNextHotfixIdAsync();
-            item.InitHotfixes(hotfixId, _verifiedBuild);
+            item.InitHotfixes(hotfixId, VerifiedBuild);
 
             if (item.IsUpdate)
             {

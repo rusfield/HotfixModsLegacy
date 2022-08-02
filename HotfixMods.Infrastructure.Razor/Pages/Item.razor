@@ -1,15 +1,19 @@
 ﻿@page "/item"
 @using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
 @using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+
+@inject IDialogService DialogService
+
 
 
 <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
     <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@SaveAsync">Item Lookup</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Info">Item Lookup</MudButton>
     </MudStack>
     <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Success">@item.Id</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@item.Id</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(item.IsUpdate ? "Update" : "Save")</MudButton>
         </MudStack>
     </MudStack>
     <MudPaper>
@@ -20,6 +24,9 @@
             <MudTabPanel Text="Textures">
                 <ItemTextures Item="item" />
             </MudTabPanel>
+            <MudTabPanel Text="Geosets">
+                <ItemGeosets Item="item" />
+            </MudTabPanel>
         </MudTabs>
     </MudPaper>
 
@@ -28,12 +35,33 @@
     {
     ItemDto item = new ItemDto()
         {
-            Id = 123
+            Id = 123,
+            IsUpdate = true
         };
 
 
-    async Task SaveAsync()
+    async Task SaveAsync_Click()
     {
-       
+
     }
+
+    async Task IdAsync_Click()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, NoHeader = true };
+        var parameters = new DialogParameters();
+        parameters.Add("Id", item.Id);
+        parameters.Add("TDto", typeof(ItemDto));
+        parameters.Add("TDtoIsUpdate", item.IsUpdate);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters, options);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            item.Id = (int)result.Data;
+            item.IsUpdate = false;
+        }
+    }
+
+    
 }
+

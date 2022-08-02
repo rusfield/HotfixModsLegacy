@@ -14,11 +14,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Core", "HotfixMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Razor", "HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Db2Provider.WowToolsFiles", "HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj", "{06152D6A-03F2-4C5B-8A6D-99F8A124159C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Db2Provider.WowToolsFiles", "HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj", "{06152D6A-03F2-4C5B-8A6D-99F8A124159C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.MySqlProvider.EntityFrameworkCore", "HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj", "{D11D811A-42B4-4347-831C-25AF291AC783}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.MySqlProvider.EntityFrameworkCore", "HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj", "{D11D811A-42B4-4347-831C-25AF291AC783}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Apps.Console", "HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{A1ECFB7F-CC55-49C0-9107-A21F823F6453}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Console", "HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{A1ECFB7F-CC55-49C0-9107-A21F823F6453}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

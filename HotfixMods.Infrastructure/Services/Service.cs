@@ -30,21 +30,27 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixIdsInRange = await _mySql.GetManyAsync<HotfixData>(c => c.Id >= IdRangeFrom && c.Id < IdRangeTo);
             if (hotfixIdsInRange.Count() > 0)
             {
-                return hotfixIdsInRange.Max(c => c.Id) + 1;
+                id = hotfixIdsInRange.Max(c => c.Id) + 1;
             }
-            return id;
+            if (id < IdRangeTo)
+                return id;
+            else
+                throw new ArgumentOutOfRangeException("Database is full.");
         }
 
         public async Task<int> GetNextIdAsync(bool quickScan = true)
         {
             int id = IdRangeFrom;
-            var creaturesIdsInRange = await _mySql.GetManyAsync<CreatureTemplate>(c => c.Entry >= IdRangeFrom && c.Entry < IdRangeTo);
-            if (creaturesIdsInRange.Count() > 0)
+            var entitiesInRange = await _mySql.GetManyAsync<HotfixData>(c => c.RecordId >= IdRangeFrom && c.RecordId < IdRangeTo);
+            if (entitiesInRange.Count() > 0)
             {
-                var maxId = creaturesIdsInRange.Max(c => c.Entry) + 1;
-                id = (int)(Math.Ceiling(maxId / IdSize) * IdSize);
+                var nextEmpty = entitiesInRange.Max(c => c.RecordId) + 1;
+                id = (int)(Math.Ceiling(nextEmpty / IdSize) * IdSize);
             }
-            return id;
+            if (id < IdRangeTo)
+                return id;
+            else
+                throw new ArgumentOutOfRangeException("Database is full.");
         }
     }
 }

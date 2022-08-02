@@ -46,13 +46,5 @@ namespace HotfixMods.Infrastructure.DtoModels
 
             return hotfixes;
         }
-
-        public int GetVerifiedBuild()
-        {
-            if (hotfixes == null)
-                throw new Exception("Call InitHotfixes before adding any.");
-
-            return verifiedBuild;
-        }
     }
 }

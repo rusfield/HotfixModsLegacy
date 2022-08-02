@@ -1,33 +1,19 @@
 ﻿@using HotfixMods.Core.Enums
-@using HotfixMods.Infrastructure.DtoEnums
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Extensions
+@using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
     <MudItem xs="4">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Icon ID" @bind-Value="@Item.IconId" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Slot" @bind-Value="_test" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Chest" @bind-Value="_test" />
-            <MudStack Row="true">
-                <MudSelect Variant="Variant.Outlined" T="string" Label="Type" ValueChanged="OnItemTypeChange">
-                    <MudSelectItem Value="@("ARMOR")">Armor</MudSelectItem>
-                    <MudSelectItem Value="@("WEAPON")">Weapon</MudSelectItem>
-                </MudSelect>
-                <MudSelect Variant="Variant.Outlined" T="ItemTypeDtoEnum?" @bind-Value="Item.ItemType" Label="Subtype">
-                    @foreach (var subType in availableItemSubTypes)
-                    {
-                        <MudSelectItem T="ItemTypeDtoEnum?" Value="@subType">@(subType.ToDisplayString().Replace("Armor ", "").Replace("Weapon ", ""))</MudSelectItem>
-                    }
-                </MudSelect>
-            </MudStack>
+            <NumericInput_Element Label="Icon Id" @bind-Value="Item.IconId" ValueLookup="@ItemLookup?.IconId" CssClass="@cssClass" />
         </MudStack>
     </MudItem>
     <MudItem xs="4" />
     <MudItem xs="4">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Required Level" @bind-Value="_test" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Level" @bind-Value="_test" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Required Level" @bind-Value="Item.RequiredLevel" />
+            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Level" @bind-Value="Item.ItemLevel" />
 
             <MudSelect Variant="Variant.Outlined" T="OverallQualities?" @bind-Value="Item.OverallQuality" Label="Quality">
                 @foreach (var qualityEnum in Enum.GetValues<OverallQualities>())
@@ -59,20 +45,10 @@
 
 @code {
     [Parameter]
-    public ItemDto? Item { get; set; }
+    public ItemDto Item { get; set; }
 
-    int? _test;
-    List<ItemTypeDtoEnum> availableItemSubTypes = new List<ItemTypeDtoEnum>();
-
-    void OnItemTypeChange(string selection)
-    {
-        availableItemSubTypes = new List<ItemTypeDtoEnum>();
-        foreach (var enumValue in Enum.GetValues<ItemTypeDtoEnum>())
-        {
-            if (enumValue.ToString().StartsWith(selection))
-                availableItemSubTypes.Add(enumValue);
-        }
-    }
+    [Parameter]
+    public ItemDto? ItemLookup { get; set; }
 
 
 

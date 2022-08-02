@@ -1,6 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Flags;
-using HotfixMods.Infrastructure.DtoEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +19,6 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemBondings? Bonding { get; set; }
         public OverallQualities? OverallQuality { get; set; }
         public ItemMaterial? Material { get; set; }
-        public ItemTypeDtoEnum? ItemType { get; set; } // TODO: Replace and load dynamic from itemsubclass.csv
         public int? ModelResourceId0 { get; set; }
         public int? ModelResourceId1 { get; set; }
         public int? ModelMaterialResourceId0 { get; set; }
@@ -58,6 +56,11 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemDisplayInfoFlags? ItemDisplayInfoFlags { get; set; }
         public ItemRaceFlags? AllowableRaces { get; set; }
         public ItemClassFlags? AllowableClasses { get; set; }
+
+        public DisplayTypes DisplayType { get; set; }
+        public InventoryTypes InventoryType { get; set; }
+        public ItemClass ItemClass { get; set; }
+        public int ItemSubClass { get; set; }
 
     }
 }

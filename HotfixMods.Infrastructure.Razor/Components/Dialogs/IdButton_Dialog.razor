@@ -10,7 +10,7 @@
     <DialogContent>
         <MudStack>
             <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="CopyToClipboardAsync_Click">Copy Id</MudButton>
-            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshAsync_Click">Refresh Id</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshAsync_Click" Disabled="@(!TDtoIsUpdate)">Refresh Id</MudButton>
         </MudStack>
     </DialogContent>
 </MudDialog>
@@ -27,19 +27,11 @@
     [Parameter]
     public bool TDtoIsUpdate { get; set; }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        if (!TDtoIsUpdate)
-        {
-            await CopyToClipboardAsync();
-        }
-    }
-
-
     async Task CopyToClipboardAsync_Click()
     {
-        await CopyToClipboardAsync();
+        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", Id);
+        Snackbar.Add($"{Id} copied to clipboard", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        MudDialog.Close(-1);
     }
 
     async Task RefreshAsync_Click()
@@ -47,12 +39,5 @@
         var newId = await ItemService.GetNextIdAsync();
         Snackbar.Add($"Id set to {newId}", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
         MudDialog.Close(newId);
-    }
-
-    async Task CopyToClipboardAsync()
-    {
-        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", Id);
-        Snackbar.Add($"{Id} copied to clipboard", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
-        MudDialog.Close(-1);
     }
 }

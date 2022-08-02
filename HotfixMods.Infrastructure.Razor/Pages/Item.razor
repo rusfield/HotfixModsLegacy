@@ -2,8 +2,11 @@
 @using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
 
 @inject IDialogService DialogService
+@inject ItemService ItemService
 
 
 
@@ -19,13 +22,13 @@
     <MudPaper>
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <MudTabPanel Text="Properties">
-                <ItemProperties Item="item" />
+                <ItemProperties Item="item" ItemLookup="itemLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Textures">
-                <ItemTextures Item="item" />
+                <ItemTextures Item="item" ItemLookup="itemLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Geosets">
-                <ItemGeosets Item="item" />
+                <ItemGeosets Item="item" ItemLookup="itemLookup" />
             </MudTabPanel>
         </MudTabs>
     </MudPaper>
@@ -36,13 +39,22 @@
     ItemDto item = new ItemDto()
         {
             Id = 123,
-            IsUpdate = true
+            IsUpdate = true,
+            InventoryType = InventoryTypes.WAIST,
+            DisplayType = DisplayTypes.WAIST,
+            ItemClass = ItemClass.ARMOR,
+            ItemSubClass = 1
         };
 
+    ItemDto? itemLookup = new ItemDto()
+        {
+            IconId = 123
+        };
 
     async Task SaveAsync_Click()
     {
-
+        await ItemService.SaveItemAsync(item);
+        item.IsUpdate = true;
     }
 
     async Task IdAsync_Click()
@@ -62,6 +74,6 @@
         }
     }
 
-    
+
 }
 

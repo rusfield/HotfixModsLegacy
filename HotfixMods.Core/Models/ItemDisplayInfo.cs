@@ -18,40 +18,31 @@ namespace HotfixMods.Core.Models
         public int ModelMaterialResourcesId0 { get; set; }
         public int ModelMaterialResourcesId1 { get; set; }
         public int VerifiedBuild { get; set; }
+        public int ItemDisplayModelType1 { get; set; }
+        public int ItemDisplayModelType2 { get; set; }
+        public int GeosetGroup0 { get; set; }
+        public int GeosetGroup1 { get; set; }
+        public int GeosetGroup2 { get; set; }
+        public int GeosetGroup3 { get; set; }
+        public int GeosetGroup4 { get; set; }
+        public int GeosetGroup5 { get; set; }
+        public int AttachmentGeosetGroup0 { get; set; }
+        public int AttachmentGeosetGroup1{ get; set; }
+        public int AttachmentGeosetGroup2 { get; set; }
+        public int AttachmentGeosetGroup3 { get; set; }
+        public int AttachmentGeosetGroup4 { get; set; }
+        public int AttachmentGeosetGroup5 { get; set; }
+        public int HelmetGeosetVis0 { get; set; }
+        public int HelmetGeosetVis1 { get; set; }
 
+        public int ParticleColorID { get; set; }
+        public int ItemVisual { get; set; }
+        public int ItemRangedDisplayInfoID { get; set; }
+        public int OverrideSwooshSoundKitID { get; set; }
+        public int SheatheTransformMatrixID { get; set; }
+        public int StateSpellVisualKitID { get; set; }
+        public int SheathedSpellVisualKitID { get; set; }
+        public int UnsheathedSpellVisualKitID { get; set; }
 
-        // Temp
-
-        [Column("ItemDisplayModelType1")]
-        public int ModelType0 { get; set; } = -1;
-        public int GeosetGroup1 { get; set; } = 1;
-
-        // TODO: Implement all these
-        /*
-         * ALTER TABLE hotfixes.item_display_info ALTER COLUMN ItemVisual SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN ParticleColorID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN ItemRangedDisplayInfoID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN OverrideSwooshSoundKitID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN SheatheTransformMatrixID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN StateSpellVisualKitID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN SheathedSpellVisualKitID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN UnsheathedSpellVisualKitID SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN ItemDisplayModelType1 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN ItemDisplayModelType2 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup0 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup1 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup2 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup3 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup4 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN GeosetGroup5 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup0 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup1 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup2 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup3 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup4 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN AttachmentGeosetGroup5 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN HelmetGeosetVis0 SET DEFAULT 0;
-ALTER TABLE hotfixes.item_display_info ALTER COLUMN HelmetGeosetVis1 SET DEFAULT 0;
-        */
     }
 }

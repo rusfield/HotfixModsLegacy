@@ -44,7 +44,7 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
                     {
                         foreach (var header in columns)
                         {
-                            headers.Add(header.Replace("[", "").Replace("]", "").Replace("_lang", ""));
+                            headers.Add(header.Replace("[", "").Replace("]", "").Replace("_lang", "").Replace("_",""));
                         }
                     }
                     else

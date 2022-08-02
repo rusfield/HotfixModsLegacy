@@ -19,7 +19,8 @@ namespace HotfixMods.Infrastructure.Services
 
             if (item.IsUpdate)
             {
-                // TODO:
+                // TODO
+                throw new NotImplementedException();
             }
             else
             {

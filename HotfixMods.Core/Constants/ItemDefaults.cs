@@ -26,5 +26,23 @@ namespace HotfixMods.Core.Constants
         public const int ModelResourceId = 0;
         public const ItemRaceFlags AllowableRaces = ItemRaceFlags.ALL;
         public const ItemClassFlags AllowableClasses = ItemClassFlags.ALL;
+        public const int ItemDisplayModelType1 = 0;
+        public const int ItemDisplayModelType2 = 0;
+        public const int GeosetGroup0 = 0;
+        public const int GeosetGroup1 = 0;
+        public const int GeosetGroup2 = 0;
+        public const int GeosetGroup3 = 0;
+        public const int GeosetGroup4 = 0;
+        public const int GeosetGroup5 = 0;
+        public const int AttachmentGeosetGroup0 = 0;
+        public const int AttachmentGeosetGroup1 = 0;
+        public const int AttachmentGeosetGroup2 = 0;
+        public const int AttachmentGeosetGroup3 = 0;
+        public const int AttachmentGeosetGroup4 = 0;
+        public const int AttachmentGeosetGroup5 = 0;
+        public const int HelmetGeosetVis0 = 0;
+        public const int HelmetGeosetVis1 = 0;
+        public const string Description = "";
+
     }
 }

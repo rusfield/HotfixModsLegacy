@@ -37,8 +37,8 @@ namespace HotfixMods.Apps.Desktop
                 {
                     VerifiedBuild = -1200,
                     IdSize = 10.0,
-                    IdRangeFrom = 10000000,
-                    IdRangeTo = 99999999
+                    IdRangeFrom = 5000000,
+                    IdRangeTo = 6000000
                 };
             });
 

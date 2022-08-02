@@ -61,7 +61,10 @@
 
 @code {
     [Parameter]
-    public ItemDto? Item { get; set; }
+    public ItemDto Item { get; set; }
+
+    [Parameter]
+    public ItemDto? ItemLookup { get; set; }
 
     string cssClass = "pb-2 pt-2";
 }

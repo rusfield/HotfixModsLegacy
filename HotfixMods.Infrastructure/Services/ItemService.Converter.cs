@@ -9,24 +9,6 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
-        DisplayTypes GetDisplayType()
-        {
-            return DisplayTypes.CHEST;
-        }
 
-        InventoryTypes GetInventoryType()
-        {
-            return InventoryTypes.CHEST_BODY;
-        }
-
-        ItemClass GetClass()
-        {
-            return ItemClass.ARMOR;
-        }
-
-        int GetSubclassId()
-        {
-            return 5;
-        }
     }
 }

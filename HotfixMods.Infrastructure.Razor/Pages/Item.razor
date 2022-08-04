@@ -1,4 +1,6 @@
 ﻿@page "/item"
+@using HotfixMods.Infrastructure.DashboardModels
+@using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
@@ -9,17 +11,19 @@
 @inject ItemService ItemService
 
 
-
-<MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
-    <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Info">Item Lookup</MudButton>
-    </MudStack>
-    <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@item.Id</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+@if (item != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Item Lookup</MudButton>
         </MudStack>
-    </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@item.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
     <MudPaper>
+
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <MudTabPanel Text="Properties">
                 <ItemProperties Item="item" ItemLookup="itemLookup" />
@@ -31,25 +35,31 @@
                 <ItemGeosets Item="item" ItemLookup="itemLookup" />
             </MudTabPanel>
         </MudTabs>
+
     </MudPaper>
+}
+else
+{
+    <DashboardTable T="ItemDashboard" Data="@(new List<ItemDashboard>())" Add="AddAsync_Click" />
+}
 
+@code
+{
+    ItemDto? item;
 
-    @code
+    ItemDto? itemLookup;
+
+    async void AddAsync_Click()
     {
-    ItemDto item = new ItemDto()
-        {
-            Id = 123,
-            IsUpdate = true,
-            InventoryType = InventoryTypes.WAIST,
-            DisplayType = DisplayTypes.WAIST,
-            ItemClass = ItemClass.ARMOR,
-            ItemSubClass = 1
-        };
+        item = await OpenItemSearchDialog();
+        this.StateHasChanged();
+    }
 
-    ItemDto? itemLookup = new ItemDto()
-        {
-            IconId = 123
-        };
+    async Task LookupAsync_Click()
+    {
+        itemLookup = await OpenItemSearchDialog();
+        this.StateHasChanged();
+    }
 
     async Task SaveAsync_Click()
     {
@@ -74,6 +84,20 @@
         }
     }
 
-
+    async Task<ItemDto?> OpenItemSearchDialog()
+    {
+        var dialogParameters = new DialogParameters();
+        var dialog = DialogService.Show<ItemSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (ItemDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (ItemDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
 }
 

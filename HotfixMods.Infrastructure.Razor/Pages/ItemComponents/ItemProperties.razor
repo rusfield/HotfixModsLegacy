@@ -1,44 +1,35 @@
 ﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Core.Flags
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Extensions
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <NumericInput_Element Label="Icon Id" @bind-Value="Item.IconId" ValueLookup="@ItemLookup?.IconId" CssClass="@cssClass" />
+            <NumericInput_Element Label="Icon Id" @bind-Value="Item.IconId" ValueLookup="@ItemLookup?.IconId" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Required Level" @bind-Value="Item.RequiredLevel" ValueLookup="@ItemLookup?.RequiredLevel" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Item Level" @bind-Value="Item.ItemLevel" ValueLookup="@ItemLookup?.ItemLevel" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="4" />
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Required Level" @bind-Value="Item.RequiredLevel" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Item Level" @bind-Value="Item.ItemLevel" />
-
-            <MudSelect Variant="Variant.Outlined" T="OverallQualities?" @bind-Value="Item.OverallQuality" Label="Quality">
-                @foreach (var qualityEnum in Enum.GetValues<OverallQualities>())
-                {
-                    <MudSelectItem T="OverallQualities?" Value="@qualityEnum">@qualityEnum.ToDisplayString()</MudSelectItem>
-                }
-            </MudSelect>
-            <MudSelect Variant="Variant.Outlined" T="ItemBondings?" @bind-Value="Item.Bonding" Label="Bonding">
-                @foreach (var bondingEnum in Enum.GetValues<ItemBondings>())
-                {
-                    <MudSelectItem T="ItemBondings?" Value="@bondingEnum">@bondingEnum.ToDisplayString()</MudSelectItem>
-                }
-            </MudSelect>
+            <SingleSelect_Element Label="Quality" T="OverallQualities?" @bind-Value="Item.OverallQuality" Items="@(overallQualities)" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Bonding" T="ItemBondings?" @bind-Value="Item.Bonding" Items="@(itemBondings)" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Race Restriction" T="ItemRaceFlags?" @bind-Value="Item.AllowableRaces" Items="@(itemRaceFlags)"CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="3" />
-    <MudItem xs="6">
-        <MudTextField @bind-Value="@Item.Name" Label="Name" />
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" @bind-Value="Item.Name" ValueLookup="@ItemLookup?.Name" CssClass="@elementCssClass" Variant="Variant.Text" />
     </MudItem>
-    <MudItem xs="3" />
-    <MudItem xs="4" />
-    <MudItem xs="4">
-        <MudTextField @bind-Value="@Item.Description" Label="Description" />
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <TextInput_Element Label="Description" @bind-Value="Item.Description" ValueLookup="@ItemLookup?.Description" CssClass="@elementCssClass" Variant="Variant.Text" />
     </MudItem>
-    <MudItem xs="4" />
+    <MudItem xs="4" Class="@gridItemCssClass" />
 
 </MudGrid>
 
@@ -50,7 +41,18 @@
     [Parameter]
     public ItemDto? ItemLookup { get; set; }
 
+    Dictionary<OverallQualities?, string> overallQualities;
+    Dictionary<ItemBondings?, string> itemBondings;
+    Dictionary<ItemRaceFlags?, string> itemRaceFlags;
 
+    protected override Task OnInitializedAsync()
+    {
+        overallQualities = Enum.GetValues<OverallQualities>().ToDictionary(e => (OverallQualities?)e, v => v.ToDisplayString());
+        itemBondings = Enum.GetValues<ItemBondings>().ToDictionary(e => (ItemBondings?)e, v => v.ToDisplayString());
+        itemRaceFlags = Enum.GetValues<ItemRaceFlags>().ToDictionary(e => (ItemRaceFlags?)e, v => v.ToDisplayString());
+        return base.OnInitializedAsync();
+    }
 
-    string cssClass = "pb-2 pt-2";
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
 }

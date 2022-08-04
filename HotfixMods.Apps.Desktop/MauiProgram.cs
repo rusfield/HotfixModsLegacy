@@ -3,7 +3,7 @@ using HotfixMods.Core.Providers;
 using HotfixMods.Db2Provider.WowToolsFiles.Clients;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.MySqlProvider.EntityFrameworkCore.Clients;
-using Microsoft.AspNetCore.Components.WebView.Maui;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 
 namespace HotfixMods.Apps.Desktop
@@ -43,9 +43,11 @@ namespace HotfixMods.Apps.Desktop
             });
 
 
-#if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
-#endif
+            builder.Services.AddLogging(configure =>
+            {
+                configure.AddDebug();
+            });
 
             return builder.Build();
         }

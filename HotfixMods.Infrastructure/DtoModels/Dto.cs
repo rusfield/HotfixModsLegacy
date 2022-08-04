@@ -12,6 +12,7 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public int Id { get; set; }
         public bool IsUpdate { get; set; }
+        public string AppearanceName { get;set; } // For example "Heroic" for items, or female name for creatures.
 
 
         // Used by code to save/update

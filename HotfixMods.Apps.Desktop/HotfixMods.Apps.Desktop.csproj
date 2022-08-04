@@ -48,6 +48,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj" />
     </ItemGroup>
 

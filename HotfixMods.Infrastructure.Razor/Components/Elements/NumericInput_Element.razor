@@ -1,5 +1,5 @@
 ﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudNumericField T="int?" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant.Outlined" HideSpinButtons="true" />
+    <MudNumericField T="int?" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" />
 </MudBadge>
 
 
@@ -19,6 +19,9 @@
 
     [Parameter]
     public EventCallback<int?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
 
     bool GetBadgeVisibility()
     {

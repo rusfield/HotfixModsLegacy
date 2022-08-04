@@ -18,7 +18,7 @@ namespace HotfixMods.Core.Models
         public string Display { get; set; } // Name
         public int Stackable { get; set; } // 1
         public int VendorStackCount { get; set; } // 1
-        public int PriceRandomValue { get; set; } // 1
+        public double PriceRandomValue { get; set; } // 1
         [Column("Flags1")]
         public ItemFlags0 Flags0 { get; set; }
         [Column("Flags2")]

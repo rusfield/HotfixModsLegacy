@@ -1,39 +1,41 @@
 ﻿@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 0" @bind-Value="Item.GeosetGroup0" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 1" @bind-Value="Item.GeosetGroup1" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 2" @bind-Value="Item.GeosetGroup2" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 3" @bind-Value="Item.GeosetGroup3" />
+            <NumericInput_Element Label="Group 0" @bind-Value="Item.GeosetGroup0" ValueLookup="@ItemLookup?.GeosetGroup0" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Group 1" @bind-Value="Item.GeosetGroup1" ValueLookup="@ItemLookup?.GeosetGroup1" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Group 2" @bind-Value="Item.GeosetGroup2" ValueLookup="@ItemLookup?.GeosetGroup2" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Group 3" @bind-Value="Item.GeosetGroup3" ValueLookup="@ItemLookup?.GeosetGroup3" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="4" />
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 0" @bind-Value="Item.GeosetGroupAttachment0" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 1" @bind-Value="Item.GeosetGroupAttachment1" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 2" @bind-Value="Item.GeosetGroupAttachment2" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 3" @bind-Value="Item.GeosetGroupAttachment3" />
+            <NumericInput_Element Label="Attachment 0" @bind-Value="Item.GeosetGroupAttachment0" ValueLookup="@ItemLookup?.GeosetGroupAttachment0" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Attachment 1" @bind-Value="Item.GeosetGroupAttachment1" ValueLookup="@ItemLookup?.GeosetGroupAttachment1" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Attachment 2" @bind-Value="Item.GeosetGroupAttachment2" ValueLookup="@ItemLookup?.GeosetGroupAttachment2" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Attachment 3" @bind-Value="Item.GeosetGroupAttachment3" ValueLookup="@ItemLookup?.GeosetGroupAttachment3" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 4" @bind-Value="Item.GeosetGroup4" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Group 5" @bind-Value="Item.GeosetGroup5" />
+            <NumericInput_Element Label="Group 4" @bind-Value="Item.GeosetGroup4" ValueLookup="@ItemLookup?.GeosetGroup4" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Group 5" @bind-Value="Item.GeosetGroup5" ValueLookup="@ItemLookup?.GeosetGroup5" CssClass="@elementCssClass" />
+
         </MudStack>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Type 0" @bind-Value="Item.ModelType0" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Type 1" @bind-Value="Item.ModelType1" />
+            <NumericInput_Element Label="Model Type 0" @bind-Value="Item.ModelType0" ValueLookup="@ItemLookup?.ModelType0" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Model Type 1" @bind-Value="Item.ModelType1" ValueLookup="@ItemLookup?.ModelType1" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 4" @bind-Value="Item.GeosetGroupAttachment4" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Attachment 5" @bind-Value="Item.GeosetGroupAttachment5" />
+            <NumericInput_Element Label="Attachment 4" @bind-Value="Item.GeosetGroupAttachment4" ValueLookup="@ItemLookup?.GeosetGroupAttachment4" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Attachment 5" @bind-Value="Item.GeosetGroupAttachment5" ValueLookup="@ItemLookup?.GeosetGroupAttachment5" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
 
@@ -41,18 +43,18 @@
     @* If helmet*@
     @if (true)
     {
-        <MudItem xs="2" />
-        <MudItem xs="4">
+        <MudItem xs="2" Class="@gridItemCssClass" />
+        <MudItem xs="4" Class="@gridItemCssClass">
             <MudStack>
-                <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Helmet Vis 0" @bind-Value="Item.HelmetGeosetVis0" />
+                <NumericInput_Element Label="Helmet Vis 0" @bind-Value="Item.HelmetGeosetVis0" ValueLookup="@ItemLookup?.HelmetGeosetVis0" CssClass="@elementCssClass" />
             </MudStack>
         </MudItem>
-        <MudItem xs="4">
+        <MudItem xs="4" Class="@gridItemCssClass">
             <MudStack>
-                <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Helmet Vis 1" @bind-Value="Item.HelmetGeosetVis1" />
+                <NumericInput_Element Label="Helmet Vis 1" @bind-Value="Item.HelmetGeosetVis1" ValueLookup="@ItemLookup?.HelmetGeosetVis1" CssClass="@elementCssClass" />
             </MudStack>
         </MudItem>
-        <MudItem xs="2" />
+        <MudItem xs="2" Class="@gridItemCssClass" />
 
     }
 
@@ -66,5 +68,6 @@
     [Parameter]
     public ItemDto? ItemLookup { get; set; }
 
-    string cssClass = "pb-2 pt-2";
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
 }

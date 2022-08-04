@@ -52,5 +52,10 @@ namespace HotfixMods.Infrastructure.Services
             else
                 throw new ArgumentOutOfRangeException("Database is full.");
         }
+
+        protected void ConsoleProgressCallback(string stepTitle, string stepSubTitle, int progress)
+        {
+            Console.WriteLine($"{progress} %: {stepTitle} => {stepSubTitle}");
+        }
     }
 }

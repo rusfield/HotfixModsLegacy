@@ -1,33 +1,45 @@
 ﻿@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Chest" @bind-Value="Item.ComponentTorsoUpper" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Chest" @bind-Value="Item.ComponentTorsoLower" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Legs" @bind-Value="Item.ComponentLegUpper" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Legs" @bind-Value="Item.ComponentLegLower" />
+            <NumericInput_Element Label="Upper Chest" @bind-Value="Item.ComponentTorsoUpper" ValueLookup="@ItemLookup?.ComponentTorsoUpper" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Lower Chest" @bind-Value="Item.ComponentTorsoLower" ValueLookup="@ItemLookup?.ComponentTorsoLower" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Upper Legs" @bind-Value="Item.ComponentLegUpper" ValueLookup="@ItemLookup?.ComponentLegUpper" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Lower Legs" @bind-Value="Item.ComponentLegLower" ValueLookup="@ItemLookup?.ComponentLegLower" CssClass="@elementCssClass" />
+
         </MudStack>
     </MudItem>
-    <MudItem xs="4" />
-    <MudItem xs="4">
+    <MudItem xs="4" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Upper Arm" @bind-Value="Item.ComponentArmUpper" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Lower Arm" @bind-Value="Item.ComponentArmLower" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Hands" @bind-Value="Item.ComponentHand" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Feet" @bind-Value="Item.ComponentFoot" />
+            <NumericInput_Element Label="Upper Arms" @bind-Value="Item.ComponentArmUpper" ValueLookup="@ItemLookup?.ComponentArmUpper" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Lower Arms" @bind-Value="Item.ComponentArmLower" ValueLookup="@ItemLookup?.ComponentArmLower" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Hands" @bind-Value="Item.ComponentHand" ValueLookup="@ItemLookup?.ComponentHand" CssClass="@elementCssClass" />
+            <NumericInput_Element Label="Feet" @bind-Value="Item.ComponentFoot" ValueLookup="@ItemLookup?.ComponentFoot" CssClass="@elementCssClass" />
+
+
         </MudStack>
     </MudItem>
-    <MudItem xs="6">
-        <MudStack Row="true">
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model 1" @bind-Value="Item.ModelResourceId0" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Texture 1" @bind-Value="Item.ModelMaterialResourceId0" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <NumericInput_Element Label="Model 1" @bind-Value="Item.ModelResourceId0" ValueLookup="@ItemLookup?.ModelResourceId0" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
-    <MudItem xs="6">
-        <MudStack Row="true">
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model 2" @bind-Value="Item.ModelResourceId1" />
-            <MudNumericField Variant="Variant.Outlined" HideSpinButtons="true" Class="@cssClass" Label="Model Texture 2" @bind-Value="Item.ModelMaterialResourceId1" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <NumericInput_Element Label="Model Texture 1" @bind-Value="Item.ModelMaterialResourceId0" ValueLookup="@ItemLookup?.ModelMaterialResourceId0" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <NumericInput_Element Label="Model 2" @bind-Value="Item.ModelResourceId1" ValueLookup="@ItemLookup?.ModelResourceId1" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <NumericInput_Element Label="Model Texture 2" @bind-Value="Item.ModelMaterialResourceId1" ValueLookup="@ItemLookup?.ModelMaterialResourceId1" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
 </MudGrid>
@@ -40,5 +52,6 @@
     [Parameter]
     public ItemDto? ItemLookup { get; set; }
 
-    string cssClass = "pb-2 pt-2";
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
 }

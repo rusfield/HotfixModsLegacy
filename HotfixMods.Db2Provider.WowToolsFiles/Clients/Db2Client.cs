@@ -3,9 +3,11 @@ using HotfixMods.Core.Providers;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
@@ -29,19 +31,28 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
             var compiledPredicate = predicate.Compile();
             var fileName = typeof(T).Name.ToLower();
 
-            var filePath = $"{Directory.GetParent(Directory.GetCurrentDirectory())?.FullName}\\CreatureCreator.Db2Provider.WowToolsFiles\\Files\\{fileName}.csv";
+            // TODO: Find a less hacky way for this...
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            int end = baseDirectory.LastIndexOf("\\HotfixMods\\");
+            baseDirectory = baseDirectory.Substring(0, end + 12);
 
+            var filePath = $"{baseDirectory}HotfixMods.Db2Provider.WowToolsFiles\\Files\\{fileName}.csv";
+            
             var result = new List<T>();
             var headers = new List<string>();
-            var row = -1;
+            var row = 0;
             try
             {
+                // Some columns contains the comma-delimiter symbol, and are messing up
+                // the default string.Split(','). Ex. name of an item.
+                var regex = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
                 foreach (string line in await File.ReadAllLinesAsync(@filePath))
                 {
-                    row++;
-                    var columns = line.Split(',');
+                    var columns = regex.Split(line);
                     if (row == 0)
                     {
+                        row++;
                         foreach (var header in columns)
                         {
                             headers.Add(header.Replace("[", "").Replace("]", "").Replace("_lang", "").Replace("_",""));
@@ -49,6 +60,7 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
                     }
                     else
                     {
+                        row++;
                         var lineJsonObject = new JObject();
                         for (int i = 0; i < headers.Count; i++)
                         {
@@ -70,7 +82,7 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
             }
             catch (Exception ex)
             {
-                throw new Exception($"Crashed on line {row + 1} in file {fileName}. Error message: {ex.Message}");
+                Debug.WriteLine($"Error on line {row + 1} in file {fileName}. Error message: {ex.Message}. This entity is being skipped.");
             }
 
             return result;

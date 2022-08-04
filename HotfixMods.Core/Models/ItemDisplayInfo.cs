@@ -2,6 +2,7 @@
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace HotfixMods.Core.Models
 {
     public class ItemDisplayInfo : IHotfixesSchema, IDb2
     {
+        [Key]
         public int Id { get; set; }
         public ItemDisplayInfoFlags Flags { get; set; }
         public int ModelResourcesId0 { get; set; }
@@ -18,8 +20,10 @@ namespace HotfixMods.Core.Models
         public int ModelMaterialResourcesId0 { get; set; }
         public int ModelMaterialResourcesId1 { get; set; }
         public int VerifiedBuild { get; set; }
-        public int ItemDisplayModelType1 { get; set; }
-        public int ItemDisplayModelType2 { get; set; }
+        [Column("ItemDisplayModelType1")]
+        public int ModelType0 { get; set; }
+        [Column("ItemDisplayModelType2")]
+        public int ModelType1 { get; set; }
         public int GeosetGroup0 { get; set; }
         public int GeosetGroup1 { get; set; }
         public int GeosetGroup2 { get; set; }

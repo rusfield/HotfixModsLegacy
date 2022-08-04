@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.ARM_LOWER,
                     ComponentSection = ComponentSections.ARM_LOWER,
-                    MaterialResourceId = (int)item.ComponentArmLower,
+                    MaterialResourcesId = (int)item.ComponentArmLower,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -37,7 +37,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.ARM_UPPER,
                     ComponentSection = ComponentSections.ARM_UPPER,
-                    MaterialResourceId = (int)item.ComponentArmUpper,
+                    MaterialResourcesId = (int)item.ComponentArmUpper,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -51,7 +51,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.TORSO_LOWER,
                     ComponentSection = ComponentSections.TORSO_LOWER,
-                    MaterialResourceId = (int)item.ComponentTorsoLower,
+                    MaterialResourcesId = (int)item.ComponentTorsoLower,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -65,7 +65,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.TORSO_UPPER,
                     ComponentSection = ComponentSections.TORSO_UPPER,
-                    MaterialResourceId = (int)item.ComponentTorsoUpper,
+                    MaterialResourcesId = (int)item.ComponentTorsoUpper,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -79,7 +79,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.LEG_LOWER,
                     ComponentSection = ComponentSections.LEG_LOWER,
-                    MaterialResourceId = (int)item.ComponentLegLower,
+                    MaterialResourcesId = (int)item.ComponentLegLower,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -93,7 +93,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.LEG_UPPER,
                     ComponentSection = ComponentSections.LEG_UPPER,
-                    MaterialResourceId = (int)item.ComponentLegUpper,
+                    MaterialResourcesId = (int)item.ComponentLegUpper,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -107,7 +107,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.HAND,
                     ComponentSection = ComponentSections.HAND,
-                    MaterialResourceId = (int)item.ComponentHand,
+                    MaterialResourcesId = (int)item.ComponentHand,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -121,7 +121,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.FOOT,
                     ComponentSection = ComponentSections.FOOT,
-                    MaterialResourceId = (int)item.ComponentFoot,
+                    MaterialResourcesId = (int)item.ComponentFoot,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -135,7 +135,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = item.Id + (int)ComponentSections.ACCESSORY,
                     ComponentSection = ComponentSections.ACCESSORY,
-                    MaterialResourceId = (int)item.ComponentAccessory,
+                    MaterialResourcesId = (int)item.ComponentAccessory,
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
@@ -283,8 +283,8 @@ namespace HotfixMods.Infrastructure.Services
                 GeosetGroup5 = item.GeosetGroup5 ?? ItemDefaults.GeosetGroup5,
                 HelmetGeosetVis0 = item.HelmetGeosetVis0 ?? ItemDefaults.HelmetGeosetVis0,
                 HelmetGeosetVis1 = item.HelmetGeosetVis1 ?? ItemDefaults.HelmetGeosetVis1,
-                ItemDisplayModelType1 = item.ModelType0 ?? ItemDefaults.ItemDisplayModelType1, // NB: Different starting indexes
-                ItemDisplayModelType2 = item.ModelType1 ?? ItemDefaults.ItemDisplayModelType2, // NB: Different starting indexes
+                ModelType0 = item.ModelType0 ?? ItemDefaults.ItemDisplayModelType1, // NB: Different starting indexes
+                ModelType1 = item.ModelType1 ?? ItemDefaults.ItemDisplayModelType2, // NB: Different starting indexes
                 ItemRangedDisplayInfoID = 0,
                 ItemVisual = 0,
                 OverrideSwooshSoundKitID = 0,

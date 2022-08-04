@@ -1,0 +1,85 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject ItemService ItemService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 200px; overflow-y: scroll">
+                    @if (itemResults.Count == 0)
+                    {
+
+                        <MudNumericField @bind-Value="@itemId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemId_Click" />
+                        <MudNumericField @bind-Value="@displayInfoId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemDisplayInfoId_Click" />
+
+                    }
+                    else if (itemResults.Count > 1)
+                    {
+                        foreach (var (item, index) in itemResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnItem(item))">@item.AppearanceName</MudButton>
+                            if (index % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    Loader loaderRef = new Loader();
+
+    int? displayInfoId;
+    int? itemId;
+
+    List<ItemDto> itemResults = new List<ItemDto>();
+
+    async Task ItemId_Click()
+    {
+        if (null != itemId)
+        {
+            itemResults = await ItemService.GetItemsById((int)itemId, loaderRef.SetLoading);
+            if (itemResults.Count() == 1)
+            {
+                ReturnItem(itemResults.First());
+            }
+            else if (itemResults.Count() > 1)
+            {
+                this.StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add($"No items with ID {itemId} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+    void ItemDisplayInfoId_Click()
+    {
+
+    }
+
+    void ReturnItem(ItemDto item)
+    {
+        Dialog.Close(item);
+    }
+}

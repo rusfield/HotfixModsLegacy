@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DashboardModels
 {
-    public interface IDashboardModel
+    public interface IRazorDashboardModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string AvatarUrl { get; set; }
-        public string Page { get; set; }
+        public Action EditAction { get; set; }
         public Action DeleteAction { get; set; }
     }
 }

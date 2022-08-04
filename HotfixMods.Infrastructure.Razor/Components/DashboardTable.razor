@@ -1,6 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.DashboardModels
 
-@typeparam T where T : IDashboardModel
+@typeparam T where T : IRazorDashboardModel
 
 <MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
     <HeaderContent>
@@ -17,7 +17,7 @@
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Action">
             <MudStack Row="true" Justify="Justify.FlexEnd">
-                <MudIconButton Size="Size.Small" Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Href="@($"/{context.Page}/{context.Id}")" />
+                <MudIconButton Size="Size.Small" Color="Color.Info" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync(context))" />
                 <MudIconButton Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync(context))" />
             </MudStack>
         </MudTd>
@@ -40,6 +40,10 @@
 
     MudTable<T> mudTableRef;
 
+    async Task EditAsync(T entity)
+    {
+        await InvokeAsync(entity.EditAction);
+    }
 
     async Task DeleteAsync(T entity)
     {

@@ -1,5 +1,5 @@
 ﻿@page "/item"
-@using HotfixMods.Infrastructure.DashboardModels
+@using HotfixMods.Infrastructure.Razor.DashboardModels
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.ItemComponents
 @using HotfixMods.Infrastructure.DtoModels
@@ -40,14 +40,37 @@
 }
 else
 {
-    <DashboardTable T="ItemDashboard" Data="@(new List<ItemDashboard>())" Add="AddAsync_Click" />
+    <DashboardTable T="RazorItemDashboard" Data="@(itemDashboard)" Add="AddAsync_Click" />
 }
 
 @code
 {
     ItemDto? item;
-
     ItemDto? itemLookup;
+    List<RazorItemDashboard> itemDashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        itemDashboard = new List<RazorItemDashboard>();
+        var items = await ItemService.GetItemDashboardAsync();
+        foreach(var item in items)
+        {
+            itemDashboard.Add(new RazorItemDashboard(
+                item.Id, 
+                item.Name,
+                item.AvatarUrl,
+                (async () => await EditAsync(item.Id)),
+                (async () => await ItemService.DeleteItem(item.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task EditAsync(int id)
+    {
+        item = await OpenItemSearchDialog(id);
+        this.StateHasChanged();
+    }
 
     async void AddAsync_Click()
     {
@@ -71,9 +94,9 @@ else
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, CloseButton = true, NoHeader = true };
         var parameters = new DialogParameters();
-        parameters.Add("Id", item.Id);
-        parameters.Add("TDto", typeof(ItemDto));
-        parameters.Add("TDtoIsUpdate", item.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.Id), item.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(ItemDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), item.IsUpdate);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters, options);
         var result = await dialog.Result;
 
@@ -84,9 +107,10 @@ else
         }
     }
 
-    async Task<ItemDto?> OpenItemSearchDialog()
+    async Task<ItemDto?> OpenItemSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(ItemSearch_Dialog.ItemId), id);
         var dialog = DialogService.Show<ItemSearch_Dialog>(null, dialogParameters);
         var dialogResult = await dialog.Result;
         if (!dialogResult.Cancelled)

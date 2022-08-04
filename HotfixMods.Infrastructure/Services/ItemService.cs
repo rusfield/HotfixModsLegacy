@@ -8,12 +8,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using HotfixMods.Infrastructure.DashboardModels;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService : Service
     {
         public ItemService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
+
+        public async Task<List<ItemDashboard>> GetItemDashboardAsync()
+        {
+            var items = await _mySql.GetManyAsync<ItemSparse>(c => c.VerifiedBuild == VerifiedBuild);
+            var result = new List<ItemDashboard>();
+            foreach (var item in items)
+            {
+                result.Add(new ItemDashboard()
+                {
+                    Id = item.Id,
+                    Name = item.Display,
+                    AvatarUrl = "TODO"
+                });
+            }
+
+            // Newest on top
+            return result.OrderBy(i => i.Id).ToList();
+        }
+
+        public async Task DeleteItem(int id)
+        {
+
+        }
+
         public async Task SaveItemAsync(ItemDto item)
         {
             var hotfixId = await GetNextHotfixIdAsync();
@@ -82,8 +107,10 @@ namespace HotfixMods.Infrastructure.Services
                 id = await GetNextIdAsync();
             }
 
-            foreach(var (itemModifiedAppearance, index) in itemModifiedAppearances.Select((value, idx) => (value, idx)))
+            int index = 0;
+            foreach(var itemModifiedAppearance in itemModifiedAppearances)
             {
+                index++;
                 progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "Loading from ItemAppearance", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
                 var itemAppearance = await _db2.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId);
                 if(null == itemAppearance)
@@ -118,7 +145,34 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 else if(itemModifiedAppearances.Count() == 24)
                 {
-                    appearanceName = "Artifact"; // TODO
+                    appearanceName = (itemModifiedAppearance.OrderIndex) switch
+                    {
+                        0 => "Artifact (Default)",
+                        1 => "Pillar of Creation",
+                        2 => "Light's Charge",
+                        3 => "First Major Order Campaign",
+                        4 => "Forged to Battle",
+                        5 => "Power Realized",
+                        6 => "Part of History",
+                        7 => "This Side Up",
+                        8 => "Improving History",
+                        9 => "Unleashed Monstrosities",
+                        10 => "Keystone Master",
+                        11 => "Glory of the Legion Hero",
+                        12 => "The Prestige",
+                        13 => "Crest of Heroism",
+                        14 => "Crest of Carnage",
+                        15 => "Crest of Devastation",
+                        16 => "Mage Tower (Default)",
+                        17 => "Mage Tower (Kil'jaeden)",
+                        18 => "Mage Tower (10 RBGs)",
+                        19 => "Mage Tower (Legion dungeons)",
+                        20 => "Hidden (Default)",
+                        21 => "Hidden (30 dungeons)",
+                        22 => "Hidden (200 world quests)",
+                        23 => "Hidden (1000 players)",
+                        _ => "Unknown"
+                    };
                 }
 
                 var itemDto = new ItemDto()

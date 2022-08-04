@@ -6,21 +6,10 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DashboardModels
 {
-    public class ItemDashboard : IDashboardModel
+    public class ItemDashboard
     {
-        public ItemDashboard(int id, string name, string avatarUrl, string page, Action deleteAction)
-        {
-            Id = id;
-            Name = name;
-            AvatarUrl = avatarUrl;
-            Page = page;
-            DeleteAction = deleteAction;
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
         public string AvatarUrl { get; set; }
-        public string Page { get; set; }
-        public Action DeleteAction { get; set; }
     }
 }

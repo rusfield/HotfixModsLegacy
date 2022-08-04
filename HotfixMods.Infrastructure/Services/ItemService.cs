@@ -72,7 +72,7 @@ namespace HotfixMods.Infrastructure.Services
             var result = new List<ItemDto>();
 
             progressCallback("Item", "Loading from ItemSparse", 10);
-            var itemSparse = await _db2.GetAsync<ItemSparse>(i => i.Id == itemId);
+            var itemSparse = await _mySql.GetAsync<ItemSparse>(i => i.Id == itemId) ?? await _db2.GetAsync<ItemSparse>(i => i.Id == itemId);
             if(null == itemSparse)
             {
                 progressCallback("Item", "ItemSparse not found", 100);
@@ -80,7 +80,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             progressCallback("Item", "Loading from Item", 25);
-            var item = await _db2.GetAsync<Item>(i => i.Id == itemId);
+            var item = await _mySql.GetAsync<Item>(i => i.Id == itemId) ?? await _db2.GetAsync<Item>(i => i.Id == itemId);
             if(null == item)
             {
                 progressCallback("Item", "Item not found", 100);
@@ -88,7 +88,10 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             progressCallback("Item", "Loading from ItemModifiedAppearance", 40);
-            var itemModifiedAppearances = (await _db2.GetManyAsync<ItemModifiedAppearance>(i => i.ItemId == itemId)).ToList();
+
+            var itemModifiedAppearances = (await _mySql.GetManyAsync<ItemModifiedAppearance>(i => i.Id == itemId)).ToList();
+            if(!itemModifiedAppearances.Any())
+                itemModifiedAppearances = (await _db2.GetManyAsync<ItemModifiedAppearance>(i => i.ItemId == itemId)).ToList();
             if(!itemModifiedAppearances.Any())
             {
                 progressCallback("Item", "ItemModifiedAppearance not found", 100);
@@ -112,7 +115,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 index++;
                 progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "Loading from ItemAppearance", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
-                var itemAppearance = await _db2.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId);
+                var itemAppearance = await _mySql.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId);
                 if(null == itemAppearance)
                 {
                     progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "ItemAppearance not found", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
@@ -120,7 +123,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "Loading from ItemDisplayInfo", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
-                var itemDisplayInfo = await _db2.GetAsync<ItemDisplayInfo>(i => i.Id == itemAppearance.ItemDisplayInfoId);
+                var itemDisplayInfo = await _mySql.GetAsync<ItemDisplayInfo>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemDisplayInfo>(i => i.Id == itemAppearance.ItemDisplayInfoId);
                 if(null == itemDisplayInfo)
                 {
                     progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "ItemDisplayInfo not found", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
@@ -128,7 +131,9 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 progressCallback($"Appearance {index + 1} of {itemModifiedAppearances.Count}", "Loading from ItemDisplayInfoMaterialRes", 50 + (int)(45.0 / itemModifiedAppearances.Count * index));
-                var itemDisplayInfoMaterialResources = await _db2.GetManyAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
+                var itemDisplayInfoMaterialResources = await _mySql.GetManyAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
+                if(!itemDisplayInfoMaterialResources.Any())
+                    itemDisplayInfoMaterialResources = await _db2.GetManyAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
 
                 // Check for raid drop or artifact
                 string appearanceName = "None";

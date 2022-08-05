@@ -48,6 +48,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ModelType1 { get; set; }
         public int? HelmetGeosetVis0 { get; set; }
         public int? HelmetGeosetVis1 { get; set; }
+        public int ItemGroupSoundsId { get; set; }
 
         public ItemFlags0? Flags0 { get; set; }
         public ItemFlags1?  Flags1 { get; set; }

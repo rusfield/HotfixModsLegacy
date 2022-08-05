@@ -21,5 +21,6 @@ namespace HotfixMods.Core.Models
         public int IconFileDataId { get; set; }
         public int VerifiedBuild { get; set; }
         public int SoundOverrideSubClassId { get; set; }
+        public int ItemGroupSoundsId { get; set; }
     }
 }

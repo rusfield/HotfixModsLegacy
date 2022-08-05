@@ -31,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             // Newest on top
-            return result.OrderBy(i => i.Id).ToList();
+            return result.OrderByDescending(i => i.Id).ToList();
         }
 
         public async Task DeleteItem(int id)
@@ -221,6 +221,7 @@ namespace HotfixMods.Infrastructure.Services
                     Description = itemSparse.Description,
                     InventoryType = item.InventoryType,
                     DisplayType = itemAppearance.DisplayType,
+                    ItemGroupSoundsId = item.ItemGroupSoundsId,
                     
                     IsUpdate = isUpdate,
                     AppearanceName = appearanceName

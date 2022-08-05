@@ -249,7 +249,9 @@ namespace HotfixMods.Infrastructure.Services
                 InventoryType = item.InventoryType,
                 Material = item.Material ?? ItemDefaults.Material,
                 SubClassId = item.ItemSubClass,
+                ItemGroupSoundsId = item.ItemGroupSoundsId,
                 VerifiedBuild = VerifiedBuild,
+                
 
                 SoundOverrideSubClassId = -1,
             };

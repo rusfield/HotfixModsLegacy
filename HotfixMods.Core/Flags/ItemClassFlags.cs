@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace HotfixMods.Core.Flags
 {
     [Flags]
-    public enum ItemClassFlags
+    public enum ItemClassFlags : long
     {
         ALL = -1,
+        UNK_0 = 0,
         WARRIOR = 1,
         PALADIN = 2,
         HUNTER = 4,

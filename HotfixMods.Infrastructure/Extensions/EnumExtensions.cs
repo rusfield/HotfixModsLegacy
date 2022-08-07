@@ -29,11 +29,8 @@ namespace HotfixMods.Infrastructure.Extensions
             var input = (long)(object)flags;
             foreach (T value in Enum.GetValues(typeof(T)))
             {
-                var val = (long)(object)value;
-                if (0 != (val & input))
-                {
+                if(flags.HasFlag(value))
                     yield return value;
-                }
             }
         }
 

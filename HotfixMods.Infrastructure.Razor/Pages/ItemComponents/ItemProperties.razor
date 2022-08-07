@@ -15,10 +15,12 @@
     <MudItem xs="4" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
+
             <SingleSelect_Element Label="Quality" T="OverallQualities?" @bind-Value="Item.OverallQuality" Items="@(overallQualities)" CssClass="@elementCssClass" />
             <SingleSelect_Element Label="Bonding" T="ItemBondings?" @bind-Value="Item.Bonding" Items="@(itemBondings)" CssClass="@elementCssClass" />
-            <SingleSelect_Element Label="Race Restriction" T="ItemRaceFlags?" @bind-Value="Item.AllowableRaces" Items="@(itemRaceFlags)"CssClass="@elementCssClass" />
-            <SingleSelect_Element Label="Class Restriction" T="ItemClassFlags?" @bind-Value="Item.AllowableClasses" Items="@(itemClassFlags)" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Race Restriction" T="ItemRaceFlags?" @bind-Value="Item.AllowableRaces" Items="@(itemRaceFlags)" CssClass="@elementCssClass" />
+
+            <MultiSelect_Element Label="Class Restriction" T="ItemClassFlags" @bind-Value="@Item.AllowableClasses" ValueLookup="@ItemLookup?.AllowableClasses" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass" />
@@ -45,16 +47,20 @@
     Dictionary<OverallQualities?, string> overallQualities;
     Dictionary<ItemBondings?, string> itemBondings;
     Dictionary<ItemRaceFlags?, string> itemRaceFlags;
-    Dictionary<ItemClassFlags?, string> itemClassFlags;
+
+
 
     protected override Task OnInitializedAsync()
     {
         overallQualities = Enum.GetValues<OverallQualities>().ToDictionary(e => (OverallQualities?)e, v => v.ToDisplayString());
         itemBondings = Enum.GetValues<ItemBondings>().ToDictionary(e => (ItemBondings?)e, v => v.ToDisplayString());
         itemRaceFlags = Enum.GetValues<ItemRaceFlags>().ToDictionary(e => (ItemRaceFlags?)e, v => v.ToDisplayString());
-        itemClassFlags = Enum.GetValues<ItemClassFlags>().ToDictionary(e => (ItemClassFlags?)e, v => v.ToDisplayString());
+
+
         return base.OnInitializedAsync();
     }
+
+
 
     string elementCssClass = "pb-2 pt-2";
     string gridItemCssClass = "pb-0 pt-0";

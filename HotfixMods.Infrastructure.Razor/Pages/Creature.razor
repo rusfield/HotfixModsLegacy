@@ -1,38 +1,38 @@
-﻿@page "/item"
+﻿@page "/creature"
 @using HotfixMods.Infrastructure.Razor.DashboardModels
 @using HotfixMods.Infrastructure.Razor.Components
-@using HotfixMods.Infrastructure.Razor.Pages.ItemTabs
+@using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject ItemService ItemService
+@inject CreatureService CreatureService
 
 
-@if (item != null)
+@if (creature != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Item Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="CreatureLookupAsync_Click">Creature Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@item.Id</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@creature.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(creature.IsUpdate ? "Update" : "Save")</MudButton>
             </MudStack>
         </MudStack>
     <MudPaper>
 
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <MudTabPanel Text="Properties">
-                <ItemProperties_Tab Item="item" ItemLookup="itemLookup" />
+            <MudTabPanel Text="Template">
+                <CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
-            <MudTabPanel Text="Textures">
-                <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
+            <MudTabPanel Text="Customization">
+                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
-            <MudTabPanel Text="Geosets">
-                <ItemGeosets_Tab Item="item" ItemLookup="itemLookup" />
+            <MudTabPanel Text="Equipment">
+                <CreatureEquipment_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
         </MudTabs>
 
@@ -40,47 +40,49 @@
 }
 else
 {
-    <DashboardTable T="RazorItemDashboard" Data="@(itemDashboard)" Add="AddAsync_Click" />
+    <DashboardTable T="RazorCreatureDashboard" Data="@(creatureDashboard)" Add="AddAsync_Click" />
 }
 
 @code
 {
-    ItemDto? item;
-    ItemDto? itemLookup;
-    List<RazorItemDashboard> itemDashboard;
+    CreatureDto? creature;
+    CreatureDto? creatureLookup;
+    List<RazorCreatureDashboard> creatureDashboard;
 
     protected override async Task OnInitializedAsync()
     {
-        itemDashboard = new List<RazorItemDashboard>();
-        var items = await ItemService.GetItemDashboardAsync();
-        foreach(var item in items)
+        creatureDashboard = new List<RazorCreatureDashboard>();
+        var creatures = await CreatureService.GetCreatureDashboardAsync();
+        foreach (var creature in creatures)
         {
+            /*
             itemDashboard.Add(new RazorItemDashboard(
-                item.Id, 
+                item.Id,
                 item.Name,
                 item.AvatarUrl,
                 (async () => await EditAsync(item.Id)),
                 (async () => await ItemService.DeleteItem(item.Id))
             ));
+            */
         }
         await base.OnInitializedAsync();
     }
 
     async Task EditAsync(int id)
     {
-        item = await OpenItemSearchDialog(id);
+        creature = await OpenCreatureSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        item = await OpenItemSearchDialog();
+        creature = await OpenCreatureSearchDialog();
         this.StateHasChanged();
     }
 
-    async Task LookupAsync_Click()
+    async Task CreatureLookupAsync_Click()
     {
-        itemLookup = await OpenItemSearchDialog();
+        creatureLookup = await OpenCreatureSearchDialog();
         this.StateHasChanged();
     }
 
@@ -91,31 +93,31 @@ else
         parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
         DialogService.Show<Prompt_Dialog>(null, parameters);
 
-        item.IsUpdate = true;
+        creature.IsUpdate = true;
     }
 
     async void SaveAsync()
     {
-        await ItemService.SaveItemAsync(item);
+        await CreatureService.SaveItemAsync(creature);
     }
 
     async Task IdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.Id), item.Id);
-        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(ItemDto));
-        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), item.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.Id), creature.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(CreatureDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), creature.IsUpdate);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled && (int)result.Data != -1)
         {
-            item.Id = (int)result.Data;
-            item.IsUpdate = false;
+            creature.Id = (int)result.Data;
+            creature.IsUpdate = false;
         }
     }
 
-    async Task<ItemDto?> OpenItemSearchDialog(int? id = null)
+    async Task<CreatureDto?> OpenCreatureSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(ItemSearch_Dialog.ItemId), id);
@@ -123,10 +125,10 @@ else
         var dialogResult = await dialog.Result;
         if (!dialogResult.Cancelled)
         {
-            var result = (ItemDto)dialogResult.Data;
+            var result = (CreatureDto)dialogResult.Data;
             if (null != result)
             {
-                return (ItemDto)dialogResult.Data;
+                return (CreatureDto)dialogResult.Data;
             }
         }
         return null;

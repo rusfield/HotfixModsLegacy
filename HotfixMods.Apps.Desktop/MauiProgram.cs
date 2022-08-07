@@ -41,6 +41,16 @@ namespace HotfixMods.Apps.Desktop
                     IdRangeTo = 6000000
                 };
             });
+            builder.Services.AddSingleton(config =>
+            {
+                return new CreatureService(db2Provider, mySqlProvider)
+                {
+                    VerifiedBuild = -2000,
+                    IdSize = 5000.0,
+                    IdRangeFrom = 100000000,
+                    IdRangeTo = 999999999
+                };
+            });
 
 
             builder.Services.AddBlazorWebViewDeveloperTools();

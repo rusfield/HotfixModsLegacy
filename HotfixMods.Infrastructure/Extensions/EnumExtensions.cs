@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.Extensions
         }
 
         public static string ToDisplayString<T>(this T enumValue)
-            where T : Enum
+            //where T : Enum
         {
             string result = "";
             var enumStrings = enumValue.ToString().Split("_");

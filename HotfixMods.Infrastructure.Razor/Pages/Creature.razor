@@ -118,8 +118,8 @@ else
     async Task<CreatureDto?> OpenCreatureSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
-        dialogParameters.Add(nameof(ItemSearch_Dialog.ItemId), id);
-        var dialog = DialogService.Show<ItemSearch_Dialog>(null, dialogParameters);
+        dialogParameters.Add(nameof(CreatureSearch_Dialog.CreatureId), id);
+        var dialog = DialogService.Show<CreatureSearch_Dialog>(null, dialogParameters);
         var dialogResult = await dialog.Result;
         if (!dialogResult.Cancelled)
         {

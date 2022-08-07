@@ -1,0 +1,36 @@
+﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+    <MudNumericField T="double?" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" />
+</MudBadge>
+
+
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public double? Value { get; set; }
+
+    [Parameter]
+    public double? ValueLookup { get; set; }
+
+    [Parameter]
+    public string CssClass { get; set; }
+
+    [Parameter]
+    public EventCallback<double?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    bool GetBadgeVisibility()
+    {
+        return ValueLookup != null && Value != ValueLookup;
+    }
+
+    async Task SetValueAsync(double? newValue)
+    {
+        Value = newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

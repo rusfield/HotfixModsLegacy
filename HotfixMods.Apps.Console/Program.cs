@@ -10,9 +10,20 @@ using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.MySqlProvider.EntityFrameworkCore.Clients;
 using HotfixMods.Core.Enums;
+using HotfixMods.Apps.Console;
 
 Console.WriteLine("Hello, World!");
 
+var test = new TestClass();
+
+test.Test<MyEnum?>();
+
+
+public enum MyEnum
+{
+    A,
+    B
+}
 /*
 var service = new ItemService(
     new Db2Client(),

@@ -9,25 +9,25 @@ namespace HotfixMods.Infrastructure.DtoModels
 {
     public class CreatureDto : Dto
     {
-        public Genders Gender { get; set; }
-        public Races Race { get; set; }
+        public Genders? Gender { get; set; }
+        public Races? Race { get; set; }
         public string? Name { get; set; }
         public string? SubName { get; set; }
-        public int Level { get; set; }
-        public int Faction { get; set; }
-        public double Scale { get; set; }
-        public Ranks Rank { get; set; }
-        public CreatureTypes CreatureType { get; set; }
-        public CreatureUnitClasses CreatureUnitClass { get; set; }
-        public UnitFlags UnitFlags { get; set; }
-        public UnitFlags2 UnitFlags2 { get; set; }
-        public UnitFlags3 UnitFlags3 { get; set; }
-        public FlagsExtra FlagsExtra { get; set; }
-        public double HealthModifier { get; set; }
-        public double DamageModifier { get; set; }
-        public double ArmorModifier { get; set; }
-        public int SoundId { get; set; }
-        public bool RegenHealth { get; set; }
+        public int? Level { get; set; }
+        public int? Faction { get; set; }
+        public double? Scale { get; set; }
+        public Ranks? Rank { get; set; }
+        public CreatureTypes? CreatureType { get; set; }
+        public CreatureUnitClasses? CreatureUnitClass { get; set; }
+        public UnitFlags? UnitFlags { get; set; }
+        public UnitFlags2? UnitFlags2 { get; set; }
+        public UnitFlags3? UnitFlags3 { get; set; }
+        public FlagsExtra? FlagsExtra { get; set; }
+        public double? HealthModifier { get; set; }
+        public double? DamageModifier { get; set; }
+        public double? ArmorModifier { get; set; }
+        public int? SoundId { get; set; }
+        public bool? RegenHealth { get; set; }
         public List<int> Auras { get; set; }
 
         // Armor
@@ -56,5 +56,6 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? RangedItemAppearanceModifierId { get; set; }
 
         public Dictionary<int, int> Customizations { get; set; }
+
     }
 }

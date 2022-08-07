@@ -1,0 +1,89 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject CreatureService CreatureService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    @if (creatureResults.Count == 0)
+                    {
+                        <MudNumericField @bind-Value="@CreatureId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CreatureId_Click" />
+                    }
+                    else if (creatureResults.Count > 1)
+                    {
+                        foreach (var (creature, index) in creatureResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnCreature(creature))">@creature.AppearanceName</MudButton>
+                            if ((index + 1) % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? CreatureId { get; set; }
+
+    Loader loaderRef = new Loader();
+    List<CreatureDto> creatureResults = new List<CreatureDto>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != CreatureId)
+            await SearchCreatureById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task CreatureId_Click()
+    {
+        if (null != CreatureId)
+        {
+            await SearchCreatureById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchCreatureById()
+    {
+        creatureResults = await CreatureService.GetCreaturesByCreatureId((int)CreatureId, loaderRef.SetLoading);
+        if (creatureResults.Count() == 1)
+        {
+            ReturnCreature(creatureResults.First());
+        }
+        else if (creatureResults.Count() > 1)
+        {
+            this.StateHasChanged();
+        }
+        else
+        {
+            Snackbar.Add($"No items with ID {CreatureId} found", Severity.Info);
+        }
+    }
+
+    void ReturnCreature(CreatureDto item)
+    {
+        Dialog.Close(item);
+    }
+}

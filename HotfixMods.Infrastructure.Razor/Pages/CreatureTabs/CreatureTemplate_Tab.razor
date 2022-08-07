@@ -2,7 +2,26 @@
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 
+<MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <IntInput_Element Label="Faction" @bind-Value="Creature.Faction" ValueLookup="@CreatureLookup?.Faction" CssClass="@elementCssClass" />
+            <IntInput_Element Label="Level" @bind-Value="Creature.Level" ValueLookup="@CreatureLookup?.Level" CssClass="@elementCssClass" />
+            @*
+            <SingleSelect_Element Label="Rank" CssClass="@elementCssClass" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
+            <SingleSelect_Element Label="Type" CssClass="@elementCssClass" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
+            <SingleSelect_Element Label="Unit Class" CssClass="@elementCssClass" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
+            *@
+            <DoubleInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+        @* BG *@
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
 
+    </MudItem>
+</MudGrid>
 
 
 @code

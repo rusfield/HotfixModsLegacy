@@ -12,4 +12,8 @@
     <ProjectReference Include="..\HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DtoModels\Items\" />
+  </ItemGroup>
+
 </Project>

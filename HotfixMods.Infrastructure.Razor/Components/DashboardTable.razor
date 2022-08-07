@@ -22,7 +22,7 @@
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Action">
             <MudStack Row="true" Justify="Justify.FlexEnd">
-                <MudIconButton Size="Size.Small" Color="Color.Info" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync(context))" />
+                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync(context))" />
                 <MudIconButton Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync_Click(context))" />
             </MudStack>
         </MudTd>

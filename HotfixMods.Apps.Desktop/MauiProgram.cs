@@ -1,5 +1,4 @@
-﻿using HotfixMods.Apps.Desktop.Data;
-using HotfixMods.Core.Providers;
+﻿using HotfixMods.Core.Providers;
 using HotfixMods.Db2Provider.WowToolsFiles.Clients;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.MySqlProvider.EntityFrameworkCore.Clients;

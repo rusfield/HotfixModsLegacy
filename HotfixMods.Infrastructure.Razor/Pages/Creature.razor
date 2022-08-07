@@ -55,15 +55,13 @@ else
         var creatures = await CreatureService.GetCreatureDashboardAsync();
         foreach (var creature in creatures)
         {
-            /*
-            itemDashboard.Add(new RazorItemDashboard(
-                item.Id,
-                item.Name,
-                item.AvatarUrl,
-                (async () => await EditAsync(item.Id)),
-                (async () => await ItemService.DeleteItem(item.Id))
+            creatureDashboard.Add(new RazorCreatureDashboard(
+                creature.Id,
+                creature.Name,
+                creature.AvatarUrl,
+                (async () => await EditAsync(creature.Id)),
+                (async () => await CreatureService.DeleteItem(creature.Id))
             ));
-            */
         }
         await base.OnInitializedAsync();
     }

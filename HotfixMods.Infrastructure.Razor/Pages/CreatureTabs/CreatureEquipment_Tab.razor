@@ -1,5 +1,18 @@
-﻿<h3>CreatureEquipment_Tab</h3>
+﻿@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
 
-@code {
 
+
+
+
+@code
+{
+    [Parameter]
+    public CreatureDto Creature { get; set; }
+
+    [Parameter]
+    public CreatureDto? CreatureLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
 }

@@ -15,9 +15,9 @@
     <MudItem xs="4" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">
         <MudStack>
-            <SingleSelect_Element Label="Quality" T="OverallQualities?" @bind-Value="Item.OverallQuality" CssClass="@elementCssClass" />
-            <SingleSelect_Element Label="Bonding" T="ItemBondings?" @bind-Value="Item.Bonding" CssClass="@elementCssClass" />
-            <SingleSelect_Element Label="Race Restriction" T="ItemRaceFlags?" @bind-Value="Item.AllowableRaces" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Quality" T="OverallQualities?" @bind-Value="Item.OverallQuality" ValueLookup="ItemLookup?.OverallQuality" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Bonding" T="ItemBondings?" @bind-Value="Item.Bonding" ValueLookup="ItemLookup?.Bonding" CssClass="@elementCssClass" />
+            <SingleSelect_Element Label="Race Restriction" T="ItemRaceFlags?" @bind-Value="Item.AllowableRaces" ValueLookup="ItemLookup?.AllowableRaces" CssClass="@elementCssClass" />
             <MultiSelect_Element Label="Class Restriction" T="ItemClassFlags" @bind-Value="@Item.AllowableClasses" ValueLookup="@ItemLookup?.AllowableClasses" CssClass="@elementCssClass" />
         </MudStack>
     </MudItem>

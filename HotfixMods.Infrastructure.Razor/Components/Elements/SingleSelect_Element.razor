@@ -1,27 +1,29 @@
-﻿@typeparam T 
+﻿@typeparam T
 
 @using HotfixMods.Infrastructure.Extensions
 
-<MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" Class="@CssClass">
-    @foreach (var option in options)
-    {
-        <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
-    }
-</MudSelect>
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" Class="@CssClass">
+        @foreach (var option in options)
+        {
+            <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
+        }
+    </MudSelect>
+</MudBadge>
 
-@code 
+@code
 {
     [Parameter]
     public string Label { get; set; }
 
     [Parameter]
-    public T Value { get; set; }
+    public T? Value { get; set; }
 
     [Parameter]
     public T? ValueLookup { get; set; }
 
     [Parameter]
-    public EventCallback<T> ValueChanged { get; set; }
+    public EventCallback<T?> ValueChanged { get; set; }
 
     [Parameter]
     public string CssClass { get; set; }
@@ -38,8 +40,18 @@
     Dictionary<T, string> options;
     protected override void OnInitialized()
     {
-        var values = Enum.GetValues(Nullable.GetUnderlyingType(typeof(T)));
-        options = ((T[])values).ToDictionary(e => e, v => v.ToDisplayString());
+        var enumValues = Enum.GetValues(Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T));
+        options = enumValues.Cast<T>().ToDictionary(e => e, v => v.ToDisplayString());
+
         base.OnInitialized();
+    }
+
+    bool GetBadgeVisibility()
+    {
+        if (Value != null && ValueLookup != null)
+        {
+            return Value.ToString() != ValueLookup.ToString();
+        }
+        return false;
     }
 }

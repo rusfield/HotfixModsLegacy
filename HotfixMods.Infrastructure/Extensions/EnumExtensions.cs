@@ -33,20 +33,5 @@ namespace HotfixMods.Infrastructure.Extensions
                     yield return value;
             }
         }
-
-        public static string ToDisplayString<T>(this T enumValue)
-            //where T : Enum
-        {
-            string result = "";
-            var enumStrings = enumValue.ToString().Split("_");
-            foreach (var enumString in enumStrings)
-            {
-                if (enumString.Length > 1)
-                    result += $"{enumString.Substring(0, 1).ToUpper()}{enumString.Substring(1, enumString.Length - 1).ToLower()} ";
-                else if (enumString.Length == 1)
-                    result += $"{enumString.ToString().ToUpper()} ";
-            }
-            return result.Trim();
-        }
     }
 }

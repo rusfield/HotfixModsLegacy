@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Elements
+@using HotfixMods.Core.Flags
 
 
 <MudGrid>
@@ -17,10 +18,50 @@
         @* BG *@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-
+        <MultiSelect_Element T="UnitFlags" Label="Unit Flags" @bind-Value="Creature.UnitFlags" ValueLookup="CreatureLookup?.UnitFlags" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="UnitFlags2" Label="Unit Flags" @bind-Value="Creature.UnitFlags2" ValueLookup="CreatureLookup?.UnitFlags2" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="UnitFlags3" Label="Unit Flags" @bind-Value="Creature.UnitFlags3" ValueLookup="CreatureLookup?.UnitFlags3" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="FlagsExtra" Label="Unit Flags" @bind-Value="Creature.FlagsExtra" ValueLookup="CreatureLookup?.FlagsExtra" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Health Modifier" @bind-Value="Creature.HealthModifier" ValueLookup="@CreatureLookup?.HealthModifier" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Damage Modifier" @bind-Value="Creature.DamageModifier" ValueLookup="@CreatureLookup?.DamageModifier" CssClass="@elementCssClass" />
     </MudItem>
-</MudGrid>
 
+
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <IntInput_Element Label="Sound ID" @bind-Value="Creature.SoundId" ValueLookup="@CreatureLookup?.SoundId" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <MudStack>
+            <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <DoubleInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            <BoolSelect_Element Label="Regen Health" @bind-Value="Creature.RegenHealth" ValueLookup="CreatureLookup?.RegenHealth" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <MudStack>
+            <TextInput_Element Label="Sub Name" @bind-Value="Creature.SubName" ValueLookup="@CreatureLookup?.SubName" CssClass="@elementCssClass" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MudStack>
+            @* List with Add *@
+        </MudStack>
+    </MudItem>
+
+</MudGrid>
 
 @code
 {

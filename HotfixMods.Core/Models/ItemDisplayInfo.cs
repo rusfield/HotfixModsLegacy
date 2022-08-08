@@ -1,4 +1,4 @@
-﻿using HotfixMods.Core.Enums;
+﻿using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;

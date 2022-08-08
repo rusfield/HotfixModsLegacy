@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using System;
 using System.Collections.Generic;
 using System.Linq;

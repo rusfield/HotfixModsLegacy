@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Core.Enums
+namespace HotfixMods.Core.Flags
 {
     [Flags]
     public enum ItemFlags0 : long

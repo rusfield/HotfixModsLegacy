@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
 using HotfixMods.Infrastructure.DashboardModels;

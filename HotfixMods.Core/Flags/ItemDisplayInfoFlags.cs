@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Core.Enums
+namespace HotfixMods.Core.Flags
 {
     [Flags]
     public enum ItemDisplayInfoFlags : long
@@ -12,7 +12,7 @@ namespace HotfixMods.Core.Enums
         DEFAULT = 0,
         EMBLAZONED_TABARD_COMMON = 1,
         NO_SHEATHED_KIT_FOR_SPELL_COMBAT_ANIM = 2,
-        HIDE_PANTS_AND_BELT = 4, 
+        HIDE_PANTS_AND_BELT = 4,
         EMBLAZONED_TABARD_RARE = 8,
         EMBLAZONED_TABARD_EPIC = 16,
         USE_SPEAR_RANGED_WEAPON_ATTACHMENT = 32,
@@ -24,7 +24,7 @@ namespace HotfixMods.Core.Enums
         MIRROR_WARGLAIVE_ON_SHEATHED = 2048,
         FLIP_MODEL_ON_SHEATHED = 4096,
         USE_ALTERNATE_WEAPON_TRAIL_ENDPOINTS = 8192,
-        FORCE_SHEATHED = 16384, 
+        FORCE_SHEATHED = 16384,
         DONT_CLOSE_HANDS = 32768,
         UNSHEATHED_FOR_SPELL_ANIM = 65536,
         BREWMASTER_UNSHEATHED = 131072,

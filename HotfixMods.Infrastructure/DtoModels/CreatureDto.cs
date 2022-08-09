@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Flags;
+using HotfixMods.Infrastructure.DtoModels.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? RangedItemVisual { get; set; }
         public int? RangedItemAppearanceModifierId { get; set; }
 
-        public Dictionary<int, int> Customizations { get; set; }
+        public Dictionary<int, int?> Customizations { get; set; } // Option ID and Choice ID
 
     }
 }

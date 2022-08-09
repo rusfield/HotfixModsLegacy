@@ -4,7 +4,7 @@
 
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
     <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" Class="@CssClass">
-        @foreach (var option in options)
+        @foreach (var option in Options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
         }
@@ -31,17 +31,24 @@
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
 
+    [Parameter]
+    public Dictionary<T, string> Options { get; set; } // Options will be automatically generated if T is an enum, but may be overriden if it is not.
+
     async Task SetValueAsync(T newValue)
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
     }
 
-    Dictionary<T, string> options;
+
     protected override void OnInitialized()
     {
-        var enumValues = Enum.GetValues(Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T));
-        options = enumValues.Cast<T>().ToDictionary(e => e, v => v.ToDisplayString());
+        if(Options == null)
+        {
+            // Options must be provided if T is not an enum
+            var enumValues = Enum.GetValues(Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T));
+            Options = enumValues.Cast<T>().ToDictionary(e => e, v => v.ToDisplayString());
+        }
 
         base.OnInitialized();
     }

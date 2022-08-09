@@ -1,4 +1,5 @@
 ﻿@page "/creature"
+@using HotfixMods.Infrastructure.DtoModels.Creatures
 @using HotfixMods.Infrastructure.Razor.DashboardModels
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
@@ -29,7 +30,7 @@
                 <CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Customization">
-                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" />
+                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" AvailableCustomizations="availableCustomizations"/>
             </MudTabPanel>
             <MudTabPanel Text="Equipment">
                 <CreatureEquipment_Tab Creature="creature" CreatureLookup="creatureLookup" />
@@ -48,6 +49,7 @@ else
     CreatureDto? creature;
     CreatureDto? creatureLookup;
     List<RazorCreatureDashboard> creatureDashboard;
+    Dictionary<CustomizationOptionDto, List<CustomizationChoiceDto>> availableCustomizations;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,12 +71,16 @@ else
     async Task EditAsync(int id)
     {
         creature = await OpenCreatureSearchDialog(id);
+        if (creature != null && creature.Race != null && creature.Gender != null) 
+            availableCustomizations = await CreatureService.GetAvailableCustomizations((Races)creature.Race, (Genders)creature.Gender);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
         creature = await OpenCreatureSearchDialog();
+        if (creature != null && creature.Race != null && creature.Gender != null)
+            availableCustomizations = await CreatureService.GetAvailableCustomizations((Races)creature.Race, (Genders)creature.Gender);
         this.StateHasChanged();
     }
 

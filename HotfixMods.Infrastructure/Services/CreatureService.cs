@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.DtoModels.Creatures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
                 var creatures = await GetCreatureByDisplayIdAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
                 if (creatures.Any())
                 {
-                    foreach(var creature in creatures)
+                    foreach (var creature in creatures)
                     {
                         if (creature.Id < IdRangeTo && creature.Id >= IdRangeFrom)
                         {
@@ -73,7 +74,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             int index = 0;
             var result = new List<CreatureDto>();
-            foreach(var creatureDisplayId in creatureDisplayIds)
+            foreach (var creatureDisplayId in creatureDisplayIds)
             {
                 index++;
                 double iterationDivider = index / creatureDisplayIds.Count();
@@ -155,30 +156,25 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback("Customizations", $"Retrieving available customizations", (int)(40 / iterationDivider));
                 var availableCustomizations = await GetAvailableCustomizations(displayInfoExtra.DisplayRaceId, displayInfo.Gender);
                 progressCallback("Customizations", $"Retrieving creature customizations", (int)(60 / iterationDivider));
-                var hotfixCustomizations = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
-                var db2Customizations = await _db2.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
-                var customizations = new Dictionary<int, int>();
+                var customizations = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id) ?? await _db2.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
+                var creatureCustomizations = new Dictionary<int, int?>();
 
                 foreach (var availableCustomization in availableCustomizations)
                 {
                     progressCallback("Customizations", $"Preparing {availableCustomization.Key.Name}", (int)(70 / iterationDivider));
 
-                    var hotfixCustomization = hotfixCustomizations.Where(hc => hc.ChrCustomizationOptionId == availableCustomization.Key.Id).FirstOrDefault();
-                    var db2Customization = db2Customizations.Where(dc => dc.ChrCustomizationOptionId == availableCustomization.Key.Id).FirstOrDefault();
-                    if (hotfixCustomization != null)
+                    var customization = customizations.Where(hc => hc.ChrCustomizationOptionId == availableCustomization.Key.Id).FirstOrDefault();
+
+                    if (customization != null)
                     {
-                        customizations.Add(hotfixCustomization.ChrCustomizationOptionId, hotfixCustomization.ChrCustomizationChoiceId);
-                    }
-                    else if (db2Customization != null)
-                    {
-                        customizations.Add(db2Customization.ChrCustomizationOptionId, db2Customization.ChrCustomizationChoiceId);
+                        creatureCustomizations.Add(customization.ChrCustomizationOptionId, customization.ChrCustomizationChoiceId);
                     }
                     else
                     {
-                        customizations.Add(availableCustomization.Key.Id, availableCustomization.Value.First().Id);
+                        creatureCustomizations.Add(availableCustomization.Key.Id, availableCustomization.Value.First().Id);
                     }
                 }
-                creature.Customizations = customizations;
+                creature.Customizations = creatureCustomizations;
 
                 progressCallback("Equipment", $"Retrieving equipment", (int)(80 / iterationDivider));
                 var hotfixEquipment = await _mySql.GetManyAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);

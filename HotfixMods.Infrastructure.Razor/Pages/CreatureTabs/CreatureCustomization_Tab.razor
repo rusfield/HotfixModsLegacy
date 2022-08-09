@@ -12,7 +12,7 @@
             <SingleSelect_Element T="int?" Label="@(AvailableCustomizations.ElementAt(iNested).Key.Name)" Options="@(AvailableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
         }
     </MudItem>
-    <MudItem xs="6" Class="@gridItemCssClass">
+    <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
         @* BG *@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">

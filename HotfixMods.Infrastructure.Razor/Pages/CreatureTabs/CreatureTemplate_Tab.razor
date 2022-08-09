@@ -12,7 +12,7 @@
         <SingleSelect_Element Label="Unit Class" CssClass="@elementCssClass" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
         <DoubleInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
     </MudItem>
-    <MudItem xs="6" Class="@gridItemCssClass">
+    <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
         @* BG *@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">

@@ -3,14 +3,12 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <IntInput_Element Label="Head" @bind-Value="Creature.HeadItemDisplayInfoId" ValueLookup="@CreatureLookup?.HeadItemDisplayInfoId" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Shoulders" @bind-Value="Creature.ShouldersItemDisplayInfoId" ValueLookup="@CreatureLookup?.ShouldersItemDisplayInfoId" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Chest" @bind-Value="Creature.ChestItemDisplayInfoId" ValueLookup="@CreatureLookup?.ChestItemDisplayInfoId" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Hands" @bind-Value="Creature.HandsItemDisplayInfoId" ValueLookup="@CreatureLookup?.HandsItemDisplayInfoId" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Legs" @bind-Value="Creature.LegsItemDisplayInfoId" ValueLookup="@CreatureLookup?.LegsItemDisplayInfoId" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Feet" @bind-Value="Creature.FeetItemDisplayInfoId" ValueLookup="@CreatureLookup?.FeetItemDisplayInfoId" CssClass="@elementCssClass" />
-        </MudStack>
+        <IntInput_Element Label="Head" @bind-Value="Creature.HeadItemDisplayInfoId" ValueLookup="@CreatureLookup?.HeadItemDisplayInfoId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Shoulders" @bind-Value="Creature.ShouldersItemDisplayInfoId" ValueLookup="@CreatureLookup?.ShouldersItemDisplayInfoId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Chest" @bind-Value="Creature.ChestItemDisplayInfoId" ValueLookup="@CreatureLookup?.ChestItemDisplayInfoId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Hands" @bind-Value="Creature.HandsItemDisplayInfoId" ValueLookup="@CreatureLookup?.HandsItemDisplayInfoId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Legs" @bind-Value="Creature.LegsItemDisplayInfoId" ValueLookup="@CreatureLookup?.LegsItemDisplayInfoId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Feet" @bind-Value="Creature.FeetItemDisplayInfoId" ValueLookup="@CreatureLookup?.FeetItemDisplayInfoId" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
         @* BG *@

@@ -5,14 +5,12 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <IntInput_Element Label="Faction" @bind-Value="Creature.Faction" ValueLookup="@CreatureLookup?.Faction" CssClass="@elementCssClass" />
-            <IntInput_Element Label="Level" @bind-Value="Creature.Level" ValueLookup="@CreatureLookup?.Level" CssClass="@elementCssClass" />
-            <SingleSelect_Element Label="Rank" CssClass="@elementCssClass" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
-            <SingleSelect_Element Label="Type" CssClass="@elementCssClass" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
-            <SingleSelect_Element Label="Unit Class" CssClass="@elementCssClass" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
-            <DoubleInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
-        </MudStack>
+        <IntInput_Element Label="Faction" @bind-Value="Creature.Faction" ValueLookup="@CreatureLookup?.Faction" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Level" @bind-Value="Creature.Level" ValueLookup="@CreatureLookup?.Level" CssClass="@elementCssClass" />
+        <SingleSelect_Element Label="Rank" CssClass="@elementCssClass" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
+        <SingleSelect_Element Label="Type" CssClass="@elementCssClass" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
+        <SingleSelect_Element Label="Unit Class" CssClass="@elementCssClass" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
+        <DoubleInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
         @* BG *@
@@ -28,37 +26,25 @@
 
 
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <IntInput_Element Label="Sound ID" @bind-Value="Creature.SoundId" ValueLookup="@CreatureLookup?.SoundId" CssClass="@elementCssClass" />
-        </MudStack>
+        <IntInput_Element Label="Sound ID" @bind-Value="Creature.SoundId" ValueLookup="@CreatureLookup?.SoundId" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
-        <MudStack>
-            <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" CssClass="@elementCssClass" />
-        </MudStack>
+        <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" CssClass="@elementCssClass" Variant="Variant.Text" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <DoubleInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" CssClass="@elementCssClass" />
-        </MudStack>
+        <DoubleInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" CssClass="@elementCssClass" />
     </MudItem>
 
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <BoolSelect_Element Label="Regen Health" @bind-Value="Creature.RegenHealth" ValueLookup="CreatureLookup?.RegenHealth" CssClass="@elementCssClass" />
-        </MudStack>
+        <BoolSelect_Element Label="Regen Health" @bind-Value="Creature.RegenHealth" ValueLookup="CreatureLookup?.RegenHealth" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="1" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">
-        <MudStack>
-            <TextInput_Element Label="Sub Name" @bind-Value="Creature.SubName" ValueLookup="@CreatureLookup?.SubName" CssClass="@elementCssClass" Variant="Variant.Text" />
-        </MudStack>
+        <TextInput_Element Label="Sub Name" @bind-Value="Creature.SubName" ValueLookup="@CreatureLookup?.SubName" CssClass="@elementCssClass" Variant="Variant.Text" />
     </MudItem>
     <MudItem xs="1" Class="@gridItemCssClass" />
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MudStack>
-            <IntList_Element Label="Auras" PluralItemName="auras" SingularItemName="aura" @bind-Value="Creature.Auras" ValueLookup="CreatureLookup?.Auras" />
-        </MudStack>
+        <IntList_Element Label="Auras" PluralItemName="auras" SingularItemName="aura" @bind-Value="Creature.Auras" ValueLookup="CreatureLookup?.Auras" />
     </MudItem>
 
 </MudGrid>

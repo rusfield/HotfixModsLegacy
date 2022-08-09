@@ -57,7 +57,7 @@
     <MudItem xs="1" Class="@gridItemCssClass" />
     <MudItem xs="3" Class="@gridItemCssClass">
         <MudStack>
-            @* List with Add *@
+            <IntList_Element Label="Auras" PluralItemName="auras" SingularItemName="aura" @bind-Value="Creature.Auras" ValueLookup="CreatureLookup?.Auras" />
         </MudStack>
     </MudItem>
 

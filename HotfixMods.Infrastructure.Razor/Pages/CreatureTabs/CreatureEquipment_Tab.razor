@@ -24,6 +24,38 @@
         <IntInput_Element Label="Quiver" @bind-Value="Creature.QuiverItemDisplayInfoId" ValueLookup="@CreatureLookup?.QuiverItemDisplayInfoId" CssClass="@elementCssClass" />
     </MudItem>
 
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <IntInput_Element Label="Main Hand" @bind-Value="Creature.MainHandItemId" ValueLookup="@CreatureLookup?.MainHandItemId" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <IntInput_Element Label="Off Hand" @bind-Value="Creature.OffHandItemId" ValueLookup="@CreatureLookup?.OffHandItemId" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <IntInput_Element Label="Ranged" @bind-Value="Creature.RangedItemId" ValueLookup="@CreatureLookup?.RangedItemId" CssClass="@elementCssClass" />
+    </MudItem>
+
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Mod" @bind-Value="Creature.MainHandItemAppearanceModifierId" ValueLookup="@CreatureLookup?.MainHandItemAppearanceModifierId" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Visual" @bind-Value="Creature.MainHandItemVisual" ValueLookup="@CreatureLookup?.MainHandItemVisual" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Mod" @bind-Value="Creature.OffHandItemAppearanceModifierId" ValueLookup="@CreatureLookup?.OffHandItemAppearanceModifierId" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Visual" @bind-Value="Creature.OffHandItemVisual" ValueLookup="@CreatureLookup?.OffHandItemVisual" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Mod" @bind-Value="Creature.RangedItemAppearanceModifierId" ValueLookup="@CreatureLookup?.RangedItemAppearanceModifierId" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass">
+        <IntInput_Element Label="Visual" @bind-Value="Creature.RangedItemVisual" ValueLookup="@CreatureLookup?.RangedItemVisual" CssClass="@elementCssClass" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass" />
 
 
 </MudGrid>

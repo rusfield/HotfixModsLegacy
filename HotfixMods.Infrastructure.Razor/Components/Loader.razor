@@ -6,9 +6,11 @@
         <MudText Typo="Typo.h5" Color="Color.Primary">@loadingTitle</MudText>
         <MudText Typo="Typo.h6" Color="Color.Primary">@loadingSubTitle</MudText>
         <MudProgressLinear Color="Color.Info" Size="Size.Large" Value="loadingProgress" Class="my-7">
-            <MudText Typo="Typo.subtitle1" Color="Color.Dark">
-                <b>@($"{loadingProgress}%")</b>
-            </MudText>
+            <MudPaper Class="pa-3 rounded-circle" Elevation="0">
+                <MudText Typo="Typo.subtitle1" Color="Color.Info">
+                    <b>@($"{loadingProgress}%")</b>
+                </MudText>
+            </MudPaper>
         </MudProgressLinear>
     </MudStack>
 }

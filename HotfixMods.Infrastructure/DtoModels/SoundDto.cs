@@ -10,6 +10,8 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public double? PitchVariationPlus { get; set; }
         public double? PitchVariationMinus { get; set; }
+        public double? VolumeVariationMinus { get; set; }
+        public double? VolumeVariationPlus { get; set; }
         public double? PitchAdjust { get; set; }
         public List<int> FileDataIds { get; set; }
     }

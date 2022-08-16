@@ -191,7 +191,7 @@ namespace HotfixMods.Infrastructure.Services
                 Flags1 = item.Flags1 ?? ItemDefaults.Flags1,
                 Flags2 = item.Flags2 ?? ItemDefaults.Flags2,
                 Flags3 = item.Flags3 ?? ItemDefaults.Flags3,
-                ItemLevel = ItemDefaults.ItemLevel,
+                ItemLevel = item.ItemLevel ?? ItemDefaults.ItemLevel,
                 OverallQualityId = item.OverallQuality ?? ItemDefaults.OverallQuality,
                 RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel,
                 AllowableClass = item.AllowableClasses ?? ItemDefaults.AllowableClasses,

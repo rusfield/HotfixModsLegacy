@@ -47,6 +47,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (item.IsUpdate)
             {
+                await _mySql.UpdateAsync(BuildItemSparse(item));
                 await DeleteFromHotfixes(item.Id);
             }
 

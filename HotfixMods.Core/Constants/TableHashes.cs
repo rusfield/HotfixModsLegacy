@@ -19,5 +19,9 @@ namespace HotfixMods.Core.Constants
         public const long ItemSearchName = 428746933;
         public const long ItemAppearance = 1109793673;
         public const long ItemModifiedAppearance = 3834752085;
+        public const long SoundKit = 908293937;
+        public const long SoundKitEntry = 3266400455;
+        public const long AnimKit = 3014618826;
+        public const long AnimKitSegment = 1050181896;
     }
 }

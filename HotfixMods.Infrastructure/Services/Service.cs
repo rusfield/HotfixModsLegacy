@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
 using System;
 using System.Collections.Generic;

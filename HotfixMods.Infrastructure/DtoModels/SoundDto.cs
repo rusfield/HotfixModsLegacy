@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class SoundDto : Dto
+    public class SoundKitDto : Dto
     {
         public double? PitchVariationPlus { get; set; }
         public double? PitchVariationMinus { get; set; }

@@ -14,8 +14,8 @@ namespace HotfixMods.Core.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public HotfixModsRecordTypes Type { get; set; }
         public int RecordId { get; set; }
         public string Comment { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

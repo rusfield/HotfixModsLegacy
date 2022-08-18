@@ -20,5 +20,6 @@ namespace HotfixMods.Core.Models
         public double PitchVariationPlus { get; set; }
         public double PitchVariationMinus { get; set; }
         public double PitchAdjust { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

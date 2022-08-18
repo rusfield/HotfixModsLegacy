@@ -76,6 +76,26 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             {
                 entity.ToTable("item_sparse");
             });
+            modelBuilder.Entity<HotfixModsData>(entity =>
+            {
+                entity.ToTable("hotfix_mods_data");
+            });
+            modelBuilder.Entity<SoundKit>(entity =>
+            {
+                entity.ToTable("sound_kit");
+            });
+            modelBuilder.Entity<SoundKitEntry>(entity =>
+            {
+                entity.ToTable("sound_kit_entry");
+            });
+            modelBuilder.Entity<AnimKit>(entity =>
+            {
+                entity.ToTable("anim_kit");
+            });
+            modelBuilder.Entity<AnimKitSegment>(entity =>
+            {
+                entity.ToTable("anim_kit_segment");
+            });
         }
     }
 }

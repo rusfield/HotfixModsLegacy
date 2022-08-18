@@ -7,13 +7,9 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models
 {
-    public class SoundKitEntry : IHotfixesSchema, IDb2
+    public class AnimKit : IHotfixesSchema, IDb2
     {
         public int Id { get; set; }
-        public int SoundKitId { get; set; }
-        public int FileDataId { get; set; }
-        public int Frequency { get; set; }
-        public double Volume { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

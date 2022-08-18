@@ -47,19 +47,26 @@ namespace HotfixMods.Infrastructure.Services
 
             if (item.IsUpdate)
             {
+                await _mySql.UpdateAsync(BuildItem(item));
+                await _mySql.UpdateAsync(BuildItemAppearance(item));
+                await _mySql.UpdateAsync(BuildItemDisplayInfo(item));
+                await _mySql.UpdateAsync(BuildItemModifiedAppearance(item));
+                await _mySql.UpdateAsync(BuildItemSearchName(item));
                 await _mySql.UpdateAsync(BuildItemSparse(item));
-                await DeleteFromHotfixes(item.Id);
+                await _mySql.UpdateManyAsync(BuildItemDisplayInfoMaterialRes(item));
+            }
+            else
+            {
+                await _mySql.AddAsync(BuildItem(item));
+                await _mySql.AddAsync(BuildItemAppearance(item));
+                await _mySql.AddAsync(BuildItemDisplayInfo(item));
+                await _mySql.AddAsync(BuildItemModifiedAppearance(item));
+                await _mySql.AddAsync(BuildItemSearchName(item));
+                await _mySql.AddAsync(BuildItemSparse(item));
+                await _mySql.AddManyAsync(BuildItemDisplayInfoMaterialRes(item));
             }
 
-            await _mySql.AddAsync(BuildItem(item));
-            await _mySql.AddAsync(BuildItemAppearance(item));
-            await _mySql.AddAsync(BuildItemDisplayInfo(item));
-            await _mySql.AddAsync(BuildItemModifiedAppearance(item));
-            await _mySql.AddAsync(BuildItemSearchName(item));
-            await _mySql.AddAsync(BuildItemSparse(item));
-            await _mySql.AddManyAsync(BuildItemDisplayInfoMaterialRes(item));
-
-            await _mySql.AddManyAsync(item.GetHotfixes());
+            await AddHotfixes(item.GetHotfixes());
         }
 
         public async Task<List<ItemDto>> GetItemsById(int itemId, Action<string, string, int>? progressCallback = null)
@@ -269,6 +276,20 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
+
+
+        async Task DeleteFromCharacters(int id)
+        {
+            var itemInstances = await _mySql.GetManyAsync<ItemInstance>(i => i.ItemEntry == id);
+            foreach(var itemInstance in itemInstances)
+            {
+                var characterInventory = await _mySql.GetAsync<CharacterInventory>(c => c.Item == id);
+                if (characterInventory != null)
+                    await _mySql.DeleteAsync(characterInventory);
+                await _mySql.DeleteAsync(itemInstance);
+            }
+        }
+
         async Task DeleteFromHotfixes(int id)
         {
             var item = await _mySql.GetAsync<Item>(c => c.Id == id);
@@ -311,18 +332,6 @@ namespace HotfixMods.Infrastructure.Services
                     hotfix.Status = HotfixStatuses.INVALID;
                 }
                 await _mySql.UpdateManyAsync(hotfixData);
-            }
-        }
-
-        async Task DeleteFromCharacters(int id)
-        {
-            var itemInstances = await _mySql.GetManyAsync<ItemInstance>(i => i.ItemEntry == id);
-            foreach(var itemInstance in itemInstances)
-            {
-                var characterInventory = await _mySql.GetAsync<CharacterInventory>(c => c.Item == id);
-                if (characterInventory != null)
-                    await _mySql.DeleteAsync(characterInventory);
-                await _mySql.DeleteAsync(itemInstance);
             }
         }
     }

@@ -39,6 +39,24 @@ namespace HotfixMods.Infrastructure.Services
                 throw new ArgumentOutOfRangeException("Database is full.");
         }
 
+        protected async Task AddHotfixes(List<HotfixData> newHotfixData)
+        {
+            if(newHotfixData.Count > 0)
+            {
+                var id = newHotfixData.First().UniqueId;
+                var existingHotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.Status == HotfixStatuses.VALID && h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
+                if (existingHotfixData != null && existingHotfixData.Count() > 0)
+                {
+                    foreach (var hotfix in existingHotfixData)
+                    {
+                        hotfix.Status = HotfixStatuses.INVALID;
+                    }
+                    await _mySql.UpdateManyAsync(existingHotfixData);
+                }
+                await _mySql.AddManyAsync(newHotfixData);
+            }
+        }
+
         public async Task<int> GetNextIdAsync(bool quickScan = true)
         {
             int id = IdRangeFrom;

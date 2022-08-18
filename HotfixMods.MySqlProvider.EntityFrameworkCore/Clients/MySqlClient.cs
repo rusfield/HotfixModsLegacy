@@ -28,22 +28,22 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return await SetContext<T>().Set<T>().FirstOrDefaultAsync(predicate);
+            return await SetContext<T>().Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
         }
 
         public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return await SetContext<T>().Set<T>().Where(predicate).ToListAsync();
+            return await SetContext<T>().Set<T>().AsNoTracking().Where(predicate).ToListAsync();
         }
 
 
         public async Task AddAsync<T>(T entity)
             where T : class, ITrinityCore
-
         {
             SetContext<T>().Set<T>().Add(entity);
             await SetContext<T>().SaveChangesAsync();
+            SetContext<T>().Entry(entity).State = EntityState.Detached;
         }
 
         public async Task AddManyAsync<T>(IEnumerable<T> entities)
@@ -51,6 +51,10 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         {
             SetContext<T>().Set<T>().AddRange(entities);
             await SetContext<T>().SaveChangesAsync();
+            foreach(var entity in entities)
+            {
+                SetContext<T>().Entry(entity).State = EntityState.Detached;
+            }
         }
 
         public async Task UpdateAsync<T>(T entity)
@@ -58,6 +62,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         {
             SetContext<T>().Set<T>().Update(entity);
             await SetContext<T>().SaveChangesAsync();
+            SetContext<T>().Entry(entity).State = EntityState.Detached;
         }
 
         public async Task UpdateManyAsync<T>(IEnumerable<T> entities)
@@ -65,6 +70,11 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         {
             SetContext<T>().Set<T>().UpdateRange(entities);
             await SetContext<T>().SaveChangesAsync();
+
+            foreach(var entity in entities)
+            {
+                SetContext<T>().Entry(entity).State = EntityState.Detached;
+            }
         }
 
         public async Task DeleteAsync<T>(T entity)

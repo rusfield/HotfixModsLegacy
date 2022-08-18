@@ -87,7 +87,7 @@ else
     async Task SaveAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.Prompt), item.IsUpdate ? Prompt_Dialog.PromptType.Update : Prompt_Dialog.PromptType.Save);
         parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
         DialogService.Show<Prompt_Dialog>(null, parameters);
 

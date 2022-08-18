@@ -53,10 +53,10 @@ else
     {
         itemDashboard = new List<RazorItemDashboard>();
         var items = await ItemService.GetItemDashboardAsync();
-        foreach(var item in items)
+        foreach (var item in items)
         {
             itemDashboard.Add(new RazorItemDashboard(
-                item.Id, 
+                item.Id,
                 item.Name,
                 item.AvatarUrl,
                 (async () => await EditAsync(item.Id)),
@@ -89,9 +89,12 @@ else
         var parameters = new DialogParameters();
         parameters.Add(nameof(Prompt_Dialog.Prompt), item.IsUpdate ? Prompt_Dialog.PromptType.Update : Prompt_Dialog.PromptType.Save);
         parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
-        DialogService.Show<Prompt_Dialog>(null, parameters);
+        var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
 
-        item.IsUpdate = true;
+        if (!result.Cancelled)
+        {
+            item.IsUpdate = true;
+        }
     }
 
     async void SaveAsync()

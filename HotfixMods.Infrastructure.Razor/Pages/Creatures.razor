@@ -1,10 +1,10 @@
 ﻿@page "/creatures"
 @using HotfixMods.Infrastructure.DtoModels.Creatures
-@using HotfixMods.Infrastructure.Razor.DashboardModels
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Services
 @using Core.Enums
 
@@ -41,28 +41,29 @@
 }
 else
 {
-    <DashboardTable T="RazorCreatureDashboard" Data="@(creatureDashboard)" Add="AddAsync_Click" />
+    <DashboardTable Data="@(creatureDashboard)" Add="AddAsync_Click" />
 }
 
 @code
 {
     CreatureDto? creature;
     CreatureDto? creatureLookup;
-    List<RazorCreatureDashboard> creatureDashboard;
+    List<RazorDashboardModel> creatureDashboard;
     Dictionary<CustomizationOptionDto, List<CustomizationChoiceDto>> availableCustomizations;
 
     protected override async Task OnInitializedAsync()
     {
-        creatureDashboard = new List<RazorCreatureDashboard>();
-        var creatures = await CreatureService.GetCreatureDashboardAsync();
-        foreach (var creature in creatures)
+        creatureDashboard = new List<RazorDashboardModel>();
+        var dashboardCreatures = await CreatureService.GetCreatureDashboardAsync();
+        foreach (var dashboardCreature in dashboardCreatures)
         {
-            creatureDashboard.Add(new RazorCreatureDashboard(
-                creature.Id,
-                creature.Name,
-                creature.AvatarUrl,
-                (async () => await EditAsync(creature.Id)),
-                (async () => await CreatureService.DeleteItem(creature.Id))
+            creatureDashboard.Add(new RazorDashboardModel(
+                dashboardCreature.Id,
+                dashboardCreature.Name,
+                dashboardCreature.AvatarUrl,
+                dashboardCreature.Comment,
+                (async () => await EditAsync(dashboardCreature.Id)),
+                (async () => await CreatureService.DeleteCreatureAsync(dashboardCreature.Id))
             ));
         }
         await base.OnInitializedAsync();

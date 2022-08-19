@@ -1,0 +1,89 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject SoundKitService SoundKitService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    @if (soundKitResults.Count == 0)
+                    {
+                        <MudNumericField @bind-Value="@SoundKitId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Sound Kit ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="SoundKitId_Click" />
+                    }
+                    else if (soundKitResults.Count > 1)
+                    {
+                        foreach (var (soundKit, index) in soundKitResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnSoundKit(soundKit))">@soundKit.AppearanceName</MudButton>
+                            if ((index + 1) % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? SoundKitId { get; set; }
+
+    Loader loaderRef = new Loader();
+    List<SoundKitDto> soundKitResults = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != SoundKitId)
+            await SearchSoundKitById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task SoundKitId_Click()
+    {
+        if (null != SoundKitId)
+        {
+            await SearchSoundKitById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchSoundKitById()
+    {
+        soundKitResults = await SoundKitService.GetSoundKitById((int)SoundKitId, loaderRef.SetLoading);
+        if (soundKitResults.Count() == 1)
+        {
+            ReturnSoundKit(soundKitResults.First());
+        }
+        else if (soundKitResults.Count() > 1)
+        {
+            this.StateHasChanged();
+        }
+        else
+        {
+            Snackbar.Add($"No items with ID {SoundKitId} found", Severity.Info);
+        }
+    }
+
+    void ReturnSoundKit(SoundKitDto soundKit)
+    {
+        Dialog.Close(soundKit);
+    }
+}

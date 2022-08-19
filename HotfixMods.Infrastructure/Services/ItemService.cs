@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using HotfixMods.Infrastructure.DashboardModels;
+using HotfixMods.Infrastructure.Dashboard;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -16,17 +16,18 @@ namespace HotfixMods.Infrastructure.Services
     {
         public ItemService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task<List<ItemDashboard>> GetItemDashboardAsync()
+        public async Task<List<DashboardModel>> GetItemDashboardAsync()
         {
             var items = await _mySql.GetManyAsync<ItemSparse>(c => c.VerifiedBuild == VerifiedBuild);
-            var result = new List<ItemDashboard>();
+            var result = new List<DashboardModel>();
             foreach (var item in items)
             {
-                result.Add(new ItemDashboard()
+                result.Add(new DashboardModel()
                 {
                     Id = item.Id,
                     Name = item.Display,
-                    AvatarUrl = "TODO"
+                    AvatarUrl = "TODO",
+                    Comment = "TODO"
                 });
             }
 
@@ -34,7 +35,7 @@ namespace HotfixMods.Infrastructure.Services
             return result.OrderByDescending(i => i.Id).ToList();
         }
 
-        public async Task DeleteItem(int id)
+        public async Task DeleteItemAsync(int id)
         {
             await DeleteFromHotfixes(id);
             await DeleteFromCharacters(id); 

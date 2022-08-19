@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HotfixMods.Core\HotfixMods.Core.csproj" />
-    <ProjectReference Include="..\HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj" />
-    <ProjectReference Include="..\HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj" />
+    <Compile Remove="DtoModels\Items\**" />
+    <EmbeddedResource Remove="DtoModels\Items\**" />
+    <None Remove="DtoModels\Items\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DtoModels\Items\" />
+    <ProjectReference Include="..\HotfixMods.Core\HotfixMods.Core.csproj" />
+    <ProjectReference Include="..\HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj" />
+    <ProjectReference Include="..\HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

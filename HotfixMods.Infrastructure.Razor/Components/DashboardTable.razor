@@ -1,7 +1,5 @@
-﻿@using HotfixMods.Infrastructure.DashboardModels
+﻿@using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
-
-@typeparam T where T : IRazorDashboardModel
 
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
@@ -38,14 +36,14 @@
 
 @code {
     [Parameter]
-    public List<T> Data { get; set; }
+    public List<RazorDashboardModel> Data { get; set; }
 
     [Parameter]
     public Action Add { get; set; }
 
-    MudTable<T> mudTableRef;
+    MudTable<RazorDashboardModel> mudTableRef;
 
-    async Task DeleteAsync_Click(T entity)
+    async Task DeleteAsync_Click(RazorDashboardModel entity)
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Delete);
@@ -54,12 +52,12 @@
     }
 
 
-    async Task EditAsync(T entity)
+    async Task EditAsync(RazorDashboardModel entity)
     {
         await InvokeAsync(entity.EditAction);
     }
 
-    async void DeleteAsync(T entity)
+    async void DeleteAsync(RazorDashboardModel entity)
     {
         await InvokeAsync(entity.DeleteAction);
         Data.RemoveAll(c => c.Id == entity.Id);

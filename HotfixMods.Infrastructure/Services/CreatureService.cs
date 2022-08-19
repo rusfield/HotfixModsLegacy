@@ -2,7 +2,7 @@
 using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
-using HotfixMods.Infrastructure.DashboardModels;
+using HotfixMods.Infrastructure.Dashboard;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.DtoModels.Creatures;
 using System;
@@ -22,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
 
         }
 
-        public async Task DeleteItem(int id)
+        public async Task DeleteCreatureAsync(int id)
         {
 
         }
@@ -266,19 +266,20 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<CreatureDashboard>> GetCreatureDashboardAsync()
+        public async Task<List<DashboardModel>> GetCreatureDashboardAsync()
         {
             var creatures = await _mySql.GetManyAsync<CreatureTemplate>(c => c.VerifiedBuild == VerifiedBuild);
-            var result = new List<CreatureDashboard>();
+            var result = new List<DashboardModel>();
             foreach (var creature in creatures)
             {
                 var displayInfo = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == creature.Entry);
                 if (displayInfo == null)
                     continue;
-                result.Add(new CreatureDashboard()
+                result.Add(new DashboardModel()
                 {
                     Id = creature.Entry,
                     Name = creature.Name,
+                    Comment = "TODO",
                     AvatarUrl = $"/images/creatures/avatars/{displayInfo.DisplaySexId.ToString().ToLower()}/{displayInfo.DisplayRaceId.ToString().ToLower().Replace("_", "")}.jpg"
                 });
             }

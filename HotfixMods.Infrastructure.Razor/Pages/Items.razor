@@ -1,5 +1,5 @@
 ﻿@page "/items"
-@using HotfixMods.Infrastructure.Razor.DashboardModels
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.ItemTabs
 @using HotfixMods.Infrastructure.DtoModels
@@ -40,27 +40,28 @@
 }
 else
 {
-    <DashboardTable T="RazorItemDashboard" Data="@(itemDashboard)" Add="AddAsync_Click" />
+    <DashboardTable Data="@(itemDashboard)" Add="AddAsync_Click" />
 }
 
 @code
 {
     ItemDto? item;
     ItemDto? itemLookup;
-    List<RazorItemDashboard> itemDashboard;
+    List<RazorDashboardModel> itemDashboard;
 
     protected override async Task OnInitializedAsync()
     {
-        itemDashboard = new List<RazorItemDashboard>();
-        var items = await ItemService.GetItemDashboardAsync();
-        foreach (var item in items)
+        itemDashboard = new();
+        var dashboardItems = await ItemService.GetItemDashboardAsync();
+        foreach (var dashboardItem in dashboardItems)
         {
-            itemDashboard.Add(new RazorItemDashboard(
-                item.Id,
-                item.Name,
-                item.AvatarUrl,
-                (async () => await EditAsync(item.Id)),
-                (async () => await ItemService.DeleteItem(item.Id))
+            itemDashboard.Add(new RazorDashboardModel(
+                dashboardItem.Id,
+                dashboardItem.Name,
+                dashboardItem.AvatarUrl,
+                dashboardItem.Comment,
+                (async () => await EditAsync(dashboardItem.Id)),
+                (async () => await ItemService.DeleteItemAsync(dashboardItem.Id))
             ));
         }
         await base.OnInitializedAsync();

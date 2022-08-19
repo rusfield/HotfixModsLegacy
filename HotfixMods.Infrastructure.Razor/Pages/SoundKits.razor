@@ -1,7 +1,137 @@
-﻿@page "/sound-kits"
+﻿@page "/creatures"
+@using HotfixMods.Infrastructure.DtoModels.Creatures
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
 
-<h3>SoundKits</h3>
+@inject IDialogService DialogService
+@inject SoundKitService SoundKitService
 
-@code {
 
+@if (soundKit != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SoundKitLookupAsync_Click">Creature Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@soundKit.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(soundKit.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+
+        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <MudTabPanel Text="Template">
+                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
+            </MudTabPanel>
+            <MudTabPanel Text="Customization">
+                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
+            </MudTabPanel>
+            <MudTabPanel Text="Equipment">
+                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
+            </MudTabPanel>
+        </MudTabs>
+
+    </MudPaper>
 }
+else
+{
+    <DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" />
+}
+
+@code
+{
+    SoundKitDto? soundKit;
+    SoundKitDto? soundKitLookup;
+    List<RazorDashboardModel> soundKitDashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        soundKitDashboard = new();
+        var dashboardSoundKits = await SoundKitService.GetSoundKitDashboardAsync();
+        foreach (var dashboardSoundKit in dashboardSoundKits)
+        {
+            soundKitDashboard.Add(new RazorDashboardModel(
+                dashboardSoundKit.Id,
+                dashboardSoundKit.Name,
+                dashboardSoundKit.AvatarUrl,
+                dashboardSoundKit.Comment,
+                (async () => await EditAsync(dashboardSoundKit.Id)),
+                (async () => await SoundKitService.DeleteSoundKitAsync(dashboardSoundKit.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task EditAsync(int id)
+    {
+        soundKit = await OpenSoundKitSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        soundKit = await OpenSoundKitSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SoundKitLookupAsync_Click()
+    {
+        soundKitLookup = await OpenSoundKitSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        DialogService.Show<Prompt_Dialog>(null, parameters);
+
+        soundKit.IsUpdate = true;
+    }
+
+    async void SaveAsync()
+    {
+        await SoundKitService.SaveSoundKitAsync(soundKit);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), soundKit.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SoundKitDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), soundKit.IsUpdate);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            soundKit.Id = (int)result.Data;
+            soundKit.IsUpdate = false;
+        }
+    }
+
+    async Task<SoundKitDto?> OpenSoundKitSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(SoundKitSearch_Dialog.SoundKitId), id);
+        var dialog = DialogService.Show<SoundKitSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (SoundKitDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (SoundKitDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+}
+

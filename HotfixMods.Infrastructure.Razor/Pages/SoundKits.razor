@@ -1,8 +1,7 @@
-﻿@page "/creatures"
+﻿@page "/sound-kits"
 @using HotfixMods.Infrastructure.DtoModels.Creatures
 @using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
-@using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
@@ -41,7 +40,7 @@
 }
 else
 {
-    <DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" />
+    @*<DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" />*@
 }
 
 @code

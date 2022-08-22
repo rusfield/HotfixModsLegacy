@@ -15,5 +15,6 @@ namespace HotfixMods.Core.Models
         public int ChrCustomizationOptionId { get; set; }
         public int ChrCustomizationChoiceId { get; set; }
         public int CreatureDisplayInfoExtraId { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

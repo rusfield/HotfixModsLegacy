@@ -16,5 +16,6 @@ namespace HotfixMods.Core.Models
         public int ItemDisplayInfoId { get; set; }
         public ArmorSlots ItemSlot { get; set; }
         public int NpcModelId { get; set; } // References Id of CreatureDisplayInfoExtra (textures, etc).
+        public int VerifiedBuild { get; set; }
     }
 }

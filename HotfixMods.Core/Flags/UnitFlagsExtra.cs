@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HotfixMods.Core.Flags
 {
     [Flags]
-    public enum FlagsExtra : long
+    public enum UnitFlagsExtra : long
     {
         NONE = 0,
         INSTANCE_BIND = 1,                          // creature kill bind instance with killer and killer's group

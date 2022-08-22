@@ -18,7 +18,7 @@ namespace HotfixMods.Core.Models
         [Column("unit_class")]
         public CreatureUnitClasses UnitClass { get; set; }
         public CreatureTypes Type { get; set; }
-        public Ranks Rank { get; set; }
+        public CreatureRanks Rank { get; set; }
         [Column("speed_walk")]
         public double SpeedWalk { get; set; }
         [Column("speed_run")]

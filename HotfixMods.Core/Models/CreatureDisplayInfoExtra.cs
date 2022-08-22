@@ -15,6 +15,7 @@ namespace HotfixMods.Core.Models
         public int Id { get; set; }
         public Races DisplayRaceId { get; set; }
         public Genders DisplaySexId { get; set; }
+        public int VerifiedBuild { get; set; }
 
     }
 }

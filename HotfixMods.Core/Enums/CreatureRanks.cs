@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum Ranks
+    public enum CreatureRanks
     {
         NORMAL = 0,
         ELITE = 1,

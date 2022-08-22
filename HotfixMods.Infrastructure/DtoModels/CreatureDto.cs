@@ -18,13 +18,13 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? Level { get; set; }
         public int? Faction { get; set; }
         public double? Scale { get; set; }
-        public Ranks? Rank { get; set; }
+        public CreatureRanks? Rank { get; set; }
         public CreatureTypes? CreatureType { get; set; }
         public CreatureUnitClasses? CreatureUnitClass { get; set; }
         public UnitFlags? UnitFlags { get; set; }
         public UnitFlags2? UnitFlags2 { get; set; }
         public UnitFlags3? UnitFlags3 { get; set; }
-        public FlagsExtra? FlagsExtra { get; set; }
+        public UnitFlagsExtra? FlagsExtra { get; set; }
         public double? HealthModifier { get; set; }
         public double? DamageModifier { get; set; }
         public double? ArmorModifier { get; set; }

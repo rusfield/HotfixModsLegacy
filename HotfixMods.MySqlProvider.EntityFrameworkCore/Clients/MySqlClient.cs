@@ -14,115 +14,134 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
 {
     public class MySqlClient : IMySqlProvider
     {
-        WorldDbContext _worldDbContext;
-        HotfixesDbContext _hotfixesDbContext;
-        CharactersDbContext _charactersDbContext;
+        string _server;
+        string _user;
+        string _password;
+        string _worldSchemaName;
+        string _charactersSchemaName;
+        string _hotfixesSchemaName;
 
         public MySqlClient(string server, string user, string password, string worldSchemaName, string charactersSchemaName, string hotfixesSchemaName)
         {
-            _worldDbContext = new WorldDbContext($"server={server};user={user};password={password};database={worldSchemaName}");
-            _hotfixesDbContext = new HotfixesDbContext($"server={server};user={user};password={password};database={hotfixesSchemaName}");
-            _charactersDbContext = new CharactersDbContext($"server={server};user={user};password={password};database={charactersSchemaName}");
+            _server = server;
+            _user = user;
+            _password = password;
+            _worldSchemaName = worldSchemaName;
+            _charactersSchemaName = charactersSchemaName;
+            _hotfixesSchemaName = hotfixesSchemaName;
         }
 
         public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return await SetContext<T>().Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+            using(var context = GetContext<T>())
+            {
+                return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+            }
         }
 
         public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return await SetContext<T>().Set<T>().AsNoTracking().Where(predicate).ToListAsync();
+            return await GetContext<T>().Set<T>().AsNoTracking().Where(predicate).ToListAsync();
         }
 
 
         public async Task AddAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().Add(entity);
-            await SetContext<T>().SaveChangesAsync();
-            SetContext<T>().Entry(entity).State = EntityState.Detached;
+            GetContext<T>().Set<T>().Add(entity);
+            await GetContext<T>().SaveChangesAsync();
+            GetContext<T>().Entry(entity).State = EntityState.Detached;
         }
 
         public async Task AddManyAsync<T>(IEnumerable<T> entities)
         where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().AddRange(entities);
-            await SetContext<T>().SaveChangesAsync();
+            GetContext<T>().Set<T>().AddRange(entities);
+            await GetContext<T>().SaveChangesAsync();
             foreach(var entity in entities)
             {
-                SetContext<T>().Entry(entity).State = EntityState.Detached;
+                GetContext<T>().Entry(entity).State = EntityState.Detached;
             }
         }
 
         public async Task UpdateAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().Update(entity);
-            await SetContext<T>().SaveChangesAsync();
-            SetContext<T>().Entry(entity).State = EntityState.Detached;
+            GetContext<T>().Set<T>().Update(entity);
+            await GetContext<T>().SaveChangesAsync();
+            GetContext<T>().Entry(entity).State = EntityState.Detached;
         }
 
         public async Task UpdateManyAsync<T>(IEnumerable<T> entities)
             where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().UpdateRange(entities);
-            await SetContext<T>().SaveChangesAsync();
+            GetContext<T>().Set<T>().UpdateRange(entities);
+            await GetContext<T>().SaveChangesAsync();
 
             foreach(var entity in entities)
             {
-                SetContext<T>().Entry(entity).State = EntityState.Detached;
+                GetContext<T>().Entry(entity).State = EntityState.Detached;
             }
         }
 
         public async Task DeleteAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().Remove(entity);
-            await SetContext<T>().SaveChangesAsync();
+            GetContext<T>().Set<T>().Remove(entity);
+            await GetContext<T>().SaveChangesAsync();
         }
 
         public async Task DeleteManyAsync<T>(IEnumerable<T> entities)
             where T : class, ITrinityCore
         {
-            SetContext<T>().Set<T>().RemoveRange(entities);
-            await SetContext<T>().SaveChangesAsync();
+            GetContext<T>().Set<T>().RemoveRange(entities);
+            await GetContext<T>().SaveChangesAsync();
         }
 
         public async Task<bool> WorldConnectionTestAsync()
         {
-            return await _worldDbContext.Database.CanConnectAsync();
+            using(var context = GetContext<IWorldSchema>())
+            {
+                return await context.Database.CanConnectAsync();
+            }
         }
         public async Task<bool> CharactersConnectionTestAsync()
         {
-            return await _charactersDbContext.Database.CanConnectAsync();
+            using(var context = GetContext<ICharactersSchema>())
+            {
+                return await context.Database.CanConnectAsync();
+            }   
         }
         public async Task<bool> HotfixesConnectionTestAsync()
         {
-            return await _hotfixesDbContext.Database.CanConnectAsync();
+            using(var context = GetContext<IHotfixesSchema>())
+            {
+                return await context.Database.CanConnectAsync();
+            }
         }
 
 
-        DbContext SetContext<T>()
+        DbContext GetContext<T>()
         {
             if (typeof(IWorldSchema).IsAssignableFrom(typeof(T)))
-                return _worldDbContext;
+                return new WorldDbContext($"server={_server};user={_user};password={_password};database={_worldSchemaName}");
             else if (typeof(IHotfixesSchema).IsAssignableFrom(typeof(T)))
-                return _hotfixesDbContext;
+                return new HotfixesDbContext($"server={_server};user={_user};password={_password};database={_hotfixesSchemaName}");
             else if (typeof(ICharactersSchema).IsAssignableFrom(typeof(T)))
-                return _charactersDbContext;
+                return new CharactersDbContext($"server={_server};user={_user};password={_password};database={_charactersSchemaName}");
+
             throw new Exception($"Incorrect implementation of {nameof(T)}. Make sure {nameof(T)} derives from one of the Schema classes.");
         }
 
         public async Task<bool> TableExists<T>()
             where T : class, ITrinityCore
         {
-            var entityType = SetContext<T>().Model.FindEntityType(typeof(T));
+            var entityType = GetContext<T>().Model.FindEntityType(typeof(T));
             var tableName = entityType.GetTableName();
 
-            using (var command = SetContext<T>().Database.GetDbConnection().CreateCommand())
+            using (var command = GetContext<T>().Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText = $"SHOW TABLES LIKE @tableName;";
                 command.CommandType = CommandType.Text;
@@ -131,7 +150,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
                 parameter.Value = tableName;
                 command.Parameters.Add(parameter);
 
-                SetContext<T>().Database.OpenConnection();
+                GetContext<T>().Database.OpenConnection();
 
                 using (var result = await command.ExecuteReaderAsync())
                 {
@@ -148,14 +167,14 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         async Task<bool> CreateTableIfNotExist<T>(string createQuery)
             where T : class, ITrinityCore
         {
-            var entityType = SetContext<T>().Model.FindEntityType(typeof(T));
+            var entityType = GetContext<T>().Model.FindEntityType(typeof(T));
 
-            using (var command = SetContext<T>().Database.GetDbConnection().CreateCommand())
+            using (var command = GetContext<T>().Database.GetDbConnection().CreateCommand())
             {
                 command.CommandText = $"{createQuery}";
                 command.CommandType = CommandType.Text;
 
-                SetContext<T>().Database.OpenConnection();
+                GetContext<T>().Database.OpenConnection();
                 await command.ExecuteNonQueryAsync();
             }
             return true;

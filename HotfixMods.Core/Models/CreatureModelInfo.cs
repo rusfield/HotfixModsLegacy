@@ -11,7 +11,6 @@ namespace HotfixMods.Core.Models
 {
     public class CreatureModelInfo : IWorldSchema
     {
-        [Key]
         public int DisplayId { get; set; }
         public int VerifiedBuild { get; set; }
     }

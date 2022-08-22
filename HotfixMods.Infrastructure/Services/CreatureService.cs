@@ -19,12 +19,42 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveItemAsync(CreatureDto creature)
         {
+            var hotfixId = await GetNextHotfixIdAsync();
+            creature.InitHotfixes(hotfixId, VerifiedBuild);
+
+            if (creature.IsUpdate)
+            {
+                await _mySql.UpdateAsync(BuildCreatureTemplate(creature));
+                await _mySql.UpdateAsync(BuildCreatureTemplateAddon(creature));
+                await _mySql.UpdateAsync(BuildCreatureTemplateModel(creature));
+                await _mySql.UpdateAsync(BuildCreatureDisplayInfo(creature));
+                await _mySql.UpdateAsync(BuildCreatureDisplayInfoExtra(creature));
+                await _mySql.UpdateAsync(BuildCreatureEquipTemplate(creature));
+                await _mySql.UpdateAsync(BuildCreatureModelInfo(creature));
+                await _mySql.UpdateManyAsync(BuildCreatureDisplayInfoOption(creature));
+                await _mySql.UpdateManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
+            }
+            else
+            {
+                await _mySql.AddAsync(BuildCreatureTemplate(creature));
+                await _mySql.AddAsync(BuildCreatureTemplateAddon(creature));
+                await _mySql.AddAsync(BuildCreatureTemplateModel(creature));
+                await _mySql.AddAsync(BuildCreatureDisplayInfo(creature));
+                await _mySql.AddAsync(BuildCreatureDisplayInfoExtra(creature));
+                await _mySql.AddAsync(BuildCreatureEquipTemplate(creature));
+                await _mySql.AddAsync(BuildCreatureModelInfo(creature));
+                await _mySql.AddManyAsync(BuildCreatureDisplayInfoOption(creature));
+                await _mySql.AddManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
+            }
+
+            await AddHotfixes(creature.GetHotfixes());
 
         }
 
         public async Task DeleteCreatureAsync(int id)
         {
-
+            await DeleteFromHotfixes(id);
+            await DeleteFromWorld(id);
         }
 
         public async Task<List<CreatureDto>> GetCreaturesByCreatureId(int creatureId, Action<string, string, int>? progressCallback = null)
@@ -286,6 +316,60 @@ namespace HotfixMods.Infrastructure.Services
             // Newest on top
             result.Reverse();
             return result;
+        }
+
+        async Task DeleteFromHotfixes(int id)
+        {
+            var creatureDisplayInfo = await _mySql.GetAsync<CreatureDisplayInfo>(c => c.Id == id);
+            var creatureDisplayInfoExtra = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
+            var creatureDisplayInfoOptions = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(c => c.CreatureDisplayInfoExtraId == id);
+            var npcModelItemSlotDisplayInfos = await _mySql.GetManyAsync<NpcModelItemSlotDisplayInfo>(c => c.NpcModelId == id);
+
+            if (null != creatureDisplayInfo)
+                await _mySql.DeleteAsync(creatureDisplayInfo);
+
+            if (null != creatureDisplayInfoExtra)
+                await _mySql.DeleteAsync(creatureDisplayInfoExtra);
+
+            if (creatureDisplayInfoOptions.Any())
+                await _mySql.DeleteManyAsync(creatureDisplayInfoOptions);
+
+            if (npcModelItemSlotDisplayInfos.Any())
+                await _mySql.DeleteManyAsync(npcModelItemSlotDisplayInfos);
+
+            var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
+            if (hotfixData != null && hotfixData.Count() > 0)
+            {
+                foreach (var hotfix in hotfixData)
+                {
+                    hotfix.Status = HotfixStatuses.INVALID;
+                }
+                await _mySql.UpdateManyAsync(hotfixData);
+            }
+        }
+
+        async Task DeleteFromWorld(int id)
+        {
+            var creatureTemplate = await _mySql.GetAsync<CreatureTemplate>(c => c.Entry == id);
+            var creatureTemplateAddon = await _mySql.GetAsync<CreatureTemplateAddon>(c => c.Entry == id);
+            var creatureTemplateModel = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == id);
+            var creatureEquipTemplate = await _mySql.GetAsync<CreatureEquipTemplate>(c => c.CreatureId == id);
+            var creatureModelInfo = await _mySql.GetAsync<CreatureModelInfo>(c => c.DisplayId == id);
+
+            if(null != creatureTemplate)
+                await _mySql.DeleteAsync(creatureTemplate);
+
+            if(null != creatureTemplateAddon)
+                await _mySql.DeleteAsync(creatureTemplateAddon);
+
+            if(null != creatureTemplateModel)
+                await _mySql.DeleteAsync(creatureTemplateModel);
+
+            if(null != creatureEquipTemplate)
+                await _mySql.DeleteAsync(creatureEquipTemplate);
+
+            if(null != creatureModelInfo)
+                await _mySql.DeleteAsync(creatureModelInfo);
         }
     }
 }

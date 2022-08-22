@@ -1,13 +1,11 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models.Interfaces;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotfixMods.Core.Models
 {
     public class CreatureTemplate : IWorldSchema
     {
-        [Key]
         public int Entry { get; set; }
         public string? Name { get; set; }
         public string? SubName { get; set; }

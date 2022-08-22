@@ -32,6 +32,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             modelBuilder.Entity<CreatureTemplate>(entity =>
             {
                 entity.ToTable("creature_template");
+                entity.HasKey(c => c.Entry);
             });
 
             modelBuilder.Entity<CreatureEquipTemplate>(entity =>
@@ -49,11 +50,13 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             modelBuilder.Entity<CreatureModelInfo>(entity =>
             {
                 entity.ToTable("creature_model_info");
+                entity.HasKey(c => c.DisplayId);
             });
 
             modelBuilder.Entity<CreatureTemplateAddon>(entity =>
             {
                 entity.ToTable("creature_template_addon");
+                entity.HasKey(c => c.Entry);
             });
         }
     }

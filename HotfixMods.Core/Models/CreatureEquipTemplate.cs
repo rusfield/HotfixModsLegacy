@@ -1,5 +1,4 @@
 ﻿using HotfixMods.Core.Models.Interfaces;
-using System.ComponentModel.DataAnnotations;
 
 namespace HotfixMods.Core.Models
 {

@@ -31,6 +31,5 @@ namespace HotfixMods.Core.Providers
         public Task<bool> CharactersConnectionTestAsync();
         public Task<bool> HotfixesConnectionTestAsync();
         public Task<bool> WorldConnectionTestAsync();
-        public Task<bool> CreateCreatureCreatorTableIfNotExist();
     }
 }

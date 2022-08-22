@@ -34,7 +34,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            using(var context = GetContext<T>())
+            using (var context = GetContext<T>())
             {
                 return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
             }
@@ -43,80 +43,90 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return await GetContext<T>().Set<T>().AsNoTracking().Where(predicate).ToListAsync();
+            using (var context = GetContext<T>())
+            {
+                return await context.Set<T>().AsNoTracking().Where(predicate).ToListAsync();
+            }
         }
 
 
         public async Task AddAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().Add(entity);
-            await GetContext<T>().SaveChangesAsync();
-            GetContext<T>().Entry(entity).State = EntityState.Detached;
+            using (var context = GetContext<T>())
+            {
+                context.Set<T>().Add(entity);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task AddManyAsync<T>(IEnumerable<T> entities)
-        where T : class, ITrinityCore
+            where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().AddRange(entities);
-            await GetContext<T>().SaveChangesAsync();
-            foreach(var entity in entities)
+            using (var context = GetContext<T>())
             {
-                GetContext<T>().Entry(entity).State = EntityState.Detached;
+                context.Set<T>().AddRange(entities);
+                await context.SaveChangesAsync();
             }
         }
 
         public async Task UpdateAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().Update(entity);
-            await GetContext<T>().SaveChangesAsync();
-            GetContext<T>().Entry(entity).State = EntityState.Detached;
+            using (var context = GetContext<T>())
+            {
+                context.Set<T>().Update(entity);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task UpdateManyAsync<T>(IEnumerable<T> entities)
             where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().UpdateRange(entities);
-            await GetContext<T>().SaveChangesAsync();
-
-            foreach(var entity in entities)
+            using (var context = GetContext<T>())
             {
-                GetContext<T>().Entry(entity).State = EntityState.Detached;
+                context.Set<T>().UpdateRange(entities);
+                await context.SaveChangesAsync();
             }
         }
 
         public async Task DeleteAsync<T>(T entity)
             where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().Remove(entity);
-            await GetContext<T>().SaveChangesAsync();
+            using (var context = GetContext<T>())
+            {
+                context.Set<T>().Remove(entity);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task DeleteManyAsync<T>(IEnumerable<T> entities)
             where T : class, ITrinityCore
         {
-            GetContext<T>().Set<T>().RemoveRange(entities);
-            await GetContext<T>().SaveChangesAsync();
+            using (var context = GetContext<T>())
+            {
+                context.Set<T>().RemoveRange(entities);
+                await context.SaveChangesAsync();
+            }
         }
 
         public async Task<bool> WorldConnectionTestAsync()
         {
-            using(var context = GetContext<IWorldSchema>())
+            using (var context = GetContext<IWorldSchema>())
             {
                 return await context.Database.CanConnectAsync();
             }
         }
         public async Task<bool> CharactersConnectionTestAsync()
         {
-            using(var context = GetContext<ICharactersSchema>())
+            using (var context = GetContext<ICharactersSchema>())
             {
                 return await context.Database.CanConnectAsync();
-            }   
+            }
         }
         public async Task<bool> HotfixesConnectionTestAsync()
         {
-            using(var context = GetContext<IHotfixesSchema>())
+            using (var context = GetContext<IHotfixesSchema>())
             {
                 return await context.Database.CanConnectAsync();
             }
@@ -157,11 +167,6 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
                     return result.HasRows;
                 }
             }
-        }
-
-        public Task<bool> CreateCreatureCreatorTableIfNotExist()
-        {
-            throw new NotImplementedException();
         }
 
         async Task<bool> CreateTableIfNotExist<T>(string createQuery)

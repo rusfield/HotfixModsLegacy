@@ -102,4 +102,11 @@
         Value = ValueLookup;
         await SetText();
     }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+            await SetText();
+        await base.OnAfterRenderAsync(firstRender);
+    }
 }

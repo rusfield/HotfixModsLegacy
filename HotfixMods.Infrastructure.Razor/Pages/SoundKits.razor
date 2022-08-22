@@ -1,5 +1,5 @@
 ﻿@page "/sound-kits"
-@using HotfixMods.Infrastructure.DtoModels.Creatures
+@using HotfixMods.Infrastructure.Razor.Pages.SoundKitTabs
 @using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.DtoModels
@@ -15,7 +15,7 @@
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SoundKitLookupAsync_Click">Creature Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SoundKitLookupAsync_Click">Sound Kit Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
             <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@soundKit.Id</MudButton>
@@ -25,14 +25,8 @@
     <MudPaper>
 
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <MudTabPanel Text="Template">
-                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
-            </MudTabPanel>
-            <MudTabPanel Text="Customization">
-                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
-            </MudTabPanel>
-            <MudTabPanel Text="Equipment">
-                @*<CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />*@
+            <MudTabPanel Text="Properties">
+                <SoundKitProperties_Tab SoundKit="soundKit" SoundKitLookup="soundKitLookup" />
             </MudTabPanel>
         </MudTabs>
 
@@ -40,8 +34,9 @@
 }
 else
 {
-    @*<DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" />*@
+    <DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" />
 }
+
 
 @code
 {

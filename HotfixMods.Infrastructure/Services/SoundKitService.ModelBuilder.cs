@@ -21,14 +21,14 @@ namespace HotfixMods.Infrastructure.Services
 
                 DistanceCutoff = SoundDefaults.DistanceCutoff,
                 PitchAdjust = soundKit.PitchAdjust ?? SoundDefaults.PitchAdjust,
-                PitchVariationMinus = soundKit.PitchVariationMinus ?? SoundDefaults.PitchVariationMinus,
-                PitchVariationPlus = soundKit.PitchVariationPlus ?? SoundDefaults.PitchVariationPlus,
-                VolumeVariationMinus = soundKit.VolumeVariationMinus ?? SoundDefaults.VolumeVariationMinus,
-                VolumeVariationPlus = soundKit.VolumeVariationPlus ?? SoundDefaults.VolumeVariationPlus,
+                PitchVariationMinus = soundKit.PitchVariation ?? SoundDefaults.PitchVariationMinus,
+                PitchVariationPlus = soundKit.PitchVariation ?? SoundDefaults.PitchVariationPlus,
+                VolumeVariationMinus = soundKit.VolumeVariation ?? SoundDefaults.VolumeVariationMinus,
+                VolumeVariationPlus = soundKit.VolumeVariation ?? SoundDefaults.VolumeVariationPlus,
+                VolumeFloat = soundKit.VolumeAdjust ?? SoundDefaults.VolumeFloat,
+                SoundType = soundKit.SoundType ?? SoundDefaults.SoundType,
 
                 MinDistance = SoundDefaults.MinDistance,
-                VolumeFloat = SoundDefaults.VolumeFloat,
-                SoundType = SoundDefaults.SoundType,
                 Flags = SoundDefaults.Flags
             };
         }

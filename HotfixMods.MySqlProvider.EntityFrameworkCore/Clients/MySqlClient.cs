@@ -36,7 +36,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         {
             using (var context = GetContext<T>())
             {
-                return await context.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
+                return await context.Set<T>().FirstOrDefaultAsync(predicate);
             }
         }
 
@@ -45,7 +45,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
         {
             using (var context = GetContext<T>())
             {
-                return await context.Set<T>().AsNoTracking().Where(predicate).ToListAsync();
+                return await context.Set<T>().Where(predicate).ToListAsync();
             }
         }
 

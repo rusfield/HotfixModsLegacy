@@ -1,0 +1,39 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <IntList_Element Label="File Data IDs" PluralItemName="sounds" SingularItemName="sound" @bind-Value="@SoundKit.FileDataIds" ListAnchorOrigin="Origin.BottomCenter" ListTransformOrigin="Origin.TopCenter" ValueLookup="SoundKitLookup?.FileDataIds" />
+        <DoubleInput_Element Label="Volume" @bind-Value="@SoundKit.VolumeAdjust" ValueLookup="SoundKitLookup?.VolumeAdjust" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Volume Variation" @bind-Value="@SoundKit.VolumeVariation" ValueLookup="SoundKitLookup?.VolumeVariation" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <SingleSelect_Element T="SoundKitSoundTypes?" Label="Sound Type" @bind-Value="@SoundKit.SoundType" ValueLookup="@SoundKitLookup?.SoundType" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Pitch" @bind-Value="@SoundKit.PitchAdjust" ValueLookup="SoundKitLookup?.PitchAdjust" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Pitch Variation" @bind-Value="@SoundKit.PitchVariation" ValueLookup="SoundKitLookup?.PitchVariation" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="8" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" @bind-Value="@SoundKit.HotfixModsName" ValueLookup="@SoundKitLookup?.HotfixModsName" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Label="Comment" @bind-Value="@SoundKit.HotfixModsComment" ValueLookup="@SoundKitLookup?.HotfixModsComment" Variant="Variant.Text" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+</MudGrid>
+
+@code {
+    [Parameter]
+    public SoundKitDto SoundKit { get; set; }
+
+    [Parameter]
+    public SoundKitDto? SoundKitLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

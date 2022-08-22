@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotfixMods.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,11 @@ namespace HotfixMods.Infrastructure.DtoModels
 {
     public class SoundKitDto : Dto
     {
-        public double? PitchVariationPlus { get; set; }
-        public double? PitchVariationMinus { get; set; }
-        public double? VolumeVariationMinus { get; set; }
-        public double? VolumeVariationPlus { get; set; }
+        public SoundKitSoundTypes? SoundType { get; set; }
+        public double? PitchVariation { get; set; }
+        public double? VolumeVariation { get; set; }
         public double? PitchAdjust { get; set; }
+        public double? VolumeAdjust { get; set; }
         public List<int> FileDataIds { get; set; }
     }
 }

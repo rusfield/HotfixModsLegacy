@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotfixMods.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace HotfixMods.Core.Constants
         public const double PitchVariationPlus = 0.1;
         public const double PitchVariationMinus = 0.1;
         public const double PitchAdjust = 0;
-        public const int SoundType = 10;
+        public const SoundKitSoundTypes SoundType = SoundKitSoundTypes.NPC;
         public const int Flags = 0;
         public const int Frequency = 1;
         public const double Volume = 1;

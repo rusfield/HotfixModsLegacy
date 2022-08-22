@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class SoundKitService : Service
     {
-        public SoundKitService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider)  {   }
+        public SoundKitService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
         public async Task<List<DashboardModel>> GetSoundKitDashboardAsync()
         {
@@ -36,7 +36,32 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<SoundKitDto>> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
         {
-            return null;
+            var soundKit = await _db2.GetAsync<SoundKit>(s => s.Id == soundKitId);
+            if (null == soundKit)
+            {
+                return new ();
+            }
+            var soundKitEntries = await _db2.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+            if (!soundKitEntries.Any())
+            {
+                return new();
+            }
+
+            var result = new SoundKitDto()
+            {
+                Id = await GetNextIdAsync(),
+                FileDataIds = new(),
+                PitchAdjust = soundKit.PitchAdjust,
+                PitchVariation = soundKit.PitchVariationPlus,
+                VolumeAdjust = soundKit.VolumeFloat,
+                VolumeVariation = soundKit.VolumeVariationPlus,
+                SoundType = soundKit.SoundType
+            };
+            foreach(var soundKitEntry in soundKitEntries)
+            {
+                result.FileDataIds.Add(soundKitEntry.FileDataId);
+            }
+            return new List<SoundKitDto>() { result };
         }
 
         public async Task DeleteSoundKitAsync(int id)
@@ -46,7 +71,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveSoundKitAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
         {
-            if(soundKit.FileDataIds.Count > 10)
+            if (soundKit.FileDataIds.Count > 10)
             {
                 /*
                  * Adding more than 10 SoundKitEntries will cause conflicts with the next SoundKit.

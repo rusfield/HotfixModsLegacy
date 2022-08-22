@@ -35,7 +35,7 @@ namespace HotfixMods.Apps.Desktop
                 return new ItemService(db2Provider, mySqlProvider)
                 {
                     VerifiedBuild = -1200,
-                    IdSize = 10.0,
+                    IdSize = 10,
                     IdRangeFrom = 5000000,
                     IdRangeTo = 6000000
                 };
@@ -45,9 +45,19 @@ namespace HotfixMods.Apps.Desktop
                 return new CreatureService(db2Provider, mySqlProvider)
                 {
                     VerifiedBuild = -2000,
-                    IdSize = 5000.0,
+                    IdSize = 5000,
                     IdRangeFrom = 100000000,
-                    IdRangeTo = 999999999
+                    IdRangeTo = 200000000
+                };
+            });
+            builder.Services.AddSingleton(config =>
+            {
+                return new SoundKitService(db2Provider, mySqlProvider)
+                {
+                    VerifiedBuild = -800,
+                    IdSize = 10,
+                    IdRangeFrom = 1800000,
+                    IdRangeTo = 1900000
                 };
             });
 

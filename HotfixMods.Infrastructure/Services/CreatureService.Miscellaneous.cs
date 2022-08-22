@@ -202,7 +202,7 @@ namespace HotfixMods.Infrastructure.Services
                 (Races.HIGHMOUNTAIN_TAUREN, Genders.Male) => 9932,
                 (Races.HIGHMOUNTAIN_TAUREN, Genders.Female) => 9933,
 
-                _ => throw new NotImplementedException($"Race and Gender combination {race} + {gender} is not implemented");
+                _ => throw new NotImplementedException($"Race and Gender combination {race} + {gender} is not implemented")
             };
         }
     }

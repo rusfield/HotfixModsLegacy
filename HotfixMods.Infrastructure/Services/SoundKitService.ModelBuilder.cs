@@ -53,19 +53,5 @@ namespace HotfixMods.Infrastructure.Services
             }
             return result;
         }
-
-        public HotfixModsData BuildHotfixModsData(SoundKitDto soundKit, HotfixModsData hotfixModsData = null)
-        {
-            hotfixModsData = new HotfixModsData()
-            {
-                Id = soundKit.Id,
-                Name = soundKit.HotfixModsName,
-                Comment = soundKit.HotfixModsComment,
-                RecordId = soundKit.Id,
-                VerifiedBuild = VerifiedBuild
-            };
-            return hotfixModsData;
-        }
-
     }
 }

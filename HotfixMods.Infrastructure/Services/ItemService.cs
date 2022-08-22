@@ -48,6 +48,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (item.IsUpdate)
             {
+                await _mySql.UpdateAsync(BuildHotfixModsData(item));
                 await _mySql.UpdateAsync(BuildItem(item));
                 await _mySql.UpdateAsync(BuildItemAppearance(item));
                 await _mySql.UpdateAsync(BuildItemDisplayInfo(item));
@@ -58,6 +59,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             else
             {
+                await _mySql.AddAsync(BuildHotfixModsData(item));
                 await _mySql.AddAsync(BuildItem(item));
                 await _mySql.AddAsync(BuildItemAppearance(item));
                 await _mySql.AddAsync(BuildItemDisplayInfo(item));
@@ -300,6 +302,7 @@ namespace HotfixMods.Infrastructure.Services
             var itemModifiedAppearance = await _mySql.GetAsync<ItemModifiedAppearance>(c => c.Id == id);
             var itemDisplayInfo = await _mySql.GetAsync<ItemDisplayInfo>(c => c.Id == id);
             var itemDisplayInfoMaterialResources = await _mySql.GetManyAsync<ItemDisplayInfoMaterialRes>(c => c.ItemDisplayInfoId == id);
+            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != item)
                 await _mySql.DeleteAsync(item);
@@ -322,9 +325,6 @@ namespace HotfixMods.Infrastructure.Services
             if (itemDisplayInfoMaterialResources.Any())
                 await _mySql.DeleteManyAsync(itemDisplayInfoMaterialResources);
 
-
-
-
             var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
             if (hotfixData != null && hotfixData.Count() > 0)
             {
@@ -334,6 +334,9 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 await _mySql.UpdateManyAsync(hotfixData);
             }
+
+            if (null != hotfixModsData)
+                await _mySql.DeleteAsync(hotfixModsData);
         }
     }
 }

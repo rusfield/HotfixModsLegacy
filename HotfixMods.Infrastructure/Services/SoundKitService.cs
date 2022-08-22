@@ -41,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task DeleteSoundKitAsync(int id)
         {
-
+            await DeleteFromHotfixes(id);
         }
 
         public async Task SaveSoundKitAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
@@ -55,22 +55,25 @@ namespace HotfixMods.Infrastructure.Services
                 throw new Exception($"SoundKit should not have more than 10 SoundKitEntries (aka FileDataIds).");
             }
 
-            HotfixModsData hotfixModsData;
             var hotfixId = await GetNextHotfixIdAsync();
             soundKit.InitHotfixes(hotfixId, VerifiedBuild);
 
             if (soundKit.IsUpdate)
             {
-                await DeleteFromHotfixes(soundKit.Id);
                 await _mySql.UpdateAsync(BuildHotfixModsData(soundKit));
+                await _mySql.UpdateAsync(BuildSoundKit(soundKit));
+
+                var entries = await _mySql.GetManyAsync<SoundKitEntry>(c => c.SoundKitId == soundKit.Id);
+                if (entries.Any())
+                    await _mySql.DeleteManyAsync(entries);
+                await _mySql.AddManyAsync(BuildSoundKitEntry(soundKit));
             }
             else
             {
                 await _mySql.AddAsync(BuildHotfixModsData(soundKit));
+                await _mySql.AddAsync(BuildSoundKit(soundKit));
+                await _mySql.AddManyAsync(BuildSoundKitEntry(soundKit));
             }
-
-            await _mySql.AddAsync(BuildSoundKit(soundKit));
-            await _mySql.AddManyAsync(BuildSoundKitEntry(soundKit));
 
             await _mySql.AddManyAsync(soundKit.GetHotfixes());
         }
@@ -79,13 +82,13 @@ namespace HotfixMods.Infrastructure.Services
         {
             var soundKit = await _mySql.GetAsync<SoundKit>(s => s.Id == id);
             var soundKitEntries = await _mySql.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == id);
+            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != soundKit)
                 await _mySql.DeleteAsync(soundKit);
 
             if (soundKitEntries.Any())
                 await _mySql.DeleteManyAsync(soundKitEntries);
-
 
             var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
             if (hotfixData != null && hotfixData.Count() > 0)
@@ -96,6 +99,9 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 await _mySql.UpdateManyAsync(hotfixData);
             }
+
+            if (null != hotfixModsData)
+                await _mySql.DeleteAsync(hotfixModsData);
         }
     }
 }

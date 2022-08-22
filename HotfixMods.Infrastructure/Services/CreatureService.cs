@@ -7,6 +7,7 @@ using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.DtoModels.Creatures;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace HotfixMods.Infrastructure.Services
                 await _mySql.UpdateAsync(BuildCreatureModelInfo(creature));
                 await _mySql.UpdateManyAsync(BuildCreatureDisplayInfoOption(creature));
                 await _mySql.UpdateManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
+                await _mySql.UpdateAsync(BuildHotfixModsData(creature));
             }
             else
             {
@@ -45,6 +47,7 @@ namespace HotfixMods.Infrastructure.Services
                 await _mySql.AddAsync(BuildCreatureModelInfo(creature));
                 await _mySql.AddManyAsync(BuildCreatureDisplayInfoOption(creature));
                 await _mySql.AddManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
+                await _mySql.AddAsync(BuildHotfixModsData(creature));
             }
 
             await AddHotfixes(creature.GetHotfixes());
@@ -324,6 +327,7 @@ namespace HotfixMods.Infrastructure.Services
             var creatureDisplayInfoExtra = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
             var creatureDisplayInfoOptions = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(c => c.CreatureDisplayInfoExtraId == id);
             var npcModelItemSlotDisplayInfos = await _mySql.GetManyAsync<NpcModelItemSlotDisplayInfo>(c => c.NpcModelId == id);
+            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != creatureDisplayInfo)
                 await _mySql.DeleteAsync(creatureDisplayInfo);
@@ -346,6 +350,9 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 await _mySql.UpdateManyAsync(hotfixData);
             }
+
+            if (null != hotfixModsData)
+                await _mySql.DeleteAsync(hotfixModsData);
         }
 
         async Task DeleteFromWorld(int id)

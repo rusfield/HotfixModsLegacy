@@ -1,6 +1,7 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
+using HotfixMods.Infrastructure.DtoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +76,19 @@ namespace HotfixMods.Infrastructure.Services
         protected void ConsoleProgressCallback(string stepTitle, string stepSubTitle, int progress)
         {
             Console.WriteLine($"{progress} %: {stepTitle} => {stepSubTitle}");
+        }
+
+        protected HotfixModsData BuildHotfixModsData(Dto dto)
+        {
+            var hotfixModsData = new HotfixModsData()
+            {
+                Id = dto.Id,
+                Name = dto.HotfixModsName,
+                Comment = dto.HotfixModsComment,
+                RecordId = dto.Id,
+                VerifiedBuild = VerifiedBuild
+            };
+            return hotfixModsData;
         }
     }
 }

@@ -36,28 +36,36 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<SoundKitDto>> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
         {
-            var soundKit = await _db2.GetAsync<SoundKit>(s => s.Id == soundKitId);
+            var soundKit = await _mySql.GetAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetAsync<SoundKit>(s => s.Id == soundKitId);
             if (null == soundKit)
             {
-                return new ();
+                return new();
             }
-            var soundKitEntries = await _db2.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+            var soundKitEntries = await _mySql.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+            if (!soundKitEntries.Any())
+                soundKitEntries = await _db2.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+
             if (!soundKitEntries.Any())
             {
                 return new();
             }
 
+            var hmData = await _mySql.GetAsync<HotfixModsData>(h => h.RecordId == soundKitId);
+
             var result = new SoundKitDto()
             {
-                Id = await GetNextIdAsync(),
+                Id = hmData != null ? hmData.RecordId : await GetNextIdAsync(),
                 FileDataIds = new(),
                 PitchAdjust = soundKit.PitchAdjust,
                 PitchVariation = soundKit.PitchVariationPlus,
                 VolumeAdjust = soundKit.VolumeFloat,
                 VolumeVariation = soundKit.VolumeVariationPlus,
-                SoundType = soundKit.SoundType
+                SoundType = soundKit.SoundType,
+                HotfixModsComment = hmData?.Comment,
+                HotfixModsName = hmData?.Name,
+                IsUpdate = hmData != null
             };
-            foreach(var soundKitEntry in soundKitEntries)
+            foreach (var soundKitEntry in soundKitEntries)
             {
                 result.FileDataIds.Add(soundKitEntry.FileDataId);
             }
@@ -73,10 +81,6 @@ namespace HotfixMods.Infrastructure.Services
         {
             if (soundKit.FileDataIds.Count > 20)
             {
-                /*
-                 * Adding more than 10 SoundKitEntries will cause conflicts with the next SoundKit.
-                 * If this number is increased, you need to make appropriate changes everywhere in code.
-                 */
                 throw new Exception($"SoundKit should not have more than 20 SoundKitEntries (aka FileDataIds).");
             }
 

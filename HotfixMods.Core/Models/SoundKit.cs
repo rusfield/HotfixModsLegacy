@@ -14,7 +14,7 @@ namespace HotfixMods.Core.Models
         public SoundKitSoundTypes SoundType { get; set; }
         public double VolumeFloat { get; set; }
         public int Flags { get; set; } // Exists as flag in WowTools
-        public int MinDistance { get; set; }
+        public double MinDistance { get; set; }
         public int DistanceCutoff { get; set; }
         public double VolumeVariationPlus { get; set; }
         public double VolumeVariationMinus { get; set; }

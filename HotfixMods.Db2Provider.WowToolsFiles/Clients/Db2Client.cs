@@ -14,13 +14,13 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
 {
     public class Db2Client : IDb2Provider
     {
-        public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate) 
+        public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2
         {
             return (await ReadFiles(predicate, true)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate) 
+        public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2
         {
             return await ReadFiles(predicate, false);
@@ -37,17 +37,18 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
             baseDirectory = baseDirectory.Substring(0, end + 12);
 
             var filePath = $"{baseDirectory}HotfixMods.Db2Provider.WowToolsFiles\\Files\\{fileName}.csv";
-            
+
             var result = new List<T>();
             var headers = new List<string>();
             var row = 0;
-            try
-            {
-                // Some columns contains the comma-delimiter symbol, and are messing up
-                // the default string.Split(','). Ex. name of an item.
-                var regex = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-                foreach (string line in await File.ReadAllLinesAsync(@filePath))
+            // Some columns contains the comma-delimiter symbol, and are messing up
+            // the default string.Split(','). Ex. name of an item.
+            var regex = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+            foreach (string line in await File.ReadAllLinesAsync(@filePath))
+            {
+                try
                 {
                     var columns = regex.Split(line);
                     if (row == 0)
@@ -55,7 +56,7 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
                         row++;
                         foreach (var header in columns)
                         {
-                            headers.Add(header.Replace("[", "").Replace("]", "").Replace("_lang", "").Replace("_",""));
+                            headers.Add(header.Replace("[", "").Replace("]", "").Replace("_lang", "").Replace("_", ""));
                         }
                     }
                     else
@@ -77,12 +78,12 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
                         if (firstOnly && result.Count == 1)
                             return result;
                     }
-                    
+
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error on line {row + 1} in file {fileName}. Error message: {ex.Message}. This entity is being skipped.");
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error on line {row + 1} in file {fileName}. Error message: {ex.Message}. This entity is being skipped.");
+                }
             }
 
             return result;

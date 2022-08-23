@@ -5,7 +5,7 @@
         </MudBadge>
     </ActivatorContent>
     <ChildContent>
-        <MudTable Items="@Value" Hover="true" Height="250px">
+        <MudTable Items="@Value" Hover="true" Style="max-height:250px">
             <RowTemplate>
                 <MudTd>@context</MudTd>
                 <MudTd Style="text-align:right"><MudIcon Icon="@Icons.Filled.Clear" onclick="@(() => Remove(@context))" Style="cursor:pointer" /></MudTd>

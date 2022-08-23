@@ -4,7 +4,8 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 
-<MudText Typo="Typo.subtitle1">@Label</MudText>
+<MudText Typo="Typo.h4" Class="pb-4">@Label</MudText>
+
 <MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
     <HeaderContent>
         <MudTh>@*Avatars*@</MudTh>

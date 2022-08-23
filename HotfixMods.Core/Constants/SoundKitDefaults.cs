@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Constants
 {
-    public abstract class SoundDefaults
+    public abstract class SoundKitDefaults
     {
         public const int DistanceCutoff = 40;
         public const double VolumeFloat = 1;

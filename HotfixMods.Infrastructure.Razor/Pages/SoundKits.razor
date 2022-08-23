@@ -47,7 +47,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         soundKitDashboard = new();
-        var dashboardSoundKits = await SoundKitService.GetSoundKitDashboardAsync();
+        var dashboardSoundKits = await SoundKitService.GetDashboardAsync();
         foreach (var dashboardSoundKit in dashboardSoundKits)
         {
             soundKitDashboard.Add(new RazorDashboardModel(
@@ -55,8 +55,8 @@ else
                 dashboardSoundKit.Name,
                 dashboardSoundKit.AvatarUrl,
                 dashboardSoundKit.Comment,
-      GetDashboardAsyncait EditAsync(dashboardSoundKit.Id)),
-                (async () => await SoundKitService.DeleteSoundKitAsync(dashboardSoundKit.Id))
+                (async () => await EditAsync(dashboardSoundKit.Id)),
+                (async () => await SoundKitService.DeleteAsync(dashboardSoundKit.Id))
             ));
         }
         await base.OnInitializedAsync();

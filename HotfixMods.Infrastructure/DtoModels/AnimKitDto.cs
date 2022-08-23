@@ -9,8 +9,8 @@ namespace HotfixMods.Infrastructure.DtoModels
 {
     public class AnimKitDto : Dto
     {
-        public int OneShotDuration { get; set; }
-        public int OneShotStopAnimKitId { get; set; }
+        public int? OneShotDuration { get; set; }
+        public int? OneShotStopAnimKitId { get; set; }
         public List<AnimKitSegmentDto> Segments { get; set; }
     }
 }

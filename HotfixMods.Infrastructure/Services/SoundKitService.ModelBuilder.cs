@@ -19,17 +19,17 @@ namespace HotfixMods.Infrastructure.Services
             {
                 Id = soundKit.Id,
 
-                DistanceCutoff = SoundDefaults.DistanceCutoff,
-                PitchAdjust = soundKit.PitchAdjust ?? SoundDefaults.PitchAdjust,
-                PitchVariationMinus = soundKit.PitchVariation ?? SoundDefaults.PitchVariationMinus,
-                PitchVariationPlus = soundKit.PitchVariation ?? SoundDefaults.PitchVariationPlus,
-                VolumeVariationMinus = soundKit.VolumeVariation ?? SoundDefaults.VolumeVariationMinus,
-                VolumeVariationPlus = soundKit.VolumeVariation ?? SoundDefaults.VolumeVariationPlus,
-                VolumeFloat = soundKit.VolumeAdjust ?? SoundDefaults.VolumeFloat,
-                SoundType = soundKit.SoundType ?? SoundDefaults.SoundType,
+                DistanceCutoff = SoundKitDefaults.DistanceCutoff,
+                PitchAdjust = soundKit.PitchAdjust ?? SoundKitDefaults.PitchAdjust,
+                PitchVariationMinus = soundKit.PitchVariation ?? SoundKitDefaults.PitchVariationMinus,
+                PitchVariationPlus = soundKit.PitchVariation ?? SoundKitDefaults.PitchVariationPlus,
+                VolumeVariationMinus = soundKit.VolumeVariation ?? SoundKitDefaults.VolumeVariationMinus,
+                VolumeVariationPlus = soundKit.VolumeVariation ?? SoundKitDefaults.VolumeVariationPlus,
+                VolumeFloat = soundKit.VolumeAdjust ?? SoundKitDefaults.VolumeFloat,
+                SoundType = soundKit.SoundType ?? SoundKitDefaults.SoundType,
 
-                MinDistance = SoundDefaults.MinDistance,
-                Flags = SoundDefaults.Flags
+                MinDistance = SoundKitDefaults.MinDistance,
+                Flags = SoundKitDefaults.Flags
             };
         }
 
@@ -46,8 +46,8 @@ namespace HotfixMods.Infrastructure.Services
                     FileDataId = fileDataId,
                     SoundKitId = soundKit.Id,
                     
-                    Frequency = SoundDefaults.Frequency,
-                    Volume = SoundDefaults.Volume
+                    Frequency = SoundKitDefaults.Frequency,
+                    Volume = SoundKitDefaults.Volume
                 });
                 id++;
             }

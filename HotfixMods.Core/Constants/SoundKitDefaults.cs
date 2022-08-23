@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Constants
 {
     public abstract class SoundKitDefaults
     {
-        public const int DistanceCutoff = 40;
+        public const double DistanceCutoff = 40;
         public const double VolumeFloat = 1;
         public const int MinDistance = 6;
         public const double VolumeVariationPlus = 0.1;

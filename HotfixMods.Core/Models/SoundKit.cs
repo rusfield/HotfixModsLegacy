@@ -15,7 +15,7 @@ namespace HotfixMods.Core.Models
         public double VolumeFloat { get; set; }
         public int Flags { get; set; } // Exists as flag in WowTools
         public double MinDistance { get; set; }
-        public int DistanceCutoff { get; set; }
+        public double DistanceCutoff { get; set; }
         public double VolumeVariationPlus { get; set; }
         public double VolumeVariationMinus { get; set; }
         public double PitchVariationPlus { get; set; }

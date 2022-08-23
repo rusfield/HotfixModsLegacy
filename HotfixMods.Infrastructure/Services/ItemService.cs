@@ -16,7 +16,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public ItemService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task<List<DashboardModel>> GetItemDashboardAsync()
+        public async Task<List<DashboardModel>> GetDashboardAsync()
         {
             var items = await _mySql.GetManyAsync<ItemSparse>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
@@ -35,13 +35,13 @@ namespace HotfixMods.Infrastructure.Services
             return result.OrderByDescending(i => i.Id).ToList();
         }
 
-        public async Task DeleteItemAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            await DeleteFromHotfixes(id);
-            await DeleteFromCharacters(id); 
+            await DeleteFromHotfixesAsync(id);
+            await DeleteFromCharactersAsync(id); 
         }
 
-        public async Task SaveItemAsync(ItemDto item)
+        public async Task SaveAsync(ItemDto item)
         {
             var hotfixId = await GetNextHotfixIdAsync();
             item.InitHotfixes(hotfixId, VerifiedBuild);
@@ -72,7 +72,7 @@ namespace HotfixMods.Infrastructure.Services
             await AddHotfixes(item.GetHotfixes());
         }
 
-        public async Task<List<ItemDto>> GetItemsById(int itemId, Action<string, string, int>? progressCallback = null)
+        public async Task<List<ItemDto>> GetItemsByIdAsync(int itemId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
@@ -281,7 +281,7 @@ namespace HotfixMods.Infrastructure.Services
 
 
 
-        async Task DeleteFromCharacters(int id)
+        async Task DeleteFromCharactersAsync(int id)
         {
             var itemInstances = await _mySql.GetManyAsync<ItemInstance>(i => i.ItemEntry == id);
             foreach(var itemInstance in itemInstances)
@@ -293,7 +293,7 @@ namespace HotfixMods.Infrastructure.Services
             }
         }
 
-        async Task DeleteFromHotfixes(int id)
+        async Task DeleteFromHotfixesAsync(int id)
         {
             var item = await _mySql.GetAsync<Item>(c => c.Id == id);
             var itemSparse = await _mySql.GetAsync<ItemSparse>(c => c.Id == id);

@@ -54,7 +54,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         creatureDashboard = new List<RazorDashboardModel>();
-        var dashboardCreatures = await CreatureService.GetCreatureDashboardAsync();
+        var dashboardCreatures = await CreatureService.GetDashboardAsync();
         foreach (var dashboardCreature in dashboardCreatures)
         {
             creatureDashboard.Add(new RazorDashboardModel(
@@ -63,7 +63,7 @@ else
                 dashboardCreature.AvatarUrl,
                 dashboardCreature.Comment,
                 (async () => await EditAsync(dashboardCreature.Id)),
-                (async () => await CreatureService.DeleteCreatureAsync(dashboardCreature.Id))
+                (async () => await CreatureService.DeleteAsync(dashboardCreature.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -103,7 +103,7 @@ else
 
     async void SaveAsync()
     {
-        await CreatureService.SaveItemAsync(creature);
+        await CreatureService.SaveAsync(creature);
     }
 
     async Task IdAsync_Click()

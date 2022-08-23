@@ -52,7 +52,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         itemDashboard = new();
-        var dashboardItems = await ItemService.GetItemDashboardAsync();
+        var dashboardItems = await ItemService.GetDashboardAsync();
         foreach (var dashboardItem in dashboardItems)
         {
             itemDashboard.Add(new RazorDashboardModel(
@@ -61,7 +61,7 @@ else
                 dashboardItem.AvatarUrl,
                 dashboardItem.Comment,
                 (async () => await EditAsync(dashboardItem.Id)),
-                (async () => await ItemService.DeleteItemAsync(dashboardItem.Id))
+                (async () => await ItemService.DeleteAsync(dashboardItem.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -100,7 +100,7 @@ else
 
     async void SaveAsync()
     {
-        await ItemService.SaveItemAsync(item);
+        await ItemService.SaveAsync(item);
     }
 
     async Task IdAsync_Click()

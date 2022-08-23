@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public CreatureService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task SaveItemAsync(CreatureDto creature)
+        public async Task SaveAsync(CreatureDto creature)
         {
             var hotfixId = await GetNextHotfixIdAsync();
             creature.InitHotfixes(hotfixId, VerifiedBuild);
@@ -54,13 +54,13 @@ namespace HotfixMods.Infrastructure.Services
 
         }
 
-        public async Task DeleteCreatureAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            await DeleteFromHotfixes(id);
-            await DeleteFromWorld(id);
+            await DeleteFromHotfixesAsync(id);
+            await DeleteFromWorldAsync(id);
         }
 
-        public async Task<List<CreatureDto>> GetCreaturesByCreatureId(int creatureId, Action<string, string, int>? progressCallback = null)
+        public async Task<List<CreatureDto>> GetCreaturesByCreatureIdAsync(int creatureId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
@@ -91,7 +91,7 @@ namespace HotfixMods.Infrastructure.Services
             return new List<CreatureDto>();
         }
 
-        public async Task<List<CreatureDto>> GetCreaturesByDisplayId(int creatureDisplayId, Action<string, string, int>? progressCallback = null)
+        public async Task<List<CreatureDto>> GetCreaturesByDisplayIdAsync(int creatureDisplayId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
@@ -299,7 +299,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<DashboardModel>> GetCreatureDashboardAsync()
+        public async Task<List<DashboardModel>> GetDashboardAsync()
         {
             var creatures = await _mySql.GetManyAsync<CreatureTemplate>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
@@ -321,7 +321,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        async Task DeleteFromHotfixes(int id)
+        async Task DeleteFromHotfixesAsync(int id)
         {
             var creatureDisplayInfo = await _mySql.GetAsync<CreatureDisplayInfo>(c => c.Id == id);
             var creatureDisplayInfoExtra = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
@@ -355,7 +355,7 @@ namespace HotfixMods.Infrastructure.Services
                 await _mySql.DeleteAsync(hotfixModsData);
         }
 
-        async Task DeleteFromWorld(int id)
+        async Task DeleteFromWorldAsync(int id)
         {
             var creatureTemplate = await _mySql.GetAsync<CreatureTemplate>(c => c.Entry == id);
             var creatureTemplateAddon = await _mySql.GetAsync<CreatureTemplateAddon>(c => c.Entry == id);

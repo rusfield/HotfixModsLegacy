@@ -67,7 +67,7 @@
 
     async Task SearchCreatureById()
     {
-        creatureResults = await CreatureService.GetCreaturesByCreatureId((int)CreatureId, loaderRef.SetLoading);
+        creatureResults = await CreatureService.GetCreaturesByCreatureIdAsync((int)CreatureId, loaderRef.SetLoading);
         if (creatureResults.Count() == 1)
         {
             ReturnCreature(creatureResults.First());

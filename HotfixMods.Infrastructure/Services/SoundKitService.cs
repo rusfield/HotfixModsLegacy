@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public SoundKitService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task<List<DashboardModel>> GetSoundKitDashboardAsync()
+        public async Task<List<DashboardModel>> GetDashboardAsync()
         {
             var hotfixModsData = await _mySql.GetManyAsync<HotfixModsData>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
@@ -64,12 +64,12 @@ namespace HotfixMods.Infrastructure.Services
             return new List<SoundKitDto>() { result };
         }
 
-        public async Task DeleteSoundKitAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            await DeleteFromHotfixes(id);
+            await DeleteFromHotfixesAsync(id);
         }
 
-        public async Task SaveSoundKitAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
+        public async Task SaveAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
         {
             if (soundKit.FileDataIds.Count > 20)
             {
@@ -103,7 +103,7 @@ namespace HotfixMods.Infrastructure.Services
             await _mySql.AddManyAsync(soundKit.GetHotfixes());
         }
 
-        async Task DeleteFromHotfixes(int id)
+        async Task DeleteFromHotfixesAsync(int id)
         {
             var soundKit = await _mySql.GetAsync<SoundKit>(s => s.Id == id);
             var soundKitEntries = await _mySql.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == id);

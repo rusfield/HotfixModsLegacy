@@ -75,7 +75,7 @@
 
     async Task SearchItemById()
     {
-        itemResults = await ItemService.GetItemsById((int)ItemId, loaderRef.SetLoading);
+        itemResults = await ItemService.GetItemsByIdAsync((int)ItemId, loaderRef.SetLoading);
         if (itemResults.Count() == 1)
         {
             ReturnItem(itemResults.First());

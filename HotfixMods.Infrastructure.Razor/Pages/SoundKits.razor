@@ -55,7 +55,7 @@ else
                 dashboardSoundKit.Name,
                 dashboardSoundKit.AvatarUrl,
                 dashboardSoundKit.Comment,
-                (async () => await EditAsync(dashboardSoundKit.Id)),
+      GetDashboardAsyncait EditAsync(dashboardSoundKit.Id)),
                 (async () => await SoundKitService.DeleteSoundKitAsync(dashboardSoundKit.Id))
             ));
         }
@@ -92,7 +92,7 @@ else
 
     async void SaveAsync()
     {
-        await SoundKitService.SaveSoundKitAsync(soundKit);
+        await SoundKitService.SaveAsync(soundKit);
     }
 
     async Task IdAsync_Click()

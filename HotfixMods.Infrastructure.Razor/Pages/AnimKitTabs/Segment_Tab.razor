@@ -1,0 +1,61 @@
+﻿@using HotfixMods.Infrastructure.DtoModels.AnimKits
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Order Index" @bind-Value="AnimKitSegment.OrderIndex" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Animation ID" @bind-Value="AnimKitSegment.AnimId" ValueLookup="AnimKitSegmentLookup?.AnimId" CssClass="@elementCssClass" />
+        <DoubleInput_Element Label="Speed" @bind-Value="AnimKitSegment.Speed" ValueLookup="AnimKitSegmentLookup?.Speed" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Start Time" @bind-Value="AnimKitSegment.AnimStartTime" ValueLookup="AnimKitSegmentLookup?.AnimStartTime" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass" >
+        @* BG *@
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Blend In Time" @bind-Value="AnimKitSegment.BlendInTimeMs" ValueLookup="AnimKitSegmentLookup?.BlendInTimeMs" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Blend Out Time" @bind-Value="AnimKitSegment.BlendOutTimeMs" ValueLookup="AnimKitSegmentLookup?.BlendOutTimeMs" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Config ID" @bind-Value="AnimKitSegment.AnimKitConfigId" ValueLookup="AnimKitSegmentLookup?.AnimKitConfigId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Flags" @bind-Value="AnimKitSegment.SegmentFlags" ValueLookup="AnimKitSegmentLookup?.SegmentFlags" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Start Condition" @bind-Value="AnimKitSegment.StartCondition" ValueLookup="AnimKitSegmentLookup?.StartCondition" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Start Condition Param" @bind-Value="AnimKitSegment.StartConditionParam" ValueLookup="AnimKitSegmentLookup?.StartConditionParam" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Start Condition Delay" @bind-Value="AnimKitSegment.StartConditionDelay" ValueLookup="AnimKitSegmentLookup?.StartConditionDelay" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Override Config Flags" @bind-Value="AnimKitSegment.OverrideConfigFlags" ValueLookup="AnimKitSegmentLookup?.OverrideConfigFlags" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="End Condition" @bind-Value="AnimKitSegment.EndCondition" ValueLookup="AnimKitSegmentLookup?.EndCondition" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="End Condition Param" @bind-Value="AnimKitSegment.EndConditionParam" ValueLookup="AnimKitSegmentLookup?.EndConditionParam" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="End Condition Delay" @bind-Value="AnimKitSegment.EndConditionDelay" ValueLookup="AnimKitSegmentLookup?.EndConditionDelay" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Unknown / TODO" CssClass="@elementCssClass" />
+    </MudItem>
+</MudGrid>
+
+
+
+@code
+{
+    [Parameter]
+    public AnimKitSegmentDto AnimKitSegment { get; set; }
+
+    [Parameter]
+    public AnimKitSegmentDto? AnimKitSegmentLookup { get; set; }
+
+    [Parameter]
+    public int OrderIndex { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

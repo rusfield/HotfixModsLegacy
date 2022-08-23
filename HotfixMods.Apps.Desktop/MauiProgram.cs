@@ -29,8 +29,8 @@ namespace HotfixMods.Apps.Desktop
 
             // TODO: Cleanup 
             IDb2Provider db2Provider = new Db2Client();
-            IMySqlProvider mySqlProvider = new MySqlClient("127.0.0.1","root","root","world","characters","hotfixes");
-            //IMySqlProvider mySqlProvider = new MySqlProvider.Debug.Clients.MySqlProvider();
+            //IMySqlProvider mySqlProvider = new MySqlClient("127.0.0.1","root","root","world","characters","hotfixes");
+            IMySqlProvider mySqlProvider = new MySqlProvider.Debug.Clients.MySqlProvider();
             builder.Services.AddSingleton(config =>
             {
                 return new ItemService(db2Provider, mySqlProvider)
@@ -59,6 +59,16 @@ namespace HotfixMods.Apps.Desktop
                     IdSize = 20,
                     IdRangeFrom = 1800000,
                     IdRangeTo = 1900000
+                };
+            });
+            builder.Services.AddSingleton(config =>
+            {
+                return new AnimKitService(db2Provider, mySqlProvider)
+                {
+                    VerifiedBuild = -700,
+                    IdSize = 50,
+                    IdRangeFrom = 100000,
+                    IdRangeTo = 200000
                 };
             });
 

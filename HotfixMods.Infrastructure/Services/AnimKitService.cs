@@ -34,7 +34,17 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<AnimKitDto>> GetAnimKitsByIdAsync(int animKitId)
+        public async Task DeleteAsync(int id)
+        {
+
+        }
+
+        public async Task SaveAsync(AnimKitDto animKitDto)
+        {
+
+        }
+
+        public async Task<List<AnimKitDto>> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
         {
             var animKit = await _db2.GetAsync<AnimKit>(a => a.Id == animKitId);
             if(animKit == null)

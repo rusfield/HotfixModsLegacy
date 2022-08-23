@@ -1,7 +1,130 @@
 ﻿@page "/anim-kits"
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
 
-<h3>AnimKits</h3>
+@inject IDialogService DialogService
+@inject AnimKitService AnimKitService
 
-@code {
 
+@if (animKit != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="AnimKitLookupAsync_Click">Anim Kit Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@animKit.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(animKit.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+
+        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <MudTabPanel Text="Properties">
+                @*<SoundKitProperties_Tab SoundKit="animKit" SoundKitLookup="animKitLookup" />*@
+            </MudTabPanel>
+        </MudTabs>
+
+    </MudPaper>
 }
+else
+{
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" />
+}
+
+
+@code
+{
+    AnimKitDto? animKit;
+    AnimKitDto? animKitLookup;
+    List<RazorDashboardModel> dashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        dashboard = new();
+        var dashboardAnimKits = await AnimKitService.GetDashboardAsync();
+        foreach (var dashboardAnimKit in dashboardAnimKits)
+        {
+            dashboard.Add(new RazorDashboardModel(
+                dashboardAnimKit.Id,
+                dashboardAnimKit.Name,
+                dashboardAnimKit.AvatarUrl,
+                dashboardAnimKit.Comment,
+                (async () => await EditAsync(dashboardAnimKit.Id)),
+                (async () => await AnimKitService.DeleteAsync(dashboardAnimKit.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task EditAsync(int id)
+    {
+        animKit = await OpenAnimKitSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        animKit = await OpenAnimKitSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task AnimKitLookupAsync_Click()
+    {
+        animKitLookup = await OpenAnimKitSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        DialogService.Show<Prompt_Dialog>(null, parameters);
+
+        animKit.IsUpdate = true;
+    }
+
+    async void SaveAsync()
+    {
+        await AnimKitService.SaveAsync(animKit);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), animKit.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(AnimKitDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), animKit.IsUpdate);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            animKit.Id = (int)result.Data;
+            animKit.IsUpdate = false;
+        }
+    }
+
+    async Task<AnimKitDto?> OpenAnimKitSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(AnimKitSearch_Dialog.AnimKitId), id);
+        var dialog = DialogService.Show<AnimKitSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (AnimKitDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (AnimKitDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+}
+

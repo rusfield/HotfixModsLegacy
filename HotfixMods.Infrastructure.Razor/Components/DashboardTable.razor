@@ -4,7 +4,7 @@
 @inject IDialogService DialogService
 @inject ISnackbar Snackbar
 
-
+<MudText Typo="Typo.subtitle1">@Label</MudText>
 <MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
     <HeaderContent>
         <MudTh>@*Avatars*@</MudTh>
@@ -40,6 +40,9 @@
 
     [Parameter]
     public Action Add { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }
 
     MudTable<RazorDashboardModel> mudTableRef;
 

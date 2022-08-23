@@ -1,6 +1,7 @@
 ﻿using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,8 @@ namespace HotfixMods.Core.Models
         public int BlendInTimeMs { get; set; }
         public int BlendOutTimeMs { get; set; }
         public int LoopToSegmentIndex { get; set; }
-        // public decimal Unknown_column { get; set; } // Just default to 0
+
+         //public decimal Field901 { get; set; } // Just default to 0
         public int VerifiedBuild { get; set; }
     }
 }

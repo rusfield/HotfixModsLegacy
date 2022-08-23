@@ -1,7 +1,9 @@
 ﻿@page "/anim-kits"
+@using HotfixMods.Infrastructure.Razor.Pages.AnimKitTabs
 @using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.DtoModels.AnimKits
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
 @using Core.Enums
@@ -23,12 +25,28 @@
         </MudStack>
     <MudPaper>
 
-        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <MudTabPanel Text="Properties">
-                @*<SoundKitProperties_Tab SoundKit="animKit" SoundKitLookup="animKitLookup" />*@
-            </MudTabPanel>
+        <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <ChildContent>
+                <MudTabPanel Text="Properties">
+                    @*<SoundKitProperties_Tab SoundKit="animKit" SoundKitLookup="animKitLookup" />*@
+                </MudTabPanel>
+                @for (int i = 0; i < animKit.Segments.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Segment {index}")">
+                        <Segment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
+                    </MudTabPanel>
+                }
+            </ChildContent>
+            <Header>
+                <MudTooltip Text="Add new segment">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddSegment_Click"/>
+                </MudTooltip>
+                <MudTooltip Text="Remove current segment">
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveSegment_Click" Disabled="@(animKit.Segments.Count <= 1)"/>
+                </MudTooltip>
+            </Header>
         </MudTabs>
-
     </MudPaper>
 }
 else
@@ -42,6 +60,7 @@ else
     AnimKitDto? animKit;
     AnimKitDto? animKitLookup;
     List<RazorDashboardModel> dashboard;
+    MudTabs mudTabsRef;
 
     protected override async Task OnInitializedAsync()
     {
@@ -128,6 +147,34 @@ else
             }
         }
         return null;
+    }
+
+    void AddSegment_Click()
+    {
+        animKit.Segments.Add(new AnimKitSegmentDto()
+        {
+            OrderIndex = animKit.Segments.Count()
+        });
+    }
+
+    void RemoveSegment_Click()
+    {
+        if(animKit.Segments.Count > 1)
+        {
+            var currentSegment = mudTabsRef.ActivePanelIndex - 1;
+            animKit.Segments.RemoveAt(currentSegment);
+            for (int i = 0; i < animKit.Segments.Count; i++)
+            {
+                animKit.Segments[i].OrderIndex = i;
+            }
+            this.StateHasChanged();
+        }
+    }
+
+    void SegmentChanged(int newSegment)
+    {
+        this.StateHasChanged();
+        mudTabsRef.ActivatePanel(1 + newSegment);
     }
 }
 

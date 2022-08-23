@@ -71,13 +71,13 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveSoundKitAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
         {
-            if (soundKit.FileDataIds.Count > 10)
+            if (soundKit.FileDataIds.Count > 20)
             {
                 /*
                  * Adding more than 10 SoundKitEntries will cause conflicts with the next SoundKit.
                  * If this number is increased, you need to make appropriate changes everywhere in code.
                  */
-                throw new Exception($"SoundKit should not have more than 10 SoundKitEntries (aka FileDataIds).");
+                throw new Exception($"SoundKit should not have more than 20 SoundKitEntries (aka FileDataIds).");
             }
 
             var hotfixId = await GetNextHotfixIdAsync();

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HotfixMods.Core\HotfixMods.Core.csproj" />
     <ProjectReference Include="..\HotfixMods.Db2Provider.WowToolsFiles\HotfixMods.Db2Provider.WowToolsFiles.csproj" />
+    <ProjectReference Include="..\HotfixMods.MySqlProvider.Debug\HotfixMods.MySqlProvider.Debug.csproj" />
     <ProjectReference Include="..\HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

@@ -53,13 +53,13 @@ namespace HotfixMods.MySqlProvider.Debug.Clients
         public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return (T)Activator.CreateInstance(typeof(T));
+            return Activator.CreateInstance<T>();
         }
 
         public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
-            return new List<T>() { (T)Activator.CreateInstance(typeof(T)) };
+            return new List<T>() { Activator.CreateInstance<T>() };
         }
 
         public async Task<bool> TableExists<T>()

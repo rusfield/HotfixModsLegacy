@@ -29,7 +29,8 @@ namespace HotfixMods.Apps.Desktop
 
             // TODO: Cleanup 
             IDb2Provider db2Provider = new Db2Client();
-            IMySqlProvider mySqlProvider = new MySqlClient("127.0.0.1","root","root","world","characters","hotfixes");
+            //IMySqlProvider mySqlProvider = new MySqlClient("127.0.0.1","root","root","world","characters","hotfixes");
+            IMySqlProvider mySqlProvider = new MySqlProvider.Debug.Clients.MySqlProvider();
             builder.Services.AddSingleton(config =>
             {
                 return new ItemService(db2Provider, mySqlProvider)
@@ -55,7 +56,7 @@ namespace HotfixMods.Apps.Desktop
                 return new SoundKitService(db2Provider, mySqlProvider)
                 {
                     VerifiedBuild = -800,
-                    IdSize = 10,
+                    IdSize = 20,
                     IdRangeFrom = 1800000,
                     IdRangeTo = 1900000
                 };

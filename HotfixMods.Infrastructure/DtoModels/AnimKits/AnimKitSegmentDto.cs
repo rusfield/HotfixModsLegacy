@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.DtoModels.AnimKits
         public int? EndCondition { get; set; }
         public int? EndConditionParam { get; set; }
         public int? EndConditionDelay { get; set; }
-        public double? Speed { get; set; }
+        public decimal? Speed { get; set; }
         public int? SegmentFlags { get; set; }
         public int? OverrideConfigFlags { get; set; }
         public int? BlendInTimeMs { get; set; }

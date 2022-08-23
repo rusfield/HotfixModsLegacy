@@ -21,14 +21,14 @@ namespace HotfixMods.Core.Models
         public int EndCondition { get; set; }
         public int EndConditionParam { get; set; }
         public int EndConditionDelay { get; set; }
-        public double Speed { get; set; }
+        public decimal Speed { get; set; }
         public int SegmentFlags { get; set; }
         public int ForcedVariation { get; set; }
         public int OverrideConfigFlags { get; set; }
         public int BlendInTimeMs { get; set; }
         public int BlendOutTimeMs { get; set; }
         public int LoopToSegmentIndex { get; set; }
-        // public double Unknown_column { get; set; } // Just default to 0
+        // public decimal Unknown_column { get; set; } // Just default to 0
         public int VerifiedBuild { get; set; }
     }
 }

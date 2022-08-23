@@ -20,7 +20,7 @@ namespace HotfixMods.Core.Constants
         public const int EndCondition = 0;
         public const int EndConditionParam = 0;
         public const int EndConditionDelay = 0;
-        public const double Speed = 1;
+        public const decimal Speed = 1;
         public const int SegmentFlags = 0;
         public const int ForcedVariation = 0;
         public const int OverrideConfigFlags = 0;

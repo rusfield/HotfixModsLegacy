@@ -9,17 +9,17 @@ namespace HotfixMods.Core.Constants
 {
     public abstract class SoundKitDefaults
     {
-        public const double DistanceCutoff = 40;
-        public const double VolumeFloat = 1;
+        public const decimal DistanceCutoff = 40;
+        public const decimal VolumeFloat = 1;
         public const int MinDistance = 6;
-        public const double VolumeVariationPlus = 0.1;
-        public const double VolumeVariationMinus = 0.1;
-        public const double PitchVariationPlus = 0.1;
-        public const double PitchVariationMinus = 0.1;
-        public const double PitchAdjust = 0;
+        public const decimal VolumeVariationPlus = 0.1M;
+        public const decimal VolumeVariationMinus = 0.1M;
+        public const decimal PitchVariationPlus = 0.1M;
+        public const decimal PitchVariationMinus = 0.1M;
+        public const decimal PitchAdjust = 0;
         public const SoundKitSoundTypes SoundType = SoundKitSoundTypes.NPC;
         public const int Flags = 0;
         public const int Frequency = 1;
-        public const double Volume = 1;
+        public const decimal Volume = 1;
     }
 }

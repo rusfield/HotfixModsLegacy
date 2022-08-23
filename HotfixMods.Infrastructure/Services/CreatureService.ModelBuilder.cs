@@ -48,8 +48,8 @@ namespace HotfixMods.Infrastructure.Services
                 ManaModifierExtra = 1,
                 RangeAttackTime = 2000,
                 RangeVariance = 1,
-                
-                SpeedRun = 1.14286,
+
+                SpeedRun = 1.14286M,
                 SpeedWalk = 1
             };
         }

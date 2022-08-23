@@ -18,10 +18,10 @@ namespace HotfixMods.Core.Constants
         public const string SubName = "";
         public const CreatureTypes Type = CreatureTypes.HUMANOID;
         public const CreatureUnitClasses UnitClass = CreatureUnitClasses.WARRIOR;
-        public const double Scale = 1;
-        public const double HealthModifier = 1;
-        public const double ArmorModifier = 1;
-        public const double DamageModifier = 1;
+        public const decimal Scale = 1;
+        public const decimal HealthModifier = 1;
+        public const decimal ArmorModifier = 1;
+        public const decimal DamageModifier = 1;
         public const UnitFlags UnitFlag = UnitFlags.NONE;
         public const UnitFlags2 UnitFlag2 = UnitFlags2.NONE;
         public const UnitFlags3 UnitFlag3 = UnitFlags3.NONE;

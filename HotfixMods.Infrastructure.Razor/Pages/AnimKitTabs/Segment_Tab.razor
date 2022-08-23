@@ -5,7 +5,7 @@
     <MudItem xs="3" Class="@gridItemCssClass">
         <IntInput_Element Label="Order Index" @bind-Value="AnimKitSegment.OrderIndex" CssClass="@elementCssClass" />
         <IntInput_Element Label="Animation ID" @bind-Value="AnimKitSegment.AnimId" ValueLookup="AnimKitSegmentLookup?.AnimId" CssClass="@elementCssClass" />
-        <DoubleInput_Element Label="Speed" @bind-Value="AnimKitSegment.Speed" ValueLookup="AnimKitSegmentLookup?.Speed" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Speed" @bind-Value="AnimKitSegment.Speed" ValueLookup="AnimKitSegmentLookup?.Speed" CssClass="@elementCssClass" />
         <IntInput_Element Label="Start Time" @bind-Value="AnimKitSegment.AnimStartTime" ValueLookup="AnimKitSegmentLookup?.AnimStartTime" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass" >

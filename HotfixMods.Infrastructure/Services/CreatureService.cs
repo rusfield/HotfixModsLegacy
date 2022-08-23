@@ -158,7 +158,7 @@ namespace HotfixMods.Infrastructure.Services
                     Level = creatureTemplate != null && creatureTemplate.MaxLevel > 0 ? creatureTemplate.MaxLevel : 30,
                     Name = creatureTemplate?.Name,
                     SubName = creatureTemplate?.SubName,
-                    Scale = creatureTemplate?.Scale ?? 1.0,
+                    Scale = creatureTemplate?.Scale ?? 1.0M,
                     Rank = creatureTemplate?.Rank ?? CreatureRanks.NORMAL,
                     HealthModifier = creatureTemplate?.HealthModifier ?? 1,
                     DamageModifier = creatureTemplate?.DamageModifier ?? 1,

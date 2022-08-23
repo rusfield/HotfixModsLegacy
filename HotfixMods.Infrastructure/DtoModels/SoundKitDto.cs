@@ -10,10 +10,10 @@ namespace HotfixMods.Infrastructure.DtoModels
     public class SoundKitDto : Dto
     {
         public SoundKitSoundTypes? SoundType { get; set; }
-        public double? PitchVariation { get; set; }
-        public double? VolumeVariation { get; set; }
-        public double? PitchAdjust { get; set; }
-        public double? VolumeAdjust { get; set; }
+        public decimal? PitchVariation { get; set; }
+        public decimal? VolumeVariation { get; set; }
+        public decimal? PitchAdjust { get; set; }
+        public decimal? VolumeAdjust { get; set; }
         public List<int> FileDataIds { get; set; }
     }
 }

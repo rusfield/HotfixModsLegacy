@@ -17,8 +17,8 @@ namespace HotfixMods.Core.Models
         public Genders Gender { get; set; }
         public int SizeClass { get; set; }
         public int CreatureModelAlpha { get; set; }
-        public double CreatureModelScale { get; set; }
-        public double PetInstanceScale { get; set; }
+        public decimal CreatureModelScale { get; set; }
+        public decimal PetInstanceScale { get; set; }
         public int UnarmedWeaponType { get; set; }
         public int VerifiedBuild { get; set; }
     }

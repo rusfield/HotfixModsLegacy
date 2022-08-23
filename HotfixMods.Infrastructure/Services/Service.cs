@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.Services
         public int VerifiedBuild { get; set; }
         public int IdRangeFrom { get; set; }
         public int IdRangeTo { get; set; }
-        public double IdSize { get; set; }
+        public decimal IdSize { get; set; }
 
         protected IDb2Provider _db2;
         protected IMySqlProvider _mySql;

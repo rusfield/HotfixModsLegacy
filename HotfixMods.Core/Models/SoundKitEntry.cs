@@ -13,7 +13,7 @@ namespace HotfixMods.Core.Models
         public int SoundKitId { get; set; }
         public int FileDataId { get; set; }
         public int Frequency { get; set; }
-        public double Volume { get; set; }
+        public decimal Volume { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

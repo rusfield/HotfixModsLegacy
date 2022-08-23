@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public string? SubName { get; set; }
         public int? Level { get; set; }
         public int? Faction { get; set; }
-        public double? Scale { get; set; }
+        public decimal? Scale { get; set; }
         public CreatureRanks? Rank { get; set; }
         public CreatureTypes? CreatureType { get; set; }
         public CreatureUnitClasses? CreatureUnitClass { get; set; }
@@ -25,9 +25,9 @@ namespace HotfixMods.Infrastructure.DtoModels
         public UnitFlags2? UnitFlags2 { get; set; }
         public UnitFlags3? UnitFlags3 { get; set; }
         public UnitFlagsExtra? FlagsExtra { get; set; }
-        public double? HealthModifier { get; set; }
-        public double? DamageModifier { get; set; }
-        public double? ArmorModifier { get; set; }
+        public decimal? HealthModifier { get; set; }
+        public decimal? DamageModifier { get; set; }
+        public decimal? ArmorModifier { get; set; }
         public int? SoundId { get; set; }
         public bool? RegenHealth { get; set; }
         public List<int> Auras { get; set; }

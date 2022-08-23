@@ -10,7 +10,7 @@
         <SingleSelect_Element Label="Rank" CssClass="@elementCssClass" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
         <SingleSelect_Element Label="Type" CssClass="@elementCssClass" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
         <SingleSelect_Element Label="Unit Class" CssClass="@elementCssClass" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
-        <DoubleInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
         @* BG *@
@@ -20,8 +20,8 @@
         <MultiSelect_Element T="UnitFlags2" Label="Unit Flags" @bind-Value="Creature.UnitFlags2" ValueLookup="CreatureLookup?.UnitFlags2" CssClass="@elementCssClass" />
         <MultiSelect_Element T="UnitFlags3" Label="Unit Flags" @bind-Value="Creature.UnitFlags3" ValueLookup="CreatureLookup?.UnitFlags3" CssClass="@elementCssClass" />
         <MultiSelect_Element T="UnitFlagsExtra" Label="Unit Flags" @bind-Value="Creature.FlagsExtra" ValueLookup="CreatureLookup?.FlagsExtra" CssClass="@elementCssClass" />
-        <DoubleInput_Element Label="Health Modifier" @bind-Value="Creature.HealthModifier" ValueLookup="@CreatureLookup?.HealthModifier" CssClass="@elementCssClass" />
-        <DoubleInput_Element Label="Damage Modifier" @bind-Value="Creature.DamageModifier" ValueLookup="@CreatureLookup?.DamageModifier" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Health Modifier" @bind-Value="Creature.HealthModifier" ValueLookup="@CreatureLookup?.HealthModifier" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Damage Modifier" @bind-Value="Creature.DamageModifier" ValueLookup="@CreatureLookup?.DamageModifier" CssClass="@elementCssClass" />
     </MudItem>
 
 
@@ -32,7 +32,7 @@
         <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" CssClass="@elementCssClass" Variant="Variant.Text" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <DoubleInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" CssClass="@elementCssClass" />
     </MudItem>
 
     <MudItem xs="3" Class="@gridItemCssClass">

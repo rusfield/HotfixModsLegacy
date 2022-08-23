@@ -12,15 +12,15 @@ namespace HotfixMods.Core.Models
     {
         public int Id { get; set; }
         public SoundKitSoundTypes SoundType { get; set; }
-        public double VolumeFloat { get; set; }
+        public decimal VolumeFloat { get; set; }
         public int Flags { get; set; } // Exists as flag in WowTools
-        public double MinDistance { get; set; }
-        public double DistanceCutoff { get; set; }
-        public double VolumeVariationPlus { get; set; }
-        public double VolumeVariationMinus { get; set; }
-        public double PitchVariationPlus { get; set; }
-        public double PitchVariationMinus { get; set; }
-        public double PitchAdjust { get; set; }
+        public decimal MinDistance { get; set; }
+        public decimal DistanceCutoff { get; set; }
+        public decimal VolumeVariationPlus { get; set; }
+        public decimal VolumeVariationMinus { get; set; }
+        public decimal PitchVariationPlus { get; set; }
+        public decimal PitchVariationMinus { get; set; }
+        public decimal PitchAdjust { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

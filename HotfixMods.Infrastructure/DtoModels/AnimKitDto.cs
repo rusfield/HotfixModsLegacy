@@ -1,17 +1,16 @@
-﻿using HotfixMods.Core.Models.Interfaces;
+﻿using HotfixMods.Infrastructure.DtoModels.AnimKits;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Core.Models
+namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class AnimKit : IHotfixesSchema, IDb2
+    public class AnimKitDto : Dto
     {
-        public int Id { get; set; }
         public int OneShotDuration { get; set; }
         public int OneShotStopAnimKitId { get; set; }
-        public int VerifiedBuild { get; set; }
+        public List<AnimKitSegmentDto> Segments { get; set; }
     }
 }

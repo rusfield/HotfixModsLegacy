@@ -28,13 +28,13 @@
         <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <ChildContent>
                 <MudTabPanel Text="Properties">
-                    @*<SoundKitProperties_Tab SoundKit="animKit" SoundKitLookup="animKitLookup" />*@
+                    <AnimKitProperties_Tab AnimKit="animKit" AnimKitLookup="animKitLookup" />
                 </MudTabPanel>
                 @for (int i = 0; i < animKit.Segments.Count; i++)
                 {
                     int index = i;
                     <MudTabPanel Text="@($"Segment {index}")">
-                        <Segment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
+                        <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
                     </MudTabPanel>
                 }
             </ChildContent>

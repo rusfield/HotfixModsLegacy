@@ -1,0 +1,37 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <MudTextField T="string" Variant="Variant.Outlined" Class="@($"invisible {elementCssClass}")" Label="Invisible Placeholder" />
+        <MudTextField T="string" Variant="Variant.Outlined" Class="@($"invisible {elementCssClass}")" Label="Invisible Placeholder" />
+        <MudTextField T="string" Variant="Variant.Outlined" Class="@($"invisible {elementCssClass}")" Label="Invisible Placeholder" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="8" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" @bind-Value="@AnimKit.HotfixModsName" ValueLookup="@AnimKitLookup?.HotfixModsName" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Label="Comment" @bind-Value="@AnimKit.HotfixModsComment" ValueLookup="@AnimKitLookup?.HotfixModsComment" Variant="Variant.Text" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+</MudGrid>
+
+@code {
+    [Parameter]
+    public AnimKitDto AnimKit { get; set; }
+
+    [Parameter]
+    public AnimKitDto? AnimKitLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

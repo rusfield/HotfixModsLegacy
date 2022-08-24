@@ -10,22 +10,16 @@ namespace HotfixMods.Core.Providers
 {
     public interface IMySqlProvider
     {
-        public Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
+        public Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore;
-        public Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
+        public Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore;
-        public Task AddAsync<T>(T entity)
+        public Task AddOrUpdateAsync<T>(params T[] entities)
             where T : class, ITrinityCore;
-        public Task AddManyAsync<T>(IEnumerable<T> entities)
+
+        public Task DeleteAsync<T>(params T[] entities)
             where T : class, ITrinityCore;
-        public Task UpdateAsync<T>(T entity)
-            where T : class, ITrinityCore;
-        public Task UpdateManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore;
-        public Task DeleteAsync<T>(T entity)
-            where T : class, ITrinityCore;
-        public Task DeleteManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore;
+
         public Task<bool> TableExists<T>()
             where T : class, ITrinityCore;
         public Task<bool> CharactersConnectionTestAsync();

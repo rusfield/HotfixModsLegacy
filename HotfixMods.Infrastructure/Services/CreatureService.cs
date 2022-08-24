@@ -23,32 +23,16 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixId = await GetNextHotfixIdAsync();
             creature.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if (creature.IsUpdate)
-            {
-                await _mySql.UpdateAsync(BuildCreatureTemplate(creature));
-                await _mySql.UpdateAsync(BuildCreatureTemplateAddon(creature));
-                await _mySql.UpdateAsync(BuildCreatureTemplateModel(creature));
-                await _mySql.UpdateAsync(BuildCreatureDisplayInfo(creature));
-                await _mySql.UpdateAsync(BuildCreatureDisplayInfoExtra(creature));
-                await _mySql.UpdateAsync(BuildCreatureEquipTemplate(creature));
-                await _mySql.UpdateAsync(BuildCreatureModelInfo(creature));
-                await _mySql.UpdateManyAsync(BuildCreatureDisplayInfoOption(creature));
-                await _mySql.UpdateManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
-                await _mySql.UpdateAsync(BuildHotfixModsData(creature));
-            }
-            else
-            {
-                await _mySql.AddAsync(BuildCreatureTemplate(creature));
-                await _mySql.AddAsync(BuildCreatureTemplateAddon(creature));
-                await _mySql.AddAsync(BuildCreatureTemplateModel(creature));
-                await _mySql.AddAsync(BuildCreatureDisplayInfo(creature));
-                await _mySql.AddAsync(BuildCreatureDisplayInfoExtra(creature));
-                await _mySql.AddAsync(BuildCreatureEquipTemplate(creature));
-                await _mySql.AddAsync(BuildCreatureModelInfo(creature));
-                await _mySql.AddManyAsync(BuildCreatureDisplayInfoOption(creature));
-                await _mySql.AddManyAsync(BuildNpcModelItemSlotDisplayInfo(creature));
-                await _mySql.AddAsync(BuildHotfixModsData(creature));
-            }
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplate(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateAddon(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateModel(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfo(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoExtra(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureEquipTemplate(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureModelInfo(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoOption(creature));
+            await _mySql.AddOrUpdateAsync(BuildNpcModelItemSlotDisplayInfo(creature));
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(creature));
 
             await AddHotfixes(creature.GetHotfixes());
 
@@ -68,7 +52,7 @@ namespace HotfixMods.Infrastructure.Services
             progressCallback("Creature", $"Retrieving DisplayInfos for Creature ID {creatureId}", 0);
             // This will only return the first model.
             // If the desired result has multiple displays, use the desired one directly instead.
-            var creatureTemplateModels = await _mySql.GetManyAsync<CreatureTemplateModel>(c => c.CreatureId == creatureId);
+            var creatureTemplateModels = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == creatureId);
             if (creatureTemplateModels.Any())
             {
                 var creatures = await GetCreatureByDisplayIdAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
@@ -114,17 +98,17 @@ namespace HotfixMods.Infrastructure.Services
 
                 progressCallback("Creature", $"Retrieving Creature Template Model", (int)(10 / iterationDivider));
                 CreatureTemplate? creatureTemplate = null;
-                var creatureTemplateModel = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureDisplayId == creatureDisplayId);
+                var creatureTemplateModel = await _mySql.GetSingleAsync<CreatureTemplateModel>(c => c.CreatureDisplayId == creatureDisplayId);
                 if (creatureTemplateModel != null)
                 {
                     progressCallback("Creature", $"Retrieving Creature Template", (int)(15 / iterationDivider));
-                    creatureTemplate = await _mySql.GetAsync<CreatureTemplate>(c => c.Entry == creatureTemplateModel.CreatureId);
+                    creatureTemplate = await _mySql.GetSingleAsync<CreatureTemplate>(c => c.Entry == creatureTemplateModel.CreatureId);
                     if (creatureTemplate != null)
                         progressCallback("Creature", $"Found Creature Template ({creatureTemplate.Entry})", (int)(15 / iterationDivider));
                 }
 
                 progressCallback("Creature", $"Retrieving Display Info", (int)(20 / iterationDivider));
-                var displayInfo = await _mySql.GetAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId) ?? await _db2.GetAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId);
+                var displayInfo = await _mySql.GetSingleAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId) ?? await _db2.GetAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId);
                 if (displayInfo == null)
                 {
                     progressCallback("Failed", $"Display Info for Display Id {creatureDisplayId} not found", (int)(20 / iterationDivider));
@@ -135,7 +119,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (creatureTemplate != null)
                 {
                     progressCallback("Creature", $"Retrieving Auras", (int)(25 / iterationDivider));
-                    var creatureTemplateAddon = await _mySql.GetAsync<CreatureTemplateAddon>(c => c.Entry == creatureTemplate.Entry);
+                    var creatureTemplateAddon = await _mySql.GetSingleAsync<CreatureTemplateAddon>(c => c.Entry == creatureTemplate.Entry);
                     if (creatureTemplateAddon != null && !string.IsNullOrWhiteSpace(creatureTemplateAddon.Auras))
                     {
                         var auraStrings = creatureTemplateAddon.Auras.Split(' ');
@@ -176,7 +160,7 @@ namespace HotfixMods.Infrastructure.Services
                 };
 
                 progressCallback("Creature", $"Retrieving Display Info Extra", (int)(30 / iterationDivider));
-                var displayInfoExtra = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
+                var displayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
                 if (displayInfoExtra == null)
                 {
                     progressCallback("Creature", $"Display Info Extra not found", (int)(30 / iterationDivider));
@@ -189,7 +173,7 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback("Customizations", $"Retrieving available customizations", (int)(40 / iterationDivider));
                 var availableCustomizations = await GetAvailableCustomizations(displayInfoExtra.DisplayRaceId, displayInfo.Gender);
                 progressCallback("Customizations", $"Retrieving creature customizations", (int)(60 / iterationDivider));
-                var customizations = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id) ?? await _db2.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
+                var customizations = await _mySql.GetAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id) ?? await _db2.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
                 var creatureCustomizations = new Dictionary<int, int?>();
 
                 foreach (var availableCustomization in availableCustomizations)
@@ -210,7 +194,7 @@ namespace HotfixMods.Infrastructure.Services
                 creature.Customizations = creatureCustomizations;
 
                 progressCallback("Equipment", $"Retrieving equipment", (int)(80 / iterationDivider));
-                var hotfixEquipment = await _mySql.GetManyAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
+                var hotfixEquipment = await _mySql.GetAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
                 var db2Equipment = await _db2.GetManyAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
 
                 for (int i = 0; i <= Enum.GetValues(typeof(ArmorSlots)).Cast<int>().Max(); i++)
@@ -268,7 +252,7 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback("Equipment", $"Handling weapons", (int)(95 / iterationDivider));
                 if (creatureTemplate != null)
                 {
-                    var creatureEquipTemplate = await _mySql.GetAsync<CreatureEquipTemplate>(c => c.CreatureId == creatureTemplate.Entry);
+                    var creatureEquipTemplate = await _mySql.GetSingleAsync<CreatureEquipTemplate>(c => c.CreatureId == creatureTemplate.Entry);
                     if (creatureEquipTemplate != null)
                     {
                         if (creatureEquipTemplate.ItemId1 > 0)
@@ -301,11 +285,11 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardAsync()
         {
-            var creatures = await _mySql.GetManyAsync<CreatureTemplate>(c => c.VerifiedBuild == VerifiedBuild);
+            var creatures = await _mySql.GetAsync<CreatureTemplate>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
             foreach (var creature in creatures)
             {
-                var displayInfo = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == creature.Entry);
+                var displayInfo = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == creature.Entry);
                 if (displayInfo == null)
                     continue;
                 result.Add(new DashboardModel()
@@ -323,11 +307,11 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromHotfixesAsync(int id)
         {
-            var creatureDisplayInfo = await _mySql.GetAsync<CreatureDisplayInfo>(c => c.Id == id);
-            var creatureDisplayInfoExtra = await _mySql.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
-            var creatureDisplayInfoOptions = await _mySql.GetManyAsync<CreatureDisplayInfoOption>(c => c.CreatureDisplayInfoExtraId == id);
-            var npcModelItemSlotDisplayInfos = await _mySql.GetManyAsync<NpcModelItemSlotDisplayInfo>(c => c.NpcModelId == id);
-            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
+            var creatureDisplayInfo = await _mySql.GetSingleAsync<CreatureDisplayInfo>(c => c.Id == id);
+            var creatureDisplayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
+            var creatureDisplayInfoOptions = await _mySql.GetAsync<CreatureDisplayInfoOption>(c => c.CreatureDisplayInfoExtraId == id);
+            var npcModelItemSlotDisplayInfos = await _mySql.GetAsync<NpcModelItemSlotDisplayInfo>(c => c.NpcModelId == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != creatureDisplayInfo)
                 await _mySql.DeleteAsync(creatureDisplayInfo);
@@ -336,19 +320,19 @@ namespace HotfixMods.Infrastructure.Services
                 await _mySql.DeleteAsync(creatureDisplayInfoExtra);
 
             if (creatureDisplayInfoOptions.Any())
-                await _mySql.DeleteManyAsync(creatureDisplayInfoOptions);
+                await _mySql.DeleteAsync(creatureDisplayInfoOptions.ToArray());
 
             if (npcModelItemSlotDisplayInfos.Any())
-                await _mySql.DeleteManyAsync(npcModelItemSlotDisplayInfos);
+                await _mySql.DeleteAsync(npcModelItemSlotDisplayInfos.ToArray());
 
-            var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)
                 {
                     hotfix.Status = HotfixStatuses.INVALID;
                 }
-                await _mySql.UpdateManyAsync(hotfixData);
+                await _mySql.AddOrUpdateAsync(hotfixData.ToArray());
             }
 
             if (null != hotfixModsData)
@@ -357,11 +341,11 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromWorldAsync(int id)
         {
-            var creatureTemplate = await _mySql.GetAsync<CreatureTemplate>(c => c.Entry == id);
-            var creatureTemplateAddon = await _mySql.GetAsync<CreatureTemplateAddon>(c => c.Entry == id);
-            var creatureTemplateModel = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == id);
-            var creatureEquipTemplate = await _mySql.GetAsync<CreatureEquipTemplate>(c => c.CreatureId == id);
-            var creatureModelInfo = await _mySql.GetAsync<CreatureModelInfo>(c => c.DisplayId == id);
+            var creatureTemplate = await _mySql.GetSingleAsync<CreatureTemplate>(c => c.Entry == id);
+            var creatureTemplateAddon = await _mySql.GetSingleAsync<CreatureTemplateAddon>(c => c.Entry == id);
+            var creatureTemplateModel = await _mySql.GetSingleAsync<CreatureTemplateModel>(c => c.CreatureId == id);
+            var creatureEquipTemplate = await _mySql.GetSingleAsync<CreatureEquipTemplate>(c => c.CreatureId == id);
+            var creatureModelInfo = await _mySql.GetSingleAsync<CreatureModelInfo>(c => c.DisplayId == id);
 
             if(null != creatureTemplate)
                 await _mySql.DeleteAsync(creatureTemplate);

@@ -26,37 +26,25 @@ namespace HotfixMods.MySqlProvider.Debug.Clients
             return true;
         }
 
-        public async Task AddAsync<T>(T entity)
+        public async Task AddOrUpdateAsync<T>(params T[] entities)
             where T : class, ITrinityCore
         {
             return;
         }
 
-        public async Task AddManyAsync<T>(IEnumerable<T> entities)
+        public async Task DeleteAsync<T>(params T[] entities)
             where T : class, ITrinityCore
         {
             return;
         }
 
-        public async Task DeleteAsync<T>(T entity)
-            where T : class, ITrinityCore
-        {
-            return;
-        }
-
-        public async Task DeleteManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore
-        {
-            return;
-        }
-
-        public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
             return Activator.CreateInstance<T>();
         }
 
-        public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
             return new List<T>() { Activator.CreateInstance<T>() };
@@ -66,18 +54,6 @@ namespace HotfixMods.MySqlProvider.Debug.Clients
             where T : class, ITrinityCore
         {
             return true;
-        }
-
-        public async Task UpdateAsync<T>(T entity)
-            where T : class, ITrinityCore
-        {
-            return;
-        }
-
-        public async Task UpdateManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore
-        {
-            return;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
             _hotfixesSchemaName = hotfixesSchemaName;
         }
 
-        public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
             using (var context = GetContext<T>())
@@ -40,7 +40,7 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
             }
         }
 
-        public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, ITrinityCore
         {
             using (var context = GetContext<T>())
@@ -49,58 +49,21 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Clients
             }
         }
 
-
-        public async Task AddAsync<T>(T entity)
+        public async Task AddOrUpdateAsync<T>(params T[] entities)
             where T : class, ITrinityCore
         {
             using (var context = GetContext<T>())
             {
-                context.Set<T>().Add(entity);
+                // Multiple db queries for each add/update is bad, but its limited how mch traffic this software will cause.
+                foreach(var entity in entities)
+                {
+                    _ = context.Set<T>().Any(e => e == entity) ? context.Set<T>().Update(entity) : context.Set<T>().Add(entity);
+                }
                 await context.SaveChangesAsync();
             }
         }
 
-        public async Task AddManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore
-        {
-            using (var context = GetContext<T>())
-            {
-                context.Set<T>().AddRange(entities);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task UpdateAsync<T>(T entity)
-            where T : class, ITrinityCore
-        {
-            using (var context = GetContext<T>())
-            {
-                context.Set<T>().Update(entity);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task UpdateManyAsync<T>(IEnumerable<T> entities)
-            where T : class, ITrinityCore
-        {
-            using (var context = GetContext<T>())
-            {
-                context.Set<T>().UpdateRange(entities);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteAsync<T>(T entity)
-            where T : class, ITrinityCore
-        {
-            using (var context = GetContext<T>())
-            {
-                context.Set<T>().Remove(entity);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteManyAsync<T>(IEnumerable<T> entities)
+        public async Task DeleteAsync<T>(params T[] entities)
             where T : class, ITrinityCore
         {
             using (var context = GetContext<T>())

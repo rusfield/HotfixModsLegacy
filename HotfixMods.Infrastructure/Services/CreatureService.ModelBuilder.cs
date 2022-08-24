@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class CreatureService
     {
-        public CreatureTemplate BuildCreatureTemplate(CreatureDto creatureDto)
+        CreatureTemplate BuildCreatureTemplate(CreatureDto creatureDto)
         {
             return new CreatureTemplate()
             {
@@ -54,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureEquipTemplate BuildCreatureEquipTemplate(CreatureDto creatureDto)
+        CreatureEquipTemplate BuildCreatureEquipTemplate(CreatureDto creatureDto)
         {
             return new CreatureEquipTemplate()
             {
@@ -75,7 +75,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureTemplateModel BuildCreatureTemplateModel(CreatureDto creatureDto)
+        CreatureTemplateModel BuildCreatureTemplateModel(CreatureDto creatureDto)
         {
             return new CreatureTemplateModel()
             {
@@ -88,7 +88,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureModelInfo BuildCreatureModelInfo(CreatureDto creatureDto)
+        CreatureModelInfo BuildCreatureModelInfo(CreatureDto creatureDto)
         {
             return new CreatureModelInfo()
             {
@@ -97,7 +97,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureTemplateAddon BuildCreatureTemplateAddon(CreatureDto creatureDto)
+        CreatureTemplateAddon BuildCreatureTemplateAddon(CreatureDto creatureDto)
         {
             return new CreatureTemplateAddon()
             {
@@ -106,7 +106,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureDisplayInfo BuildCreatureDisplayInfo(CreatureDto creatureDto)
+        CreatureDisplayInfo BuildCreatureDisplayInfo(CreatureDto creatureDto)
         {
             creatureDto.AddHotfix(creatureDto.Id, TableHashes.CreatureDisplayInfo, HotfixStatuses.VALID);
 
@@ -130,7 +130,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public CreatureDisplayInfoExtra BuildCreatureDisplayInfoExtra(CreatureDto creatureDto)
+        CreatureDisplayInfoExtra BuildCreatureDisplayInfoExtra(CreatureDto creatureDto)
         {
             creatureDto.AddHotfix(creatureDto.Id, TableHashes.CreatureDisplayInfoExtra, HotfixStatuses.VALID);
 
@@ -144,7 +144,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public List<CreatureDisplayInfoOption> BuildCreatureDisplayInfoOption(CreatureDto creature)
+        CreatureDisplayInfoOption[] BuildCreatureDisplayInfoOption(CreatureDto creature)
         {
             var result = new List<CreatureDisplayInfoOption>();
             foreach (var customization in creature.Customizations)
@@ -162,10 +162,10 @@ namespace HotfixMods.Infrastructure.Services
                     VerifiedBuild = VerifiedBuild
                 });
             }
-            return result;
+            return result.ToArray();
         }
 
-        public List<NpcModelItemSlotDisplayInfo> BuildNpcModelItemSlotDisplayInfo(CreatureDto creatureDto)
+        NpcModelItemSlotDisplayInfo[] BuildNpcModelItemSlotDisplayInfo(CreatureDto creatureDto)
         {
             int npcModelId = creatureDto.Id;
 
@@ -272,7 +272,7 @@ namespace HotfixMods.Infrastructure.Services
                 creatureDto.AddHotfix(item.Id, TableHashes.NpcModelItemSlotDisplayInfo, HotfixStatuses.VALID);
             }
 
-            return result;
+            return result.ToArray();
         }
     }
 }

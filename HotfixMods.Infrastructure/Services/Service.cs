@@ -29,7 +29,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<int> GetNextHotfixIdAsync(bool quickScan = true)
         {
             int id = IdRangeFrom;
-            var hotfixIdsInRange = await _mySql.GetManyAsync<HotfixData>(c => c.Id >= IdRangeFrom && c.Id < IdRangeTo);
+            var hotfixIdsInRange = await _mySql.GetAsync<HotfixData>(c => c.Id >= IdRangeFrom && c.Id < IdRangeTo);
             if (hotfixIdsInRange.Count() > 0)
             {
                 id = hotfixIdsInRange.Max(c => c.Id) + 1;
@@ -45,23 +45,23 @@ namespace HotfixMods.Infrastructure.Services
             if(newHotfixData.Count > 0)
             {
                 var id = newHotfixData.First().UniqueId;
-                var existingHotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.Status == HotfixStatuses.VALID && h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
+                var existingHotfixData = await _mySql.GetAsync<HotfixData>(h => h.Status == HotfixStatuses.VALID && h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
                 if (existingHotfixData != null && existingHotfixData.Count() > 0)
                 {
                     foreach (var hotfix in existingHotfixData)
                     {
                         hotfix.Status = HotfixStatuses.INVALID;
                     }
-                    await _mySql.UpdateManyAsync(existingHotfixData);
+                    await _mySql.AddOrUpdateAsync(existingHotfixData.ToArray());
                 }
-                await _mySql.AddManyAsync(newHotfixData);
+                await _mySql.AddOrUpdateAsync(newHotfixData.ToArray());
             }
         }
 
         public async Task<int> GetNextIdAsync(bool quickScan = true)
         {
             int id = IdRangeFrom;
-            var entitiesInRange = await _mySql.GetManyAsync<HotfixData>(c => c.RecordId >= IdRangeFrom && c.RecordId < IdRangeTo);
+            var entitiesInRange = await _mySql.GetAsync<HotfixData>(c => c.RecordId >= IdRangeFrom && c.RecordId < IdRangeTo);
             if (entitiesInRange.Count() > 0)
             {
                 var nextEmpty = entitiesInRange.Max(c => c.RecordId) + 1;

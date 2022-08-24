@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         } 
 
-        List<AnimKitSegment> BuildAnimKitSegment(AnimKitDto animKitDto)
+        AnimKitSegment[] BuildAnimKitSegment(AnimKitDto animKitDto)
         {
             var result = new List<AnimKitSegment>();
             foreach(var segment in animKitDto.Segments)
@@ -58,7 +58,7 @@ namespace HotfixMods.Infrastructure.Services
                     LoopToSegmentIndex = AnimKitDefaults.LoopToSegmentIndex
                 });
             }
-            return result;
+            return result.ToArray();
         }
     }
 }

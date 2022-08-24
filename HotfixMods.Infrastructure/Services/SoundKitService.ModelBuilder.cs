@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class SoundKitService
     {
-        public SoundKit BuildSoundKit(SoundKitDto soundKit)
+        SoundKit BuildSoundKit(SoundKitDto soundKit)
         {
             soundKit.AddHotfix(soundKit.Id, TableHashes.SoundKit, HotfixStatuses.VALID);
             return new SoundKit()
@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public List<SoundKitEntry> BuildSoundKitEntry(SoundKitDto soundKit)
+        SoundKitEntry[] BuildSoundKitEntry(SoundKitDto soundKit)
         {
             var result = new List<SoundKitEntry>();
             var id = soundKit.Id;
@@ -51,7 +51,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
                 id++;
             }
-            return result;
+            return result.ToArray();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardAsync()
         {
-            var hotfixModsData = await _mySql.GetManyAsync<HotfixModsData>(c => c.VerifiedBuild == VerifiedBuild);
+            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
             foreach (var data in hotfixModsData)
             {
@@ -53,19 +53,19 @@ namespace HotfixMods.Infrastructure.Services
 
             if (animKitDto.IsUpdate)
             {
-                await _mySql.UpdateAsync(BuildHotfixModsData(animKitDto));
-                await _mySql.UpdateAsync(BuildAnimKit(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKit(animKitDto));
 
-                var segments = await _mySql.GetManyAsync<AnimKitSegment>(c => c.ParentAnimKitId == animKitDto.Id);
+                var segments = await _mySql.GetAsync<AnimKitSegment>(c => c.ParentAnimKitId == animKitDto.Id);
                 if (segments.Any())
-                    await _mySql.DeleteManyAsync(segments);
-                await _mySql.AddManyAsync(BuildAnimKitSegment(animKitDto));
+                    await _mySql.DeleteAsync(segments.ToArray());
+                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(animKitDto));
             }
             else
             {
-                await _mySql.AddAsync(BuildHotfixModsData(animKitDto));
-                await _mySql.AddAsync(BuildAnimKit(animKitDto));
-                await _mySql.AddManyAsync(BuildAnimKitSegment(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKit(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(animKitDto));
             }
 
             await AddHotfixes(animKitDto.GetHotfixes());
@@ -119,24 +119,24 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromHotfixesAsync(int id)
         {
-            var animKit = await _mySql.GetAsync<AnimKit>(s => s.Id == id);
-            var animKitSegments = await _mySql.GetManyAsync<AnimKitSegment>(s => s.ParentAnimKitId == id);
-            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
+            var animKit = await _mySql.GetSingleAsync<AnimKit>(s => s.Id == id);
+            var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(s => s.ParentAnimKitId == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != animKit)
                 await _mySql.DeleteAsync(animKit);
 
             if (animKitSegments.Any())
-                await _mySql.DeleteManyAsync(animKitSegments);
+                await _mySql.DeleteAsync(animKitSegments.ToArray());
 
-            var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)
                 {
                     hotfix.Status = HotfixStatuses.INVALID;
                 }
-                await _mySql.UpdateManyAsync(hotfixData);
+                await _mySql.AddOrUpdateAsync(hotfixData.ToArray());
             }
 
             if (null != hotfixModsData)

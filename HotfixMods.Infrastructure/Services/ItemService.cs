@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardAsync()
         {
-            var items = await _mySql.GetManyAsync<ItemSparse>(c => c.VerifiedBuild == VerifiedBuild);
+            var items = await _mySql.GetAsync<ItemSparse>(c => c.VerifiedBuild == VerifiedBuild);
             var result = new List<DashboardModel>();
             foreach (var item in items)
             {
@@ -46,28 +46,14 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixId = await GetNextHotfixIdAsync();
             item.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if (item.IsUpdate)
-            {
-                await _mySql.UpdateAsync(BuildHotfixModsData(item));
-                await _mySql.UpdateAsync(BuildItem(item));
-                await _mySql.UpdateAsync(BuildItemAppearance(item));
-                await _mySql.UpdateAsync(BuildItemDisplayInfo(item));
-                await _mySql.UpdateAsync(BuildItemModifiedAppearance(item));
-                await _mySql.UpdateAsync(BuildItemSearchName(item));
-                await _mySql.UpdateAsync(BuildItemSparse(item));
-                await _mySql.UpdateManyAsync(BuildItemDisplayInfoMaterialRes(item));
-            }
-            else
-            {
-                await _mySql.AddAsync(BuildHotfixModsData(item));
-                await _mySql.AddAsync(BuildItem(item));
-                await _mySql.AddAsync(BuildItemAppearance(item));
-                await _mySql.AddAsync(BuildItemDisplayInfo(item));
-                await _mySql.AddAsync(BuildItemModifiedAppearance(item));
-                await _mySql.AddAsync(BuildItemSearchName(item));
-                await _mySql.AddAsync(BuildItemSparse(item));
-                await _mySql.AddManyAsync(BuildItemDisplayInfoMaterialRes(item));
-            }
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(item));
+            await _mySql.AddOrUpdateAsync(BuildItem(item));
+            await _mySql.AddOrUpdateAsync(BuildItemAppearance(item));
+            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfo(item));
+            await _mySql.AddOrUpdateAsync(BuildItemModifiedAppearance(item));
+            await _mySql.AddOrUpdateAsync(BuildItemSearchName(item));
+            await _mySql.AddOrUpdateAsync(BuildItemSparse(item));
+            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfoMaterialRes(item));
 
             await AddHotfixes(item.GetHotfixes());
         }
@@ -80,7 +66,7 @@ namespace HotfixMods.Infrastructure.Services
             var result = new List<ItemDto>();
 
             progressCallback("Item", "Loading from ItemSparse", 10);
-            var itemSparse = await _mySql.GetAsync<ItemSparse>(i => i.Id == itemId) ?? await _db2.GetAsync<ItemSparse>(i => i.Id == itemId);
+            var itemSparse = await _mySql.GetSingleAsync<ItemSparse>(i => i.Id == itemId) ?? await _db2.GetAsync<ItemSparse>(i => i.Id == itemId);
             if(null == itemSparse)
             {
                 progressCallback("Item", "ItemSparse not found", 100);
@@ -88,7 +74,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             progressCallback("Item", "Loading from Item", 25);
-            var item = await _mySql.GetAsync<Item>(i => i.Id == itemId) ?? await _db2.GetAsync<Item>(i => i.Id == itemId);
+            var item = await _mySql.GetSingleAsync<Item>(i => i.Id == itemId) ?? await _db2.GetAsync<Item>(i => i.Id == itemId);
             if(null == item)
             {
                 progressCallback("Item", "Item not found", 100);
@@ -97,7 +83,7 @@ namespace HotfixMods.Infrastructure.Services
 
             progressCallback("Item", "Loading from ItemModifiedAppearance", 40);
 
-            var itemModifiedAppearances = (await _mySql.GetManyAsync<ItemModifiedAppearance>(i => i.Id == itemId)).ToList();
+            var itemModifiedAppearances = (await _mySql.GetAsync<ItemModifiedAppearance>(i => i.Id == itemId)).ToList();
             if(!itemModifiedAppearances.Any())
                 itemModifiedAppearances = (await _db2.GetManyAsync<ItemModifiedAppearance>(i => i.ItemId == itemId)).ToList();
             if(!itemModifiedAppearances.Any())
@@ -124,7 +110,7 @@ namespace HotfixMods.Infrastructure.Services
                 index++;
                 int progress = 50 + (int)(45.0 / itemModifiedAppearances.Count * index);
                 progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "Loading from ItemAppearance", progress);
-                var itemAppearance = await _mySql.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId);
+                var itemAppearance = await _mySql.GetSingleAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemAppearance>(i => i.Id == itemModifiedAppearance.ItemAppearanceId);
                 if(null == itemAppearance)
                 {
                     progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "ItemAppearance not found", progress);
@@ -132,7 +118,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "Loading from ItemDisplayInfo", progress);
-                var itemDisplayInfo = await _mySql.GetAsync<ItemDisplayInfo>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemDisplayInfo>(i => i.Id == itemAppearance.ItemDisplayInfoId);
+                var itemDisplayInfo = await _mySql.GetSingleAsync<ItemDisplayInfo>(i => i.Id == itemModifiedAppearance.ItemAppearanceId) ?? await _db2.GetAsync<ItemDisplayInfo>(i => i.Id == itemAppearance.ItemDisplayInfoId);
                 if(null == itemDisplayInfo)
                 {
                     progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "ItemDisplayInfo not found", progress);
@@ -140,7 +126,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "Loading from ItemDisplayInfoMaterialRes", progress);
-                var itemDisplayInfoMaterialResources = await _mySql.GetManyAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
+                var itemDisplayInfoMaterialResources = await _mySql.GetAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
                 if(!itemDisplayInfoMaterialResources.Any())
                     itemDisplayInfoMaterialResources = await _db2.GetManyAsync<ItemDisplayInfoMaterialRes>(i => i.ItemDisplayInfoId == itemDisplayInfo.Id);
 
@@ -283,10 +269,10 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromCharactersAsync(int id)
         {
-            var itemInstances = await _mySql.GetManyAsync<ItemInstance>(i => i.ItemEntry == id);
+            var itemInstances = await _mySql.GetAsync<ItemInstance>(i => i.ItemEntry == id);
             foreach(var itemInstance in itemInstances)
             {
-                var characterInventory = await _mySql.GetAsync<CharacterInventory>(c => c.Item == id);
+                var characterInventory = await _mySql.GetSingleAsync<CharacterInventory>(c => c.Item == id);
                 if (characterInventory != null)
                     await _mySql.DeleteAsync(characterInventory);
                 await _mySql.DeleteAsync(itemInstance);
@@ -295,14 +281,14 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromHotfixesAsync(int id)
         {
-            var item = await _mySql.GetAsync<Item>(c => c.Id == id);
-            var itemSparse = await _mySql.GetAsync<ItemSparse>(c => c.Id == id);
-            var itemSearchName = await _mySql.GetAsync<ItemSearchName>(c => c.Id == id);
-            var itemAppearance = await _mySql.GetAsync<ItemAppearance>(c => c.Id == id);
-            var itemModifiedAppearance = await _mySql.GetAsync<ItemModifiedAppearance>(c => c.Id == id);
-            var itemDisplayInfo = await _mySql.GetAsync<ItemDisplayInfo>(c => c.Id == id);
-            var itemDisplayInfoMaterialResources = await _mySql.GetManyAsync<ItemDisplayInfoMaterialRes>(c => c.ItemDisplayInfoId == id);
-            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(h => h.Id == id);
+            var item = await _mySql.GetSingleAsync<Item>(c => c.Id == id);
+            var itemSparse = await _mySql.GetSingleAsync<ItemSparse>(c => c.Id == id);
+            var itemSearchName = await _mySql.GetSingleAsync<ItemSearchName>(c => c.Id == id);
+            var itemAppearance = await _mySql.GetSingleAsync<ItemAppearance>(c => c.Id == id);
+            var itemModifiedAppearance = await _mySql.GetSingleAsync<ItemModifiedAppearance>(c => c.Id == id);
+            var itemDisplayInfo = await _mySql.GetSingleAsync<ItemDisplayInfo>(c => c.Id == id);
+            var itemDisplayInfoMaterialResources = await _mySql.GetAsync<ItemDisplayInfoMaterialRes>(c => c.ItemDisplayInfoId == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
 
             if (null != item)
                 await _mySql.DeleteAsync(item);
@@ -323,16 +309,16 @@ namespace HotfixMods.Infrastructure.Services
                 await _mySql.DeleteAsync(itemDisplayInfo);
 
             if (itemDisplayInfoMaterialResources.Any())
-                await _mySql.DeleteManyAsync(itemDisplayInfoMaterialResources);
+                await _mySql.DeleteAsync(itemDisplayInfoMaterialResources.ToArray());
 
-            var hotfixData = await _mySql.GetManyAsync<HotfixData>(h => h.UniqueId == id);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)
                 {
                     hotfix.Status = HotfixStatuses.INVALID;
                 }
-                await _mySql.UpdateManyAsync(hotfixData);
+                await _mySql.AddOrUpdateAsync(hotfixData.ToArray());
             }
 
             if (null != hotfixModsData)

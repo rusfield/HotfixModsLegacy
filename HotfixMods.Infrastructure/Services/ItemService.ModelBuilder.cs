@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
-        List<ItemDisplayInfoMaterialRes> BuildItemDisplayInfoMaterialRes(ItemDto item)
+        ItemDisplayInfoMaterialRes[] BuildItemDisplayInfoMaterialRes(ItemDto item)
         {
             var result = new List<ItemDisplayInfoMaterialRes>();
 
@@ -143,7 +143,7 @@ namespace HotfixMods.Infrastructure.Services
 
             }
 
-            return result;
+            return result.ToArray();
         }
 
         ItemAppearance BuildItemAppearance(ItemDto item)

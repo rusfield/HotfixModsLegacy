@@ -14,13 +14,13 @@ namespace HotfixMods.Db2Provider.WowToolsFiles.Clients
 {
     public class Db2Client : IDb2Provider
     {
-        public async Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2
         {
             return (await ReadFiles(predicate, true)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
+        public async Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2
         {
             return await ReadFiles(predicate, false);

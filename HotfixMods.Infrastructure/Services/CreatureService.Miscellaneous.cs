@@ -21,13 +21,13 @@ namespace HotfixMods.Infrastructure.Services
             if (chrModel == null)
                 return result;
 
-            var options = await _db2.GetManyAsync<ChrCustomizationOption>(c => c.ChrModelId == chrModel);
+            var options = await _db2.GetAsync<ChrCustomizationOption>(c => c.ChrModelId == chrModel);
             foreach (var option in options)
             {
                 if (!includeDruidForms && IsDruidFormCustomization(option))
                     continue;
 
-                var choices = (await _db2.GetManyAsync<ChrCustomizationChoice>(c => c.ChrCustomizationOptionId == option.Id)).ToList();
+                var choices = (await _db2.GetAsync<ChrCustomizationChoice>(c => c.ChrCustomizationOptionId == option.Id)).ToList();
                 result.Add(new CustomizationOptionDto()
                 {
                     Id = option.Id,

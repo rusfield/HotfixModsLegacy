@@ -10,9 +10,9 @@ namespace HotfixMods.Core.Providers
 {
     public interface IDb2Provider
     {
-        public Task<T?> GetAsync<T>(Expression<Func<T, bool>> predicate)
+        public Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2;
-        public Task<IEnumerable<T>> GetManyAsync<T>(Expression<Func<T, bool>> predicate)
+        public Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
             where T : IDb2;
     }
 }

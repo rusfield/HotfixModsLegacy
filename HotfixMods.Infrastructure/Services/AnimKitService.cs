@@ -82,12 +82,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto?> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
         {
-            var animKit = await _db2.GetAsync<AnimKit>(a => a.Id == animKitId);
+            var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == animKitId);
             if(animKit == null)
             {
                 return null;
             }
-            var animKitSegments = await _db2.GetManyAsync<AnimKitSegment>(a => a.ParentAnimKitId == animKitId);
+            var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == animKitId);
             if (!animKitSegments.Any())
             {
                 return null;

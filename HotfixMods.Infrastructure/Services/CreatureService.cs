@@ -108,7 +108,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 progressCallback("Creature", $"Retrieving Display Info", (int)(20 / iterationDivider));
-                var displayInfo = await _mySql.GetSingleAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId) ?? await _db2.GetAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId);
+                var displayInfo = await _mySql.GetSingleAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId) ?? await _db2.GetSingleAsync<CreatureDisplayInfo>(c => c.Id == creatureDisplayId);
                 if (displayInfo == null)
                 {
                     progressCallback("Failed", $"Display Info for Display Id {creatureDisplayId} not found", (int)(20 / iterationDivider));
@@ -160,7 +160,7 @@ namespace HotfixMods.Infrastructure.Services
                 };
 
                 progressCallback("Creature", $"Retrieving Display Info Extra", (int)(30 / iterationDivider));
-                var displayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
+                var displayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
                 if (displayInfoExtra == null)
                 {
                     progressCallback("Creature", $"Display Info Extra not found", (int)(30 / iterationDivider));
@@ -173,7 +173,7 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback("Customizations", $"Retrieving available customizations", (int)(40 / iterationDivider));
                 var availableCustomizations = await GetAvailableCustomizations(displayInfoExtra.DisplayRaceId, displayInfo.Gender);
                 progressCallback("Customizations", $"Retrieving creature customizations", (int)(60 / iterationDivider));
-                var customizations = await _mySql.GetAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id) ?? await _db2.GetManyAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
+                var customizations = await _mySql.GetAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id) ?? await _db2.GetAsync<CreatureDisplayInfoOption>(h => h.CreatureDisplayInfoExtraId == displayInfoExtra.Id);
                 var creatureCustomizations = new Dictionary<int, int?>();
 
                 foreach (var availableCustomization in availableCustomizations)
@@ -195,7 +195,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 progressCallback("Equipment", $"Retrieving equipment", (int)(80 / iterationDivider));
                 var hotfixEquipment = await _mySql.GetAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
-                var db2Equipment = await _db2.GetManyAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
+                var db2Equipment = await _db2.GetAsync<NpcModelItemSlotDisplayInfo>(npc => npc.NpcModelId == displayInfoExtra.Id);
 
                 for (int i = 0; i <= Enum.GetValues(typeof(ArmorSlots)).Cast<int>().Max(); i++)
                 {

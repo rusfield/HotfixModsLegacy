@@ -45,14 +45,14 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<SoundKitDto> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
         {
-            var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetAsync<SoundKit>(s => s.Id == soundKitId);
+            var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetSingleAsync<SoundKit>(s => s.Id == soundKitId);
             if (null == soundKit)
             {
                 return new();
             }
             var soundKitEntries = await _mySql.GetAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
             if (!soundKitEntries.Any())
-                soundKitEntries = await _db2.GetManyAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+                soundKitEntries = await _db2.GetAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
 
             if (!soundKitEntries.Any())
             {

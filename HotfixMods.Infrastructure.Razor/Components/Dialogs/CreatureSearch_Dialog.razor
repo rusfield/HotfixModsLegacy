@@ -13,7 +13,26 @@
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
                     @if (creatureResults.Count == 0)
                     {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
                         <MudNumericField @bind-Value="@CreatureId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CreatureId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Display ID:</MudText>
+                        <MudNumericField @bind-Value="@CreatureDisplayId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Character:</MudText>
+                        <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" />
+                        <MudSpacer />
+                        <MudSpacer />
+
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
                     }
                     else if (creatureResults.Count > 1)
                     {
@@ -40,6 +59,12 @@
 
     [Parameter]
     public int? CreatureId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    int? CreatureDisplayId;
+    string? CharacterName;
 
     Loader loaderRef = new Loader();
     List<CreatureDto> creatureResults = new List<CreatureDto>();

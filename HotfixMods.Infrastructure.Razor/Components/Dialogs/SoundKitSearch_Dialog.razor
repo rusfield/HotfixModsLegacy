@@ -13,7 +13,18 @@
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
                     @if (soundKitResults.Count == 0)
                     {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Sound Kit ID:</MudText>
                         <MudNumericField @bind-Value="@SoundKitId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Sound Kit ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="SoundKitId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
                     }
                     else if (soundKitResults.Count > 1)
                     {
@@ -40,6 +51,9 @@
 
     [Parameter]
     public int? SoundKitId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
 
     Loader loaderRef = new Loader();
     List<SoundKitDto> soundKitResults = new();

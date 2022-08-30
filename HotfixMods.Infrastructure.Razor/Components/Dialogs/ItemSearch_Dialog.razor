@@ -13,10 +13,22 @@
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
                     @if (itemResults.Count == 0)
                     {
-
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Item ID:</MudText>
                         <MudNumericField @bind-Value="@ItemId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Display ID:</MudText>
                         <MudNumericField @bind-Value="@displayInfoId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemDisplayInfoId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
 
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
                     }
                     else if (itemResults.Count > 1)
                     {
@@ -43,6 +55,9 @@
 
     [Parameter]
     public int? ItemId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
 
     Loader loaderRef = new Loader();
     int? displayInfoId;

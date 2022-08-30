@@ -71,24 +71,36 @@ namespace HotfixMods.Infrastructure.Services
             await AddHotfixes(animKitDto.GetHotfixes());
         }
 
-        public async Task<List<AnimKitDto>> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
+        public async Task<AnimKitDto> GetNewAnimKit(Action<string, string, int>? progressCallback = null)
+        {
+            return new AnimKitDto()
+            {
+                Id = await GetNextIdAsync(),
+                Segments = new List<AnimKitSegmentDto>() { new AnimKitSegmentDto() { OrderIndex = 0 } }
+            };
+        }
+
+        public async Task<AnimKitDto?> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
         {
             var animKit = await _db2.GetAsync<AnimKit>(a => a.Id == animKitId);
             if(animKit == null)
             {
-                return new();
+                return null;
             }
             var animKitSegments = await _db2.GetManyAsync<AnimKitSegment>(a => a.ParentAnimKitId == animKitId);
             if (!animKitSegments.Any())
             {
-                return new();
+                return null;
             }
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(c => c.RecordId == animKitId && c.VerifiedBuild == VerifiedBuild);
             
             var result = new AnimKitDto()
             {
                 Id = await GetNextIdAsync(),
                 OneShotStopAnimKitId = animKit.OneShotStopAnimKitId,
                 OneShotDuration = animKit.OneShotDuration,
+                HotfixModsName = hmData?.Name,
+                HotfixModsComment = hmData?.Comment,
                 Segments = new()
             };
 
@@ -114,7 +126,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
-            return new() { result };
+            return result;
         }
 
         async Task DeleteFromHotfixesAsync(int id)

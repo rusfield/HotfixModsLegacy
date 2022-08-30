@@ -34,7 +34,7 @@
                     {
                         foreach (var (item, index) in itemResults.Select((val, idx) => (val, idx)))
                         {
-                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnItem(item))">@item.AppearanceName</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnItem(item))">@item.SearchResultName</MudButton>
                             if ((index + 1) % 4 == 0)
                             {
                                 <MudSpacer />

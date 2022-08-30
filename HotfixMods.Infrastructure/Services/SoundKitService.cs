@@ -34,7 +34,16 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<SoundKitDto>> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
+        public async Task<SoundKitDto> GetNewSoundKit(Action<string, string, int>? progressCallback = null)
+        {
+            return new SoundKitDto()
+            {
+                Id = await GetNextIdAsync(),
+                FileDataIds = new()
+            };
+        }
+
+        public async Task<SoundKitDto> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
         {
             var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetAsync<SoundKit>(s => s.Id == soundKitId);
             if (null == soundKit)
@@ -69,7 +78,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 result.FileDataIds.Add(soundKitEntry.FileDataId);
             }
-            return new List<SoundKitDto>() { result };
+            return result;
         }
 
         public async Task DeleteAsync(int id)

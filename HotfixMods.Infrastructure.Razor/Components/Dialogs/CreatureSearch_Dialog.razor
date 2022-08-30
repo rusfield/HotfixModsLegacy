@@ -38,7 +38,7 @@
                     {
                         foreach (var (creature, index) in creatureResults.Select((val, idx) => (val, idx)))
                         {
-                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnCreature(creature))">@creature.AppearanceName</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnCreature(creature))">@creature.SearchResultName</MudButton>
                             if ((index + 1) % 4 == 0)
                             {
                                 <MudSpacer />

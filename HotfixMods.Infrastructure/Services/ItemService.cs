@@ -221,7 +221,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemGroupSoundsId = item.ItemGroupSoundsId,
                     
                     IsUpdate = isUpdate,
-                    AppearanceName = appearanceName
+                    SearchResultName = appearanceName
                 };
 
                 foreach(var materialRes in itemDisplayInfoMaterialResources)

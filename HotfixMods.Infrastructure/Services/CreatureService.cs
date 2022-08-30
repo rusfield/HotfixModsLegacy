@@ -156,7 +156,7 @@ namespace HotfixMods.Infrastructure.Services
                     Auras = auras,
 
                     IsUpdate = false,
-                    AppearanceName = creatureDisplayId.ToString()
+                    SearchResultName = creatureDisplayId.ToString()
                 };
 
                 progressCallback("Creature", $"Retrieving Display Info Extra", (int)(30 / iterationDivider));

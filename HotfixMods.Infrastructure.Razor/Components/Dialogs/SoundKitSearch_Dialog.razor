@@ -21,7 +21,7 @@
                         @if (ShowNewOption)
                         {
                             <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
-                            <MudButton Variant="Variant.Outlined" Color="Color.Primary">New</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="SoundKitNew_Click">New</MudButton>
                             <MudSpacer />
                             <MudSpacer />
                         }
@@ -30,7 +30,7 @@
                     {
                         foreach (var (soundKit, index) in soundKitResults.Select((val, idx) => (val, idx)))
                         {
-                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnSoundKit(soundKit))">@soundKit.AppearanceName</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnSoundKit(soundKit))">@soundKit.SearchResultName</MudButton>
                             if ((index + 1) % 4 == 0)
                             {
                                 <MudSpacer />
@@ -66,6 +66,12 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
+    async Task SoundKitNew_Click()
+    {
+        var soundKitResult = await SoundKitService.GetNewSoundKit(loaderRef.SetLoading);
+        ReturnSoundKit(soundKitResult);
+    }
+
     async Task SoundKitId_Click()
     {
         if (null != SoundKitId)
@@ -81,14 +87,10 @@
 
     async Task SearchSoundKitById()
     {
-        soundKitResults = await SoundKitService.GetSoundKitById((int)SoundKitId, loaderRef.SetLoading);
-        if (soundKitResults.Count() == 1)
+        var soundKitResult = await SoundKitService.GetSoundKitById((int)SoundKitId, loaderRef.SetLoading);
+        if (null != soundKitResult)
         {
-            ReturnSoundKit(soundKitResults.First());
-        }
-        else if (soundKitResults.Count() > 1)
-        {
-            this.StateHasChanged();
+            ReturnSoundKit(soundKitResult);
         }
         else
         {

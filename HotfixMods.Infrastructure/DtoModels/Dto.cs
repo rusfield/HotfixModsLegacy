@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public int Id { get; set; }
         public bool IsUpdate { get; set; }
-        public string AppearanceName { get;set; } // For example "Heroic" for items, or female name for creatures.
+        public string SearchResultName { get;set; } // For example "Heroic" for items, or female name for creatures.
 
         public string HotfixModsName { get; set; }
         public string HotfixModsComment { get; set; }

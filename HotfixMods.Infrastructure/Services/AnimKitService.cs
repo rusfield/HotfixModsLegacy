@@ -76,7 +76,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 Id = await GetNextIdAsync(),
-                Segments = new List<AnimKitSegmentDto>() { new AnimKitSegmentDto() { OrderIndex = 0 } }
+                Segments = new() { new() { OrderIndex = 0 } }
             };
         }
 

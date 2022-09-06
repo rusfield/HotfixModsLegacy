@@ -1,38 +1,45 @@
 ﻿@using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.DtoModels.Creatures
 @using HotfixMods.Infrastructure.Razor.Components.Elements
+@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.Services
+
+@inject CreatureService CreatureService
+
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        @for (int i = 0; i < Math.Min(6, AvailableCustomizations.Count); i++)
+        <SingleSelect_Element T="Races?" Label="Race" Value="@Creature.Race" ValueChanged="SetRace" CssClass="@elementCssClass" />
+        <SingleSelect_Element T="Genders?" Label="Gender" Value="@Creature.Gender" ValueChanged="SetGender" CssClass="@elementCssClass" />
+        @for (int i = 0; i < Math.Min(4, availableCustomizations.Count); i++)
         {
             int iNested = i;
-            int customizationOption = AvailableCustomizations.ElementAt(iNested).Key.Id;
+            int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
-            <SingleSelect_Element T="int?" Label="@(AvailableCustomizations.ElementAt(iNested).Key.Name)" Options="@(AvailableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
+            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
         }
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
         @* BG *@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        @for (int i = 6; i < Math.Min(12, AvailableCustomizations.Count - 1); i++)
+        @for (int i = 4; i < Math.Min(10, availableCustomizations.Count - 1); i++)
         {
             int iNested = i;
-            int customizationOption = AvailableCustomizations.ElementAt(iNested).Key.Id;
+            int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
-            <SingleSelect_Element T="int?" Label="@(AvailableCustomizations.ElementAt(iNested).Key.Name)" Options="@(AvailableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
+            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
         }
     </MudItem>
 
-    @if (AvailableCustomizations.Count > 12)
+    @if (availableCustomizations.Count > 10)
     {
-        foreach (var (remainingOption, iNested) in AvailableCustomizations.Skip(12).Select((v, i) => (v, i + 12)))
+        foreach (var (remainingOption, iNested) in availableCustomizations.Skip(12).Select((v, i) => (v, i + 12)))
         {
-            int customizationOption = AvailableCustomizations.ElementAt(iNested).Key.Id;
+            int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
             <MudItem xs="3" Class="@gridItemCssClass">
-                <SingleSelect_Element T="int?" Label="@(AvailableCustomizations.ElementAt(iNested).Key.Name)" Options="@(AvailableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
+                <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" CssClass="@elementCssClass" />
             </MudItem>
         }
     }
@@ -48,16 +55,56 @@
     [Parameter]
     public CreatureDto? CreatureLookup { get; set; }
 
-    [Parameter]
-    public Dictionary<CustomizationOptionDto, List<CustomizationChoiceDto>> AvailableCustomizations { get; set; }
+    Dictionary<CustomizationOptionDto, List<CustomizationChoiceDto>> availableCustomizations = new();
+
+    async Task SetRace(Races? race)
+    {
+        Creature.Race = race;
+        await SetAvailableCustomizations(true);
+    }
+
+    async Task SetGender(Genders? gender)
+    {
+        Creature.Gender = gender;
+        await SetAvailableCustomizations(true);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await SetAvailableCustomizations(false);
+        await base.OnParametersSetAsync();
+    }
+
+    async Task SetAvailableCustomizations(bool resetCreature)
+    {
+        if (Creature != null && Creature.Race != null && Creature.Gender != null)
+        {
+            availableCustomizations = await CreatureService.GetAvailableCustomizations((Races)Creature.Race, (Genders)Creature.Gender);
+            if (resetCreature)
+                Creature.Customizations = new();
+        }
+        else
+        {
+            availableCustomizations = new();
+        }
+        foreach (var customizationOption in availableCustomizations.Keys)
+        {
+            if (!Creature.Customizations.Any(c => c.Key == customizationOption.Id))
+            {
+                // This could crash if there is an Option without any Choices, but that would cause issues elsewhere too
+                Creature.Customizations.Add(customizationOption.Id, availableCustomizations[customizationOption].First().Id);
+            }
+        }
+    }
+
 
     bool CreatureAndCreatureLookupShareCustomizations()
     {
-        if(Creature != null && Creature.Race != null && Creature.Gender != null)
+        if (Creature != null && Creature.Race != null && Creature.Gender != null)
         {
             if (CreatureLookup != null && CreatureLookup.Race != null && CreatureLookup.Gender != null)
             {
-                if(Creature.Race == CreatureLookup.Race && Creature.Gender == CreatureLookup.Gender)
+                if (Creature.Race == CreatureLookup.Race && Creature.Gender == CreatureLookup.Gender)
                 {
                     return true;
                 }

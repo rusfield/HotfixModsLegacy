@@ -30,7 +30,7 @@
                 <CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Customization">
-                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" AvailableCustomizations="availableCustomizations"/>
+                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Equipment">
                 <CreatureEquipment_Tab Creature="creature" CreatureLookup="creatureLookup" />
@@ -49,7 +49,6 @@ else
     CreatureDto? creature;
     CreatureDto? creatureLookup;
     List<RazorDashboardModel> creatureDashboard;
-    Dictionary<CustomizationOptionDto, List<CustomizationChoiceDto>> availableCustomizations;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,16 +71,12 @@ else
     async Task EditAsync(int id)
     {
         creature = await OpenCreatureSearchDialog(id);
-        if (creature != null && creature.Race != null && creature.Gender != null) 
-            availableCustomizations = await CreatureService.GetAvailableCustomizations((Races)creature.Race, (Genders)creature.Gender);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
         creature = await OpenCreatureSearchDialog();
-        if (creature != null && creature.Race != null && creature.Gender != null)
-            availableCustomizations = await CreatureService.GetAvailableCustomizations((Races)creature.Race, (Genders)creature.Gender);
         this.StateHasChanged();
     }
 

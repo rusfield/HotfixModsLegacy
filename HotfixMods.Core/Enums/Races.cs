@@ -8,7 +8,7 @@ namespace HotfixMods.Core.Enums
 {
     public enum Races
     {
-        NONE = 0,
+        //NONE = 0,
         HUMAN = 1,
         ORC = 2,
         DWARF = 3,

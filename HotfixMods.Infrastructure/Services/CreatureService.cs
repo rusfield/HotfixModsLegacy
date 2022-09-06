@@ -131,11 +131,20 @@ namespace HotfixMods.Infrastructure.Services
                     }
 
                 }
+
+                progressCallback("Creature", $"Retrieving Display Info Extra", (int)(30 / iterationDivider));
+                var displayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
+                if (displayInfoExtra == null)
+                {
+                    progressCallback("Creature", $"Display Info Extra not found", (int)(30 / iterationDivider));
+                    continue;
+                }
+
                 var creature = new CreatureDto()
                 {
                     Id = await GetNextIdAsync(),
                     Gender = displayInfo.Gender,
-                    Race = Races.NONE,
+                    Race = displayInfoExtra.DisplayRaceId,
                     CreatureType = creatureTemplate != null ? creatureTemplate.Type : CreatureTypes.HUMANOID,
                     Faction = creatureTemplate != null ? creatureTemplate.Faction : 17,
                     CreatureUnitClass = creatureTemplate != null ? creatureTemplate.UnitClass : CreatureUnitClasses.WARRIOR,
@@ -158,17 +167,6 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = false,
                     SearchResultName = creatureDisplayId.ToString()
                 };
-
-                progressCallback("Creature", $"Retrieving Display Info Extra", (int)(30 / iterationDivider));
-                var displayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId) ?? await _db2.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == displayInfo.ExtendedDisplayInfoId);
-                if (displayInfoExtra == null)
-                {
-                    progressCallback("Creature", $"Display Info Extra not found", (int)(30 / iterationDivider));
-                    result.Add(creature);
-                    continue;
-                }
-
-                creature.Race = displayInfoExtra.DisplayRaceId;
 
                 progressCallback("Customizations", $"Retrieving available customizations", (int)(40 / iterationDivider));
                 var availableCustomizations = await GetAvailableCustomizations(displayInfoExtra.DisplayRaceId, displayInfo.Gender);

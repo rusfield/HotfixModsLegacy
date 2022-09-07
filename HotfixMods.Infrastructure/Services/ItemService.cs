@@ -58,6 +58,18 @@ namespace HotfixMods.Infrastructure.Services
             await AddHotfixes(item.GetHotfixes());
         }
 
+        public async Task<ItemDto> GetNewItemAsync(Action<string, string, int>? progressCallback = null)
+        {
+            return new ItemDto()
+            {
+                Id = await GetNextIdAsync(),
+                DisplayType = DisplayTypes.CHEST,
+                InventoryType = InventoryTypes.CHEST_BODY,
+                ItemClass = ItemClasses.ARMOR,
+                ItemSubClass = 1
+            };
+        }
+
         public async Task<List<ItemDto>> GetItemsByIdAsync(int itemId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)

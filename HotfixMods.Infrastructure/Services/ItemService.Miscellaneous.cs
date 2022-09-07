@@ -9,6 +9,9 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
+        public Dictionary<int, string> GetAvailableSubClasses(ItemClasses itemClass)
+        {
 
+        }
     }
 }

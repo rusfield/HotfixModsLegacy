@@ -13,7 +13,7 @@ namespace HotfixMods.Core.Models
     {
         [Key]
         public int Id { get; set; }
-        public ItemClass ClassId { get; set; }
+        public ItemClasses ClassId { get; set; }
         public int SubClassId { get; set; } // A bunch of enums, based on ClassId
         public ItemMaterial Material { get; set; }
         public InventoryTypes InventoryType { get; set; }

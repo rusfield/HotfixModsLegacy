@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemClass
+    public enum ItemClasses
     {
         WEAPON = 2,
-        ARMOR = 4,
-        QUIVER = 11,
+        ARMOR = 4
     }
 }

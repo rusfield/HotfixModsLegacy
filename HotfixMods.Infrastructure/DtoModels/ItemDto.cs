@@ -60,7 +60,7 @@ namespace HotfixMods.Infrastructure.DtoModels
 
         public DisplayTypes DisplayType { get; set; }
         public InventoryTypes InventoryType { get; set; }
-        public ItemClass ItemClass { get; set; }
+        public ItemClasses ItemClass { get; set; }
         public int ItemSubClass { get; set; }
 
     }

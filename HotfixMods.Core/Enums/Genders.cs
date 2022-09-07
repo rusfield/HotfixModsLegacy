@@ -8,8 +8,8 @@ namespace HotfixMods.Core.Enums
 {
     public enum Genders
     {
-        Male = 0,
-        Female = 1,
+        MALE = 0,
+        FEMALE = 1,
         //Other = 2
     }
 }

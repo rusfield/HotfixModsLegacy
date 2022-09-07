@@ -82,7 +82,7 @@ else
 
     async Task CreatureLookupAsync_Click()
     {
-        creatureLookup = await OpenCreatureSearchDialog();
+        creatureLookup = await OpenCreatureSearchDialog(null, false);
         this.StateHasChanged();
     }
 
@@ -120,10 +120,11 @@ else
         }
     }
 
-    async Task<CreatureDto?> OpenCreatureSearchDialog(int? id = null)
+    async Task<CreatureDto?> OpenCreatureSearchDialog(int? id = null, bool showNewOption = true)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(CreatureSearch_Dialog.CreatureId), id);
+        dialogParameters.Add(nameof(CreatureSearch_Dialog.ShowNewOption), showNewOption);
         var dialog = DialogService.Show<CreatureSearch_Dialog>(null, dialogParameters);
         var dialogResult = await dialog.Result;
         if (!dialogResult.Cancelled)

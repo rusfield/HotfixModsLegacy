@@ -44,6 +44,18 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromWorldAsync(id);
         }
 
+        public async Task<CreatureDto> GetNewCreatureAsync(Action<string, string, int>? progressCallback = null)
+        {
+            return new CreatureDto()
+            {
+                Id = await GetNextIdAsync(),
+                Auras = new(),
+                Gender = Genders.MALE,
+                Race = Races.HUMAN,
+                Customizations = new()
+            };
+        }
+
         public async Task<List<CreatureDto>> GetCreaturesByCreatureIdAsync(int creatureId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)

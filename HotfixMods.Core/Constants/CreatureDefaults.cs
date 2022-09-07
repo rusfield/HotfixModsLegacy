@@ -36,7 +36,7 @@ namespace HotfixMods.Core.Constants
         public const int MainHandItemAppearanceModifierId = 0;
         public const int OffHandItemAppearanceModifierId = 0;
         public const int RangedItemAppearanceModifierId = 0;
-        public const Genders Gender = Genders.Male;
+        public const Genders Gender = Genders.MALE;
         public const Races Race = Races.HUMAN;
         public const int SoundId = 0;
         public const int HeadItemDisplayInfoId = 0;

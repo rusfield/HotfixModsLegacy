@@ -71,7 +71,7 @@ namespace HotfixMods.Infrastructure.Services
             await AddHotfixes(animKitDto.GetHotfixes());
         }
 
-        public async Task<AnimKitDto> GetNewAnimKit(Action<string, string, int>? progressCallback = null)
+        public async Task<AnimKitDto> GetNewAnimKitAsync(Action<string, string, int>? progressCallback = null)
         {
             return new AnimKitDto()
             {

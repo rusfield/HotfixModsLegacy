@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public ChrModels? ConvertRaceAndGenderToChrModel(Races race, Genders gender)
+        protected ChrModels? ConvertRaceAndGenderToChrModel(Races race, Genders gender)
         {
             return (race, gender) switch
             {
@@ -126,13 +126,13 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public bool IsDruidFormCustomization(ChrCustomizationOption option)
+        protected bool IsDruidFormCustomization(ChrCustomizationOption option)
         {
             var druidForms = new List<int>() { 6, 7, 9, 10, 11, 12 }; // IDs gotten from ChrCustomizationCategory
             return druidForms.Any(d => d == option.ChrCustomizationCategoryId);
         }
 
-        public int GetModelIdByRaceAndGenders(Races race, Genders gender, Dictionary<int, int?> customizations)
+        protected int GetModelIdByRaceAndGenders(Races race, Genders gender, Dictionary<int, int?> customizations)
         {
 
             /* Comments:
@@ -204,6 +204,68 @@ namespace HotfixMods.Infrastructure.Services
 
                 _ => throw new NotImplementedException($"Race and Gender combination {race} + {gender} is not implemented")
             };
+        }
+
+        protected int GetDefaultSoundId(Races race, Genders gender)
+        {
+            // TODO: Needs more digging. 
+            // Some missing, and some of them are missing crit attack sound.
+            return (race, gender) switch
+            {
+                (Races.HUMAN, Genders.MALE) => 6847,
+                (Races.HUMAN, Genders.FEMALE) => 6688,
+                (Races.ORC, Genders.MALE) => 51,
+                (Races.ORC, Genders.FEMALE) => 4314,
+                (Races.DWARF, Genders.MALE) => 53,
+                (Races.DWARF, Genders.FEMALE) => 54,
+                (Races.NIGHT_ELF, Genders.MALE) => 55,
+                (Races.NIGHT_ELF, Genders.FEMALE) => 56,
+                (Races.UNDEAD, Genders.MALE) => 57,
+                (Races.UNDEAD, Genders.FEMALE) => 58,
+                (Races.TAUREN, Genders.MALE) => 59,
+                (Races.TAUREN, Genders.FEMALE) => 60,
+                (Races.GNOME, Genders.MALE) => 294,
+                (Races.GNOME, Genders.FEMALE) => 295,
+                (Races.TROLL, Genders.MALE) => 296,
+                (Races.TROLL, Genders.FEMALE) => 297,
+                (Races.GOBLIN, Genders.MALE) => 4315,
+                (Races.GOBLIN, Genders.FEMALE) => 4316,
+                (Races.BLOOD_ELF, Genders.MALE) => 2155,
+                (Races.BLOOD_ELF, Genders.FEMALE) => 2156,
+                (Races.DRAENEI, Genders.MALE) => 2153,
+                (Races.DRAENEI, Genders.FEMALE) => 2154,
+                (Races.WORGEN, Genders.MALE) => 3058,
+                (Races.WORGEN, Genders.FEMALE) => 3061,
+                (Races.DARK_IRON_DWARF, Genders.MALE) => 5958,
+                (Races.DARK_IRON_DWARF, Genders.FEMALE) => 5959,
+                (Races.MAGHAR_ORC, Genders.MALE) => 6087,
+                (Races.MAGHAR_ORC, Genders.FEMALE) => 6086,
+                (Races.PANDAREN, Genders.MALE) => 4560,
+                (Races.PANDAREN, Genders.FEMALE) => 4559,
+                (Races.KUL_TIRAN, Genders.MALE) => 6008,
+                (Races.KUL_TIRAN, Genders.FEMALE) => 6296,
+                (Races.NIGHTBORNE, Genders.MALE) => 5919,
+                (Races.NIGHTBORNE, Genders.FEMALE) => 5918,
+                (Races.VOID_ELF, Genders.MALE) => 5912,
+                (Races.VOID_ELF, Genders.FEMALE) => 5913,
+                (Races.MECHAGNOME, Genders.MALE) => 6644,
+                (Races.MECHAGNOME, Genders.FEMALE) => 6643,
+                (Races.VULPERA, Genders.MALE) => 6278,
+                (Races.VULPERA, Genders.FEMALE) => 6279,
+                (Races.ZANDALARI_TROLL, Genders.MALE) => 6453,
+                (Races.ZANDALARI_TROLL, Genders.FEMALE) => 6448,
+                (Races.LIGHTFORGED_DRAENEI, Genders.MALE) => 5917,
+                (Races.LIGHTFORGED_DRAENEI, Genders.FEMALE) => 5916,
+                (Races.HIGHMOUNTAIN_TAUREN, Genders.MALE) => 5915,
+                (Races.HIGHMOUNTAIN_TAUREN, Genders.FEMALE) => 5911,
+
+                _ => 0
+            };
+        }
+
+        protected bool IsWeaponSlot(CharacterInventorySlots slot)
+        {
+            return slot == CharacterInventorySlots.MAIN_HAND || slot == CharacterInventorySlots.OFF_HAND || slot == CharacterInventorySlots.RANGED;
         }
     }
 }

@@ -4,13 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
 using HotfixMods.Infrastructure.Dashboard;
 using HotfixMods.Infrastructure.DtoModels;
-using HotfixMods.Infrastructure.DtoModels.Creatures;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -54,6 +48,190 @@ namespace HotfixMods.Infrastructure.Services
                 Race = Races.HUMAN,
                 Customizations = new()
             };
+        }
+
+        public async Task<CreatureDto?> GetCreatureByCharacterNameAsync(string characterName, Action<string, string, int>? progressCallback = null)
+        {
+            if (progressCallback == null)
+                progressCallback = ConsoleProgressCallback;
+
+            progressCallback("Character", $"Retrieving {characterName}", 10);
+            var character = await _mySql.GetSingleAsync<Characters>(c => c.Name == characterName); // TODO: Check if Deleted chars must be excluded
+            if (character == null)
+            {
+                progressCallback("Failed", $"{characterName} not found", 100);
+                return null;
+            }
+
+            progressCallback("Customizations", "Retrieving customizations", 30);
+            var characterCustomization = await _mySql.GetAsync<CharacterCustomizations>(c => c.Guid == character.Guid);
+            progressCallback("Customizations", $"Found {characterCustomization.Count()} customizations", 40);
+
+            var customizations = new Dictionary<int, int?>();
+            foreach (var customization in characterCustomization)
+            {
+                customizations.Add(customization.ChrCustomizationOptionId, customization.ChrCustomizationChoiceId);
+            }
+            var result = new CreatureDto()
+            {
+                Id = await GetNextIdAsync(),
+                Race = character.Race,
+                Gender = character.Gender,
+                Customizations = customizations,
+                Level = character.Level,
+                Name = character.Name,
+                SoundId = GetDefaultSoundId(character.Race, character.Gender)
+            };
+
+            progressCallback("Equipment", "Retrieving equipment", 50);
+            var characterItems = await _mySql.GetAsync<ItemInstance>(c => c.OwnerGuid == character.Guid);
+            var characterEquipMap = await _mySql.GetAsync<CharacterInventory>(c => c.Guid == character.Guid);
+            foreach (var equippedItem in characterEquipMap.OrderBy(c => c.Slot))
+            {
+                progressCallback("Equipment", $"Handling {equippedItem.Slot.ToString().ToLower().Replace("_", "")} slot", Math.Min(50 + 2 * (int)equippedItem.Slot, 99));
+
+                var item = characterItems.Where(i => i.Guid == equippedItem.Item).FirstOrDefault();
+                if (item == null || (int)equippedItem.Slot > Enum.GetValues(typeof(CharacterInventorySlots)).Cast<int>().Max())
+                    continue;
+
+                var itemAppearanceId = 0;
+                var itemAppearanceModifierId = 0;
+                var itemId = item.ItemEntry;
+                var itemVisual = 0;
+                var transmogItem = await _mySql.GetSingleAsync<ItemInstanceTransmog>(c => c.ItemGuid == equippedItem.Item);
+
+                // Try get ItemAppearanceId by transmog.
+                // Note: Dont mix up ItemModifiedAppearance.Id with ItemAppearanceModifierId.
+                if (transmogItem != null)
+                {
+                    var itemModifiedAppearance = await _db2.GetSingleAsync<ItemModifiedAppearance>(c => c.Id == transmogItem.ItemModifiedAppearanceAllSpecs);
+                    if (itemModifiedAppearance != null)
+                    {
+                        itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
+                        itemAppearanceModifierId = itemModifiedAppearance.ItemAppearanceModifierId;
+                        itemId = itemModifiedAppearance.ItemId;
+                    }
+                    if (transmogItem.SpellItemEnchantmentAllSpecs > 0 && IsWeaponSlot(equippedItem.Slot))
+                    {
+                        var spellItemEnchantment = await _db2.GetSingleAsync<SpellItemEnchantment>(s => s.Id == transmogItem.SpellItemEnchantmentAllSpecs);
+                        if (spellItemEnchantment != null)
+                            itemVisual = spellItemEnchantment.ItemVisual;
+                    }
+                }
+
+                // Get ItemAppearanceId the default way, either because transmog does not exist or transmog failed.
+                if (itemAppearanceId == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(item.BonusListIds))
+                    {
+                        var bonusListIds = item.BonusListIds.Trim().Split(' ').Select(int.Parse).ToList();
+                        if (bonusListIds != null && bonusListIds.Any())
+                        {
+                            var itemBonus = await _db2.GetSingleAsync<ItemBonus>(bonus => bonus.Type == 7 && bonusListIds.Any(bonusId => bonusId == bonus.ParentItemBonusListId));
+                            if (itemBonus != null)
+                            {
+                                itemAppearanceModifierId = itemBonus.Value0;
+                            }
+                        }
+                    }
+
+                    var itemModifiedAppearance = await _db2.GetSingleAsync<ItemModifiedAppearance>(c => c.ItemId == item.ItemEntry && c.ItemAppearanceModifierId == itemAppearanceModifierId);
+                    if (itemModifiedAppearance == null)
+                        continue;
+
+                    itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
+                }
+
+                if (itemVisual == 0 && IsWeaponSlot(equippedItem.Slot))
+                {
+                    foreach (var enchantment in item.Enchantments.Split(' '))
+                    {
+                        if (int.TryParse(enchantment.Trim(), out var enchantmentId))
+                        {
+                            if (enchantmentId > 0)
+                            {
+                                var spellItemEnchantment = await _db2.GetSingleAsync<SpellItemEnchantment>(s => s.Id == enchantmentId);
+                                if (spellItemEnchantment != null && spellItemEnchantment.ItemVisual > 0)
+                                {
+                                    itemVisual = spellItemEnchantment.ItemVisual;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var itemAppearance = await _db2.GetSingleAsync<ItemAppearance>(c => c.Id == itemAppearanceId);
+                if (itemAppearance == null)
+                    continue;
+
+                switch (equippedItem.Slot)
+                {
+                    case CharacterInventorySlots.HEAD:
+                        result.HeadItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.BACK:
+                        result.BackItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.SHOULDERS:
+                        result.ShouldersItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.CHEST:
+                        result.ChestItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.WAIST:
+                        result.WaistItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.TABARD:
+                        result.TabardItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.SHIRT:
+                        result.ShirtItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.LEGS:
+                        result.LegsItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.FEET:
+                        result.FeetItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.WRISTS:
+                        result.WristsItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.HANDS:
+                        result.HandsItemDisplayInfoId = itemAppearance.ItemDisplayInfoId;
+                        break;
+
+                    case CharacterInventorySlots.MAIN_HAND:
+                        result.MainHandItemId = itemId;
+                        result.MainHandItemAppearanceModifierId = itemAppearanceModifierId;
+                        result.MainHandItemVisual = itemVisual;
+                        break;
+
+                    case CharacterInventorySlots.OFF_HAND:
+                        result.OffHandItemId = itemId;
+                        result.OffHandItemAppearanceModifierId = itemAppearanceModifierId;
+                        result.OffHandItemVisual = itemVisual;
+                        break;
+
+                    case CharacterInventorySlots.RANGED:
+                        result.RangedItemId = itemId;
+                        result.RangedItemAppearanceModifierId = itemAppearanceModifierId;
+                        result.RangedItemVisual = itemVisual;
+                        break;
+                }
+            }
+            progressCallback("Done", "Creature returned", 100);
+            return result;
         }
 
         public async Task<List<CreatureDto>> GetCreaturesByCreatureIdAsync(int creatureId, Action<string, string, int>? progressCallback = null)
@@ -357,19 +535,19 @@ namespace HotfixMods.Infrastructure.Services
             var creatureEquipTemplate = await _mySql.GetSingleAsync<CreatureEquipTemplate>(c => c.CreatureId == id);
             var creatureModelInfo = await _mySql.GetSingleAsync<CreatureModelInfo>(c => c.DisplayId == id);
 
-            if(null != creatureTemplate)
+            if (null != creatureTemplate)
                 await _mySql.DeleteAsync(creatureTemplate);
 
-            if(null != creatureTemplateAddon)
+            if (null != creatureTemplateAddon)
                 await _mySql.DeleteAsync(creatureTemplateAddon);
 
-            if(null != creatureTemplateModel)
+            if (null != creatureTemplateModel)
                 await _mySql.DeleteAsync(creatureTemplateModel);
 
-            if(null != creatureEquipTemplate)
+            if (null != creatureEquipTemplate)
                 await _mySql.DeleteAsync(creatureEquipTemplate);
 
-            if(null != creatureModelInfo)
+            if (null != creatureModelInfo)
                 await _mySql.DeleteAsync(creatureModelInfo);
         }
     }

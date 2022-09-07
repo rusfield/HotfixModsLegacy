@@ -22,7 +22,7 @@
                         <MudSpacer />
                         <MudSpacer />
                         <MudText Typo="Typo.h6" Align="Align.Center">Search by Character:</MudText>
-                        <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" />
+                        <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CharacterName_Click" />
                         <MudSpacer />
                         <MudSpacer />
 
@@ -92,25 +92,53 @@
 
     async Task SearchCreatureById()
     {
-        creatureResults = await CreatureService.GetCreaturesByCreatureIdAsync((int)CreatureId, loaderRef.SetLoading);
-        if (creatureResults.Count() == 1)
+        if (null != CreatureId)
         {
-            ReturnCreature(creatureResults.First());
-        }
-        else if (creatureResults.Count() > 1)
-        {
-            this.StateHasChanged();
+            creatureResults = await CreatureService.GetCreaturesByCreatureIdAsync((int)CreatureId, loaderRef.SetLoading);
+            if (creatureResults.Count() == 1)
+            {
+                ReturnCreature(creatureResults.First());
+            }
+            else if (creatureResults.Count() > 1)
+            {
+                this.StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add($"No items with ID {CreatureId} found", Severity.Info);
+            }
         }
         else
         {
-            Snackbar.Add($"No items with ID {CreatureId} found", Severity.Info);
+            Snackbar.Add($"Enter a creature ID", Severity.Info);
         }
+
     }
 
     async Task CreatureNew_Click()
     {
         var creature = await CreatureService.GetNewCreatureAsync(loaderRef.SetLoading);
         ReturnCreature(creature);
+    }
+
+    async Task CharacterName_Click()
+    {
+        if (!string.IsNullOrWhiteSpace(CharacterName))
+        {
+            var creature = await CreatureService.GetCreatureByCharacterNameAsync(CharacterName, loaderRef.SetLoading);
+            if (null != creature)
+            {
+                ReturnCreature(creature);
+            }
+            else
+            {
+                Snackbar.Add($"No character with name {CharacterName} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a character name", Severity.Info);
+        }
     }
 
     void ReturnCreature(CreatureDto item)

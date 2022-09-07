@@ -11,7 +11,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public Dictionary<int, string> GetAvailableSubClasses(ItemClasses itemClass)
         {
-
+            return null;
         }
     }
 }

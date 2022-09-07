@@ -245,7 +245,7 @@ namespace HotfixMods.Infrastructure.Services
             var creatureTemplateModels = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == creatureId);
             if (creatureTemplateModels.Any())
             {
-                var creatures = await GetCreatureByDisplayIdAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
+                var creatures = await GetCreaturesByDisplayIdsAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
                 if (creatures.Any())
                 {
                     foreach (var creature in creatures)
@@ -265,19 +265,19 @@ namespace HotfixMods.Infrastructure.Services
             return new List<CreatureDto>();
         }
 
-        public async Task<List<CreatureDto>> GetCreaturesByDisplayIdAsync(int creatureDisplayId, Action<string, string, int>? progressCallback = null)
+        public async Task<CreatureDto?> GetCreatureByDisplayIdAsync(int creatureDisplayId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
 
             progressCallback("Creature", $"Retrieving DisplayInfo for ID {creatureDisplayId}", 0);
-            var result = await GetCreatureByDisplayIdAsync(new List<int>() { creatureDisplayId }, progressCallback);
+            var result = await GetCreaturesByDisplayIdsAsync(new List<int>() { creatureDisplayId }, progressCallback);
 
             progressCallback("Done", "Returning creature", 100);
-            return result;
+            return result.FirstOrDefault();
         }
 
-        async Task<List<CreatureDto>> GetCreatureByDisplayIdAsync(List<int> creatureDisplayIds, Action<string, string, int>? progressCallback)
+        async Task<List<CreatureDto>> GetCreaturesByDisplayIdsAsync(List<int> creatureDisplayIds, Action<string, string, int>? progressCallback)
         {
             int index = 0;
             var result = new List<CreatureDto>();

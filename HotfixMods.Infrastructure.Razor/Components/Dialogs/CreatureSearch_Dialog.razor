@@ -18,7 +18,7 @@
                         <MudSpacer />
                         <MudSpacer />
                         <MudText Typo="Typo.h6" Align="Align.Center">Search by Display ID:</MudText>
-                        <MudNumericField @bind-Value="@CreatureDisplayId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" />
+                        <MudNumericField @bind-Value="@CreatureDisplayId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CreatureDisplayId_Click" />
                         <MudSpacer />
                         <MudSpacer />
                         <MudText Typo="Typo.h6" Align="Align.Center">Search by Character:</MudText>
@@ -105,20 +105,39 @@
             }
             else
             {
-                Snackbar.Add($"No items with ID {CreatureId} found", Severity.Info);
+                Snackbar.Add($"No creature with ID {CreatureId} found", Severity.Info);
             }
         }
         else
         {
             Snackbar.Add($"Enter a creature ID", Severity.Info);
         }
-
     }
 
     async Task CreatureNew_Click()
     {
         var creature = await CreatureService.GetNewCreatureAsync(loaderRef.SetLoading);
         ReturnCreature(creature);
+    }
+
+    async Task CreatureDisplayId_Click()
+    {
+        if (null != CreatureDisplayId)
+        {
+            var creature = await CreatureService.GetCreatureByDisplayIdAsync((int)CreatureId, loaderRef.SetLoading);
+            if (null != creature)
+            {
+                ReturnCreature(creatureResults.First());
+            }
+            else
+            {
+                Snackbar.Add($"No creature display with ID {CreatureDisplayId} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a creature display ID", Severity.Info);
+        }
     }
 
     async Task CharacterName_Click()

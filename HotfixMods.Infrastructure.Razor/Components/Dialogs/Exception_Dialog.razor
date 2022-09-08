@@ -1,0 +1,28 @@
+﻿@using HotfixMods.Infrastructure.Razor.Components.Elements
+@using Microsoft.Extensions.Hosting
+@inject ISnackbar Snackbar
+
+@*
+@inject IHostApplicationLifetime AppLifetime
+*@
+
+<MudDialog>
+    <DialogContent>
+        <MudText>The software has crashed.</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => Quit_Click())">Quit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    async Task Quit_Click()
+    {
+        //AppLifetime.StopApplication();
+        Environment.Exit(0);
+    }
+}

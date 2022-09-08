@@ -1,10 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Components.Elements
-@using Microsoft.Extensions.Hosting
 @inject ISnackbar Snackbar
 
-@*
-@inject IHostApplicationLifetime AppLifetime
-*@
 
 <MudDialog>
     <DialogContent>
@@ -22,7 +18,6 @@
 
     async Task Quit_Click()
     {
-        //AppLifetime.StopApplication();
-        Environment.Exit(0);
+        
     }
 }

@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<SoundKitDto> GetNewSoundKit(Action<string, string, int>? progressCallback = null)
+        public async Task<SoundKitDto> GetNewSoundKitAsync(Action<string, string, int>? progressCallback = null)
         {
             return new SoundKitDto()
             {
@@ -43,7 +43,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<SoundKitDto> GetSoundKitById(int soundKitId, Action<string, string, int>? progressCallback = null)
+        public async Task<SoundKitDto> GetSoundKitByIdAsync(int soundKitId, Action<string, string, int>? progressCallback = null)
         {
             var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetSingleAsync<SoundKit>(s => s.Id == soundKitId);
             if (null == soundKit)

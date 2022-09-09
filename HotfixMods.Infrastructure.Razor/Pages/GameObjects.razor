@@ -1,7 +1,144 @@
 ﻿@page "/game-objects"
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
 
-<MudGrid>
-    <MudItem xs="12">
-        <MudText>To be implemented...</MudText>
-    </MudItem>
-</MudGrid>
+@inject IDialogService DialogService
+@inject GameObjectService GameObjectService
+
+
+@if (gameObject != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="GameObjectLookupAsync_Click">Anim Kit Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@gameObject.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(gameObject.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+
+        <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <ChildContent>
+                @*
+                <MudTabPanel Text="Properties">
+                    <AnimKitProperties_Tab AnimKit="animKit" AnimKitLookup="animKitLookup" />
+                </MudTabPanel>
+                @for (int i = 0; i < animKit.Segments.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Segment {index}")">
+                        <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
+                    </MudTabPanel>
+                }
+                *@
+            </ChildContent>
+        </MudTabs>
+    </MudPaper>
+}
+else
+{
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Game Objects" />
+}
+
+
+@code
+{
+    GameObjectDto? gameObject;
+    GameObjectDto? gameObjectLookup;
+    List<RazorDashboardModel> dashboard;
+    MudTabs mudTabsRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        dashboard = new();
+        var dashboardGameObjects = await GameObjectService.GetDashboardAsync();
+        foreach (var dashboardGameObject in dashboardGameObjects)
+        {
+            dashboard.Add(new RazorDashboardModel(
+                dashboardGameObject.Id,
+                dashboardGameObject.Name,
+                dashboardGameObject.AvatarUrl,
+                dashboardGameObject.Comment,
+                (async () => await EditAsync(dashboardGameObject.Id)),
+                (async () => await GameObjectService.DeleteAsync(dashboardGameObject.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task EditAsync(int id)
+    {
+        gameObject = await OpenGameObjectSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        gameObject = await OpenGameObjectSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task GameObjectLookupAsync_Click()
+    {
+        gameObjectLookup = await OpenGameObjectSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
+
+        if (!result.Cancelled)
+        {
+            gameObject.IsUpdate = true;
+        }
+    }
+
+    async void SaveAsync()
+    {
+        await GameObjectService.SaveAsync(gameObject);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), gameObject.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(GameObjectDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), gameObject.IsUpdate);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            gameObject.Id = (int)result.Data;
+            gameObject.IsUpdate = false;
+        }
+    }
+
+    async Task<GameObjectDto?> OpenGameObjectSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(GameObjectSearch_Dialog.GameObjectId), id);
+        var dialog = DialogService.Show<GameObjectSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (GameObjectDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (GameObjectDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+}
+

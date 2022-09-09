@@ -71,6 +71,16 @@ namespace HotfixMods.Apps.Desktop
                     IdRangeTo = 7000000
                 };
             });
+            builder.Services.AddSingleton(config =>
+            {
+                return new GameObjectService(db2Provider, mySqlProvider)
+                {
+                    VerifiedBuild = -900,
+                    IdSize = 5, // TODO: Check
+                    IdRangeFrom = 500000,
+                    IdRangeTo = 550000
+                };
+            });
 
 
             builder.Services.AddBlazorWebViewDeveloperTools();

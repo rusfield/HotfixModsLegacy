@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardAsync()
         {
-            return null;
+            return new();
         }
     }
 }

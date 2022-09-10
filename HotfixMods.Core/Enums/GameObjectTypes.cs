@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HotfixMods.Core.Enums
+{
+    public enum GameObjectTypes
+    {
+        DOOR = 0,
+        BUTTON = 1,
+        QUESTGIVER = 2,
+        CHEST = 3,
+        BINDER = 4,
+        GENERIC = 5,
+        TRAP = 6,
+        CHAIR = 7,
+        SPELL_FOCUS = 8,
+        TEXT = 9,
+        GOOBER = 10,
+        TRANSPORT = 11,
+        AREADAMAGE = 12,
+        CAMERA = 13,
+        MAP_OBJECT = 14,
+        MAP_OBJ_TRANSPORT = 15,
+        DUEL_ARBITER = 16,
+        FISHINGNODE = 17,
+        RITUAL = 18,
+        MAILBOX = 19,
+        DO_NOT_USE = 20,
+        GUARDPOST = 21,
+        SPELLCASTER = 22,
+        MEETINGSTONE = 23,
+        FLAGSTAND = 24,
+        FISHINGHOLE = 25,
+        FLAGDROP = 26,
+        MINI_GAME = 27,
+        DO_NOT_USE_2 = 28,
+        CONTROL_ZONE = 29,
+        AURA_GENERATOR = 30,
+        DUNGEON_DIFFICULTY = 31,
+        BARBER_CHAIR = 32,
+        DESTRUCTIBLE_BUILDING = 33,
+        GUILD_BANK = 34,
+        TRAPDOOR = 35,
+        NEW_FLAG = 36,
+        NEW_FLAG_DROP = 37,
+        GARRISON_BUILDING = 38,
+        GARRISON_PLOT = 39,
+        CLIENT_CREATURE = 40,
+        CLIENT_ITEM = 41,
+        CAPTURE_POINT = 42,
+        PHASEABLE_MO = 43,
+        GARRISON_MONUMENT = 44,
+        GARRISON_SHIPMENT = 45,
+        GARRISON_MONUMENT_PLAQUE = 46,
+        ITEM_FORGE = 47,
+        UI_LINK = 48,
+        KEYSTONE_RECEPTACLE = 49,
+        GATHERING_NODE = 50,
+        CHALLENGE_MODE_REWARD = 51,
+        MULTI = 52,
+        SIEGEABLE_MULTI = 53,
+        SIEGEABLE_MO = 54,
+        PVP_REWARD = 55,
+        PLAYER_CHOICE_CHEST = 56,
+        LEGENDARY_FORGE = 57,
+        GARR_TALENT_TREE = 58,
+        WEEKLY_REWARD_CHEST = 59,
+        CLIENT_MODEL = 60
+    }
+}

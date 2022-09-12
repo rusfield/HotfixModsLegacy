@@ -25,7 +25,10 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<GameObjectDto> GetNewGameObjectAsync(Action<string, string, int>? progressCallback = null)
         {
-            return null;
+            return new GameObjectDto()
+            {
+                Id = await GetNextIdAsync()
+            };
         }
 
         public async Task<GameObjectDto> GetGameObjectByIdAsync(int id, Action<string, string, int>? progressCallback = null)

@@ -4,7 +4,7 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <IntList_Element Label="File Data IDs" PluralItemName="sounds" SingularItemName="sound" @bind-Value="@SoundKit.FileDataIds" ListAnchorOrigin="Origin.BottomCenter" ListTransformOrigin="Origin.TopCenter" ValueLookup="SoundKitLookup?.FileDataIds" />
+        <IntList_Element Label="File Data IDs" PluralItemName="sounds" SingularItemName="sound" @bind-Value="@SoundKit.FileDataIds" ListAnchorOrigin="Origin.BottomCenter" ListTransformOrigin="Origin.TopCenter" ValueLookup="SoundKitLookup?.FileDataIds" CssClass="@elementCssClass" />
         <DecimalInput_Element Label="Volume" @bind-Value="@SoundKit.VolumeAdjust" ValueLookup="SoundKitLookup?.VolumeAdjust" CssClass="@elementCssClass" />
         <DecimalInput_Element Label="Volume Variation" @bind-Value="@SoundKit.VolumeVariation" ValueLookup="SoundKitLookup?.VolumeVariation" CssClass="@elementCssClass" />
     </MudItem>

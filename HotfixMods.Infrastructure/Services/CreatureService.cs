@@ -250,7 +250,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     foreach (var creature in creatures)
                     {
-                        if (creature.Id < IdRangeTo && creature.Id >= IdRangeFrom)
+                        if (creatureId < IdRangeTo && creatureId >= IdRangeFrom)
                         {
                             // Override the automatically generated Id, as this is most likely an update.
                             creature.Id = creatureId;
@@ -499,7 +499,7 @@ namespace HotfixMods.Infrastructure.Services
             var creatureDisplayInfoExtra = await _mySql.GetSingleAsync<CreatureDisplayInfoExtra>(c => c.Id == id);
             var creatureDisplayInfoOptions = await _mySql.GetAsync<CreatureDisplayInfoOption>(c => c.CreatureDisplayInfoExtraId == id);
             var npcModelItemSlotDisplayInfos = await _mySql.GetAsync<NpcModelItemSlotDisplayInfo>(c => c.NpcModelId == id);
-            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
 
             if (null != creatureDisplayInfo)
                 await _mySql.DeleteAsync(creatureDisplayInfo);
@@ -529,6 +529,7 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task DeleteFromWorldAsync(int id)
         {
+            var creatures = await _mySql.GetAsync<Creature>(c => c.Guid == id);
             var creatureTemplate = await _mySql.GetSingleAsync<CreatureTemplate>(c => c.Entry == id);
             var creatureTemplateAddon = await _mySql.GetSingleAsync<CreatureTemplateAddon>(c => c.Entry == id);
             var creatureTemplateModel = await _mySql.GetSingleAsync<CreatureTemplateModel>(c => c.CreatureId == id);
@@ -549,6 +550,9 @@ namespace HotfixMods.Infrastructure.Services
 
             if (null != creatureModelInfo)
                 await _mySql.DeleteAsync(creatureModelInfo);
+
+            if (creatures.Count() > 0)
+                await _mySql.DeleteAsync(creatures.ToArray());
         }
     }
 }

@@ -111,7 +111,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == id);
             var soundKitEntries = await _mySql.GetAsync<SoundKitEntry>(s => s.SoundKitId == id);
-            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
 
             if (null != soundKit)
                 await _mySql.DeleteAsync(soundKit);

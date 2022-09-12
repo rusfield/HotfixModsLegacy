@@ -133,7 +133,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var animKit = await _mySql.GetSingleAsync<AnimKit>(s => s.Id == id);
             var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(s => s.ParentAnimKitId == id);
-            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
 
             if (null != animKit)
                 await _mySql.DeleteAsync(animKit);

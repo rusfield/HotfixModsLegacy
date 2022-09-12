@@ -300,7 +300,7 @@ namespace HotfixMods.Infrastructure.Services
             var itemModifiedAppearance = await _mySql.GetSingleAsync<ItemModifiedAppearance>(c => c.Id == id);
             var itemDisplayInfo = await _mySql.GetSingleAsync<ItemDisplayInfo>(c => c.Id == id);
             var itemDisplayInfoMaterialResources = await _mySql.GetAsync<ItemDisplayInfoMaterialRes>(c => c.ItemDisplayInfoId == id);
-            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
 
             if (null != item)
                 await _mySql.DeleteAsync(item);

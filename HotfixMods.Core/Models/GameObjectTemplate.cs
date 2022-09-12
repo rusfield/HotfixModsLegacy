@@ -21,8 +21,6 @@ namespace HotfixMods.Core.Models
         public decimal Size { get; set; }
         public string AiName { get; set; }
         public string ScriptName { get; set; }
-        public int Faction { get; set; }
-        public GameObjectAddonFlags Flags { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

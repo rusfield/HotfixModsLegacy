@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HotfixMods.Infrastructure.Defaults;
+using HotfixMods.Infrastructure.DefaultModels;
 
 namespace HotfixMods.Infrastructure.Services
 {

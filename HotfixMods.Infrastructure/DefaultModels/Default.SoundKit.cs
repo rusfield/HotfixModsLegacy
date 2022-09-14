@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Infrastructure.Defaults
+namespace HotfixMods.Infrastructure.DefaultModels
 {
     public static partial class Default
     {

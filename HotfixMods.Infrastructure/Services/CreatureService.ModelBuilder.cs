@@ -1,5 +1,5 @@
 ﻿using HotfixMods.Core.Constants;
-using HotfixMods.Infrastructure.Defaults;
+using HotfixMods.Infrastructure.DefaultModels;
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;

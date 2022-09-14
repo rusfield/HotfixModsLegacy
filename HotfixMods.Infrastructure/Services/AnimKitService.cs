@@ -73,6 +73,10 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto> GetNewAnimKitAsync(Action<string, string, int>? progressCallback = null)
         {
+            if (progressCallback == null)
+                progressCallback = ConsoleProgressCallback;
+
+            progressCallback("Done", "Returning new Anim Kit", 100);
             return new AnimKitDto()
             {
                 Id = await GetNextIdAsync(),
@@ -82,18 +86,27 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto?> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
         {
+            if (progressCallback == null)
+                progressCallback = ConsoleProgressCallback;
+
+            progressCallback("Loading", "Loading Anim Kit", 15);
             var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == animKitId);
             if(animKit == null)
             {
+                progressCallback("Error", "Anim Kit not found", 100);
                 return null;
             }
             var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == animKitId);
             if (!animKitSegments.Any())
             {
+                progressCallback("Error", "Anim Kit Segments not found", 100);
                 return null;
             }
+
+            progressCallback("Loading", "Loading Hotfix Mods Data", 50);
             var hmData = await _mySql.GetSingleAsync<HotfixModsData>(c => c.RecordId == animKitId && c.VerifiedBuild == VerifiedBuild);
-            
+
+            progressCallback("Loading", "Building Anim Kit", 90);
             var result = new AnimKitDto()
             {
                 Id = await GetNextIdAsync(),
@@ -126,6 +139,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
+            progressCallback("Done", "Returning Anim Kit", 100);
             return result;
         }
 

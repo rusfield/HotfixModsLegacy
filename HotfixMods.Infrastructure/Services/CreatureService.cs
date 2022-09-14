@@ -279,6 +279,9 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task<List<CreatureDto>> GetCreaturesByDisplayIdsAsync(List<int> creatureDisplayIds, Action<string, string, int>? progressCallback)
         {
+            if (progressCallback == null)
+                progressCallback = ConsoleProgressCallback;
+
             int index = 0;
             var result = new List<CreatureDto>();
             foreach (var creatureDisplayId in creatureDisplayIds)

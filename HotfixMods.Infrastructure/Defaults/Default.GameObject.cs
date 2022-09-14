@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Core.Defaults
+namespace HotfixMods.Infrastructure.Defaults
 {
     public static partial class Default
     {
-        public static readonly GameObjectTemplate GameObjectTemplate = new GameObjectTemplate()
+        public static readonly GameObjectTemplate GameObjectTemplate = new()
         {
             IconName = "",
             Name = "New Object",
@@ -27,7 +27,7 @@ namespace HotfixMods.Core.Defaults
             DisplayId = -1,
         };
 
-        public static readonly GameObjectTemplateAddon GameObjectTemplateAddon = new GameObjectTemplateAddon()
+        public static readonly GameObjectTemplateAddon GameObjectTemplateAddon = new()
         {
             Faction = 0,
             Flags = GameObjectAddonFlags.NONE,
@@ -36,7 +36,7 @@ namespace HotfixMods.Core.Defaults
             VerifiedBuild = -1
         };
 
-        public static readonly GameObjectDisplayInfo GameObjectDisplayInfo = new GameObjectDisplayInfo()
+        public static readonly GameObjectDisplayInfo GameObjectDisplayInfo = new()
         {
             FileDataId = 0, // TODO: Find ID of chest
             GeoBox0 = 0,

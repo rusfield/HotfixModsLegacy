@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotfixMods.Infrastructure.Defaults;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -151,7 +152,7 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemAppearance()
             {
                 Id = item.Id,
-                DefaultIconFileDataId = item.IconId ?? ItemDefaults.IconId,
+                DefaultIconFileDataId = item.IconId ?? Default.ItemAppearance.DefaultIconFileDataId,
                 DisplayType = item.DisplayType,
                 ItemDisplayInfoId = item.Id,
                 UiOrder = item.Id, // CHECK IF OK -- Should be id x 100 according to DB2, but this may result in a very big number
@@ -170,13 +171,13 @@ namespace HotfixMods.Infrastructure.Services
                 Id = item.Id,
                 ItemAppearanceId = item.Id,
                 ItemId = item.Id,
-                ItemAppearanceModifierId = 0,
-                OrderIndex = 0,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemAppearanceModifierId = Default.ItemModifiedAppearance.ItemAppearanceModifierId,
+                OrderIndex = Default.ItemModifiedAppearance.OrderIndex
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemModifiedAppearance, HotfixStatuses.VALID);
-
 
             return result;
         }
@@ -186,16 +187,16 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemSearchName()
             {
                 Id = item.Id,
-                Display = item.Name ?? ItemDefaults.Name,
-                Flags0 = item.Flags0 ?? ItemDefaults.Flags0,
-                Flags1 = item.Flags1 ?? ItemDefaults.Flags1,
-                Flags2 = item.Flags2 ?? ItemDefaults.Flags2,
-                Flags3 = item.Flags3 ?? ItemDefaults.Flags3,
-                ItemLevel = item.ItemLevel ?? ItemDefaults.ItemLevel,
-                OverallQualityId = item.OverallQuality ?? ItemDefaults.OverallQuality,
-                RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel,
-                AllowableClass = item.AllowableClasses ?? ItemDefaults.AllowableClasses,
-                AllowableRace = item.AllowableRaces ?? ItemDefaults.AllowableRaces,
+                Display = item.Name ?? Default.ItemSearchName.Display,
+                Flags0 = item.Flags0 ?? Default.ItemSearchName.Flags0,
+                Flags1 = item.Flags1 ?? Default.ItemSearchName.Flags1,
+                Flags2 = item.Flags2 ?? Default.ItemSearchName.Flags2,
+                Flags3 = item.Flags3 ?? Default.ItemSearchName.Flags3,
+                ItemLevel = item.ItemLevel ?? Default.ItemSearchName.ItemLevel,
+                OverallQualityId = item.OverallQuality ?? Default.ItemSearchName.OverallQualityId,
+                RequiredLevel = item.RequiredLevel ?? Default.ItemSearchName.RequiredLevel,
+                AllowableClass = item.AllowableClasses ?? Default.ItemSearchName.AllowableClass,
+                AllowableRace = item.AllowableRaces ?? Default.ItemSearchName.AllowableRace,
                 VerifiedBuild = VerifiedBuild
             };
 
@@ -209,29 +210,29 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemSparse()
             {
                 Id = item.Id,
-                Bonding = item.Bonding ?? ItemDefaults.Bonding,
-                Display = item.Name ?? ItemDefaults.Name,
-                Flags0 = item.Flags0 ?? ItemDefaults.Flags0,
-                Flags1 = item.Flags1 ?? ItemDefaults.Flags1,
-                Flags2 = item.Flags2 ?? ItemDefaults.Flags2,
-                Flags3 = item.Flags3 ?? ItemDefaults.Flags3,
-                InventoryType = item.InventoryType,
-                ItemLevel = item.ItemLevel ?? ItemDefaults.ItemLevel,
-                Material = item.Material ?? ItemDefaults.Material,
-                OverallQualityId = item.OverallQuality ?? ItemDefaults.OverallQuality,
-                RequiredLevel = item.RequiredLevel ?? ItemDefaults.RequiredLevel,
                 VerifiedBuild = VerifiedBuild,
-                AllowableClass = item.AllowableClasses ?? ItemDefaults.AllowableClasses,
-                AllowableRace = item.AllowableRaces ?? ItemDefaults.AllowableRaces,
-                Description = item.Description ?? ItemDefaults.Description,
+                InventoryType = item.InventoryType,
 
+                Bonding = item.Bonding ?? Default.ItemSparse.Bonding,
+                Display = item.Name ?? Default.ItemSparse.Display,
+                Flags0 = item.Flags0 ?? Default.ItemSparse.Flags0,
+                Flags1 = item.Flags1 ?? Default.ItemSparse.Flags1,
+                Flags2 = item.Flags2 ?? Default.ItemSparse.Flags2,
+                Flags3 = item.Flags3 ?? Default.ItemSparse.Flags3,
+                ItemLevel = item.ItemLevel ?? Default.ItemSparse.ItemLevel,
+                Material = item.Material ?? Default.ItemSparse.Material,
+                OverallQualityId = item.OverallQuality ?? Default.ItemSparse.OverallQualityId,
+                RequiredLevel = item.RequiredLevel ?? Default.ItemSparse.RequiredLevel,
+                AllowableClass = item.AllowableClasses ?? Default.ItemSparse.AllowableClass,
+                AllowableRace = item.AllowableRaces ?? Default.ItemSparse.AllowableRace,
+                Description = item.Description ?? Default.ItemSparse.Description,
 
-                PriceRandomValue = 1,
-                Stackable = 1,
-                VendorStackCount = 1,
-                Display1 = "",
-                Display2 = "",
-                Display3 = ""
+                PriceRandomValue = Default.ItemSparse.PriceRandomValue,
+                Stackable = Default.ItemSparse.Stackable,
+                VendorStackCount = Default.ItemSparse.VendorStackCount,
+                Display1 = Default.ItemSparse.Display1,
+                Display2 = Default.ItemSparse.Display2,
+                Display3 = Default.ItemSparse.Display3
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemSparse, HotfixStatuses.VALID);
@@ -244,16 +245,16 @@ namespace HotfixMods.Infrastructure.Services
             var result = new Item()
             {
                 Id = item.Id,
-                IconFileDataId = item.IconId ?? ItemDefaults.IconId,
-                ClassId = item.ItemClass,
-                InventoryType = item.InventoryType,
-                Material = item.Material ?? ItemDefaults.Material,
+                VerifiedBuild = VerifiedBuild,
                 SubClassId = item.ItemSubClass,
                 ItemGroupSoundsId = item.ItemGroupSoundsId,
-                VerifiedBuild = VerifiedBuild,
-                
+                ClassId = item.ItemClass,
+                InventoryType = item.InventoryType,
 
-                SoundOverrideSubClassId = -1,
+                IconFileDataId = item.IconId ?? Default.Item.IconFileDataId,
+                Material = item.Material ?? Default.Item.Material,
+
+                SoundOverrideSubClassId = Default.Item.SoundOverrideSubClassId
             };
             item.AddHotfix(item.Id, TableHashes.Item, HotfixStatuses.VALID);
 
@@ -265,36 +266,38 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemDisplayInfo()
             {
                 Id = item.Id,
-                Flags = item.ItemDisplayInfoFlags ?? ItemDefaults.DisplayInfoFlag,
-                ModelMaterialResourcesId0 = item.ModelMaterialResourceId0 ?? ItemDefaults.ModelMaterialResourcesId,
-                ModelMaterialResourcesId1 = item.ModelMaterialResourceId1 ?? ItemDefaults.ModelMaterialResourcesId,
-                ModelResourcesId0 = item.ModelResourceId0 ?? ItemDefaults.ModelResourceId,
-                ModelResourcesId1 = item.ModelResourceId1 ?? ItemDefaults.ModelResourceId,
                 VerifiedBuild = VerifiedBuild,
-                AttachmentGeosetGroup0 = item.GeosetGroupAttachment0 ?? ItemDefaults.AttachmentGeosetGroup0,
-                AttachmentGeosetGroup1 = item.GeosetGroupAttachment1 ?? ItemDefaults.AttachmentGeosetGroup1,
-                AttachmentGeosetGroup2 = item.GeosetGroupAttachment2 ?? ItemDefaults.AttachmentGeosetGroup2,
-                AttachmentGeosetGroup3 = item.GeosetGroupAttachment3 ?? ItemDefaults.AttachmentGeosetGroup3,
-                AttachmentGeosetGroup4 = item.GeosetGroupAttachment4 ?? ItemDefaults.AttachmentGeosetGroup4,
-                AttachmentGeosetGroup5 = item.GeosetGroupAttachment5 ?? ItemDefaults.AttachmentGeosetGroup5,
-                GeosetGroup0 = item.GeosetGroup0 ?? ItemDefaults.GeosetGroup0,
-                GeosetGroup1 = item.GeosetGroup1 ?? ItemDefaults.GeosetGroup1,
-                GeosetGroup2 = item.GeosetGroup2 ?? ItemDefaults.GeosetGroup2,
-                GeosetGroup3 = item.GeosetGroup3 ?? ItemDefaults.GeosetGroup3,
-                GeosetGroup4 = item.GeosetGroup4 ?? ItemDefaults.GeosetGroup4,
-                GeosetGroup5 = item.GeosetGroup5 ?? ItemDefaults.GeosetGroup5,
-                HelmetGeosetVis0 = item.HelmetGeosetVis0 ?? ItemDefaults.HelmetGeosetVis0,
-                HelmetGeosetVis1 = item.HelmetGeosetVis1 ?? ItemDefaults.HelmetGeosetVis1,
-                ModelType0 = item.ModelType0 ?? ItemDefaults.ItemDisplayModelType1, // NB: Different starting indexes
-                ModelType1 = item.ModelType1 ?? ItemDefaults.ItemDisplayModelType2, // NB: Different starting indexes
-                ItemRangedDisplayInfoID = 0,
-                ItemVisual = 0,
-                OverrideSwooshSoundKitID = 0,
-                ParticleColorID = 0,
-                SheathedSpellVisualKitID = 0,
-                SheatheTransformMatrixID = 0,
-                StateSpellVisualKitID = 0,
-                UnsheathedSpellVisualKitID = 0
+
+                Flags = item.ItemDisplayInfoFlags ?? Default.ItemDisplayInfo.Flags,
+                ModelMaterialResourcesId0 = item.ModelMaterialResourceId0 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId0,
+                ModelMaterialResourcesId1 = item.ModelMaterialResourceId1 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId1,
+                ModelResourcesId0 = item.ModelResourceId0 ?? Default.ItemDisplayInfo.ModelResourcesId0,
+                ModelResourcesId1 = item.ModelResourceId1 ?? Default.ItemDisplayInfo.ModelResourcesId1,
+                AttachmentGeosetGroup0 = item.GeosetGroupAttachment0 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup0,
+                AttachmentGeosetGroup1 = item.GeosetGroupAttachment1 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup1,
+                AttachmentGeosetGroup2 = item.GeosetGroupAttachment2 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup2,
+                AttachmentGeosetGroup3 = item.GeosetGroupAttachment3 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup3,
+                AttachmentGeosetGroup4 = item.GeosetGroupAttachment4 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup4,
+                AttachmentGeosetGroup5 = item.GeosetGroupAttachment5 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup5,
+                GeosetGroup0 = item.GeosetGroup0 ?? Default.ItemDisplayInfo.GeosetGroup0,
+                GeosetGroup1 = item.GeosetGroup1 ?? Default.ItemDisplayInfo.GeosetGroup1,
+                GeosetGroup2 = item.GeosetGroup2 ?? Default.ItemDisplayInfo.GeosetGroup2,
+                GeosetGroup3 = item.GeosetGroup3 ?? Default.ItemDisplayInfo.GeosetGroup3,
+                GeosetGroup4 = item.GeosetGroup4 ?? Default.ItemDisplayInfo.GeosetGroup4,
+                GeosetGroup5 = item.GeosetGroup5 ?? Default.ItemDisplayInfo.GeosetGroup5,
+                HelmetGeosetVis0 = item.HelmetGeosetVis0 ?? Default.ItemDisplayInfo.HelmetGeosetVis0,
+                HelmetGeosetVis1 = item.HelmetGeosetVis1 ?? Default.ItemDisplayInfo.HelmetGeosetVis1,
+                ModelType0 = item.ModelType0 ?? Default.ItemDisplayInfo.ModelType0, 
+                ModelType1 = item.ModelType1 ?? Default.ItemDisplayInfo.ModelType1,
+
+                ItemRangedDisplayInfoID = Default.ItemDisplayInfo.ItemRangedDisplayInfoID,
+                ItemVisual = Default.ItemDisplayInfo.ItemVisual,
+                OverrideSwooshSoundKitID = Default.ItemDisplayInfo.OverrideSwooshSoundKitID,
+                ParticleColorID = Default.ItemDisplayInfo.ParticleColorID,
+                SheathedSpellVisualKitID = Default.ItemDisplayInfo.SheathedSpellVisualKitID,
+                SheatheTransformMatrixID = Default.ItemDisplayInfo.SheatheTransformMatrixID,
+                StateSpellVisualKitID = Default.ItemDisplayInfo.StateSpellVisualKitID,
+                UnsheathedSpellVisualKitID = Default.ItemDisplayInfo.UnsheathedSpellVisualKitID
             };
 
             item.AddHotfix(item.Id, TableHashes.ItemDisplayInfo, HotfixStatuses.VALID);

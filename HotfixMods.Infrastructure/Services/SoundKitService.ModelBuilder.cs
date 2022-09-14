@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotfixMods.Infrastructure.Defaults;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -19,17 +20,17 @@ namespace HotfixMods.Infrastructure.Services
             {
                 Id = soundKit.Id,
 
-                DistanceCutoff = SoundKitDefaults.DistanceCutoff,
-                PitchAdjust = soundKit.PitchAdjust ?? SoundKitDefaults.PitchAdjust,
-                PitchVariationMinus = soundKit.PitchVariation ?? SoundKitDefaults.PitchVariationMinus,
-                PitchVariationPlus = soundKit.PitchVariation ?? SoundKitDefaults.PitchVariationPlus,
-                VolumeVariationMinus = soundKit.VolumeVariation ?? SoundKitDefaults.VolumeVariationMinus,
-                VolumeVariationPlus = soundKit.VolumeVariation ?? SoundKitDefaults.VolumeVariationPlus,
-                VolumeFloat = soundKit.VolumeAdjust ?? SoundKitDefaults.VolumeFloat,
-                SoundType = soundKit.SoundType ?? SoundKitDefaults.SoundType,
+                DistanceCutoff = Default.SoundKit.DistanceCutoff,
+                PitchAdjust = soundKit.PitchAdjust ?? Default.SoundKit.PitchAdjust,
+                PitchVariationMinus = soundKit.PitchVariation ?? Default.SoundKit.PitchVariationMinus,
+                PitchVariationPlus = soundKit.PitchVariation ?? Default.SoundKit.PitchVariationPlus,
+                VolumeVariationMinus = soundKit.VolumeVariation ?? Default.SoundKit.VolumeVariationMinus,
+                VolumeVariationPlus = soundKit.VolumeVariation ?? Default.SoundKit.VolumeVariationPlus,
+                VolumeFloat = soundKit.VolumeAdjust ?? Default.SoundKit.VolumeFloat,
+                SoundType = soundKit.SoundType ?? Default.SoundKit.SoundType,
 
-                MinDistance = SoundKitDefaults.MinDistance,
-                Flags = SoundKitDefaults.Flags
+                MinDistance = Default.SoundKit.MinDistance,
+                Flags = Default.SoundKit.Flags
             };
         }
 
@@ -46,8 +47,8 @@ namespace HotfixMods.Infrastructure.Services
                     FileDataId = fileDataId,
                     SoundKitId = soundKit.Id,
                     
-                    Frequency = SoundKitDefaults.Frequency,
-                    Volume = SoundKitDefaults.Volume
+                    Frequency = Default.SoundKitEntry.Frequency,
+                    Volume = Default.SoundKitEntry.Volume
                 });
                 id++;
             }

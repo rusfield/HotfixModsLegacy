@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -38,13 +39,13 @@ namespace HotfixMods.Core.Models
         public decimal ExperienceModifier { get; set; }
 
         [Column("unit_flags")]
-        public long UnitFlags { get; set; }
+        public UnitFlags UnitFlags { get; set; }
         [Column("unit_flags2")]
-        public long UnitFlags2 { get; set; }
+        public UnitFlags2 UnitFlags2 { get; set; }
         [Column("unit_flags3")]
-        public long UnitFlags3 { get; set; }
+        public UnitFlags3 UnitFlags3 { get; set; }
         [Column("flags_extra")]
-        public long FlagsExtra { get; set; }
+        public UnitFlagsExtra FlagsExtra { get; set; }
 
 
         public int VerifiedBuild { get; set; }

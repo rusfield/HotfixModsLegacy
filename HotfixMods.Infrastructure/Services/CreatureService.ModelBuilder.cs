@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Constants;
+using HotfixMods.Infrastructure.Defaults;
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
@@ -17,40 +18,38 @@ namespace HotfixMods.Infrastructure.Services
             return new CreatureTemplate()
             {
                 Entry = creatureDto.Id,
-                Name = string.IsNullOrWhiteSpace(creatureDto.Name) ? CreatureDefaults.Name : creatureDto.Name,
-                Faction = creatureDto.Faction ?? CreatureDefaults.Faction,
-                MaxLevel = creatureDto.Level ?? CreatureDefaults.MaxLevel,
-                MinLevel = creatureDto.Level ?? CreatureDefaults.MinLevel,
-                Rank = creatureDto.Rank ?? CreatureDefaults.Rank,
-                SubName = string.IsNullOrWhiteSpace(creatureDto.SubName) ? CreatureDefaults.SubName : creatureDto.SubName,
-                Type = creatureDto.CreatureType ?? CreatureDefaults.Type,
-                UnitClass = creatureDto.CreatureUnitClass ?? CreatureDefaults.UnitClass,
-                Scale = creatureDto.Scale ?? CreatureDefaults.Scale,
-                HealthModifier = creatureDto.HealthModifier ?? CreatureDefaults.HealthModifier,
-                DamageModifier = creatureDto.DamageModifier ?? CreatureDefaults.DamageModifier,
-                ArmorModifier = creatureDto.ArmorModifier ?? CreatureDefaults.ArmorModifier,
-                UnitFlags = (long)(creatureDto.UnitFlags ?? CreatureDefaults.UnitFlag),
-                UnitFlags2 = (long)(creatureDto.UnitFlags2 ?? CreatureDefaults.UnitFlag2),
-                UnitFlags3 = (long)(creatureDto.UnitFlags3 ?? CreatureDefaults.UnitFlag3),
-                FlagsExtra = (long)(creatureDto.FlagsExtra ?? CreatureDefaults.FlagsExtra),
-                RegenHealth = creatureDto.RegenHealth ?? CreatureDefaults.RegenHealth,
-
                 VerifiedBuild = VerifiedBuild,
 
-                // Custom default values
-                AiName = "SmartAI",
-                BaseAttackTime = 2000,
-                BaseVariance = 1,
-                ExperienceModifier = 1,
-                HealthModifierExtra = 1,
-                HoverHeight = 1,
-                ManaModifier = 1,
-                ManaModifierExtra = 1,
-                RangeAttackTime = 2000,
-                RangeVariance = 1,
+                Name = string.IsNullOrWhiteSpace(creatureDto.Name) ? Default.CreatureTemplate.Name : creatureDto.Name,
+                Faction = creatureDto.Faction ?? Default.CreatureTemplate.Faction,
+                MaxLevel = creatureDto.Level ?? Default.CreatureTemplate.MaxLevel,
+                MinLevel = creatureDto.Level ?? Default.CreatureTemplate.MinLevel,
+                Rank = creatureDto.Rank ?? Default.CreatureTemplate.Rank,
+                SubName = string.IsNullOrWhiteSpace(creatureDto.SubName) ? Default.CreatureTemplate.SubName : creatureDto.SubName,
+                Type = creatureDto.CreatureType ?? Default.CreatureTemplate.Type,
+                UnitClass = creatureDto.CreatureUnitClass ?? Default.CreatureTemplate.UnitClass,
+                Scale = creatureDto.Scale ?? Default.CreatureTemplate.Scale,
+                HealthModifier = creatureDto.HealthModifier ?? Default.CreatureTemplate.HealthModifier,
+                DamageModifier = creatureDto.DamageModifier ?? Default.CreatureTemplate.DamageModifier,
+                ArmorModifier = creatureDto.ArmorModifier ?? Default.CreatureTemplate.ArmorModifier,
+                UnitFlags = creatureDto.UnitFlags ?? Default.CreatureTemplate.UnitFlags,
+                UnitFlags2 = creatureDto.UnitFlags2 ?? Default.CreatureTemplate.UnitFlags2,
+                UnitFlags3 = creatureDto.UnitFlags3 ?? Default.CreatureTemplate.UnitFlags3,
+                FlagsExtra = creatureDto.FlagsExtra ?? Default.CreatureTemplate.FlagsExtra,
+                RegenHealth = creatureDto.RegenHealth ?? Default.CreatureTemplate.RegenHealth,
 
-                SpeedRun = 1.14286M,
-                SpeedWalk = 1
+                AiName = Default.CreatureTemplate.AiName,
+                BaseAttackTime = Default.CreatureTemplate.BaseAttackTime,
+                BaseVariance = Default.CreatureTemplate.BaseVariance,
+                ExperienceModifier = Default.CreatureTemplate.ExperienceModifier,
+                HealthModifierExtra = Default.CreatureTemplate.HealthModifier,
+                HoverHeight = Default.CreatureTemplate.HoverHeight,
+                ManaModifier = Default.CreatureTemplate.ManaModifier,
+                ManaModifierExtra = Default.CreatureTemplate.ManaModifierExtra,
+                RangeAttackTime = Default.CreatureTemplate.RangeAttackTime,
+                RangeVariance = Default.CreatureTemplate.RangeVariance,
+                SpeedRun = Default.CreatureTemplate.SpeedRun,
+                SpeedWalk = Default.CreatureTemplate.SpeedWalk
             };
         }
 
@@ -61,17 +60,17 @@ namespace HotfixMods.Infrastructure.Services
                 CreatureId = creatureDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
-                ItemId1 = creatureDto.MainHandItemId ?? CreatureDefaults.MainHandItemId,
-                AppearanceModId1 = creatureDto.MainHandItemAppearanceModifierId ?? CreatureDefaults.MainHandItemAppearanceModifierId,
-                ItemVisual1 = creatureDto.MainHandItemVisual ?? CreatureDefaults.MainHandItemVisual,
-                ItemId2 = creatureDto.OffHandItemId ?? CreatureDefaults.OffHandItemId,
-                AppearanceModId2 = creatureDto.OffHandItemAppearanceModifierId ?? CreatureDefaults.OffHandItemAppearanceModifierId,
-                ItemVisual2 = creatureDto.OffHandItemVisual ?? CreatureDefaults.OffHandItemVisual,
-                ItemId3 = creatureDto.RangedItemId ?? CreatureDefaults.RangedItemId,
-                AppearanceModId3 = creatureDto.RangedItemAppearanceModifierId ?? CreatureDefaults.RangedItemAppearanceModifierId,
-                ItemVisual3 = creatureDto.RangedItemVisual ?? CreatureDefaults.RangedItemVisual,
-                
-                Id = 1
+                ItemId1 = creatureDto.MainHandItemId ?? Default.CreatureEquipTemplate.ItemId1,
+                AppearanceModId1 = creatureDto.MainHandItemAppearanceModifierId ?? Default.CreatureEquipTemplate.AppearanceModId1,
+                ItemVisual1 = creatureDto.MainHandItemVisual ?? Default.CreatureEquipTemplate.ItemVisual1,
+                ItemId2 = creatureDto.OffHandItemId ?? Default.CreatureEquipTemplate.ItemId2,
+                AppearanceModId2 = creatureDto.OffHandItemAppearanceModifierId ?? Default.CreatureEquipTemplate.AppearanceModId2,
+                ItemVisual2 = creatureDto.OffHandItemVisual ?? Default.CreatureEquipTemplate.ItemVisual2,
+                ItemId3 = creatureDto.RangedItemId ?? Default.CreatureEquipTemplate.ItemId3,
+                AppearanceModId3 = creatureDto.RangedItemAppearanceModifierId ?? Default.CreatureEquipTemplate.AppearanceModId3,
+                ItemVisual3 = creatureDto.RangedItemVisual ?? Default.CreatureEquipTemplate.ItemVisual3,
+
+                Id = Default.CreatureEquipTemplate.Id
             };
         }
 
@@ -82,9 +81,9 @@ namespace HotfixMods.Infrastructure.Services
                 CreatureId = creatureDto.Id,
                 CreatureDisplayId = creatureDto.Id,
                 VerifiedBuild = VerifiedBuild,
-                
-                Probability = 1,
-                DisplayScale = 1
+
+                Probability = Default.CreatureTemplateModel.Probability,
+                DisplayScale = Default.CreatureTemplateModel.DisplayScale
             };
         }
 
@@ -110,8 +109,8 @@ namespace HotfixMods.Infrastructure.Services
         {
             creatureDto.AddHotfix(creatureDto.Id, TableHashes.CreatureDisplayInfo, HotfixStatuses.VALID);
 
-            var gender = creatureDto.Gender ?? CreatureDefaults.Gender;
-            var race = creatureDto.Race ?? CreatureDefaults.Race;
+            var gender = creatureDto.Gender ?? Default.CreatureDisplayInfo.Gender;
+            var race = creatureDto.Race ?? Races.HUMAN;
             return new CreatureDisplayInfo()
             {
                 Id = creatureDto.Id,
@@ -120,13 +119,13 @@ namespace HotfixMods.Infrastructure.Services
 
                 ModelId = GetModelIdByRaceAndGenders(race, gender, creatureDto.Customizations),
                 Gender = gender,
-                SoundId = creatureDto.SoundId ?? CreatureDefaults.SoundId,
+                SoundId = creatureDto.SoundId ?? Default.CreatureDisplayInfo.SoundId,
 
-                UnarmedWeaponType = -1,
-                CreatureModelAlpha = 255,
-                CreatureModelScale = 1,
-                PetInstanceScale = 1,
-                SizeClass = 1
+                UnarmedWeaponType = Default.CreatureDisplayInfo.UnarmedWeaponType,
+                CreatureModelAlpha = Default.CreatureDisplayInfo.CreatureModelAlpha,
+                CreatureModelScale = Default.CreatureDisplayInfo.CreatureModelScale,
+                PetInstanceScale = Default.CreatureDisplayInfo.PetInstanceScale,
+                SizeClass = Default.CreatureDisplayInfo.SizeClass
             };
         }
 
@@ -139,8 +138,8 @@ namespace HotfixMods.Infrastructure.Services
                 Id = creatureDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
-                DisplayRaceId = creatureDto.Race ?? CreatureDefaults.Race,
-                DisplaySexId = creatureDto.Gender ?? CreatureDefaults.Gender
+                DisplayRaceId = creatureDto.Race ?? Default.CreatureDisplayInfoExtra.DisplayRaceId,
+                DisplaySexId = creatureDto.Gender ?? Default.CreatureDisplayInfoExtra.DisplaySexId
             };
         }
 
@@ -173,98 +172,110 @@ namespace HotfixMods.Infrastructure.Services
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.HEAD,
-                ItemDisplayInfoId = creatureDto.HeadItemDisplayInfoId ?? CreatureDefaults.HeadItemDisplayInfoId,
                 ItemSlot = ArmorSlots.HEAD,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.HeadItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.SHOULDERS,
-                ItemDisplayInfoId = creatureDto.ShouldersItemDisplayInfoId ?? CreatureDefaults.ShouldersItemDisplayInfoId,
                 ItemSlot = ArmorSlots.SHOULDERS,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.ShouldersItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.SHIRT,
-                ItemDisplayInfoId = creatureDto.ShirtItemDisplayInfoId ?? CreatureDefaults.ShirtItemDisplayInfoId,
                 ItemSlot = ArmorSlots.SHIRT,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.ShirtItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.CHEST,
-                ItemDisplayInfoId = creatureDto.ChestItemDisplayInfoId ?? CreatureDefaults.ChestItemDisplayInfoId,
                 ItemSlot = ArmorSlots.CHEST,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.ChestItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.WAIST,
-                ItemDisplayInfoId = creatureDto.WaistItemDisplayInfoId ?? CreatureDefaults.WaistItemDisplayInfoId,
                 ItemSlot = ArmorSlots.WAIST,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.WaistItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.LEGS,
-                ItemDisplayInfoId = creatureDto.LegsItemDisplayInfoId ?? CreatureDefaults.LegsItemDisplayInfoId,
                 ItemSlot = ArmorSlots.LEGS,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.LegsItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.FEET,
-                ItemDisplayInfoId = creatureDto.FeetItemDisplayInfoId ?? CreatureDefaults.FeetItemDisplayInfoId,
                 ItemSlot = ArmorSlots.FEET,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.FeetItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.WRISTS,
-                ItemDisplayInfoId = creatureDto.WristsItemDisplayInfoId ?? CreatureDefaults.WristsItemDisplayInfoId,
                 ItemSlot = ArmorSlots.WRISTS,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.WristsItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.HANDS,
-                ItemDisplayInfoId = creatureDto.HandsItemDisplayInfoId ?? CreatureDefaults.HandsItemDisplayInfoId,
                 ItemSlot = ArmorSlots.HANDS,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.HandsItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.TABARD,
-                ItemDisplayInfoId = creatureDto.TabardItemDisplayInfoId ?? CreatureDefaults.TabardItemDisplayInfoId,
                 ItemSlot = ArmorSlots.TABARD,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.TabardItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.BACK,
-                ItemDisplayInfoId = creatureDto.BackItemDisplayInfoId ?? CreatureDefaults.BackItemDisplayInfoId,
                 ItemSlot = ArmorSlots.BACK,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.BackItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
             result.Add(new NpcModelItemSlotDisplayInfo()
             {
                 Id = creatureDto.Id + (int)ArmorSlots.QUIVER,
-                ItemDisplayInfoId = creatureDto.QuiverItemDisplayInfoId ?? CreatureDefaults.QuiverItemDisplayInfoId,
                 ItemSlot = ArmorSlots.QUIVER,
                 NpcModelId = npcModelId,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                ItemDisplayInfoId = creatureDto.QuiverItemDisplayInfoId ?? Default.NpcModelItemSlotDisplayInfo.ItemDisplayInfoId
             });
 
             foreach (var item in result)

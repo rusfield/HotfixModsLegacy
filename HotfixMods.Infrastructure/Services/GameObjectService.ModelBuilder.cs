@@ -1,5 +1,5 @@
 ﻿using HotfixMods.Core.Constants;
-using HotfixMods.Core.Defaults;
+using HotfixMods.Infrastructure.Defaults;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
 using System;
@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class GameObjectService
     {
-        protected GameObjectDisplayInfo BuildGameObjectDisplayInfo(GameObjectDto gameObjectDto)
+        GameObjectDisplayInfo BuildGameObjectDisplayInfo(GameObjectDto gameObjectDto)
         {
             return new GameObjectDisplayInfo()
             {
@@ -29,7 +29,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        protected GameObjectTemplate BuildGameObjectTemplate(GameObjectDto gameObjectDto)
+        GameObjectTemplate BuildGameObjectTemplate(GameObjectDto gameObjectDto)
         {
             return new GameObjectTemplate()
             {
@@ -49,7 +49,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        protected GameObjectTemplateAddon BuildGameObjectTemplateAddon(GameObjectDto gameObjectDto)
+        GameObjectTemplateAddon BuildGameObjectTemplateAddon(GameObjectDto gameObjectDto)
         {
             return new GameObjectTemplateAddon()
             {

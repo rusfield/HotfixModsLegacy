@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Constants;
+using HotfixMods.Infrastructure.Defaults;
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
@@ -20,8 +21,8 @@ namespace HotfixMods.Infrastructure.Services
                 Id = animKitDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
-                OneShotDuration = animKitDto.OneShotDuration ?? AnimKitDefaults.OneShotDuration,
-                OneShotStopAnimKitId = animKitDto.OneShotStopAnimKitId ?? AnimKitDefaults.OneShotStopAnimKitId
+                OneShotDuration = animKitDto.OneShotDuration ?? Default.AnimKit.OneShotDuration,
+                OneShotStopAnimKitId = animKitDto.OneShotStopAnimKitId ?? Default.AnimKit.OneShotStopAnimKitId
             };
         } 
 
@@ -30,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
             var result = new List<AnimKitSegment>();
             foreach(var segment in animKitDto.Segments)
             {
-                int id = animKitDto.Id + (segment.OrderIndex ?? AnimKitDefaults.OrderIndex);
+                int id = animKitDto.Id + (segment.OrderIndex ?? Default.AnimKitSegment.OrderIndex);
                 animKitDto.AddHotfix(id, TableHashes.AnimKitSegment, HotfixStatuses.VALID);
                 result.Add(new AnimKitSegment()
                 {
@@ -38,24 +39,24 @@ namespace HotfixMods.Infrastructure.Services
                     ParentAnimKitId = animKitDto.Id,
                     VerifiedBuild = VerifiedBuild,
                     
-                    AnimId = segment.AnimId ?? AnimKitDefaults.AnimId,
-                    AnimKitConfigId = segment.AnimKitConfigId ?? AnimKitDefaults.AnimKitConfigId,
-                    AnimStartTime = segment.AnimStartTime ?? AnimKitDefaults.AnimStartTime,
-                    BlendInTimeMs = segment.BlendInTimeMs ?? AnimKitDefaults.BlendInTimeMs,
-                    BlendOutTimeMs = segment.BlendOutTimeMs ?? AnimKitDefaults.BlendOutTimeMs,
-                    EndCondition = segment.EndCondition ?? AnimKitDefaults.EndCondition,
-                    EndConditionDelay = segment.EndConditionDelay ?? AnimKitDefaults.EndConditionDelay,
-                    EndConditionParam = segment.EndConditionParam ?? AnimKitDefaults.EndConditionParam,
-                    OrderIndex = segment.OrderIndex ?? AnimKitDefaults.OrderIndex,
-                    OverrideConfigFlags = segment.OverrideConfigFlags ?? AnimKitDefaults.OverrideConfigFlags,
-                    SegmentFlags = segment.OverrideConfigFlags ?? AnimKitDefaults.OverrideConfigFlags,
-                    Speed = segment.Speed ?? AnimKitDefaults.Speed,
-                    StartCondition = segment.StartCondition ?? AnimKitDefaults.StartCondition,
-                    StartConditionDelay = segment.StartConditionDelay ?? AnimKitDefaults.StartConditionDelay,
-                    StartConditionParam = segment.StartConditionParam ?? AnimKitDefaults.StartConditionParam,
+                    AnimId = segment.AnimId ?? Default.AnimKitSegment.AnimId,
+                    AnimKitConfigId = segment.AnimKitConfigId ?? Default.AnimKitSegment.AnimKitConfigId,
+                    AnimStartTime = segment.AnimStartTime ?? Default.AnimKitSegment.AnimStartTime,
+                    BlendInTimeMs = segment.BlendInTimeMs ?? Default.AnimKitSegment.BlendInTimeMs,
+                    BlendOutTimeMs = segment.BlendOutTimeMs ?? Default.AnimKitSegment.BlendOutTimeMs,
+                    EndCondition = segment.EndCondition ?? Default.AnimKitSegment.EndCondition,
+                    EndConditionDelay = segment.EndConditionDelay ?? Default.AnimKitSegment.EndConditionDelay,
+                    EndConditionParam = segment.EndConditionParam ?? Default.AnimKitSegment.EndConditionParam,
+                    OrderIndex = segment.OrderIndex ?? Default.AnimKitSegment.OrderIndex,
+                    OverrideConfigFlags = segment.OverrideConfigFlags ?? Default.AnimKitSegment.OverrideConfigFlags,
+                    SegmentFlags = segment.OverrideConfigFlags ?? Default.AnimKitSegment.OverrideConfigFlags,
+                    Speed = segment.Speed ?? Default.AnimKitSegment.Speed,
+                    StartCondition = segment.StartCondition ?? Default.AnimKitSegment.StartCondition,
+                    StartConditionDelay = segment.StartConditionDelay ?? Default.AnimKitSegment.StartConditionDelay,
+                    StartConditionParam = segment.StartConditionParam ?? Default.AnimKitSegment.StartConditionParam,
 
-                    ForcedVariation = AnimKitDefaults.ForcedVariation,
-                    LoopToSegmentIndex = AnimKitDefaults.LoopToSegmentIndex
+                    ForcedVariation = Default.AnimKitSegment.ForcedVariation,
+                    LoopToSegmentIndex = Default.AnimKitSegment.LoopToSegmentIndex
                 });
             }
             return result.ToArray();

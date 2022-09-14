@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Constants;
+using HotfixMods.Core.Defaults;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
 using System;
@@ -16,13 +17,15 @@ namespace HotfixMods.Infrastructure.Services
             return new GameObjectDisplayInfo()
             {
                 Id = gameObjectDto.Id,
-                FileDataId = gameObjectDto.FileDataId ?? GameObjectDefaults.FileDataId,
-                GeoBox0 = gameObjectDto.GeoBox0 ?? GameObjectDefaults.GeoBox0,
-                GeoBox1 = gameObjectDto.GeoBox1 ?? GameObjectDefaults.GeoBox1,
-                Geobox2 = gameObjectDto.GeoBox2 ?? GameObjectDefaults.GeoBox2,
-                Geobox3 = gameObjectDto.GeoBox3 ?? GameObjectDefaults.GeoBox3,
-                Geobox4 = gameObjectDto.GeoBox4 ?? GameObjectDefaults.GeoBox4,
-                Geobox5 = gameObjectDto.GeoBox5 ?? GameObjectDefaults.GeoBox5
+                VerifiedBuild = VerifiedBuild,
+
+                FileDataId = gameObjectDto.FileDataId ?? Default.GameObjectDisplayInfo.FileDataId,
+                GeoBox0 = gameObjectDto.GeoBox0 ?? Default.GameObjectDisplayInfo.GeoBox0,
+                GeoBox1 = gameObjectDto.GeoBox1 ?? Default.GameObjectDisplayInfo.GeoBox1,
+                GeoBox2 = gameObjectDto.GeoBox2 ?? Default.GameObjectDisplayInfo.GeoBox2,
+                GeoBox3 = gameObjectDto.GeoBox3 ?? Default.GameObjectDisplayInfo.GeoBox3,
+                GeoBox4 = gameObjectDto.GeoBox4 ?? Default.GameObjectDisplayInfo.GeoBox4,
+                GeoBox5 = gameObjectDto.GeoBox5 ?? Default.GameObjectDisplayInfo.GeoBox5
             };
         }
 
@@ -31,13 +34,30 @@ namespace HotfixMods.Infrastructure.Services
             return new GameObjectTemplate()
             {
                 Entry = gameObjectDto.Id,
-                Name = gameObjectDto.Name ?? GameObjectDefaults.Name,
-                CastBarCaption = gameObjectDto.CastBarCaption ?? GameObjectDefaults.CastBarCaption,
                 VerifiedBuild = VerifiedBuild,
                 DisplayId = gameObjectDto.Id,
-                Size = gameObjectDto.Size ?? GameObjectDefaults.Size,
+
+                Name = gameObjectDto.Name ?? Default.GameObjectTemplate.Name,
+                CastBarCaption = gameObjectDto.CastBarCaption ?? Default.GameObjectTemplate.CastBarCaption,
+                Size = gameObjectDto.Size ?? Default.GameObjectTemplate.Size,
+                Type = gameObjectDto.Type ?? Default.GameObjectTemplate.Type,
+
+                AiName = Default.GameObjectTemplate.AiName,
+                IconName = Default.GameObjectTemplate.IconName,
+                ScriptName = Default.GameObjectTemplate.ScriptName,
+                Unk1 = Default.GameObjectTemplate.Unk1
+            };
+        }
+
+        protected GameObjectTemplateAddon BuildGameObjectTemplateAddon(GameObjectDto gameObjectDto)
+        {
+            return new GameObjectTemplateAddon()
+            {
+                Entry = gameObjectDto.Id,
+                VerifiedBuild = VerifiedBuild,
                 
-                // TODO: Continue
+                Faction = gameObjectDto.Faction ?? Default.GameObjectTemplateAddon.Faction,
+                Flags = gameObjectDto.Flags ?? Default.GameObjectTemplateAddon.Flags
             };
         }
     }

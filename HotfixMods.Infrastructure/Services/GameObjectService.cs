@@ -21,9 +21,12 @@ namespace HotfixMods.Infrastructure.Services
             gameObjectDto.InitHotfixes(hotfixId, VerifiedBuild);
 
             // Nothing special to do whether IsUpdate is true or false for GameObject.
+            
+            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplate(gameObjectDto));
+            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplateAddon(gameObjectDto));
+            await _mySql.AddOrUpdateAsync(BuildGameObjectDisplayInfo(gameObjectDto));
 
-
-
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(gameObjectDto));
             await AddHotfixes(gameObjectDto.GetHotfixes());
         }
 
@@ -41,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<GameObjectDto> GetGameObjectByIdAsync(int id, Action<string, string, int>? progressCallback = null)
+        public async Task<GameObjectDto?> GetGameObjectByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
             var gameObjectTemplate = await _mySql.GetSingleAsync<GameObjectTemplate>(c => c.Entry == id);
             if(null == gameObjectTemplate)
@@ -70,10 +73,10 @@ namespace HotfixMods.Infrastructure.Services
                 FileDataId = gameObjectDisplayInfo.FileDataId,
                 GeoBox0 = gameObjectDisplayInfo.GeoBox0,
                 GeoBox1 = gameObjectDisplayInfo.GeoBox1,
-                GeoBox2 = gameObjectDisplayInfo.Geobox2,
-                GeoBox3 = gameObjectDisplayInfo.Geobox3,
-                GeoBox4 = gameObjectDisplayInfo.Geobox4,
-                GeoBox5 = gameObjectDisplayInfo.Geobox5,
+                GeoBox2 = gameObjectDisplayInfo.GeoBox2,
+                GeoBox3 = gameObjectDisplayInfo.GeoBox3,
+                GeoBox4 = gameObjectDisplayInfo.GeoBox4,
+                GeoBox5 = gameObjectDisplayInfo.GeoBox5,
                 HotfixModsName = hotfixMods?.Name,
                 HotfixModsComment = hotfixMods.Comment
             };

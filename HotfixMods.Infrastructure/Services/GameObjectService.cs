@@ -17,7 +17,14 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveAsync(GameObjectDto gameObjectDto)
         {
+            var hotfixId = await GetNextHotfixIdAsync();
+            gameObjectDto.InitHotfixes(hotfixId, VerifiedBuild);
 
+            // Nothing special to do whether IsUpdate is true or false for GameObject.
+
+
+
+            await AddHotfixes(gameObjectDto.GetHotfixes());
         }
 
         public async Task DeleteAsync(int id)

@@ -12,5 +12,6 @@ namespace HotfixMods.Core.Models
         public int Id { get; set; }
         public string NameSubtext { get; set; }
         public string AuraDescription { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

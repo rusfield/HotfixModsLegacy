@@ -2,7 +2,7 @@
 using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
-using HotfixMods.Infrastructure.Dashboard;
+using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 
 

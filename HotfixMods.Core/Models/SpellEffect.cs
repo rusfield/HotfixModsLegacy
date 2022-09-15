@@ -15,5 +15,11 @@ namespace HotfixMods.Core.Models
         public int EffectIndex { get; set; }
         public SpellEffects Effect { get; set; }
         public int SpellId { get; set; }
+        public decimal Variance { get; set; }
+        public decimal PvpMultiplier { get; set; }
+        public decimal EffectChainAmplitude { get; set; }
+        public SpellTargets ImplicitTarget0 { get; set; }
+        public SpellTargets ImplicitTarget1 { get; set; }
+        public int VerifiedBuild { get; set; }
     }
 }

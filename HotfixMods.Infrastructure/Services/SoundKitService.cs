@@ -1,7 +1,7 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
-using HotfixMods.Infrastructure.Dashboard;
+using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 using System;
 using System.Collections.Generic;

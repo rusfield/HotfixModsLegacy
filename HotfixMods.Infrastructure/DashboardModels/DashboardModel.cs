@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Infrastructure.Dashboard
+namespace HotfixMods.Infrastructure.DashboardModels
 {
     public class DashboardModel
     {

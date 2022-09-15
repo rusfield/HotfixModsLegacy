@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace HotfixMods.Apps.Desktop
+namespace HotfixMods.Apps.Desktop.Platforms.MacCatalyst
 {
     public class Program
     {

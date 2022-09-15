@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace HotfixMods.Apps.Desktop
+namespace HotfixMods.Apps.Desktop.Platforms.iOS
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

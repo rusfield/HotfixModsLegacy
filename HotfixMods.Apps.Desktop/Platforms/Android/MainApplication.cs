@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace HotfixMods.Apps.Desktop
+namespace HotfixMods.Apps.Desktop.Platforms.Android
 {
     [Application]
     public class MainApplication : MauiApplication

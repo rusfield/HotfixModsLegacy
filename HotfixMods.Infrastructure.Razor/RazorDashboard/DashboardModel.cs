@@ -1,4 +1,4 @@
-﻿using HotfixMods.Infrastructure.Dashboard;
+﻿using HotfixMods.Infrastructure.DashboardModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

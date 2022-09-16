@@ -80,6 +80,7 @@ namespace HotfixMods.Infrastructure.Services
                 Customizations = customizations,
                 Level = character.Level,
                 Name = character.Name,
+                Auras = new(),
                 SoundId = GetDefaultSoundId(character.Race, character.Gender)
             };
 

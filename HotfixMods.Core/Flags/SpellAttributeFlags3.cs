@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HotfixMods.Core.Flags
+{
+    [Flags]
+    public enum SpellAttributeFlags3 : long
+    {
+        NONE = 0,
+        PVP_ENABLING = 1,
+        NO_PROC_EQUIP_REQUIREMENT = 2,
+        NO_CASTING_BAR_TEXT = 4,
+        COMPLETELY_BLOCKED = 8,
+        NO_RES_TIMER = 16,
+        NO_DURABILITY_LOSS = 32,
+        NO_AVOIDANCE = 64,
+        DOT_STACKING_RULE = 128,
+        ONLY_ON_PLAYER = 256,
+        NOT_A_PROC = 512,
+        REQUIRES_MAIN_HAND_WEAPON = 1024,
+        ONLY_BATTLEGROUNDS = 2048,
+        ONLY_ON_GHOSTS = 4096,
+        HIDE_CHANNEL_BAR = 8192,
+        HIDE_IN_RAID_FILTER = 16384,
+        NORMAL_RANGED_ATTACK = 32768,
+        SUPPRESS_CASTER_PROCS = 65536,
+        SUPPRESS_TARGET_PROCS = 131072,
+        ALWAYS_HIT = 262144,
+        INSTANT_TARGET_PROCS = 524288,
+        ALLOW_AURA_WHILE_DEAD = 1048576,
+        ONLY_PROC_OUTDOORS = 2097152,
+        CASTING_CANCELS_AUTOREPEAT_MAINLINE_DO_NOT_TRIGGER_TARGET_STAND = 4194304,
+        NO_DAMAGE_HISTORY = 8388608,
+        REQUIRES_OFF_HAND_WEAPON = 16777216,
+        TREAT_AS_PERIODIC = 33554432,
+        CAN_PROC_FROM_PROCS = 67108864,
+        ONLY_PROC_ON_CASTER = 134217728,
+        IGNORE_CASTER_TARGET_RESTRICTIONS = 268435456,
+        IGNORE_CASTER_MODIFIERS = 536870912,
+        DO_NOT_DISPLAY_RANGE = 1073741824,
+        NOT_ON_AOE_IMMUNE = 2147483648
+    }
+}

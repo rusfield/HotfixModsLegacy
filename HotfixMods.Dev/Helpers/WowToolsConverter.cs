@@ -24,7 +24,7 @@ namespace HotfixMods.Dev.Helpers
                 string line;
                 while ((line = file.ReadLine()) != null)
                 {
-                    line = line.Replace("//", "");
+                    line = line.Replace("/", "");
                     line = line.Replace("'", "");
                     line = line.Replace("\\", "");
                     line = line.Replace("(", "");
@@ -109,7 +109,7 @@ namespace HotfixMods.Dev.Helpers
             {
                 if (result.ContainsKey(i))
                 {
-                    Console.WriteLine($"{result[i]} = {i},");
+                    Console.WriteLine($"{result[i].ToUpper()} = {i},");
                 }
                 else
                 {

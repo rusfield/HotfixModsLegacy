@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HotfixMods.Core.Flags
+{
+    [Flags]
+    public enum SpellAttributeFlags1 : long
+    {
+        NONE = 0,
+        DISMISS_PET_FIRST = 1,
+        USE_ALL_MANA = 2,
+        IS_CHANNELLED = 4,
+        NO_REDIRECTION = 8,
+        NO_SKILL_INCREASE = 16,
+        ALLOW_WHILE_STEALTHED = 32,
+        IS_SELF_CHANNELLED = 64,
+        NO_REFLECTION = 128,
+        ONLY_PEACEFUL_TARGETS = 256,
+        INITIATES_COMBAT_ENABLES_AUTO_ATTACK = 512,
+        NO_THREAT = 1024,
+        AURA_UNIQUE = 2048,
+        FAILURE_BREAKS_STEALTH = 4096,
+        TOGGLE_FAR_SIGHT = 8192,
+        TRACK_TARGET_IN_CHANNEL = 16384,
+        IMMUNITY_PURGES_EFFECT = 32768,
+        IMMUNITY_TO_HOSTILE_FRIENDLY_EFFECTS = 65536,
+        NO_AUTOCAST_AI = 131072,
+        PREVENTS_ANIM = 262144,
+        EXCLUDE_CASTER = 524288,
+        FINISHING_MOVE_DAMAGE = 1048576,
+        THREAT_ONLY_ON_MISS = 2097152,
+        FINISHING_MOVE_DURATION = 4194304,
+        IGNORE_OWNERS_DEATH = 8388608,
+        SPECIAL_SKILLUP = 16777216,
+        AURA_STAYS_AFTER_COMBAT = 33554432,
+        REQUIRE_ALL_TARGETS = 67108864,
+        DISCOUNT_POWER_ON_MISS = 134217728,
+        NO_AURA_ICON = 268435456,
+        NAME_IN_CHANNEL_BAR = 536870912,
+        COMBO_ON_BLOCK_MAINLINE_DISPEL_ALL_STACKS = 1073741824,
+        CAST_WHEN_LEARNED = 2147483648
+    }
+}

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HotfixMods.Core.Flags
 {
     [Flags]
-    public enum SpellAttributes0 : long
+    public enum SpellAttributeFlags0 : long
     {
         NONE = 0,
         PROC_FAILURE_BURNS_CHARGE = 1,

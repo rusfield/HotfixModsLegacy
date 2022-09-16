@@ -48,8 +48,27 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ModelType1 { get; set; }
         public int? HelmetGeosetVis0 { get; set; }
         public int? HelmetGeosetVis1 { get; set; }
-        public int ItemGroupSoundsId { get; set; }
-
+        public int? ItemGroupSoundsId { get; set; }
+        public int? StatPercentEditor0 { get; set; }
+        public int? StatPercentEditor1 { get; set; }
+        public int? StatPercentEditor2 { get; set; }
+        public int? StatPercentEditor3 { get; set; }
+        public int? StatPercentEditor4 { get; set; }
+        public int? StatPercentEditor5 { get; set; }
+        public int? StatPercentEditor6 { get; set; }
+        public int? StatPercentEditor7 { get; set; }
+        public int? StatPercentEditor8 { get; set; }
+        public int? StatPercentEditor9 { get; set; }
+        public ItemStatType? StatModifierBonusStat0 { get; set; }
+        public ItemStatType? StatModifierBonusStat1 { get; set; }
+        public ItemStatType? StatModifierBonusStat2 { get; set; }
+        public ItemStatType? StatModifierBonusStat3 { get; set; }
+        public ItemStatType? StatModifierBonusStat4 { get; set; }
+        public ItemStatType? StatModifierBonusStat5 { get; set; }
+        public ItemStatType? StatModifierBonusStat6 { get; set; }
+        public ItemStatType? StatModifierBonusStat7 { get; set; }
+        public ItemStatType? StatModifierBonusStat8 { get; set; }
+        public ItemStatType? StatModifierBonusStat9 { get; set; }
         public ItemFlags0? Flags0 { get; set; }
         public ItemFlags1?  Flags1 { get; set; }
         public ItemFlags2? Flags2 { get; set; }

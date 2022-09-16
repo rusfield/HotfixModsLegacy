@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models
 {
-    public class GameObjectTemplate : ITrinityCore
+    public class GameObjectTemplate : IWorldSchema
     {
         public int Entry { get; set; }
         public GameObjectTypes Type { get; set; }

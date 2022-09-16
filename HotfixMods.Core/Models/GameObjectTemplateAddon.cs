@@ -13,6 +13,7 @@ namespace HotfixMods.Core.Models
         public int Entry { get; set; }
         public GameObjectAddonFlags Flags { get; set; }
         public int Faction { get; set; }
-        public int VerifiedBuild { get; set; }
+
+        //public int VerifiedBuild { get; set; } // Currently not implemented in TC 
     }
 }

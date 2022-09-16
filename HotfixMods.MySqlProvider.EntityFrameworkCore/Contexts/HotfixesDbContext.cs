@@ -96,6 +96,10 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             {
                 entity.ToTable("anim_kit_segment");
             });
+            modelBuilder.Entity<GameObjectDisplayInfo>(entity =>
+            {
+                entity.ToTable("gameobject_display_info");
+            });
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HotfixMods.Core.Flags
 {
     [Flags]
-    public enum GameObjectAddonFlags
+    public enum GameObjectAddonFlags : long
     {
         NONE = 0,
         IN_USE = 1,

@@ -231,7 +231,27 @@ namespace HotfixMods.Infrastructure.Services
                     InventoryType = item.InventoryType,
                     DisplayType = itemAppearance.DisplayType,
                     ItemGroupSoundsId = item.ItemGroupSoundsId,
-                    
+                    StatModifierBonusStat0 = itemSparse.StatModifierBonusStat0,
+                    StatModifierBonusStat1 = itemSparse.StatModifierBonusStat1,
+                    StatModifierBonusStat2 = itemSparse.StatModifierBonusStat2,
+                    StatModifierBonusStat3 = itemSparse.StatModifierBonusStat3,
+                    StatModifierBonusStat4 = itemSparse.StatModifierBonusStat4,
+                    StatModifierBonusStat5 = itemSparse.StatModifierBonusStat5,
+                    StatModifierBonusStat6 = itemSparse.StatModifierBonusStat6,
+                    StatModifierBonusStat7 = itemSparse.StatModifierBonusStat7,
+                    StatModifierBonusStat8 = itemSparse.StatModifierBonusStat8,
+                    StatModifierBonusStat9 = itemSparse.StatModifierBonusStat9,
+                    StatPercentEditor0 = itemSparse.StatPercentEditor0,
+                    StatPercentEditor1 = itemSparse.StatPercentEditor1,
+                    StatPercentEditor2 = itemSparse.StatPercentEditor2,
+                    StatPercentEditor3 = itemSparse.StatPercentEditor3,
+                    StatPercentEditor4 = itemSparse.StatPercentEditor4,
+                    StatPercentEditor5 = itemSparse.StatPercentEditor5,
+                    StatPercentEditor6 = itemSparse.StatPercentEditor6,
+                    StatPercentEditor7 = itemSparse.StatPercentEditor7,
+                    StatPercentEditor8 = itemSparse.StatPercentEditor8,
+                    StatPercentEditor9 = itemSparse.StatPercentEditor9,
+
                     IsUpdate = isUpdate,
                     SearchResultName = appearanceName
                 };

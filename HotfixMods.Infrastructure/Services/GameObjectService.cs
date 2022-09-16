@@ -20,6 +20,8 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixId = await GetNextHotfixIdAsync();
             gameObjectDto.InitHotfixes(hotfixId, VerifiedBuild);
 
+            gameObjectDto.HotfixModsName = gameObjectDto.Name;
+
             // Nothing special to do whether IsUpdate is true or false for GameObject.
             
             await _mySql.AddOrUpdateAsync(BuildGameObjectTemplate(gameObjectDto));
@@ -78,7 +80,7 @@ namespace HotfixMods.Infrastructure.Services
                 GeoBox4 = gameObjectDisplayInfo.GeoBox4,
                 GeoBox5 = gameObjectDisplayInfo.GeoBox5,
                 HotfixModsName = hotfixMods?.Name,
-                HotfixModsComment = hotfixMods.Comment
+                HotfixModsComment = hotfixMods?.Comment
             };
 
             if (id < IdRangeTo && id >= IdRangeFrom)

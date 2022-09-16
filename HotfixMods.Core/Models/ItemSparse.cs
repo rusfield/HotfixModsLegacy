@@ -39,6 +39,46 @@ namespace HotfixMods.Core.Models
         public string Display2 { get; set; }
         public string Display3 { get; set; }
         public string Description { get; set; }
+        [Column("StatPercentEditor1")]
+        public int StatPercentEditor0 { get; set; }
+        [Column("StatPercentEditor2")]
+        public int StatPercentEditor1 { get; set; }
+        [Column("StatPercentEditor3")]
+        public int StatPercentEditor2 { get; set; }
+        [Column("StatPercentEditor4")]
+        public int StatPercentEditor3 { get; set; }
+        [Column("StatPercentEditor5")]
+        public int StatPercentEditor4 { get; set; }
+        [Column("StatPercentEditor6")]
+        public int StatPercentEditor5 { get; set; }
+        [Column("StatPercentEditor7")]
+        public int StatPercentEditor6 { get; set; }
+        [Column("StatPercentEditor8")]
+        public int StatPercentEditor7 { get; set; }
+        [Column("StatPercentEditor9")]
+        public int StatPercentEditor8 { get; set; }
+        [Column("StatPercentEditor10")]
+        public int StatPercentEditor9 { get; set; }
+        [Column("StatModifierBonusStat1")]
+        public ItemStatType StatModifierBonusStat0 { get; set; }
+        [Column("StatModifierBonusStat2")]
+        public ItemStatType StatModifierBonusStat1 { get; set; }
+        [Column("StatModifierBonusStat3")]
+        public ItemStatType StatModifierBonusStat2 { get; set; }
+        [Column("StatModifierBonusStat4")]
+        public ItemStatType StatModifierBonusStat3 { get; set; }
+        [Column("StatModifierBonusStat5")]
+        public ItemStatType StatModifierBonusStat4 { get; set; }
+        [Column("StatModifierBonusStat6")]
+        public ItemStatType StatModifierBonusStat5 { get; set; }
+        [Column("StatModifierBonusStat7")]
+        public ItemStatType StatModifierBonusStat6 { get; set; }
+        [Column("StatModifierBonusStat8")]
+        public ItemStatType StatModifierBonusStat7 { get; set; }
+        [Column("StatModifierBonusStat9")]
+        public ItemStatType StatModifierBonusStat8 { get; set; }
+        [Column("StatModifierBonusStat10")]
+        public ItemStatType StatModifierBonusStat9 { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

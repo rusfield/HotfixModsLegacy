@@ -54,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
             return new GameObjectTemplateAddon()
             {
                 Entry = gameObjectDto.Id,
-                VerifiedBuild = VerifiedBuild,
+                //VerifiedBuild = VerifiedBuild,
                 
                 Faction = gameObjectDto.Faction ?? Default.GameObjectTemplateAddon.Faction,
                 Flags = gameObjectDto.Flags ?? Default.GameObjectTemplateAddon.Flags

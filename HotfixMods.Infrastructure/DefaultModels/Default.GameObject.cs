@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             Flags = GameObjectAddonFlags.NONE,
 
             Entry = -1,
-            VerifiedBuild = -1
+            //VerifiedBuild = -1
         };
 
         public static readonly GameObjectDisplayInfo GameObjectDisplayInfo = new()

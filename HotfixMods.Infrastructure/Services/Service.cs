@@ -83,8 +83,8 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixModsData = new HotfixModsData()
             {
                 Id = dto.Id,
-                Name = dto.HotfixModsName,
-                Comment = dto.HotfixModsComment,
+                Name = dto.HotfixModsName ?? "",
+                Comment = dto.HotfixModsComment ?? "",
                 RecordId = dto.Id,
                 VerifiedBuild = VerifiedBuild
             };

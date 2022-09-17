@@ -11,54 +11,32 @@ using HotfixMods.Infrastructure.Services;
 using HotfixMods.MySqlProvider.EntityFrameworkCore.Clients;
 using HotfixMods.Core.Enums;
 using HotfixMods.Apps.Console;
+using HotfixMods.Core.Constants;
+using System.Text;
 
-Console.WriteLine("Hello, World!");
-
-var test = new TestClass();
-
-test.Test<MyEnum?>();
-
-
-public enum MyEnum
+foreach (var enumValue in Enum.GetValues(typeof(DB2Hash)))
 {
-    A,
-    B
+    var enumString = enumValue.ToString();
+    enumString = enumString.Replace("_", "");
+    enumString = AddSpacesToSentence(enumString, true);
+    Console.WriteLine($"{enumString.ToUpper()} = {(uint)enumValue},");
 }
-/*
-var service = new ItemService(
-    new Db2Client(),
-    new MySqlClient(
-        "127.0.0.1",
-        "root",
-        "root",
-        "world",
-        "characters",
-        "hotfixes"),
-    -1200,
-    10000000,
-    99999999);
 
-var item = new ItemDto()
+
+string AddSpacesToSentence(string text, bool preserveAcronyms)
 {
-    Id = 10010020,
-    IconId = 132692,
-    Bonding = ItemBondings.NOT_BOUND,
-    OverallQuality = OverallQualities.UNCOMMON,
-    RequiredLevel = 0,
-    Name = "Skirt and Robes Test",
-    //ComponentTorsoUpper = 44871,
-    //ComponentTorsoLower = 45378,
-    //ComponentLegUpper = 80193,
-    //ComponentLegLower = 80192,
-    ItemLevel = 1,
-    Flags1 = (ItemFlags1)8192,
-    Flags2 = (ItemFlags2)8388608,
-    Flags3 = (ItemFlags3)2,
-    Material = ItemMaterial.LEATHER,
-    ModelResourceId0 = 51474,
-    ModelMaterialResourceId0 = 526358
-};
-
-await service.SaveItemAsync(item);
-
-*/
+    if (string.IsNullOrWhiteSpace(text))
+        return string.Empty;
+    StringBuilder newText = new StringBuilder(text.Length * 2);
+    newText.Append(text[0]);
+    for (int i = 1; i < text.Length; i++)
+    {
+        if (char.IsUpper(text[i]))
+            if ((text[i - 1] != ' ' && !char.IsUpper(text[i - 1])) ||
+                (preserveAcronyms && char.IsUpper(text[i - 1]) &&
+                 i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+                newText.Append('_');
+        newText.Append(text[i]);
+    }
+    return newText.ToString();
+}

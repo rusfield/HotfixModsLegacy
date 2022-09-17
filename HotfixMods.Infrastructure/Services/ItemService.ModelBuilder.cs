@@ -1,13 +1,7 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
-using HotfixMods.Core.Constants;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HotfixMods.Infrastructure.DefaultModels;
 
 namespace HotfixMods.Infrastructure.Services
@@ -28,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ARM_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.ARM_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -42,7 +36,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ARM_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.ARM_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -56,7 +50,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -70,7 +64,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -84,7 +78,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.LEG_LOWER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.LEG_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -98,7 +92,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.LEG_UPPER, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.LEG_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -112,7 +106,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.HAND, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.HAND, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -126,7 +120,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.FOOT, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.FOOT, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -140,7 +134,7 @@ namespace HotfixMods.Infrastructure.Services
                     ItemDisplayInfoId = item.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ACCESSORY, TableHashes.ItemDisplayInfoMaterialRes, HotfixStatuses.VALID);
+                item.AddHotfix(item.Id + (int)ComponentSections.ACCESSORY, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
@@ -159,7 +153,7 @@ namespace HotfixMods.Infrastructure.Services
                 VerifiedBuild = VerifiedBuild
             };
 
-            item.AddHotfix(item.Id, TableHashes.ItemAppearance, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM_APPEARANCE, HotfixStatuses.VALID);
 
             return result;
         }
@@ -177,7 +171,7 @@ namespace HotfixMods.Infrastructure.Services
                 OrderIndex = Default.ItemModifiedAppearance.OrderIndex
             };
 
-            item.AddHotfix(item.Id, TableHashes.ItemModifiedAppearance, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM_MODIFIED_APPEARANCE, HotfixStatuses.VALID);
 
             return result;
         }
@@ -200,7 +194,7 @@ namespace HotfixMods.Infrastructure.Services
                 VerifiedBuild = VerifiedBuild
             };
 
-            item.AddHotfix(item.Id, TableHashes.ItemSearchName, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM_SEARCH_NAME, HotfixStatuses.VALID);
 
             return result;
         }
@@ -255,7 +249,7 @@ namespace HotfixMods.Infrastructure.Services
                 Display3 = Default.ItemSparse.Display3
             };
 
-            item.AddHotfix(item.Id, TableHashes.ItemSparse, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM_SPARSE, HotfixStatuses.VALID);
 
             return result;
         }
@@ -276,7 +270,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 SoundOverrideSubClassId = Default.Item.SoundOverrideSubClassId
             };
-            item.AddHotfix(item.Id, TableHashes.Item, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM, HotfixStatuses.VALID);
 
             return result;
         }
@@ -320,7 +314,7 @@ namespace HotfixMods.Infrastructure.Services
                 UnsheathedSpellVisualKitID = Default.ItemDisplayInfo.UnsheathedSpellVisualKitID
             };
 
-            item.AddHotfix(item.Id, TableHashes.ItemDisplayInfo, HotfixStatuses.VALID);
+            item.AddHotfix(item.Id, TableHashes.ITEM_DISPLAY_INFO, HotfixStatuses.VALID);
             
             return result;
         }

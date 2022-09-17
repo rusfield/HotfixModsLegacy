@@ -1,13 +1,7 @@
-﻿using HotfixMods.Core.Constants;
-using HotfixMods.Infrastructure.DefaultModels;
+﻿using HotfixMods.Infrastructure.DefaultModels;
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -15,7 +9,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         AnimKit BuildAnimKit(AnimKitDto animKitDto)
         {
-            animKitDto.AddHotfix(animKitDto.Id, TableHashes.AnimKit, HotfixStatuses.VALID);
+            animKitDto.AddHotfix(animKitDto.Id, TableHashes.ANIM_KIT, HotfixStatuses.VALID);
             return new AnimKit()
             {
                 Id = animKitDto.Id,
@@ -32,7 +26,7 @@ namespace HotfixMods.Infrastructure.Services
             foreach(var segment in animKitDto.Segments)
             {
                 int id = animKitDto.Id + (segment.OrderIndex ?? Default.AnimKitSegment.OrderIndex);
-                animKitDto.AddHotfix(id, TableHashes.AnimKitSegment, HotfixStatuses.VALID);
+                animKitDto.AddHotfix(id, TableHashes.ANIM_KIT_SEGMENT, HotfixStatuses.VALID);
                 result.Add(new AnimKitSegment()
                 {
                     Id = id,

@@ -1,12 +1,7 @@
-﻿using HotfixMods.Core.Constants;
-using HotfixMods.Infrastructure.DefaultModels;
+﻿using HotfixMods.Infrastructure.DefaultModels;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HotfixMods.Core.Enums;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -14,6 +9,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         GameObjectDisplayInfo BuildGameObjectDisplayInfo(GameObjectDto gameObjectDto)
         {
+            gameObjectDto.AddHotfix(gameObjectDto.Id, TableHashes.GAME_OBJECT_DISPLAY_INFO, HotfixStatuses.VALID);
             return new GameObjectDisplayInfo()
             {
                 Id = gameObjectDto.Id,

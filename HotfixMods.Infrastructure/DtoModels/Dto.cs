@@ -28,7 +28,7 @@ namespace HotfixMods.Infrastructure.DtoModels
             this.initHotfixId = initHotfixId;
             this.verifiedBuild = verifiedBuild;
         }
-        public void AddHotfix(int recordId, long tableHash, HotfixStatuses status)
+        public void AddHotfix(int recordId, TableHashes tableHash, HotfixStatuses status)
         {
             if (hotfixes == null)
                 throw new Exception("Call InitHotfixes before adding any.");
@@ -38,7 +38,7 @@ namespace HotfixMods.Infrastructure.DtoModels
                 Id = hotfixes.Count > 0 ? hotfixes.Max(c => c.Id) + 1 : initHotfixId,
                 RecordId = recordId,
                 UniqueId = Id,
-                TableHash = tableHash,
+                TableHash = (long)tableHash,
                 Status = status,
                 VerifiedBuild = verifiedBuild
             });

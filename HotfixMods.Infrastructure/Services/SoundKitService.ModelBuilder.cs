@@ -1,12 +1,6 @@
-﻿using HotfixMods.Core.Constants;
-using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using HotfixMods.Infrastructure.DefaultModels;
 
 namespace HotfixMods.Infrastructure.Services
@@ -15,7 +9,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         SoundKit BuildSoundKit(SoundKitDto soundKit)
         {
-            soundKit.AddHotfix(soundKit.Id, TableHashes.SoundKit, HotfixStatuses.VALID);
+            soundKit.AddHotfix(soundKit.Id, TableHashes.SOUND_KIT, HotfixStatuses.VALID);
             return new SoundKit()
             {
                 Id = soundKit.Id,
@@ -40,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             var id = soundKit.Id;
             foreach(var fileDataId in soundKit.FileDataIds)
             {
-                soundKit.AddHotfix(id, TableHashes.SoundKitEntry, HotfixStatuses.VALID);
+                soundKit.AddHotfix(id, TableHashes.SOUND_KIT_ENTRY, HotfixStatuses.VALID);
                 result.Add(new SoundKitEntry()
                 {
                     Id = id,

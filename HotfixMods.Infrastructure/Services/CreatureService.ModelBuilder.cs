@@ -1,13 +1,7 @@
-﻿using HotfixMods.Core.Constants;
-using HotfixMods.Infrastructure.DefaultModels;
+﻿using HotfixMods.Infrastructure.DefaultModels;
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -107,7 +101,7 @@ namespace HotfixMods.Infrastructure.Services
 
         CreatureDisplayInfo BuildCreatureDisplayInfo(CreatureDto creatureDto)
         {
-            creatureDto.AddHotfix(creatureDto.Id, TableHashes.CreatureDisplayInfo, HotfixStatuses.VALID);
+            creatureDto.AddHotfix(creatureDto.Id, TableHashes.CREATURE_DISPLAY_INFO, HotfixStatuses.VALID);
 
             var gender = creatureDto.Gender ?? Default.CreatureDisplayInfo.Gender;
             var race = creatureDto.Race ?? Races.HUMAN;
@@ -131,7 +125,7 @@ namespace HotfixMods.Infrastructure.Services
 
         CreatureDisplayInfoExtra BuildCreatureDisplayInfoExtra(CreatureDto creatureDto)
         {
-            creatureDto.AddHotfix(creatureDto.Id, TableHashes.CreatureDisplayInfoExtra, HotfixStatuses.VALID);
+            creatureDto.AddHotfix(creatureDto.Id, TableHashes.CREATURE_DISPLAY_INFO_EXTRA, HotfixStatuses.VALID);
 
             return new CreatureDisplayInfoExtra()
             {
@@ -151,7 +145,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (customization.Value == null)
                     continue;
 
-                creature.AddHotfix(creature.Id + customization.Key, TableHashes.CreatureDisplayInfoOption, HotfixStatuses.VALID);
+                creature.AddHotfix(creature.Id + customization.Key, TableHashes.CREATURE_DISPLAY_INFO_OPTION, HotfixStatuses.VALID);
                 result.Add(new CreatureDisplayInfoOption()
                 {
                     Id = creature.Id + customization.Key,
@@ -280,7 +274,7 @@ namespace HotfixMods.Infrastructure.Services
 
             foreach (var item in result)
             {
-                creatureDto.AddHotfix(item.Id, TableHashes.NpcModelItemSlotDisplayInfo, HotfixStatuses.VALID);
+                creatureDto.AddHotfix(item.Id, TableHashes.NPC_MODEL_ITEM_SLOT_DISPLAY_INFO, HotfixStatuses.VALID);
             }
 
             return result.ToArray();

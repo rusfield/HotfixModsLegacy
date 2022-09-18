@@ -148,6 +148,19 @@ namespace HotfixMods.Infrastructure.DefaultModels
             VerifiedBuild = -1
         };
 
+        public static readonly ItemEffect ItemEffect = new()
+        {
+            SpellId = 0,
+            CategoryCoolDownMSec = 0,
+            Charges = 0,
+            CoolDownMSec = 0,
+            SpellCategoryId = 0,
+            TriggerType = ItemTriggerType.ON_EQUIP,
+
+            Id = -1,
+            VerifiedBuild = -1
+        };
+
         public static readonly ItemDisplayInfoMaterialRes ItemDisplayInfoMaterialRes = new()
         {
             // Unused

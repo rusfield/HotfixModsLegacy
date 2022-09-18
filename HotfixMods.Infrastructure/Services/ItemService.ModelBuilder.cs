@@ -8,238 +8,238 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
-        ItemDisplayInfoMaterialRes[] BuildItemDisplayInfoMaterialRes(ItemDto item)
+        ItemDisplayInfoMaterialRes[] BuildItemDisplayInfoMaterialRes(ItemDto itemDto)
         {
             var result = new List<ItemDisplayInfoMaterialRes>();
 
-            if (!item.ComponentArmLower.IsNullOrZero())
+            if (!itemDto.ComponentArmLower.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.ARM_LOWER,
+                    Id = itemDto.Id + (int)ComponentSections.ARM_LOWER,
                     ComponentSection = ComponentSections.ARM_LOWER,
-                    MaterialResourcesId = (int)item.ComponentArmLower,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentArmLower,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ARM_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.ARM_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentArmUpper.IsNullOrZero())
+            if (!itemDto.ComponentArmUpper.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.ARM_UPPER,
+                    Id = itemDto.Id + (int)ComponentSections.ARM_UPPER,
                     ComponentSection = ComponentSections.ARM_UPPER,
-                    MaterialResourcesId = (int)item.ComponentArmUpper,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentArmUpper,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ARM_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.ARM_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentTorsoLower.IsNullOrZero())
+            if (!itemDto.ComponentTorsoLower.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.TORSO_LOWER,
+                    Id = itemDto.Id + (int)ComponentSections.TORSO_LOWER,
                     ComponentSection = ComponentSections.TORSO_LOWER,
-                    MaterialResourcesId = (int)item.ComponentTorsoLower,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentTorsoLower,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.TORSO_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentTorsoUpper.IsNullOrZero())
+            if (!itemDto.ComponentTorsoUpper.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.TORSO_UPPER,
+                    Id = itemDto.Id + (int)ComponentSections.TORSO_UPPER,
                     ComponentSection = ComponentSections.TORSO_UPPER,
-                    MaterialResourcesId = (int)item.ComponentTorsoUpper,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentTorsoUpper,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.TORSO_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.TORSO_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentLegLower.IsNullOrZero())
+            if (!itemDto.ComponentLegLower.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.LEG_LOWER,
+                    Id = itemDto.Id + (int)ComponentSections.LEG_LOWER,
                     ComponentSection = ComponentSections.LEG_LOWER,
-                    MaterialResourcesId = (int)item.ComponentLegLower,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentLegLower,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.LEG_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.LEG_LOWER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentLegUpper.IsNullOrZero())
+            if (!itemDto.ComponentLegUpper.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.LEG_UPPER,
+                    Id = itemDto.Id + (int)ComponentSections.LEG_UPPER,
                     ComponentSection = ComponentSections.LEG_UPPER,
-                    MaterialResourcesId = (int)item.ComponentLegUpper,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentLegUpper,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.LEG_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.LEG_UPPER, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentHand.IsNullOrZero())
+            if (!itemDto.ComponentHand.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.HAND,
+                    Id = itemDto.Id + (int)ComponentSections.HAND,
                     ComponentSection = ComponentSections.HAND,
-                    MaterialResourcesId = (int)item.ComponentHand,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentHand,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.HAND, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.HAND, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentFoot.IsNullOrZero())
+            if (!itemDto.ComponentFoot.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.FOOT,
+                    Id = itemDto.Id + (int)ComponentSections.FOOT,
                     ComponentSection = ComponentSections.FOOT,
-                    MaterialResourcesId = (int)item.ComponentFoot,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentFoot,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.FOOT, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.FOOT, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
-            if (!item.ComponentAccessory.IsNullOrZero())
+            if (!itemDto.ComponentAccessory.IsNullOrZero())
             {
                 result.Add(new ItemDisplayInfoMaterialRes()
                 {
-                    Id = item.Id + (int)ComponentSections.ACCESSORY,
+                    Id = itemDto.Id + (int)ComponentSections.ACCESSORY,
                     ComponentSection = ComponentSections.ACCESSORY,
-                    MaterialResourcesId = (int)item.ComponentAccessory,
-                    ItemDisplayInfoId = item.Id,
+                    MaterialResourcesId = (int)itemDto.ComponentAccessory,
+                    ItemDisplayInfoId = itemDto.Id,
                     VerifiedBuild = VerifiedBuild
                 });
-                item.AddHotfix(item.Id + (int)ComponentSections.ACCESSORY, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
+                itemDto.AddHotfix(itemDto.Id + (int)ComponentSections.ACCESSORY, TableHashes.ITEM_DISPLAY_INFO_MATERIAL_RES, HotfixStatuses.VALID);
 
             }
 
             return result.ToArray();
         }
 
-        ItemAppearance BuildItemAppearance(ItemDto item)
+        ItemAppearance BuildItemAppearance(ItemDto itemDto)
         {
             var result = new ItemAppearance()
             {
-                Id = item.Id,
-                DefaultIconFileDataId = item.IconId ?? Default.ItemAppearance.DefaultIconFileDataId,
-                DisplayType = item.DisplayType,
-                ItemDisplayInfoId = item.Id,
-                UiOrder = item.Id, // CHECK IF OK -- Should be id x 100 according to DB2, but this may result in a very big number
+                Id = itemDto.Id,
+                DefaultIconFileDataId = itemDto.IconId ?? Default.ItemAppearance.DefaultIconFileDataId,
+                DisplayType = itemDto.DisplayType,
+                ItemDisplayInfoId = itemDto.Id,
+                UiOrder = itemDto.Id, // CHECK IF OK -- Should be id x 100 according to DB2, but this may result in a very big number
                 VerifiedBuild = VerifiedBuild
             };
 
-            item.AddHotfix(item.Id, TableHashes.ITEM_APPEARANCE, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM_APPEARANCE, HotfixStatuses.VALID);
 
             return result;
         }
 
-        ItemModifiedAppearance BuildItemModifiedAppearance(ItemDto item)
+        ItemModifiedAppearance BuildItemModifiedAppearance(ItemDto itemDto)
         {
             var result = new ItemModifiedAppearance()
             {
-                Id = item.Id,
-                ItemAppearanceId = item.Id,
-                ItemId = item.Id,
+                Id = itemDto.Id,
+                ItemAppearanceId = itemDto.Id,
+                ItemId = itemDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
                 ItemAppearanceModifierId = Default.ItemModifiedAppearance.ItemAppearanceModifierId,
                 OrderIndex = Default.ItemModifiedAppearance.OrderIndex
             };
 
-            item.AddHotfix(item.Id, TableHashes.ITEM_MODIFIED_APPEARANCE, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM_MODIFIED_APPEARANCE, HotfixStatuses.VALID);
 
             return result;
         }
 
-        ItemSearchName BuildItemSearchName(ItemDto item)
+        ItemSearchName BuildItemSearchName(ItemDto itemDto)
         {
             var result = new ItemSearchName()
             {
-                Id = item.Id,
-                Display = item.Name ?? Default.ItemSearchName.Display,
-                Flags0 = item.Flags0 ?? Default.ItemSearchName.Flags0,
-                Flags1 = item.Flags1 ?? Default.ItemSearchName.Flags1,
-                Flags2 = item.Flags2 ?? Default.ItemSearchName.Flags2,
-                Flags3 = item.Flags3 ?? Default.ItemSearchName.Flags3,
-                ItemLevel = item.ItemLevel ?? Default.ItemSearchName.ItemLevel,
-                OverallQualityId = item.OverallQuality ?? Default.ItemSearchName.OverallQualityId,
-                RequiredLevel = item.RequiredLevel ?? Default.ItemSearchName.RequiredLevel,
-                AllowableClass = item.AllowableClasses ?? Default.ItemSearchName.AllowableClass,
-                AllowableRace = item.AllowableRaces ?? Default.ItemSearchName.AllowableRace,
+                Id = itemDto.Id,
+                Display = itemDto.Name ?? Default.ItemSearchName.Display,
+                Flags0 = itemDto.Flags0 ?? Default.ItemSearchName.Flags0,
+                Flags1 = itemDto.Flags1 ?? Default.ItemSearchName.Flags1,
+                Flags2 = itemDto.Flags2 ?? Default.ItemSearchName.Flags2,
+                Flags3 = itemDto.Flags3 ?? Default.ItemSearchName.Flags3,
+                ItemLevel = itemDto.ItemLevel ?? Default.ItemSearchName.ItemLevel,
+                OverallQualityId = itemDto.OverallQuality ?? Default.ItemSearchName.OverallQualityId,
+                RequiredLevel = itemDto.RequiredLevel ?? Default.ItemSearchName.RequiredLevel,
+                AllowableClass = itemDto.AllowableClasses ?? Default.ItemSearchName.AllowableClass,
+                AllowableRace = itemDto.AllowableRaces ?? Default.ItemSearchName.AllowableRace,
                 VerifiedBuild = VerifiedBuild
             };
 
-            item.AddHotfix(item.Id, TableHashes.ITEM_SEARCH_NAME, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM_SEARCH_NAME, HotfixStatuses.VALID);
 
             return result;
         }
 
-        ItemSparse BuildItemSparse(ItemDto item)
+        ItemSparse BuildItemSparse(ItemDto itemDto)
         {
             var result = new ItemSparse()
             {
-                Id = item.Id,
+                Id = itemDto.Id,
                 VerifiedBuild = VerifiedBuild,
-                InventoryType = item.InventoryType,
+                InventoryType = itemDto.InventoryType,
 
-                Bonding = item.Bonding ?? Default.ItemSparse.Bonding,
-                Display = item.Name ?? Default.ItemSparse.Display,
-                Flags0 = item.Flags0 ?? Default.ItemSparse.Flags0,
-                Flags1 = item.Flags1 ?? Default.ItemSparse.Flags1,
-                Flags2 = item.Flags2 ?? Default.ItemSparse.Flags2,
-                Flags3 = item.Flags3 ?? Default.ItemSparse.Flags3,
-                ItemLevel = item.ItemLevel ?? Default.ItemSparse.ItemLevel,
-                Material = item.Material ?? Default.ItemSparse.Material,
-                OverallQualityId = item.OverallQuality ?? Default.ItemSparse.OverallQualityId,
-                RequiredLevel = item.RequiredLevel ?? Default.ItemSparse.RequiredLevel,
-                AllowableClass = item.AllowableClasses ?? Default.ItemSparse.AllowableClass,
-                AllowableRace = item.AllowableRaces ?? Default.ItemSparse.AllowableRace,
-                Description = item.Description ?? Default.ItemSparse.Description,
-                StatModifierBonusStat0 = item.StatModifierBonusStat0 ?? Default.ItemSparse.StatModifierBonusStat0,
-                StatModifierBonusStat1 = item.StatModifierBonusStat1 ?? Default.ItemSparse.StatModifierBonusStat1,
-                StatModifierBonusStat2 = item.StatModifierBonusStat2 ?? Default.ItemSparse.StatModifierBonusStat2,
-                StatModifierBonusStat3 = item.StatModifierBonusStat3 ?? Default.ItemSparse.StatModifierBonusStat3,
-                StatModifierBonusStat4 = item.StatModifierBonusStat4 ?? Default.ItemSparse.StatModifierBonusStat4,
-                StatModifierBonusStat5 = item.StatModifierBonusStat5 ?? Default.ItemSparse.StatModifierBonusStat5,
-                StatModifierBonusStat6 = item.StatModifierBonusStat6 ?? Default.ItemSparse.StatModifierBonusStat6,
-                StatModifierBonusStat7 = item.StatModifierBonusStat7 ?? Default.ItemSparse.StatModifierBonusStat7,
-                StatModifierBonusStat8 = item.StatModifierBonusStat8 ?? Default.ItemSparse.StatModifierBonusStat8,
-                StatModifierBonusStat9 = item.StatModifierBonusStat9 ?? Default.ItemSparse.StatModifierBonusStat9,
-                StatPercentEditor0 = item.StatPercentEditor0 ?? Default.ItemSparse.StatPercentEditor0,
-                StatPercentEditor1 = item.StatPercentEditor1 ?? Default.ItemSparse.StatPercentEditor1,
-                StatPercentEditor2 = item.StatPercentEditor2 ?? Default.ItemSparse.StatPercentEditor2,
-                StatPercentEditor3 = item.StatPercentEditor3 ?? Default.ItemSparse.StatPercentEditor3,
-                StatPercentEditor4 = item.StatPercentEditor4 ?? Default.ItemSparse.StatPercentEditor4,
-                StatPercentEditor5 = item.StatPercentEditor5 ?? Default.ItemSparse.StatPercentEditor5,
-                StatPercentEditor6 = item.StatPercentEditor6 ?? Default.ItemSparse.StatPercentEditor6,
-                StatPercentEditor7 = item.StatPercentEditor7 ?? Default.ItemSparse.StatPercentEditor7,
-                StatPercentEditor8 = item.StatPercentEditor8 ?? Default.ItemSparse.StatPercentEditor8,
-                StatPercentEditor9 = item.StatPercentEditor9 ?? Default.ItemSparse.StatPercentEditor9,
+                Bonding = itemDto.Bonding ?? Default.ItemSparse.Bonding,
+                Display = itemDto.Name ?? Default.ItemSparse.Display,
+                Flags0 = itemDto.Flags0 ?? Default.ItemSparse.Flags0,
+                Flags1 = itemDto.Flags1 ?? Default.ItemSparse.Flags1,
+                Flags2 = itemDto.Flags2 ?? Default.ItemSparse.Flags2,
+                Flags3 = itemDto.Flags3 ?? Default.ItemSparse.Flags3,
+                ItemLevel = itemDto.ItemLevel ?? Default.ItemSparse.ItemLevel,
+                Material = itemDto.Material ?? Default.ItemSparse.Material,
+                OverallQualityId = itemDto.OverallQuality ?? Default.ItemSparse.OverallQualityId,
+                RequiredLevel = itemDto.RequiredLevel ?? Default.ItemSparse.RequiredLevel,
+                AllowableClass = itemDto.AllowableClasses ?? Default.ItemSparse.AllowableClass,
+                AllowableRace = itemDto.AllowableRaces ?? Default.ItemSparse.AllowableRace,
+                Description = itemDto.Description ?? Default.ItemSparse.Description,
+                StatModifierBonusStat0 = itemDto.StatModifierBonusStat0 ?? Default.ItemSparse.StatModifierBonusStat0,
+                StatModifierBonusStat1 = itemDto.StatModifierBonusStat1 ?? Default.ItemSparse.StatModifierBonusStat1,
+                StatModifierBonusStat2 = itemDto.StatModifierBonusStat2 ?? Default.ItemSparse.StatModifierBonusStat2,
+                StatModifierBonusStat3 = itemDto.StatModifierBonusStat3 ?? Default.ItemSparse.StatModifierBonusStat3,
+                StatModifierBonusStat4 = itemDto.StatModifierBonusStat4 ?? Default.ItemSparse.StatModifierBonusStat4,
+                StatModifierBonusStat5 = itemDto.StatModifierBonusStat5 ?? Default.ItemSparse.StatModifierBonusStat5,
+                StatModifierBonusStat6 = itemDto.StatModifierBonusStat6 ?? Default.ItemSparse.StatModifierBonusStat6,
+                StatModifierBonusStat7 = itemDto.StatModifierBonusStat7 ?? Default.ItemSparse.StatModifierBonusStat7,
+                StatModifierBonusStat8 = itemDto.StatModifierBonusStat8 ?? Default.ItemSparse.StatModifierBonusStat8,
+                StatModifierBonusStat9 = itemDto.StatModifierBonusStat9 ?? Default.ItemSparse.StatModifierBonusStat9,
+                StatPercentEditor0 = itemDto.StatPercentEditor0 ?? Default.ItemSparse.StatPercentEditor0,
+                StatPercentEditor1 = itemDto.StatPercentEditor1 ?? Default.ItemSparse.StatPercentEditor1,
+                StatPercentEditor2 = itemDto.StatPercentEditor2 ?? Default.ItemSparse.StatPercentEditor2,
+                StatPercentEditor3 = itemDto.StatPercentEditor3 ?? Default.ItemSparse.StatPercentEditor3,
+                StatPercentEditor4 = itemDto.StatPercentEditor4 ?? Default.ItemSparse.StatPercentEditor4,
+                StatPercentEditor5 = itemDto.StatPercentEditor5 ?? Default.ItemSparse.StatPercentEditor5,
+                StatPercentEditor6 = itemDto.StatPercentEditor6 ?? Default.ItemSparse.StatPercentEditor6,
+                StatPercentEditor7 = itemDto.StatPercentEditor7 ?? Default.ItemSparse.StatPercentEditor7,
+                StatPercentEditor8 = itemDto.StatPercentEditor8 ?? Default.ItemSparse.StatPercentEditor8,
+                StatPercentEditor9 = itemDto.StatPercentEditor9 ?? Default.ItemSparse.StatPercentEditor9,
 
                 PriceRandomValue = Default.ItemSparse.PriceRandomValue,
                 Stackable = Default.ItemSparse.Stackable,
@@ -249,60 +249,60 @@ namespace HotfixMods.Infrastructure.Services
                 Display3 = Default.ItemSparse.Display3
             };
 
-            item.AddHotfix(item.Id, TableHashes.ITEM_SPARSE, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM_SPARSE, HotfixStatuses.VALID);
 
             return result;
         }
 
-        Item BuildItem(ItemDto item)
+        Item BuildItem(ItemDto itemDto)
         {
             var result = new Item()
             {
-                Id = item.Id,
+                Id = itemDto.Id,
                 VerifiedBuild = VerifiedBuild,
-                SubClassId = item.ItemSubClass,
-                ItemGroupSoundsId = item.ItemGroupSoundsId ?? Default.Item.ItemGroupSoundsId,
-                ClassId = item.ItemClass,
-                InventoryType = item.InventoryType,
+                SubClassId = itemDto.ItemSubClass,
+                ItemGroupSoundsId = itemDto.ItemGroupSoundsId ?? Default.Item.ItemGroupSoundsId,
+                ClassId = itemDto.ItemClass,
+                InventoryType = itemDto.InventoryType,
 
-                IconFileDataId = item.IconId ?? Default.Item.IconFileDataId,
-                Material = item.Material ?? Default.Item.Material,
+                IconFileDataId = itemDto.IconId ?? Default.Item.IconFileDataId,
+                Material = itemDto.Material ?? Default.Item.Material,
 
                 SoundOverrideSubClassId = Default.Item.SoundOverrideSubClassId
             };
-            item.AddHotfix(item.Id, TableHashes.ITEM, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM, HotfixStatuses.VALID);
 
             return result;
         }
 
-        ItemDisplayInfo BuildItemDisplayInfo(ItemDto item)
+        ItemDisplayInfo BuildItemDisplayInfo(ItemDto itemDto)
         {
             var result = new ItemDisplayInfo()
             {
-                Id = item.Id,
+                Id = itemDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
-                Flags = item.ItemDisplayInfoFlags ?? Default.ItemDisplayInfo.Flags,
-                ModelMaterialResourcesId0 = item.ModelMaterialResourceId0 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId0,
-                ModelMaterialResourcesId1 = item.ModelMaterialResourceId1 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId1,
-                ModelResourcesId0 = item.ModelResourceId0 ?? Default.ItemDisplayInfo.ModelResourcesId0,
-                ModelResourcesId1 = item.ModelResourceId1 ?? Default.ItemDisplayInfo.ModelResourcesId1,
-                AttachmentGeosetGroup0 = item.GeosetGroupAttachment0 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup0,
-                AttachmentGeosetGroup1 = item.GeosetGroupAttachment1 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup1,
-                AttachmentGeosetGroup2 = item.GeosetGroupAttachment2 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup2,
-                AttachmentGeosetGroup3 = item.GeosetGroupAttachment3 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup3,
-                AttachmentGeosetGroup4 = item.GeosetGroupAttachment4 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup4,
-                AttachmentGeosetGroup5 = item.GeosetGroupAttachment5 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup5,
-                GeosetGroup0 = item.GeosetGroup0 ?? Default.ItemDisplayInfo.GeosetGroup0,
-                GeosetGroup1 = item.GeosetGroup1 ?? Default.ItemDisplayInfo.GeosetGroup1,
-                GeosetGroup2 = item.GeosetGroup2 ?? Default.ItemDisplayInfo.GeosetGroup2,
-                GeosetGroup3 = item.GeosetGroup3 ?? Default.ItemDisplayInfo.GeosetGroup3,
-                GeosetGroup4 = item.GeosetGroup4 ?? Default.ItemDisplayInfo.GeosetGroup4,
-                GeosetGroup5 = item.GeosetGroup5 ?? Default.ItemDisplayInfo.GeosetGroup5,
-                HelmetGeosetVis0 = item.HelmetGeosetVis0 ?? Default.ItemDisplayInfo.HelmetGeosetVis0,
-                HelmetGeosetVis1 = item.HelmetGeosetVis1 ?? Default.ItemDisplayInfo.HelmetGeosetVis1,
-                ModelType0 = item.ModelType0 ?? Default.ItemDisplayInfo.ModelType0, 
-                ModelType1 = item.ModelType1 ?? Default.ItemDisplayInfo.ModelType1,
+                Flags = itemDto.ItemDisplayInfoFlags ?? Default.ItemDisplayInfo.Flags,
+                ModelMaterialResourcesId0 = itemDto.ModelMaterialResourceId0 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId0,
+                ModelMaterialResourcesId1 = itemDto.ModelMaterialResourceId1 ?? Default.ItemDisplayInfo.ModelMaterialResourcesId1,
+                ModelResourcesId0 = itemDto.ModelResourceId0 ?? Default.ItemDisplayInfo.ModelResourcesId0,
+                ModelResourcesId1 = itemDto.ModelResourceId1 ?? Default.ItemDisplayInfo.ModelResourcesId1,
+                AttachmentGeosetGroup0 = itemDto.GeosetGroupAttachment0 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup0,
+                AttachmentGeosetGroup1 = itemDto.GeosetGroupAttachment1 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup1,
+                AttachmentGeosetGroup2 = itemDto.GeosetGroupAttachment2 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup2,
+                AttachmentGeosetGroup3 = itemDto.GeosetGroupAttachment3 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup3,
+                AttachmentGeosetGroup4 = itemDto.GeosetGroupAttachment4 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup4,
+                AttachmentGeosetGroup5 = itemDto.GeosetGroupAttachment5 ?? Default.ItemDisplayInfo.AttachmentGeosetGroup5,
+                GeosetGroup0 = itemDto.GeosetGroup0 ?? Default.ItemDisplayInfo.GeosetGroup0,
+                GeosetGroup1 = itemDto.GeosetGroup1 ?? Default.ItemDisplayInfo.GeosetGroup1,
+                GeosetGroup2 = itemDto.GeosetGroup2 ?? Default.ItemDisplayInfo.GeosetGroup2,
+                GeosetGroup3 = itemDto.GeosetGroup3 ?? Default.ItemDisplayInfo.GeosetGroup3,
+                GeosetGroup4 = itemDto.GeosetGroup4 ?? Default.ItemDisplayInfo.GeosetGroup4,
+                GeosetGroup5 = itemDto.GeosetGroup5 ?? Default.ItemDisplayInfo.GeosetGroup5,
+                HelmetGeosetVis0 = itemDto.HelmetGeosetVis0 ?? Default.ItemDisplayInfo.HelmetGeosetVis0,
+                HelmetGeosetVis1 = itemDto.HelmetGeosetVis1 ?? Default.ItemDisplayInfo.HelmetGeosetVis1,
+                ModelType0 = itemDto.ModelType0 ?? Default.ItemDisplayInfo.ModelType0, 
+                ModelType1 = itemDto.ModelType1 ?? Default.ItemDisplayInfo.ModelType1,
 
                 ItemRangedDisplayInfoID = Default.ItemDisplayInfo.ItemRangedDisplayInfoID,
                 ItemVisual = Default.ItemDisplayInfo.ItemVisual,
@@ -314,8 +314,51 @@ namespace HotfixMods.Infrastructure.Services
                 UnsheathedSpellVisualKitID = Default.ItemDisplayInfo.UnsheathedSpellVisualKitID
             };
 
-            item.AddHotfix(item.Id, TableHashes.ITEM_DISPLAY_INFO, HotfixStatuses.VALID);
+            itemDto.AddHotfix(itemDto.Id, TableHashes.ITEM_DISPLAY_INFO, HotfixStatuses.VALID);
             
+            return result;
+        }
+
+        List<ItemXItemEffect> BuildItemXItemEffects(ItemDto itemDto)
+        {
+            var result = new List<ItemXItemEffect>();
+            int index = 0;
+            foreach(var effect in itemDto.Effects)
+            {
+                result.Add(new ItemXItemEffect()
+                {
+                    Id = itemDto.Id + index,
+                    ItemEffectId = itemDto.Id + index,
+                    ItemId = itemDto.Id,
+                    VerifiedBuild = VerifiedBuild
+                });
+                itemDto.AddHotfix(itemDto.Id + index, TableHashes.ITEM_X_ITEM_EFFECT, HotfixStatuses.VALID);
+                index++;
+            }
+            return result;
+        }
+
+        List<ItemEffect> BuildItemEffects(ItemDto itemDto)
+        {
+            var result = new List<ItemEffect>();
+            int index = 0;
+            foreach (var effect in itemDto.Effects)
+            {
+                result.Add(new ItemEffect()
+                {
+                    Id = itemDto.Id + index,
+                    VerifiedBuild = VerifiedBuild,
+
+                    CategoryCoolDownMSec = effect.CategoryCoolDownMSec ?? Default.ItemEffect.CategoryCoolDownMSec,
+                    Charges = effect.Charges ?? Default.ItemEffect.Charges,
+                    CoolDownMSec = effect.CoolDownMSec ?? Default.ItemEffect.CoolDownMSec,
+                    SpellCategoryId = effect.SpellCategoryId ?? Default.ItemEffect.SpellCategoryId,
+                    SpellId = effect.SpellId ?? Default.ItemEffect.SpellId,
+                    TriggerType = effect.TriggerType ?? Default.ItemEffect.TriggerType 
+                });
+                itemDto.AddHotfix(itemDto.Id + index, TableHashes.ITEM_EFFECT, HotfixStatuses.VALID);
+                index++;
+            }
             return result;
         }
     }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels.Items;
+using System.Diagnostics;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -115,18 +116,7 @@ namespace HotfixMods.Infrastructure.Services
                 return result;
             }
 
-            progressCallback("Item", "Loading from ItemModifiedAppearance", 40);
-
-            var itemModifiedAppearances = (await _mySql.GetAsync<ItemModifiedAppearance>(i => i.Id == itemId)).ToList();
-            if (!itemModifiedAppearances.Any())
-                itemModifiedAppearances = (await _db2.GetAsync<ItemModifiedAppearance>(i => i.ItemId == itemId)).ToList();
-            if (!itemModifiedAppearances.Any())
-            {
-                progressCallback("Item", "ItemModifiedAppearance not found", 100);
-                return result;
-            }
-
-            progressCallback("Item", "Setting Id", 50);
+            progressCallback("Item", "Setting Id", 40);
             var id = itemId;
             var isUpdate = false;
             if (id >= IdRangeFrom && id < IdRangeTo)
@@ -136,6 +126,91 @@ namespace HotfixMods.Infrastructure.Services
             else
             {
                 id = await GetNextIdAsync();
+            }
+
+            progressCallback("Item", "Loading from ItemModifiedAppearance", 50);
+
+            var itemModifiedAppearances = (await _mySql.GetAsync<ItemModifiedAppearance>(i => i.Id == itemId)).ToList();
+            if (!itemModifiedAppearances.Any())
+                itemModifiedAppearances = (await _db2.GetAsync<ItemModifiedAppearance>(i => i.ItemId == itemId)).ToList();
+            if (!itemModifiedAppearances.Any())
+            {
+                progressCallback("Item", "Item has no appearance", 70);
+                progressCallback($"Item", "Loading effects", 80);
+                var itemXEffects = await _mySql.GetAsync<ItemXItemEffect>(i => i.ItemId == itemId);
+                if (itemXEffects.Count() == 0)
+                    itemXEffects = await _db2.GetAsync<ItemXItemEffect>(i => i.ItemId == itemId);
+
+                var effects = new List<ItemEffectDto>();
+                foreach (var itemXEffect in itemXEffects)
+                {
+                    var itemEffect = await _mySql.GetSingleAsync<ItemEffect>(i => i.Id == itemXEffect.ItemEffectId) ?? await _db2.GetSingleAsync<ItemEffect>(i => i.Id == itemXEffect.ItemEffectId);
+                    if (itemEffect != null)
+                    {
+                        effects.Add(new ItemEffectDto()
+                        {
+                            TriggerType = itemEffect.TriggerType,
+                            CategoryCoolDownMSec = itemEffect.CategoryCoolDownMSec,
+                            Charges = itemEffect.Charges,
+                            CoolDownMSec = itemEffect.CoolDownMSec,
+                            SpellCategoryId = itemEffect.SpellCategoryId,
+                            SpellId = itemEffect.SpellId
+                        });
+                    }
+                }
+
+                
+                result.Add(new ItemDto()
+                {
+                    Id = id,
+                    ItemDisplayInfoId = id,
+                    Bonding = itemSparse.Bonding,
+                    Flags0 = itemSparse.Flags0,
+                    Flags1 = itemSparse.Flags1,
+                    Flags2 = itemSparse.Flags2,
+                    Flags3 = itemSparse.Flags3,
+                    AllowableClasses = itemSparse.AllowableClass,
+                    AllowableRaces = itemSparse.AllowableRace,
+                    RequiredLevel = itemSparse.RequiredLevel,
+                    ItemLevel = itemSparse.ItemLevel,
+                    OverallQuality = itemSparse.OverallQualityId,
+                    Material = itemSparse.Material,
+                    ItemClass = item.ClassId,
+                    Name = itemSparse.Display,
+                    ItemSubClass = item.SubClassId,
+                    IconId = item.IconFileDataId,
+                    Description = itemSparse.Description,
+                    InventoryType = item.InventoryType,
+                    ItemGroupSoundsId = item.ItemGroupSoundsId,
+                    StatModifierBonusStat0 = itemSparse.StatModifierBonusStat0,
+                    StatModifierBonusStat1 = itemSparse.StatModifierBonusStat1,
+                    StatModifierBonusStat2 = itemSparse.StatModifierBonusStat2,
+                    StatModifierBonusStat3 = itemSparse.StatModifierBonusStat3,
+                    StatModifierBonusStat4 = itemSparse.StatModifierBonusStat4,
+                    StatModifierBonusStat5 = itemSparse.StatModifierBonusStat5,
+                    StatModifierBonusStat6 = itemSparse.StatModifierBonusStat6,
+                    StatModifierBonusStat7 = itemSparse.StatModifierBonusStat7,
+                    StatModifierBonusStat8 = itemSparse.StatModifierBonusStat8,
+                    StatModifierBonusStat9 = itemSparse.StatModifierBonusStat9,
+                    StatPercentEditor0 = itemSparse.StatPercentEditor0,
+                    StatPercentEditor1 = itemSparse.StatPercentEditor1,
+                    StatPercentEditor2 = itemSparse.StatPercentEditor2,
+                    StatPercentEditor3 = itemSparse.StatPercentEditor3,
+                    StatPercentEditor4 = itemSparse.StatPercentEditor4,
+                    StatPercentEditor5 = itemSparse.StatPercentEditor5,
+                    StatPercentEditor6 = itemSparse.StatPercentEditor6,
+                    StatPercentEditor7 = itemSparse.StatPercentEditor7,
+                    StatPercentEditor8 = itemSparse.StatPercentEditor8,
+                    StatPercentEditor9 = itemSparse.StatPercentEditor9,
+                    Effects = effects,
+
+                    IsUpdate = isUpdate,
+                    SearchResultName = itemSparse.Display
+
+                });
+
+                progressCallback($"Result", $"Returning {result.Count} {(result.Count == 1 ? "item" : "items")}", 100);
+                return result;
             }
 
             int index = 0;

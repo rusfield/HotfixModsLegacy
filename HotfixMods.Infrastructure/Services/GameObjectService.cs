@@ -61,11 +61,11 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             var gameObjectTemplateAddon = await _mySql.GetSingleAsync<GameObjectTemplateAddon>(c => c.Entry == gameObjectId);
-            var hotfixMods = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == gameObjectId && h.VerifiedBuild == VerifiedBuild);
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == gameObjectId && h.VerifiedBuild == VerifiedBuild);
 
             var result = new GameObjectDto()
             {
-                Id = await GetNextIdAsync(),
+                Id = hmData != null ? gameObjectId : await GetNextIdAsync(),
                 CastBarCaption = gameObjectTemplate.CastBarCaption,
                 Name = gameObjectTemplate.Name,
                 Size = gameObjectTemplate.Size,
@@ -79,16 +79,11 @@ namespace HotfixMods.Infrastructure.Services
                 GeoBox3 = gameObjectDisplayInfo.GeoBox3,
                 GeoBox4 = gameObjectDisplayInfo.GeoBox4,
                 GeoBox5 = gameObjectDisplayInfo.GeoBox5,
-                HotfixModsName = hotfixMods?.Name,
-                HotfixModsComment = hotfixMods?.Comment
+                HotfixModsName = hmData?.Name,
+                HotfixModsComment = hmData?.Comment,
+                IsUpdate = hmData != null
             };
 
-            if (gameObjectId <= IdRangeTo && gameObjectId >= IdRangeFrom)
-            {
-                // Override the automatically generated Id, as this is most likely an update.
-                result.Id = gameObjectId;
-                result.IsUpdate = true;
-            }
 
             return result;
         }

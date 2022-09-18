@@ -100,6 +100,14 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             {
                 entity.ToTable("gameobject_display_info");
             });
+            modelBuilder.Entity<ItemXItemEffect>(entity =>
+            {
+                entity.ToTable("item_x_item_effect");
+            });
+            modelBuilder.Entity<ItemEffect>(entity =>
+            {
+                entity.ToTable("item_effect");
+            });
         }
     }
 }

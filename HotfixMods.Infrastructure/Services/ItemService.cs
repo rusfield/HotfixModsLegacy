@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using HotfixMods.Infrastructure.DashboardModels;
+using HotfixMods.Infrastructure.DtoModels.Items;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -188,6 +189,29 @@ namespace HotfixMods.Infrastructure.Services
                     };
                 }
 
+                progressCallback($"Appearance {index} of {itemModifiedAppearances.Count}", "Loading effects", progress);
+                var itemXEffects = await _mySql.GetAsync<ItemXItemEffect>(i => i.ItemId == itemModifiedAppearance.ItemId);
+                if (itemXEffects.Count() == 0)
+                    itemXEffects = await _db2.GetAsync<ItemXItemEffect>(i => i.ItemId == itemModifiedAppearance.ItemId);
+
+                var effects = new List<ItemEffectDto>();
+                foreach (var itemXEffect in itemXEffects)
+                {
+                    var itemEffect = await _mySql.GetSingleAsync<ItemEffect>(i => i.Id == itemXEffect.ItemEffectId) ?? await _db2.GetSingleAsync<ItemEffect>(i => i.Id == itemXEffect.ItemEffectId);
+                    if(itemEffect != null)
+                    {
+                        effects.Add(new ItemEffectDto()
+                        {
+                            TriggerType = itemEffect.TriggerType,
+                            CategoryCoolDownMSec = itemEffect.CategoryCoolDownMSec,
+                            Charges = itemEffect.Charges,
+                            CoolDownMSec = itemEffect.CoolDownMSec,
+                            SpellCategoryId = itemEffect.SpellCategoryId,
+                            SpellId = itemEffect.SpellId
+                        });
+                    }
+                }
+
                 var itemDto = new ItemDto()
                 {
                     Id = id,
@@ -252,7 +276,7 @@ namespace HotfixMods.Infrastructure.Services
                     StatPercentEditor7 = itemSparse.StatPercentEditor7,
                     StatPercentEditor8 = itemSparse.StatPercentEditor8,
                     StatPercentEditor9 = itemSparse.StatPercentEditor9,
-                    Effects = new(), // TODO: get effects
+                    Effects = effects,
 
                     IsUpdate = isUpdate,
                     SearchResultName = appearanceName

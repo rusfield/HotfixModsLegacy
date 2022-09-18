@@ -66,7 +66,8 @@ namespace HotfixMods.Infrastructure.Services
                 DisplayType = DisplayTypes.CHEST,
                 InventoryType = InventoryTypes.CHEST_BODY,
                 ItemClass = ItemClasses.ARMOR,
-                ItemSubClass = 1
+                ItemSubClass = 1,
+                Effects = new()
             };
         }
 
@@ -251,6 +252,7 @@ namespace HotfixMods.Infrastructure.Services
                     StatPercentEditor7 = itemSparse.StatPercentEditor7,
                     StatPercentEditor8 = itemSparse.StatPercentEditor8,
                     StatPercentEditor9 = itemSparse.StatPercentEditor9,
+                    Effects = new(), // TODO: get effects
 
                     IsUpdate = isUpdate,
                     SearchResultName = appearanceName

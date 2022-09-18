@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Flags;
+using HotfixMods.Infrastructure.DtoModels.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,7 +77,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemDisplayInfoFlags? ItemDisplayInfoFlags { get; set; }
         public ItemRaceFlags? AllowableRaces { get; set; }
         public ItemClassFlags? AllowableClasses { get; set; }
-
+        public List<ItemEffectDto> Effects { get; set; }
         public DisplayTypes DisplayType { get; set; }
         public InventoryTypes InventoryType { get; set; }
         public ItemClasses ItemClass { get; set; }

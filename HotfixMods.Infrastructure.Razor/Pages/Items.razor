@@ -3,6 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.Razor.Pages.ItemTabs
 @using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.DtoModels.Items
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
 @using Core.Enums
@@ -25,25 +26,44 @@
     <MudPaper>
 
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <MudTabPanel Text="Properties">
-                <ItemProperties_Tab Item="item" ItemLookup="itemLookup" />
-            </MudTabPanel>
-            <MudTabPanel Text="Stats">
-                <ItemStats_Tab Item="item" ItemLookup="itemLookup" />
-            </MudTabPanel>
-            <MudTabPanel Text="Textures">
-                <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
-            </MudTabPanel>
-            <MudTabPanel Text="Geosets">
-                <ItemGeosets_Tab Item="item" ItemLookup="itemLookup" />
-            </MudTabPanel>
+            <ChildContent>
+                <MudTabPanel Text="Properties">
+                    <ItemProperties_Tab Item="item" ItemLookup="itemLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Stats">
+                    <ItemStats_Tab Item="item" ItemLookup="itemLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Textures">
+                    <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Geosets">
+                    <ItemGeosets_Tab Item="item" ItemLookup="itemLookup" />
+                </MudTabPanel>
+                @for (int i = 0; i < item.Effects.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Effect {index}")">
+                        <ItemEffect_Tab ItemEffect="item.Effects[index]" ItemEffectLookup="@(itemLookup != null && itemLookup.Effects.Count >= index ? itemLookup.Effects[index] : null)" />
+                    </MudTabPanel>
+                }
+            </ChildContent>
+            <Header>
+                <MudTooltip Text="Add new effect">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddEffect_Click" />
+                </MudTooltip>
+                <MudTooltip Text="Remove current effect">
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveEffect_Click" Disabled="@(!TabIsRemovable())" />
+                </MudTooltip>
+            </Header>
+
+
         </MudTabs>
 
     </MudPaper>
 }
 else
 {
-    <DashboardTable Data="@(itemDashboard)" Add="AddAsync_Click" Label="Items"/>
+    <DashboardTable Data="@(itemDashboard)" Add="AddAsync_Click" Label="Items" />
 }
 
 @code
@@ -138,6 +158,21 @@ else
             }
         }
         return null;
+    }
+
+    void AddEffect_Click()
+    {
+        item.Effects.Add(new ItemEffectDto());
+    }
+
+    void RemoveEffect_Click()
+    {
+
+    }
+
+    bool TabIsRemovable()
+    {
+        return false;
     }
 }
 

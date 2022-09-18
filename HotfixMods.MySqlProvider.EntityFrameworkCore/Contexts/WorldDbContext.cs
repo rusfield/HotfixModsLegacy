@@ -68,6 +68,11 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
                 entity.ToTable("gameobject_template_addon");
                 entity.HasKey(c => c.Entry);
             });
+            modelBuilder.Entity<GameObject>(entity =>
+            {
+                entity.ToTable("gameobject");
+                entity.HasKey(c => c.Guid);
+            });
         }
     }
 }

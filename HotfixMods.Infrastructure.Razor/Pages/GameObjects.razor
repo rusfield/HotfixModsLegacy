@@ -109,6 +109,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), gameObject.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(GameObjectDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), gameObject.IsUpdate);
+        parameters.Add(nameof(Service), GameObjectService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 

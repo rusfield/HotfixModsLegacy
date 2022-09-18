@@ -109,19 +109,20 @@ namespace HotfixMods.Infrastructure.Services
             progressCallback("Loading", "Building Anim Kit", 90);
             var result = new AnimKitDto()
             {
-                Id = await GetNextIdAsync(),
+                Id = hmData != null ? animKitId : await GetNextIdAsync(),
                 OneShotStopAnimKitId = animKit.OneShotStopAnimKitId,
                 OneShotDuration = animKit.OneShotDuration,
                 HotfixModsName = hmData?.Name,
                 HotfixModsComment = hmData?.Comment,
-                Segments = new()
+                Segments = new(),
+                IsUpdate = hmData != null
             };
 
             foreach(var segment in animKitSegments)
             {
                 result.Segments.Add(new AnimKitSegmentDto()
                 {
-                    AnimId = segment.AnimId,
+                    AnimId = result.Id,
                     AnimKitConfigId = segment.AnimKitConfigId,
                     AnimStartTime = segment.AnimStartTime,
                     BlendInTimeMs = segment.BlendInTimeMs,

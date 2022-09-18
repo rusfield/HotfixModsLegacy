@@ -46,9 +46,9 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<GameObjectDto?> GetGameObjectByIdAsync(int id, Action<string, string, int>? progressCallback = null)
+        public async Task<GameObjectDto?> GetGameObjectByIdAsync(int gameObjectId, Action<string, string, int>? progressCallback = null)
         {
-            var gameObjectTemplate = await _mySql.GetSingleAsync<GameObjectTemplate>(c => c.Entry == id);
+            var gameObjectTemplate = await _mySql.GetSingleAsync<GameObjectTemplate>(c => c.Entry == gameObjectId);
             if(null == gameObjectTemplate)
             {
                 return null;
@@ -60,8 +60,8 @@ namespace HotfixMods.Infrastructure.Services
                 return null;
             }
 
-            var gameObjectTemplateAddon = await _mySql.GetSingleAsync<GameObjectTemplateAddon>(c => c.Entry == id);
-            var hotfixMods = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id && h.VerifiedBuild == VerifiedBuild);
+            var gameObjectTemplateAddon = await _mySql.GetSingleAsync<GameObjectTemplateAddon>(c => c.Entry == gameObjectId);
+            var hotfixMods = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == gameObjectId && h.VerifiedBuild == VerifiedBuild);
 
             var result = new GameObjectDto()
             {
@@ -83,10 +83,10 @@ namespace HotfixMods.Infrastructure.Services
                 HotfixModsComment = hotfixMods?.Comment
             };
 
-            if (id < IdRangeTo && id >= IdRangeFrom)
+            if (gameObjectId <= IdRangeTo && gameObjectId >= IdRangeFrom)
             {
                 // Override the automatically generated Id, as this is most likely an update.
-                result.Id = id;
+                result.Id = gameObjectId;
                 result.IsUpdate = true;
             }
 

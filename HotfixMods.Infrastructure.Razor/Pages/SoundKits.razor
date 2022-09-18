@@ -104,6 +104,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), soundKit.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SoundKitDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), soundKit.IsUpdate);
+        parameters.Add(nameof(Service), SoundKitService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 

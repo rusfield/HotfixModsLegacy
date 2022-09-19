@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum SpellEffects : long
+    public enum SpellEffects
     {
         NONE = 0,
         INSTAKILL = 1,

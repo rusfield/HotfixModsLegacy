@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ComponentSections : long
+    public enum ComponentSections
     {
         ARM_UPPER = 0,
         ARM_LOWER = 1,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemArmorSubClasses : long
+    public enum ItemArmorSubClasses
     {
         MISCELLANEOUS = 0,
         CLOTH = 1,

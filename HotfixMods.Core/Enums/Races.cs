@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum Races : long
+    public enum Races
     {
         //NONE = 0,
         HUMAN = 1,

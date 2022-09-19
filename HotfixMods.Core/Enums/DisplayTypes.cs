@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum DisplayTypes : long
+    public enum DisplayTypes
     {
         HEAD = 0,
         SHOULDERS = 1,

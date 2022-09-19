@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum SoundKitSoundTypes : long
+    public enum SoundKitSoundTypes
     {
         UNKNOWN = -1,
         NONE = 0,

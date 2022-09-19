@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemSourceTypes : long
+    public enum ItemSourceTypes
     {
         NONE = 0,
 

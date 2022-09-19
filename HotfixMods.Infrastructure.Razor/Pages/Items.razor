@@ -24,14 +24,16 @@
             </MudStack>
         </MudStack>
     <MudPaper>
-
-        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+        <MudTabs @ref="@mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <ChildContent>
                 <MudTabPanel Text="Properties">
                     <ItemProperties_Tab Item="item" ItemLookup="itemLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Stats">
                     <ItemStats_Tab Item="item" ItemLookup="itemLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Sockets">
+                    @*Sockets*@
                 </MudTabPanel>
                 <MudTabPanel Text="Textures">
                     <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
@@ -72,6 +74,9 @@ else
     ItemDto? itemLookup;
     List<RazorDashboardModel> itemDashboard;
 
+    MudTabs mudTabsRef;
+    int numberOfStaticTabs; // excluding Effect-tabs
+
     protected override async Task OnInitializedAsync()
     {
         itemDashboard = new();
@@ -88,6 +93,13 @@ else
             ));
         }
         await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(item != null && numberOfStaticTabs == 0)
+            numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Effect")).Count();
+        base.OnAfterRender(firstRender);
     }
 
     async Task EditAsync(int id)
@@ -160,19 +172,26 @@ else
         return null;
     }
 
-    void AddEffect_Click()
+    async Task AddEffect_Click()
     {
         item.Effects.Add(new ItemEffectDto());
+        await InvokeAsync(() => StateHasChanged());
+        mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
     }
 
     void RemoveEffect_Click()
     {
-
+        if (item.Effects.Count > 0)
+        {
+            var currentEffect = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
+            item.Effects.RemoveAt(currentEffect);
+            this.StateHasChanged();
+        }
     }
 
     bool TabIsRemovable()
     {
-        return false;
+        return mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
     }
 }
 

@@ -150,12 +150,14 @@ else
         return null;
     }
 
-    void AddSegment_Click()
+    async Task AddSegment_Click()
     {
         animKit.Segments.Add(new AnimKitSegmentDto()
         {
             OrderIndex = animKit.Segments.Count()
         });
+        await InvokeAsync(() => StateHasChanged());
+        mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
     }
 
     void RemoveSegment_Click()

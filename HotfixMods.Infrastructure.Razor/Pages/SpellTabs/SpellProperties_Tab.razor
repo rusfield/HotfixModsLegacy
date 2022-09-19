@@ -1,23 +1,45 @@
 ﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Core.Flags
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Icon ID" @bind-Value="Spell.SpellIconFileDataId" ValueLookup="SpellLookup?.SpellIconFileDataId" CssClass="@elementCssClass" />
+        <SingleSelect_Element Label="Power Type" @bind-Value="Spell.PowerType" ValueLookup="SpellLookup?.PowerType" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Power Cost (Value)" @bind-Value="Spell.PowerCost" ValueLookup="SpellLookup?.PowerCost" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Power Cost (Percentage)" @bind-Value="Spell.PowerCostPct" ValueLookup="SpellLookup?.PowerCostPct" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Casting Time ID" @bind-Value="Spell.CastingTimeIndex" ValueLookup="SpellLookup?.CastingTimeIndex" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Range ID" @bind-Value="Spell.RangeIndex" ValueLookup="SpellLookup?.RangeIndex" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Duration ID" @bind-Value="Spell.DurationIndex" ValueLookup="SpellLookup?.DurationIndex" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Cooldown (ms)" @bind-Value="Spell.RecoveryTime" ValueLookup="SpellLookup?.RecoveryTime" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Required Aura ID" @bind-Value="Spell.PowerCost" ValueLookup="SpellLookup?.PowerCost" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@Spell.AuraDescription" ValueLookup="@SpellLookup?.AuraDescription" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Cooldown (ms)" @bind-Value="Spell.RecoveryTime" ValueLookup="SpellLookup?.RecoveryTime" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Launch Speed" @bind-Value="Spell.Speed" ValueLookup="SpellLookup?.Speed" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="DamageClass" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
+    </MudItem>
+        <MudItem xs="1" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">
-        <Invisible_Element CssClass="@elementCssClass" />
-        <Invisible_Element CssClass="@elementCssClass" />
-        <Invisible_Element CssClass="@elementCssClass" />
+        <TextInput_Element Label="Description" Variant="Variant.Text" @bind-Value="@Spell.AuraDescription" ValueLookup="@SpellLookup?.AuraDescription" Lines="6" CssClass="@elementCssClass" />
     </MudItem>
-    <MudItem xs="4" Class="@gridItemCssClass">
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Global Cooldown (ms)" @bind-Value="Spell.StartRecoveryTime" ValueLookup="SpellLookup?.StartRecoveryTime" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Category Cooldown (ms)" @bind-Value="Spell.CategoryRecoveryTime" ValueLookup="SpellLookup?.CategoryRecoveryTime" CssClass="@elementCssClass" />
     </MudItem>
-    <MudItem xs="4" Class="@gridItemCssClass">
-
-    </MudItem>
-    <MudItem xs="2" Class="@gridItemCssClass" />
-    <MudItem xs="8" Class="@gridItemCssClass">
-        <TextInput_Element Label="Name" @bind-Value="@Spell.HotfixModsName" ValueLookup="@Spell?.HotfixModsName" CssClass="@elementCssClass" />
-    </MudItem>
-    <MudItem xs="2" Class="@gridItemCssClass" />
 </MudGrid>
 
 @code {

@@ -26,6 +26,7 @@
                     <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="new List<string>(){ hrefGameObjects, hrefSoundKits, hrefAnimKits }.Any(c => c == currentHref) ? Color.Primary : Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
                 </ActivatorContent>
                 <ChildContent>
+                    <MudMenuItem OnClick="(() => Navigate(hrefSpells))">Spells</MudMenuItem>
                     <MudMenuItem OnClick="(() => Navigate(hrefGameObjects))">Game Objects</MudMenuItem>
                     <MudMenuItem OnClick="(() => Navigate(hrefSoundKits))">Sound Kits</MudMenuItem>
                     <MudMenuItem OnClick="(() => Navigate(hrefAnimKits))">Anim Kits</MudMenuItem>
@@ -61,6 +62,7 @@
     string hrefGameObjects = "game-objects";
     string hrefSoundKits = "sound-kits";
     string hrefAnimKits = "anim-kits";
+    string hrefSpells = "spells";
 
     string currentHref;
 

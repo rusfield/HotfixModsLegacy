@@ -1,0 +1,135 @@
+﻿@page "/spells"
+@using HotfixMods.Infrastructure.Razor.Pages.SpellTabs
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
+
+@inject IDialogService DialogService
+@inject SpellService SpellService
+
+
+@if (spell != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SpellLookupAsync_Click">Sound Kit Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@spell.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(spell.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+
+        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <MudTabPanel Text="Properties">
+                <SpellProperties_Tab Spell="@spell" SpellLookup="@spellLookup" />
+            </MudTabPanel>
+        </MudTabs>
+
+    </MudPaper>
+}
+else
+{
+    <DashboardTable Data="@(spellDashboard)" Add="AddAsync_Click" Label="Spells" />
+}
+
+
+@code
+{
+    SpellDto? spell;
+    SpellDto? spellLookup;
+    List<RazorDashboardModel> spellDashboard;
+
+    protected override async Task OnInitializedAsync()
+    {
+        spellDashboard = new();
+        var dashboardSpells = await SpellService.GetDashboardAsync();
+        foreach (var dashboardSpell in dashboardSpells)
+        {
+            spellDashboard.Add(new RazorDashboardModel(
+                dashboardSpell.Id,
+                dashboardSpell.Name,
+                dashboardSpell.AvatarUrl,
+                dashboardSpell.Comment,
+                (async () => await EditAsync(dashboardSpell.Id)),
+                (async () => await SpellService.DeleteAsync(dashboardSpell.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task EditAsync(int id)
+    {
+        spell = await OpenSpellSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        spell = await OpenSpellSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SpellLookupAsync_Click()
+    {
+        spellLookup = await OpenSpellSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
+
+        if (!result.Cancelled)
+        {
+            spell.IsUpdate = true;
+        }
+    }
+
+    async void SaveAsync()
+    {
+        await SpellService.SaveAsync(spell);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), spell.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SpellDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), spell.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), SpellService);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            spell.Id = (int)result.Data;
+            spell.IsUpdate = false;
+        }
+    }
+
+    async Task<SpellDto?> OpenSpellSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(SpellSearch_Dialog.SpellId), id);
+        var dialog = DialogService.Show<SpellSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (SpellDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (SpellDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+}
+

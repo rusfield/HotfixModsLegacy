@@ -110,7 +110,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), creature.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(CreatureDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), creature.IsUpdate);
-        parameters.Add(nameof(Service), CreatureService);
+        parameters.Add(nameof(IdButton_Dialog.TService), CreatureService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 

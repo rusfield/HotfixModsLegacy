@@ -1,0 +1,32 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <Invisible_Element CssClass="@elementCssClass" />
+        <Invisible_Element CssClass="@elementCssClass" />
+        <Invisible_Element CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="8" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" @bind-Value="@Spell.HotfixModsName" ValueLookup="@Spell?.HotfixModsName" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+</MudGrid>
+
+@code {
+    [Parameter]
+    public SpellDto Spell { get; set; }
+
+    [Parameter]
+    public SpellDto? SpellLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

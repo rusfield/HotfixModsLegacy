@@ -144,7 +144,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), item.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(ItemDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), item.IsUpdate);
-        parameters.Add(nameof(Service), ItemService);
+        parameters.Add(nameof(IdButton_Dialog.TService), ItemService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 

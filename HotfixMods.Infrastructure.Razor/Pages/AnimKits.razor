@@ -122,7 +122,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), animKit.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(AnimKitDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), animKit.IsUpdate);
-        parameters.Add(nameof(Service), AnimKitService);
+        parameters.Add(nameof(IdButton_Dialog.TService), AnimKitService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 

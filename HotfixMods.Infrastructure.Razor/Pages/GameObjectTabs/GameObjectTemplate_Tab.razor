@@ -7,7 +7,7 @@
     <MudItem xs="4" Class="@gridItemCssClass">
         <SingleSelect_Element Label="Type" @bind-Value="@GameObject.Type" ValueLookup="GameObjectLookup?.Type" CssClass="@elementCssClass" />
         <DecimalInput_Element Label="Size" @bind-Value="@GameObject.Size" ValueLookup="GameObjectLookup?.Size" CssClass="@elementCssClass" />
-        <MudTextField T="string" Variant="Variant.Outlined" Class="@($"invisible {elementCssClass}")" Label="Invisible Placeholder" />
+        <Invisible_Element CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
     </MudItem>

@@ -77,11 +77,15 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemDisplayInfoFlags? ItemDisplayInfoFlags { get; set; }
         public ItemRaceFlags? AllowableRaces { get; set; }
         public ItemClassFlags? AllowableClasses { get; set; }
+        public SocketTypes? SocketType0 { get; set; }
+        public SocketTypes? SocketType1 { get; set; }
+        public SocketTypes? SocketType2 { get; set; }
+        public int? SocketMatchEnchantmentId { get; set; }
+        public ItemSheatheTypes? SheatheType { get; set; }
         public List<ItemEffectDto> Effects { get; set; }
         public DisplayTypes DisplayType { get; set; }
         public InventoryTypes InventoryType { get; set; }
         public ItemClasses ItemClass { get; set; }
         public int ItemSubClass { get; set; }
-
     }
 }

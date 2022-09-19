@@ -1,0 +1,27 @@
+﻿@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <SingleSelect_Element Label="Socket Slot 0" @bind-Value="Item.SocketType0" ValueLookup="ItemLookup?.SocketType0" CssClass="@elementCssClass" />
+        <SingleSelect_Element Label="Socket Slot 1" @bind-Value="Item.SocketType1" ValueLookup="ItemLookup?.SocketType1" CssClass="@elementCssClass" />
+        <SingleSelect_Element Label="Socket Slot 2" @bind-Value="Item.SocketType2" ValueLookup="ItemLookup?.SocketType2" CssClass="@elementCssClass" />
+        <Invisible_Element CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <IntInput_Element Label="Socket Match Enchantment ID" @bind-Value="Item.SocketMatchEnchantmentId" ValueLookup="ItemLookup?.SocketMatchEnchantmentId" CssClass="@elementCssClass" />
+    </MudItem>
+</MudGrid>
+
+
+@code {
+    [Parameter]
+    public ItemDto Item { get; set; }
+
+    [Parameter]
+    public ItemDto? ItemLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

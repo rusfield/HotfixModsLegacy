@@ -203,6 +203,11 @@ namespace HotfixMods.Infrastructure.Services
                     StatPercentEditor8 = itemSparse.StatPercentEditor8,
                     StatPercentEditor9 = itemSparse.StatPercentEditor9,
                     Effects = effects,
+                    SocketMatchEnchantmentId = itemSparse.SocketMatchEnchantmentId,
+                    SocketType0 = itemSparse.SocketType0,
+                    SocketType1 = itemSparse.SocketType1,
+                    SocketType2 = itemSparse.SocketType2,
+                    SheatheType = itemSparse.SheatheType,
 
                     IsUpdate = isUpdate,
                     SearchResultName = itemSparse.Display
@@ -372,6 +377,11 @@ namespace HotfixMods.Infrastructure.Services
                     StatPercentEditor8 = itemSparse.StatPercentEditor8,
                     StatPercentEditor9 = itemSparse.StatPercentEditor9,
                     Effects = effects,
+                    SocketMatchEnchantmentId = itemSparse.SocketMatchEnchantmentId,
+                    SocketType0 = itemSparse.SocketType0,
+                    SocketType1 = itemSparse.SocketType1,
+                    SocketType2 = itemSparse.SocketType2,
+                    SheatheType = itemSparse.SheatheType,
 
                     IsUpdate = isUpdate,
                     SearchResultName = appearanceName

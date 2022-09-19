@@ -33,7 +33,7 @@
                 @for (int i = 0; i < animKit.Segments.Count; i++)
                 {
                     int index = i;
-                    <MudTabPanel Text="@($"Segment {index}")">
+                    <MudTabPanel Text="@($"Segment #{index}")">
                         <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
                     </MudTabPanel>
                 }

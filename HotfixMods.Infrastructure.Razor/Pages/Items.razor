@@ -33,7 +33,7 @@
                     <ItemStats_Tab Item="item" ItemLookup="itemLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Sockets">
-                    @*Sockets*@
+                    <ItemSockets_Tab Item="item" ItemLookup="itemLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Textures">
                     <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
@@ -44,7 +44,7 @@
                 @for (int i = 0; i < item.Effects.Count; i++)
                 {
                     int index = i;
-                    <MudTabPanel Text="@($"Effect {index}")">
+                    <MudTabPanel Text="@($"Effect #{index}")">
                         <ItemEffect_Tab ItemEffect="item.Effects[index]" ItemEffectLookup="@(itemLookup != null && itemLookup.Effects.Count >= index ? itemLookup.Effects[index] : null)" />
                     </MudTabPanel>
                 }

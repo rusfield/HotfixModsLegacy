@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             ItemLevel = 1,
             RequiredLevel = 1,
             OverallQualityId = OverallQualities.COMMON,
-
+            
             Id = -1,
             VerifiedBuild = -1
         };
@@ -81,6 +81,11 @@ namespace HotfixMods.Infrastructure.DefaultModels
             StatPercentEditor7 = -1,
             StatPercentEditor8 = -1,
             StatPercentEditor9 = -1,
+            SheatheType = ItemSheatheTypes.NONE,
+            SocketMatchEnchantmentId = 0,
+            SocketType0 = SocketTypes.NONE,
+            SocketType1 = SocketTypes.NONE,
+            SocketType2 = SocketTypes.NONE,
 
             InventoryType = (InventoryTypes)(-1),
             Id = -1,

@@ -79,6 +79,11 @@ namespace HotfixMods.Core.Models
         public ItemStatType StatModifierBonusStat8 { get; set; }
         [Column("StatModifierBonusStat10")]
         public ItemStatType StatModifierBonusStat9 { get; set; }
+        public SocketTypes SocketType0 { get; set; }
+        public SocketTypes SocketType1 { get; set; }
+        public SocketTypes SocketType2 { get; set; }
+        public int SocketMatchEnchantmentId { get; set; }
+        public ItemSheatheTypes SheatheType { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

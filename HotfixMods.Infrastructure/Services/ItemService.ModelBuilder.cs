@@ -240,6 +240,11 @@ namespace HotfixMods.Infrastructure.Services
                 StatPercentEditor7 = itemDto.StatPercentEditor7 ?? Default.ItemSparse.StatPercentEditor7,
                 StatPercentEditor8 = itemDto.StatPercentEditor8 ?? Default.ItemSparse.StatPercentEditor8,
                 StatPercentEditor9 = itemDto.StatPercentEditor9 ?? Default.ItemSparse.StatPercentEditor9,
+                SheatheType = itemDto.SheatheType ?? Default.ItemSparse.SheatheType,
+                SocketType0 = itemDto.SocketType0 ?? Default.ItemSparse.SocketType0,
+                SocketType1 = itemDto.SocketType1 ?? Default.ItemSparse.SocketType1,
+                SocketType2 = itemDto.SocketType2 ?? Default.ItemSparse.SocketType2,
+                SocketMatchEnchantmentId = itemDto.SocketMatchEnchantmentId ?? Default.ItemSparse.SocketMatchEnchantmentId,
 
                 PriceRandomValue = Default.ItemSparse.PriceRandomValue,
                 Stackable = Default.ItemSparse.Stackable,

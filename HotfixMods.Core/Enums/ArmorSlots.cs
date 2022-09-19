@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ArmorSlots
+    public enum ArmorSlots : long
     {
         HEAD = 0,
         SHOULDERS = 1,

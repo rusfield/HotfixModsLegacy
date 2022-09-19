@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum InventoryTypes
+    public enum InventoryTypes : long
     {
         NON_EQUIPPABLE = 0,
         HEAD = 1,

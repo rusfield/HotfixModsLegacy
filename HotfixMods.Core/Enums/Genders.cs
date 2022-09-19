@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum Genders
+    public enum Genders : long
     {
         MALE = 0,
         FEMALE = 1,

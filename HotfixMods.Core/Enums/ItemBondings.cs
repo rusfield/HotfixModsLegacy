@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemBondings
+    public enum ItemBondings : long
     {
         NOT_BOUND = 0,
         BINDS_WHEN_PICKED_UP = 1,

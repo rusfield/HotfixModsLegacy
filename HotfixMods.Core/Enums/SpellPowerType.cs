@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum SpellPowerType
+    public enum SpellPowerType : long
     {
         MANA = 0,
         RAGE = 1,

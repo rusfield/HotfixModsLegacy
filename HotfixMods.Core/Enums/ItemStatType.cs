@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemStatType
+    public enum ItemStatType : long
     {
         NONE = -1,
         MANA = 0,

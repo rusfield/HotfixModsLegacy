@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace HotfixMods.Core.Flags
 {
     [Flags]
-    public enum DamageClass
+    public enum DamageClass : long
     {
         NONE = 0,
         PHYSICAL = 1,

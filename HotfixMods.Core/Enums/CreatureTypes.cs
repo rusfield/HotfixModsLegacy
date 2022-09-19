@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum CreatureTypes
+    public enum CreatureTypes : long
     {
         NONE = 0,
         BEAST = 1,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum CharacterInventorySlots
+    public enum CharacterInventorySlots : long
     {
         HEAD = 0,
         NECK = 1,

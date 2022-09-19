@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemMaterial
+    public enum ItemMaterial : long
     {
         NONE = 0,
         LIGHT_METAL = 1,

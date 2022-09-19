@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemTriggerType
+    public enum ItemTriggerType : long
     {
         UNK = -1,
         ON_USE = 0,

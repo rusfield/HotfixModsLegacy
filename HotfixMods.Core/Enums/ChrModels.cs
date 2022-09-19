@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ChrModels
+    public enum ChrModels : long
     {
         UNKNOWN = 0,
         HUMAN_MALE = 1,

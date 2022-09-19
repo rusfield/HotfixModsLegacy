@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum GameObjectTypes
+    public enum GameObjectTypes : long
     {
         DOOR = 0,
         BUTTON = 1,

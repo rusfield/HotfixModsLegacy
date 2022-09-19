@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums
 {
-    public enum ItemWeaponSubClasses
+    public enum ItemWeaponSubClasses : long
     {
         AXE_ONE_HAND = 0,
         AXE_TWO_HAND = 1,

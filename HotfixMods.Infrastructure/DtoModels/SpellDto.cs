@@ -36,10 +36,18 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellAttributeFlags14? Attributes14 { get; set; }
         public int? Speed { get; set; }
         public int? SpellIconFileDataId { get; set; }
-        public int? PowerCost { get; set; } 
+        public int? ManaCost { get; set; } 
         public decimal? PowerCostPct { get; set; }
         public SpellPowerType? PowerType { get; set; }
         public int? RequiredAuraSpellId { get; set; }
+        public int? CumulativeAura { get; set; } // stacks
+        public int? ProcCategoryRecovery { get; set; }
+        public int? ProcChance { get; set; }
+        public int? ProcCharges { get; set; }
+        public int? SpellProcsPerMinuteId { get; set; }
+        public int? ProcTypeMask0 { get; set; }
+        public int? ProcTypeMask1 { get; set; }
+        public int? SpellVisualId { get; set; }
         public List<SpellEffectDto> SpellEffects { get; set; }
 
     }

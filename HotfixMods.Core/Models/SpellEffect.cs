@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,11 @@ namespace HotfixMods.Core.Models
         public decimal Variance { get; set; }
         public decimal PvpMultiplier { get; set; }
         public decimal EffectChainAmplitude { get; set; }
+        public int EffectAuraPeriod { get; set; }
+        public int EffectBasePointsF { get; set; }
         public SpellTargets ImplicitTarget0 { get; set; }
         public SpellTargets ImplicitTarget1 { get; set; }
+        public SpellEffectAttributeFlags EffectAttributes { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

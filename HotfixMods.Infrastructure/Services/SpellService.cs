@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class SpellService : Service
+    public partial class SpellService : Service
     {
         public SpellService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
@@ -22,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             return new SpellDto()
             {
-                // TODO
+                SpellEffects = new()
             };
         }
 

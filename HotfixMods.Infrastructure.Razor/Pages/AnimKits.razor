@@ -43,7 +43,7 @@
                     <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddSegment_Click"/>
                 </MudTooltip>
                 <MudTooltip Text="Remove current segment">
-                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveSegment_Click" Disabled="@(animKit.Segments.Count <= 1)"/>
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveSegment_Click" Disabled="@(!TabIsRemovable())"/>
                 </MudTooltip>
             </Header>
         </MudTabs>
@@ -61,6 +61,7 @@ else
     AnimKitDto? animKitLookup;
     List<RazorDashboardModel> dashboard;
     MudTabs mudTabsRef;
+    int numberOfStaticTabs;
 
     protected override async Task OnInitializedAsync()
     {
@@ -164,7 +165,7 @@ else
     {
         if(animKit.Segments.Count > 1)
         {
-            var currentSegment = mudTabsRef.ActivePanelIndex - 1;
+            var currentSegment = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
             animKit.Segments.RemoveAt(currentSegment);
             for (int i = 0; i < animKit.Segments.Count; i++)
             {
@@ -174,10 +175,22 @@ else
         }
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (animKit != null && numberOfStaticTabs == 0)
+            numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Segment")).Count();
+        base.OnAfterRender(firstRender);
+    }
+
     void SegmentChanged(int newSegment)
     {
         this.StateHasChanged();
-        mudTabsRef.ActivatePanel(1 + newSegment);
+        mudTabsRef.ActivatePanel(numberOfStaticTabs + newSegment);
+    }
+
+    bool TabIsRemovable()
+    {
+        return animKit.Segments.Count > 1 && mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
     }
 }
 

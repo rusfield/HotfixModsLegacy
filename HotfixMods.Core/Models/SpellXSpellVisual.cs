@@ -12,7 +12,7 @@ namespace HotfixMods.Core.Models
         public int Id { get; set; }
         public int SpellVisualId { get; set; }
         public int SpellId { get; set; }
-        public int Probability { get; set; }
+        public decimal Probability { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

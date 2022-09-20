@@ -6,7 +6,7 @@
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
         <IntInput_Element Label="Spell Visual ID" @bind-Value="Spell.SpellVisualId" ValueLookup="SpellLookup?.SpellVisualId" CssClass="@elementCssClass" />
-        <Invisible_Element CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Launch Speed" @bind-Value="Spell.Speed" ValueLookup="SpellLookup?.Speed" CssClass="@elementCssClass" />
         <Invisible_Element CssClass="@elementCssClass" />
         <Invisible_Element CssClass="@elementCssClass" />
     </MudItem>

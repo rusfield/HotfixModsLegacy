@@ -22,10 +22,10 @@
         <MultiSelect_Element T="@DamageClassFlags" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
-        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@Spell.AuraDescription" ValueLookup="@SpellLookup?.AuraDescription" CssClass="@elementCssClass" />
+        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@Spell.HotfixModsName" ValueLookup="@SpellLookup?.HotfixModsName" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Launch Speed" @bind-Value="Spell.Speed" ValueLookup="SpellLookup?.Speed" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Stacks" @bind-Value="Spell.CumulativeAura" ValueLookup="SpellLookup?.CumulativeAura" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">

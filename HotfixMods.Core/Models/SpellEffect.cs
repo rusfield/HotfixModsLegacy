@@ -3,6 +3,7 @@ using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,11 @@ namespace HotfixMods.Core.Models
         public decimal PvpMultiplier { get; set; }
         public decimal EffectChainAmplitude { get; set; }
         public int EffectAuraPeriod { get; set; }
-        public int EffectBasePointsF { get; set; }
+        [Column("EffectBasePoints")]
+        public decimal EffectBasePointsF { get; set; }
+        [Column("ImplicitTarget1")]
         public SpellTargets ImplicitTarget0 { get; set; }
+        [Column("ImplicitTarget2")]
         public SpellTargets ImplicitTarget1 { get; set; }
         public SpellEffectAttributeFlags EffectAttributes { get; set; }
         public int VerifiedBuild { get; set; }

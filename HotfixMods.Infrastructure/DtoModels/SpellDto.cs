@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellAttributeFlags12? Attributes12 { get; set; }
         public SpellAttributeFlags13? Attributes13 { get; set; }
         public SpellAttributeFlags14? Attributes14 { get; set; }
-        public int? Speed { get; set; }
+        public decimal? Speed { get; set; }
         public int? SpellIconFileDataId { get; set; }
         public int? ManaCost { get; set; } 
         public decimal? PowerCostPct { get; set; }

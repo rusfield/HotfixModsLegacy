@@ -9,7 +9,7 @@ namespace HotfixMods.Infrastructure.DtoModels.Spells
         public int EffectIndex { get; set; }
         public SpellEffects? Effect { get; set; }
         public SpellEffectAttributeFlags? EffectAttributes { get; set; }
-        public int? EffectBasePointsF { get; set; } // mod value
+        public decimal? EffectBasePointsF { get; set; } // mod value
         public int? EffectAuraPeriod { get; set; } // How often a dot ticks, in ms
         public SpellTargets? ImplicitTarget0 { get; set; }
         public SpellTargets? ImplicitTarget1 { get; set; }

@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Extensions
 
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(((T)ValueLookup).ToValues()))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudSelect T="T" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" MultiSelection="true" Class="@CssClass">
+    <MudSelect T="T" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true" Class="@CssClass">
         @foreach (var item in options)
         {
             <MudSelectItem T="T" Value="@item.Key">@item.Value</MudSelectItem>
@@ -31,7 +31,7 @@
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
 
-   
+
     IEnumerable<T> selectedValues;
     Dictionary<T, string> options;
     protected override void OnInitialized()
@@ -56,7 +56,8 @@
 
     string SetSelectionText(IEnumerable<string> selection)
     {
-        return string.Join(", ", selection);
+        var result = string.Join(", ", selection);
+        return result;
     }
 
     bool GetBadgeVisibility()

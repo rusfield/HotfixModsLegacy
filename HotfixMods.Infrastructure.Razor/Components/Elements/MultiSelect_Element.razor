@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Extensions
 
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(((T)ValueLookup).ToValues()))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudSelect T="T" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true" Class="@CssClass">
+    <MudSelect T="T" @bind-Value="internalValue" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true" Class="@CssClass">
         @foreach (var item in options)
         {
             <MudSelectItem T="T" Value="@item.Key">@item.Value</MudSelectItem>
@@ -34,6 +34,7 @@
 
     IEnumerable<T> selectedValues;
     Dictionary<T, string> options;
+    T internalValue;
     protected override void OnInitialized()
     {
         var enumValues = Enum.GetValues(Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T));
@@ -51,6 +52,7 @@
     {
         selectedValues = newValues;
         Value = selectedValues.ToMask();
+        internalValue = (T)Value;
         await ValueChanged.InvokeAsync(Value);
     }
 

@@ -61,7 +61,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<int> GetNextIdAsync(bool quickScan = true)
         {
             int id = IdRangeFrom;
-            var entitiesInRange = await _mySql.GetAsync<HotfixData>(c => c.RecordId >= IdRangeFrom && c.RecordId < IdRangeTo);
+            var entitiesInRange = await _mySql.GetAsync<HotfixData>(c => c.RecordId >= IdRangeFrom && c.RecordId < IdRangeTo && c.VerifiedBuild == VerifiedBuild);
             if (entitiesInRange.Count() > 0)
             {
                 var nextEmpty = entitiesInRange.Max(c => c.RecordId) + 1;

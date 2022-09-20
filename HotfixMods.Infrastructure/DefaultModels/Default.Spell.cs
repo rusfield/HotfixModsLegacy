@@ -8,6 +8,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
         public static readonly Spell Spell = new()
         {
             AuraDescription = "",
+            Description = "",
             NameSubtext = "New Spell",
 
             Id = -1,
@@ -21,6 +22,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             StartRecoveryTime = 0,
 
             Id = -1,
+            SpellId = -1,
             VerifiedBuild = -1
         };
 
@@ -30,7 +32,6 @@ namespace HotfixMods.Infrastructure.DefaultModels
             EffectAura = SpellEffectAuras.NONE,
             ImplicitTarget0 = SpellTargets.NONE,
             ImplicitTarget1 = SpellTargets.NONE,
-            SpellId = 0,
             EffectBasePointsF = 0,
             EffectAuraPeriod = 0,
             EffectAttributes = SpellEffectAttributeFlags.NONE,
@@ -40,6 +41,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             Variance = 1,
 
             Id = -1,
+            SpellId = -1,
             EffectIndex = -1,
             VerifiedBuild = -1
         };
@@ -65,7 +67,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             CastingTimeIndex = 0,
             DurationIndex = 0,
             RangeIndex = 0,
-            SchoolMask = DamageClass.NONE,
+            SchoolMask = DamageClassFlags.NONE,
             Speed = 0,
             SpellIconFileDataId = 0,
 

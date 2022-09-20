@@ -15,7 +15,7 @@
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
         <IntInput_Element Label="Effect Value" @bind-Value="SpellEffect.EffectBasePointsF" ValueLookup="SpellEffectLookup?.EffectBasePointsF" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Aura Tick Time (ms)" @bind-Value="SpellEffect.EffectAuraPeriod" ValueLookup="SpellEffectLookup?.EffectAuraPeriod" />
+        <IntInput_Element Label="Aura Tick Time (ms)" @bind-Value="SpellEffect.EffectAuraPeriod" ValueLookup="SpellEffectLookup?.EffectAuraPeriod" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Implicit Taret 0" @bind-Value="SpellEffect.ImplicitTarget0" ValueLookup="SpellEffectLookup?.ImplicitTarget0" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Implicit Taret 1" @bind-Value="SpellEffect.ImplicitTarget1" ValueLookup="SpellEffectLookup?.ImplicitTarget1" CssClass="@elementCssClass" />
     </MudItem>

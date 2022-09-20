@@ -108,6 +108,42 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             {
                 entity.ToTable("item_effect");
             });
+            modelBuilder.Entity<Spell>(entity =>
+            {
+                entity.ToTable("spell");
+            });
+            modelBuilder.Entity<SpellAuraOptions>(entity =>
+            {
+                entity.ToTable("spell_aura_options");
+            });
+            modelBuilder.Entity<SpellCooldowns>(entity =>
+            {
+                entity.ToTable("spell_cooldowns");
+            });
+            modelBuilder.Entity<SpellEffect>(entity =>
+            {
+                entity.ToTable("spell_effect");
+            });
+            modelBuilder.Entity<SpellMisc>(entity =>
+            {
+                entity.ToTable("spell_misc");
+            });
+            modelBuilder.Entity<SpellName>(entity =>
+            {
+                entity.ToTable("spell_name");
+            });
+            modelBuilder.Entity<SpellPower>(entity =>
+            {
+                entity.ToTable("spell_power");
+            });
+            modelBuilder.Entity<SpellVisual>(entity =>
+            {
+                entity.ToTable("spell_visual");
+            });
+            modelBuilder.Entity<SpellXSpellVisual>(entity =>
+            {
+                entity.ToTable("spell_x_spell_visual");
+            });
         }
     }
 }

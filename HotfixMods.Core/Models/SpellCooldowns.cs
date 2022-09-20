@@ -13,6 +13,7 @@ namespace HotfixMods.Core.Models
         public int CategoryRecoveryTime { get; set; }
         public int RecoveryTime { get; set; }
         public int StartRecoveryTime { get; set; }
+        public int SpellId { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

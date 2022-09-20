@@ -19,7 +19,7 @@
         <IntInput_Element Label="Required Aura ID" @bind-Value="Spell.ManaCost" ValueLookup="SpellLookup?.ManaCost" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="DamageClass" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="@DamageClassFlags" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
         <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@Spell.AuraDescription" ValueLookup="@SpellLookup?.AuraDescription" CssClass="@elementCssClass" />

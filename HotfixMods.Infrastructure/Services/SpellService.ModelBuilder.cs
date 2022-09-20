@@ -19,8 +19,9 @@ namespace HotfixMods.Infrastructure.Services
             {
                 Id = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
-
-                AuraDescription = spellDto.AuraDescription ?? Default.Spell.AuraDescription,
+                
+                AuraDescription = spellDto.AuraDescription ?? Default.Spell.AuraDescription, // TODO:
+                Description = spellDto.AuraDescription ?? Default.Spell.AuraDescription, // TODO: One is ability text and the other is hover. Consider changing one.
                 NameSubtext = spellDto.HotfixModsName ?? Default.Spell.NameSubtext
             };
         }
@@ -49,12 +50,13 @@ namespace HotfixMods.Infrastructure.Services
             spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_COOLDOWNS, HotfixStatuses.VALID);
             return new ()
             {
+                Id = spellDto.Id,
+                SpellId = spellDto.Id,
+                VerifiedBuild = VerifiedBuild,
+
                 CategoryRecoveryTime = spellDto.CategoryRecoveryTime ?? Default.SpellCooldowns.CategoryRecoveryTime,
                 RecoveryTime = spellDto.RecoveryTime ?? Default.SpellCooldowns.RecoveryTime,
                 StartRecoveryTime = spellDto.StartRecoveryTime ?? Default.SpellCooldowns.StartRecoveryTime,
-
-                Id = -1,
-                VerifiedBuild = -1
             };
         }
 

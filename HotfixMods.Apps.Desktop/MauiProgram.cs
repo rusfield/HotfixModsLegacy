@@ -86,7 +86,7 @@ namespace HotfixMods.Apps.Desktop
                 return new SpellService(db2Provider, mySqlProvider)
                 {
                     VerifiedBuild = -1600,
-                    IdSize = 10, // TODO: Check
+                    IdSize = 50, 
                     IdRangeFrom = 2000000,
                     IdRangeTo = 3000000
                 };

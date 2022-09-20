@@ -29,7 +29,7 @@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
         <IntInput_Element Label="Launch Speed" @bind-Value="Spell.Speed" ValueLookup="SpellLookup?.Speed" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="DamageClass" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="DamageClassFlags" Label="Categories" @bind-Value="Spell.SchoolMask" ValueLookup="SpellLookup?.SchoolMask" CssClass="@elementCssClass" />
     </MudItem>
         <MudItem xs="1" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">

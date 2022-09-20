@@ -10,6 +10,9 @@
         <IntInput_Element Label="Required Level" @bind-Value="Item.RequiredLevel" ValueLookup="@ItemLookup?.RequiredLevel" CssClass="@elementCssClass" />
         <IntInput_Element Label="Item Level" @bind-Value="Item.ItemLevel" ValueLookup="@ItemLookup?.ItemLevel" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Weapon Sheathe" @bind-Value="Item.SheatheType" ValueLookup="@ItemLookup?.SheatheType" CssClass="@elementCssClass" />
+
+        @*TODO: Move somewhere else*@
+        <MultiSelect_Element T="ItemDisplayInfoFlags" Label="Display Flags" @bind-Value="Item.ItemDisplayInfoFlags" ValueLookup="@ItemLookup?.ItemDisplayInfoFlags" CssClass="@elementCssClass" />
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">

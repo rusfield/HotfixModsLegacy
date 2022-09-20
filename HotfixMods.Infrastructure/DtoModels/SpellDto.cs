@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? CastingTimeIndex { get; set; }
         public int? DurationIndex { get; set; }
         public int? RangeIndex { get; set; }
-        public DamageClass? SchoolMask { get; set; }
+        public DamageClassFlags? SchoolMask { get; set; }
         public SpellAttributeFlags0? Attributes0 { get; set; }
         public SpellAttributeFlags1? Attributes1 { get; set; }
         public SpellAttributeFlags2? Attributes2 { get; set; }

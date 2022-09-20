@@ -6,7 +6,7 @@ namespace HotfixMods.Infrastructure.DtoModels.Spells
     public class SpellEffectDto
     {
         public SpellEffectAuras? EffectAura { get; set; }
-        public int? EffectIndex { get; set; }
+        public int EffectIndex { get; set; }
         public SpellEffects? Effect { get; set; }
         public SpellEffectAttributeFlags? EffectAttributes { get; set; }
         public int? EffectBasePointsF { get; set; } // mod value

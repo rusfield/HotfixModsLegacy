@@ -5,7 +5,7 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <SingleSelect_Element T="int?" Label="Effect Index" Value="SpellEffect.EffectIndex" ValueChanged="ValueChanged" Options="Spell.SpellEffects.ToDictionary(s => s.EffectIndex, k => k.EffectIndex.ToString())" CssClass="@elementCssClass" />
+        <SingleSelect_Element T="int" Label="Effect Index" Value="SpellEffect.EffectIndex" ValueChanged="ValueChanged" Options="Spell.SpellEffects.ToDictionary(s => s.EffectIndex, k => k.EffectIndex.ToString())" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Effect" @bind-Value="SpellEffect.Effect" ValueLookup="SpellEffectLookup?.Effect" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Effect Aura" @bind-Value="SpellEffect.EffectAura" ValueLookup="SpellEffectLookup?.EffectAura" CssClass="@elementCssClass" />
         <MultiSelect_Element T="@SpellEffectAttributeFlags" Label="Attributes" @bind-Value="SpellEffect.EffectAttributes" ValueLookup="SpellEffectLookup?.EffectAttributes" CssClass="@elementCssClass" />
@@ -39,18 +39,18 @@
 
 
 
-    async Task ValueChanged(int? newValue)
+    async Task ValueChanged(int newValue)
     {
         if (SpellEffect.EffectIndex != newValue)
         {
-            Spell.SpellEffects.RemoveAt((int)SpellEffect.EffectIndex);
-            Spell.SpellEffects.Insert((int)newValue, SpellEffect);
+            Spell.SpellEffects.RemoveAt(SpellEffect.EffectIndex);
+            Spell.SpellEffects.Insert(newValue, SpellEffect);
             for (int i = 0; i < Spell.SpellEffects.Count; i++)
             {
                 Spell.SpellEffects[i].EffectIndex = i;
             }
             this.StateHasChanged();
-            await EffectChanged.InvokeAsync((int)newValue);
+            await EffectChanged.InvokeAsync(newValue);
         }
     }
 

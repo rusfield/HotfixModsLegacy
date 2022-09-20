@@ -24,11 +24,10 @@ namespace HotfixMods.Infrastructure.DefaultModels
             VerifiedBuild = -1
         };
 
-        public static readonly SpellEffect SpellEFfect = new()
+        public static readonly SpellEffect SpellEffect = new()
         {
             Effect = SpellEffects.NONE,
             EffectAura = SpellEffectAuras.NONE,
-            EffectIndex = 0,
             ImplicitTarget0 = SpellTargets.NONE,
             ImplicitTarget1 = SpellTargets.NONE,
             SpellId = 0,
@@ -41,6 +40,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             Variance = 1,
 
             Id = -1,
+            EffectIndex = -1,
             VerifiedBuild = -1
         };
 
@@ -99,6 +99,21 @@ namespace HotfixMods.Infrastructure.DefaultModels
             SpellVisualId = 0,
 
             Probability = 1,
+
+            Id = -1,
+            VerifiedBuild = -1
+        };
+
+        public static readonly SpellAuraOptions SpellAuraOptions = new()
+        {
+            CumulativeAura = 0,
+            ProcCategoryRecovery = 0,
+            ProcChance = 101,
+            ProcCharges = 0,
+            ProcTypeMask0 = 0,
+            ProcTypeMask1 = 0,
+            SpellId = 0,
+            SpellProcsPerMinuteId = 0,
 
             Id = -1,
             VerifiedBuild = -1

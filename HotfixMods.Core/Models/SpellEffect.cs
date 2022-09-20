@@ -28,6 +28,11 @@ namespace HotfixMods.Core.Models
         [Column("ImplicitTarget2")]
         public SpellTargets ImplicitTarget1 { get; set; }
         public SpellEffectAttributeFlags EffectAttributes { get; set; }
+        [Column("EffectMiscValue1")]
+        public int EffectMiscValue0 { get; set; }
+        [Column("EffectMiscValue2")]
+        public int EffectMiscValue1 { get; set; }
+
         public int VerifiedBuild { get; set; }
     }
 }

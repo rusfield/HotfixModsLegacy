@@ -35,6 +35,8 @@ namespace HotfixMods.Infrastructure.DefaultModels
             EffectBasePointsF = 0,
             EffectAuraPeriod = 0,
             EffectAttributes = SpellEffectAttributeFlags.NONE,
+            EffectMiscValue0 = 0,
+            EffectMiscValue1 = 0,
 
             EffectChainAmplitude = 1,
             PvpMultiplier = 1,

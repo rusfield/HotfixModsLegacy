@@ -4,21 +4,30 @@
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    <MudItem xs="4" Class="@gridItemCssClass">
-        <SingleSelect_Element T="int" Label="Effect Index" Value="SpellEffect.EffectIndex" ValueChanged="ValueChanged" Options="Spell.SpellEffects.ToDictionary(s => s.EffectIndex, k => k.EffectIndex.ToString())" CssClass="@elementCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <SingleSelect_Element T="int?" Label="Effect Index" Value="SpellEffect.EffectIndex" ValueChanged="ValueChanged" Options="Spell.SpellEffects.ToDictionary(s => s.EffectIndex, k => k.EffectIndex.ToString())" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Effect" @bind-Value="SpellEffect.Effect" ValueLookup="SpellEffectLookup?.Effect" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Effect Aura" @bind-Value="SpellEffect.EffectAura" ValueLookup="SpellEffectLookup?.EffectAura" CssClass="@elementCssClass" />
         <MultiSelect_Element T="@SpellEffectAttributeFlags" Label="Attributes" @bind-Value="SpellEffect.EffectAttributes" ValueLookup="SpellEffectLookup?.EffectAttributes" CssClass="@elementCssClass" />
     </MudItem>
-    <MudItem xs="4" Class="@gridItemCssClass">
+    <MudItem xs="6" Class="@gridItemCssClass">
         @* BG *@
     </MudItem>
-    <MudItem xs="4" Class="@gridItemCssClass">
+    <MudItem xs="3" Class="@gridItemCssClass">
         <DecimalInput_Element Label="Effect Value" @bind-Value="SpellEffect.EffectBasePointsF" ValueLookup="SpellEffectLookup?.EffectBasePointsF" CssClass="@elementCssClass" />
         <IntInput_Element Label="Aura Tick Time (ms)" @bind-Value="SpellEffect.EffectAuraPeriod" ValueLookup="SpellEffectLookup?.EffectAuraPeriod" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Implicit Taret 0" @bind-Value="SpellEffect.ImplicitTarget0" ValueLookup="SpellEffectLookup?.ImplicitTarget0" CssClass="@elementCssClass" />
         <SingleSelect_Element Label="Implicit Taret 1" @bind-Value="SpellEffect.ImplicitTarget1" ValueLookup="SpellEffectLookup?.ImplicitTarget1" CssClass="@elementCssClass" />
     </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Miscellaneous Value 0" @bind-Value="SpellEffect.EffectMiscValue0" ValueLookup="SpellEffectLookup?.EffectMiscValue0" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Miscellaneous Value 1" @bind-Value="SpellEffect.EffectMiscValue1" ValueLookup="SpellEffectLookup?.EffectMiscValue1" CssClass="@elementCssClass" />
+
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
 </MudGrid>
 
 
@@ -39,18 +48,18 @@
 
 
 
-    async Task ValueChanged(int newValue)
+    async Task ValueChanged(int? newValue)
     {
         if (SpellEffect.EffectIndex != newValue)
         {
-            Spell.SpellEffects.RemoveAt(SpellEffect.EffectIndex);
-            Spell.SpellEffects.Insert(newValue, SpellEffect);
+            Spell.SpellEffects.RemoveAt((int)SpellEffect.EffectIndex);
+            Spell.SpellEffects.Insert((int)newValue, SpellEffect);
             for (int i = 0; i < Spell.SpellEffects.Count; i++)
             {
                 Spell.SpellEffects[i].EffectIndex = i;
             }
             this.StateHasChanged();
-            await EffectChanged.InvokeAsync(newValue);
+            await EffectChanged.InvokeAsync((int)newValue);
         }
     }
 

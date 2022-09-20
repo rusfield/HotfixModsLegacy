@@ -62,19 +62,15 @@ namespace HotfixMods.Infrastructure.Services
 
         List<SpellEffect> BuildSpellEffects(SpellDto spellDto)
         {
-            if(spellDto.SpellEffects.Count > 50)
-            {
-                throw new Exception("Spell effects should not exceed 50.");
-            }
             var result = new List<SpellEffect>();
             foreach(var spellEffect in spellDto.SpellEffects)
             {
-                spellDto.AddHotfix(spellDto.Id + spellEffect.EffectIndex, TableHashes.SPELL_EFFECT, HotfixStatuses.VALID);
+                spellDto.AddHotfix(spellDto.Id + (int)spellEffect.EffectIndex, TableHashes.SPELL_EFFECT, HotfixStatuses.VALID);
                 result.Add(new()
                 {
-                    Id = spellDto.Id + spellEffect.EffectIndex,
+                    Id = spellDto.Id + (int)spellEffect.EffectIndex,
                     SpellId = spellDto.Id,
-                    EffectIndex = spellEffect.EffectIndex,
+                    EffectIndex = (int)spellEffect.EffectIndex,
                     VerifiedBuild = VerifiedBuild,
 
                     Effect = spellEffect.Effect ?? Default.SpellEffect.Effect,
@@ -84,7 +80,9 @@ namespace HotfixMods.Infrastructure.Services
                     EffectBasePointsF = spellEffect.EffectBasePointsF ?? Default.SpellEffect.EffectBasePointsF,
                     ImplicitTarget0 = spellEffect.ImplicitTarget0 ?? Default.SpellEffect.ImplicitTarget0,
                     ImplicitTarget1 = spellEffect.ImplicitTarget1 ?? Default.SpellEffect.ImplicitTarget1,
-                    
+                    EffectMiscValue0 = spellEffect.EffectMiscValue0 ?? Default.SpellEffect.EffectMiscValue0,
+                    EffectMiscValue1 = spellEffect.EffectMiscValue1 ?? Default.SpellEffect.EffectMiscValue1,
+
                     PvpMultiplier = Default.SpellEffect.PvpMultiplier,
                     Variance = Default.SpellEffect.Variance,
                     EffectChainAmplitude = Default.SpellEffect.EffectChainAmplitude

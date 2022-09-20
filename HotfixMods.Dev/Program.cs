@@ -7,4 +7,4 @@
 using HotfixMods.Dev.Helpers;
 
 var helper = new WowToolsConverter();
-helper.ConvertEnumToCSharp(@"C:\Users\Disconnected\Desktop\flagstest.txt");
+helper.ConvertFlagToCSharp(@"C:\Users\Disconnected\Desktop\flagstest.txt");

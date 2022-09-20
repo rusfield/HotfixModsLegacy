@@ -5,7 +5,8 @@
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
-@using Core.Enums
+@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels.Spells
 
 @inject IDialogService DialogService
 @inject SpellService SpellService
@@ -15,7 +16,7 @@
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SpellLookupAsync_Click">Sound Kit Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SpellLookupAsync_Click">Spell Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
             <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@spell.Id</MudButton>
@@ -23,16 +24,38 @@
             </MudStack>
         </MudStack>
     <MudPaper>
+        <MudTabs @ref="@mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <ChildContent>
+                <MudTabPanel Text="Properties">
+                    <SpellProperties_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Cooldown">
+                    <SpellCooldown_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Visuals">
+                    <SpellVisual_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Attributes">
+                    <SpellAttributes_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
 
-        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <MudTabPanel Text="Properties">
-                <SpellProperties_Tab Spell="@spell" SpellLookup="@spellLookup" />
-            </MudTabPanel>
-            <MudTabPanel Text="Attributes">
-                <SpellAttributes_Tabs Spell="@spell" SpellLookup="@spellLookup" />
-            </MudTabPanel>
+                @for (int i = 0; i < spell.SpellEffects.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Effect #{index}")">
+                        <SpellEffects_Tab EffectChanged="EffectChanged" Spell="spell" SpellEffect="spell.SpellEffects[index]" SpellEffectLookup="@(spellLookup != null && spellLookup.SpellEffects.Count >= index ? spellLookup.SpellEffects[index] : null)" />
+                    </MudTabPanel>
+                }
+            </ChildContent>
+            <Header>
+                <MudTooltip Text="Add new effect">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddEffect_Click" />
+                </MudTooltip>
+                <MudTooltip Text="Remove current segment">
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveEffect_Click" Disabled="@(!TabIsRemovable())" />
+                </MudTooltip>
+            </Header>
         </MudTabs>
-
     </MudPaper>
 }
 else
@@ -46,6 +69,8 @@ else
     SpellDto? spell;
     SpellDto? spellLookup;
     List<RazorDashboardModel> spellDashboard;
+    MudTabs mudTabsRef;
+    int numberOfStaticTabs; // excluding Effect-tabs
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,6 +88,13 @@ else
             ));
         }
         await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (spell != null && numberOfStaticTabs == 0)
+            numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Effect")).Count();
+        base.OnAfterRender(firstRender);
     }
 
     async Task EditAsync(int id)
@@ -133,6 +165,41 @@ else
             }
         }
         return null;
+    }
+
+    void EffectChanged(int newEffect)
+    {
+        this.StateHasChanged();
+        mudTabsRef.ActivatePanel(numberOfStaticTabs + newEffect);
+    }
+
+    async Task AddEffect_Click()
+    {
+        spell.SpellEffects.Add(new SpellEffectDto()
+            {
+                EffectIndex = spell.SpellEffects.Count()
+            });
+        await InvokeAsync(() => StateHasChanged());
+        mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
+    }
+
+    void RemoveEffect_Click()
+    {
+        if (spell.SpellEffects.Count > 1)
+        {
+            var currentSpellEffect = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
+            spell.SpellEffects.RemoveAt(currentSpellEffect);
+            for (int i = 0; i < spell.SpellEffects.Count; i++)
+            {
+                spell.SpellEffects[i].EffectIndex = i;
+            }
+            this.StateHasChanged();
+        }
+    }
+
+    bool TabIsRemovable()
+    {
+        return spell.SpellEffects.Count > 1 && mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
     }
 }
 

@@ -58,8 +58,10 @@
 
     string SetSelectionText(IEnumerable<string> selection)
     {
-        var result = string.Join(", ", selection);
-        return result;
+        var output = selection.ToList();
+        for (int i = 0; i < output.Count; i++)
+            output[i] = output[i].ToDisplayString();
+        return string.Join(", ", output);
     }
 
     bool GetBadgeVisibility()

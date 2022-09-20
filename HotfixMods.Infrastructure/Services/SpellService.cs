@@ -22,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             return new SpellDto()
             {
-                // TODO
+                SpellEffects = new()
             };
         }
 

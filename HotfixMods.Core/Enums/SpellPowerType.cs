@@ -8,6 +8,7 @@ namespace HotfixMods.Core.Enums
 {
     public enum SpellPowerType
     {
+        UNK_MINUS_2 = -2,
         MANA = 0,
         RAGE = 1,
         FOCUS = 2,

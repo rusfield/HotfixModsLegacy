@@ -1,0 +1,41 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Core.Flags
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Cooldown (ms)" @bind-Value="Spell.RecoveryTime" ValueLookup="SpellLookup?.RecoveryTime" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Global Cooldown (ms)" @bind-Value="Spell.StartRecoveryTime" ValueLookup="SpellLookup?.StartRecoveryTime" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Category Cooldown (ms)" @bind-Value="Spell.CategoryRecoveryTime" ValueLookup="SpellLookup?.CategoryRecoveryTime" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Proc Category Cooldown (ms)" @bind-Value="Spell.ProcCategoryRecovery" ValueLookup="SpellLookup?.ProcCategoryRecovery" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Proc Chance" @bind-Value="Spell.ProcChance" ValueLookup="SpellLookup?.ProcChance" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Proc Charges" @bind-Value="Spell.ProcCharges" ValueLookup="SpellLookup?.ProcCharges" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Procs Per Minute ID" @bind-Value="Spell.SpellProcsPerMinuteId" ValueLookup="SpellLookup?.SpellProcsPerMinuteId" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Proc Type Mask 0" @bind-Value="Spell.ProcTypeMask0" ValueLookup="SpellLookup?.ProcTypeMask0" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Proc Type Mask 1" @bind-Value="Spell.ProcTypeMask1" ValueLookup="SpellLookup?.ProcTypeMask1" CssClass="@elementCssClass" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+
+
+</MudGrid>
+
+@code {
+    [Parameter]
+    public SpellDto Spell { get; set; }
+
+    [Parameter]
+    public SpellDto? SpellLookup { get; set; }
+
+    string elementCssClass = "pb-2 pt-2";
+    string gridItemCssClass = "pb-0 pt-0";
+}

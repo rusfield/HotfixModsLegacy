@@ -4,9 +4,9 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <Invisible_Element CssClass="@elementCssClass" />
-        <Invisible_Element CssClass="@elementCssClass" />
-        <Invisible_Element CssClass="@elementCssClass" />
+        <Invisible_Element/>
+        <Invisible_Element/>
+        <Invisible_Element/>
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
     </MudItem>
@@ -15,7 +15,7 @@
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
     <MudItem xs="8" Class="@gridItemCssClass">
-        <TextInput_Element Variant="Variant.Text" Label="Name" @bind-Value="@AnimKit.HotfixModsName" ValueLookup="@AnimKitLookup?.HotfixModsName" CssClass="@elementCssClass" />
+        <TextInput_Element Variant="Variant.Text" Label="Name" @bind-Value="@AnimKit.HotfixModsName" ValueLookup="@AnimKitLookup?.HotfixModsName"/>
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
 </MudGrid>
@@ -27,6 +27,6 @@
     [Parameter]
     public AnimKitDto? AnimKitLookup { get; set; }
 
-    string elementCssClass = "pb-2 pt-2";
+    
     string gridItemCssClass = "pb-0 pt-0";
 }

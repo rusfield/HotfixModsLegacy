@@ -3,29 +3,29 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <IntInput_Element Label="Upper Chest" @bind-Value="Item.ComponentTorsoUpper" ValueLookup="@ItemLookup?.ComponentTorsoUpper" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Lower Chest" @bind-Value="Item.ComponentTorsoLower" ValueLookup="@ItemLookup?.ComponentTorsoLower" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Upper Legs" @bind-Value="Item.ComponentLegUpper" ValueLookup="@ItemLookup?.ComponentLegUpper" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Lower Legs" @bind-Value="Item.ComponentLegLower" ValueLookup="@ItemLookup?.ComponentLegLower" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Upper Chest" @bind-Value="Item.ComponentTorsoUpper" ValueLookup="@ItemLookup?.ComponentTorsoUpper"/>
+        <IntInput_Element Label="Lower Chest" @bind-Value="Item.ComponentTorsoLower" ValueLookup="@ItemLookup?.ComponentTorsoLower"/>
+        <IntInput_Element Label="Upper Legs" @bind-Value="Item.ComponentLegUpper" ValueLookup="@ItemLookup?.ComponentLegUpper"/>
+        <IntInput_Element Label="Lower Legs" @bind-Value="Item.ComponentLegLower" ValueLookup="@ItemLookup?.ComponentLegLower"/>
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass" />
     <MudItem xs="4" Class="@gridItemCssClass">
-        <IntInput_Element Label="Upper Arms" @bind-Value="Item.ComponentArmUpper" ValueLookup="@ItemLookup?.ComponentArmUpper" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Lower Arms" @bind-Value="Item.ComponentArmLower" ValueLookup="@ItemLookup?.ComponentArmLower" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Hands" @bind-Value="Item.ComponentHand" ValueLookup="@ItemLookup?.ComponentHand" CssClass="@elementCssClass" />
-        <IntInput_Element Label="Feet" @bind-Value="Item.ComponentFoot" ValueLookup="@ItemLookup?.ComponentFoot" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Upper Arms" @bind-Value="Item.ComponentArmUpper" ValueLookup="@ItemLookup?.ComponentArmUpper"/>
+        <IntInput_Element Label="Lower Arms" @bind-Value="Item.ComponentArmLower" ValueLookup="@ItemLookup?.ComponentArmLower"/>
+        <IntInput_Element Label="Hands" @bind-Value="Item.ComponentHand" ValueLookup="@ItemLookup?.ComponentHand"/>
+        <IntInput_Element Label="Feet" @bind-Value="Item.ComponentFoot" ValueLookup="@ItemLookup?.ComponentFoot"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Model 1" @bind-Value="Item.ModelResourceId0" ValueLookup="@ItemLookup?.ModelResourceId0" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Model 1" @bind-Value="Item.ModelResourceId0" ValueLookup="@ItemLookup?.ModelResourceId0"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Model Texture 1" @bind-Value="Item.ModelMaterialResourceId0" ValueLookup="@ItemLookup?.ModelMaterialResourceId0" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Model Texture 1" @bind-Value="Item.ModelMaterialResourceId0" ValueLookup="@ItemLookup?.ModelMaterialResourceId0"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Model 2" @bind-Value="Item.ModelResourceId1" ValueLookup="@ItemLookup?.ModelResourceId1" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Model 2" @bind-Value="Item.ModelResourceId1" ValueLookup="@ItemLookup?.ModelResourceId1"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Model Texture 2" @bind-Value="Item.ModelMaterialResourceId1" ValueLookup="@ItemLookup?.ModelMaterialResourceId1" CssClass="@elementCssClass" />
+        <IntInput_Element Label="Model Texture 2" @bind-Value="Item.ModelMaterialResourceId1" ValueLookup="@ItemLookup?.ModelMaterialResourceId1"/>
     </MudItem>
 </MudGrid>
 
@@ -37,6 +37,6 @@
     [Parameter]
     public ItemDto? ItemLookup { get; set; }
 
-    string elementCssClass = "pb-2 pt-2";
+    
     string gridItemCssClass = "pb-0 pt-0";
 }

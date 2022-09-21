@@ -4,20 +4,20 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <IntList_Element Label="File Data IDs" PluralItemName="sounds" SingularItemName="sound" @bind-Value="@SoundKit.FileDataIds" ListAnchorOrigin="Origin.BottomCenter" ListTransformOrigin="Origin.TopCenter" ValueLookup="SoundKitLookup?.FileDataIds" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Volume" @bind-Value="@SoundKit.VolumeAdjust" ValueLookup="SoundKitLookup?.VolumeAdjust" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Volume Variation" @bind-Value="@SoundKit.VolumeVariation" ValueLookup="SoundKitLookup?.VolumeVariation" CssClass="@elementCssClass" />
+        <IntList_Element Label="File Data IDs" PluralItemName="sounds" SingularItemName="sound" @bind-Value="@SoundKit.FileDataIds" ListAnchorOrigin="Origin.BottomCenter" ListTransformOrigin="Origin.TopCenter" ValueLookup="SoundKitLookup?.FileDataIds"/>
+        <DecimalInput_Element Label="Volume" @bind-Value="@SoundKit.VolumeAdjust" ValueLookup="SoundKitLookup?.VolumeAdjust"/>
+        <DecimalInput_Element Label="Volume Variation" @bind-Value="@SoundKit.VolumeVariation" ValueLookup="SoundKitLookup?.VolumeVariation"/>
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <SingleSelect_Element T="SoundKitSoundTypes?" Label="Sound Type" @bind-Value="@SoundKit.SoundType" ValueLookup="@SoundKitLookup?.SoundType" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Pitch" @bind-Value="@SoundKit.PitchAdjust" ValueLookup="SoundKitLookup?.PitchAdjust" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Pitch Variation" @bind-Value="@SoundKit.PitchVariation" ValueLookup="SoundKitLookup?.PitchVariation" CssClass="@elementCssClass" />
+        <SingleSelect_Element T="SoundKitSoundTypes?" Label="Sound Type" @bind-Value="@SoundKit.SoundType" ValueLookup="@SoundKitLookup?.SoundType"/>
+        <DecimalInput_Element Label="Pitch" @bind-Value="@SoundKit.PitchAdjust" ValueLookup="SoundKitLookup?.PitchAdjust"/>
+        <DecimalInput_Element Label="Pitch Variation" @bind-Value="@SoundKit.PitchVariation" ValueLookup="SoundKitLookup?.PitchVariation"/>
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
     <MudItem xs="8" Class="@gridItemCssClass">
-        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@SoundKit.HotfixModsName" ValueLookup="@SoundKitLookup?.HotfixModsName" CssClass="@elementCssClass" />
+        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@SoundKit.HotfixModsName" ValueLookup="@SoundKitLookup?.HotfixModsName"/>
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
 </MudGrid>
@@ -29,6 +29,6 @@
     [Parameter]
     public SoundKitDto? SoundKitLookup { get; set; }
 
-    string elementCssClass = "pb-2 pt-2";
+    
     string gridItemCssClass = "pb-0 pt-0";
 }

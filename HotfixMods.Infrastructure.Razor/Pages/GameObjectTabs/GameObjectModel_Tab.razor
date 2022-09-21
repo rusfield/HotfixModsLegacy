@@ -4,20 +4,20 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <DecimalInput_Element Label="Geobox 0" @bind-Value="@GameObject.GeoBox0" ValueLookup="GameObjectLookup?.GeoBox0" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Geobox 1" @bind-Value="@GameObject.GeoBox1" ValueLookup="GameObjectLookup?.GeoBox1" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Geobox 2" @bind-Value="@GameObject.GeoBox2" ValueLookup="GameObjectLookup?.GeoBox2" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Geobox 0" @bind-Value="@GameObject.GeoBox0" ValueLookup="GameObjectLookup?.GeoBox0"/>
+        <DecimalInput_Element Label="Geobox 1" @bind-Value="@GameObject.GeoBox1" ValueLookup="GameObjectLookup?.GeoBox1"/>
+        <DecimalInput_Element Label="Geobox 2" @bind-Value="@GameObject.GeoBox2" ValueLookup="GameObjectLookup?.GeoBox2"/>
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
     </MudItem>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <DecimalInput_Element Label="Geobox 3" @bind-Value="@GameObject.GeoBox3" ValueLookup="GameObjectLookup?.GeoBox3" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Geobox 4" @bind-Value="@GameObject.GeoBox4" ValueLookup="GameObjectLookup?.GeoBox4" CssClass="@elementCssClass" />
-        <DecimalInput_Element Label="Geobox 5" @bind-Value="@GameObject.GeoBox5" ValueLookup="GameObjectLookup?.GeoBox5" CssClass="@elementCssClass" />
+        <DecimalInput_Element Label="Geobox 3" @bind-Value="@GameObject.GeoBox3" ValueLookup="GameObjectLookup?.GeoBox3"/>
+        <DecimalInput_Element Label="Geobox 4" @bind-Value="@GameObject.GeoBox4" ValueLookup="GameObjectLookup?.GeoBox4"/>
+        <DecimalInput_Element Label="Geobox 5" @bind-Value="@GameObject.GeoBox5" ValueLookup="GameObjectLookup?.GeoBox5"/>
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
     <MudItem xs="8" Class="@gridItemCssClass">
-        <IntInput_Element Label="File Data ID" @bind-Value="@GameObject.FileDataId" ValueLookup="@GameObjectLookup?.FileDataId" CssClass="@elementCssClass" />
+        <IntInput_Element Label="File Data ID" @bind-Value="@GameObject.FileDataId" ValueLookup="@GameObjectLookup?.FileDataId"/>
     </MudItem>
     <MudItem xs="2" Class="@gridItemCssClass" />
 </MudGrid>
@@ -29,6 +29,6 @@
     [Parameter]
     public GameObjectDto? GameObjectLookup { get; set; }
 
-    string elementCssClass = "pb-2 pt-2";
+    
     string gridItemCssClass = "pb-0 pt-0";
 }

@@ -5,34 +5,34 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags0" Label="Attributes 0" @bind-Value="Spell.Attributes0" ValueLookup="SpellLookup?.Attributes0" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags2" Label="Attributes 2" @bind-Value="Spell.Attributes2" ValueLookup="SpellLookup?.Attributes2" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags4" Label="Attributes 4" @bind-Value="Spell.Attributes4" ValueLookup="SpellLookup?.Attributes4" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags6" Label="Attributes 6" @bind-Value="Spell.Attributes6" ValueLookup="SpellLookup?.Attributes6" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags0" Label="Attributes 0" @bind-Value="Spell.Attributes0" ValueLookup="SpellLookup?.Attributes0"/>
+        <MultiSelect_Element T="SpellAttributeFlags2" Label="Attributes 2" @bind-Value="Spell.Attributes2" ValueLookup="SpellLookup?.Attributes2"/>
+        <MultiSelect_Element T="SpellAttributeFlags4" Label="Attributes 4" @bind-Value="Spell.Attributes4" ValueLookup="SpellLookup?.Attributes4"/>
+        <MultiSelect_Element T="SpellAttributeFlags6" Label="Attributes 6" @bind-Value="Spell.Attributes6" ValueLookup="SpellLookup?.Attributes6"/>
 
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags1" Label="Attributes 1" @bind-Value="Spell.Attributes1" ValueLookup="SpellLookup?.Attributes1" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags3" Label="Attributes 3" @bind-Value="Spell.Attributes3" ValueLookup="SpellLookup?.Attributes3" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags5" Label="Attributes 5" @bind-Value="Spell.Attributes5" ValueLookup="SpellLookup?.Attributes5" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags7" Label="Attributes 7" @bind-Value="Spell.Attributes7" ValueLookup="SpellLookup?.Attributes7" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags1" Label="Attributes 1" @bind-Value="Spell.Attributes1" ValueLookup="SpellLookup?.Attributes1"/>
+        <MultiSelect_Element T="SpellAttributeFlags3" Label="Attributes 3" @bind-Value="Spell.Attributes3" ValueLookup="SpellLookup?.Attributes3"/>
+        <MultiSelect_Element T="SpellAttributeFlags5" Label="Attributes 5" @bind-Value="Spell.Attributes5" ValueLookup="SpellLookup?.Attributes5"/>
+        <MultiSelect_Element T="SpellAttributeFlags7" Label="Attributes 7" @bind-Value="Spell.Attributes7" ValueLookup="SpellLookup?.Attributes7"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags8" Label="Attributes 8" @bind-Value="Spell.Attributes8" ValueLookup="SpellLookup?.Attributes8" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags12" Label="Attributes 12" @bind-Value="Spell.Attributes12" ValueLookup="SpellLookup?.Attributes12" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags8" Label="Attributes 8" @bind-Value="Spell.Attributes8" ValueLookup="SpellLookup?.Attributes8"/>
+        <MultiSelect_Element T="SpellAttributeFlags12" Label="Attributes 12" @bind-Value="Spell.Attributes12" ValueLookup="SpellLookup?.Attributes12"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags9" Label="Attributes 9" @bind-Value="Spell.Attributes9" ValueLookup="SpellLookup?.Attributes9" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags13" Label="Attributes 13" @bind-Value="Spell.Attributes13" ValueLookup="SpellLookup?.Attributes13" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags9" Label="Attributes 9" @bind-Value="Spell.Attributes9" ValueLookup="SpellLookup?.Attributes9"/>
+        <MultiSelect_Element T="SpellAttributeFlags13" Label="Attributes 13" @bind-Value="Spell.Attributes13" ValueLookup="SpellLookup?.Attributes13"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags10" Label="Attributes 10" @bind-Value="Spell.Attributes10" ValueLookup="SpellLookup?.Attributes10" CssClass="@elementCssClass" />
-        <MultiSelect_Element T="SpellAttributeFlags14" Label="Attributes 14" @bind-Value="Spell.Attributes14" ValueLookup="SpellLookup?.Attributes14" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags10" Label="Attributes 10" @bind-Value="Spell.Attributes10" ValueLookup="SpellLookup?.Attributes10"/>
+        <MultiSelect_Element T="SpellAttributeFlags14" Label="Attributes 14" @bind-Value="Spell.Attributes14" ValueLookup="SpellLookup?.Attributes14"/>
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellAttributeFlags11" Label="Attributes 11" @bind-Value="Spell.Attributes11" ValueLookup="SpellLookup?.Attributes11" CssClass="@elementCssClass" />
+        <MultiSelect_Element T="SpellAttributeFlags11" Label="Attributes 11" @bind-Value="Spell.Attributes11" ValueLookup="SpellLookup?.Attributes11"/>
     </MudItem>
 </MudGrid>
 
@@ -43,6 +43,6 @@
     [Parameter]
     public SpellDto? SpellLookup { get; set; }
 
-    string elementCssClass = "pb-2 pt-2";
+    
     string gridItemCssClass = "pb-0 pt-0";
 }

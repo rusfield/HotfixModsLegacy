@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models
 {
-    public class SpellVisual : IDb2, IHotfixesSchema
+    public class SpellVisualKit : IDb2, IHotfixesSchema
     {
         public int Id { get; set; }
         // TODO: Investigate properties

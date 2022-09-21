@@ -7,10 +7,16 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models
 {
-    public class SpellVisual : IDb2, IHotfixesSchema
+    public class SpellVisualKitModelAttach : IDb2, IHotfixesSchema
     {
         public int Id { get; set; }
-        // TODO: Investigate properties
+
+
+        // TODO: Check properties!!
+
+
+        public int SpellVisualEffectNameId { get; set; }
+        public int ParentSpellVisualKitId { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

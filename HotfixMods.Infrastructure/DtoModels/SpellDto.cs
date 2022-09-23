@@ -48,6 +48,11 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ProcTypeMask0 { get; set; }
         public int? ProcTypeMask1 { get; set; }
         public int? SpellVisualId { get; set; }
+        public SpellVisualEventTypes? StartEvent { get; set; }
+        public SpellVisualEventTypes? EndEvent { get; set; }
+        public SpellVisualEventTargetType? TargetType { get; set; }
+        public SpellVisualKitEffectType? VisualEffectType { get; set; }
+        public int? VisualEffectId { get; set; }
         public List<SpellEffectDto> SpellEffects { get; set; }
 
     }

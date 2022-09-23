@@ -23,7 +23,7 @@ namespace HotfixMods.Core.Enums
         EDGE_GLOW_EFFECT = 12,
         BEAM_EFFECT_ID = 13,
         CLIENT_SCENE_EFFECT_ID = 14,
-        CLONE_EFFECT_ID = 15,
+        CLONE_EFFECT_ID = 15, // May not work
         GRADIENT_EFFECT_ID = 16,
         BARRAGE_EFFECT_ID = 17,
         ROPE_EFFECT_ID = 18,

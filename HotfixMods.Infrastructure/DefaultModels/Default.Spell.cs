@@ -122,5 +122,64 @@ namespace HotfixMods.Infrastructure.DefaultModels
             Id = -1,
             VerifiedBuild = -1
         };
+
+        public static readonly SpellVisualEvent SpellVisualEvent = new()
+        {
+            StartEvent = SpellVisualEventTypes.CAST,
+            EndEvent = SpellVisualEventTypes.ONE_SHOT,
+            EndMaxOffsetMs = 0,
+            EndMinOffsetMs = 0,
+            StartMaxOffsetMs = 0,
+            StartMinOffsetMs = 0,
+            TargetType = SpellVisualEventTargetType.CASTER,
+
+            Id = -1,
+            VerifiedBuild = -1,
+            SpellVisualKitId = -1,
+            SpellVisualId = -1
+        };
+
+        public static readonly SpellVisualKit SpellVisualKit = new()
+        {
+
+            // Nothing yet
+
+            Id = -1,
+            VerifiedBuild = -1
+        };
+
+        public static readonly SpellVisualKitEffect SpellVisualKitEffect = new()
+        {
+            Effect = 2,
+            EffectType = SpellVisualKitEffectType.SPELL_PROCEDURAL_EFFECT_ID,
+
+            Id = -1,
+            VerifiedBuild = -1,
+            ParentSpellVisualKitId = -1
+        };
+
+        public static readonly SpellVisualKitModelAttach SpellVisualKitModelAttach = new()
+        {
+            ParentSpellVisualKitId = -1,
+            SpellVisualEffectNameId = -1,
+            Id = -1,
+            VerifiedBuild = -1
+        };
+
+        public static readonly SpellVisualEffectName SpellVisualEffectName = new()
+        {
+            ModelFileDataId = 0,
+            Alpha = 1,
+            Scale = 1,
+            GenericId = 0,
+            MaxAllowedScale = 100,
+            MinAllowedScale = 0.01M,
+            ModelPosition = -1,
+            TextureFileDataId = 0,
+            Type = SpellVisualEffectNameType.FILE_DATA_ID,
+
+            Id = -1,
+            VerifiedBuild = -1
+        };
     }
 }

@@ -15,11 +15,11 @@ namespace HotfixMods.Infrastructure.Services
         Spell BuildSpell(SpellDto spellDto)
         {
             spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL, HotfixStatuses.VALID);
-            return new ()
+            return new()
             {
                 Id = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
-                
+
                 AuraDescription = spellDto.AuraDescription ?? Default.Spell.AuraDescription, // TODO:
                 Description = spellDto.AuraDescription ?? Default.Spell.AuraDescription, // TODO: One is ability text and the other is hover. Consider changing one.
                 NameSubtext = spellDto.HotfixModsName ?? Default.Spell.NameSubtext
@@ -29,7 +29,7 @@ namespace HotfixMods.Infrastructure.Services
         SpellAuraOptions BuildSpellAuraOptions(SpellDto spellDto)
         {
             spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_AURA_OPTIONS, HotfixStatuses.VALID);
-            return new ()
+            return new()
             {
                 Id = spellDto.Id,
                 SpellId = spellDto.Id,
@@ -48,7 +48,7 @@ namespace HotfixMods.Infrastructure.Services
         SpellCooldowns BuildSpellCooldowns(SpellDto spellDto)
         {
             spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_COOLDOWNS, HotfixStatuses.VALID);
-            return new ()
+            return new()
             {
                 Id = spellDto.Id,
                 SpellId = spellDto.Id,
@@ -63,7 +63,7 @@ namespace HotfixMods.Infrastructure.Services
         List<SpellEffect> BuildSpellEffects(SpellDto spellDto)
         {
             var result = new List<SpellEffect>();
-            foreach(var spellEffect in spellDto.SpellEffects)
+            foreach (var spellEffect in spellDto.SpellEffects)
             {
                 spellDto.AddHotfix(spellDto.Id + (int)spellEffect.EffectIndex, TableHashes.SPELL_EFFECT, HotfixStatuses.VALID);
                 result.Add(new()
@@ -167,14 +167,81 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        // TODO:
         SpellVisual BuildSpellVisual(SpellDto spellDto)
         {
             spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL, HotfixStatuses.VALID);
             return new()
             {
-                Id= spellDto.Id,
+                Id = spellDto.Id,
                 VerifiedBuild = VerifiedBuild
+            };
+        }
+
+        SpellVisualEvent BuildSpellVisualEvent(SpellDto spellDto)
+        {
+            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_EVENT, HotfixStatuses.VALID);
+            return new()
+            {
+                Id = spellDto.Id,
+                VerifiedBuild = VerifiedBuild,
+                SpellVisualId = spellDto.Id,
+                SpellVisualKitId = spellDto.Id,
+                
+                TargetType = spellDto.TargetType ?? Default.SpellVisualEvent.TargetType,
+                StartEvent = spellDto.StartEvent ?? Default.SpellVisualEvent.StartEvent,
+                EndEvent = spellDto.EndEvent ?? Default.SpellVisualEvent.EndEvent,
+
+                EndMaxOffsetMs = Default.SpellVisualEvent.EndMinOffsetMs,
+                EndMinOffsetMs = Default.SpellVisualEvent.EndMinOffsetMs,
+                StartMaxOffsetMs = Default.SpellVisualEvent.StartMaxOffsetMs,
+                StartMinOffsetMs = Default.SpellVisualEvent.StartMinOffsetMs
+            };
+        }
+
+        SpellVisualKit BuildSpellVisualKit(SpellDto spellDto)
+        {
+            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT, HotfixStatuses.VALID);
+            return new()
+            {
+                Id = spellDto.Id,
+                VerifiedBuild = VerifiedBuild
+            };
+        }
+
+        SpellVisualKitEffect BuildSpellVisualKitEffect(SpellDto spellDto)
+        {
+            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT_EFFECT, HotfixStatuses.VALID);
+            return new()
+            {
+                Effect = spellDto.VisualEffectId ?? Default.SpellVisualKitEffect.Effect,
+                EffectType = spellDto.VisualEffectType ?? Default.SpellVisualKitEffect.EffectType,
+
+                ParentSpellVisualKitId = -1,
+                Id = -1,
+                VerifiedBuild = -1
+            };
+        }
+
+        SpellVisualKitModelAttach BuildSpellVisualKitModelAttach(SpellDto spellDto)
+        {
+            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT_MODEL_ATTACH, HotfixStatuses.VALID);
+            return new()
+            {
+                ParentSpellVisualKitId = -1,
+                SpellVisualEffectNameId = -1,
+                Id = -1,
+                VerifiedBuild = -1
+            };
+        }
+
+        SpellVisualEffectName BuildSpellVisualEffectName(SpellDto spellDto)
+        {
+            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_EFFECT_NAME, HotfixStatuses.VALID);
+            return new()
+            {
+  
+                Id = -1,
+                VerifiedBuild = -1
             };
         }
     }

@@ -20,14 +20,15 @@
             <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
             <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="currentHref == hrefCreature ? Color.Primary : Color.Inherit" OnClick="(() => Navigate(hrefCreature))" />
             <MudIconButton Icon="@Icons.Filled.Security" Color="currentHref == hrefItem ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefItem))" />
+            <MudIconButton Icon="@Icons.Filled.LocalFireDepartment" Color="currentHref == hrefSpells ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefSpells))" />
+            <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="currentHref == hrefGameObjects ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefGameObjects))" />
 
             <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
                 <ActivatorContent>
                     <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="new List<string>(){ hrefGameObjects, hrefSoundKits, hrefAnimKits }.Any(c => c == currentHref) ? Color.Primary : Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
                 </ActivatorContent>
                 <ChildContent>
-                    <MudMenuItem OnClick="(() => Navigate(hrefSpells))">Spells</MudMenuItem>
-                    <MudMenuItem OnClick="(() => Navigate(hrefGameObjects))">Game Objects</MudMenuItem>
+                    <MudMenuItem OnClick="(() => Navigate(hrefSpellVisualKits))">Spell Visual Kits</MudMenuItem>
                     <MudMenuItem OnClick="(() => Navigate(hrefSoundKits))">Sound Kits</MudMenuItem>
                     <MudMenuItem OnClick="(() => Navigate(hrefAnimKits))">Anim Kits</MudMenuItem>
                 </ChildContent>
@@ -62,6 +63,7 @@
     string hrefGameObjects = "game-objects";
     string hrefSoundKits = "sound-kits";
     string hrefAnimKits = "anim-kits";
+    string hrefSpellVisualKits = "spell-visual-kits";
     string hrefSpells = "spells";
 
     string currentHref;

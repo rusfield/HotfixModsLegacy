@@ -1,21 +1,20 @@
-﻿@page "/game-objects"
+﻿@page "/spell-visual-kits"
 @using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
-@using HotfixMods.Infrastructure.Razor.Pages.GameObjectTabs
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 @using HotfixMods.Infrastructure.Services
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject GameObjectService DtoService
+@inject SpellVisualKitService DtoService
 
 
 @if (dto != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Anim Kit Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Spell Visual Kit Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
             <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
@@ -24,30 +23,24 @@
         </MudStack>
     <MudPaper>
 
-        <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
-            <ChildContent>
-                <MudTabPanel Text="Template">
-                    <GameObjectTemplate_Tab GameObject="dto" GameObjectLookup="dtoLookup" />
-                </MudTabPanel>
-                <MudTabPanel Text="Model">
-                    <GameObjectModel_Tab GameObject="dto" GameObjectLookup="dtoLookup" />
-                </MudTabPanel>
-            </ChildContent>
+        <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <MudTabPanel Text="Properties">
+                @*<AnimKitProperties_Tab AnimKit="animKit" AnimKitLookup="animKitLookup" />*@
+            </MudTabPanel>
         </MudTabs>
     </MudPaper>
 }
 else
 {
-    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Game Objects" />
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Spell Visual Kits" />
 }
 
 
 @code
 {
-    GameObjectDto? dto;
-    GameObjectDto? dtoLookup;
+    SpellVisualKitDto? dto;
+    SpellVisualKitDto? dtoLookup;
     List<RazorDashboardModel> dashboard;
-    MudTabs mudTabsRef;
 
     protected override async Task OnInitializedAsync()
     {
@@ -107,7 +100,7 @@ else
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
-        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(GameObjectDto));
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SpellVisualKitDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
         parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
@@ -120,18 +113,18 @@ else
         }
     }
 
-    async Task<GameObjectDto?> OpenSearchDialog(int? id = null)
+    async Task<SpellVisualKitDto?> OpenSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
-        dialogParameters.Add(nameof(GameObjectSearch_Dialog.GameObjectId), id);
-        var dialog = DialogService.Show<GameObjectSearch_Dialog>(null, dialogParameters);
+        dialogParameters.Add(nameof(SpellVisualKitSearch_Dialog.Id), id);
+        var dialog = DialogService.Show<SpellVisualKitSearch_Dialog>(null, dialogParameters);
         var dialogResult = await dialog.Result;
         if (!dialogResult.Cancelled)
         {
-            var result = (GameObjectDto)dialogResult.Data;
+            var result = (SpellVisualKitDto)dialogResult.Data;
             if (null != result)
             {
-                return (GameObjectDto)dialogResult.Data;
+                return (SpellVisualKitDto)dialogResult.Data;
             }
         }
         return null;

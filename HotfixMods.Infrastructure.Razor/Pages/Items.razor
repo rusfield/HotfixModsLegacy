@@ -9,43 +9,43 @@
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject ItemService ItemService
+@inject ItemService DtoService
 
 
-@if (item != null)
+@if (dto != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
             <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Item Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@item.Id</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(item.IsUpdate ? "Update" : "Save")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(dto.IsUpdate ? "Update" : "Save")</MudButton>
             </MudStack>
         </MudStack>
     <MudPaper>
         <MudTabs @ref="@mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <ChildContent>
                 <MudTabPanel Text="Properties">
-                    <ItemProperties_Tab Item="item" ItemLookup="itemLookup" />
+                    <ItemProperties_Tab Item="dto" ItemLookup="dtoLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Stats">
-                    <ItemStats_Tab Item="item" ItemLookup="itemLookup" />
+                    <ItemStats_Tab Item="dto" ItemLookup="dtoLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Sockets">
-                    <ItemSockets_Tab Item="item" ItemLookup="itemLookup" />
+                    <ItemSockets_Tab Item="dto" ItemLookup="dtoLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Textures">
-                    <ItemTextures_Tab Item="item" ItemLookup="itemLookup" />
+                    <ItemTextures_Tab Item="dto" ItemLookup="dtoLookup" />
                 </MudTabPanel>
                 <MudTabPanel Text="Geosets">
-                    <ItemGeosets_Tab Item="item" ItemLookup="itemLookup" />
+                    <ItemGeosets_Tab Item="dto" ItemLookup="dtoLookup" />
                 </MudTabPanel>
-                @for (int i = 0; i < item.Effects.Count; i++)
+                @for (int i = 0; i < dto.Effects.Count; i++)
                 {
                     int index = i;
                     <MudTabPanel Text="@($"Effect #{index}")">
-                        <ItemEffect_Tab ItemEffect="item.Effects[index]" ItemEffectLookup="@(itemLookup != null && itemLookup.Effects.Count >= index ? itemLookup.Effects[index] : null)" />
+                        <ItemEffect_Tab ItemEffect="dto.Effects[index]" ItemEffectLookup="@(dtoLookup != null && dtoLookup.Effects.Count >= index ? dtoLookup.Effects[index] : null)" />
                     </MudTabPanel>
                 }
             </ChildContent>
@@ -65,31 +65,30 @@
 }
 else
 {
-    <DashboardTable Data="@(itemDashboard)" Add="AddAsync_Click" Label="Items" />
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Items" />
 }
 
 @code
 {
-    ItemDto? item;
-    ItemDto? itemLookup;
-    List<RazorDashboardModel> itemDashboard;
-
+    ItemDto? dto;
+    ItemDto? dtoLookup;
+    List<RazorDashboardModel> dashboard;
     MudTabs mudTabsRef;
     int numberOfStaticTabs; // excluding Effect-tabs
 
     protected override async Task OnInitializedAsync()
     {
-        itemDashboard = new();
-        var dashboardItems = await ItemService.GetDashboardAsync();
+        dashboard = new();
+        var dashboardItems = await DtoService.GetDashboardAsync();
         foreach (var dashboardItem in dashboardItems)
         {
-            itemDashboard.Add(new RazorDashboardModel(
+            dashboard.Add(new RazorDashboardModel(
                 dashboardItem.Id,
                 dashboardItem.Name,
                 dashboardItem.AvatarUrl,
                 dashboardItem.Comment,
                 (async () => await EditAsync(dashboardItem.Id)),
-                (async () => await ItemService.DeleteAsync(dashboardItem.Id))
+                (async () => await DtoService.DeleteAsync(dashboardItem.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -97,65 +96,65 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if(item != null && numberOfStaticTabs == 0)
+        if(dto != null && numberOfStaticTabs == 0)
             numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Effect")).Count();
         base.OnAfterRender(firstRender);
     }
 
     async Task EditAsync(int id)
     {
-        item = await OpenItemSearchDialog(id);
+        dto = await OpenSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        item = await OpenItemSearchDialog();
+        dto = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
     async Task LookupAsync_Click()
     {
-        itemLookup = await OpenItemSearchDialog();
+        dtoLookup = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
     async Task SaveAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(Prompt_Dialog.Prompt), item.IsUpdate ? Prompt_Dialog.PromptType.Update : Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.Prompt), dto.IsUpdate ? Prompt_Dialog.PromptType.Update : Prompt_Dialog.PromptType.Save);
         parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
         var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
 
         if (!result.Cancelled)
         {
-            item.IsUpdate = true;
+            dto.IsUpdate = true;
         }
     }
 
     async void SaveAsync()
     {
-        await ItemService.SaveAsync(item);
+        await DtoService.SaveAsync(dto);
     }
 
     async Task IdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.Id), item.Id);
+        parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(ItemDto));
-        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), item.IsUpdate);
-        parameters.Add(nameof(IdButton_Dialog.TService), ItemService);
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled && (int)result.Data != -1)
         {
-            item.Id = (int)result.Data;
-            item.IsUpdate = false;
+            dto.Id = (int)result.Data;
+            dto.IsUpdate = false;
         }
     }
 
-    async Task<ItemDto?> OpenItemSearchDialog(int? id = null)
+    async Task<ItemDto?> OpenSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(ItemSearch_Dialog.ItemId), id);
@@ -174,17 +173,17 @@ else
 
     async Task AddEffect_Click()
     {
-        item.Effects.Add(new ItemEffectDto());
+        dto.Effects.Add(new ItemEffectDto());
         await InvokeAsync(() => StateHasChanged());
         mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
     }
 
     void RemoveEffect_Click()
     {
-        if (item.Effects.Count > 0)
+        if (dto.Effects.Count > 0)
         {
             var currentEffect = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
-            item.Effects.RemoveAt(currentEffect);
+            dto.Effects.RemoveAt(currentEffect);
             this.StateHasChanged();
         }
     }

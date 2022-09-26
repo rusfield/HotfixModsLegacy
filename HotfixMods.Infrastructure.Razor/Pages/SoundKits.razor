@@ -8,25 +8,25 @@
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject SoundKitService SoundKitService
+@inject SoundKitService DtoService
 
 
-@if (soundKit != null)
+@if (dto != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SoundKitLookupAsync_Click">Sound Kit Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Sound Kit Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@soundKit.Id</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(soundKit.IsUpdate ? "Update" : "Save")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(dto.IsUpdate ? "Update" : "Save")</MudButton>
             </MudStack>
         </MudStack>
     <MudPaper>
 
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <MudTabPanel Text="Properties">
-                <SoundKitProperties_Tab SoundKit="soundKit" SoundKitLookup="soundKitLookup" />
+                <SoundKitProperties_Tab SoundKit="dto" SoundKitLookup="dtoLookup" />
             </MudTabPanel>
         </MudTabs>
 
@@ -34,29 +34,29 @@
 }
 else
 {
-    <DashboardTable Data="@(soundKitDashboard)" Add="AddAsync_Click" Label="Sound Kits" />
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Sound Kits" />
 }
 
 
 @code
 {
-    SoundKitDto? soundKit;
-    SoundKitDto? soundKitLookup;
-    List<RazorDashboardModel> soundKitDashboard;
+    SoundKitDto? dto;
+    SoundKitDto? dtoLookup;
+    List<RazorDashboardModel> dashboard;
 
     protected override async Task OnInitializedAsync()
     {
-        soundKitDashboard = new();
-        var dashboardSoundKits = await SoundKitService.GetDashboardAsync();
-        foreach (var dashboardSoundKit in dashboardSoundKits)
+        dashboard = new();
+        var dashboardResults = await DtoService.GetDashboardAsync();
+        foreach (var dashboardResult in dashboardResults)
         {
-            soundKitDashboard.Add(new RazorDashboardModel(
-                dashboardSoundKit.Id,
-                dashboardSoundKit.Name,
-                dashboardSoundKit.AvatarUrl,
-                dashboardSoundKit.Comment,
-                (async () => await EditAsync(dashboardSoundKit.Id)),
-                (async () => await SoundKitService.DeleteAsync(dashboardSoundKit.Id))
+            dashboard.Add(new RazorDashboardModel(
+                dashboardResult.Id,
+                dashboardResult.Name,
+                dashboardResult.AvatarUrl,
+                dashboardResult.Comment,
+                (async () => await EditAsync(dashboardResult.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardResult.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -64,19 +64,19 @@ else
 
     async Task EditAsync(int id)
     {
-        soundKit = await OpenSoundKitSearchDialog(id);
+        dto = await OpenSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        soundKit = await OpenSoundKitSearchDialog();
+        dto = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
-    async Task SoundKitLookupAsync_Click()
+    async Task LookupAsync_Click()
     {
-        soundKitLookup = await OpenSoundKitSearchDialog();
+        dtoLookup = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
@@ -89,33 +89,33 @@ else
 
         if (!result.Cancelled)
         {
-            soundKit.IsUpdate = true;
+            dto.IsUpdate = true;
         }
     }
 
     async void SaveAsync()
     {
-        await SoundKitService.SaveAsync(soundKit);
+        await DtoService.SaveAsync(dto);
     }
 
     async Task IdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.Id), soundKit.Id);
+        parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SoundKitDto));
-        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), soundKit.IsUpdate);
-        parameters.Add(nameof(IdButton_Dialog.TService), SoundKitService);
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled && (int)result.Data != -1)
         {
-            soundKit.Id = (int)result.Data;
-            soundKit.IsUpdate = false;
+            dto.Id = (int)result.Data;
+            dto.IsUpdate = false;
         }
     }
 
-    async Task<SoundKitDto?> OpenSoundKitSearchDialog(int? id = null)
+    async Task<SoundKitDto?> OpenSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(SoundKitSearch_Dialog.SoundKitId), id);

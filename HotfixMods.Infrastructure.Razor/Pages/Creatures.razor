@@ -9,31 +9,31 @@
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject CreatureService CreatureService
+@inject CreatureService DtoService
 
 
-@if (creature != null)
+@if (dto != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="CreatureLookupAsync_Click">Creature Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Creature Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@creature.Id</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(creature.IsUpdate ? "Update" : "Save")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(dto.IsUpdate ? "Update" : "Save")</MudButton>
             </MudStack>
         </MudStack>
     <MudPaper>
 
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <MudTabPanel Text="Template">
-                <CreatureTemplate_Tab Creature="creature" CreatureLookup="creatureLookup" />
+                <CreatureTemplate_Tab Creature="dto" CreatureLookup="dtoLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Customization">
-                <CreatureCustomization_Tab Creature="creature" CreatureLookup="creatureLookup" />
+                <CreatureCustomization_Tab Creature="dto" CreatureLookup="dtoLookup" />
             </MudTabPanel>
             <MudTabPanel Text="Equipment">
-                <CreatureEquipment_Tab Creature="creature" CreatureLookup="creatureLookup" />
+                <CreatureEquipment_Tab Creature="dto" CreatureLookup="dtoLookup" />
             </MudTabPanel>
         </MudTabs>
 
@@ -41,28 +41,28 @@
 }
 else
 {
-    <DashboardTable Data="@(creatureDashboard)" Add="AddAsync_Click" Label="Creatures" />
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Creatures" />
 }
 
 @code
 {
-    CreatureDto? creature;
-    CreatureDto? creatureLookup;
-    List<RazorDashboardModel> creatureDashboard;
+    CreatureDto? dto;
+    CreatureDto? dtoLookup;
+    List<RazorDashboardModel> dashboard;
 
     protected override async Task OnInitializedAsync()
     {
-        creatureDashboard = new List<RazorDashboardModel>();
-        var dashboardCreatures = await CreatureService.GetDashboardAsync();
-        foreach (var dashboardCreature in dashboardCreatures)
+        dashboard = new List<RazorDashboardModel>();
+        var dashboardResults = await DtoService.GetDashboardAsync();
+        foreach (var dashboardResult in dashboardResults)
         {
-            creatureDashboard.Add(new RazorDashboardModel(
-                dashboardCreature.Id,
-                dashboardCreature.Name,
-                dashboardCreature.AvatarUrl,
-                dashboardCreature.Comment,
-                (async () => await EditAsync(dashboardCreature.Id)),
-                (async () => await CreatureService.DeleteAsync(dashboardCreature.Id))
+            dashboard.Add(new RazorDashboardModel(
+                dashboardResult.Id,
+                dashboardResult.Name,
+                dashboardResult.AvatarUrl,
+                dashboardResult.Comment,
+                (async () => await EditAsync(dashboardResult.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardResult.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -70,19 +70,19 @@ else
 
     async Task EditAsync(int id)
     {
-        creature = await OpenCreatureSearchDialog(id);
+        dto = await OpenSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        creature = await OpenCreatureSearchDialog();
+        dto = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
-    async Task CreatureLookupAsync_Click()
+    async Task LookupAsync_Click()
     {
-        creatureLookup = await OpenCreatureSearchDialog(null, false);
+        dtoLookup = await OpenSearchDialog(null, false);
         this.StateHasChanged();
     }
 
@@ -95,33 +95,33 @@ else
 
         if (!result.Cancelled)
         {
-            creature.IsUpdate = true;
+            dto.IsUpdate = true;
         }
     }
 
     async void SaveAsync()
     {
-        await CreatureService.SaveAsync(creature);
+        await DtoService.SaveAsync(dto);
     }
 
     async Task IdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.Id), creature.Id);
+        parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(CreatureDto));
-        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), creature.IsUpdate);
-        parameters.Add(nameof(IdButton_Dialog.TService), CreatureService);
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled && (int)result.Data != -1)
         {
-            creature.Id = (int)result.Data;
-            creature.IsUpdate = false;
+            dto.Id = (int)result.Data;
+            dto.IsUpdate = false;
         }
     }
 
-    async Task<CreatureDto?> OpenCreatureSearchDialog(int? id = null, bool showNewOption = true)
+    async Task<CreatureDto?> OpenSearchDialog(int? id = null, bool showNewOption = true)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(CreatureSearch_Dialog.CreatureId), id);

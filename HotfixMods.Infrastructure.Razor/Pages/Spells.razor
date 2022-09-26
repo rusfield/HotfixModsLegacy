@@ -9,14 +9,14 @@
 @using HotfixMods.Infrastructure.DtoModels.Spells
 
 @inject IDialogService DialogService
-@inject SpellService SpellService
+@inject SpellService DtoService
 
 
 @if (spell != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="SpellLookupAsync_Click">Spell Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Spell Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
             <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@spell.Id</MudButton>
@@ -60,7 +60,7 @@
 }
 else
 {
-    <DashboardTable Data="@(spellDashboard)" Add="AddAsync_Click" Label="Spells" />
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Spells" />
 }
 
 
@@ -68,23 +68,23 @@ else
 {
     SpellDto? spell;
     SpellDto? spellLookup;
-    List<RazorDashboardModel> spellDashboard;
+    List<RazorDashboardModel> dashboard;
     MudTabs mudTabsRef;
     int numberOfStaticTabs; // excluding Effect-tabs
 
     protected override async Task OnInitializedAsync()
     {
-        spellDashboard = new();
-        var dashboardSpells = await SpellService.GetDashboardAsync();
-        foreach (var dashboardSpell in dashboardSpells)
+        dashboard = new();
+        var dashboardResults = await DtoService.GetDashboardAsync();
+        foreach (var dashboardResult in dashboardResults)
         {
-            spellDashboard.Add(new RazorDashboardModel(
-                dashboardSpell.Id,
-                dashboardSpell.Name,
-                dashboardSpell.AvatarUrl,
-                dashboardSpell.Comment,
-                (async () => await EditAsync(dashboardSpell.Id)),
-                (async () => await SpellService.DeleteAsync(dashboardSpell.Id))
+            dashboard.Add(new RazorDashboardModel(
+                dashboardResult.Id,
+                dashboardResult.Name,
+                dashboardResult.AvatarUrl,
+                dashboardResult.Comment,
+                (async () => await EditAsync(dashboardResult.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardResult.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -99,19 +99,19 @@ else
 
     async Task EditAsync(int id)
     {
-        spell = await OpenSpellSearchDialog(id);
+        spell = await OpenSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        spell = await OpenSpellSearchDialog();
+        spell = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
-    async Task SpellLookupAsync_Click()
+    async Task LookupAsync_Click()
     {
-        spellLookup = await OpenSpellSearchDialog();
+        spellLookup = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
@@ -130,7 +130,7 @@ else
 
     async void SaveAsync()
     {
-        await SpellService.SaveAsync(spell);
+        await DtoService.SaveAsync(spell);
     }
 
     async Task IdAsync_Click()
@@ -139,7 +139,7 @@ else
         parameters.Add(nameof(IdButton_Dialog.Id), spell.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SpellDto));
         parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), spell.IsUpdate);
-        parameters.Add(nameof(IdButton_Dialog.TService), SpellService);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
@@ -150,7 +150,7 @@ else
         }
     }
 
-    async Task<SpellDto?> OpenSpellSearchDialog(int? id = null)
+    async Task<SpellDto?> OpenSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(SpellSearch_Dialog.SpellId), id);

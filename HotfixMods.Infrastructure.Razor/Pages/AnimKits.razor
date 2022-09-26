@@ -9,18 +9,18 @@
 @using Core.Enums
 
 @inject IDialogService DialogService
-@inject AnimKitService AnimKitService
+@inject AnimKitService DtoService
 
 
-@if (animKit != null)
+@if (dto != null)
 {
     <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="AnimKitLookupAsync_Click">Anim Kit Lookup</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Anim Kit Lookup</MudButton>
         </MudStack>
         <MudStack Row="true">
-            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@animKit.Id</MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(animKit.IsUpdate ? "Update" : "Save")</MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(dto.IsUpdate ? "Update" : "Save")</MudButton>
             </MudStack>
         </MudStack>
     <MudPaper>
@@ -28,13 +28,13 @@
         <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <ChildContent>
                 <MudTabPanel Text="Properties">
-                    <AnimKitProperties_Tab AnimKit="animKit" AnimKitLookup="animKitLookup" />
+                    <AnimKitProperties_Tab AnimKit="dto" AnimKitLookup="dtoLookup" />
                 </MudTabPanel>
-                @for (int i = 0; i < animKit.Segments.Count; i++)
+                @for (int i = 0; i < dto.Segments.Count; i++)
                 {
                     int index = i;
                     <MudTabPanel Text="@($"Segment #{index}")">
-                        <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="animKit" AnimKitSegment="animKit.Segments[index]" AnimKitSegmentLookup="@(animKitLookup != null && animKitLookup.Segments.Count >= index ? animKitLookup.Segments[index] : null)" />
+                        <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="dto" AnimKitSegment="dto.Segments[index]" AnimKitSegmentLookup="@(dtoLookup != null && dtoLookup.Segments.Count >= index ? dtoLookup.Segments[index] : null)" />
                     </MudTabPanel>
                 }
             </ChildContent>
@@ -57,8 +57,8 @@ else
 
 @code
 {
-    AnimKitDto? animKit;
-    AnimKitDto? animKitLookup;
+    AnimKitDto? dto;
+    AnimKitDto? dtoLookup;
     List<RazorDashboardModel> dashboard;
     MudTabs mudTabsRef;
     int numberOfStaticTabs;
@@ -66,16 +66,16 @@ else
     protected override async Task OnInitializedAsync()
     {
         dashboard = new();
-        var dashboardAnimKits = await AnimKitService.GetDashboardAsync();
-        foreach (var dashboardAnimKit in dashboardAnimKits)
+        var dashboardResults = await DtoService.GetDashboardAsync();
+        foreach (var dashboardResult in dashboardResults)
         {
             dashboard.Add(new RazorDashboardModel(
-                dashboardAnimKit.Id,
-                dashboardAnimKit.Name,
-                dashboardAnimKit.AvatarUrl,
-                dashboardAnimKit.Comment,
-                (async () => await EditAsync(dashboardAnimKit.Id)),
-                (async () => await AnimKitService.DeleteAsync(dashboardAnimKit.Id))
+                dashboardResult.Id,
+                dashboardResult.Name,
+                dashboardResult.AvatarUrl,
+                dashboardResult.Comment,
+                (async () => await EditAsync(dashboardResult.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardResult.Id))
             ));
         }
         await base.OnInitializedAsync();
@@ -83,19 +83,19 @@ else
 
     async Task EditAsync(int id)
     {
-        animKit = await OpenAnimKitSearchDialog(id);
+        dto = await OpenSearchDialog(id);
         this.StateHasChanged();
     }
 
     async void AddAsync_Click()
     {
-        animKit = await OpenAnimKitSearchDialog();
+        dto = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
-    async Task AnimKitLookupAsync_Click()
+    async Task LookupAsync_Click()
     {
-        animKitLookup = await OpenAnimKitSearchDialog();
+        dtoLookup = await OpenSearchDialog();
         this.StateHasChanged();
     }
 
@@ -108,33 +108,33 @@ else
 
         if (!result.Cancelled)
         {
-            animKit.IsUpdate = true;
+            dto.IsUpdate = true;
         }
     }
 
     async void SaveAsync()
     {
-        await AnimKitService.SaveAsync(animKit);
+        await DtoService.SaveAsync(dto);
     }
 
     async Task IdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.Id), animKit.Id);
+        parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
         parameters.Add(nameof(IdButton_Dialog.TDto), typeof(AnimKitDto));
-        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), animKit.IsUpdate);
-        parameters.Add(nameof(IdButton_Dialog.TService), AnimKitService);
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
         var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
         var result = await dialog.Result;
 
         if (!result.Cancelled && (int)result.Data != -1)
         {
-            animKit.Id = (int)result.Data;
-            animKit.IsUpdate = false;
+            dto.Id = (int)result.Data;
+            dto.IsUpdate = false;
         }
     }
 
-    async Task<AnimKitDto?> OpenAnimKitSearchDialog(int? id = null)
+    async Task<AnimKitDto?> OpenSearchDialog(int? id = null)
     {
         var dialogParameters = new DialogParameters();
         dialogParameters.Add(nameof(AnimKitSearch_Dialog.AnimKitId), id);
@@ -153,9 +153,9 @@ else
 
     async Task AddSegment_Click()
     {
-        animKit.Segments.Add(new AnimKitSegmentDto()
+        dto.Segments.Add(new AnimKitSegmentDto()
         {
-            OrderIndex = animKit.Segments.Count()
+            OrderIndex = dto.Segments.Count()
         });
         await InvokeAsync(() => StateHasChanged());
         mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
@@ -163,13 +163,13 @@ else
 
     void RemoveSegment_Click()
     {
-        if(animKit.Segments.Count > 1)
+        if(dto.Segments.Count > 1)
         {
             var currentSegment = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
-            animKit.Segments.RemoveAt(currentSegment);
-            for (int i = 0; i < animKit.Segments.Count; i++)
+            dto.Segments.RemoveAt(currentSegment);
+            for (int i = 0; i < dto.Segments.Count; i++)
             {
-                animKit.Segments[i].OrderIndex = i;
+                dto.Segments[i].OrderIndex = i;
             }
             this.StateHasChanged();
         }
@@ -177,7 +177,7 @@ else
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (animKit != null && numberOfStaticTabs == 0)
+        if (dto != null && numberOfStaticTabs == 0)
             numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Segment")).Count();
         base.OnAfterRender(firstRender);
     }
@@ -190,7 +190,7 @@ else
 
     bool TabIsRemovable()
     {
-        return animKit.Segments.Count > 1 && mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
+        return dto.Segments.Count > 1 && mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
     }
 }
 

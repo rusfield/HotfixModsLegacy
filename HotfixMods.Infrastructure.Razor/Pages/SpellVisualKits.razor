@@ -1,4 +1,5 @@
 ﻿@page "/spell-visual-kits"
+@using HotfixMods.Infrastructure.Razor.Pages.SpellVisualKitTabs
 @using HotfixMods.Infrastructure.Razor.RazorDashboard
 @using HotfixMods.Infrastructure.Razor.Components
 @using HotfixMods.Infrastructure.DtoModels
@@ -22,11 +23,18 @@
             </MudStack>
         </MudStack>
     <MudPaper>
-
         <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
             <MudTabPanel Text="Properties">
-                @*<AnimKitProperties_Tab AnimKit="animKit" AnimKitLookup="animKitLookup" />*@
+                <SpellVisualKitProperties_Tab Dto="dto" DtoLookup="dtoLookup" EffectTypeChangedCallback="EffectTypeChanged" />
             </MudTabPanel>
+            @switch (effectType)
+            {
+                case SpellVisualKitEffectType.MODEL_ATTACH:
+                    <MudTabPanel Text="Model Attach">
+                        <SpellVisualKitModelAttach_Tab Dto="dto" DtoLookup="dtoLookup" />
+                    </MudTabPanel>
+                    break;
+            }
         </MudTabs>
     </MudPaper>
 }
@@ -41,10 +49,12 @@ else
     SpellVisualKitDto? dto;
     SpellVisualKitDto? dtoLookup;
     List<RazorDashboardModel> dashboard;
+    SpellVisualKitEffectType effectType = SpellVisualKitEffectType.NONE;
 
     protected override async Task OnInitializedAsync()
     {
         dashboard = new();
+        effectType = dto?.EffectType ?? effectType;
         var dashboardResults = await DtoService.GetDashboardAsync();
         foreach (var dashboardResult in dashboardResults)
         {
@@ -128,6 +138,12 @@ else
             }
         }
         return null;
+    }
+
+    void EffectTypeChanged(SpellVisualKitEffectType newEffectType)
+    {
+        effectType = newEffectType;
+        this.StateHasChanged();
     }
 }
 

@@ -4,7 +4,7 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <SingleSelect_Element T="int?" Label="Order Index" Value="AnimKitSegment.OrderIndex" ValueChanged="ValueChanged" Options="AnimKit.Segments.ToDictionary(s => s.OrderIndex, k => k.OrderIndex.ToString())"/>
+        <SingleSelect_Element T="int?" Label="Order Index" Value="AnimKitSegment.OrderIndex" ValueChanged="SegmentChanged" Options="AnimKit.Segments.ToDictionary(s => s.OrderIndex, k => k.OrderIndex.ToString())"/>
         <IntInput_Element Label="Animation ID" @bind-Value="AnimKitSegment.AnimId" ValueLookup="AnimKitSegmentLookup?.AnimId"/>
         <DecimalInput_Element Label="Speed" @bind-Value="AnimKitSegment.Speed" ValueLookup="AnimKitSegmentLookup?.Speed"/>
         <IntInput_Element Label="Start Time" @bind-Value="AnimKitSegment.AnimStartTime" ValueLookup="AnimKitSegmentLookup?.AnimStartTime"/>
@@ -58,11 +58,11 @@
     public AnimKitDto AnimKit { get; set; }
 
     [Parameter]
-    public EventCallback<int> SegmentChanged { get; set; }
+    public EventCallback<int> SegmentChangedCallback { get; set; }
 
 
 
-    async Task ValueChanged(int? newValue)
+    async Task SegmentChanged(int? newValue)
     {
         if (AnimKitSegment.OrderIndex != newValue)
         {
@@ -73,7 +73,7 @@
                 AnimKit.Segments[i].OrderIndex = i;
             }
             this.StateHasChanged();
-            await SegmentChanged.InvokeAsync((int)newValue);
+            await SegmentChangedCallback.InvokeAsync((int)newValue);
         }
     }
 

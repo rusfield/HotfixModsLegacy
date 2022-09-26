@@ -91,7 +91,16 @@ namespace HotfixMods.Apps.Desktop
                     IdRangeTo = 3000000
                 };
             });
-
+            builder.Services.AddSingleton(config =>
+            {
+                return new SpellVisualKitService(db2Provider, mySqlProvider)
+                {
+                    VerifiedBuild = -1700,
+                    IdSize = 5, // TODO: Check
+                    IdRangeFrom = 300000,
+                    IdRangeTo = 400000
+                };
+            });
 
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Services.AddLogging(configure =>

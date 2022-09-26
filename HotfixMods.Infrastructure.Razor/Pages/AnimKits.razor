@@ -34,7 +34,7 @@
                 {
                     int index = i;
                     <MudTabPanel Text="@($"Segment #{index}")">
-                        <AnimKitSegment_Tab SegmentChanged="SegmentChanged" AnimKit="dto" AnimKitSegment="dto.Segments[index]" AnimKitSegmentLookup="@(dtoLookup != null && dtoLookup.Segments.Count >= index ? dtoLookup.Segments[index] : null)" />
+                        <AnimKitSegment_Tab SegmentChangedCallback="SegmentChanged" AnimKit="dto" AnimKitSegment="dto.Segments[index]" AnimKitSegmentLookup="@(dtoLookup != null && dtoLookup.Segments.Count >= index ? dtoLookup.Segments[index] : null)" />
                     </MudTabPanel>
                 }
             </ChildContent>

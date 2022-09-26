@@ -1,0 +1,37 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <SingleSelect_Element Label="Type" @bind-Value="Dto.SpellVisualEffectNameType" ValueLookup="DtoLookup?.SpellVisualEffectNameType" />
+        <IntInput_Element Label="ID (based on Type)" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
+        <IntInput_Element Label="Model File Data ID" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
+        <IntInput_Element Label="Texture File Data ID" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <DecimalInput_Element Label="Alpha" @bind-Value="Dto.Alpha" ValueLookup="DtoLookup?.Alpha" />
+        <DecimalInput_Element Label="Default Scale" @bind-Value="Dto.Scale" ValueLookup="DtoLookup?.Scale" />
+        <DecimalInput_Element Label="Minimum Scale" @bind-Value="Dto.MinAllowedScale" ValueLookup="DtoLookup?.MinAllowedScale" />
+        <DecimalInput_Element Label="Maximum Scale" @bind-Value="Dto.MaxAllowedScale" ValueLookup="DtoLookup?.MaxAllowedScale" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Model Position" @bind-Value="Dto.ModelPosition" ValueLookup="DtoLookup?.ModelPosition" />
+        <Invisible_Element />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+</MudGrid>
+
+@code {
+    [Parameter]
+    public SpellVisualKitDto Dto { get; set; }
+
+    [Parameter]
+    public SpellVisualKitDto? DtoLookup { get; set; }
+
+    string gridItemCssClass = "pb-0 pt-0";
+}

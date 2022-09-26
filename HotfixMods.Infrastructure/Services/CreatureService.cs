@@ -517,7 +517,7 @@ namespace HotfixMods.Infrastructure.Services
             if (npcModelItemSlotDisplayInfos.Any())
                 await _mySql.DeleteAsync(npcModelItemSlotDisplayInfos.ToArray());
 
-            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)

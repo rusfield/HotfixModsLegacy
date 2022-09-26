@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Providers;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
@@ -156,9 +157,80 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task DeleteAsync(int spellId)
+        public async Task DeleteAsync(int id)
         {
+            /*
+             * 
+             *             await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpell(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellAuraOptions(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellCooldowns(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellEffects(dto).ToArray());
+            await _mySql.AddOrUpdateAsync(BuildSpellMisc(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellName(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellPower(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellXSpellVisual(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisual(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisualEvent(dto));
 
+            */
+
+
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
+            var spell = await _mySql.GetSingleAsync<Spell>(s => s.Id == id);
+            var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(s => s.Id == id);
+            var spellCooldowns = await _mySql.GetSingleAsync<SpellCooldowns>(s => s.Id == id);
+            var spellMisc = await _mySql.GetSingleAsync<SpellMisc>(s => s.Id == id);
+            var spellName = await _mySql.GetSingleAsync<SpellName>(s => s.Id == id);
+            var spellPower = await _mySql.GetSingleAsync<SpellPower>(s => s.Id == id);
+            var spellVisual = await _mySql.GetSingleAsync<SpellVisual>(s => s.Id == id);
+            var spellVisualEvent = await _mySql.GetSingleAsync<SpellVisualEvent>(s => s.Id == id);
+            var spellXSpellVisual = await _mySql.GetAsync<SpellXSpellVisual>(s => s.Id == id);
+            var spellEffects = await _mySql.GetAsync<SpellEffect>(s => s.SpellId == id);
+
+
+            if (null != spell)
+                await _mySql.DeleteAsync(spell);
+
+            if (null != spellAuraOptions)
+                await _mySql.DeleteAsync(spellAuraOptions);
+
+            if (null != spellCooldowns)
+                await _mySql.DeleteAsync(spellCooldowns);
+
+            if (null != spellMisc)
+                await _mySql.DeleteAsync(spellMisc);
+
+            if (null != spellName)
+                await _mySql.DeleteAsync(spellName);
+
+            if (null != spellPower)
+                await _mySql.DeleteAsync(spellPower);
+
+            if (null != spellVisual)
+                await _mySql.DeleteAsync(spellVisual);
+
+            if (null != spellVisualEvent)
+                await _mySql.DeleteAsync(spellVisualEvent);
+
+            if (spellXSpellVisual.Any())
+                await _mySql.DeleteAsync(spellXSpellVisual.ToArray());
+
+            if (spellEffects.Any())
+                await _mySql.DeleteAsync(spellEffects.ToArray());
+
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
+            if (hotfixData != null && hotfixData.Count() > 0)
+            {
+                foreach (var hotfix in hotfixData)
+                {
+                    hotfix.Status = HotfixStatuses.INVALID;
+                }
+                await _mySql.AddOrUpdateAsync(hotfixData.ToArray());
+            }
+
+            if (null != hotfixModsData)
+                await _mySql.DeleteAsync(hotfixModsData);
         }
     }
 }

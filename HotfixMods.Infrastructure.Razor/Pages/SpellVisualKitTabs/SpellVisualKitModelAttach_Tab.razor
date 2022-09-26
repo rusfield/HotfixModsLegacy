@@ -4,10 +4,10 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <SingleSelect_Element Label="Type" @bind-Value="Dto.SpellVisualEffectNameType" ValueLookup="DtoLookup?.SpellVisualEffectNameType" />
-        <IntInput_Element Label="ID (based on Type)" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
+        <SingleSelect_Element Label="Type" @bind-Value="Dto.Type" ValueLookup="DtoLookup?.Type" />
+        <IntInput_Element Label="ID (based on Type)" @bind-Value="Dto.GenericId" ValueLookup="DtoLookup?.GenericId" />
         <IntInput_Element Label="Model File Data ID" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
-        <IntInput_Element Label="Texture File Data ID" @bind-Value="Dto.ModelFileDataId" ValueLookup="DtoLookup?.ModelFileDataId" />
+        <IntInput_Element Label="Texture File Data ID" @bind-Value="Dto.TextureFileDataId" ValueLookup="DtoLookup?.TextureFileDataId" />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
     </MudItem>

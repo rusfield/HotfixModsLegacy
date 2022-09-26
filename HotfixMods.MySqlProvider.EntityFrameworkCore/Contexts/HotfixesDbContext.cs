@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -143,6 +144,26 @@ namespace HotfixMods.MySqlProvider.EntityFrameworkCore.Contexts
             modelBuilder.Entity<SpellXSpellVisual>(entity =>
             {
                 entity.ToTable("spell_x_spell_visual");
+            });
+            modelBuilder.Entity<SpellVisualEvent>(entity =>
+            {
+                entity.ToTable("spell_visual_event");
+            });
+            modelBuilder.Entity<SpellVisualKit>(entity =>
+            {
+                entity.ToTable("spell_visual_kit");
+            });
+            modelBuilder.Entity<SpellVisualKitEffect>(entity =>
+            {
+                entity.ToTable("spell_visual_kit_effect");
+            });
+            modelBuilder.Entity<SpellVisualKitModelAttach>(entity =>
+            {
+                entity.ToTable("spell_visual_kit_model_attach");
+            });
+            modelBuilder.Entity<SpellVisualEffectName>(entity =>
+            {
+                entity.ToTable("spell_visual_effect_name");
             });
         }
     }

@@ -22,12 +22,12 @@ namespace HotfixMods.Infrastructure.Services
             dto.AddHotfix(dto.Id, TableHashes.SPELL_VISUAL_KIT_EFFECT, HotfixStatuses.VALID);
             return new()
             {
-                Effect = dto.Effect ?? Default.SpellVisualKitEffect.Effect,
-                EffectType = dto.EffectType ?? Default.SpellVisualKitEffect.EffectType,
+                ParentSpellVisualKitId = dto.Id,
+                Id = dto.Id,
+                VerifiedBuild = VerifiedBuild,
 
-                ParentSpellVisualKitId = -1,
-                Id = -1,
-                VerifiedBuild = -1
+                Effect = dto.Effect ?? Default.SpellVisualKitEffect.Effect,
+                EffectType = dto.EffectType ?? Default.SpellVisualKitEffect.EffectType
             };
         }
 
@@ -36,10 +36,10 @@ namespace HotfixMods.Infrastructure.Services
             dto.AddHotfix(dto.Id, TableHashes.SPELL_VISUAL_KIT_MODEL_ATTACH, HotfixStatuses.VALID);
             return new()
             {
-                ParentSpellVisualKitId = -1,
-                SpellVisualEffectNameId = -1,
-                Id = -1,
-                VerifiedBuild = -1
+                ParentSpellVisualKitId = dto.Id,
+                SpellVisualEffectNameId = dto.Id,
+                Id = dto.Id,
+                VerifiedBuild = VerifiedBuild
             };
         }
 
@@ -48,6 +48,9 @@ namespace HotfixMods.Infrastructure.Services
             dto.AddHotfix(dto.Id, TableHashes.SPELL_VISUAL_EFFECT_NAME, HotfixStatuses.VALID);
             return new()
             {
+                Id = dto.Id,
+                VerifiedBuild = VerifiedBuild,
+
                 Alpha = dto.Alpha ?? Default.SpellVisualEffectName.Alpha,
                 GenericId = dto.GenericId ?? Default.SpellVisualEffectName.GenericId,
                 MaxAllowedScale = dto.MaxAllowedScale ?? Default.SpellVisualEffectName.MaxAllowedScale,
@@ -56,10 +59,7 @@ namespace HotfixMods.Infrastructure.Services
                 ModelPosition = dto.ModelPosition ?? Default.SpellVisualEffectName.ModelPosition,
                 Scale = dto.Scale ?? Default.SpellVisualEffectName.Scale,
                 TextureFileDataId = dto.TextureFileDataId ?? Default.SpellVisualEffectName.TextureFileDataId,
-                Type = dto.Type ?? Default.SpellVisualEffectName.Type,
-
-                Id = -1,
-                VerifiedBuild = -1
+                Type = dto.Type ?? Default.SpellVisualEffectName.Type
             };
         }
     }

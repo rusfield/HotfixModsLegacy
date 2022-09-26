@@ -52,6 +52,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 case SpellVisualKitEffectType.MODEL_ATTACH:
                     await _mySql.AddOrUpdateAsync(BuildSpellVisualKitModelAttach(dto));
+                    await _mySql.AddOrUpdateAsync(BuildSpellVisualEffectName(dto));
                     break;
             }
 

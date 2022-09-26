@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.DtoModels
 
 @inject ISnackbar Snackbar
-@inject GameObjectService GameObjectService
+@inject SpellVisualKitService Service
 
 <MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
     <MudDialog>
@@ -11,18 +11,20 @@
             @if (!loaderRef.IsLoading)
             {
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
-                    <MudText Typo="Typo.h6" Align="Align.Center">Search by Game Object ID:</MudText>
-                    <MudNumericField @bind-Value="@GameObjectId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Game Object ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="GameObjectId_Click" />
+
+                    <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
+                    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Spell Visual Kit ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="Id_Click" />
                     <MudSpacer />
                     <MudSpacer />
 
                     @if (ShowNewOption)
                     {
                         <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GameObjectNew_Click">New</MudButton>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="New_Click">New</MudButton>
                         <MudSpacer />
                         <MudSpacer />
                     }
+
                 </MudStack>
             }
         </DialogContent>
@@ -36,7 +38,7 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public int? GameObjectId { get; set; }
+    public int? Id { get; set; }
 
     [Parameter]
     public bool ShowNewOption { get; set; } = true;
@@ -45,23 +47,17 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender && null != GameObjectId)
-            await SearchGameObjectById();
+        if (firstRender && null != Id)
+            await SearchById();
 
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task GameObjectNew_Click()
+    async Task Id_Click()
     {
-        var gameObjectResult = await GameObjectService.GetNewAsync(loaderRef.SetLoading);
-        ReturnGameObject(gameObjectResult);
-    }
-
-    async Task GameObjectId_Click()
-    {
-        if (null != GameObjectId)
+        if (null != Id)
         {
-            await SearchGameObjectById();
+            await SearchById();
         }
         else
         {
@@ -70,21 +66,27 @@
     }
 
 
-    async Task SearchGameObjectById()
+    async Task SearchById()
     {
-        var gameObjectResult = await GameObjectService.GetByIdAsync((int)GameObjectId, loaderRef.SetLoading);
-        if (null != gameObjectResult)
+        var result = await Service.GetByIdAsync((int)Id, loaderRef.SetLoading);
+        if (null != result)
         {
-            ReturnGameObject(gameObjectResult);
+            Return(result);
         }
         else
         {
-            Snackbar.Add($"No game objects with ID {GameObjectId} found", Severity.Info);
+            Snackbar.Add($"No results with ID {Id} found", Severity.Info);
         }
     }
 
-    void ReturnGameObject(GameObjectDto gameObject)
+    async Task New_Click()
     {
-        Dialog.Close(gameObject);
+        var result = await Service.GetNewAsync();
+        Return(result);
+    }
+
+    void Return(SpellVisualKitDto dto)
+    {
+        Dialog.Close(dto);
     }
 }

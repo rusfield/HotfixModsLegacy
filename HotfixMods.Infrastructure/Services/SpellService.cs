@@ -15,37 +15,37 @@ namespace HotfixMods.Infrastructure.Services
     {
         public SpellService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task SaveAsync(SpellDto spellDto)
+        public async Task SaveAsync(SpellDto dto)
         {
-            if (spellDto.SpellEffects.Count > 50)
+            if (dto.SpellEffects.Count > 50)
                 throw new Exception("Spell Effects should not exceed 50.");
 
             var hotfixId = await GetNextHotfixIdAsync();
-            spellDto.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if (spellDto.IsUpdate)
+            if (dto.IsUpdate)
             {
-                var spellEffects = await _mySql.GetAsync<SpellEffect>(c => c.SpellId == spellDto.Id);
+                var spellEffects = await _mySql.GetAsync<SpellEffect>(c => c.SpellId == dto.Id);
                 if (spellEffects.Any())
                     await _mySql.DeleteAsync(spellEffects.ToArray());
             }
 
-            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpell(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellAuraOptions(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellCooldowns(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellEffects(spellDto).ToArray());
-            await _mySql.AddOrUpdateAsync(BuildSpellMisc(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellName(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellPower(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellXSpellVisual(spellDto));
-            await _mySql.AddOrUpdateAsync(BuildSpellVisual(spellDto));
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpell(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellAuraOptions(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellCooldowns(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellEffects(dto).ToArray());
+            await _mySql.AddOrUpdateAsync(BuildSpellMisc(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellName(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellPower(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellXSpellVisual(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisual(dto));
 
-            await AddHotfixes(spellDto.GetHotfixes());
+            await AddHotfixes(dto.GetHotfixes());
 
         }
 
-        public async Task<SpellDto> GetNewSpellAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<SpellDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             return new SpellDto()
             {
@@ -54,21 +54,21 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<SpellDto?> GetSpellByIdAsync(int spellId, Action<string, string, int>? progressCallback = null)
+        public async Task<SpellDto?> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
-            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == spellId && h.VerifiedBuild == VerifiedBuild);
-            var spell = await _mySql.GetSingleAsync<Spell>(s => s.Id == spellId) ?? await _db2.GetSingleAsync<Spell>(s => s.Id == spellId);
-            var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(s => s.SpellId == spellId) ?? await _db2.GetSingleAsync<SpellAuraOptions>(s => s.SpellId == spellId);
-            var spellCooldowns = await _mySql.GetSingleAsync<SpellCooldowns>(s => s.SpellId == spellId) ?? await _db2.GetSingleAsync<SpellCooldowns>(s => s.SpellId == spellId);
-            var spellMisc = await _mySql.GetSingleAsync<SpellMisc>(s => s.SpellId == spellId) ?? await _db2.GetSingleAsync<SpellMisc>(s => s.SpellId == spellId);
-            var spellName = await _mySql.GetSingleAsync<SpellName>(s => s.Id == spellId) ?? await _db2.GetSingleAsync<SpellName>(s => s.Id == spellId);
-            var spellPower = await _mySql.GetSingleAsync<SpellPower>(s => s.SpellId == spellId) ?? await _db2.GetSingleAsync<SpellPower>(s => s.SpellId == spellId);
-            var spellXSpellVisual = await _mySql.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == spellId) ?? await _db2.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == spellId);
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id && h.VerifiedBuild == VerifiedBuild);
+            var spell = await _mySql.GetSingleAsync<Spell>(s => s.Id == id) ?? await _db2.GetSingleAsync<Spell>(s => s.Id == id);
+            var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellAuraOptions>(s => s.SpellId == id);
+            var spellCooldowns = await _mySql.GetSingleAsync<SpellCooldowns>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellCooldowns>(s => s.SpellId == id);
+            var spellMisc = await _mySql.GetSingleAsync<SpellMisc>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellMisc>(s => s.SpellId == id);
+            var spellName = await _mySql.GetSingleAsync<SpellName>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellName>(s => s.Id == id);
+            var spellPower = await _mySql.GetSingleAsync<SpellPower>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellPower>(s => s.SpellId == id);
+            var spellXSpellVisual = await _mySql.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == id);
             var spellVisual = await _mySql.GetSingleAsync<SpellVisual>(s => s.Id == spellXSpellVisual.SpellVisualId) ?? await _db2.GetSingleAsync<SpellVisual>(s => s.Id == spellXSpellVisual.SpellVisualId);
 
-            var spellEffects = await _mySql.GetAsync<SpellEffect>(s => s.SpellId == spellId);
+            var spellEffects = await _mySql.GetAsync<SpellEffect>(s => s.SpellId == id);
             if(!spellEffects.Any())
-                spellEffects = await _db2.GetAsync<SpellEffect>(s => s.SpellId == spellId);
+                spellEffects = await _db2.GetAsync<SpellEffect>(s => s.SpellId == id);
 
             var spellEffectDtos = new List<SpellEffectDto>();
             foreach(var spellEffect in spellEffects)
@@ -88,7 +88,7 @@ namespace HotfixMods.Infrastructure.Services
 
             var result = new SpellDto()
             {
-                Id = hmData != null ? spellId : await GetNextIdAsync(),
+                Id = hmData != null ? id : await GetNextIdAsync(),
                 Attributes0 = spellMisc.Attributes0,
                 Attributes1 = spellMisc.Attributes1,
                 Attributes2 = spellMisc.Attributes2,

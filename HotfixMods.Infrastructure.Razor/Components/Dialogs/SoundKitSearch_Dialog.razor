@@ -68,7 +68,7 @@
 
     async Task SoundKitNew_Click()
     {
-        var soundKitResult = await SoundKitService.GetNewSoundKitAsync(loaderRef.SetLoading);
+        var soundKitResult = await SoundKitService.GetNewAsync(loaderRef.SetLoading);
         ReturnSoundKit(soundKitResult);
     }
 
@@ -87,7 +87,7 @@
 
     async Task SearchSoundKitById()
     {
-        var soundKitResult = await SoundKitService.GetSoundKitByIdAsync((int)SoundKitId, loaderRef.SetLoading);
+        var soundKitResult = await SoundKitService.GetByIdAsync((int)SoundKitId, loaderRef.SetLoading);
         if (null != soundKitResult)
         {
             ReturnSoundKit(soundKitResult);

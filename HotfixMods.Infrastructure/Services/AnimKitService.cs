@@ -40,38 +40,38 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromHotfixesAsync(id);
         }
 
-        public async Task SaveAsync(AnimKitDto animKitDto)
+        public async Task SaveAsync(AnimKitDto dto)
         {
-            if (animKitDto.Segments.Count > 20)
+            if (dto.Segments.Count > 20)
             {
                 throw new Exception($"AnimKit should not have more than 50 Segments.");
             }
 
 
             var hotfixId = await GetNextHotfixIdAsync();
-            animKitDto.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if (animKitDto.IsUpdate)
+            if (dto.IsUpdate)
             {
-                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(animKitDto));
-                await _mySql.AddOrUpdateAsync(BuildAnimKit(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKit(dto));
 
-                var segments = await _mySql.GetAsync<AnimKitSegment>(c => c.ParentAnimKitId == animKitDto.Id);
+                var segments = await _mySql.GetAsync<AnimKitSegment>(c => c.ParentAnimKitId == dto.Id);
                 if (segments.Any())
                     await _mySql.DeleteAsync(segments.ToArray());
-                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(dto));
             }
             else
             {
-                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(animKitDto));
-                await _mySql.AddOrUpdateAsync(BuildAnimKit(animKitDto));
-                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(animKitDto));
+                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKit(dto));
+                await _mySql.AddOrUpdateAsync(BuildAnimKitSegment(dto));
             }
 
-            await AddHotfixes(animKitDto.GetHotfixes());
+            await AddHotfixes(dto.GetHotfixes());
         }
 
-        public async Task<AnimKitDto> GetNewAnimKitAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<AnimKitDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
@@ -84,19 +84,19 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<AnimKitDto?> GetAnimKitsByIdAsync(int animKitId, Action<string, string, int>? progressCallback = null)
+        public async Task<AnimKitDto?> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
 
             progressCallback("Loading", "Loading Anim Kit", 15);
-            var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == animKitId);
+            var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == id);
             if(animKit == null)
             {
                 progressCallback("Error", "Anim Kit not found", 100);
                 return null;
             }
-            var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == animKitId);
+            var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
             if (!animKitSegments.Any())
             {
                 progressCallback("Error", "Anim Kit Segments not found", 100);
@@ -104,12 +104,12 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             progressCallback("Loading", "Loading Hotfix Mods Data", 50);
-            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(c => c.RecordId == animKitId && c.VerifiedBuild == VerifiedBuild);
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(c => c.RecordId == id && c.VerifiedBuild == VerifiedBuild);
 
             progressCallback("Loading", "Building Anim Kit", 90);
             var result = new AnimKitDto()
             {
-                Id = hmData != null ? animKitId : await GetNextIdAsync(),
+                Id = hmData != null ? id : await GetNextIdAsync(),
                 OneShotStopAnimKitId = animKit.OneShotStopAnimKitId,
                 OneShotDuration = animKit.OneShotDuration,
                 HotfixModsName = hmData?.Name,

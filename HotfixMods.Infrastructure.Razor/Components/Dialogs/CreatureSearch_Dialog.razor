@@ -94,7 +94,7 @@
     {
         if (null != CreatureId)
         {
-            creatureResults = await CreatureService.GetCreaturesByCreatureIdAsync((int)CreatureId, loaderRef.SetLoading);
+            creatureResults = await CreatureService.GetByIdAsync((int)CreatureId, loaderRef.SetLoading);
             if (creatureResults.Count() == 1)
             {
                 ReturnCreature(creatureResults.First());
@@ -116,7 +116,7 @@
 
     async Task CreatureNew_Click()
     {
-        var creature = await CreatureService.GetNewCreatureAsync(loaderRef.SetLoading);
+        var creature = await CreatureService.GetNewAsync(loaderRef.SetLoading);
         ReturnCreature(creature);
     }
 
@@ -124,7 +124,7 @@
     {
         if (null != CreatureDisplayId)
         {
-            var creature = await CreatureService.GetCreatureByDisplayIdAsync((int)CreatureId, loaderRef.SetLoading);
+            var creature = await CreatureService.GetByDisplayIdAsync((int)CreatureId, loaderRef.SetLoading);
             if (null != creature)
             {
                 ReturnCreature(creatureResults.First());
@@ -144,7 +144,7 @@
     {
         if (!string.IsNullOrWhiteSpace(CharacterName))
         {
-            var creature = await CreatureService.GetCreatureByCharacterNameAsync(CharacterName, loaderRef.SetLoading);
+            var creature = await CreatureService.GetByCharacterNameAsync(CharacterName, loaderRef.SetLoading);
             if (null != creature)
             {
                 ReturnCreature(creature);

@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<SoundKitDto> GetNewSoundKitAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<SoundKitDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             return new SoundKitDto()
             {
@@ -43,23 +43,23 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<SoundKitDto> GetSoundKitByIdAsync(int soundKitId, Action<string, string, int>? progressCallback = null)
+        public async Task<SoundKitDto> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
-            var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == soundKitId) ?? await _db2.GetSingleAsync<SoundKit>(s => s.Id == soundKitId);
+            var soundKit = await _mySql.GetSingleAsync<SoundKit>(s => s.Id == id) ?? await _db2.GetSingleAsync<SoundKit>(s => s.Id == id);
             if (null == soundKit)
             {
                 return new();
             }
-            var soundKitEntries = await _mySql.GetAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+            var soundKitEntries = await _mySql.GetAsync<SoundKitEntry>(s => s.SoundKitId == id);
             if (!soundKitEntries.Any())
-                soundKitEntries = await _db2.GetAsync<SoundKitEntry>(s => s.SoundKitId == soundKitId);
+                soundKitEntries = await _db2.GetAsync<SoundKitEntry>(s => s.SoundKitId == id);
 
             if (!soundKitEntries.Any())
             {
                 return new();
             }
 
-            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == soundKitId);
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id);
 
             var result = new SoundKitDto()
             {
@@ -86,25 +86,25 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromHotfixesAsync(id);
         }
 
-        public async Task SaveAsync(SoundKitDto soundKit, Action<string, string, int>? progressCallback = null)
+        public async Task SaveAsync(SoundKitDto dto, Action<string, string, int>? progressCallback = null)
         {
-            if (soundKit.FileDataIds.Count > 20)
+            if (dto.FileDataIds.Count > 20)
             {
                 throw new Exception($"SoundKit should not have more than 20 SoundKitEntries (aka FileDataIds).");
             }
 
             var hotfixId = await GetNextHotfixIdAsync();
-            soundKit.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(soundKit));
-            await _mySql.AddOrUpdateAsync(BuildSoundKit(soundKit));
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await _mySql.AddOrUpdateAsync(BuildSoundKit(dto));
 
-            var entries = await _mySql.GetAsync<SoundKitEntry>(c => c.SoundKitId == soundKit.Id);
+            var entries = await _mySql.GetAsync<SoundKitEntry>(c => c.SoundKitId == dto.Id);
             if (entries.Any())
                 await _mySql.DeleteAsync(entries.ToArray());
-            await _mySql.AddOrUpdateAsync(BuildSoundKitEntry(soundKit));
+            await _mySql.AddOrUpdateAsync(BuildSoundKitEntry(dto));
 
-            await _mySql.AddOrUpdateAsync(soundKit.GetHotfixes().ToArray());
+            await _mySql.AddOrUpdateAsync(dto.GetHotfixes().ToArray());
         }
 
         async Task DeleteFromHotfixesAsync(int id)

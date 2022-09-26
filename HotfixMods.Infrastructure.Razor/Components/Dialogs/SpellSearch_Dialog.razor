@@ -68,7 +68,7 @@
 
     async Task SpellNew_Click()
     {
-        var spellResult = await SpellService.GetNewSpellAsync(loaderRef.SetLoading);
+        var spellResult = await SpellService.GetNewAsync(loaderRef.SetLoading);
         ReturnSpell(spellResult);
     }
 
@@ -87,7 +87,7 @@
 
     async Task SearchSpellById()
     {
-        var spellResult = await SpellService.GetSpellByIdAsync((int)SpellId, loaderRef.SetLoading);
+        var spellResult = await SpellService.GetByIdAsync((int)SpellId, loaderRef.SetLoading);
         if (null != spellResult)
         {
             ReturnSpell(spellResult);

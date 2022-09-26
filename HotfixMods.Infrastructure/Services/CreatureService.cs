@@ -12,23 +12,23 @@ namespace HotfixMods.Infrastructure.Services
     {
         public CreatureService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task SaveAsync(CreatureDto creature)
+        public async Task SaveAsync(CreatureDto dto)
         {
             var hotfixId = await GetNextHotfixIdAsync();
-            creature.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            await _mySql.AddOrUpdateAsync(BuildCreatureTemplate(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateAddon(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateModel(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfo(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoExtra(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureEquipTemplate(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureModelInfo(creature));
-            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoOption(creature));
-            await _mySql.AddOrUpdateAsync(BuildNpcModelItemSlotDisplayInfo(creature));
-            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(creature));
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplate(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateAddon(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureTemplateModel(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfo(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoExtra(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureEquipTemplate(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureModelInfo(dto));
+            await _mySql.AddOrUpdateAsync(BuildCreatureDisplayInfoOption(dto));
+            await _mySql.AddOrUpdateAsync(BuildNpcModelItemSlotDisplayInfo(dto));
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
 
-            await AddHotfixes(creature.GetHotfixes());
+            await AddHotfixes(dto.GetHotfixes());
 
         }
 
@@ -38,7 +38,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromWorldAsync(id);
         }
 
-        public async Task<CreatureDto> GetNewCreatureAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<CreatureDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             return new CreatureDto()
             {
@@ -50,7 +50,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<CreatureDto?> GetCreatureByCharacterNameAsync(string characterName, Action<string, string, int>? progressCallback = null)
+        public async Task<CreatureDto?> GetByCharacterNameAsync(string characterName, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
@@ -235,26 +235,26 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<List<CreatureDto>> GetCreaturesByCreatureIdAsync(int creatureId, Action<string, string, int>? progressCallback = null)
+        public async Task<List<CreatureDto>> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
 
-            progressCallback("Creature", $"Retrieving DisplayInfos for Creature ID {creatureId}", 0);
+            progressCallback("Creature", $"Retrieving DisplayInfos for Creature ID {id}", 0);
             // This will only return the first model.
             // If the desired result has multiple displays, use the desired one directly instead.
-            var creatureTemplateModels = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == creatureId);
+            var creatureTemplateModels = await _mySql.GetAsync<CreatureTemplateModel>(c => c.CreatureId == id);
             if (creatureTemplateModels.Any())
             {
-                var creatures = await GetCreaturesByDisplayIdsAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
+                var creatures = await GetByDisplayIdsAsync(creatureTemplateModels.Select(c => c.CreatureId).ToList(), progressCallback);
                 if (creatures.Any())
                 {
                     foreach (var creature in creatures)
                     {
-                        if (creatureId < IdRangeTo && creatureId >= IdRangeFrom)
+                        if (id < IdRangeTo && id >= IdRangeFrom)
                         {
                             // Override the automatically generated Id, as this is most likely an update.
-                            creature.Id = creatureId;
+                            creature.Id = id;
                             creature.IsUpdate = true;
                         }
                     }
@@ -266,29 +266,29 @@ namespace HotfixMods.Infrastructure.Services
             return new List<CreatureDto>();
         }
 
-        public async Task<CreatureDto?> GetCreatureByDisplayIdAsync(int creatureDisplayId, Action<string, string, int>? progressCallback = null)
+        public async Task<CreatureDto?> GetByDisplayIdAsync(int displayId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
 
-            progressCallback("Creature", $"Retrieving DisplayInfo for ID {creatureDisplayId}", 0);
-            var result = await GetCreaturesByDisplayIdsAsync(new List<int>() { creatureDisplayId }, progressCallback);
+            progressCallback("Creature", $"Retrieving DisplayInfo for ID {displayId}", 0);
+            var result = await GetByDisplayIdsAsync(new List<int>() { displayId }, progressCallback);
 
             progressCallback("Done", "Returning creature", 100);
             return result.FirstOrDefault();
         }
 
-        async Task<List<CreatureDto>> GetCreaturesByDisplayIdsAsync(List<int> creatureDisplayIds, Action<string, string, int>? progressCallback)
+        async Task<List<CreatureDto>> GetByDisplayIdsAsync(List<int> displayIds, Action<string, string, int>? progressCallback)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;
 
             int index = 0;
             var result = new List<CreatureDto>();
-            foreach (var creatureDisplayId in creatureDisplayIds)
+            foreach (var creatureDisplayId in displayIds)
             {
                 index++;
-                double iterationDivider = index / creatureDisplayIds.Count();
+                double iterationDivider = index / displayIds.Count();
 
                 progressCallback("Creature", $"Retrieving Creature Template Model", (int)(10 / iterationDivider));
                 CreatureTemplate? creatureTemplate = null;

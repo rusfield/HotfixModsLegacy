@@ -68,7 +68,7 @@
 
     async Task SearchAnimKitById()
     {
-        var animKitResult = await AnimKitService.GetAnimKitsByIdAsync((int)AnimKitId, loaderRef.SetLoading);
+        var animKitResult = await AnimKitService.GetByIdAsync((int)AnimKitId, loaderRef.SetLoading);
         if (null != animKitResult)
         {
             ReturnAnimKit(animKitResult);
@@ -81,7 +81,7 @@
 
     async Task AnimKitNew_Click()
     {
-        var animKitResult = await AnimKitService.GetNewAnimKitAsync();
+        var animKitResult = await AnimKitService.GetNewAsync();
         ReturnAnimKit(animKitResult);
     }
 

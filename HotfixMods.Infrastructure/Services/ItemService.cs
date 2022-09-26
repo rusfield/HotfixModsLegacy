@@ -43,17 +43,17 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromCharactersAsync(id);
         }
 
-        public async Task SaveAsync(ItemDto item)
+        public async Task SaveAsync(ItemDto dto)
         {
             var hotfixId = await GetNextHotfixIdAsync();
-            item.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if (item.Effects.Count > 10)
+            if (dto.Effects.Count > 10)
                 throw new Exception("Effects can not exceed 10.");
 
-            if (item.IsUpdate)
+            if (dto.IsUpdate)
             {
-                var itemXItemEffects = await _mySql.GetAsync<ItemXItemEffect>(i => i.ItemId == item.Id);
+                var itemXItemEffects = await _mySql.GetAsync<ItemXItemEffect>(i => i.ItemId == dto.Id);
                 if (itemXItemEffects.Count() > 0)
                 {
                     foreach (var itemXItemEffect in itemXItemEffects)
@@ -66,21 +66,21 @@ namespace HotfixMods.Infrastructure.Services
                 }
             }
 
-            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(item));
-            await _mySql.AddOrUpdateAsync(BuildItem(item));
-            await _mySql.AddOrUpdateAsync(BuildItemAppearance(item));
-            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfo(item));
-            await _mySql.AddOrUpdateAsync(BuildItemModifiedAppearance(item));
-            await _mySql.AddOrUpdateAsync(BuildItemSearchName(item));
-            await _mySql.AddOrUpdateAsync(BuildItemSparse(item));
-            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfoMaterialRes(item));
-            await _mySql.AddOrUpdateAsync(BuildItemXItemEffects(item).ToArray());
-            await _mySql.AddOrUpdateAsync(BuildItemEffects(item).ToArray());
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await _mySql.AddOrUpdateAsync(BuildItem(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemAppearance(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfo(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemModifiedAppearance(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemSearchName(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemSparse(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemDisplayInfoMaterialRes(dto));
+            await _mySql.AddOrUpdateAsync(BuildItemXItemEffects(dto).ToArray());
+            await _mySql.AddOrUpdateAsync(BuildItemEffects(dto).ToArray());
 
-            await AddHotfixes(item.GetHotfixes());
+            await AddHotfixes(dto.GetHotfixes());
         }
 
-        public async Task<ItemDto> GetNewItemAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<ItemDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             return new ItemDto()
             {
@@ -93,7 +93,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<List<ItemDto>> GetItemsByIdAsync(int itemId, Action<string, string, int>? progressCallback = null)
+        public async Task<List<ItemDto>> GetByIdAsync(int itemId, Action<string, string, int>? progressCallback = null)
         {
             if (progressCallback == null)
                 progressCallback = ConsoleProgressCallback;

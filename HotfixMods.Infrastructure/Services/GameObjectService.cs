@@ -15,21 +15,21 @@ namespace HotfixMods.Infrastructure.Services
     {
         public GameObjectService(IDb2Provider db2Provider, IMySqlProvider mySqlProvider) : base(db2Provider, mySqlProvider) { }
 
-        public async Task SaveAsync(GameObjectDto gameObjectDto)
+        public async Task SaveAsync(GameObjectDto dto)
         {
             var hotfixId = await GetNextHotfixIdAsync();
-            gameObjectDto.InitHotfixes(hotfixId, VerifiedBuild);
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            gameObjectDto.HotfixModsName = gameObjectDto.Name;
+            dto.HotfixModsName = dto.Name;
 
             // Nothing special to do whether IsUpdate is true or false for GameObject.
             
-            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplate(gameObjectDto));
-            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplateAddon(gameObjectDto));
-            await _mySql.AddOrUpdateAsync(BuildGameObjectDisplayInfo(gameObjectDto));
+            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplate(dto));
+            await _mySql.AddOrUpdateAsync(BuildGameObjectTemplateAddon(dto));
+            await _mySql.AddOrUpdateAsync(BuildGameObjectDisplayInfo(dto));
 
-            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(gameObjectDto));
-            await AddHotfixes(gameObjectDto.GetHotfixes());
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await AddHotfixes(dto.GetHotfixes());
         }
 
         public async Task DeleteAsync(int id)
@@ -38,7 +38,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteFromHotfixesAsync(id);
         }
 
-        public async Task<GameObjectDto> GetNewGameObjectAsync(Action<string, string, int>? progressCallback = null)
+        public async Task<GameObjectDto> GetNewAsync(Action<string, string, int>? progressCallback = null)
         {
             return new GameObjectDto()
             {
@@ -46,9 +46,9 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<GameObjectDto?> GetGameObjectByIdAsync(int gameObjectId, Action<string, string, int>? progressCallback = null)
+        public async Task<GameObjectDto?> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
-            var gameObjectTemplate = await _mySql.GetSingleAsync<GameObjectTemplate>(c => c.Entry == gameObjectId);
+            var gameObjectTemplate = await _mySql.GetSingleAsync<GameObjectTemplate>(c => c.Entry == id);
             if(null == gameObjectTemplate)
             {
                 return null;
@@ -60,12 +60,12 @@ namespace HotfixMods.Infrastructure.Services
                 return null;
             }
 
-            var gameObjectTemplateAddon = await _mySql.GetSingleAsync<GameObjectTemplateAddon>(c => c.Entry == gameObjectId);
-            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == gameObjectId && h.VerifiedBuild == VerifiedBuild);
+            var gameObjectTemplateAddon = await _mySql.GetSingleAsync<GameObjectTemplateAddon>(c => c.Entry == id);
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id && h.VerifiedBuild == VerifiedBuild);
 
             var result = new GameObjectDto()
             {
-                Id = hmData != null ? gameObjectId : await GetNextIdAsync(),
+                Id = hmData != null ? id : await GetNextIdAsync(),
                 CastBarCaption = gameObjectTemplate.CastBarCaption,
                 Name = gameObjectTemplate.Name,
                 Size = gameObjectTemplate.Size,

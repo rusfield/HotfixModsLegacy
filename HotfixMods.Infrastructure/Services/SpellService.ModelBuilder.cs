@@ -197,52 +197,5 @@ namespace HotfixMods.Infrastructure.Services
                 StartMinOffsetMs = Default.SpellVisualEvent.StartMinOffsetMs
             };
         }
-
-        SpellVisualKit BuildSpellVisualKit(SpellDto spellDto)
-        {
-            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT, HotfixStatuses.VALID);
-            return new()
-            {
-                Id = spellDto.Id,
-                VerifiedBuild = VerifiedBuild
-            };
-        }
-
-        SpellVisualKitEffect BuildSpellVisualKitEffect(SpellDto spellDto)
-        {
-            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT_EFFECT, HotfixStatuses.VALID);
-            return new()
-            {
-                Effect = spellDto.VisualEffectId ?? Default.SpellVisualKitEffect.Effect,
-                EffectType = spellDto.VisualEffectType ?? Default.SpellVisualKitEffect.EffectType,
-
-                ParentSpellVisualKitId = -1,
-                Id = -1,
-                VerifiedBuild = -1
-            };
-        }
-
-        SpellVisualKitModelAttach BuildSpellVisualKitModelAttach(SpellDto spellDto)
-        {
-            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_KIT_MODEL_ATTACH, HotfixStatuses.VALID);
-            return new()
-            {
-                ParentSpellVisualKitId = -1,
-                SpellVisualEffectNameId = -1,
-                Id = -1,
-                VerifiedBuild = -1
-            };
-        }
-
-        SpellVisualEffectName BuildSpellVisualEffectName(SpellDto spellDto)
-        {
-            spellDto.AddHotfix(spellDto.Id, TableHashes.SPELL_VISUAL_EFFECT_NAME, HotfixStatuses.VALID);
-            return new()
-            {
-  
-                Id = -1,
-                VerifiedBuild = -1
-            };
-        }
     }
 }

@@ -36,7 +36,26 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveAsync(SpellVisualKitDto dto)
         {
-            
+            var hotfixId = await GetNextHotfixIdAsync();
+            dto.InitHotfixes(hotfixId, VerifiedBuild);
+
+            if(null == dto.EffectType || dto.EffectType == SpellVisualKitEffectType.NONE)
+            {
+                throw new Exception("Invalid EffectType");
+            }
+
+            await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisualKit(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisualKitEffect(dto));
+
+            switch (dto.EffectType)
+            {
+                case SpellVisualKitEffectType.MODEL_ATTACH:
+                    await _mySql.AddOrUpdateAsync(BuildSpellVisualKitModelAttach(dto));
+                    break;
+            }
+
+            await AddHotfixes(dto.GetHotfixes());
         }
 
         public async Task<SpellVisualKitDto> GetNewAsync(Action<string, string, int>? progressCallback = null)

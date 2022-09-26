@@ -40,6 +40,7 @@ namespace HotfixMods.Infrastructure.Services
             await _mySql.AddOrUpdateAsync(BuildSpellPower(dto));
             await _mySql.AddOrUpdateAsync(BuildSpellXSpellVisual(dto));
             await _mySql.AddOrUpdateAsync(BuildSpellVisual(dto));
+            await _mySql.AddOrUpdateAsync(BuildSpellVisualEvent(dto));
 
             await AddHotfixes(dto.GetHotfixes());
 

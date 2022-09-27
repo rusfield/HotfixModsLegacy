@@ -1,10 +1,12 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.Interfaces;
 using HotfixMods.Core.Providers;
 using HotfixMods.Infrastructure.DtoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,5 +92,24 @@ namespace HotfixMods.Infrastructure.Services
             };
             return hotfixModsData;
         }
+
+
+
+
+        protected async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, ITrinityCore, IDb2
+        {
+            return await _mySql.GetSingleAsync(predicate) ?? await _db2.GetSingleAsync(predicate);
+        }
+
+        protected async Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class
+        {
+            var result = await _mySql.GetAsync(predicate);
+            if(!result.Any() && typeof(T) is IDb2) 
+                result = await _db2.GetAsync(predicate);
+            return result;
+        }
+
     }
 }

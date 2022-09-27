@@ -39,7 +39,7 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixId = await GetNextHotfixIdAsync();
             dto.InitHotfixes(hotfixId, VerifiedBuild);
 
-            if(null == dto.EffectType || dto.EffectType == SpellVisualKitEffectType.NONE)
+            if (null == dto.EffectType || dto.EffectType == SpellVisualKitEffectType.NONE)
             {
                 throw new Exception("Invalid EffectType");
             }
@@ -73,7 +73,39 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<SpellVisualKitDto?> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
-            return new SpellVisualKitDto();
+            var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id && h.VerifiedBuild == VerifiedBuild);
+            var spellVisualKit = await _mySql.GetSingleAsync<SpellVisualKit>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKit>(s => s.Id == id);
+            var spellVisualKitEffect = await _mySql.GetSingleAsync<SpellVisualKitEffect>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKitEffect>(s => s.Id == id);
+
+            if (null == spellVisualKit && null == hmData)
+            {
+                return null;
+            }
+            else if (hmData != null)
+            {
+                return new()
+                {
+                    Id = hmData.Id,
+                    HotfixModsName = hmData.Name
+                };
+            }
+
+            var result = new SpellVisualKitDto()
+            {
+                Id = id,
+                HotfixModsName = hmData?.Name,
+                Effect = spellVisualKitEffect?.Effect,
+                EffectType = spellVisualKitEffect?.EffectType,
+                
+            };
+
+            switch (spellVisualKitEffect?.EffectType)
+            {
+                case SpellVisualKitEffectType.MODEL_ATTACH:
+                    var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id);
+                    await _mySql.AddOrUpdateAsync(BuildSpellVisualEffectName(dto));
+                    break;
+            }
         }
 
         async Task DeleteFromHotfixesAsync(int id)

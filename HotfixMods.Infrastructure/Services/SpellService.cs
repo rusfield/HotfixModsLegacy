@@ -159,23 +159,6 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task DeleteAsync(int id)
         {
-            /*
-             * 
-             *             await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpell(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellAuraOptions(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellCooldowns(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellEffects(dto).ToArray());
-            await _mySql.AddOrUpdateAsync(BuildSpellMisc(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellName(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellPower(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellXSpellVisual(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellVisual(dto));
-            await _mySql.AddOrUpdateAsync(BuildSpellVisualEvent(dto));
-
-            */
-
-
             var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
             var spell = await _mySql.GetSingleAsync<Spell>(s => s.Id == id);
             var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(s => s.Id == id);

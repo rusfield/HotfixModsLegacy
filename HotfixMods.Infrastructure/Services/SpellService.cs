@@ -122,7 +122,7 @@ namespace HotfixMods.Infrastructure.Services
                 ProcCharges = spellAuraOptions?.ProcCharges,
                 SpellProcsPerMinuteId = spellAuraOptions?.SpellProcsPerMinuteId,
                 RequiredAuraSpellId = spellPower?.RequiredAuraSpellId,
-                SpellVisualId = spellXSpellVisual?.SpellVisualId,
+                SpellVisualKitId = spellXSpellVisual?.SpellVisualId,
                 CastingTimeIndex = spellMisc.CastingTimeIndex,
                 DurationIndex= spellMisc.DurationIndex,
                 RangeIndex = spellMisc.RangeIndex,

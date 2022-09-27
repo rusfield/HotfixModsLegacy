@@ -11,6 +11,8 @@ namespace HotfixMods.Core.Models
     {
         public int Id { get; set; }
         // TODO: Investigate properties
+        public int MissileAttachment { get; set; }
+        public int MissileDestinationAttachment { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

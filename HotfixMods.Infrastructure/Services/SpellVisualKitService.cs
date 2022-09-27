@@ -81,7 +81,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 return null;
             }
-            else if (hmData != null)
+            else if (null == spellVisualKit && hmData != null)
             {
                 return new()
                 {
@@ -92,20 +92,32 @@ namespace HotfixMods.Infrastructure.Services
 
             var result = new SpellVisualKitDto()
             {
-                Id = id,
+                Id = hmData != null ? id : await GetNextIdAsync(),
+                IsUpdate = hmData != null,
                 HotfixModsName = hmData?.Name,
-                Effect = spellVisualKitEffect?.Effect,
+                HotfixModsComment = hmData?.Comment,
                 EffectType = spellVisualKitEffect?.EffectType,
-                
+
             };
 
             switch (spellVisualKitEffect?.EffectType)
             {
                 case SpellVisualKitEffectType.MODEL_ATTACH:
                     var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id);
-                    await _mySql.AddOrUpdateAsync(BuildSpellVisualEffectName(dto));
+                    var spellVisualEffectName = await _mySql.GetSingleAsync<SpellVisualEffectName>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualEffectName>(s => s.Id == id);
+
+                    result.Alpha = spellVisualEffectName?.Alpha;
+                    result.Scale = spellVisualEffectName?.Scale;
+                    result.GenericId = spellVisualEffectName?.GenericId;
+                    result.MaxAllowedScale = spellVisualEffectName?.MaxAllowedScale;
+                    result.MinAllowedScale = spellVisualEffectName?.MinAllowedScale;
+                    result.ModelFileDataId = spellVisualEffectName?.ModelFileDataId;
+                    result.TextureFileDataId = spellVisualEffectName?.TextureFileDataId;
+                    result.ModelPosition = spellVisualEffectName?.ModelPosition;
+                    result.Type = spellVisualEffectName?.Type;
                     break;
             }
+            return result;
         }
 
         async Task DeleteFromHotfixesAsync(int id)

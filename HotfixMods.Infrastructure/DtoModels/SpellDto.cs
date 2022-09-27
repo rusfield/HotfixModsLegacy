@@ -47,7 +47,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? SpellProcsPerMinuteId { get; set; }
         public int? ProcTypeMask0 { get; set; }
         public int? ProcTypeMask1 { get; set; }
-        public int? SpellVisualId { get; set; }
+        public int? SpellVisualKitId { get; set; }
         public SpellVisualEventTypes? StartEvent { get; set; }
         public SpellVisualEventTypes? EndEvent { get; set; }
         public SpellVisualEventTargetType? TargetType { get; set; }

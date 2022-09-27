@@ -13,7 +13,14 @@ namespace HotfixMods.Infrastructure.Services
             return new()
             {
                 Id = dto.Id,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+                
+                ClutterLevel = Default.SpellVisualKit.ClutterLevel,
+                FallbackSpellVisualKitId = Default.SpellVisualKit.FallbackSpellVisualKitId,
+                DelayMin = Default.SpellVisualKit.DelayMin,
+                DelayMax = Default.SpellVisualKit.DelayMax,
+                Flags0 = Default.SpellVisualKit.Flags0,
+                Flags1 = Default.SpellVisualKit.Flags1
             };
         }
 
@@ -25,8 +32,8 @@ namespace HotfixMods.Infrastructure.Services
                 ParentSpellVisualKitId = dto.Id,
                 Id = dto.Id,
                 VerifiedBuild = VerifiedBuild,
+                Effect = dto.Id,
 
-                Effect = dto.Effect ?? Default.SpellVisualKitEffect.Effect,
                 EffectType = dto.EffectType ?? Default.SpellVisualKitEffect.EffectType
             };
         }
@@ -39,7 +46,32 @@ namespace HotfixMods.Infrastructure.Services
                 ParentSpellVisualKitId = dto.Id,
                 SpellVisualEffectNameId = dto.Id,
                 Id = dto.Id,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                Scale = Default.SpellVisualKitModelAttach.Scale,
+                YawVariation = Default.SpellVisualKitModelAttach.YawVariation,
+                AnimId = Default.SpellVisualKitModelAttach.AnimId,
+                AnimKitId = Default.SpellVisualKitModelAttach.AnimKitId,
+                EndAnimId = Default.SpellVisualKitModelAttach.EndAnimId,
+                AttachmentId = Default.SpellVisualKitModelAttach.AttachmentId,
+                Field_9_0_1_33978_021 = Default.SpellVisualKitModelAttach.Field_9_0_1_33978_021,
+                Flags = Default.SpellVisualKitModelAttach.Flags,
+                LowDefModelAttachId = Default.SpellVisualKitModelAttach.LowDefModelAttachId,
+                Offset0 = Default.SpellVisualKitModelAttach.Offset0,
+                Offset1 = Default.SpellVisualKitModelAttach.Offset1,
+                Offset2 = Default.SpellVisualKitModelAttach.Offset2,
+                OffsetVariation0 = Default.SpellVisualKitModelAttach.OffsetVariation0,
+                OffsetVariation1 = Default.SpellVisualKitModelAttach.OffsetVariation1,
+                OffsetVariation2 = Default.SpellVisualKitModelAttach.OffsetVariation2,
+                Pitch = Default.SpellVisualKitModelAttach.Pitch,
+                PitchVariation = Default.SpellVisualKitModelAttach.PitchVariation,
+                PositionerId = Default.SpellVisualKitModelAttach.PositionerId,
+                Roll = Default.SpellVisualKitModelAttach.Roll,
+                RollVariation = Default.SpellVisualKitModelAttach.RollVariation,
+                ScaleVariation = Default.SpellVisualKitModelAttach.ScaleVariation,
+                StartAnimId = Default.SpellVisualKitModelAttach.StartAnimId,
+                StartDelay = Default.SpellVisualKitModelAttach.StartDelay,
+                Yaw = Default.SpellVisualKitModelAttach.Yaw
             };
         }
 
@@ -59,7 +91,14 @@ namespace HotfixMods.Infrastructure.Services
                 ModelPosition = dto.ModelPosition ?? Default.SpellVisualEffectName.ModelPosition,
                 Scale = dto.Scale ?? Default.SpellVisualEffectName.Scale,
                 TextureFileDataId = dto.TextureFileDataId ?? Default.SpellVisualEffectName.TextureFileDataId,
-                Type = dto.Type ?? Default.SpellVisualEffectName.Type
+                Type = dto.Type ?? Default.SpellVisualEffectName.Type,
+
+                BaseMissileSpeed = Default.SpellVisualEffectName.BaseMissileSpeed,
+                DissolveEffectId = Default.SpellVisualEffectName.DissolveEffectId,
+                EffectRadius = Default.SpellVisualEffectName.EffectRadius,
+                Field_9_1_0_38549_014 = Default.SpellVisualEffectName.Field_9_1_0_38549_014,
+                Flags = Default.SpellVisualEffectName.Flags,
+                RibbonQualityId = Default.SpellVisualEffectName.RibbonQualityId
             };
         }
     }

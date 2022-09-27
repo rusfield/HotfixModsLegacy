@@ -125,18 +125,28 @@ namespace HotfixMods.Infrastructure.DefaultModels
 
         public static readonly SpellVisualEvent SpellVisualEvent = new()
         {
-            StartEvent = SpellVisualEventTypes.CAST,
-            EndEvent = SpellVisualEventTypes.ONE_SHOT,
+            StartEvent = SpellVisualEventTypes.AURA_START,
+            EndEvent = SpellVisualEventTypes.AURA_END,
             EndMaxOffsetMs = 0,
             EndMinOffsetMs = 0,
             StartMaxOffsetMs = 0,
             StartMinOffsetMs = 0,
-            TargetType = SpellVisualEventTargetType.CASTER,
+            TargetType = SpellVisualEventTargetType.TARGET,
 
             Id = -1,
             VerifiedBuild = -1,
             SpellVisualKitId = -1,
             SpellVisualId = -1
+        };
+
+        public static readonly SpellVisual SpellVisual = new()
+        {
+            // TEMP
+            MissileAttachment = -1,
+            MissileDestinationAttachment = 34,
+
+            Id = 1,
+            VerifiedBuild = -1,
         };
     }
 }

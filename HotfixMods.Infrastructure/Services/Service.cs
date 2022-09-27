@@ -94,22 +94,5 @@ namespace HotfixMods.Infrastructure.Services
         }
 
 
-
-
-        protected async Task<T?> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
-            where T : class, ITrinityCore, IDb2
-        {
-            return await _mySql.GetSingleAsync(predicate) ?? await _db2.GetSingleAsync(predicate);
-        }
-
-        protected async Task<IEnumerable<T>> GetAsync<T>(Expression<Func<T, bool>> predicate)
-            where T : class
-        {
-            var result = await _mySql.GetAsync(predicate);
-            if(!result.Any() && typeof(T) is IDb2) 
-                result = await _db2.GetAsync(predicate);
-            return result;
-        }
-
     }
 }

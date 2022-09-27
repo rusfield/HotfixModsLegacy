@@ -10,8 +10,6 @@ namespace HotfixMods.Infrastructure.DtoModels
     public class SpellVisualKitDto : Dto
     {
         public SpellVisualKitEffectType? EffectType { get; set; }
-        public int? Effect { get; set; }
-
 
         // SpellVisualEffectName (used for SpellVisualModelAttach)
         public int? ModelFileDataId { get; set; }

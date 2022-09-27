@@ -13,7 +13,13 @@ namespace HotfixMods.Infrastructure.DefaultModels
         public static readonly SpellVisualKit SpellVisualKit = new()
         {
 
-            // Nothing yet
+            // Temp
+            Flags0 = 4096,
+            Flags1 = 0,
+            ClutterLevel = 0,
+            DelayMax = 0,
+            DelayMin = 0,
+            FallbackSpellVisualKitId = 0,
 
             Id = -1,
             VerifiedBuild = -1
@@ -31,6 +37,33 @@ namespace HotfixMods.Infrastructure.DefaultModels
 
         public static readonly SpellVisualKitModelAttach SpellVisualKitModelAttach = new()
         {
+            Scale = 1,
+
+            // Temp
+            AnimId = -1,
+            AnimKitId = 0,
+            EndAnimId = -1,
+            StartAnimId = -1,
+            AttachmentId = 1,
+            Field_9_0_1_33978_021 = 1,
+            Flags = 0,
+            LowDefModelAttachId = 0,
+            Offset0 = 0,
+            Offset1 = 0,
+            Offset2 = 0,
+            OffsetVariation0 = 0,
+            OffsetVariation1 = 0,
+            OffsetVariation2 = 0,
+            Pitch = 0,
+            PitchVariation = 0,
+            PositionerId = 0,
+            Roll = 0,
+            RollVariation = 0,
+            ScaleVariation = 0,
+            StartDelay = 0,
+            Yaw = 0,
+            YawVariation = 0,
+
             ParentSpellVisualKitId = -1,
             SpellVisualEffectNameId = -1,
             Id = -1,
@@ -48,6 +81,14 @@ namespace HotfixMods.Infrastructure.DefaultModels
             ModelPosition = -1,
             TextureFileDataId = 0,
             Type = SpellVisualEffectNameType.FILE_DATA_ID,
+
+            // Temp
+            Flags = 67108864,
+            BaseMissileSpeed = 0,
+            DissolveEffectId = 0,
+            EffectRadius = 0,
+            Field_9_1_0_38549_014 = 0,
+            RibbonQualityId = 0,
 
             Id = -1,
             VerifiedBuild = -1

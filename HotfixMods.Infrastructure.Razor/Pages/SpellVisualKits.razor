@@ -54,7 +54,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         dashboard = new();
-        effectType = dto?.EffectType ?? effectType;
         var dashboardResults = await DtoService.GetDashboardAsync();
         foreach (var dashboardResult in dashboardResults)
         {
@@ -73,6 +72,7 @@ else
     async Task EditAsync(int id)
     {
         dto = await OpenSearchDialog(id);
+        effectType = dto?.EffectType ?? effectType;
         this.StateHasChanged();
     }
 

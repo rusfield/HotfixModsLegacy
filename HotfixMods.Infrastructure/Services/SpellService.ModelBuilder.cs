@@ -161,7 +161,7 @@ namespace HotfixMods.Infrastructure.Services
                 SpellId = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
 
-                SpellVisualId = spellDto.SpellVisualId ?? Default.SpellXSpellVisual.SpellVisualId,
+                SpellVisualId = spellDto.SpellVisualKitId ?? Default.SpellXSpellVisual.SpellVisualId,
 
                 Probability = Default.SpellXSpellVisual.Probability
             };
@@ -173,7 +173,10 @@ namespace HotfixMods.Infrastructure.Services
             return new()
             {
                 Id = spellDto.Id,
-                VerifiedBuild = VerifiedBuild
+                VerifiedBuild = VerifiedBuild,
+
+                MissileAttachment = Default.SpellVisual.MissileAttachment,
+                MissileDestinationAttachment = Default.SpellVisual.MissileDestinationAttachment
             };
         }
 
@@ -185,7 +188,7 @@ namespace HotfixMods.Infrastructure.Services
                 Id = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
                 SpellVisualId = spellDto.Id,
-                SpellVisualKitId = spellDto.Id,
+                SpellVisualKitId = spellDto.SpellVisualKitId ?? Default.SpellVisualEvent.SpellVisualKitId,
                 
                 TargetType = spellDto.TargetType ?? Default.SpellVisualEvent.TargetType,
                 StartEvent = spellDto.StartEvent ?? Default.SpellVisualEvent.StartEvent,

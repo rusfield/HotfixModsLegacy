@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Core.Flags
 @using HotfixMods.Infrastructure.DtoModels
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
@@ -12,11 +13,12 @@
     <MudItem xs="6" Class="@gridItemCssClass">
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-
+        <MultiSelect_Element T="SpellVisualKitFlags0" Label="Flags 0" @bind-Value="Dto.Flags0" ValueLookup="DtoLookup?.Flags0" />
+        <MultiSelect_Element T="SpellVisualKitFlags1" Label="Flags 1" @bind-Value="Dto.Flags1" ValueLookup="DtoLookup?.Flags1" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass" />
     <MudItem xs="6" Class="@gridItemCssClass">
-        <TextInput_Element Variant="Variant.Text" Label="Name" @bind-Value="@Dto.HotfixModsName" ValueLookup="@DtoLookup?.HotfixModsName" />
+        <TextInput_Element Variant="Variant.Text" Label="Name" @bind-Value="Dto.HotfixModsName" ValueLookup="@DtoLookup?.HotfixModsName" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass" />
 </MudGrid>

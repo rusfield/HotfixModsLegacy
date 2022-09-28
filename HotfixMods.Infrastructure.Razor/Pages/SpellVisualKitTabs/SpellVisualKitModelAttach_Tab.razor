@@ -13,13 +13,11 @@
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
         <DecimalInput_Element Label="Alpha" @bind-Value="Dto.Alpha" ValueLookup="DtoLookup?.Alpha" />
-        <DecimalInput_Element Label="Default Scale" @bind-Value="Dto.Scale" ValueLookup="DtoLookup?.Scale" />
-        <DecimalInput_Element Label="Minimum Scale" @bind-Value="Dto.MinAllowedScale" ValueLookup="DtoLookup?.MinAllowedScale" />
-        <DecimalInput_Element Label="Maximum Scale" @bind-Value="Dto.MaxAllowedScale" ValueLookup="DtoLookup?.MaxAllowedScale" />
+        <DecimalInput_Element Label="Scale" @bind-Value="Dto.Scale" ValueLookup="DtoLookup?.Scale" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
+        <SingleSelect_Element Label="Position" @bind-Value="Dto.AttachmentId" ValueLookup="DtoLookup?.AttachmentId" />
         <IntInput_Element Label="Model Position" @bind-Value="Dto.ModelPosition" ValueLookup="DtoLookup?.ModelPosition" />
-        <Invisible_Element />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
     </MudItem>

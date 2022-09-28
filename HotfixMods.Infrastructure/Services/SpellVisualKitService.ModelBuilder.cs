@@ -19,8 +19,8 @@ namespace HotfixMods.Infrastructure.Services
                 FallbackSpellVisualKitId = Default.SpellVisualKit.FallbackSpellVisualKitId,
                 DelayMin = Default.SpellVisualKit.DelayMin,
                 DelayMax = Default.SpellVisualKit.DelayMax,
-                Flags0 = Default.SpellVisualKit.Flags0,
-                Flags1 = Default.SpellVisualKit.Flags1
+                Flags0 = dto.Flags0 ?? Default.SpellVisualKit.Flags0,
+                Flags1 = dto.Flags1 ?? Default.SpellVisualKit.Flags1
             };
         }
 
@@ -48,12 +48,13 @@ namespace HotfixMods.Infrastructure.Services
                 Id = dto.Id,
                 VerifiedBuild = VerifiedBuild,
 
+                AttachmentId = dto.AttachmentId ?? Default.SpellVisualKitModelAttach.AttachmentId,
+
                 Scale = Default.SpellVisualKitModelAttach.Scale,
                 YawVariation = Default.SpellVisualKitModelAttach.YawVariation,
                 AnimId = Default.SpellVisualKitModelAttach.AnimId,
                 AnimKitId = Default.SpellVisualKitModelAttach.AnimKitId,
                 EndAnimId = Default.SpellVisualKitModelAttach.EndAnimId,
-                AttachmentId = Default.SpellVisualKitModelAttach.AttachmentId,
                 Field_9_0_1_33978_021 = Default.SpellVisualKitModelAttach.Field_9_0_1_33978_021,
                 Flags = Default.SpellVisualKitModelAttach.Flags,
                 LowDefModelAttachId = Default.SpellVisualKitModelAttach.LowDefModelAttachId,
@@ -85,8 +86,8 @@ namespace HotfixMods.Infrastructure.Services
 
                 Alpha = dto.Alpha ?? Default.SpellVisualEffectName.Alpha,
                 GenericId = dto.GenericId ?? Default.SpellVisualEffectName.GenericId,
-                MaxAllowedScale = dto.MaxAllowedScale ?? Default.SpellVisualEffectName.MaxAllowedScale,
-                MinAllowedScale = dto.MinAllowedScale ?? Default.SpellVisualEffectName.MinAllowedScale,
+                MaxAllowedScale = dto.Scale != null ? (decimal)dto.Scale * 100 : Default.SpellVisualEffectName.MaxAllowedScale,
+                MinAllowedScale = dto.Scale != null ? (decimal)dto.Scale / 100 : Default.SpellVisualEffectName.MinAllowedScale,
                 ModelFileDataId = dto.ModelFileDataId ?? Default.SpellVisualEffectName.ModelFileDataId,
                 ModelPosition = dto.ModelPosition ?? Default.SpellVisualEffectName.ModelPosition,
                 Scale = dto.Scale ?? Default.SpellVisualEffectName.Scale,

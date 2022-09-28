@@ -67,7 +67,7 @@ namespace HotfixMods.Infrastructure.Services
             var spellPower = await _mySql.GetSingleAsync<SpellPower>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellPower>(s => s.SpellId == id);
             var spellXSpellVisual = await _mySql.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == id) ?? await _db2.GetSingleAsync<SpellXSpellVisual>(s => s.SpellId == id);
             var spellVisual = await _mySql.GetSingleAsync<SpellVisual>(s => s.Id == spellXSpellVisual.SpellVisualId) ?? await _db2.GetSingleAsync<SpellVisual>(s => s.Id == spellXSpellVisual.SpellVisualId);
-            var spellVisualEvent = await _mySql.GetSingleAsync<SpellVisualEvent>(s => s.Id == spellVisual.Id) ?? await _db2.GetSingleAsync<SpellVisualEvent>(s => s.Id == spellVisual.Id);
+            var spellVisualEvent = await _mySql.GetSingleAsync<SpellVisualEvent>(s => s.SpellVisualId == spellVisual.Id) ?? await _db2.GetSingleAsync<SpellVisualEvent>(s => s.SpellVisualId == spellVisual.Id);
 
             var spellEffects = await _mySql.GetAsync<SpellEffect>(s => s.SpellId == id);
             if(!spellEffects.Any())

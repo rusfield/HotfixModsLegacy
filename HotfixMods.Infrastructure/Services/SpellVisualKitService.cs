@@ -97,7 +97,8 @@ namespace HotfixMods.Infrastructure.Services
                 HotfixModsName = hmData?.Name,
                 HotfixModsComment = hmData?.Comment,
                 EffectType = spellVisualKitEffect?.EffectType,
-
+                Flags0 = spellVisualKit.Flags0,
+                Flags1 = spellVisualKit.Flags1
             };
 
             switch (spellVisualKitEffect?.EffectType)
@@ -109,11 +110,10 @@ namespace HotfixMods.Infrastructure.Services
                     result.Alpha = spellVisualEffectName?.Alpha;
                     result.Scale = spellVisualEffectName?.Scale;
                     result.GenericId = spellVisualEffectName?.GenericId;
-                    result.MaxAllowedScale = spellVisualEffectName?.MaxAllowedScale;
-                    result.MinAllowedScale = spellVisualEffectName?.MinAllowedScale;
                     result.ModelFileDataId = spellVisualEffectName?.ModelFileDataId;
                     result.TextureFileDataId = spellVisualEffectName?.TextureFileDataId;
                     result.ModelPosition = spellVisualEffectName?.ModelPosition;
+                    result.AttachmentId = spellVisualKitModelAttach?.AttachmentId;
                     result.Type = spellVisualEffectName?.Type;
                     break;
             }

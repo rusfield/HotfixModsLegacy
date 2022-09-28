@@ -1,10 +1,6 @@
 ﻿using HotfixMods.Core.Enums;
 using HotfixMods.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HotfixMods.Core.Flags;
 
 namespace HotfixMods.Infrastructure.DefaultModels
 {
@@ -14,8 +10,8 @@ namespace HotfixMods.Infrastructure.DefaultModels
         {
 
             // Temp
-            Flags0 = 4096,
-            Flags1 = 0,
+            Flags0 = SpellVisualKitFlags0.NONE,
+            Flags1 = SpellVisualKitFlags1.NONE,
             ClutterLevel = 0,
             DelayMax = 0,
             DelayMin = 0,
@@ -40,11 +36,11 @@ namespace HotfixMods.Infrastructure.DefaultModels
             Scale = 1,
 
             // Temp
-            AnimId = -1,
+            AnimId = 0,
             AnimKitId = 0,
             EndAnimId = -1,
             StartAnimId = -1,
-            AttachmentId = 1,
+            AttachmentId = SpellVisualKitModelAttachAttachments.MAIN_HAND,
             Field_9_0_1_33978_021 = 1,
             Flags = 0,
             LowDefModelAttachId = 0,

@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models.Interfaces;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,7 +18,7 @@ namespace HotfixMods.Core.Models
 
         public decimal Scale { get; set; }
         public decimal ScaleVariation { get; set; }
-        public int AttachmentId { get; set; }
+        public SpellVisualKitModelAttachAttachments AttachmentId { get; set; }
         public int StartAnimId { get; set; }
         public int EndAnimId { get; set; }
         public int AnimKitId { get; set; }

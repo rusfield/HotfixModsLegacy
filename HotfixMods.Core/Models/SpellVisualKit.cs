@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models.Interfaces;
+﻿using HotfixMods.Core.Flags;
+using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,9 +14,9 @@ namespace HotfixMods.Core.Models
         public int Id { get; set; }
         // TODO: Investigate properties
         [Column("Flags1")]
-        public int Flags0 { get; set; }
+        public SpellVisualKitFlags0 Flags0 { get; set; }
         [Column("Flags2")]
-        public int Flags1 { get; set; }
+        public SpellVisualKitFlags1 Flags1  { get; set; }
         [Column("FallbackPriority")]
         public int ClutterLevel { get; set; }
         public int FallbackSpellVisualKitId { get; set; }

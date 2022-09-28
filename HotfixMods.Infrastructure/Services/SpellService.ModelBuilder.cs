@@ -160,8 +160,7 @@ namespace HotfixMods.Infrastructure.Services
                 Id = spellDto.Id,
                 SpellId = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
-
-                SpellVisualId = spellDto.SpellVisualKitId ?? Default.SpellXSpellVisual.SpellVisualId,
+                SpellVisualId = spellDto.Id,
 
                 Probability = Default.SpellXSpellVisual.Probability
             };
@@ -174,7 +173,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 Id = spellDto.Id,
                 VerifiedBuild = VerifiedBuild,
-
+                
                 MissileAttachment = Default.SpellVisual.MissileAttachment,
                 MissileDestinationAttachment = Default.SpellVisual.MissileDestinationAttachment
             };

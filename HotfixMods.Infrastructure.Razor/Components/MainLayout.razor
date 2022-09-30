@@ -25,7 +25,7 @@
 
             <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
                 <ActivatorContent>
-                    <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="new List<string>(){ hrefGameObjects, hrefSoundKits, hrefAnimKits }.Any(c => c == currentHref) ? Color.Primary : Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                    <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="new List<string>(){ hrefSpellVisualKits, hrefSoundKits, hrefAnimKits }.Any(c => c == currentHref) ? Color.Primary : Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
                 </ActivatorContent>
                 <ChildContent>
                     <MudMenuItem OnClick="(() => Navigate(hrefSpellVisualKits))">Spell Visual Kits</MudMenuItem>

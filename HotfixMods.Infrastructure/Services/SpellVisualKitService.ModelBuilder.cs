@@ -15,10 +15,10 @@ namespace HotfixMods.Infrastructure.Services
                 Id = dto.Id,
                 VerifiedBuild = VerifiedBuild,
                 
-                ClutterLevel = Default.SpellVisualKit.ClutterLevel,
-                FallbackSpellVisualKitId = Default.SpellVisualKit.FallbackSpellVisualKitId,
-                DelayMin = Default.SpellVisualKit.DelayMin,
-                DelayMax = Default.SpellVisualKit.DelayMax,
+                ClutterLevel = dto.ClutterLevel ?? Default.SpellVisualKit.ClutterLevel,
+                FallbackSpellVisualKitId = dto.FallbackSpellVisualKitId ?? Default.SpellVisualKit.FallbackSpellVisualKitId,
+                DelayMin = dto.DelayMin ?? Default.SpellVisualKit.DelayMin,
+                DelayMax = dto.DelayMax ?? Default.SpellVisualKit.DelayMax,
                 Flags0 = dto.Flags0 ?? Default.SpellVisualKit.Flags0,
                 Flags1 = dto.Flags1 ?? Default.SpellVisualKit.Flags1
             };

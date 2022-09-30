@@ -23,5 +23,10 @@ namespace HotfixMods.Infrastructure.DtoModels
         public int? ModelPosition { get; set; }
         public SpellVisualKitFlags0? Flags0 { get; set; }
         public SpellVisualKitFlags1? Flags1 { get; set; }
+        public int? ClutterLevel { get; set; }
+        public int? DelayMax { get; set; }
+        public int? DelayMin { get; set; }
+        public int? FallbackSpellVisualKitId { get; set; }
+
     }
 }

@@ -6,15 +6,17 @@
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
         <SingleSelect_Element T="SpellVisualKitEffectType?" Label="Effect Type" Value="Dto.EffectType" ValueLookup="DtoLookup?.EffectType" ValueChanged="EffectTypeChanged" />
-        <Invisible_Element />
-        <Invisible_Element />
+        <MultiSelect_Element T="SpellVisualKitFlags0" Label="Flags 0" @bind-Value="Dto.Flags0" ValueLookup="DtoLookup?.Flags0" />
+        <MultiSelect_Element T="SpellVisualKitFlags1" Label="Flags 1" @bind-Value="Dto.Flags1" ValueLookup="DtoLookup?.Flags1" />
         <Invisible_Element />
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass">
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="SpellVisualKitFlags0" Label="Flags 0" @bind-Value="Dto.Flags0" ValueLookup="DtoLookup?.Flags0" />
-        <MultiSelect_Element T="SpellVisualKitFlags1" Label="Flags 1" @bind-Value="Dto.Flags1" ValueLookup="DtoLookup?.Flags1" />
+        <IntInput_Element Label="Delay Min (ms)" @bind-Value="Dto.DelayMin" ValueLookup="DtoLookup?.DelayMin" />
+        <IntInput_Element Label="Delay Max (ms)" @bind-Value="Dto.DelayMax" ValueLookup="DtoLookup?.DelayMax" />
+        <IntInput_Element Label="Fallback Priority" @bind-Value="Dto.ClutterLevel" ValueLookup="DtoLookup?.ClutterLevel" />
+        <IntInput_Element Label="Fallback ID" @bind-Value="Dto.FallbackSpellVisualKitId" ValueLookup="DtoLookup?.FallbackSpellVisualKitId" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass" />
     <MudItem xs="6" Class="@gridItemCssClass">

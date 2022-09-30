@@ -98,7 +98,11 @@ namespace HotfixMods.Infrastructure.Services
                 HotfixModsComment = hmData?.Comment,
                 EffectType = spellVisualKitEffect?.EffectType,
                 Flags0 = spellVisualKit.Flags0,
-                Flags1 = spellVisualKit.Flags1
+                Flags1 = spellVisualKit.Flags1,
+                ClutterLevel = spellVisualKit.ClutterLevel,
+                FallbackSpellVisualKitId = spellVisualKit.FallbackSpellVisualKitId,
+                DelayMax = spellVisualKit.DelayMax,
+                DelayMin = spellVisualKit.DelayMin 
             };
 
             switch (spellVisualKitEffect?.EffectType)

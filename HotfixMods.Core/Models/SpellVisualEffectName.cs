@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace HotfixMods.Core.Models
         public SpellVisualEffectNameType Type { get; set; }
         public int GenericId { get; set; } // Based on Type
         public int ModelPosition { get; set; }
-        public int Flags { get; set; }
-        public int BaseMissileSpeed { get; set; }
+        public SpellVisualEffectNameFlags Flags { get; set; }
+        public decimal BaseMissileSpeed { get; set; }
         public decimal EffectRadius { get; set; }
         public int RibbonQualityId { get; set; }
         public int DissolveEffectId { get; set; }

@@ -30,8 +30,11 @@
             @switch (effectType)
             {
                 case SpellVisualKitEffectType.MODEL_ATTACH:
-                    <MudTabPanel Text="Model Attach">
-                        <SpellVisualKitModelAttach_Tab Dto="dto" DtoLookup="dtoLookup" />
+                    <MudTabPanel Text="Model Attach 1">
+                        <SpellVisualKitModelAttach1_Tab Dto="dto" DtoLookup="dtoLookup" />
+                    </MudTabPanel>
+                    <MudTabPanel Text="Model Attach 2">
+                        <SpellVisualKitModelAttach1_Tab Dto="dto" DtoLookup="dtoLookup" />
                     </MudTabPanel>
                     break;
             }
@@ -48,12 +51,11 @@ else
 {
     SpellVisualKitDto? dto;
     SpellVisualKitDto? dtoLookup;
-    List<RazorDashboardModel> dashboard;
+    List<RazorDashboardModel> dashboard = new();
     SpellVisualKitEffectType effectType = SpellVisualKitEffectType.NONE;
 
     protected override async Task OnInitializedAsync()
     {
-        dashboard = new();
         var dashboardResults = await DtoService.GetDashboardAsync();
         foreach (var dashboardResult in dashboardResults)
         {

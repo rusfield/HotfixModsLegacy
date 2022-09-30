@@ -49,30 +49,30 @@ namespace HotfixMods.Infrastructure.Services
                 VerifiedBuild = VerifiedBuild,
 
                 AttachmentId = dto.AttachmentId ?? Default.SpellVisualKitModelAttach.AttachmentId,
+                AnimId = dto.AnimId ?? Default.SpellVisualKitModelAttach.AnimId,
+                AnimKitId = dto.AnimKitId ?? Default.SpellVisualKitModelAttach.AnimKitId,
+                EndAnimId = dto.EndAnimId ?? Default.SpellVisualKitModelAttach.EndAnimId,
+                Flags = dto.ModelAttachFlags ?? Default.SpellVisualKitModelAttach.Flags,
+                Offset0 = dto.Offset0 ?? Default.SpellVisualKitModelAttach.Offset0,
+                Offset1 = dto.Offset1 ?? Default.SpellVisualKitModelAttach.Offset1,
+                Offset2 = dto.Offset2 ?? Default.SpellVisualKitModelAttach.Offset2,
+                Pitch = dto.Pitch ?? Default.SpellVisualKitModelAttach.Pitch,
+                PositionerId = dto.PositionerId ?? Default.SpellVisualKitModelAttach.PositionerId,
+                Roll = dto.Roll ?? Default.SpellVisualKitModelAttach.Roll,
+                StartAnimId = dto.StartAnimId ?? Default.SpellVisualKitModelAttach.StartAnimId,
+                StartDelay = dto.StartDelay ?? Default.SpellVisualKitModelAttach.StartDelay,
+                Yaw = dto.Yaw ?? Default.SpellVisualKitModelAttach.Yaw,
 
-                Scale = Default.SpellVisualKitModelAttach.Scale,
-                YawVariation = Default.SpellVisualKitModelAttach.YawVariation,
-                AnimId = Default.SpellVisualKitModelAttach.AnimId,
-                AnimKitId = Default.SpellVisualKitModelAttach.AnimKitId,
-                EndAnimId = Default.SpellVisualKitModelAttach.EndAnimId,
-                Field_9_0_1_33978_021 = Default.SpellVisualKitModelAttach.Field_9_0_1_33978_021,
-                Flags = Default.SpellVisualKitModelAttach.Flags,
                 LowDefModelAttachId = Default.SpellVisualKitModelAttach.LowDefModelAttachId,
-                Offset0 = Default.SpellVisualKitModelAttach.Offset0,
-                Offset1 = Default.SpellVisualKitModelAttach.Offset1,
-                Offset2 = Default.SpellVisualKitModelAttach.Offset2,
+                Field_9_0_1_33978_021 = Default.SpellVisualKitModelAttach.Field_9_0_1_33978_021,
                 OffsetVariation0 = Default.SpellVisualKitModelAttach.OffsetVariation0,
                 OffsetVariation1 = Default.SpellVisualKitModelAttach.OffsetVariation1,
                 OffsetVariation2 = Default.SpellVisualKitModelAttach.OffsetVariation2,
-                Pitch = Default.SpellVisualKitModelAttach.Pitch,
                 PitchVariation = Default.SpellVisualKitModelAttach.PitchVariation,
-                PositionerId = Default.SpellVisualKitModelAttach.PositionerId,
-                Roll = Default.SpellVisualKitModelAttach.Roll,
                 RollVariation = Default.SpellVisualKitModelAttach.RollVariation,
                 ScaleVariation = Default.SpellVisualKitModelAttach.ScaleVariation,
-                StartAnimId = Default.SpellVisualKitModelAttach.StartAnimId,
-                StartDelay = Default.SpellVisualKitModelAttach.StartDelay,
-                Yaw = Default.SpellVisualKitModelAttach.Yaw
+                YawVariation = Default.SpellVisualKitModelAttach.YawVariation,
+                Scale = Default.SpellVisualKitModelAttach.Scale // Scale is set on SpellVisualEffectName
             };
         }
 
@@ -89,17 +89,17 @@ namespace HotfixMods.Infrastructure.Services
                 MaxAllowedScale = dto.Scale != null ? (decimal)dto.Scale * 100 : Default.SpellVisualEffectName.MaxAllowedScale,
                 MinAllowedScale = dto.Scale != null ? (decimal)dto.Scale / 100 : Default.SpellVisualEffectName.MinAllowedScale,
                 ModelFileDataId = dto.ModelFileDataId ?? Default.SpellVisualEffectName.ModelFileDataId,
-                ModelPosition = dto.ModelPosition ?? Default.SpellVisualEffectName.ModelPosition,
                 Scale = dto.Scale ?? Default.SpellVisualEffectName.Scale,
                 TextureFileDataId = dto.TextureFileDataId ?? Default.SpellVisualEffectName.TextureFileDataId,
                 Type = dto.Type ?? Default.SpellVisualEffectName.Type,
+                BaseMissileSpeed = dto.BaseMissileSpeed ?? Default.SpellVisualEffectName.BaseMissileSpeed,
+                DissolveEffectId = dto.DissolveEffectId ?? Default.SpellVisualEffectName.DissolveEffectId,
+                EffectRadius = dto.EffectRadius ?? Default.SpellVisualEffectName.EffectRadius,
+                Flags = dto.SpellVisualEffectNameFlags ?? Default.SpellVisualEffectName.Flags,
+                RibbonQualityId = dto.RibbonQualityId ?? Default.SpellVisualEffectName.RibbonQualityId,
 
-                BaseMissileSpeed = Default.SpellVisualEffectName.BaseMissileSpeed,
-                DissolveEffectId = Default.SpellVisualEffectName.DissolveEffectId,
-                EffectRadius = Default.SpellVisualEffectName.EffectRadius,
-                Field_9_1_0_38549_014 = Default.SpellVisualEffectName.Field_9_1_0_38549_014,
-                Flags = Default.SpellVisualEffectName.Flags,
-                RibbonQualityId = Default.SpellVisualEffectName.RibbonQualityId
+                ModelPosition = Default.SpellVisualEffectName.ModelPosition,
+                Field_9_1_0_38549_014 = Default.SpellVisualEffectName.Field_9_1_0_38549_014
             };
         }
     }

@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Flags;
 using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace HotfixMods.Core.Models
         public decimal OffsetVariation0 { get; set; }
         public decimal OffsetVariation1 { get; set; }
         public decimal OffsetVariation2 { get; set; }
-        public int Flags { get; set; }
+        public SpellVisualKitModelAttachFlags Flags { get; set; }
         public int LowDefModelAttachId { get; set; }
         public decimal StartDelay { get; set; }
         [Column("Field_901")]

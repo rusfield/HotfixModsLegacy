@@ -116,9 +116,27 @@ namespace HotfixMods.Infrastructure.Services
                     result.GenericId = spellVisualEffectName?.GenericId;
                     result.ModelFileDataId = spellVisualEffectName?.ModelFileDataId;
                     result.TextureFileDataId = spellVisualEffectName?.TextureFileDataId;
-                    result.ModelPosition = spellVisualEffectName?.ModelPosition;
                     result.AttachmentId = spellVisualKitModelAttach?.AttachmentId;
                     result.Type = spellVisualEffectName?.Type;
+                    result.Offset0 = spellVisualKitModelAttach?.Offset0;
+                    result.Offset1 = spellVisualKitModelAttach?.Offset1;
+                    result.Offset2 = spellVisualKitModelAttach?.Offset2;
+                    result.Yaw = spellVisualKitModelAttach?.Yaw;
+                    result.Pitch = spellVisualKitModelAttach?.Pitch;
+                    result.Roll = spellVisualKitModelAttach?.Roll;
+                    result.StartDelay = spellVisualKitModelAttach?.StartDelay;
+                    result.ModelAttachFlags = spellVisualKitModelAttach?.Flags;
+                    result.SpellVisualEffectNameFlags = spellVisualEffectName?.Flags;
+                    result.BaseMissileSpeed = spellVisualEffectName?.BaseMissileSpeed;
+                    result.EffectRadius = spellVisualEffectName?.EffectRadius;
+                    result.PositionerId = spellVisualKitModelAttach?.PositionerId;
+                    result.DissolveEffectId = spellVisualEffectName?.DissolveEffectId;
+                    result.RibbonQualityId = spellVisualEffectName?.RibbonQualityId;
+                    result.StartAnimId = spellVisualKitModelAttach?.StartAnimId;
+                    result.AnimId = spellVisualKitModelAttach?.AnimId;
+                    result.EndAnimId = spellVisualKitModelAttach?.EndAnimId;
+                    result.AnimKitId = spellVisualKitModelAttach?.AnimKitId;
+
                     break;
             }
             return result;

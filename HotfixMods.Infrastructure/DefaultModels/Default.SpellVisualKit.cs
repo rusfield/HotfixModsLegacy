@@ -8,8 +8,6 @@ namespace HotfixMods.Infrastructure.DefaultModels
     {
         public static readonly SpellVisualKit SpellVisualKit = new()
         {
-
-            // Temp
             Flags0 = SpellVisualKitFlags0.NONE,
             Flags1 = SpellVisualKitFlags1.NONE,
             ClutterLevel = 0,
@@ -35,7 +33,6 @@ namespace HotfixMods.Infrastructure.DefaultModels
         {
             Scale = 1,
 
-            // Temp
             AnimId = 0,
             AnimKitId = 0,
             EndAnimId = -1,
@@ -77,9 +74,7 @@ namespace HotfixMods.Infrastructure.DefaultModels
             ModelPosition = -1,
             TextureFileDataId = 0,
             Type = SpellVisualEffectNameType.FILE_DATA_ID,
-
-            // Temp
-            Flags = 67108864,
+            Flags = SpellVisualEffectNameFlags.NONE,
             BaseMissileSpeed = 0,
             DissolveEffectId = 0,
             EffectRadius = 0,

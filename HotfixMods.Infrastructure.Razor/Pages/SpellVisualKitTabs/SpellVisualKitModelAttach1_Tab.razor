@@ -14,12 +14,20 @@
     <MudItem xs="3" Class="@gridItemCssClass">
         <DecimalInput_Element Label="Alpha" @bind-Value="Dto.Alpha" ValueLookup="DtoLookup?.Alpha" />
         <DecimalInput_Element Label="Scale" @bind-Value="Dto.Scale" ValueLookup="DtoLookup?.Scale" />
+        <SingleSelect_Element Label="Position" @bind-Value="Dto.AttachmentId" ValueLookup="DtoLookup?.AttachmentId" />
+        <DecimalInput_Element Label="Start Delay" @bind-Value="Dto.StartDelay" ValueLookup="DtoLookup?.StartDelay" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <SingleSelect_Element Label="Position" @bind-Value="Dto.AttachmentId" ValueLookup="DtoLookup?.AttachmentId" />
-        <IntInput_Element Label="Model Position" @bind-Value="Dto.ModelPosition" ValueLookup="DtoLookup?.ModelPosition" />
+        <DecimalInput_Element Label="Offset X" @bind-Value="Dto.Offset0" ValueLookup="DtoLookup?.Offset0" />
+        <DecimalInput_Element Label="Yaw" @bind-Value="Dto.Yaw" ValueLookup="DtoLookup?.Yaw" />
     </MudItem>
-    <MudItem xs="6" Class="@gridItemCssClass">
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <DecimalInput_Element Label="Offset Y" @bind-Value="Dto.Offset1" ValueLookup="DtoLookup?.Offset1" />
+        <DecimalInput_Element Label="Pitch" @bind-Value="Dto.Pitch" ValueLookup="DtoLookup?.Pitch" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <DecimalInput_Element Label="Offset Z" @bind-Value="Dto.Offset2" ValueLookup="DtoLookup?.Offset2" />
+        <DecimalInput_Element Label="Roll" @bind-Value="Dto.Roll" ValueLookup="DtoLookup?.Roll" />
     </MudItem>
     <MudItem xs="3" Class="@gridItemCssClass" />
 </MudGrid>

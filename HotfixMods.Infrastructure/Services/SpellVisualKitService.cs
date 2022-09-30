@@ -97,7 +97,7 @@ namespace HotfixMods.Infrastructure.Services
                 HotfixModsName = hmData?.Name,
                 HotfixModsComment = hmData?.Comment,
                 EffectType = spellVisualKitEffect?.EffectType,
-                Flags0 = spellVisualKit.Flags0,
+                Flags0 = spellVisualKit!.Flags0,
                 Flags1 = spellVisualKit.Flags1,
                 ClutterLevel = spellVisualKit.ClutterLevel,
                 FallbackSpellVisualKitId = spellVisualKit.FallbackSpellVisualKitId,

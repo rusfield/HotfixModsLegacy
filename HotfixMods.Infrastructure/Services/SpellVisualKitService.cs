@@ -108,8 +108,10 @@ namespace HotfixMods.Infrastructure.Services
             switch (spellVisualKitEffect?.EffectType)
             {
                 case SpellVisualKitEffectType.MODEL_ATTACH:
-                    var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.Id == id);
-                    var spellVisualEffectName = await _mySql.GetSingleAsync<SpellVisualEffectName>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualEffectName>(s => s.Id == id);
+                    var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(s => s.ParentSpellVisualKitId == id) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.ParentSpellVisualKitId == id);
+                    SpellVisualEffectName? spellVisualEffectName = null;
+                    if(spellVisualKitModelAttach != null)
+                        spellVisualEffectName = await _mySql.GetSingleAsync<SpellVisualEffectName>(s => s.Id == spellVisualKitModelAttach.SpellVisualEffectNameId) ?? await _db2.GetSingleAsync<SpellVisualEffectName>(s => s.Id == spellVisualKitModelAttach.SpellVisualEffectNameId);
 
                     result.Alpha = spellVisualEffectName?.Alpha;
                     result.Scale = spellVisualEffectName?.Scale;

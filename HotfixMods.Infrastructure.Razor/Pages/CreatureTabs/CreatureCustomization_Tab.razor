@@ -9,14 +9,14 @@
 
 <MudGrid>
     <MudItem xs="3" Class="@gridItemCssClass">
-        <SingleSelect_Element T="Races?" Label="Race" Value="@Creature.Race" ValueChanged="SetRace"/>
-        <SingleSelect_Element T="Genders?" Label="Gender" Value="@Creature.Gender" ValueChanged="SetGender"/>
+        <SingleSelect_Element T="Races?" Label="Race" Value="@Creature.Race" ValueChanged="SetRace" />
+        <SingleSelect_Element T="Genders?" Label="Gender" Value="@Creature.Gender" ValueChanged="SetGender" />
         @for (int i = 0; i < Math.Min(4, availableCustomizations.Count); i++)
         {
             int iNested = i;
             int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
-            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)"/>
+            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" />
         }
     </MudItem>
     <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
@@ -28,7 +28,7 @@
             int iNested = i;
             int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
-            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)"/>
+            <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" />
         }
     </MudItem>
 
@@ -39,7 +39,7 @@
             int customizationOption = availableCustomizations.ElementAt(iNested).Key.Id;
 
             <MudItem xs="3" Class="@gridItemCssClass">
-                <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)"/>
+                <SingleSelect_Element T="int?" Label="@(availableCustomizations.ElementAt(iNested).Key.Name)" Options="@(availableCustomizations.ElementAt(iNested).Value.ToDictionary(e => (int?)e.Id, v => v.Name))" @bind-Value="(Creature.Customizations[customizationOption])" ValueLookup="@(CreatureAndCreatureLookupShareCustomizations() ? CreatureLookup?.Customizations[customizationOption] : null)" />
             </MudItem>
         }
     }
@@ -76,7 +76,7 @@
             availableCustomizations = new();
             await SetAvailableCustomizations(false);
         }
-            
+
         await base.OnParametersSetAsync();
     }
 
@@ -118,6 +118,6 @@
         return false;
     }
 
-    
+
     string gridItemCssClass = "pb-0 pt-0";
 }

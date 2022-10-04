@@ -31,7 +31,11 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
         public async Task<Dictionary<string, object>> RawGetQueryAsync(Dictionary<string, Type> definitions, string tableName)
         {
             var results = new Dictionary<string, object>();
-            var query = $"SELECT * FROM {tableName};";
+            var query = $"SELECT ";
+            foreach (var definition in definitions)
+                query += $"{definitions},";
+            query = query.Remove(query.Length - 1, 1);
+            query += $" FROM {tableName}";
 
             using var command = new MySqlCommand(query, _mySqlConnection);
             using var reader = command.ExecuteReader();

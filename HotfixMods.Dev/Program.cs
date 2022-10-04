@@ -4,7 +4,7 @@
  */
 
 
-using HotfixMods.DbDefProvider.WoWDev.Client;
+using HotfixMods.Providers.DbDef.WoWDev.Client;
 using HotfixMods.Dev.Helpers;
 
 // var helper = new WowToolsConverter();

@@ -8,7 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace HotfixMods.DbDefProvider.WoWDev.Client
+namespace HotfixMods.Providers.DbDef.WoWDev.Client
 {
     public partial class DbDefClient
     {

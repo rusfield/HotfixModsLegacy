@@ -1,6 +1,6 @@
 ﻿using DBDefsLib;
 
-namespace HotfixMods.DbDefProvider.WoWDev.Client
+namespace HotfixMods.Providers.DbDef.WoWDev.Client
 {
     /*
      * This client is getting data from the <a href="https://github.com/wowdev/WoWDBDefs">WoWDBDefs repository in GitHub, by wowdev</a>.

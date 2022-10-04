@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.MySqlProvider.De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Dev", "HotfixMods.Dev\HotfixMods.Dev.csproj", "{87AF0BDE-710E-4EAD-90F2-E7218DD6C550}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.DbDefProvider.WoWDev", "HotfixMods.DbDefProvider.WoWDev\HotfixMods.DbDefProvider.WoWDev.csproj", "{D2A09D76-ED62-4219-AE71-685EBE08AEEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.DbDef.WoWDev", "HotfixMods.Providers.DbDef.WoWDev\HotfixMods.Providers.DbDef.WoWDev.csproj", "{D2A09D76-ED62-4219-AE71-685EBE08AEEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.MySql.MySqlConnector", "HotfixMods.Providers.MySql.MySqlConnector\HotfixMods.Providers.MySql.MySqlConnector.csproj", "{0808E9C4-0264-448F-A8F0-B1611F9C6E14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,10 @@ Global
 		{D2A09D76-ED62-4219-AE71-685EBE08AEEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2A09D76-ED62-4219-AE71-685EBE08AEEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2A09D76-ED62-4219-AE71-685EBE08AEEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0808E9C4-0264-448F-A8F0-B1611F9C6E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0808E9C4-0264-448F-A8F0-B1611F9C6E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0808E9C4-0264-448F-A8F0-B1611F9C6E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0808E9C4-0264-448F-A8F0-B1611F9C6E14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{A1ECFB7F-CC55-49C0-9107-A21F823F6453} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{E435AA92-2428-4BB2-B111-8CAF9EE866D0} = {F3BD9CB8-05D3-4938-98D4-644EF048FD91}
 		{D2A09D76-ED62-4219-AE71-685EBE08AEEF} = {F3BD9CB8-05D3-4938-98D4-644EF048FD91}
+		{0808E9C4-0264-448F-A8F0-B1611F9C6E14} = {F3BD9CB8-05D3-4938-98D4-644EF048FD91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

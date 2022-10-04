@@ -90,7 +90,7 @@ namespace HotfixMods.Providers.DbDef.WoWDev.Client
                 case "locstring":
                     return typeof(string);
                 case "float":
-                    return typeof(float);
+                    return typeof(decimal);
                 default:
                     throw new ArgumentException($"Unable to construct C# type from {column.type}");
             }

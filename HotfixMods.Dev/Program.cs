@@ -17,6 +17,9 @@ for (long i = 1; i <= 67108864; i = i * 2)
 }
 */
 
+string test1 = typeof(string).ToString();
+Console.WriteLine(test1);
+
 var defProvider = new DbDefClient();
 
 var builds = await defProvider.GetAvailableBuildsForDefinitionAsync("ItemSparse.db2");

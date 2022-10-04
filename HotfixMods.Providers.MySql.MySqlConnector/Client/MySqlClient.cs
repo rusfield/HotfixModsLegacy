@@ -30,7 +30,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
 
         public async Task<Dictionary<string, object>> RawGetQueryAsync(Dictionary<string, Type> definitions, string tableName)
         {
-            var result = new Dictionary<string, object>();
+            var results = new Dictionary<string, object>();
             var query = $"SELECT * FROM {tableName};";
 
             using var command = new MySqlCommand(query, _mySqlConnection);
@@ -39,34 +39,23 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             for (int i = 0; i<definitions.Count; i++)
             {
                 string fieldName = definitions.ElementAt(i).Key;
-
-                
-                object fieldProperty = definitions.ElementAt(i).Value switch
+                object fieldProperty = definitions.ElementAt(i).Value.ToString() switch
                 {
-                    typeof(int) => reader.GetInt32(i),
-                    typeof(uint) => reader.GetUInt32(i),
+                    "System.Int8" => reader.GetSByte(i),
+                    "System.Int16" => reader.GetInt16(i),
+                    "System.Int32" => reader.GetInt32(i),
+                    "System.Int64" => reader.GetInt64(i),
+                    "System.UInt8" => reader.GetByte(i),
+                    "System.UInt16" => reader.GetUInt16(i),
+                    "System.UInt32" => reader.GetUInt32(i),
+                    "System.UInt64" => reader.GetUInt64(i),
+                    "System.String" => reader.GetString(i),
+                    "System.Decimal" => (decimal)reader.GetFloat(i),
                     _ => throw new Exception("Not implemented")
                 };
-
-
-                //var type = typeof(uint);
-                int test = type switch
-                {
-                    int t1 => 1,
-                    typeof(uint) => 2,
-                    _ => -1
-                };
-
-                var type = typeof(uint);
-                int test;
-                switch (type)
-                {
-                    case int t1:
-                        test = 1;
-                        break;
-                }
-
+                results.Add(fieldName, fieldProperty);
             }
+            return results;
         }
     }
 }

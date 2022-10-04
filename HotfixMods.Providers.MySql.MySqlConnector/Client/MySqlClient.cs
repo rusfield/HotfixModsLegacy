@@ -28,7 +28,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             _hotfixesSchemaName = hotfixesSchemaName;
         }
 
-        public async Task<Dictionary<string, object>> RawGetQueryAsync(Dictionary<string, Type> definitions, string tableName)
+        public async Task<Dictionary<string, object>> RawGetQueryAsync(Dictionary<string, Type> definitions, string tableName, string? whereClause = null)
         {
             var results = new Dictionary<string, object>();
             var query = $"SELECT ";
@@ -36,9 +36,11 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                 query += $"{definitions},";
             query = query.Remove(query.Length - 1, 1);
             query += $" FROM {tableName}";
+            if (!string.IsNullOrEmpty(whereClause))
+                query += $"WHERE {whereClause};";
 
             using var command = new MySqlCommand(query, _mySqlConnection);
-            using var reader = command.ExecuteReader();
+            using var reader = await command.ExecuteReaderAsync();
 
             for (int i = 0; i<definitions.Count; i++)
             {

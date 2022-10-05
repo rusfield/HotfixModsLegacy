@@ -1,11 +1,4 @@
 ﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Providers.MySql.MySqlConnector.Client
 {
@@ -71,26 +64,26 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return results;
         }
 
-        public async Task AddOrUpdateAsync(string schemaName, string tableName, IDictionary<string, object> data)
+        public async Task AddOrUpdateAsync(string schemaName, string tableName, IDictionary<string, KeyValuePair<Type, object?>> colNameTypeValue)
         {
             ValidateInput(schemaName, tableName);
 
-            if (data.Count == 0)
+            if (colNameTypeValue.Count == 0)
             {
                 throw new Exception("Nothing to add or update.");
             }
 
             using var cmd = new MySqlCommand(_mySqlConnection, null);
             string columns = "";
-            string values = "";
-            for (int i = 0; i < data.Count; i++)
+            string valueParameters = "";
+            for (int i = 0; i < colNameTypeValue.Count; i++)
             {
-                columns += $"{data.ElementAt(i).Key},";
-                values += $"@{data.ElementAt(i).Key},";
-                cmd.Parameters.AddWithValue($"{data.ElementAt(i).Key}", data.ElementAt(i).Value);
+                columns += $"{colNameTypeValue.ElementAt(i).Key},";
+                valueParameters += $"@{colNameTypeValue.ElementAt(i).Key},";
+                cmd.Parameters.AddWithValue($"{colNameTypeValue.ElementAt(i).Key}", GetValueWithDefault(colNameTypeValue.ElementAt(i).Value.Key, colNameTypeValue.ElementAt(i).Value.Value));
             }
 
-            string query = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES({values});";
+            string query = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES({valueParameters});";
             cmd.CommandText = query;
             await cmd.ExecuteNonQueryAsync();
         }

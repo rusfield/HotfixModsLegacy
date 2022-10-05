@@ -6,6 +6,7 @@
 
 using HotfixMods.Providers.DbDef.WoWDev.Client;
 using HotfixMods.Dev.Helpers;
+using HotfixMods.Providers.MySql.MySqlConnector.Client;
 
 // var helper = new WowToolsConverter();
 // helper.ConvertFlagToCSharp(@"C:\Users\Disconnected\Desktop\flagstest.txt");
@@ -17,26 +18,13 @@ for (long i = 1; i <= 67108864; i = i * 2)
 }
 */
 
-string test1 = typeof(string).ToString();
-Console.WriteLine(test1);
+var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
+var defClient = new DbDefClient();
 
-var defProvider = new DbDefClient();
+var builds = await defClient.GetAvailableBuildsForDefinitionAsync("ItemSparse");
+var build = builds.Last();
 
-var builds = await defProvider.GetAvailableBuildsForDefinitionAsync("ItemSparse.db2");
-foreach(var build in builds)
-{
-    Console.WriteLine(build);
-}
+var def = await defClient.GetAvailableColumnsAsync("ItemSparse", build);
 
-var definitions = await defProvider.GetAvailableDefinitionsAsync();
-foreach (var definition in definitions)
-{
-    Console.WriteLine(definition);
-}
-
-var content = await defProvider.GetAvailableColumnsAsync("ItemSparse", "10.0.0.45697");
-foreach(var c in content)
-{
-    Console.WriteLine($"{c.Value.ToString()}\t{c.Key}");
-}
-
+await mySqlClient.CreateTableIfNotExistAsync("hotfix_mods", "item_sparse", def);
+await mySqlClient.CreateTableIfNotExistAsync("hotfix_mods3", "item_sparse", def);

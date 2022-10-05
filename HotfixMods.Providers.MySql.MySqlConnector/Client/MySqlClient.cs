@@ -13,12 +13,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
     {
         MySqlConnection _mySqlConnection;
 
-        public MySqlClient(string server, string user, string password)
+        public MySqlClient(string server, string port, string user, string password)
         {
-            _mySqlConnection = new MySqlConnection($"Server={server};User ID={user};Password={password}");
+            _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};");
         }
 
-        public async Task<IEnumerable<IDictionary<string, object>>> GetAsync(string schemaName, string tableName, Dictionary<string, Type> definitions, string? whereClause = null)
+        public async Task<IEnumerable<IDictionary<string, object>>> GetAsync(string schemaName, string tableName, IDictionary<string, Type> definitions, string? whereClause = null)
         {
             ValidateInput(tableName, whereClause);
 
@@ -71,7 +71,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return results;
         }
 
-        public async Task AddOrUpdateAsync(string schemaName, string tableName, Dictionary<string, object> data)
+        public async Task AddOrUpdateAsync(string schemaName, string tableName, IDictionary<string, object> data)
         {
             ValidateInput(schemaName, tableName);
 
@@ -106,7 +106,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public async Task CreateTableIfNotExistAsync(string schemaName, string tableName, Dictionary<string, Type> definitions)
+        public async Task CreateTableIfNotExistAsync(string schemaName, string tableName, IDictionary<string, Type> definitions)
         {
             ValidateInput(schemaName, tableName);
             string columns = "";
@@ -115,25 +115,28 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                 var fieldName = definitions.ElementAt(i).Key;
                 var fieldType = definitions.ElementAt(i).Value.ToString() switch
                 {
-                    "System.Int8" => "tinyint signed",
+                    "System.SByte" => "tinyint signed",
                     "System.Int16" => "smallint signed",
                     "System.Int32" => "int signed",
                     "System.Int64" => "bigint signed",
-                    "System.UInt8" => "tinyint unsigned",
+                    "System.Byte" => "tinyint unsigned",
                     "System.UInt16" => "smallint unsigned",
                     "System.UInt32" => "int unsigned",
                     "System.UInt64" => "bigint unsigned",
                     "System.String" => "text",
                     "System.Decimal" => "float",
-                    _ => throw new Exception("Not implemented")
+                    _ => throw new Exception($"{definitions.ElementAt(i).Value} not implemented.")
                 };
                 ValidateInput(fieldName);
                 columns += $"{fieldName} {fieldType},";
             }
 
-            string query = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID, VerifiedBuild));";
-            using var cmd = new MySqlCommand(query, _mySqlConnection);
+            string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS {schemaName};";
+            string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID, VerifiedBuild));";
+            using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, _mySqlConnection);
+            await _mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
+            await _mySqlConnection.CloseAsync();
         }
     }
 }

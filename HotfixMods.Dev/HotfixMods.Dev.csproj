@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotfixMods.Providers.DbDef.WoWDev\HotfixMods.Providers.DbDef.WoWDev.csproj" />
+    <ProjectReference Include="..\HotfixMods.Providers.MySql.MySqlConnector\HotfixMods.Providers.MySql.MySqlConnector.csproj" />
   </ItemGroup>
 
 </Project>

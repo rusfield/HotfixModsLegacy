@@ -40,15 +40,15 @@ namespace HotfixMods.Providers.DbDef.WoWDev.Client
             foreach (var fieldDefinition in versionDefinition.definitions)
             {
                 var columnDefinition = databaseDefinitions.columnDefinitions[fieldDefinition.name];
-                var name = fieldDefinition.name;
+                var name = fieldDefinition.name.Replace("_lang", "");
                 var type = FieldDefinitionToType(fieldDefinition, columnDefinition);
 
                 if (fieldDefinition.arrLength != 0)
                 {
                     for (int i = 0; i<fieldDefinition.arrLength; i++)
                     {
-                        name = $"{name}{i+1}";
-                        results.Add(name, type);
+                        var arrayColName = $"{name}{i+1}";
+                        results.Add(arrayColName, type);
                     }
                 }
                 else
@@ -56,6 +56,7 @@ namespace HotfixMods.Providers.DbDef.WoWDev.Client
                     results.Add(name, type);
                 }
             }
+            results.Add("VerifiedBuild", typeof(int));
             return results;
         }
 

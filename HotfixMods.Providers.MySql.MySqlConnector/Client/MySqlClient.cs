@@ -1,4 +1,5 @@
 ﻿using MySqlConnector;
+using System.Collections.Generic;
 
 namespace HotfixMods.Providers.MySql.MySqlConnector.Client
 {
@@ -11,7 +12,29 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};");
         }
 
-        public async Task<IEnumerable<IDictionary<string, object>>> GetAsync(string schemaName, string tableName, IDictionary<string, Type> definitions, string? whereClause = null)
+        public async Task<T> GetSingleAsync<T>(string schemaName, string tableName, string? whereClause = null)
+            where T : new()
+        {
+            var colNameTypeValue = await GetSingleAsync(schemaName, tableName, ObjectToDefinitions<T>(), whereClause);
+            return ColumnNameTypeValueToObject<T>(colNameTypeValue);
+        }
+
+        public  async Task<IDictionary<string, KeyValuePair<Type, object>>> GetSingleAsync(string schemaName, string tableName, IDictionary<string, Type> definitions, string? whereClause = null)
+        {
+            return (await GetAsync(schemaName, tableName, definitions, whereClause)).First();
+        }
+
+        public async Task<IEnumerable<T>> GetAsync<T>(string schemaName, string tableName, string? whereClause = null)
+            where T : new()
+        {
+            var results = new List<T>();
+            var colNameTypeValues = await GetAsync(schemaName, tableName, ObjectToDefinitions<T>(), whereClause);
+            foreach(var colNameTypeValue in colNameTypeValues)
+                results.Add(ColumnNameTypeValueToObject<T>(colNameTypeValue));
+            return results;
+        }
+
+        public async Task<IEnumerable<IDictionary<string, KeyValuePair<Type, object>>>> GetAsync(string schemaName, string tableName, IDictionary<string, Type> definitions, string? whereClause = null)
         {
             ValidateInput(tableName, whereClause);
 
@@ -20,7 +43,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                 throw new Exception("Missing definitions.");
             }
 
-            var results = new List<Dictionary<string, object>>();
+            var results = new List<Dictionary<string, KeyValuePair<Type, object>>>();
 
             string columns = "";
             foreach (var definition in definitions)
@@ -39,11 +62,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
-                var result = new Dictionary<string, object>();
+                var result = new Dictionary<string, KeyValuePair<Type, object>>();
                 for (int i = 0; i < definitions.Count; i++)
                 {
-                    string fieldName = definitions.ElementAt(i).Key;
-                    object fieldType = definitions.ElementAt(i).Value.ToString() switch
+                    var fieldName = definitions.ElementAt(i).Key;
+                    var fieldType = definitions.ElementAt(i).Value;
+                    object fieldValue = fieldType.ToString() switch
                     {
                         "System.SByte" => reader.GetSByte(i),
                         "System.Int16" => reader.GetInt16(i),
@@ -57,7 +81,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                         "System.Decimal" => (decimal)reader.GetFloat(i),
                         _ => throw new Exception($"{definitions.ElementAt(i).Value} not implemented.")
                     };
-                    result.Add(fieldName, fieldType);
+                    result.Add(fieldName, new(fieldType, fieldValue));
                 }
                 results.Add(result);
             }

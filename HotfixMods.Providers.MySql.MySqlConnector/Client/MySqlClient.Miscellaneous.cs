@@ -27,6 +27,30 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             };
         }
 
+        IDictionary<string, Type> ObjectToDefinitions<T>()
+            where T : new()
+        {
+            var result = new Dictionary<string, Type>();
+            foreach(var property in typeof(T).GetProperties())
+            {
+                result.Add(property.Name, property.PropertyType);
+            }
+            result.Reverse();
+            return result;
+        }
+
+        T ColumnNameTypeValueToObject<T>(IDictionary<string, KeyValuePair<Type, object>> nameTypeCol)
+            where T : new()
+        {
+            T result = new();
+            foreach(var property in nameTypeCol)
+            {
+                var existingProperty = result.GetType().GetProperty(property.Key);
+                if(existingProperty != null)
+                    existingProperty.SetValue(result, property.Value.Value);
+            }
+            return result;
+        }
 
         // Simple SQL injection protection,
         // remove if needed.

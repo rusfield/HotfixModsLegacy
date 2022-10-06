@@ -1,14 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HotfixMods.Providers.MySql.MySqlConnector\HotfixMods.Providers.MySql.MySqlConnector.csproj" />
+    <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DBCD\" />
   </ItemGroup>
 
 </Project>

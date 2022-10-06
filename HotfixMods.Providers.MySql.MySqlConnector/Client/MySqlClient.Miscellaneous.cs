@@ -13,16 +13,16 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
         {
             return type.ToString() switch
             {
-                "System.SByte" => (sbyte)(value ?? 0),
-                "System.Int16" => (short)(value ?? 0),
-                "System.Int32" => (int)(value ?? 0),
-                "System.Int64" => (long)(value ?? 0),
-                "System.Byte" => (byte)(value ?? 0),
-                "System.UInt16" => (ushort)(value ?? 0),
-                "System.UInt32" => (uint)(value ?? 0),
-                "System.UInt64" => (ulong)(value ?? 0),
-                "System.String" => (string)(value ?? ""),
-                "System.Decimal" => (decimal)(value ?? 0),
+                "System.SByte" => Convert.ToSByte(value),
+                "System.Int16" => Convert.ToInt16(value),
+                "System.Int32" => Convert.ToInt32(value),
+                "System.Int64" => Convert.ToInt64(value),
+                "System.Byte" => Convert.ToByte(value),
+                "System.UInt16" => Convert.ToUInt16(value),
+                "System.UInt32" => Convert.ToUInt32(value),
+                "System.UInt64" => Convert.ToUInt64(value),
+                "System.String" => Convert.ToString(value)!,
+                "System.Decimal" => Convert.ToDecimal(value),
                 _ => throw new Exception($"{type} not implemented.")
             };
         }

@@ -34,8 +34,9 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             query += string.IsNullOrWhiteSpace(whereClause) ? ";" : $" WHERE {whereClause};";
 
             using var command = new MySqlCommand(query, _mySqlConnection);
-            using var reader = await command.ExecuteReaderAsync();
 
+            await _mySqlConnection.OpenAsync();
+            using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
                 var result = new Dictionary<string, object>();
@@ -44,22 +45,23 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                     string fieldName = definitions.ElementAt(i).Key;
                     object fieldType = definitions.ElementAt(i).Value.ToString() switch
                     {
-                        "System.Int8" => reader.GetSByte(i),
+                        "System.SByte" => reader.GetSByte(i),
                         "System.Int16" => reader.GetInt16(i),
                         "System.Int32" => reader.GetInt32(i),
                         "System.Int64" => reader.GetInt64(i),
-                        "System.UInt8" => reader.GetByte(i),
+                        "System.Byte" => reader.GetByte(i),
                         "System.UInt16" => reader.GetUInt16(i),
                         "System.UInt32" => reader.GetUInt32(i),
                         "System.UInt64" => reader.GetUInt64(i),
                         "System.String" => reader.GetString(i),
                         "System.Decimal" => (decimal)reader.GetFloat(i),
-                        _ => throw new Exception("Not implemented")
+                        _ => throw new Exception($"{definitions.ElementAt(i).Value} not implemented.")
                     };
                     result.Add(fieldName, fieldType);
                 }
                 results.Add(result);
             }
+            await _mySqlConnection.CloseAsync();
 
             return results;
         }
@@ -83,9 +85,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                 cmd.Parameters.AddWithValue($"{colNameTypeValue.ElementAt(i).Key}", GetValueWithDefault(colNameTypeValue.ElementAt(i).Value.Key, colNameTypeValue.ElementAt(i).Value.Value));
             }
 
-            string query = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES({valueParameters});";
+            string query = $"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({valueParameters.Remove(valueParameters.Length - 1)});";
             cmd.CommandText = query;
+
+            await _mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
+            await _mySqlConnection.CloseAsync();
         }
 
         public async Task DeleteAsync(string schemaName, string tableName, string whereClause)
@@ -96,7 +101,10 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
 
             var query = $"DELETE FROM {schemaName}.{tableName} WHERE {whereClause};";
             using var cmd = new MySqlCommand(query, _mySqlConnection);
+
+            await _mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
+            await _mySqlConnection.CloseAsync();
         }
 
         public async Task CreateTableIfNotExistAsync(string schemaName, string tableName, IDictionary<string, Type> definitions)
@@ -127,6 +135,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS {schemaName};";
             string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID, VerifiedBuild));";
             using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, _mySqlConnection);
+            
             await _mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
             await _mySqlConnection.CloseAsync();

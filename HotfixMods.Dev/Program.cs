@@ -8,12 +8,6 @@ using HotfixMods.Providers.DbDef.WoWDev.Client;
 using HotfixMods.Dev.Helpers;
 using HotfixMods.Providers.MySql.MySqlConnector.Client;
 
-object? number = 123;
-//var value = (long)(number ?? 0L);
-var value2 = number is long longValue ? longValue : 0;
-
-object? number2 = 123;
-var value3 = number is long longValue2 ? longValue2 : 0;
 
 // var helper = new WowToolsConverter();
 // helper.ConvertFlagToCSharp(@"C:\Users\Disconnected\Desktop\flagstest.txt");
@@ -42,13 +36,10 @@ foreach(var d in def)
 }
 
 await mySqlClient.AddOrUpdateAsync("hotfix_mods", "item_sparse", values);
+await mySqlClient.DeleteAsync("hotfix_mods", "item_sparse", "id = 0");
 
-long ObjectToLong(object? obj)
-{
-    if(obj != null)
-    {
-        int objValue = (int)obj;
-        return objValue;
-    }
-    return 0;
-}
+var vals = await mySqlClient.GetAsync("hotfix_mods", "item_sparse", def, "id = 0");
+foreach(var val in vals)
+    foreach(var v in val)
+        Console.WriteLine(v.Key + " => " + v.Value);
+

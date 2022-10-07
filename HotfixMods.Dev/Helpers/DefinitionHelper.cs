@@ -1,4 +1,4 @@
-﻿using HotfixMods.Providers.DbDef.WoWDev.Client;
+﻿using HotfixMods.Providers.Db2.WoWDev.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +12,7 @@ namespace HotfixMods.Dev.Helpers
     {
         public static async Task DefinitionToCSharp(string defName, string build)
         {
-            var defHelper = new DbDefClient();
+            var defHelper = new Db2Client();
             var definition = await defHelper.GetAvailableColumnsAsync(defName, build);
             Console.WriteLine($"public class {defName}");
             Console.WriteLine("{");

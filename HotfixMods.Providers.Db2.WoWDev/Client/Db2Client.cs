@@ -8,11 +8,11 @@ namespace HotfixMods.Providers.Db2.WoWDev.Client
      * Helper methods are based on <a href="https://github.com/MaxtorCoder/Wow.DB2DefinitionDumper>MaxtorCoder's Wow.DB2DefinitionDumper</a>.
      */
 
-    public partial class DbDefClient
+    public partial class Db2Client
     {
         HttpClient _httpClient;
 
-        public DbDefClient(HttpClient? httpClient = null)
+        public Db2Client(HttpClient? httpClient = null)
         {
             _httpClient = httpClient ?? new();
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "HotfixMods");

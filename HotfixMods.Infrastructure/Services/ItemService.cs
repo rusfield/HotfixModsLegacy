@@ -2,15 +2,8 @@
 using HotfixMods.Core.Providers;
 using HotfixMods.Core.Enums;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels.Items;
-using System.Diagnostics;
 
 namespace HotfixMods.Infrastructure.Services
 {

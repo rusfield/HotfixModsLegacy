@@ -7,29 +7,67 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static DBDefsLib.Structs;
 
 namespace HotfixMods.Providers.Db2.WoWDev.Client
 {
-    public partial class DbDefClient
+    public partial class Db2Client
     {
         readonly string defUrl = @"https://api.github.com/repos/wowdev/WoWDBDefs/git/trees/1488972b2d701cec80c9b71b63046e7694df6d0e";
         readonly string singleDefUrl = @"https://raw.githubusercontent.com/wowdev/WoWDBDefs/master/definitions/{0}.dbd";
 
         async Task<IEnumerable<IDictionary<string, KeyValuePair<Type, object?>>>> ReadDb2Async(string db2Path, string db2Name, string build)
         {
-            var stream = await GetDb2Stream(db2Name);
-            var structs = await GetStructsAsync(stream);
+            var results = new List<Dictionary<string, KeyValuePair<Type, object?>>>();
+            var streamForStructs = await GetDb2Stream(db2Name);
+            var streamForProvider = new MemoryStream();
+
+            // Need to make 2 because the DBCD closes the one it uses.
+            streamForStructs.CopyTo(streamForProvider);
+            streamForStructs.Position = 0;
+            streamForProvider.Position = 0;
+
+            var (dbDef, versionDef) = await GetStructsAsync(streamForStructs, build);
             var dbcProvider = new DbcProvider(db2Path);
-            var dbdProvider = new DbDefProvider(stream);
+            var dbdProvider = new DbDefProvider(streamForProvider);
             var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
             var db2Results = dbcd.Load(db2Name, build);
-            foreach(var db2Result in db2Results.)
+
+            foreach (var db2Result in db2Results.Values)
             {
-                db2Result.
+                var rowResult = new Dictionary<string, KeyValuePair<Type, object?>>();
+
+                for (int i = 0; i<versionDef.definitions.Length; i++)
+                {
+                    var fieldDef = versionDef.definitions[i];
+                    var columnDefinition = dbDef.columnDefinitions[fieldDef.name];
+                    var name = fieldDef.name;
+                    var type = FieldDefinitionToType(fieldDef, columnDefinition);
+
+                    if (fieldDef.arrLength != 0)
+                    {
+                        var values = db2Result.Field<object>(name) as Array;
+
+                        for (int j = 0; j<fieldDef.arrLength; j++)
+                        {
+                            var arrayColName = $"{name}{j + 1}";
+                            rowResult.Add(arrayColName, new(type, values?.GetValue(j)));
+                        }
+                    }
+                    else
+                    {
+                        var value = db2Result.Field<object>(name);
+                        rowResult.Add(name.Replace("_lang", ""), new(type, value));
+                    }
+                }
+                results.Add(rowResult);
             }
+
+            return results;
         }
 
         async Task<IEnumerable<string>> GetAllDefinitionsAsync()
@@ -136,6 +174,17 @@ namespace HotfixMods.Providers.Db2.WoWDev.Client
         {
             var dbdReader = new DBDReader();
             return dbdReader.Read(db2Stream);
+        }
+
+        async Task<(Structs.DBDefinition, Structs.VersionDefinitions)> GetStructsAsync(Stream db2Stream, string build)
+        {
+            var databaseDefinitions = await GetStructsAsync(db2Stream);
+            var dbBuild = new Build(build);
+
+            if (!Utils.GetVersionDefinitionByBuild(databaseDefinitions, dbBuild, out var versionToUse) || null == versionToUse)
+                throw new($"No definition found from db2 stream and build {build}.");
+
+            return (databaseDefinitions, versionToUse.Value);
         }
 
         async Task<(Structs.DBDefinition, Structs.VersionDefinitions)> GetStructsAsync(string db2Name, string build)

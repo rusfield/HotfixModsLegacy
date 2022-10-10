@@ -90,17 +90,22 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback = ConsoleProgressCallback;
 
             progressCallback("Loading", "Loading Anim Kit", 15);
-            var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == id);
-            if(animKit == null)
+            var animKit = await _mySql.GetSingleAsync<AnimKit>(a => a.Id == id) ?? await _db2.GetSingleAsync<AnimKit>(a => a.Id == id);
+            if (animKit == null)
             {
                 progressCallback("Error", "Anim Kit not found", 100);
                 return null;
             }
-            var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
+
+            var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
             if (!animKitSegments.Any())
             {
-                progressCallback("Error", "Anim Kit Segments not found", 100);
-                return null;
+                animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
+                if (!animKitSegments.Any())
+                {
+                    progressCallback("Error", "Anim Kit Segments not found", 100);
+                    return null;
+                }
             }
 
             progressCallback("Loading", "Loading Hotfix Mods Data", 50);
@@ -118,11 +123,11 @@ namespace HotfixMods.Infrastructure.Services
                 IsUpdate = hmData != null
             };
 
-            foreach(var segment in animKitSegments)
+            foreach (var segment in animKitSegments)
             {
                 result.Segments.Add(new AnimKitSegmentDto()
                 {
-                    AnimId = result.Id,
+                    AnimId = segment.AnimId,
                     AnimKitConfigId = segment.AnimKitConfigId,
                     AnimStartTime = segment.AnimStartTime,
                     BlendInTimeMs = segment.BlendInTimeMs,

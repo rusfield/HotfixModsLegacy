@@ -36,9 +36,9 @@ namespace HotfixMods.Infrastructure.DefaultModels
             StartConditionDelay = 0,
             StartConditionParam = 0,
             Speed = 1,
+            AnimId = 0,
 
             ParentAnimKitId = -1,
-            AnimId = -1,
             Id = -1,
             VerifiedBuild = -1,
         };

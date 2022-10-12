@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             if (dto.Segments.Count > 20)
             {
-                throw new Exception($"AnimKit should not have more than 50 Segments.");
+                throw new Exception($"AnimKit should not have more than 20 Segments.");
             }
 
 
@@ -141,7 +141,9 @@ namespace HotfixMods.Infrastructure.Services
                     Speed = segment.Speed,
                     StartCondition = segment.StartCondition,
                     StartConditionDelay = segment.StartConditionDelay,
-                    StartConditionParam = segment.StartConditionParam
+                    StartConditionParam = segment.StartConditionParam,
+                    LoopToSegmentIndex = segment.LoopToSegmentIndex,
+                    ForcedVariation = segment.ForcedVariation
                 });
             }
 
@@ -154,6 +156,12 @@ namespace HotfixMods.Infrastructure.Services
             var animKit = await _mySql.GetSingleAsync<AnimKit>(s => s.Id == id);
             var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(s => s.ParentAnimKitId == id);
             var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id && h.TableHash == (long)TableHashes.ANIM_KIT);
+
+            foreach(var segment in animKitSegments)
+            {
+                var segmentHofix = await _mySql.GetSingleAsync<HotfixData>(h => h.UniqueId == segment.Id && h.TableHash == (long)TableHashes.ANIM_KIT_SEGMENT);
+            }
 
             if (null != animKit)
                 await _mySql.DeleteAsync(animKit);
@@ -161,7 +169,7 @@ namespace HotfixMods.Infrastructure.Services
             if (animKitSegments.Any())
                 await _mySql.DeleteAsync(animKitSegments.ToArray());
 
-            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
+            
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)

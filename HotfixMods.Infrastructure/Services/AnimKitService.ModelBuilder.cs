@@ -48,9 +48,8 @@ namespace HotfixMods.Infrastructure.Services
                     StartCondition = segment.StartCondition ?? Default.AnimKitSegment.StartCondition,
                     StartConditionDelay = segment.StartConditionDelay ?? Default.AnimKitSegment.StartConditionDelay,
                     StartConditionParam = segment.StartConditionParam ?? Default.AnimKitSegment.StartConditionParam,
-
-                    ForcedVariation = Default.AnimKitSegment.ForcedVariation,
-                    LoopToSegmentIndex = Default.AnimKitSegment.LoopToSegmentIndex
+                    LoopToSegmentIndex = segment.LoopToSegmentIndex ?? Default.AnimKitSegment.LoopToSegmentIndex,
+                    ForcedVariation = segment.ForcedVariation ?? Default.AnimKitSegment.ForcedVariation
                 });
             }
             return result.ToArray();

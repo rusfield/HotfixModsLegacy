@@ -66,8 +66,8 @@ namespace HotfixMods.Apps.Desktop
                 {
                     VerifiedBuild = -700,
                     IdSize = 50,
-                    IdRangeFrom = 6000000,
-                    IdRangeTo = 7000000
+                    IdRangeFrom = 60000,
+                    IdRangeTo = 70000
                 };
             });
             builder.Services.AddSingleton(config =>

@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             if (dto.Segments.Count > 20)
             {
-                throw new Exception($"AnimKit should not have more than 50 Segments.");
+                throw new Exception($"AnimKit should not have more than 20 Segments.");
             }
 
 
@@ -90,17 +90,22 @@ namespace HotfixMods.Infrastructure.Services
                 progressCallback = ConsoleProgressCallback;
 
             progressCallback("Loading", "Loading Anim Kit", 15);
-            var animKit = await _db2.GetSingleAsync<AnimKit>(a => a.Id == id);
-            if(animKit == null)
+            var animKit = await _mySql.GetSingleAsync<AnimKit>(a => a.Id == id) ?? await _db2.GetSingleAsync<AnimKit>(a => a.Id == id);
+            if (animKit == null)
             {
                 progressCallback("Error", "Anim Kit not found", 100);
                 return null;
             }
-            var animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
+
+            var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
             if (!animKitSegments.Any())
             {
-                progressCallback("Error", "Anim Kit Segments not found", 100);
-                return null;
+                animKitSegments = await _db2.GetAsync<AnimKitSegment>(a => a.ParentAnimKitId == id);
+                if (!animKitSegments.Any())
+                {
+                    progressCallback("Error", "Anim Kit Segments not found", 100);
+                    return null;
+                }
             }
 
             progressCallback("Loading", "Loading Hotfix Mods Data", 50);
@@ -118,11 +123,11 @@ namespace HotfixMods.Infrastructure.Services
                 IsUpdate = hmData != null
             };
 
-            foreach(var segment in animKitSegments)
+            foreach (var segment in animKitSegments)
             {
                 result.Segments.Add(new AnimKitSegmentDto()
                 {
-                    AnimId = result.Id,
+                    AnimId = segment.AnimId,
                     AnimKitConfigId = segment.AnimKitConfigId,
                     AnimStartTime = segment.AnimStartTime,
                     BlendInTimeMs = segment.BlendInTimeMs,
@@ -136,7 +141,9 @@ namespace HotfixMods.Infrastructure.Services
                     Speed = segment.Speed,
                     StartCondition = segment.StartCondition,
                     StartConditionDelay = segment.StartConditionDelay,
-                    StartConditionParam = segment.StartConditionParam
+                    StartConditionParam = segment.StartConditionParam,
+                    LoopToSegmentIndex = segment.LoopToSegmentIndex,
+                    ForcedVariation = segment.ForcedVariation
                 });
             }
 
@@ -149,6 +156,12 @@ namespace HotfixMods.Infrastructure.Services
             var animKit = await _mySql.GetSingleAsync<AnimKit>(s => s.Id == id);
             var animKitSegments = await _mySql.GetAsync<AnimKitSegment>(s => s.ParentAnimKitId == id);
             var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
+            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id && h.TableHash == (long)TableHashes.ANIM_KIT);
+
+            foreach(var segment in animKitSegments)
+            {
+                var segmentHofix = await _mySql.GetSingleAsync<HotfixData>(h => h.UniqueId == segment.Id && h.TableHash == (long)TableHashes.ANIM_KIT_SEGMENT);
+            }
 
             if (null != animKit)
                 await _mySql.DeleteAsync(animKit);
@@ -156,7 +169,7 @@ namespace HotfixMods.Infrastructure.Services
             if (animKitSegments.Any())
                 await _mySql.DeleteAsync(animKitSegments.ToArray());
 
-            var hotfixData = await _mySql.GetAsync<HotfixData>(h => h.UniqueId == id);
+            
             if (hotfixData != null && hotfixData.Count() > 0)
             {
                 foreach (var hotfix in hotfixData)

@@ -13,7 +13,7 @@ namespace HotfixMods.Core.Models
     {
         [Key]
         public int Id { get; set; }
-        public int UniqueId { get; set; }
+        public long UniqueId { get; set; }
         public long TableHash { get; set; }
         public int RecordId { get; set; }
         public HotfixStatuses Status { get; set; }

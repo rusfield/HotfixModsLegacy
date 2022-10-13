@@ -4,7 +4,8 @@
 
 <MudGrid>
     <MudItem xs="4" Class="@gridItemCssClass">
-        <Invisible_Element/>
+        <IntInput_Element Label="One Shot Duration" @bind-Value="AnimKit.OneShotDuration" ValueLookup="AnimKitLookup?.OneShotDuration" />
+        <IntInput_Element Label="One Shot Stop Anim Kit ID" @bind-Value="AnimKit.OneShotStopAnimKitId" ValueLookup="AnimKitLookup?.OneShotStopAnimKitId" />
         <Invisible_Element/>
         <Invisible_Element/>
     </MudItem>

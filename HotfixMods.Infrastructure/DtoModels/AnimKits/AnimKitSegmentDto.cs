@@ -6,6 +6,44 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DtoModels.AnimKits
 {
+    // InAnimKitConfigBoneSet, higher priority number means it will run instead of lower priority ones.
+    // So an Upper Body priority 255 will run over upper body of Full Body with priority 10.
+
+    // StartCondition 0: play animation as normal
+    // Params: seems to do nothing
+    // Delay: ms delay before start play
+
+    // StartCondition 1:UNKNOWN
+    // Nothing happens. Probably related to OrderIndex
+
+    // StartCondition 2: UNKNOWN
+    // Look at AnimKit 914
+
+
+
+
+    // EndCondition 0: loop animation X times
+    // Params: X (0 and 1 plays animation 1 time, 2 plays animation 2 times, etc)
+    // Delay: Wait/Freeze on last frame (in ms)
+
+    // EndCondition 1: repeat animation infinitely
+    // Params/Delay: seems to do nothing
+
+    // EndCondition 2: Play animation one time for X ms
+    // Params: seems to do nothing
+    // Delay: X ms for when to stop animation (stops early if ms is before animation stops, freezes at end if animation is longer, ends instantly if 0)
+
+    // EndCondition 3: UNKNNOWN
+    // It seems to do the same as EndCondition2. Maybe it has to do with OrderIndex.
+
+    // EndCondition 4: UNKNOWN
+    // Look at AnimKit 934
+
+    // EndCondition 5: Freeze animation on last frame (can perform other animations while in position of last frame)
+    // Params/Delay: Unknown
+
+
+
     public class AnimKitSegmentDto
     {
         public int? OrderIndex { get; set; }
@@ -23,5 +61,7 @@ namespace HotfixMods.Infrastructure.DtoModels.AnimKits
         public int? OverrideConfigFlags { get; set; }
         public int? BlendInTimeMs { get; set; }
         public int? BlendOutTimeMs { get; set; }
+        public int? LoopToSegmentIndex { get; set; }
+        public int? ForcedVariation { get; set; }
     }
 }

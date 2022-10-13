@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotfixMods.Core.Models.App;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
 {
     public partial class MySqlClient
     {
-        object GetValueWithDefault(Type type, object? value)
+        object GetValueWithDefault(Type type, object value)
         {
             return type.ToString() switch
             {
@@ -27,27 +28,54 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             };
         }
 
-        IDictionary<string, Type> ObjectToDefinitions<T>()
+        IEnumerable<Db2ColumnDefinition> ObjectTypeToDb2ColumnDefinitions<T>()
             where T : new()
         {
-            var result = new Dictionary<string, Type>();
-            foreach(var property in typeof(T).GetProperties())
+            var result = new List<Db2ColumnDefinition>();
+            foreach (var property in typeof(T).GetProperties())
             {
-                result.Add(property.Name, property.PropertyType);
+                result.Add(new Db2ColumnDefinition()
+                {
+                    Name = property.Name,
+                    Type = property.PropertyType
+                });
             }
             result.Reverse();
             return result;
         }
 
-        T ColumnNameTypeValueToObject<T>(IDictionary<string, KeyValuePair<Type, object>> nameTypeCol)
+        IEnumerable<Db2Column>? ObjectToDb2Columns<T>(T? obj)
             where T : new()
         {
-            T result = new();
-            foreach(var property in nameTypeCol)
+            if(null == default(T))
+                return null;
+
+            var result = new List<Db2Column>();
+            foreach (var property in typeof(T).GetProperties())
             {
-                var existingProperty = result.GetType().GetProperty(property.Key);
-                if(existingProperty != null)
-                    existingProperty.SetValue(result, property.Value.Value);
+                result.Add(new Db2Column()
+                {
+                    Name = property.Name,
+                    Type = property.PropertyType,
+                    Value = property.GetValue(obj)!
+                });
+            }
+            result.Reverse();
+            return result;
+        }
+
+        T? Db2ColumnsToObject<T>(IEnumerable<Db2Column> db2Columns)
+            where T : new()
+        {
+            if (null == db2Columns)
+                return default(T);
+
+            T result = new();
+            foreach (var db2Column in db2Columns)
+            {
+                var existingProperty = result.GetType().GetProperty(db2Column.Name);
+                if (existingProperty != null)
+                    existingProperty.SetValue(result, db2Column.Value);
             }
             return result;
         }

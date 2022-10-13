@@ -200,7 +200,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             }
         }
 
-        public async Task<bool> TableExists(string schemaName, string tableName)
+        public async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
             ValidateInput(schemaName, tableName);
             await _mySqlConnection.OpenAsync();
@@ -216,13 +216,23 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return exists;
         }
 
-        public async Task<bool> SchemaExists(string schemaName)
+        public async Task<bool> SchemaExistsAsync(string schemaName)
         {
             ValidateInput(schemaName);
             await _mySqlConnection.OpenAsync();
             var schema = await _mySqlConnection.GetSchemaAsync(schemaName);
             await _mySqlConnection.CloseAsync();
             return schema != null;
+        }
+
+        public async Task<int> GetNextAvailableIdAsync(string schemaName, string tableName, int fromId)
+        {
+            ValidateInput(schemaName, tableName);
+            string query = $"SELECT t1.ID + 1 AS FirstAvailableID FROM {schemaName}.{tableName} t1 ";
+            query += $"LEFT JOIN {schemaName}.{tableName} t2 ON t2.ID = t1.ID + 1 ";
+            query += $"WHERE t2.ID IS NULL ORDER BY t1.ID LIMIT 0, 1;";
+
+
         }
     }
 }

@@ -80,8 +80,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return result;
         }
 
-        // Simple SQL injection protection,
-        // remove if needed.
+
         void ValidateInput(params string?[] inputs)
         {
             var regex = new Regex("^[A-Za-z0-9 ='_-]*$");

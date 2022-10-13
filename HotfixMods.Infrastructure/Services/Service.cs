@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,11 @@ namespace HotfixMods.Infrastructure.Services
 
         protected IDb2Provider _db2;
         protected IMySqlProvider _mySql;
+
+        public string HotfixesSchema { get; } = "hotfixes";
+        public string CharactersSchema { get; } = "characters";
+        public string WorldSchema { get; } = "world";
+        public string HotfixModsSchema { get; } = "hotfixmods";
 
         public Service(IDb2Provider db2Provider, IMySqlProvider mySqlProvider)
         {

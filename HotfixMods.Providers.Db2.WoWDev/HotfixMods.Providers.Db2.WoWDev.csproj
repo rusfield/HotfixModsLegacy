@@ -9,11 +9,6 @@
 
   <ItemGroup>
     <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
-    <PackageReference Include="MSTest" Version="2.2.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DBCD\" />
   </ItemGroup>
 
 </Project>

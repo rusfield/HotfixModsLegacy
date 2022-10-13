@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
-    <ProjectReference Include="..\HotfixMods.MySqlProvider.EntityFrameworkCore\HotfixMods.MySqlProvider.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

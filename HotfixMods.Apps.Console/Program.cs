@@ -3,8 +3,6 @@
  * Playground
  * 
  */
-
-
 using HotfixMods.Db2Provider.WowToolsFiles.Clients;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Services;

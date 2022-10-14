@@ -9,35 +9,40 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
     public partial class MySqlClient : IMySqlProvider
     {
         MySqlConnection _mySqlConnection;
+        string _hotfixModsSchemaName;
+        string _charactersSchemaName;
+        string _hotfixesSchemaName;
+        string _worldSchemaName;
 
-        public MySqlClient(string server, string port, string user, string password)
+        public MySqlClient(string server, string port, string user, string password, string hotfixesSchemaName = "hotfixes", string charactersSchemaName = "characters", string worldSchemaName = "world", string hotfixModsSchemaName = "hotfixmods")
         {
             _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};");
+            _hotfixModsSchemaName = hotfixModsSchemaName;
+            _charactersSchemaName = charactersSchemaName;
+            _worldSchemaName = worldSchemaName;
+            _hotfixesSchemaName = hotfixesSchemaName;
         }
 
-        public async Task<T?> GetSingleAsync<T>(string schemaName, string tableName, string? whereClause = null)
+        public async Task<T?> GetSingleAsync<T>(string? whereClause = null)
             where T : new()
         {
-            var db2Columns = await GetAnonymousSingleAsync(schemaName, tableName, ObjectTypeToDb2ColumnDefinitions<T>(), whereClause);
+            var db2Columns = await GetSingleAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), ObjectTypeToDb2ColumnDefinitions<T>(), whereClause);
             return Db2ColumnsToObject<T>(db2Columns);
         }
 
-        public async Task<IEnumerable<Db2Column>> GetAnonymousSingleAsync(string schemaName, string tableName, IEnumerable<Db2ColumnDefinition> definitions, string? whereClause = null)
+        public async Task<IEnumerable<Db2Column>> GetSingleAsync(string schemaName, string tableName, IEnumerable<Db2ColumnDefinition> definitions, string? whereClause = null)
         {
-            return (await GetAnonymousAsync(schemaName, tableName, definitions, whereClause)).First();
+            return (await GetAsync(schemaName, tableName, definitions, whereClause)).First();
         }
 
-        public async Task<IEnumerable<T>> GetAsync<T>(string schemaName, string tableName, string? whereClause = null)
+        public async Task<IEnumerable<T>> GetAsync<T>(string? whereClause = null)
             where T : new()
         {
-            var results = new List<T>();
-            var db2Rows = await GetAnonymousAsync(schemaName, tableName, ObjectTypeToDb2ColumnDefinitions<T>(), whereClause);
-            foreach (var db2Row in db2Rows)
-                results.Add(Db2ColumnsToObject<T>(db2Row)!);
-            return results;
+            var db2Rows = await GetAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), ObjectTypeToDb2ColumnDefinitions<T>(), whereClause);
+            return db2Rows.Select(d => Db2ColumnsToObject<T>(d));
         }
 
-        public async Task<IEnumerable<IEnumerable<Db2Column>>> GetAnonymousAsync(string schemaName, string tableName, IEnumerable<Db2ColumnDefinition> definitions, string? whereClause = null)
+        public async Task<IEnumerable<IEnumerable<Db2Column>>> GetAsync(string schemaName, string tableName, IEnumerable<Db2ColumnDefinition> definitions, string? whereClause = null)
         {
             ValidateInput(tableName, whereClause);
 
@@ -98,7 +103,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return results;
         }
 
-        public async Task AddOrUpdateAsync<T>(string schemaName, string tableName, params T[] db2Rows)
+        public async Task AddOrUpdateAsync<T>(params T[] db2Rows)
             where T : new()
         {
             if (!db2Rows.Any())
@@ -106,10 +111,10 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                 throw new Exception("Nothing to add or update.");
             }
 
-            await AddOrUpdateAnonymousAsync(schemaName, tableName, db2Rows.Select(r => ObjectToDb2Columns(r)!).ToArray());
+            await AddOrUpdateAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), db2Rows.Select(r => ObjectToDb2Columns(r)!).ToArray());
         }
 
-        public async Task AddOrUpdateAnonymousAsync(string schemaName, string tableName, params IEnumerable<Db2Column>[] db2Rows)
+        public async Task AddOrUpdateAsync(string schemaName, string tableName, params IEnumerable<Db2Column>[] db2Rows)
         {
             ValidateInput(schemaName, tableName);
 
@@ -139,6 +144,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             await _mySqlConnection.CloseAsync();
         }
 
+        public async Task DeleteAsync<T>(string whereClause)
+            where T : new()
+        {
+            await DeleteAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), whereClause);
+        }
+
         public async Task DeleteAsync(string schemaName, string tableName, string whereClause)
         {
             ValidateInput(schemaName, tableName, whereClause);
@@ -153,6 +164,11 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             await _mySqlConnection.CloseAsync();
         }
 
+        public async Task CreateTableIfNotExistAsync<T>()
+            where T : new()
+        {
+            await CreateTableIfNotExistAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), ObjectTypeToDb2ColumnDefinitions<T>());
+        }
         public async Task CreateTableIfNotExistAsync(string schemaName, string tableName, IEnumerable<Db2ColumnDefinition> definitions)
         {
             ValidateInput(schemaName, tableName);
@@ -200,11 +216,17 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             }
         }
 
+        public async Task<bool> TableExistsAsync<T>()
+            where T : new()
+        {
+            return await TableExistsAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>());
+        }
+
         public async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
             ValidateInput(schemaName, tableName);
             await _mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}' AND table_name = '{tableName}'", _mySqlConnection);
+            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}' AND table_name = '{tableName}';", _mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
             bool exists = false;
             while (reader.Read())
@@ -216,6 +238,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return exists;
         }
 
+
+        public async Task<bool> SchemaExistsAsync<T>()
+            where T : new()
+        {
+            return await SchemaExistsAsync(GetSchemaFromObject<T>());
+        }
         public async Task<bool> SchemaExistsAsync(string schemaName)
         {
             ValidateInput(schemaName);
@@ -225,7 +253,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             return schema != null;
         }
 
-        public async Task<int> GetNextAvailableIdAsync(string schemaName, string tableName, int fromId)
+        public async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId)
         {
             ValidateInput(schemaName, tableName);
             string query = $"SELECT t1.ID + 1 AS FirstAvailableID FROM {schemaName}.{tableName} t1 ";
@@ -233,6 +261,12 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             query += $"WHERE t2.ID IS NULL ORDER BY t1.ID LIMIT 0, 1;";
 
             return -1;
+        }
+
+        public async Task<int> GetNextIdAsync<T>(int fromId) 
+            where T : new()
+        {
+            return await GetNextIdAsync(GetSchemaFromObject<T>(), GetTableNameFromObject<T>(), fromId);
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
@@ -50,7 +51,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task AddHotfixes(List<HotfixData> newHotfixData)
         {
-            if(newHotfixData.Count > 0)
+            if (newHotfixData.Count > 0)
             {
                 var id = newHotfixData.First().UniqueId;
                 var existingHotfixData = await _mySql.GetAsync<HotfixData>(h => h.Status == HotfixStatuses.VALID && h.UniqueId == id && h.VerifiedBuild == VerifiedBuild);
@@ -97,6 +98,11 @@ namespace HotfixMods.Infrastructure.Services
                 VerifiedBuild = VerifiedBuild
             };
             return hotfixModsData;
+        }
+
+        protected string QueryBuilder()
+        {
+            return $"WHERE VerifiedBuild = {VerifiedBuild};";
         }
 
         protected string QueryBuilder(int id, string idParamName = "ID")

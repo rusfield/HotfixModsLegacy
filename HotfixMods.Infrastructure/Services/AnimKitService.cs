@@ -53,7 +53,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (dto.IsUpdate)
             {
-                await _mySql.AddOrUpdateAsync(HotfixModsSchema, "HotfixMods", BuildHotfixModsData(dto));
+                await _mySql.AddOrUpdateAsync(BuildHotfixModsData(dto));
                 await _mySql.AddOrUpdateAsync(BuildAnimKit(dto));
 
                 var segments = await _mySql.GetAsync<AnimKitSegment>(c => c.ParentAnimKitId == dto.Id);

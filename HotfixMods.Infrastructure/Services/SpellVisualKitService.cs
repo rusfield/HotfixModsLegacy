@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardAsync()
         {
-            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(c => c.VerifiedBuild == VerifiedBuild);
+            var hotfixModsData = await _mySql.GetAsync<HotfixModsData>(QueryBuilder());
             var result = new List<DashboardModel>();
             foreach (var data in hotfixModsData)
             {
@@ -74,8 +74,8 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<SpellVisualKitDto?> GetByIdAsync(int id, Action<string, string, int>? progressCallback = null)
         {
             var hmData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.RecordId == id && h.VerifiedBuild == VerifiedBuild);
-            var spellVisualKit = await _mySql.GetSingleAsync<SpellVisualKit>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKit>(s => s.Id == id);
-            var spellVisualKitEffect = await _mySql.GetSingleAsync<SpellVisualKitEffect>(s => s.Id == id) ?? await _db2.GetSingleAsync<SpellVisualKitEffect>(s => s.Id == id);
+            var spellVisualKit = await _mySql.GetSingleAsync<SpellVisualKit>(QueryBuilder(id)) ?? await _db2.GetSingleAsync<SpellVisualKit>(s => s.Id == id);
+            var spellVisualKitEffect = await _mySql.GetSingleAsync<SpellVisualKitEffect>(QueryBuilder(id)) ?? await _db2.GetSingleAsync<SpellVisualKitEffect>(s => s.Id == id);
 
             if (null == spellVisualKit && null == hmData)
             {
@@ -108,7 +108,7 @@ namespace HotfixMods.Infrastructure.Services
             switch (spellVisualKitEffect?.EffectType)
             {
                 case SpellVisualKitEffectType.MODEL_ATTACH:
-                    var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(s => s.ParentSpellVisualKitId == id) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.ParentSpellVisualKitId == id);
+                    var spellVisualKitModelAttach = await _mySql.GetSingleAsync<SpellVisualKitModelAttach>(QueryBuilder(id, nameof(SpellVisualKitModelAttach.ParentSpellVisualKitId))) ?? await _db2.GetSingleAsync<SpellVisualKitModelAttach>(s => s.ParentSpellVisualKitId == id);
                     SpellVisualEffectName? spellVisualEffectName = null;
                     if(spellVisualKitModelAttach != null)
                         spellVisualEffectName = await _mySql.GetSingleAsync<SpellVisualEffectName>(s => s.Id == spellVisualKitModelAttach.SpellVisualEffectNameId) ?? await _db2.GetSingleAsync<SpellVisualEffectName>(s => s.Id == spellVisualKitModelAttach.SpellVisualEffectNameId);

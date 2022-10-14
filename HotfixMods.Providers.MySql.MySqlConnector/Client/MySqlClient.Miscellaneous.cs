@@ -1,6 +1,9 @@
-﻿using HotfixMods.Core.Models.App;
+﻿using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.App;
+using HotfixMods.Core.Models.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -78,6 +81,33 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
                     existingProperty.SetValue(result, db2Column.Value);
             }
             return result;
+        }
+
+        string GetSchemaFromObject<T>()
+            where T : new()
+        {
+            if (typeof(T).GetInterface(nameof(IHotfixesSchema)) != null)
+                return _hotfixesSchemaName;
+            if (typeof(T).GetInterface(nameof(ICharactersSchema)) != null)
+                return _charactersSchemaName;
+            if (typeof(T).GetInterface(nameof(IWorldSchema)) != null)
+                return _worldSchemaName;
+            if (typeof(T).GetInterface(nameof(IHotfixModsSchema)) != null)
+                return _hotfixModsSchemaName;
+
+            throw new NotImplementedException();
+        }
+
+        string GetTableNameFromObject<T>()
+            where T : new()
+        {
+            var type = typeof(T);
+
+            // If there ever comes any exceptions, add them here
+            return type.ToString() switch
+            {
+                _ => Regex.Replace(type.ToString(), @"(?<!_|^)([A-Z])", "_$1")
+            };
         }
 
 

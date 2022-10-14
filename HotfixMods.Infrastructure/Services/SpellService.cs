@@ -168,17 +168,17 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task DeleteAsync(int id)
         {
-            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(h => h.Id == id && h.VerifiedBuild == VerifiedBuild);
-            var spell = await _mySql.GetSingleAsync<Spell>(s => s.Id == id);
-            var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(s => s.Id == id);
-            var spellCooldowns = await _mySql.GetSingleAsync<SpellCooldowns>(s => s.Id == id);
-            var spellMisc = await _mySql.GetSingleAsync<SpellMisc>(s => s.Id == id);
-            var spellName = await _mySql.GetSingleAsync<SpellName>(s => s.Id == id);
-            var spellPower = await _mySql.GetSingleAsync<SpellPower>(s => s.Id == id);
-            var spellVisual = await _mySql.GetSingleAsync<SpellVisual>(s => s.Id == id);
-            var spellVisualEvent = await _mySql.GetSingleAsync<SpellVisualEvent>(s => s.Id == id);
-            var spellXSpellVisual = await _mySql.GetAsync<SpellXSpellVisual>(s => s.Id == id);
-            var spellEffects = await _mySql.GetAsync<SpellEffect>(s => s.SpellId == id);
+            var hotfixModsData = await _mySql.GetSingleAsync<HotfixModsData>(QueryBuilder(id));
+            var spell = await _mySql.GetSingleAsync<Spell>(QueryBuilder(id));
+            var spellAuraOptions = await _mySql.GetSingleAsync<SpellAuraOptions>(QueryBuilder(id));
+            var spellCooldowns = await _mySql.GetSingleAsync<SpellCooldowns>(QueryBuilder(id));
+            var spellMisc = await _mySql.GetSingleAsync<SpellMisc>(QueryBuilder(id));
+            var spellName = await _mySql.GetSingleAsync<SpellName>(QueryBuilder(id));
+            var spellPower = await _mySql.GetSingleAsync<SpellPower>(QueryBuilder(id));
+            var spellVisual = await _mySql.GetSingleAsync<SpellVisual>(QueryBuilder(id));
+            var spellVisualEvent = await _mySql.GetSingleAsync<SpellVisualEvent>(QueryBuilder(id));
+            var spellXSpellVisual = await _mySql.GetAsync<SpellXSpellVisual>(QueryBuilder(id));
+            var spellEffects = await _mySql.GetAsync<SpellEffect>(QueryBuilder(id));
 
 
             if (null != spell)

@@ -17,8 +17,9 @@ namespace HotfixMods.Core.Providers
         public Task AddOrUpdateAsync<T>(string schema, string tableName, params T[] entities)
             where T : new();
         public Task DeleteAsync(string schema, string tableName, string whereClause);
-        public Task<bool> ConnectionExists();
-        public Task<bool> SchemaExists(string schema);
-        public Task<bool> TableExists(string schema, string tableName);
+        public Task<bool> ConnectionExistsAsync();
+        public Task<bool> SchemaExistsAsync(string schema);
+        public Task<bool> TableExistsAsync(string schema, string tableName);
+        public Task<int> GetNextAvailableIdAsync(string schema, string tableName, int fromId);
     }
 }

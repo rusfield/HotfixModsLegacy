@@ -186,7 +186,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             await cmd.ExecuteNonQueryAsync();
             await _mySqlConnection.CloseAsync();
         }
-        public async Task<bool> ConnectionExists()
+        public async Task<bool> ConnectionExistsAsync()
         {
             try
             {
@@ -232,7 +232,7 @@ namespace HotfixMods.Providers.MySql.MySqlConnector.Client
             query += $"LEFT JOIN {schemaName}.{tableName} t2 ON t2.ID = t1.ID + 1 ";
             query += $"WHERE t2.ID IS NULL ORDER BY t1.ID LIMIT 0, 1;";
 
-
+            return -1;
         }
     }
 }

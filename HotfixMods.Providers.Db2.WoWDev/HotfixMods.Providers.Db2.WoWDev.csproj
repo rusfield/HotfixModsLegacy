@@ -11,4 +11,8 @@
     <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DBCD\Extensions\" />
+  </ItemGroup>
+
 </Project>

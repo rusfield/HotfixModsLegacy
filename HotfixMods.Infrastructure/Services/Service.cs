@@ -99,6 +99,9 @@ namespace HotfixMods.Infrastructure.Services
             return hotfixModsData;
         }
 
-
+        protected string QueryBuilder(int id, string idParamName = "ID")
+        {
+            return $"WHERE {idParamName} = {id} AND VerifiedBuild = {VerifiedBuild};";
+        }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using HotfixMods.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Business
 {
@@ -28,6 +23,12 @@ namespace HotfixMods.Infrastructure.Business
             }
             dbRow.Columns.Reverse();
             return dbRow;
+        }
+
+        public static IEnumerable<DbRow> EntitiesToDbRows<T>(this IEnumerable<T> entities)
+            where T : new()
+        {
+            return entities.Where(e => e != null).Select(e => EntityToDbRow(e)!);
         }
 
         public static DbRowDefinition? EntityToDbRowDefinition<T>(this T? entity)
@@ -63,6 +64,12 @@ namespace HotfixMods.Infrastructure.Business
                     existingProperty.SetValue(entity, column.Value);
             }
             return entity;
+        }
+
+        public static IEnumerable<T> DbRowsToEntities<T>(this IEnumerable<DbRow> dbRows)
+            where T : new()
+        {
+            return dbRows.Where(d => d != null).Select(d => DbRowToEntity<T>(d)!);
         }
 
         public static string ToTableName<T>(this T entity)

@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
+using HotfixMods.Infrastructure.Business;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -26,7 +27,7 @@ namespace HotfixMods.Infrastructure.Services
             _clientDbProvider = clientDbProvider;
         }
 
-        public async Task<IEnumerable<DbRow>> GetHotfixEntitiesAsync(string tableName, IDictionary<string, object> parameters)
+        public async Task<IEnumerable<DbRow>> GetHotfixEntitiesAsync(string tableName, params DbParameter[] parameters)
         {
             var result = await _serverDbProvider.GetAsync(HotfixesSchema, tableName, parameters);
             if(!result.Any())
@@ -35,9 +36,44 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<DbRow> GetHotfixEntityAsync(string tableName, IDictionary<string, object> parameters)
+        protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
+            where T : new()
+        {
+            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, nameof(T), parameters)).DbRowToEntity<T?>();
+        }
+
+        protected async Task<DbRow?> GetSingleAsync(string tableName, params DbParameter[] parameters)
         {
             return await _serverDbProvider.GetSingleAsync(HotfixesSchema, tableName, parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, tableName, parameters);
+        }
+
+        protected async Task<IEnumerable<T>> GetAsync<T>(params DbParameter[] parameters)
+            where T : new()
+        {
+            var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), parameters);
+            if(!results.Any())
+                results = await _clientDbProvider.GetAsync(Db2Path, nameof(T), parameters);
+
+            return results.DbRowsToEntities<T>();
+        }
+
+
+
+
+        protected async Task SaveAsync<T>(params T[] entities)
+            where T : new()
+        {
+            await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.EntitiesToDbRows().ToArray());
+        }
+
+        protected async Task SaveAsync(string schemaName, string tableName, params DbRow[] dbRows)
+        {
+            await _serverDbProvider.AddOrUpdateAsync(schemaName, tableName, dbRows.ToArray());
+        }
+
+        protected async Task DeleteAsync(string schemaName, string tableName, IEnumerable<DbParameter> parameters)
+        {
+            await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }
 
         public async Task<int> GetNextHotfixEntityIdAsync<T>()

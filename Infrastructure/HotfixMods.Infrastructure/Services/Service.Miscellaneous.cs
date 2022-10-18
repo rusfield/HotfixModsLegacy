@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotfixMods.Core.Interfaces;
+using HotfixMods.Infrastructure.Business;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -14,7 +11,25 @@ namespace HotfixMods.Infrastructure.Services
         }
 
 
+        string GetSchemaNameOfEntity<T>()
+            where T : new()
+        {
+            if (typeof(T).GetInterface(nameof(IHotfixesSchema)) != null)
+                return HotfixesSchema;
+            if (typeof(T).GetInterface(nameof(ICharactersSchema)) != null)
+                return CharactersSchema;
+            if (typeof(T).GetInterface(nameof(IWorldSchema)) != null)
+                return WorldSchema;
+            if (typeof(T).GetInterface(nameof(IHotfixModsSchema)) != null)
+                return HotfixModsSchema;
 
+            throw new NotImplementedException("Entity is missing interface used for schema identification.");
+        }
 
+        string GetTableNameOfEntity<T>()
+            where T : new()
+        {
+            return Activator.CreateInstance<T>().ToTableName();
+        }
     }
 }

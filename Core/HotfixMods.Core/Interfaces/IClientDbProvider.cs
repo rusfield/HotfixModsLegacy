@@ -5,8 +5,16 @@ namespace HotfixMods.Core.Interfaces
     public interface IClientDbProvider
     {
         Task<bool> IsAvailableAsync();
-        Task<IEnumerable<DbRow>> GetAsync(string pathOrSchemaName, string fileOrTableName, IDictionary<string, object> parameters);
-        Task<DbRow> GetSingleAsync(string pathOrSchemaName, string fileOrTableName, IDictionary<string, object> parameters);
-        Task AddOrUpdateAsync(string pathOrSchemaName, string fileOrTableName, params DbRow[] dbRows);
+
+        /// <summary>
+        /// Returns a list of rows from a source, based on what provider is being used. Source can be for example a MySql database or a DB2 file.
+        /// </summary>
+        /// <param name="location">For example schema name for MySql or path for DB2 file.</param>
+        /// <param name="db2Name">Name of DB2 table. Provider should format appropriately with underscores if needed.</param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, params DbParameter[] parameters);
+        Task<DbRow> GetSingleAsync(string location, string db2Name, params DbParameter[] parameters);
+        Task AddOrUpdateAsync(string location, string db2Name, params DbRow[] dbRows);
     }
 }

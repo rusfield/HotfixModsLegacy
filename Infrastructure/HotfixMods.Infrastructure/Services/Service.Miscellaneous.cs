@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Interfaces;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Interfaces;
 using HotfixMods.Infrastructure.Business;
 
 namespace HotfixMods.Infrastructure.Services
@@ -30,6 +31,12 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             return Activator.CreateInstance<T>().ToTableName();
+        }
+
+        TableHashes GetTableHashOfEntity<T>()
+            where T : new()
+        {
+            return Enum.Parse<TableHashes>(GetTableNameOfEntity<T>(), true);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using HotfixMods.Core.Interfaces;
+﻿using HotfixMods.Core.Enums;
+using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Business;
 
 namespace HotfixMods.Infrastructure.Services
@@ -71,7 +73,36 @@ namespace HotfixMods.Infrastructure.Services
             await _serverDbProvider.AddOrUpdateAsync(schemaName, tableName, dbRows.ToArray());
         }
 
-        protected async Task DeleteAsync(string schemaName, string tableName, IEnumerable<DbParameter> parameters)
+        protected async Task DeleteAsync<T>(params DbParameter[] parameters)
+            where T : new()
+        {
+            var schemaName = GetSchemaNameOfEntity<T>();
+            if(schemaName == nameof(IHotfixesSchema))
+            {
+                var entities = (await _serverDbProvider.GetAsync(schemaName, GetTableNameOfEntity<T>(), parameters)).DbRowsToEntities<T>().Cast<IHotfixesSchema>();
+                var tableHash = GetTableHashOfEntity<T>();
+                foreach(var entity in entities)
+                {
+                    var hotfixData = new HotfixData()
+                    {
+                        Id = await GetNextHotfixEntityIdAsync<HotfixData>(),
+                        RecordId = entity.Id,
+                        UniqueId = -1,
+                        Status = HotfixStatuses.RECORD_REMOVED,
+                        TableHash = tableHash,
+                        VerifiedBuild = VerifiedBuild
+                    };
+                    await _serverDbProvider.AddOrUpdateAsync(schemaName, GetTableNameOfEntity<HotfixData>(), hotfixData.EntityToDbRow()!);
+                    await _serverDbProvider.DeleteAsync(schemaName, GetTableNameOfEntity<T>(), new DbParameter(nameof(IHotfixesSchema.Id), entity.Id));
+                }
+            }
+            else
+            {
+                await _serverDbProvider.DeleteAsync(schemaName, GetTableNameOfEntity<T>(), parameters);
+            }
+        }
+
+        protected async Task DeleteAsync(string schemaName, string tableName, params DbParameter[] parameters)
         {
             await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }

@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Interfaces;
+using HotfixMods.Core.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -10,6 +11,7 @@ namespace HotfixMods.Infrastructure.Services
         public string CharactersSchema { get; } = "characters";
         public string WorldSchema { get; } = "world";
         public string HotfixModsSchema { get; } = "hotfixmods";
+        public string Db2Path { get; } = @"C:\hotfixMods";
 
         IServerDbDefinitionProvider _serverDbDefinitionProvider;
         IClientDbDefinitionProvider _clieIClientDbDefinitionProvider;
@@ -24,9 +26,18 @@ namespace HotfixMods.Infrastructure.Services
             _clientDbProvider = clientDbProvider;
         }
 
-        public async Task GetHotfixEntityAsync(string tableName, string? whereClause = null)
+        public async Task<IEnumerable<DbRow>> GetHotfixEntitiesAsync(string tableName, IDictionary<string, object> parameters)
         {
-            return await _serverDbProvider.GetAsync(HotfixesSchema, tableName, whereClause) ?? await _clientDbProvider.GetAsync(tableName, whereClause);
+            var result = await _serverDbProvider.GetAsync(HotfixesSchema, tableName, parameters);
+            if(!result.Any())
+                result = await _clientDbProvider.GetAsync(Db2Path, tableName, parameters);
+
+            return result;
+        }
+
+        public async Task<DbRow> GetHotfixEntityAsync(string tableName, IDictionary<string, object> parameters)
+        {
+            return await _serverDbProvider.GetSingleAsync(HotfixesSchema, tableName, parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, tableName, parameters);
         }
 
         public async Task<int> GetNextHotfixEntityIdAsync<T>()

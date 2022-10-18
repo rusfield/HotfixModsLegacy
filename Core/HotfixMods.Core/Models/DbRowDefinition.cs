@@ -2,6 +2,6 @@
 {
     public class DbRowDefinition
     {
-        public IEnumerable<DbColumnDefinition> ColumnDefinitions { get; set; }
+        public List<DbColumnDefinition> ColumnDefinitions { get; set; } = new();
     }
 }

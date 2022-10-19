@@ -25,24 +25,26 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 throw new Exception("Nothing to add or update.");
             }
 
-            using var cmd = new MySqlCommand(_mySqlConnection, null);
-            string columns = "";
-            string valueParameters = "";
+            await _mySqlConnection.OpenAsync();
             foreach (var dbColumn in dbRows)
             {
-                for (int i = 0; i < dbColumn.Columns.Count; i++)
+                string columns = "";
+                string valueParameters = "";
+
+                using (var cmd = new MySqlCommand(_mySqlConnection, null))
                 {
-                    columns += $"{dbColumn.Columns.ElementAt(i).Name},";
-                    valueParameters += $"@{dbColumn.Columns.ElementAt(i).Name},";
-                    cmd.Parameters.AddWithValue($"{dbColumn.Columns.ElementAt(i).Name}", ObjectToValue(dbColumn.Columns.ElementAt(i).Type, dbColumn.Columns.ElementAt(i).Value));
+                    for (int i = 0; i < dbColumn.Columns.Count; i++)
+                    {
+                        columns += $"{dbColumn.Columns.ElementAt(i).Name},";
+                        valueParameters += $"@{dbColumn.Columns.ElementAt(i).Name},";
+                        cmd.Parameters.AddWithValue($"{dbColumn.Columns.ElementAt(i).Name}", ObjectToValue(dbColumn.Columns.ElementAt(i).Type, dbColumn.Columns.ElementAt(i).Value));
+                    }
+
+                    string query = $"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({valueParameters.Remove(valueParameters.Length - 1)});";
+                    cmd.CommandText = query;
+                    await cmd.ExecuteNonQueryAsync();
                 }
-
-                string query = $"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({valueParameters.Remove(valueParameters.Length - 1)});";
-                cmd.CommandText = query;
             }
-
-            await _mySqlConnection.OpenAsync();
-            await cmd.ExecuteNonQueryAsync();
             await _mySqlConnection.CloseAsync();
         }
 

@@ -15,11 +15,11 @@ namespace HotfixMods.Providers.Db2.WoWDev.Providers
             _db2Path = db2Path;
         }
 
-        public Stream StreamForTableName(string? tableName = null, string? build = null)
+        public Stream StreamForTableName(string tableName, string? build = null)
         {
-            if (File.Exists($"{_db2Path}"))
+            if (File.Exists($"{_db2Path}\\{tableName}.db2"))
             {
-                return File.Open(_db2Path, FileMode.Open);
+                return File.Open($"{_db2Path}\\{tableName}.db2", FileMode.Open);
             }
             else
             {

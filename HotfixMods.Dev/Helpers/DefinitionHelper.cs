@@ -1,4 +1,4 @@
-﻿using HotfixMods.Providers.Db2.WoWDev.Client;
+﻿using HotfixMods.Providers.WowDev.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +12,13 @@ namespace HotfixMods.Dev.Helpers
     {
         public static async Task DefinitionToCSharp(string defName, string build)
         {
-            var defHelper = new Db2Client();
-            var definition = await defHelper.GetAvailableColumnsAsync(defName, build);
+            var defHelper = new Db2Client(build);
+            var definition = await defHelper.GetDefinitionAsync("asdf", defName);
             Console.WriteLine($"public class {defName}");
             Console.WriteLine("{");
-            foreach(var def in definition)
+            foreach(var def in definition.ColumnDefinitions)
             {
-                Console.WriteLine($"public {GetPropertyName(def.Value.Name)} {def.Key} " + "{ get; set; }");
+                Console.WriteLine($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name} " + "{ get; set; }");
             }
             Console.WriteLine("}");
         }

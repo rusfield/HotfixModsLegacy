@@ -116,7 +116,7 @@ namespace HotfixMods.Providers.WowDev.Client
             var dbcProvider = new DbcProvider(location);
             var dbdProvider = new DbDefProvider(streamForProvider);
             var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
-            var db2Results = dbcd.Load(db2Name, build);
+            var db2Results = dbcd.Load($"{db2Name}", build);
 
             foreach (var db2Result in db2Results.Values)
             {
@@ -157,6 +157,14 @@ namespace HotfixMods.Providers.WowDev.Client
                         });
                     }
                 }
+
+                if (!rowResult.Columns.Any(c => c.Name == "VerifiedBuild"))
+                    rowResult.Columns.Add(new()
+                    {
+                        Name = "VerifiedBuild",
+                        Type = typeof(int),
+                        Value = 0
+                    });
 
                 if(MeetsDbParameterRequirements(parameters, rowResult))
                 {

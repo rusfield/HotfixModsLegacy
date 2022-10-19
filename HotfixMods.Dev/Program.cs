@@ -5,8 +5,9 @@
 
 
 using HotfixMods.Dev.Helpers;
-using HotfixMods.Providers.MySql.MySqlConnector.Client;
-using HotfixMods.Providers.Db2.WoWDev.Client;
+using HotfixMods.Providers.MySqlConnector.Client;
+using HotfixMods.Providers.WowDev.Client;
+
 
 
 // var helper = new WowToolsConverter();
@@ -15,22 +16,26 @@ using HotfixMods.Providers.Db2.WoWDev.Client;
 
 
 
-await DefinitionHelper.DefinitionToCSharp("ItemSparse", "10.0.2.45969");
+//await DefinitionHelper.DefinitionToCSharp("ItemSparse", "10.0.0.46112");
 
 
 
 
 
 var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
-var defClient = new Db2Client();
+var defClient = new Db2Client("10.0.0.46112");
 
 var builds = await defClient.GetAvailableBuildsForDefinitionAsync("ItemSparse");
 var build = builds.First();
 
 
-var db2Client = new Db2Client();
-var test = await db2Client.ReadDb2FileAsync("C:\\Users\\Disconnected\\Downloads\\ItemSparse.db2", "ItemSparse", build);
 
+var def = await defClient.GetDefinitionAsync("C:\\Users\\Disconnected\\Downloads", "ItemSparse");
+var data = await defClient.GetAsync("C:\\Users\\Disconnected\\Downloads", "ItemSparse", def);
+
+await mySqlClient.AddOrUpdateAsync("hotfix_mods", "item_sparse", data.ToArray());
+
+Console.WriteLine("Done");
 /*
 var def = await defClient.GetAvailableColumnsAsync("ItemSparse", build);
 

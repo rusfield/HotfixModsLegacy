@@ -4,6 +4,6 @@ namespace HotfixMods.Core.Interfaces
 {
     public interface IServerDbDefinitionProvider
     {
-        Task<DbRowDefinition> GetDefinitionsAsync();
+        Task<DbRowDefinition> GetDefinitionsAsync(string schemaName, string tableName);
     }
 }

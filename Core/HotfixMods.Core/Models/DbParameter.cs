@@ -30,7 +30,9 @@ namespace HotfixMods.Core.Models
         public enum DbOperator
         {
             EQ,
+            GT,
             GTE,
+            LT,
             LTE
         }
     }

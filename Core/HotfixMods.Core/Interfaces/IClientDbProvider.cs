@@ -13,8 +13,8 @@ namespace HotfixMods.Core.Interfaces
         /// <param name="db2Name">Name of DB2 table. Provider should format appropriately with underscores if needed.</param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, params DbParameter[] parameters);
-        Task<DbRow> GetSingleAsync(string location, string db2Name, params DbParameter[] parameters);
+        Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters);
+        Task<DbRow> GetSingleAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters);
         Task AddOrUpdateAsync(string location, string db2Name, params DbRow[] dbRows);
     }
 }

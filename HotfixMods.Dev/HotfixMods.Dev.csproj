@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HotfixMods.Providers.Db2.WoWDev\HotfixMods.Providers.Db2.WoWDev.csproj" />
-    <ProjectReference Include="..\HotfixMods.Providers.MySql.MySqlConnector\HotfixMods.Providers.MySql.MySqlConnector.csproj" />
   </ItemGroup>
 
 </Project>

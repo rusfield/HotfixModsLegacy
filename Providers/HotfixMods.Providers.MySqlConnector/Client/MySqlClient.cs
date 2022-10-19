@@ -115,7 +115,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             return (await GetAsync(schemaName, tableName, dbRowDefinition, parameters)).FirstOrDefault();
         }
 
-        public async Task<DbRowDefinition> GetDefinitionsAsync(string schemaName, string tableName)
+        public async Task<DbRowDefinition> GetDefinitionAsync(string schemaName, string tableName)
         {
             var query = $"DESCRIBE {schemaName}.{tableName};";
             var dbRowDefinition = new DbRowDefinition();

@@ -38,14 +38,15 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             {
                 var queryOperator = dbParameter.Operator switch
                 {
-                    DbOperator.EQ => "=",
-                    DbOperator.GT => ">",
-                    DbOperator.GTE => ">=",
-                    DbOperator.LT => "<",
-                    DbOperator.LTE => "<=",
+                    DbOperator.EQ => "= '{0}'",
+                    DbOperator.GT => "> '{0}'",
+                    DbOperator.GTE => ">= '{0}'",
+                    DbOperator.LT => "< '{0}'",
+                    DbOperator.LTE => "<= '{0}'",
+                    DbOperator.CONTAINS => "LIKE '{0}'",
                     _ => throw new NotImplementedException()
                 };
-                conditions.Add($"{dbParameter.Property} {queryOperator} '{dbParameter.Value}'");
+                conditions.Add($"{dbParameter.Property} {string.Format(queryOperator, dbParameter.Value)}");
             }
             return $"WHERE {string.Join(" AND ", conditions)}";
         }

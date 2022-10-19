@@ -4,8 +4,6 @@ namespace HotfixMods.Core.Interfaces
 {
     public interface IClientDbProvider
     {
-        Task<bool> IsAvailableAsync();
-
         /// <summary>
         /// Returns a list of rows from a source, based on what provider is being used. Source can be for example a MySql database or a DB2 file.
         /// </summary>

@@ -169,6 +169,28 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
         }
 
+        public async Task<bool> SchemaExistsAsync(string schemaName)
+        {
+            try
+            {
+                await _mySqlConnection.OpenAsync();
+                using var cmd = new MySqlCommand($"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{schemaName}';", _mySqlConnection);
+                var reader = await cmd.ExecuteReaderAsync();
+                bool exists = false;
+                while (reader.Read())
+                {
+                    int count = reader.GetInt32(0);
+                    exists = count > 0;
+                }
+                await _mySqlConnection.CloseAsync();
+                return exists;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
             await _mySqlConnection.OpenAsync();

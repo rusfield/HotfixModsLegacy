@@ -13,34 +13,35 @@ namespace HotfixMods.Providers.WowDev.Client
     public partial class Db2Client : IClientDbProvider, IClientDbDefinitionProvider
     {
         HttpClient _httpClient;
-        string _path;
 
-        public Db2Client(string path)
+        public string Build { get; set; }
+
+        public Db2Client(string build)
         {
-            _path = path;
+            Build = build;
             _httpClient = new();
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "HotfixMods");
         }
 
-        public Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
+        public async Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
         {
-            throw new NotImplementedException();
+            return await ReadDb2FileAsync(location, db2Name, Build, parameters, false);
         }
 
-        public Task<DbRow> GetSingleAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
+        public async Task<DbRow?> GetSingleAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
         {
-            throw new NotImplementedException();
+            return (await ReadDb2FileAsync(location, db2Name, Build, parameters, true)).FirstOrDefault();
         }
 
-        public async Task<DbRowDefinition> GetDefinitionAsync(string build, string db2Name)
+        public async Task<DbRowDefinition> GetDefinitionAsync(string location, string db2Name)
         {
-            if (string.IsNullOrWhiteSpace(db2Name) || string.IsNullOrWhiteSpace(build))
+            if (string.IsNullOrWhiteSpace(db2Name) || string.IsNullOrWhiteSpace(location))
             {
                 throw new Exception("Db2 Name and Build must have a value.");
             }
             db2Name = TrimDb2Name(db2Name);
 
-            var (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, build);
+            var (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, Build);
             var dbRowDefinition = new DbRowDefinition();
             foreach (var fieldDefinition in versionDefinition.definitions)
             {
@@ -77,12 +78,14 @@ namespace HotfixMods.Providers.WowDev.Client
             return dbRowDefinition;
         }
 
-
-        public async Task<bool> IsAvailableAsync()
+        public async Task<IEnumerable<string>> GetAvailableDefinitionsAsync()
         {
-            // TODO: Find out whether this is OK
-            // From SO, a file could take time to load if it is on a network drive, etc.
-            return await Task.Run(() => Directory.Exists(_path));
+            return await GetAllDefinitionsAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAvailableBuildsForDefinitionAsync(string db2Name)
+        {
+            return await GetBuildsAsync(db2Name);
         }
     }
 }

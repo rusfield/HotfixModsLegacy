@@ -11,8 +11,4 @@
     <PackageReference Include="linq2db" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\HotfixMods.Providers.Db2.WoWDev\HotfixMods.Providers.Db2.WoWDev.csproj" />
-  </ItemGroup>
-
 </Project>

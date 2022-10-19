@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\Db2\" />
+    <Folder Include="Enums\TrinityCore\" />
+  </ItemGroup>
+
 </Project>

@@ -4,9 +4,12 @@
  */
 
 
+using HotfixMods.Core.Attributes;
 using HotfixMods.Dev.Helpers;
+using HotfixMods.Infrastructure.Business;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -19,7 +22,12 @@ using HotfixMods.Providers.WowDev.Client;
 //await DefinitionHelper.DefinitionToCSharp("ItemSparse", "10.0.0.46112");
 
 
+var itemSparse = new ItemSparse()
+{
+    IDYp = 123
+};
 
+var id = itemSparse.GetId();
 
 
 var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
@@ -32,6 +40,8 @@ var build = builds.First();
 
 var def = await defClient.GetDefinitionAsync("C:\\Users\\Disconnected\\Downloads", "ItemSparse");
 var data = await defClient.GetAsync("C:\\Users\\Disconnected\\Downloads", "ItemSparse", def);
+
+
 
 await mySqlClient.AddOrUpdateAsync("hotfix_mods", "item_sparse", data.ToArray());
 
@@ -58,7 +68,8 @@ Console.WriteLine(vals.First().ID);
 
 public class ItemSparse
 {
-    public int ID { get; set; }
+    [Id]
+    public int IDYp { get; set; }
     public long AllowableRace { get; set; }
     public string Description { get; set; }
     public string Display3 { get; set; }

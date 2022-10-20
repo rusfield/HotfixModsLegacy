@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
 using System.Text.RegularExpressions;
@@ -96,9 +97,10 @@ namespace HotfixMods.Infrastructure.Business
             throw new Exception("DbRow does not contain a valid ID column.");
         }
 
-        public static int GetId<T>(this T entity, string idPropertyName = "id")
+        public static int GetId<T>(this T entity)
             where T : new()
         {
+            string idPropertyName = "id"; 
             var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
             if (idProperties.Count() > 1)
                 throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");
@@ -111,17 +113,13 @@ namespace HotfixMods.Infrastructure.Business
                 }
             }
 
-            var idAttributeProperties = typeof(T).GetProperties().Where(p =>
-            {
-                var attrib = (ColumnAttribute?)p.GetCustomAttributes(typeof(ColumnAttribute), false).SingleOrDefault();
-                return (attrib != null && !string.IsNullOrWhiteSpace(attrib.Name) && attrib.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
-            });
+            var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IdAttribute)));
             if (idAttributeProperties.Count() > 1)
                 throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
 
-            if (idProperties.Count() == 1)
+            if (idAttributeProperties.Count() == 1)
             {
-                if (int.TryParse(idProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
+                if (int.TryParse(idAttributeProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
                 {
                     return id;
                 }

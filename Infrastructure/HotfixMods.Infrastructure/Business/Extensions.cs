@@ -1,4 +1,6 @@
 ﻿using HotfixMods.Core.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 using System.Text.RegularExpressions;
 
 namespace HotfixMods.Infrastructure.Business
@@ -82,6 +84,50 @@ namespace HotfixMods.Infrastructure.Business
             {
                 _ => Regex.Replace(type.ToString(), @"(?<!_|^)([A-Z])", "_$1")
             };
+        }
+
+        public static int GetId(this DbRow dbRow)
+        {
+            var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
+            if(int.TryParse(idColumn?.Value?.ToString(), out int id) && id > 0)
+            {
+                return id;
+            }
+            throw new Exception("DbRow does not contain a valid ID column.");
+        }
+
+        public static int GetId<T>(this T entity, string idPropertyName = "id")
+            where T : new()
+        {
+            var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
+            if (idProperties.Count() > 1)
+                throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");
+
+            if (idProperties.Count() == 1)
+            {
+                if (int.TryParse(idProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
+                {
+                    return id;
+                }
+            }
+
+            var idAttributeProperties = typeof(T).GetProperties().Where(p =>
+            {
+                var attrib = (ColumnAttribute?)p.GetCustomAttributes(typeof(ColumnAttribute), false).SingleOrDefault();
+                return (attrib != null && !string.IsNullOrWhiteSpace(attrib.Name) && attrib.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
+            });
+            if (idAttributeProperties.Count() > 1)
+                throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
+
+            if (idProperties.Count() == 1)
+            {
+                if (int.TryParse(idProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
+                {
+                    return id;
+                }
+            }
+
+            throw new Exception($"{typeof(T)} does not contain any {idPropertyName} properties");
         }
     }
 }

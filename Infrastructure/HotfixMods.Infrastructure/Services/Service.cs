@@ -29,32 +29,25 @@ namespace HotfixMods.Infrastructure.Services
             _clientDbProvider = clientDbProvider;
         }
 
-        public async Task<IEnumerable<DbRow>> GetHotfixEntitiesAsync(string tableName, params DbParameter[] parameters)
-        {
-            var result = await _serverDbProvider.GetAsync(HotfixesSchema, tableName, parameters);
-            if(!result.Any())
-                result = await _clientDbProvider.GetAsync(Db2Path, tableName, parameters);
-
-            return result;
-        }
-
         protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, nameof(T), parameters)).DbRowToEntity<T?>();
+            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, nameof(T), GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowToEntity<T?>();
         }
 
+        /*
         protected async Task<DbRow?> GetSingleAsync(string tableName, params DbParameter[] parameters)
         {
-            return await _serverDbProvider.GetSingleAsync(HotfixesSchema, tableName, parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, tableName, parameters);
+            return await _serverDbProvider.GetSingleAsync(HotfixesSchema, tableName, GetDbRowDefinitionOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(Db2Path, tableName, GetDbRowDefinitionOfEntity<T>(), parameters);
         }
+        */
 
         protected async Task<IEnumerable<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), parameters);
+            var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
             if(!results.Any())
-                results = await _clientDbProvider.GetAsync(Db2Path, nameof(T), parameters);
+                results = await _clientDbProvider.GetAsync(Db2Path, nameof(T), GetDbRowDefinitionOfEntity<T>(), parameters);
 
             return results.DbRowsToEntities<T>();
         }
@@ -79,7 +72,7 @@ namespace HotfixMods.Infrastructure.Services
             var schemaName = GetSchemaNameOfEntity<T>();
             if(schemaName == nameof(IHotfixesSchema))
             {
-                var entities = (await _serverDbProvider.GetAsync(schemaName, GetTableNameOfEntity<T>(), parameters)).DbRowsToEntities<T>().Cast<IHotfixesSchema>();
+                var entities = (await _serverDbProvider.GetAsync(schemaName, GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowsToEntities<T>().Cast<IHotfixesSchema>();
                 var tableHash = GetTableHashOfEntity<T>();
                 foreach(var entity in entities)
                 {

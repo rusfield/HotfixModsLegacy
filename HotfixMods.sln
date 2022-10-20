@@ -28,7 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.MySqlConnector", "Providers\HotfixMods.Providers.MySqlConnector\HotfixMods.Providers.MySqlConnector.csproj", "{EDA7FAB2-BD7D-46E1-95D7-9E9078031903}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.WowDev", "Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj", "{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.WowDev", "Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj", "{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dev", "Dev", "{C21014FC-9C7F-4303-B841-E3E936F3C626}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Dev", "Dev\HotfixMods.Dev\HotfixMods.Dev.csproj", "{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +82,10 @@ Global
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,6 +97,7 @@ Global
 		{59C6B5E1-CF93-4565-83EC-E0965E2CBF66} = {71A06CC0-084C-4C01-87FB-E3736209A1A2}
 		{EDA7FAB2-BD7D-46E1-95D7-9E9078031903} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
+		{1C0F00CC-3E85-4CEA-B81A-00B54D1D154A} = {C21014FC-9C7F-4303-B841-E3E936F3C626}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

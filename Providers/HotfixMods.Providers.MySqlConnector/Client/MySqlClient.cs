@@ -2,6 +2,7 @@
 using HotfixMods.Core.Models;
 using MySqlConnector;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,23 +26,36 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 throw new Exception("Nothing to add or update.");
             }
 
-            await _mySqlConnection.OpenAsync();
-            foreach (var dbColumn in dbRows)
-            {
-                string columns = "";
-                string valueParameters = "";
+            var queries = new List<string>();
 
-                using (var cmd = new MySqlCommand(_mySqlConnection, null))
+            await _mySqlConnection.OpenAsync();
+            using (var cmd = new MySqlCommand(_mySqlConnection, null))
+            {
+                foreach (var dbColumn in dbRows)
                 {
+                    string columns = "";
+                    string values = "";
+
                     for (int i = 0; i < dbColumn.Columns.Count; i++)
                     {
                         columns += $"{dbColumn.Columns.ElementAt(i).Name},";
-                        valueParameters += $"@{dbColumn.Columns.ElementAt(i).Name},";
-                        cmd.Parameters.AddWithValue($"{dbColumn.Columns.ElementAt(i).Name}", ObjectToValue(dbColumn.Columns.ElementAt(i).Type, dbColumn.Columns.ElementAt(i).Value));
+                        values += $"'{MySqlHelper.EscapeString(dbColumn.Columns.ElementAt(i).Value.ToString()!)}',";
                     }
+                    queries.Add($"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({values.Remove(values.Length - 1)});");
 
-                    string query = $"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({valueParameters.Remove(valueParameters.Length - 1)});";
-                    cmd.CommandText = query;
+                    // If queries gets too large, split it up (item_sparse threw exception during test).
+                    // Can be solved by adjusting max_allowed_packet in MySql.
+                    if (queries.Count == 100)
+                    {
+                        cmd.CommandText = string.Join("", queries);
+                        await cmd.ExecuteNonQueryAsync();
+                        queries = new();
+                    }
+                }
+
+                if(queries.Count > 0)
+                {
+                    cmd.CommandText = string.Join("", queries);
                     await cmd.ExecuteNonQueryAsync();
                 }
             }

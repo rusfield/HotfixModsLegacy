@@ -1,6 +1,7 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
+using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService : Service
     {
-        public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider) { }
+        public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
         public async Task<AnimKitDto> GetNewAsync()
         {

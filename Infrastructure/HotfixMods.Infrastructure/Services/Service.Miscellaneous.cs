@@ -35,16 +35,16 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             if (typeof(T).GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
-                return HotfixesSchema;
+                return _appConfig.HotfixesSchema;
 
             if (typeof(T).GetCustomAttribute(typeof(WorldSchemaAttribute)) != null)
-                return WorldSchema;
+                return _appConfig.WorldSchema;
 
             if (typeof(T).GetCustomAttribute(typeof(HotfixModsSchemaAttribute)) != null)
-                return HotfixModsSchema;
+                return _appConfig.HotfixModsSchema;
 
             if (typeof(T).GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
-                return CharactersSchema;
+                return _appConfig.CharactersSchema;
 
             throw new Exception($"{typeof(T)} is missing Schema Attribute");
         }

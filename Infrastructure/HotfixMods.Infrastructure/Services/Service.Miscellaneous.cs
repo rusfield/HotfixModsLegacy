@@ -66,5 +66,30 @@ namespace HotfixMods.Infrastructure.Services
         {
             return Activator.CreateInstance<T>().EntityToDbRowDefinition()!;
         }
+
+        string GetIdPropertyNameOfEntity<T>()
+            where T : new()
+        {
+            string idPropertyName = "id";
+            var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
+            if (idProperties.Count() > 1)
+                throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");
+
+            if (idProperties.Count() == 1)
+            {
+                return idProperties.First().Name;
+            }
+
+            var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IdAttribute)));
+            if (idAttributeProperties.Count() > 1)
+                throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
+
+            if (idAttributeProperties.Count() == 1)
+            {
+                return idAttributeProperties.First().Name;
+            }
+
+            throw new Exception($"{typeof(T)} does not contain any {idPropertyName} properties");
+        }
     }
 }

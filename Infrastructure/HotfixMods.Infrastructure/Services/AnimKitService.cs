@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto?> GetById(int id)
         {
-            var animKit = await GetSingleAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
+            var animKit = await GetSingleByIdAsync<AnimKit>(id);
             if (null == animKit)
             {
                 return null;
@@ -38,7 +38,8 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveAsync(AnimKitDto animKitDto)
         {
-
+            await SaveAsync(animKitDto.AnimKit);
+            await SaveAsync(animKitDto.AnimKitSegments.ToArray());
         }
 
         public async Task DeleteAsync(int id)

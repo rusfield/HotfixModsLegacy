@@ -149,7 +149,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
 
             string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS {schemaName};";
-            string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID, VerifiedBuild));";
+            string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID));";
             using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, _mySqlConnection);
 
             await _mySqlConnection.OpenAsync();
@@ -206,6 +206,24 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
             await _mySqlConnection.CloseAsync();
             return exists;
+        }
+
+        public async Task<int> GetNextIdAsync(string schemaName, string tableName, int minId, string idPropertyName = "id")
+        {
+            await _mySqlConnection.OpenAsync();
+            using var cmd = new MySqlCommand($"SELECT {idPropertyName} FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} ORDER BY {idPropertyName} ASC;", _mySqlConnection);
+            var reader = await cmd.ExecuteReaderAsync();
+            var newId = minId;
+            while (reader.Read())
+            {
+                var dbId = reader.GetInt32(0);
+                if (newId != dbId)
+                    break;
+
+                newId++;
+            }
+            await _mySqlConnection.CloseAsync();
+            return newId;
         }
     }
 }

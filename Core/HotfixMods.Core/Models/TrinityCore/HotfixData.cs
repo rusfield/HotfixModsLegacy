@@ -1,9 +1,11 @@
-﻿using HotfixMods.Core.Enums;
+﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Enums;
 using HotfixMods.Core.Interfaces;
 
 namespace HotfixMods.Core.Models.TrinityCore
 {
-    public class HotfixData : IHotfixesSchema
+    [HotfixesSchema]
+    public class HotfixData
     {
         public int Id { get; set; }
         public long UniqueId { get; set; }

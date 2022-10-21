@@ -11,8 +11,9 @@ namespace HotfixMods.Dev.Helpers
             await TextCopy.ClipboardService.SetTextAsync("");
 
             var defHelper = new Db2Client(build);
-            var definition = await defHelper.GetDefinitionAsync("asdf", defName);
+            var definition = await defHelper.GetDefinitionAsync(null, defName);
 
+            await WriteToConsoleAndClipboard("[HotfixesSchema]");
             await WriteToConsoleAndClipboard($"public class {defName}");
             await WriteToConsoleAndClipboard("{");
             foreach (var def in definition.ColumnDefinitions)

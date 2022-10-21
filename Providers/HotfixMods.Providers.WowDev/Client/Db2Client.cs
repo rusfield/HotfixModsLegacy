@@ -35,7 +35,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public async Task<DbRowDefinition> GetDefinitionAsync(string location, string db2Name)
         {
-            if (string.IsNullOrWhiteSpace(db2Name) || string.IsNullOrWhiteSpace(location))
+            if (string.IsNullOrWhiteSpace(db2Name))
             {
                 throw new Exception("Db2 Name and Build must have a value.");
             }

@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<AnimKitDto> GetNewAsync()
         {
             var result = new AnimKitDto();
-            result.AnimKit.Id = await GetNextHotfixEntityIdAsync<AnimKit>();
+            result.AnimKit.Id = await GetNextIdAsync<AnimKit>();
 
             return result;
         }
@@ -32,7 +32,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 AnimKit = animKit,
-                AnimKitSegments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))
+                AnimKitSegments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id))
             };
         }
 
@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task DeleteAsync(int id)
         {
             await DeleteAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
-            await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
+            await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id));
         }
     }
 }

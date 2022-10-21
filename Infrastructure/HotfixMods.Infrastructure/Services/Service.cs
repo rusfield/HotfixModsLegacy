@@ -82,7 +82,7 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             var schemaName = GetSchemaNameOfEntity<T>();
-            if(schemaName == nameof(IHotfixesSchema))
+            if(schemaName == HotfixesSchema)
             {
                 var entities = (await _serverDbProvider.GetAsync(schemaName, GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowsToEntities<T>();
                 var tableHash = GetTableHashOfEntity<T>();
@@ -90,7 +90,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     var hotfixData = new HotfixData()
                     {
-                        Id = await GetNextHotfixEntityIdAsync<HotfixData>(),
+                        Id = await GetNextIdAsync<HotfixData>(),
                         RecordId = entity.GetId(),
                         UniqueId = -1,
                         Status = HotfixStatuses.RECORD_REMOVED,
@@ -107,17 +107,16 @@ namespace HotfixMods.Infrastructure.Services
             }
         }
 
+        protected async Task<int> GetNextIdAsync<T>()
+            where T : new()
+        {
+            return await _serverDbProvider.GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId);
+        }
+
+
         protected async Task DeleteAsync(string schemaName, string tableName, params DbParameter[] parameters)
         {
             await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }
-
-        public async Task<int> GetNextHotfixEntityIdAsync<T>()
-            where T : new()
-        {
-            return 0;
-        }
-
-
     }
 }

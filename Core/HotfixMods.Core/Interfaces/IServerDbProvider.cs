@@ -11,5 +11,6 @@ namespace HotfixMods.Core.Interfaces
         Task DeleteAsync(string schemaName, string tableName, params DbParameter[] parameters);
         Task CreateTableIfNotExistsAsync(string schemaName, string tableName, DbRowDefinition dbRowDefinition);
         Task<bool> TableExistsAsync(string schemaName, string tableName);
+        Task<int> GetNextIdAsync(string schema, string tableName, int minId, string idPropertyName = "id");
     }
 }

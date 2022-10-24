@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 namespace HotfixMods.Tools.Dev.Business
 {
 
-    internal class ClientDbDefinitionHelper
+    internal class DbDefinitionTool
     {
-        public async Task DefinitionToCSharp(string defName, string build)
+        public async Task<string> DefinitionToCSharp(string defName, string build)
         {
             await TextCopy.ClipboardService.SetTextAsync("");
 
@@ -21,6 +21,7 @@ namespace HotfixMods.Tools.Dev.Business
                 await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name} " + "{ get; set; }");
             }
             await WriteToConsoleAndClipboard("}");
+            return (await TextCopy.ClipboardService.GetTextAsync())!;
         }
 
         string GetPropertyName(string prop)

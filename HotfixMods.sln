@@ -12,8 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Core", "HotfixMo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Razor", "HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Console", "HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{A1ECFB7F-CC55-49C0-9107-A21F823F6453}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{18C44F9A-9533-48CE-9161-823B458141BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure", "Infrastructure\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj", "{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}"
@@ -28,13 +26,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.MySqlC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.WowDev", "Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj", "{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Blazor", "HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj", "{B3A159AC-B948-48A2-AE5C-792478B1237C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{A3765169-5ADD-4807-9455-E24F3702CCB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Tools.Initializer", "Tools\HotfixMods.Tools.Initializer\HotfixMods.Tools.Initializer.csproj", "{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Tools.Initializer", "Tools\HotfixMods.Tools.Initializer\HotfixMods.Tools.Initializer.csproj", "{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Tools.Dev", "Tools\HotfixMods.Tools.Dev\HotfixMods.Tools.Dev.csproj", "{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Tools.Dev", "Tools\HotfixMods.Tools.Dev\HotfixMods.Tools.Dev.csproj", "{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Blazor", "Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj", "{8D46FE74-A6D6-4222-BD45-127BD925885C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Apps.Console", "Apps\HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,10 +60,6 @@ Global
 		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1ECFB7F-CC55-49C0-9107-A21F823F6453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1ECFB7F-CC55-49C0-9107-A21F823F6453}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1ECFB7F-CC55-49C0-9107-A21F823F6453}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1ECFB7F-CC55-49C0-9107-A21F823F6453}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -80,10 +76,6 @@ Global
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3A159AC-B948-48A2-AE5C-792478B1237C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3A159AC-B948-48A2-AE5C-792478B1237C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3A159AC-B948-48A2-AE5C-792478B1237C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3A159AC-B948-48A2-AE5C-792478B1237C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -92,20 +84,28 @@ Global
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9D82ECCA-2464-47B8-AE9C-75690B151FA6} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
-		{A1ECFB7F-CC55-49C0-9107-A21F823F6453} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74} = {18C44F9A-9533-48CE-9161-823B458141BB}
 		{59C6B5E1-CF93-4565-83EC-E0965E2CBF66} = {71A06CC0-084C-4C01-87FB-E3736209A1A2}
 		{EDA7FAB2-BD7D-46E1-95D7-9E9078031903} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
-		{B3A159AC-B948-48A2-AE5C-792478B1237C} = {18C44F9A-9533-48CE-9161-823B458141BB}
 		{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF} = {A3765169-5ADD-4807-9455-E24F3702CCB5}
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76} = {A3765169-5ADD-4807-9455-E24F3702CCB5}
+		{8D46FE74-A6D6-4222-BD45-127BD925885C} = {18C44F9A-9533-48CE-9161-823B458141BB}
+		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

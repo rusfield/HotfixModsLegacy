@@ -1,9 +1,4 @@
-﻿/*
- * 
- * Playground
- * 
- */
-
+﻿// See https://aka.ms/new-console-template for more information
 
 
 using HotfixMods.Tools.Initializer.Business;

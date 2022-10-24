@@ -13,10 +13,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
     public partial class MySqlClient : IServerDbProvider, IServerDbDefinitionProvider, IClientDbProvider, IClientDbDefinitionProvider
     {
         MySqlConnection _mySqlConnection;
+        public int AddBatchSize { get; set; } = 1000; // Run this in MySql and then restart the server:      SET GLOBAL max_allowed_packet=1073741824; 
 
         public MySqlClient(string server, string port, string user, string password)
         {
-            _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};");
+            _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};default command timeout=3600;");
         }
 
         public async Task AddOrUpdateAsync(string schemaName, string tableName, params DbRow[] dbRows)
@@ -29,24 +30,19 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             var queries = new List<string>();
 
             await _mySqlConnection.OpenAsync();
+            int batchCount = 1;
             using (var cmd = new MySqlCommand(_mySqlConnection, null))
             {
                 foreach (var dbColumn in dbRows)
                 {
-                    string columns = "";
-                    string values = "";
+                    string columns = string.Join(",", dbColumn.Columns.Select(d => d.Name));
+                    string values = string.Join(",", dbColumn.Columns.Select(d => $"'{MySqlHelper.EscapeString(d.Value.ToString()!)}'"));
 
-                    for (int i = 0; i < dbColumn.Columns.Count; i++)
-                    {
-                        columns += $"{dbColumn.Columns.ElementAt(i).Name},";
-                        values += $"'{MySqlHelper.EscapeString(dbColumn.Columns.ElementAt(i).Value.ToString()!)}',";
-                    }
-                    queries.Add($"REPLACE INTO {schemaName}.{tableName} ({columns.Remove(columns.Length - 1)}) VALUES({values.Remove(values.Length - 1)});");
+                    queries.Add($"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES({values});");
 
-                    // If queries gets too large, split it up (item_sparse threw exception during test).
-                    // Can be solved by adjusting max_allowed_packet in MySql.
-                    if (queries.Count == 100)
+                    if (queries.Count == AddBatchSize)
                     {
+                        Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
                         cmd.CommandText = string.Join("", queries);
                         await cmd.ExecuteNonQueryAsync();
                         queries = new();
@@ -55,6 +51,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
                 if(queries.Count > 0)
                 {
+                    Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
                     cmd.CommandText = string.Join("", queries);
                     await cmd.ExecuteNonQueryAsync();
                 }

@@ -3,12 +3,11 @@
  * Playground
  * 
  */
-using HotfixMods.Db2Provider.WowToolsFiles.Clients;
-using HotfixMods.Infrastructure.DtoModels;
-using HotfixMods.Infrastructure.Services;
-using HotfixMods.MySqlProvider.EntityFrameworkCore.Clients;
-using HotfixMods.Core.Enums;
-using HotfixMods.Apps.Console;
-using System.Text;
 
-Console.WriteLine("Do something");
+
+
+using HotfixMods.Tools.Initializer.Business;
+
+var importTool = new Db2ImportTool();
+await importTool.Db2FileToDb2MySql("AnimKit", "10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "hotfix_mods", "anim_kit", "localhost", "3306", "root", "root");
+Console.WriteLine("Done");

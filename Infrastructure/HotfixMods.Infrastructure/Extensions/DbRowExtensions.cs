@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
 using System.Text.RegularExpressions;
 
-namespace HotfixMods.Infrastructure.Business
+namespace HotfixMods.Infrastructure.Extensions
 {
-    public static class Extensions
+    public static class DbRowExtensions
     {
         public static DbRow? EntityToDbRow<T>(this T? entity)
             where T : new()
@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.Business
             var dbRow = new DbRow();
             foreach (var property in typeof(T).GetProperties())
             {
-                dbRow.Columns.Add(new ()
+                dbRow.Columns.Add(new()
                 {
                     Name = property.Name,
                     Type = property.PropertyType,
@@ -31,7 +31,7 @@ namespace HotfixMods.Infrastructure.Business
         public static IEnumerable<DbRow> EntitiesToDbRows<T>(this IEnumerable<T> entities)
             where T : new()
         {
-            return entities.Where(e => e != null).Select(e => EntityToDbRow(e)!);
+            return entities.Where(e => e != null).Select(e => e.EntityToDbRow()!);
         }
 
         public static DbRowDefinition? EntityToDbRowDefinition<T>(this T? entity)
@@ -72,25 +72,19 @@ namespace HotfixMods.Infrastructure.Business
         public static IEnumerable<T> DbRowsToEntities<T>(this IEnumerable<DbRow> dbRows)
             where T : new()
         {
-            return dbRows.Where(d => d != null).Select(d => DbRowToEntity<T>(d)!);
+            return dbRows.Where(d => d != null).Select(d => d.DbRowToEntity<T>()!);
         }
 
         public static string ToTableName<T>(this T entity)
             where T : new()
         {
-            var type = typeof(T);
-
-            // If there ever comes any exceptions, add them here
-            return type.ToString() switch
-            {
-                _ => Regex.Replace(type.ToString(), @"(?<!_|^)([A-Z])", "_$1")
-            };
+            return typeof(T).ToString().ToTableName();
         }
 
         public static int GetId(this DbRow dbRow)
         {
             var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
-            if(int.TryParse(idColumn?.Value?.ToString(), out int id) && id > 0)
+            if (int.TryParse(idColumn?.Value?.ToString(), out int id) && id > 0)
             {
                 return id;
             }
@@ -100,7 +94,7 @@ namespace HotfixMods.Infrastructure.Business
         public static int GetId<T>(this T entity)
             where T : new()
         {
-            string idPropertyName = "id"; 
+            string idPropertyName = "id";
             var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
             if (idProperties.Count() > 1)
                 throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");

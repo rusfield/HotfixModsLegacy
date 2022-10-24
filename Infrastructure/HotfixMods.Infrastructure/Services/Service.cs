@@ -2,8 +2,8 @@
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
-using HotfixMods.Infrastructure.Business;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {

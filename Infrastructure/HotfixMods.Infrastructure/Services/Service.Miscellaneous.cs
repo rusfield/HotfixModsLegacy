@@ -2,7 +2,7 @@
 using HotfixMods.Core.Enums;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
-using HotfixMods.Infrastructure.Business;
+using HotfixMods.Infrastructure.Extensions;
 using System.Reflection;
 
 namespace HotfixMods.Infrastructure.Services

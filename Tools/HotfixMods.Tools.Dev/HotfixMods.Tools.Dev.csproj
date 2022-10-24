@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
+    <PackageReference Include="TextCopy" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tools\" />
+    <ProjectReference Include="..\..\Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj" />
   </ItemGroup>
 
 </Project>

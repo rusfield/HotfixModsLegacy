@@ -6,7 +6,7 @@
 
 using HotfixMods.Core.Attributes;
 using HotfixMods.Dev.Helpers;
-using HotfixMods.Infrastructure.Business;
+using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
 using System.ComponentModel.DataAnnotations.Schema;

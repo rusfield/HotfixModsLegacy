@@ -1,0 +1,46 @@
+﻿@using Microsoft.JSInterop;
+@using HotfixMods.Infrastructure.Services
+
+@inject IJSRuntime JSRuntime
+@inject ISnackbar Snackbar
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <MudStack>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="CopyToClipboardAsync_Click">Copy Id</MudButton>
+                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshAsync_Click" Disabled="@(!TDtoIsUpdate)">Refresh Id</MudButton>
+            </MudStack>
+        </DialogContent>
+    </MudDialog>
+</MudBadge>
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public Type TDto { get; set; }
+
+    [Parameter]
+    public bool TDtoIsUpdate { get; set; }
+
+    [Parameter]
+    public Service TService { get; set; }
+
+    async Task CopyToClipboardAsync_Click()
+    {
+        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", Id);
+        Snackbar.Add($"{Id} copied to clipboard", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        Dialog.Close(-1);
+    }
+
+    async Task RefreshAsync_Click()
+    {
+        var newId = await TService.GetNextIdAsync();
+        Snackbar.Add($"Id set to {newId}", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        Dialog.Close(newId);
+    }
+}

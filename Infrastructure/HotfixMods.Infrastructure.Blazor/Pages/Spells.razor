@@ -1,0 +1,205 @@
+﻿@page "/spells"
+@using HotfixMods.Infrastructure.Razor.Pages.SpellTabs
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Core.Enums
+@using HotfixMods.Infrastructure.DtoModels.Spells
+
+@inject IDialogService DialogService
+@inject SpellService DtoService
+
+
+@if (spell != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Spell Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@spell.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(spell.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+        <MudTabs @ref="@mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <ChildContent>
+                <MudTabPanel Text="Properties">
+                    <SpellProperties_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Cooldown">
+                    <SpellCooldown_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Visuals">
+                    <SpellVisual_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Attributes">
+                    <SpellAttributes_Tab Spell="@spell" SpellLookup="@spellLookup" />
+                </MudTabPanel>
+
+                @for (int i = 0; i < spell.SpellEffects.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Effect #{index}")">
+                        <SpellEffects_Tab EffectChanged="EffectChanged" Spell="spell" SpellEffect="spell.SpellEffects[index]" SpellEffectLookup="@(spellLookup != null && spellLookup.SpellEffects.Count >= index ? spellLookup.SpellEffects[index] : null)" />
+                    </MudTabPanel>
+                }
+            </ChildContent>
+            <Header>
+                <MudTooltip Text="Add new effect">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddEffect_Click" />
+                </MudTooltip>
+                <MudTooltip Text="Remove current effect">
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveEffect_Click" Disabled="@(!TabIsRemovable())" />
+                </MudTooltip>
+            </Header>
+        </MudTabs>
+    </MudPaper>
+}
+else
+{
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Spells" />
+}
+
+
+@code
+{
+    SpellDto? spell;
+    SpellDto? spellLookup;
+    List<RazorDashboardModel> dashboard;
+    MudTabs mudTabsRef;
+    int numberOfStaticTabs; // excluding Effect-tabs
+
+    protected override async Task OnInitializedAsync()
+    {
+        dashboard = new();
+        var dashboardResults = await DtoService.GetDashboardAsync();
+        foreach (var dashboardResult in dashboardResults)
+        {
+            dashboard.Add(new RazorDashboardModel(
+                dashboardResult.Id,
+                dashboardResult.Name,
+                dashboardResult.AvatarUrl,
+                dashboardResult.Comment,
+                (async () => await EditAsync(dashboardResult.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardResult.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (spell != null && numberOfStaticTabs == 0)
+            numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Effect")).Count();
+        base.OnAfterRender(firstRender);
+    }
+
+    async Task EditAsync(int id)
+    {
+        spell = await OpenSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        spell = await OpenSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task LookupAsync_Click()
+    {
+        spellLookup = await OpenSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
+
+        if (!result.Cancelled)
+        {
+            spell.IsUpdate = true;
+        }
+    }
+
+    async void SaveAsync()
+    {
+        await DtoService.SaveAsync(spell);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), spell.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(SpellDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), spell.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            spell.Id = (int)result.Data;
+            spell.IsUpdate = false;
+        }
+    }
+
+    async Task<SpellDto?> OpenSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(SpellSearch_Dialog.SpellId), id);
+        var dialog = DialogService.Show<SpellSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (SpellDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (SpellDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+
+    void EffectChanged(int newEffect)
+    {
+        this.StateHasChanged();
+        mudTabsRef.ActivatePanel(numberOfStaticTabs + newEffect);
+    }
+
+    async Task AddEffect_Click()
+    {
+        spell.SpellEffects.Add(new SpellEffectDto()
+            {
+                EffectIndex = spell.SpellEffects.Count()
+            });
+        await InvokeAsync(() => StateHasChanged());
+        mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
+    }
+
+    void RemoveEffect_Click()
+    {
+        if (spell.SpellEffects.Count > 1)
+        {
+            var currentSpellEffect = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
+            spell.SpellEffects.RemoveAt(currentSpellEffect);
+            for (int i = 0; i < spell.SpellEffects.Count; i++)
+            {
+                spell.SpellEffects[i].EffectIndex = i;
+            }
+            this.StateHasChanged();
+        }
+    }
+
+    bool TabIsRemovable()
+    {
+        return spell.SpellEffects.Count > 1 && mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
+    }
+}
+

@@ -1,0 +1,39 @@
+﻿@using HotfixMods.Core.Enums
+@using HotfixMods.Core.Flags
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+
+<MudGrid>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <SingleSelect_Element Label="Type" @bind-Value="@GameObject.Type" ValueLookup="GameObjectLookup?.Type"/>
+        <DecimalInput_Element Label="Size" @bind-Value="@GameObject.Size" ValueLookup="GameObjectLookup?.Size"/>
+        <Invisible_Element/>
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+    </MudItem>
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <MultiSelect_Element T="GameObjectAddonFlags" Label="Flags" @bind-Value="@GameObject.Flags" ValueLookup="GameObjectLookup?.Flags"/>
+        <IntInput_Element Label="Faction" @bind-Value="@GameObject.Faction" ValueLookup="GameObjectLookup?.Faction"/>
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="8" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" Variant="Variant.Text" @bind-Value="@GameObject.Name" ValueLookup="@GameObjectLookup?.Name"/>
+    </MudItem>
+    <MudItem xs="2" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass" />
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Variant="Variant.Text" Label="Cast Bar Caption" @bind-Value="@GameObject.CastBarCaption" ValueLookup="@GameObjectLookup?.CastBarCaption"/>
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass" />
+</MudGrid>
+
+@code {
+    [Parameter]
+    public GameObjectDto GameObject { get; set; }
+
+    [Parameter]
+    public GameObjectDto? GameObjectLookup { get; set; }
+
+    
+    string gridItemCssClass = "pb-0 pt-0";
+}

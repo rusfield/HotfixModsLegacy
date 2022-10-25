@@ -1,0 +1,42 @@
+﻿<MudStack Row="true" Spacing="0" Style="width: 100%">
+    <div class="input-border-left" style="width:33%">
+        @LeftContent
+    </div>
+    <div class="input-border-middle" style="width:33%; display:flex">
+        @MiddleContent
+    </div>
+    <div class="input-border-right" style="width:33%">
+        @RightContent
+    </div>
+</MudStack>
+
+
+@code {
+    [Parameter]
+    public RenderFragment? LeftContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? MiddleContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? RightContent { get; set; }
+
+
+}
+
+
+
+
+<style>
+    .input-border-right .mud-input-outlined-border {
+        border-radius: 0px var(--mud-default-borderradius) var(--mud-default-borderradius) 0px !important;
+    }
+
+    .input-border-left .mud-input-outlined-border {
+        border-radius: var(--mud-default-borderradius) 0px 0px var(--mud-default-borderradius) !important;
+    }
+
+    .input-border-middle .mud-input-outlined-border {
+        border-radius: 0px 0px 0px 0px !important;
+    }
+</style>

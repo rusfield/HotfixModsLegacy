@@ -1,0 +1,61 @@
+﻿@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.Razor.Components.Elements
+@using HotfixMods.Core.Flags
+
+
+<MudGrid>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Faction" @bind-Value="Creature.Faction" ValueLookup="@CreatureLookup?.Faction" />
+        <IntInput_Element Label="Level" @bind-Value="Creature.Level" ValueLookup="@CreatureLookup?.Level" />
+        <SingleSelect_Element Label="Rank" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
+        <SingleSelect_Element Label="Type" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
+        <SingleSelect_Element Label="Unit Class" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
+        <DecimalInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
+        @* BG *@
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <MultiSelect_Element T="UnitFlags" Label="Unit Flags" @bind-Value="Creature.UnitFlags" ValueLookup="CreatureLookup?.UnitFlags" />
+        <MultiSelect_Element T="UnitFlags2" Label="Unit Flags" @bind-Value="Creature.UnitFlags2" ValueLookup="CreatureLookup?.UnitFlags2" />
+        <MultiSelect_Element T="UnitFlags3" Label="Unit Flags" @bind-Value="Creature.UnitFlags3" ValueLookup="CreatureLookup?.UnitFlags3" />
+        <MultiSelect_Element T="UnitFlagsExtra" Label="Unit Flags" @bind-Value="Creature.FlagsExtra" ValueLookup="CreatureLookup?.FlagsExtra" />
+        <DecimalInput_Element Label="Health Modifier" @bind-Value="Creature.HealthModifier" ValueLookup="@CreatureLookup?.HealthModifier" />
+        <DecimalInput_Element Label="Damage Modifier" @bind-Value="Creature.DamageModifier" ValueLookup="@CreatureLookup?.DamageModifier" />
+    </MudItem>
+
+
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntInput_Element Label="Sound ID" @bind-Value="Creature.SoundId" ValueLookup="@CreatureLookup?.SoundId" />
+    </MudItem>
+    <MudItem xs="6" Class="@gridItemCssClass">
+        <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <DecimalInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" />
+    </MudItem>
+
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <BoolSelect_Element Label="Regen Health" @bind-Value="Creature.RegenHealth" ValueLookup="CreatureLookup?.RegenHealth" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="4" Class="@gridItemCssClass">
+        <TextInput_Element Label="Sub Name" @bind-Value="Creature.SubName" ValueLookup="@CreatureLookup?.SubName" Variant="Variant.Text" />
+    </MudItem>
+    <MudItem xs="1" Class="@gridItemCssClass" />
+    <MudItem xs="3" Class="@gridItemCssClass">
+        <IntList_Element Label="Auras" PluralItemName="auras" SingularItemName="aura" @bind-Value="Creature.Auras" ValueLookup="CreatureLookup?.Auras" />
+    </MudItem>
+
+</MudGrid>
+
+@code
+{
+    [Parameter]
+    public CreatureDto Creature { get; set; }
+
+    [Parameter]
+    public CreatureDto? CreatureLookup { get; set; }
+
+    string gridItemCssClass = "pb-0 pt-0";
+}

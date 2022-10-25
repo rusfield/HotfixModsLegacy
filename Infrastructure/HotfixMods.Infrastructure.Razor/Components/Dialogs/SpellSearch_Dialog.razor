@@ -1,0 +1,105 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject SpellService SpellService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    @if (spellResults.Count == 0)
+                    {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Spell ID:</MudText>
+                        <MudNumericField @bind-Value="@SpellId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Spell ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="SpellId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="SpellNew_Click">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
+                    }
+                    else if (spellResults.Count > 1)
+                    {
+                        foreach (var (spell, index) in spellResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnSpell(spell))">@spell.SearchResultName</MudButton>
+                            if ((index + 1) % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? SpellId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    Loader loaderRef = new Loader();
+    List<SpellDto> spellResults = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != SpellId)
+            await SearchSpellById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task SpellNew_Click()
+    {
+        var spellResult = await SpellService.GetNewAsync(loaderRef.SetLoading);
+        ReturnSpell(spellResult);
+    }
+
+    async Task SpellId_Click()
+    {
+        if (null != SpellId)
+        {
+            await SearchSpellById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchSpellById()
+    {
+        var spellResult = await SpellService.GetByIdAsync((int)SpellId, loaderRef.SetLoading);
+        if (null != spellResult)
+        {
+            ReturnSpell(spellResult);
+        }
+        else
+        {
+            Snackbar.Add($"No Spell with ID {SpellId} found", Severity.Info);
+        }
+    }
+
+    void ReturnSpell(SpellDto spell)
+    {
+        Dialog.Close(spell);
+    }
+}

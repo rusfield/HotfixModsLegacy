@@ -1,0 +1,23 @@
+﻿@using HotfixMods.Infrastructure.Razor.Components.Elements
+@inject ISnackbar Snackbar
+
+
+<MudDialog>
+    <DialogContent>
+        <MudText>The software has crashed.</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => Quit_Click())">Quit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    async Task Quit_Click()
+    {
+        
+    }
+}

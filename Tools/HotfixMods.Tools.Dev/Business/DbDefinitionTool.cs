@@ -18,7 +18,7 @@ namespace HotfixMods.Tools.Dev.Business
             await WriteToConsoleAndClipboard("{");
             foreach (var def in definition.ColumnDefinitions)
             {
-                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name} " + "{ get; set; }");
+                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString().Replace("ID", "Id"))} {def.Name} " + "{ get; set; }");
             }
             await WriteToConsoleAndClipboard("}");
             return (await TextCopy.ClipboardService.GetTextAsync())!;

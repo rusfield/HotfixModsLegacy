@@ -4,13 +4,9 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{B90DC3A8-FC37-4162-9714-7460BF71F606}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Desktop", "HotfixMods.Apps.Desktop\HotfixMods.Apps.Desktop.csproj", "{9D82ECCA-2464-47B8-AE9C-75690B151FA6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure", "HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj", "{5869520A-CC57-49FF-A428-808D9B27FB0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Core", "HotfixMods.Core\HotfixMods.Core.csproj", "{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Razor", "HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{18C44F9A-9533-48CE-9161-823B458141BB}"
 EndProject
@@ -32,9 +28,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Tools.Initialize
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Tools.Dev", "Tools\HotfixMods.Tools.Dev\HotfixMods.Tools.Dev.csproj", "{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Blazor", "Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj", "{8D46FE74-A6D6-4222-BD45-127BD925885C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Console", "Apps\HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Apps.Console", "Apps\HotfixMods.Apps.Console\HotfixMods.Apps.Console.csproj", "{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.MauiBlazor", "Apps\HotfixMods.Apps.MauiBlazor\HotfixMods.Apps.MauiBlazor.csproj", "{616687E2-19C1-44ED-B245-121BFA49D413}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Infrastructure.Razor", "Infrastructure\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,12 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,10 +48,6 @@ Global
 		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8E65B1B-01AF-4CAF-9DBF-D674959E11E1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,28 +72,34 @@ Global
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D46FE74-A6D6-4222-BD45-127BD925885C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Release|Any CPU.Build.0 = Release|Any CPU
+		{616687E2-19C1-44ED-B245-121BFA49D413}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9D82ECCA-2464-47B8-AE9C-75690B151FA6} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74} = {18C44F9A-9533-48CE-9161-823B458141BB}
 		{59C6B5E1-CF93-4565-83EC-E0965E2CBF66} = {71A06CC0-084C-4C01-87FB-E3736209A1A2}
 		{EDA7FAB2-BD7D-46E1-95D7-9E9078031903} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 		{C6B4FEB3-98A5-4145-9D0E-DE2CA68A7C90} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 		{57DEB2C9-E48B-4D0F-B031-1CA9955DD0EF} = {A3765169-5ADD-4807-9455-E24F3702CCB5}
 		{14D1E420-8229-4BD8-9AB9-6D9EEECBAB76} = {A3765169-5ADD-4807-9455-E24F3702CCB5}
-		{8D46FE74-A6D6-4222-BD45-127BD925885C} = {18C44F9A-9533-48CE-9161-823B458141BB}
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
+		{616687E2-19C1-44ED-B245-121BFA49D413} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
+		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0} = {18C44F9A-9533-48CE-9161-823B458141BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

@@ -1,0 +1,112 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject ItemService ItemService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    @if (itemResults.Count == 0)
+                    {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Item ID:</MudText>
+                        <MudNumericField @bind-Value="@ItemId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Display ID:</MudText>
+                        <MudNumericField @bind-Value="@displayInfoId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="ItemDisplayInfoId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
+                    }
+                    else if (itemResults.Count > 1)
+                    {
+                        foreach (var (item, index) in itemResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnItem(item))">@item.SearchResultName</MudButton>
+                            if ((index + 1) % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? ItemId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    Loader loaderRef = new Loader();
+    int? displayInfoId;
+    List<ItemDto> itemResults = new List<ItemDto>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != ItemId)
+            await SearchItemById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task ItemId_Click()
+    {
+        if (null != ItemId)
+        {
+            await SearchItemById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+    void ItemDisplayInfoId_Click()
+    {
+
+    }
+
+    async Task SearchItemById()
+    {
+        itemResults = await ItemService.GetByIdAsync((int)ItemId, loaderRef.SetLoading);
+        if (itemResults.Count() == 1)
+        {
+            ReturnItem(itemResults.First());
+        }
+        else if (itemResults.Count() > 1)
+        {
+            this.StateHasChanged();
+        }
+        else
+        {
+            Snackbar.Add($"No items with ID {ItemId} found", Severity.Info);
+        }
+    }
+
+    void ReturnItem(ItemDto item)
+    {
+        Dialog.Close(item);
+    }
+}

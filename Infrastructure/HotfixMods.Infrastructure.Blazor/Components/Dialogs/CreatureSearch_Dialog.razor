@@ -1,0 +1,167 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject CreatureService CreatureService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    @if (creatureResults.Count == 0)
+                    {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
+                        <MudNumericField @bind-Value="@CreatureId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CreatureId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Display ID:</MudText>
+                        <MudNumericField @bind-Value="@CreatureDisplayId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CreatureDisplayId_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+                        <MudText Typo="Typo.h6" Align="Align.Center">Search by Character:</MudText>
+                        <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="CharacterName_Click" />
+                        <MudSpacer />
+                        <MudSpacer />
+
+                        @if (ShowNewOption)
+                        {
+                            <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="CreatureNew_Click">New</MudButton>
+                            <MudSpacer />
+                            <MudSpacer />
+                        }
+                    }
+                    else if (creatureResults.Count > 1)
+                    {
+                        foreach (var (creature, index) in creatureResults.Select((val, idx) => (val, idx)))
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(() => ReturnCreature(creature))">@creature.SearchResultName</MudButton>
+                            if ((index + 1) % 4 == 0)
+                            {
+                                <MudSpacer />
+                            }
+                        }
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? CreatureId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    int? CreatureDisplayId;
+    string? CharacterName;
+
+    Loader loaderRef = new Loader();
+    List<CreatureDto> creatureResults = new List<CreatureDto>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != CreatureId)
+            await SearchCreatureById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task CreatureId_Click()
+    {
+        if (null != CreatureId)
+        {
+            await SearchCreatureById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchCreatureById()
+    {
+        if (null != CreatureId)
+        {
+            creatureResults = await CreatureService.GetByIdAsync((int)CreatureId, loaderRef.SetLoading);
+            if (creatureResults.Count() == 1)
+            {
+                ReturnCreature(creatureResults.First());
+            }
+            else if (creatureResults.Count() > 1)
+            {
+                this.StateHasChanged();
+            }
+            else
+            {
+                Snackbar.Add($"No creature with ID {CreatureId} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a creature ID", Severity.Info);
+        }
+    }
+
+    async Task CreatureNew_Click()
+    {
+        var creature = await CreatureService.GetNewAsync(loaderRef.SetLoading);
+        ReturnCreature(creature);
+    }
+
+    async Task CreatureDisplayId_Click()
+    {
+        if (null != CreatureDisplayId)
+        {
+            var creature = await CreatureService.GetByDisplayIdAsync((int)CreatureId, loaderRef.SetLoading);
+            if (null != creature)
+            {
+                ReturnCreature(creatureResults.First());
+            }
+            else
+            {
+                Snackbar.Add($"No creature display with ID {CreatureDisplayId} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a creature display ID", Severity.Info);
+        }
+    }
+
+    async Task CharacterName_Click()
+    {
+        if (!string.IsNullOrWhiteSpace(CharacterName))
+        {
+            var creature = await CreatureService.GetByCharacterNameAsync(CharacterName, loaderRef.SetLoading);
+            if (null != creature)
+            {
+                ReturnCreature(creature);
+            }
+            else
+            {
+                Snackbar.Add($"No character with name {CharacterName} found", Severity.Info);
+            }
+        }
+        else
+        {
+            Snackbar.Add($"Enter a character name", Severity.Info);
+        }
+    }
+
+    void ReturnCreature(CreatureDto item)
+    {
+        Dialog.Close(item);
+    }
+}

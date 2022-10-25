@@ -1,0 +1,35 @@
+﻿@using System.Diagnostics
+@if (IsLoading)
+{
+    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center">
+        <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+        <MudText Typo="Typo.h5" Color="Color.Primary">@loadingTitle</MudText>
+        <MudText Typo="Typo.h6" Color="Color.Primary">@loadingSubTitle</MudText>
+        <MudProgressLinear Color="Color.Info" Size="Size.Large" Value="loadingProgress" Class="my-7">
+            <MudPaper Class="pa-3 rounded-circle" Elevation="0">
+                <MudText Typo="Typo.subtitle1" Color="Color.Info">
+                    <b>@($"{loadingProgress}%")</b>
+                </MudText>
+            </MudPaper>
+        </MudProgressLinear>
+    </MudStack>
+}
+
+@code {
+    string loadingTitle = "";
+    string loadingSubTitle = "";
+    int loadingProgress = 0;
+
+    public bool IsLoading { get; set; } = false;
+
+    public void SetLoading(string progressTitle, string progressSubTitle, int progress)
+    {
+        IsLoading = progress < 100;
+
+        loadingProgress = progress;
+        loadingTitle = progressTitle;
+        loadingSubTitle = progressSubTitle;
+        Debug.WriteLine($"{progressTitle} -> {progressSubTitle} ({progress}%)");
+        this.StateHasChanged();
+    }
+}

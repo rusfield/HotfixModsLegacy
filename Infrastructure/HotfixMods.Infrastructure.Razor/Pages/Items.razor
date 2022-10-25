@@ -1,0 +1,196 @@
+﻿@page "/items"
+@using HotfixMods.Infrastructure.Razor.RazorDashboard
+@using HotfixMods.Infrastructure.Razor.Components
+@using HotfixMods.Infrastructure.Razor.Pages.ItemTabs
+@using HotfixMods.Infrastructure.DtoModels
+@using HotfixMods.Infrastructure.DtoModels.Items
+@using HotfixMods.Infrastructure.Razor.Components.Dialogs
+@using HotfixMods.Infrastructure.Services
+@using Core.Enums
+
+@inject IDialogService DialogService
+@inject ItemService DtoService
+
+
+@if (dto != null)
+{
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="LookupAsync_Click">Item Lookup</MudButton>
+        </MudStack>
+        <MudStack Row="true">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="IdAsync_Click">@dto.Id</MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">@(dto.IsUpdate ? "Update" : "Save")</MudButton>
+            </MudStack>
+        </MudStack>
+    <MudPaper>
+        <MudTabs @ref="@mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="pa-6">
+            <ChildContent>
+                <MudTabPanel Text="Properties">
+                    <ItemProperties_Tab Item="dto" ItemLookup="dtoLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Stats">
+                    <ItemStats_Tab Item="dto" ItemLookup="dtoLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Sockets">
+                    <ItemSockets_Tab Item="dto" ItemLookup="dtoLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Textures">
+                    <ItemTextures_Tab Item="dto" ItemLookup="dtoLookup" />
+                </MudTabPanel>
+                <MudTabPanel Text="Geosets">
+                    <ItemGeosets_Tab Item="dto" ItemLookup="dtoLookup" />
+                </MudTabPanel>
+                @for (int i = 0; i < dto.Effects.Count; i++)
+                {
+                    int index = i;
+                    <MudTabPanel Text="@($"Effect #{index}")">
+                        <ItemEffect_Tab ItemEffect="dto.Effects[index]" ItemEffectLookup="@(dtoLookup != null && dtoLookup.Effects.Count >= index ? dtoLookup.Effects[index] : null)" />
+                    </MudTabPanel>
+                }
+            </ChildContent>
+            <Header>
+                <MudTooltip Text="Add new effect">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddEffect_Click" />
+                </MudTooltip>
+                <MudTooltip Text="Remove current effect">
+                    <MudIconButton Icon="@Icons.Filled.Remove" Style="color:white" OnClick="RemoveEffect_Click" Disabled="@(!TabIsRemovable())" />
+                </MudTooltip>
+            </Header>
+
+
+        </MudTabs>
+
+    </MudPaper>
+}
+else
+{
+    <DashboardTable Data="@(dashboard)" Add="AddAsync_Click" Label="Items" />
+}
+
+@code
+{
+    ItemDto? dto;
+    ItemDto? dtoLookup;
+    List<RazorDashboardModel> dashboard;
+    MudTabs mudTabsRef;
+    int numberOfStaticTabs; // excluding Effect-tabs
+
+    protected override async Task OnInitializedAsync()
+    {
+        dashboard = new();
+        var dashboardItems = await DtoService.GetDashboardAsync();
+        foreach (var dashboardItem in dashboardItems)
+        {
+            dashboard.Add(new RazorDashboardModel(
+                dashboardItem.Id,
+                dashboardItem.Name,
+                dashboardItem.AvatarUrl,
+                dashboardItem.Comment,
+                (async () => await EditAsync(dashboardItem.Id)),
+                (async () => await DtoService.DeleteAsync(dashboardItem.Id))
+            ));
+        }
+        await base.OnInitializedAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(dto != null && numberOfStaticTabs == 0)
+            numberOfStaticTabs = mudTabsRef.Panels.Where(p => !p.Text.StartsWith("Effect")).Count();
+        base.OnAfterRender(firstRender);
+    }
+
+    async Task EditAsync(int id)
+    {
+        dto = await OpenSearchDialog(id);
+        this.StateHasChanged();
+    }
+
+    async void AddAsync_Click()
+    {
+        dto = await OpenSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task LookupAsync_Click()
+    {
+        dtoLookup = await OpenSearchDialog();
+        this.StateHasChanged();
+    }
+
+    async Task SaveAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Prompt_Dialog.Prompt), dto.IsUpdate ? Prompt_Dialog.PromptType.Update : Prompt_Dialog.PromptType.Save);
+        parameters.Add(nameof(Prompt_Dialog.ActionAsync), (() => SaveAsync()));
+        var result = await DialogService.Show<Prompt_Dialog>(null, parameters).Result;
+
+        if (!result.Cancelled)
+        {
+            dto.IsUpdate = true;
+        }
+    }
+
+    async void SaveAsync()
+    {
+        await DtoService.SaveAsync(dto);
+    }
+
+    async Task IdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.Id), dto.Id);
+        parameters.Add(nameof(IdButton_Dialog.TDto), typeof(ItemDto));
+        parameters.Add(nameof(IdButton_Dialog.TDtoIsUpdate), dto.IsUpdate);
+        parameters.Add(nameof(IdButton_Dialog.TService), DtoService);
+        var dialog = DialogService.Show<IdButton_Dialog>(null, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && (int)result.Data != -1)
+        {
+            dto.Id = (int)result.Data;
+            dto.IsUpdate = false;
+        }
+    }
+
+    async Task<ItemDto?> OpenSearchDialog(int? id = null)
+    {
+        var dialogParameters = new DialogParameters();
+        dialogParameters.Add(nameof(ItemSearch_Dialog.ItemId), id);
+        var dialog = DialogService.Show<ItemSearch_Dialog>(null, dialogParameters);
+        var dialogResult = await dialog.Result;
+        if (!dialogResult.Cancelled)
+        {
+            var result = (ItemDto)dialogResult.Data;
+            if (null != result)
+            {
+                return (ItemDto)dialogResult.Data;
+            }
+        }
+        return null;
+    }
+
+    async Task AddEffect_Click()
+    {
+        dto.Effects.Add(new ItemEffectDto());
+        await InvokeAsync(() => StateHasChanged());
+        mudTabsRef.ActivatePanel(mudTabsRef.Panels.Count() - 1);
+    }
+
+    void RemoveEffect_Click()
+    {
+        if (dto.Effects.Count > 0)
+        {
+            var currentEffect = mudTabsRef.ActivePanelIndex - numberOfStaticTabs;
+            dto.Effects.RemoveAt(currentEffect);
+            this.StateHasChanged();
+        }
+    }
+
+    bool TabIsRemovable()
+    {
+        return mudTabsRef.ActivePanelIndex > numberOfStaticTabs - 1;
+    }
+}
+

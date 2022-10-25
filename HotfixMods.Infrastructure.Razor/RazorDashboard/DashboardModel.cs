@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Infrastructure.Razor.RazorDashboard
+namespace HotfixMods.Infrastructure.Blazor.RazorDashboard
 {
     public class RazorDashboardModel : DashboardModel
     {

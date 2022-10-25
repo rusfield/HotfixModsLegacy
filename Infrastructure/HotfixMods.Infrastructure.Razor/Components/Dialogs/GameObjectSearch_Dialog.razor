@@ -1,0 +1,90 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject GameObjectService GameObjectService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+                    <MudText Typo="Typo.h6" Align="Align.Center">Search by Game Object ID:</MudText>
+                    <MudNumericField @bind-Value="@GameObjectId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Game Object ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="GameObjectId_Click" />
+                    <MudSpacer />
+                    <MudSpacer />
+
+                    @if (ShowNewOption)
+                    {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GameObjectNew_Click">New</MudButton>
+                        <MudSpacer />
+                        <MudSpacer />
+                    }
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? GameObjectId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    Loader loaderRef = new Loader();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != GameObjectId)
+            await SearchGameObjectById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GameObjectNew_Click()
+    {
+        var gameObjectResult = await GameObjectService.GetNewAsync(loaderRef.SetLoading);
+        ReturnGameObject(gameObjectResult);
+    }
+
+    async Task GameObjectId_Click()
+    {
+        if (null != GameObjectId)
+        {
+            await SearchGameObjectById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchGameObjectById()
+    {
+        var gameObjectResult = await GameObjectService.GetByIdAsync((int)GameObjectId, loaderRef.SetLoading);
+        if (null != gameObjectResult)
+        {
+            ReturnGameObject(gameObjectResult);
+        }
+        else
+        {
+            Snackbar.Add($"No game objects with ID {GameObjectId} found", Severity.Info);
+        }
+    }
+
+    void ReturnGameObject(GameObjectDto gameObject)
+    {
+        Dialog.Close(gameObject);
+    }
+}

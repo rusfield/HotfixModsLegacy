@@ -1,0 +1,92 @@
+﻿@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.DtoModels
+
+@inject ISnackbar Snackbar
+@inject AnimKitService AnimKitService
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Style="cursor:pointer">
+    <MudDialog>
+        <DialogContent>
+            <Loader @ref="loaderRef" />
+            @if (!loaderRef.IsLoading)
+            {
+                <MudStack Style="max-height: 600px; overflow-y: scroll">
+
+                    <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
+                    <MudNumericField @bind-Value="@AnimKitId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Anim Kit ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="AnimKitId_Click" />
+                    <MudSpacer />
+                    <MudSpacer />
+
+                    @if (ShowNewOption)
+                    {
+                        <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="AnimKitNew_Click">New</MudButton>
+                        <MudSpacer />
+                        <MudSpacer />
+                    }
+
+                </MudStack>
+            }
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+@code
+{
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? AnimKitId { get; set; }
+
+    [Parameter]
+    public bool ShowNewOption { get; set; } = true;
+
+    Loader loaderRef = new Loader();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && null != AnimKitId)
+            await SearchAnimKitById();
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task AnimKitId_Click()
+    {
+        if (null != AnimKitId)
+        {
+            await SearchAnimKitById();
+        }
+        else
+        {
+            Snackbar.Add($"Enter a valid ID", Severity.Info);
+        }
+    }
+
+
+    async Task SearchAnimKitById()
+    {
+        var animKitResult = await AnimKitService.GetByIdAsync((int)AnimKitId, loaderRef.SetLoading);
+        if (null != animKitResult)
+        {
+            ReturnAnimKit(animKitResult);
+        }
+        else
+        {
+            Snackbar.Add($"No Anim Kits with ID {AnimKitId} found", Severity.Info);
+        }
+    }
+
+    async Task AnimKitNew_Click()
+    {
+        var animKitResult = await AnimKitService.GetNewAsync();
+        ReturnAnimKit(animKitResult);
+    }
+
+    void ReturnAnimKit(AnimKitDto animKit)
+    {
+        Dialog.Close(animKit);
+    }
+}

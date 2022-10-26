@@ -5,18 +5,18 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ChrCustomizationChoice
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
-        public int ChrCustomizationOptionId { get; set; }
-        public int ChrCustomizationReqId { get; set; }
-        public int ChrCustomizationVisReqId { get; set; }
-        public ushort OrderIndex { get; set; }
-        public ushort UiOrderIndex { get; set; }
-        public int Flags { get; set; }
-        public int AddedInPatch { get; set; }
-        public int SwatchColor1 { get; set; }
-        public int SwatchColor2 { get; set; }
-        public int VerifiedBuild { get; set; }
+        public string Name { get; set; } = "";
+        public int Id { get; set; } = 0;
+        public int ChrCustomizationOptionId { get; set; } = 0;
+        public int ChrCustomizationReqId { get; set; } = 0;
+        public int ChrCustomizationVisReqId { get; set; } = 0;
+        public ushort OrderIndex { get; set; } = 0;
+        public ushort UiOrderIndex { get; set; } = 0;
+        public int Flags { get; set; } = 0;
+        public int AddedInPatch { get; set; } = 0;
+        public int SwatchColor1 { get; set; } = 0;
+        public int SwatchColor2 { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

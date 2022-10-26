@@ -1,39 +1,41 @@
 ﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Flags;
 
 namespace HotfixMods.Core.Models.Db2
 {
     [HotfixesSchema]
     public class CreatureDisplayInfo
     {
-        public int Id { get; set; }
-        public ushort ModelId { get; set; }
-        public ushort SoundId { get; set; }
-        public sbyte SizeClass { get; set; }
-        public decimal CreatureModelScale { get; set; }
-        public byte CreatureModelAlpha { get; set; }
-        public byte BloodId { get; set; }
-        public int ExtendedDisplayInfoId { get; set; }
-        public ushort NPCSoundId { get; set; }
-        public ushort ParticleColorId { get; set; }
-        public int PortraitCreatureDisplayInfoId { get; set; }
-        public int PortraitTextureFileDataId { get; set; }
-        public ushort ObjectEffectPackageId { get; set; }
-        public ushort AnimReplacementSetId { get; set; }
-        public byte Flags { get; set; }
-        public int StateSpellVisualKitId { get; set; }
-        public decimal PlayerOverrideScale { get; set; }
-        public decimal PetInstanceScale { get; set; }
-        public sbyte UnarmedWeaponType { get; set; }
-        public int MountPoofSpellVisualKitId { get; set; }
-        public int DissolveEffectId { get; set; }
-        public sbyte Gender { get; set; }
-        public int DissolveOutEffectId { get; set; }
-        public sbyte CreatureModelMinLod { get; set; }
-        public int TextureVariationFileDataID1 { get; set; }
-        public int TextureVariationFileDataID2 { get; set; }
-        public int TextureVariationFileDataID3 { get; set; }
-        public int TextureVariationFileDataID4 { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int Id { get; set; } = 0;
+        public ushort ModelId { get; set; } = 0;
+        public ushort SoundId { get; set; } = 0;
+        public sbyte SizeClass { get; set; } = 0;
+        public decimal CreatureModelScale { get; set; } = 1;
+        public byte CreatureModelAlpha { get; set; } = 255;
+        public byte BloodId { get; set; } = 0;
+        public int ExtendedDisplayInfoId { get; set; } = 0;
+        public ushort NPCSoundId { get; set; } = 0;
+        public ushort ParticleColorId { get; set; } = 0;
+        public int PortraitCreatureDisplayInfoId { get; set; } = 0;
+        public int PortraitTextureFileDataId { get; set; } = 0;
+        public ushort ObjectEffectPackageId { get; set; } = 0;
+        public ushort AnimReplacementSetId { get; set; } = 0;
+        public CreatureDisplayInfoFlags Flags { get; set; } = CreatureDisplayInfoFlags.DEFAULT;
+        public int StateSpellVisualKitId { get; set; } = 0;
+        public decimal PlayerOverrideScale { get; set; } = 0;
+        public decimal PetInstanceScale { get; set; } = 1;
+        public sbyte UnarmedWeaponType { get; set; } = -1;
+        public int MountPoofSpellVisualKitId { get; set; } = 0;
+        public int DissolveEffectId { get; set; } = 0;
+        public CreatureDisplayInfoGender Gender { get; set; } = CreatureDisplayInfoGender.MALE;
+        public int DissolveOutEffectId { get; set; } = 0;
+        public sbyte CreatureModelMinLod { get; set; } = 0;
+        public int TextureVariationFileDataID1 { get; set; } = 0; 
+        public int TextureVariationFileDataID2 { get; set; } = 0;
+        public int TextureVariationFileDataID3 { get; set; } = 0;
+        public int TextureVariationFileDataID4 { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

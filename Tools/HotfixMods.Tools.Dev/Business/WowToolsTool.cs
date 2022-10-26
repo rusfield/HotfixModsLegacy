@@ -15,11 +15,15 @@ namespace HotfixMods.Tools.Dev.Business
         }
         public async Task<string> FlagToCSharp(string wowToolsFlag)
         {
-            var flagRows = wowToolsFlag.Split("\r\n");
-            var flags = flagRows.ToDictionary(flag => Convert.ToInt64(flag.Split(":")[0].Trim(), 16), flag => flag.Split(":")[1]);
+            await TextCopy.ClipboardService.SetTextAsync("");
+            var flagRows = wowToolsFlag.Split("\r\n").ToList();
+            string flagName = flagRows[0].Split(" ")[1];
+            await WriteToConsoleAndClipboard(char.ToUpper(flagName[0]) + flagName.Substring(1));
+
+            var flags = flagRows.Where(f => f.Contains(":")).ToDictionary(flag => Convert.ToInt64(flag.Split(":")[0].Trim(), 16), flag => flag.Split(":")[1]);
 
             await WriteToConsoleAndClipboard("[Flags]");
-            await WriteToConsoleAndClipboard("public enum FlagName : long");
+            await WriteToConsoleAndClipboard($"public enum {flagName} : long");
             await WriteToConsoleAndClipboard("{");
             await WriteToConsoleAndClipboard($"DEFAULT = 0,");
             for(long i = 1; i <= 2147483648; i = i * 2)
@@ -27,6 +31,9 @@ namespace HotfixMods.Tools.Dev.Business
                 if (flags.ContainsKey(i))
                 {
                     var name = flags[i];
+
+                    name = name.Replace("Don\\'t", "do not");
+
                     name = name.Split("'")[1].Replace(" ", "_").ToUpper();
                     await WriteToConsoleAndClipboard($"{name} = {i},");
                 }
@@ -47,12 +54,15 @@ namespace HotfixMods.Tools.Dev.Business
 
         public async Task<string> EnumToCSharp(string wowToolsEnum)
         {
-            var enumRows = wowToolsEnum.Split("\r\n");
-            var enums = enumRows.ToDictionary(en => Convert.ToInt32(en.Split(":")[0].Trim()), en => en.Split(":")[1]);
+            await TextCopy.ClipboardService.SetTextAsync("");
+            var enumRows = wowToolsEnum.Split("\r\n").ToList();
+            string enumName = enumRows[0].Split(" ")[1];
+            await WriteToConsoleAndClipboard(char.ToUpper(enumName[0]) + enumName.Substring(1));
+            var enums = enumRows.Where(e => e.Contains(":")).ToDictionary(en => Convert.ToInt32(en.Split(":")[0].Trim()), en => en.Split(":")[1]);
 
-            await WriteToConsoleAndClipboard("public enum EnumName");
+            await WriteToConsoleAndClipboard($"public enum {enumName} : int");
             await WriteToConsoleAndClipboard("{");
-            await WriteToConsoleAndClipboard($"DEFAULT = 0,");
+
             for (int i = 0; i <= enums.Max(e => e.Key); i++)
             {
                 if (enums.ContainsKey(i))
@@ -60,6 +70,7 @@ namespace HotfixMods.Tools.Dev.Business
                     var name = enums[i];
 
                     name = name.Replace(" - ", " ");
+                    name = name.Replace("(", "").Replace(")", "");
 
                     name = name.Split("'")[1].Replace(" ", "_").ToUpper();
                     await WriteToConsoleAndClipboard($"{name} = {i},");

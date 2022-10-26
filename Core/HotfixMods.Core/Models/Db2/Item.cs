@@ -19,5 +19,4 @@ namespace HotfixMods.Core.Models.Db2
         public int CraftingQualityId { get; set; }
         public int VerifiedBuild { get; set; }
     }
-
 }

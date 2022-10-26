@@ -7,9 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enums\Db2\" />
     <Folder Include="Enums\TrinityCore\" />
-    <Folder Include="Flags\" />
   </ItemGroup>
 
 </Project>

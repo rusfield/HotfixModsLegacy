@@ -6,52 +6,52 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class CreatureSoundData
     {
-        public int Id { get; set; }
-        public uint SoundExertionId { get; set; }
-        public uint SoundExertionCriticalId { get; set; }
-        public uint SoundInjuryId { get; set; }
-        public uint SoundInjuryCriticalId { get; set; }
-        public uint SoundInjuryCrushingBlowId { get; set; }
-        public uint SoundDeathId { get; set; }
-        public uint SoundStunId { get; set; }
-        public uint SoundStandId { get; set; }
-        public uint SoundFootstepId { get; set; }
-        public uint SoundAggroId { get; set; }
-        public uint SoundWingFlapId { get; set; }
-        public uint SoundWingGlideId { get; set; }
-        public uint SoundAlertId { get; set; }
-        public uint SoundJumpStartId { get; set; }
-        public uint SoundJumpEndId { get; set; }
-        public uint SoundPetAttackId { get; set; }
-        public uint SoundPetOrderId { get; set; }
-        public uint SoundPetDismissId { get; set; }
-        public uint LoopSoundId { get; set; }
-        public uint BirthSoundId { get; set; }
-        public uint SpellCastDirectedSoundId { get; set; }
-        public uint SubmergeSoundId { get; set; }
-        public uint SubmergedSoundId { get; set; }
-        public uint WindupSoundId { get; set; }
-        public uint WindupCriticalSoundId { get; set; }
-        public uint ChargeSoundId { get; set; }
-        public uint ChargeCriticalSoundId { get; set; }
-        public uint BattleShoutSoundId { get; set; }
-        public uint BattleShoutCriticalSoundId { get; set; }
-        public uint TauntSoundId { get; set; }
-        public uint CreatureSoundDataIDPet { get; set; }
-        public decimal FidgetDelaySecondsMin { get; set; }
-        public decimal FidgetDelaySecondsMax { get; set; }
-        public byte CreatureImpactType { get; set; }
-        public uint NPCSoundId { get; set; }
-        public uint SoundFidget1 { get; set; }
-        public uint SoundFidget2 { get; set; }
-        public uint SoundFidget3 { get; set; }
-        public uint SoundFidget4 { get; set; }
-        public uint SoundFidget5 { get; set; }
-        public uint CustomAttack1 { get; set; }
-        public uint CustomAttack2 { get; set; }
-        public uint CustomAttack3 { get; set; }
-        public uint CustomAttack4 { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int Id { get; set; } = 0;
+        public uint SoundExertionId { get; set; } = 0;
+        public uint SoundExertionCriticalId { get; set; } = 0;
+        public uint SoundInjuryId { get; set; } = 0;
+        public uint SoundInjuryCriticalId { get; set; } = 0;
+        public uint SoundInjuryCrushingBlowId { get; set; } = 0;
+        public uint SoundDeathId { get; set; } = 0;
+        public uint SoundStunId { get; set; } = 0;
+        public uint SoundStandId { get; set; } = 0;
+        public uint SoundFootstepId { get; set; } = 0;
+        public uint SoundAggroId { get; set; } = 0;
+        public uint SoundWingFlapId { get; set; } = 0;
+        public uint SoundWingGlideId { get; set; } = 0;
+        public uint SoundAlertId { get; set; } = 0;
+        public uint SoundJumpStartId { get; set; } = 0;
+        public uint SoundJumpEndId { get; set; } = 0;
+        public uint SoundPetAttackId { get; set; } = 0;
+        public uint SoundPetOrderId { get; set; } = 0;
+        public uint SoundPetDismissId { get; set; } = 0;
+        public uint LoopSoundId { get; set; } = 0;
+        public uint BirthSoundId { get; set; } = 0;
+        public uint SpellCastDirectedSoundId { get; set; } = 0;
+        public uint SubmergeSoundId { get; set; } = 0;
+        public uint SubmergedSoundId { get; set; } = 0;
+        public uint WindupSoundId { get; set; } = 0;
+        public uint WindupCriticalSoundId { get; set; } = 0;
+        public uint ChargeSoundId { get; set; } = 0;
+        public uint ChargeCriticalSoundId { get; set; } = 0;
+        public uint BattleShoutSoundId { get; set; } = 0;
+        public uint BattleShoutCriticalSoundId { get; set; } = 0;
+        public uint TauntSoundId { get; set; } = 0;
+        public uint CreatureSoundDataIDPet { get; set; } = 0;
+        public decimal FidgetDelaySecondsMin { get; set; } = 0;
+        public decimal FidgetDelaySecondsMax { get; set; } = 0;
+        public byte CreatureImpactType { get; set; } = 0;
+        public uint NPCSoundId { get; set; } = 0;
+        public uint SoundFidget1 { get; set; } = 0;
+        public uint SoundFidget2 { get; set; } = 0;
+        public uint SoundFidget3 { get; set; } = 0;
+        public uint SoundFidget4 { get; set; } = 0;
+        public uint SoundFidget5 { get; set; } = 0;
+        public uint CustomAttack1 { get; set; } = 0;
+        public uint CustomAttack2 { get; set; } = 0;
+        public uint CustomAttack3 { get; set; } = 0;
+        public uint CustomAttack4 { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

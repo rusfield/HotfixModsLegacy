@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<AnimKitDto?> GetById(int id)
+        public async Task<AnimKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             var animKit = await GetSingleByIdAsync<AnimKit>(id);
             if (null == animKit)

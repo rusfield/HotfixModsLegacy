@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace HotfixMods.Tools.Dev.Business
 {
 
-    internal class DbDefinitionTool
+    public class DbDefinitionTool
     {
         public async Task<string> DefinitionToCSharp(string defName, string build)
         {
@@ -18,7 +18,7 @@ namespace HotfixMods.Tools.Dev.Business
             await WriteToConsoleAndClipboard("{");
             foreach (var def in definition.ColumnDefinitions)
             {
-                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString().Replace("ID", "Id"))} {def.Name} " + "{ get; set; }");
+                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString().Replace("ID", "Id", StringComparison.InvariantCulture))} {def.Name} " + "{ get; set; }");
             }
             await WriteToConsoleAndClipboard("}");
             return (await TextCopy.ClipboardService.GetTextAsync())!;

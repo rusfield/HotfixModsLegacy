@@ -13,7 +13,7 @@
             }
             if(value.GetType() != column.First().Type)
             {
-                throw new Exception("Column {columnName} of type {column.First().Type} can not be set to type {value.GetType()}.");
+                throw new Exception($"Column {columnName} of type {column.First().Type} can not be set to type {value.GetType()}.");
             }
             column.First().Value = value;
         }

@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 AnimKit = animKit,
-                AnimKitSegments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id))
+                AnimKitSegments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))
             };
         }
 
@@ -46,7 +46,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task DeleteAsync(int id)
         {
             await DeleteAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
-            await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id));
+            await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
         }
     }
 }

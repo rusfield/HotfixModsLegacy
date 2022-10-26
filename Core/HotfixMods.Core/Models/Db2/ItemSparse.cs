@@ -1,0 +1,109 @@
+﻿using HotfixMods.Core.Attributes;
+
+namespace HotfixMods.Core.Models.Db2
+{
+    [HotfixesSchema]
+    public class ItemSparse
+    {
+        public int Id { get; set; }
+        public long AllowableRace { get; set; }
+        public string Description { get; set; }
+        public string Display3 { get; set; }
+        public string Display2 { get; set; }
+        public string Display1 { get; set; }
+        public string Display { get; set; }
+        public int ExpansionId { get; set; }
+        public decimal DmgVariance { get; set; }
+        public int LimitCategory { get; set; }
+        public uint DurationInInventory { get; set; }
+        public decimal QualityModifier { get; set; }
+        public uint BagFamily { get; set; }
+        public int StartQuestId { get; set; }
+        public int LanguageId { get; set; }
+        public decimal ItemRange { get; set; }
+        public decimal StatPercentageOfSocket1 { get; set; }
+        public decimal StatPercentageOfSocket2 { get; set; }
+        public decimal StatPercentageOfSocket3 { get; set; }
+        public decimal StatPercentageOfSocket4 { get; set; }
+        public decimal StatPercentageOfSocket5 { get; set; }
+        public decimal StatPercentageOfSocket6 { get; set; }
+        public decimal StatPercentageOfSocket7 { get; set; }
+        public decimal StatPercentageOfSocket8 { get; set; }
+        public decimal StatPercentageOfSocket9 { get; set; }
+        public decimal StatPercentageOfSocket10 { get; set; }
+        public int StatPercentEditor1 { get; set; }
+        public int StatPercentEditor2 { get; set; }
+        public int StatPercentEditor3 { get; set; }
+        public int StatPercentEditor4 { get; set; }
+        public int StatPercentEditor5 { get; set; }
+        public int StatPercentEditor6 { get; set; }
+        public int StatPercentEditor7 { get; set; }
+        public int StatPercentEditor8 { get; set; }
+        public int StatPercentEditor9 { get; set; }
+        public int StatPercentEditor10 { get; set; }
+        public int Stackable { get; set; }
+        public int MaxCount { get; set; }
+        public int MinReputation { get; set; }
+        public uint RequiredAbility { get; set; }
+        public uint SellPrice { get; set; }
+        public uint BuyPrice { get; set; }
+        public uint VendorStackCount { get; set; }
+        public decimal PriceVariance { get; set; }
+        public decimal PriceRandomValue { get; set; }
+        public int Flags1 { get; set; }
+        public int Flags2 { get; set; }
+        public int Flags3 { get; set; }
+        public int Flags4 { get; set; }
+        public int OppositeFactionItemId { get; set; }
+        public int ModifiedCraftingReagentItemId { get; set; }
+        public int ContentTuningId { get; set; }
+        public int PlayerLevelToItemLevelCurveId { get; set; }
+        public ushort ItemNameDescriptionId { get; set; }
+        public ushort RequiredTransmogHoliday { get; set; }
+        public ushort RequiredHoliday { get; set; }
+        public ushort Gem_properties { get; set; }
+        public ushort Socket_match_enchantment_Id { get; set; }
+        public ushort TotemCategoryId { get; set; }
+        public ushort InstanceBound { get; set; }
+        public ushort ZoneBound1 { get; set; }
+        public ushort ZoneBound2 { get; set; }
+        public ushort ItemSet { get; set; }
+        public ushort LockId { get; set; }
+        public ushort PageId { get; set; }
+        public ushort ItemDelay { get; set; }
+        public ushort MinFactionId { get; set; }
+        public ushort RequiredSkillRank { get; set; }
+        public ushort RequiredSkill { get; set; }
+        public ushort ItemLevel { get; set; }
+        public short AllowableClass { get; set; }
+        public byte ArtifactId { get; set; }
+        public byte SpellWeight { get; set; }
+        public byte SpellWeightCategory { get; set; }
+        public byte SocketType1 { get; set; }
+        public byte SocketType2 { get; set; }
+        public byte SocketType3 { get; set; }
+        public byte SheatheType { get; set; }
+        public byte Material { get; set; }
+        public byte PageMaterialId { get; set; }
+        public byte Bonding { get; set; }
+        public byte DamageType { get; set; }
+        public sbyte StatModifier_bonusStat1 { get; set; }
+        public sbyte StatModifier_bonusStat2 { get; set; }
+        public sbyte StatModifier_bonusStat3 { get; set; }
+        public sbyte StatModifier_bonusStat4 { get; set; }
+        public sbyte StatModifier_bonusStat5 { get; set; }
+        public sbyte StatModifier_bonusStat6 { get; set; }
+        public sbyte StatModifier_bonusStat7 { get; set; }
+        public sbyte StatModifier_bonusStat8 { get; set; }
+        public sbyte StatModifier_bonusStat9 { get; set; }
+        public sbyte StatModifier_bonusStat10 { get; set; }
+        public byte ContainerSlots { get; set; }
+        public byte RequiredPVPMedal { get; set; }
+        public byte RequiredPVPRank { get; set; }
+        public sbyte RequiredLevel { get; set; }
+        public sbyte InventoryType { get; set; }
+        public sbyte OverallQualityId { get; set; }
+        public int VerifiedBuild { get; set; }
+    }
+
+}

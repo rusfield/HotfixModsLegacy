@@ -1,21 +1,16 @@
 ﻿using HotfixMods.Core.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Models.Db2
 {
     [HotfixesSchema]
     public class AnimKitSegment
     {
-        public int ID { get; set; }
-        public ushort ParentAnimKitID { get; set; }
+        public int Id { get; set; }
+        public ushort ParentAnimKitId { get; set; }
         public byte OrderIndex { get; set; }
-        public ushort AnimID { get; set; }
+        public ushort AnimId { get; set; }
         public uint AnimStartTime { get; set; }
-        public ushort AnimKitConfigID { get; set; }
+        public ushort AnimKitConfigId { get; set; }
         public byte StartCondition { get; set; }
         public byte StartConditionParam { get; set; }
         public uint StartConditionDelay { get; set; }

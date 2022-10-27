@@ -1,7 +1,7 @@
 ﻿namespace HotfixMods.Core.Enums.Db2
 {
     // ChrRaces table
-    public enum ChrRaceId : sbyte
+    public enum ChrRaceId
     {
         DEFAULT = 0,
         HUMAN = 1,

@@ -1,5 +1,4 @@
 ﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Enums.Db2;
 
 namespace HotfixMods.Core.Models.Db2
 {
@@ -7,8 +6,8 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfoExtra
     {
         public int Id { get; set; } = 0;
-        public ChrRaceId DisplayRaceId { get; set; } = ChrRaceId.DEFAULT;
-        public CreatureDisplayInfoExtraSexId DisplaySexId { get; set; } = CreatureDisplayInfoExtraSexId.MALE;
+        public sbyte DisplayRaceId { get; set; } = 0;
+        public sbyte DisplaySexId { get; set; } = 0;
         public sbyte DisplayClassId { get; set; } = 0;
         public sbyte Flags { get; set; } = 0;
         public int BakeMaterialResourcesId { get; set; } = 0;

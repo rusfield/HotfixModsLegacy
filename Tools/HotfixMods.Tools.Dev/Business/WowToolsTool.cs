@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,32 +56,56 @@ namespace HotfixMods.Tools.Dev.Business
         public async Task<string> EnumToCSharp(string wowToolsEnum)
         {
             await TextCopy.ClipboardService.SetTextAsync("");
-            var enumRows = wowToolsEnum.Split("\r\n").ToList();
+            var enumRows = wowToolsEnum.Split("\r\n").Where(e => !e.StartsWith("//")).ToList();
+
             string enumName = enumRows[0].Split(" ")[1];
-            await WriteToConsoleAndClipboard(char.ToUpper(enumName[0]) + enumName.Substring(1));
-            var enums = enumRows.Where(e => e.Contains(":")).ToDictionary(en => Convert.ToInt32(en.Split(":")[0].Trim()), en => en.Split(":")[1]);
+            var isArray = enumRows[0].StartsWith("let");
 
-            await WriteToConsoleAndClipboard($"public enum {enumName} : int");
-            await WriteToConsoleAndClipboard("{");
-
-            for (int i = 0; i <= enums.Max(e => e.Key); i++)
+            var dictionaries = new Dictionary<string, Dictionary<int, string>>();
+            int skip = 0; // header
+            int take = 0;
+            enumRows = enumRows.Skip(1).ToList(); // Remove header
+            foreach (var enumRow in enumRows) 
             {
-                if (enums.ContainsKey(i))
+                take++;
+                if (enumRow.Equals(string.Empty))
                 {
-                    var name = enums[i];
-
-                    name = name.Replace(" - ", " ");
-                    name = name.Replace("(", "").Replace(")", "");
-
-                    name = name.Split("'")[1].Replace(" ", "_").ToUpper();
-                    await WriteToConsoleAndClipboard($"{name} = {i},");
-                }
-                else
-                {
-                    await WriteToConsoleAndClipboard($"UNK_{i} = {i},");
+                    var tempKey = isArray ? enumRows.Skip(skip).First().Split(" ")[0].Replace("[", "").Replace("]", "") : enumName;
+                    Console.WriteLine(tempKey);
+                    dictionaries.Add(char.ToUpper(tempKey[0]) + tempKey.Substring(1), enumRows.Skip(skip).Take(take).Where(e => e.Contains(":")).ToDictionary(en => Convert.ToInt32(en.Split(":")[0].Trim()), en => en.Split(":")[1]));
+                    skip += take;
+                    take = 0;
                 }
             }
-            await WriteToConsoleAndClipboard("}");
+            var key = isArray ? enumRows.Skip(skip).First().Split(" ")[0].Replace("[", "").Replace("]", "") : enumName;
+            dictionaries.Add(char.ToUpper(key[0]) + key.Substring(1), enumRows.Skip(skip).Take(take).Where(e => e.Contains(":")).ToDictionary(en => Convert.ToInt32(en.Split(":")[0].Trim()), en => en.Split(":")[1]));
+
+            foreach (var enums in dictionaries)
+            {
+                await WriteToConsoleAndClipboard($"public enum {enums.Key}");
+                await WriteToConsoleAndClipboard("{");
+
+                for (int i = 0; i <= enums.Value.Max(e => e.Key); i++)
+                {
+                    if (enums.Value.ContainsKey(i))
+                    {
+                        var name = enums.Value[i];
+
+                        name = name.Replace(" - ", " ");
+                        name = name.Replace("(", "").Replace(")", "");
+                        name = name.Replace("&", "AND");
+                        name = name.Replace("-", " ");
+
+                        name = name.Split("'")[1].Replace(" ", "_").ToUpper();
+                        await WriteToConsoleAndClipboard($"{name} = {i},");
+                    }
+                    else
+                    {
+                        await WriteToConsoleAndClipboard($"UNK_{i} = {i},");
+                    }
+                }
+                await WriteToConsoleAndClipboard("}\r\n");
+            }
             return (await TextCopy.ClipboardService.GetTextAsync())!;
         }
 

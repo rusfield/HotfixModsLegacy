@@ -1,7 +1,7 @@
 ﻿namespace HotfixMods.Core.Enums.Db2
 {
     // ChrModel table
-    public enum ChrModelId : int
+    public enum ChrModelId
     {
         DEFAULT = 0,
 

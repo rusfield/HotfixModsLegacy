@@ -1,5 +1,4 @@
 ﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Flags;
 
 namespace HotfixMods.Core.Models.Db2
@@ -21,14 +20,14 @@ namespace HotfixMods.Core.Models.Db2
         public int PortraitTextureFileDataId { get; set; } = 0;
         public ushort ObjectEffectPackageId { get; set; } = 0;
         public ushort AnimReplacementSetId { get; set; } = 0;
-        public CreatureDisplayInfoFlags Flags { get; set; } = CreatureDisplayInfoFlags.DEFAULT;
+        public sbyte Flags { get; set; } = 0;
         public int StateSpellVisualKitId { get; set; } = 0;
         public decimal PlayerOverrideScale { get; set; } = 0;
         public decimal PetInstanceScale { get; set; } = 1;
         public sbyte UnarmedWeaponType { get; set; } = -1;
         public int MountPoofSpellVisualKitId { get; set; } = 0;
         public int DissolveEffectId { get; set; } = 0;
-        public CreatureDisplayInfoGender Gender { get; set; } = CreatureDisplayInfoGender.MALE;
+        public sbyte Gender { get; set; } = 0;
         public int DissolveOutEffectId { get; set; } = 0;
         public sbyte CreatureModelMinLod { get; set; } = 0;
         public int TextureVariationFileDataID1 { get; set; } = 0; 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums.Db2
 {
-    public enum CreatureDisplayInfoExtraSexId : sbyte
+    public enum CreatureDisplayInfoExtraSexId
     {
         MALE = 0,
         FEMALE = 1

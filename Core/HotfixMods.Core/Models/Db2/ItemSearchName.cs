@@ -2,6 +2,8 @@
 
 namespace HotfixMods.Core.Models.Db2
 {
+    // TODO: Should get most values from ItemSparse?
+
     [HotfixesSchema]
     public class ItemSearchName
     {

@@ -95,6 +95,8 @@ namespace HotfixMods.Tools.Dev.Business
                         name = name.Replace("(", "").Replace(")", "");
                         name = name.Replace("&", "AND");
                         name = name.Replace("-", " ");
+                        name = name.Replace("can't", "can not");
+                        name = name.Replace("don't", "do not");
 
                         name = name.Split("'")[1].Replace(" ", "_").ToUpper();
                         await WriteToConsoleAndClipboard($"{name} = {i},");

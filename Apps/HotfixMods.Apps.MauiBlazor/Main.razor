@@ -1,7 +1,7 @@
 ﻿@using HotfixMods.Infrastructure.Razor
 @using System.Reflection
 
-<Router AppAssembly="@typeof(Main).Assembly" AdditionalAssemblies="@(new List<Assembly>(){ Assembly.Load(nameof(HotfixMods.Infrastructure.Razor)) })">
+<Router AppAssembly="@typeof(Main).Assembly" AdditionalAssemblies="@(new List<Assembly>(){ Assembly.Load("HotfixMods.Infrastructure.Razor") })">
 	<Found Context="routeData">
 		<RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
 		<FocusOnNavigate RouteData="@routeData" Selector="h1" />

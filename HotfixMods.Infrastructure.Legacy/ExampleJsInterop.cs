@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace HotfixMods.Infrastructure.Razor
+namespace HotfixMods.Infrastructure.Legacy
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -16,7 +16,7 @@ namespace HotfixMods.Infrastructure.Razor
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/HotfixMods.Infrastructure.Razor/exampleJsInterop.js").AsTask());
+                "import", "./_content/HotfixMods.Infrastructure.Legacy/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

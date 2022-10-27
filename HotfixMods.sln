@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Console", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.MauiBlazor", "Apps\HotfixMods.Apps.MauiBlazor\HotfixMods.Apps.MauiBlazor.csproj", "{616687E2-19C1-44ED-B245-121BFA49D413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Infrastructure.Razor", "Infrastructure\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Razor", "Infrastructure\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Infrastructure.Legacy", "HotfixMods.Infrastructure.Legacy\HotfixMods.Infrastructure.Legacy.csproj", "{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +88,10 @@ Global
 		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{616687E2-19C1-44ED-B245-121BFA49D413} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0} = {18C44F9A-9533-48CE-9161-823B458141BB}
+		{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06} = {18C44F9A-9533-48CE-9161-823B458141BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

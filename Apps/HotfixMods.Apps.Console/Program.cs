@@ -27,13 +27,13 @@ while (true)
 */
 
 
-/*
+
 var importTool = new Db2ImportTool();
-await importTool.Db2FileToDb2MySql("AnimKit", "10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "hotfix_mods", "anim_kit", "localhost", "3306", "root", "root");
+await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "ItemSearchName", "hotfix_mods", "item_search_name", "localhost", "3306", "root", "root");
 Console.WriteLine("Done");
-*/
 
 
+/*
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -56,6 +56,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
+*/
 
 
 

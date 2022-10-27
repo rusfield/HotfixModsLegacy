@@ -13,24 +13,45 @@
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="0">
+    <MudAppBar>
+        <MudDynamicTabs Centered="true" Color="Color.Dark" Style="width:100%" TabPanelHeaderPosition="TabHeaderPosition.After">
+            <Header>
+                <MudTooltip Text="New">
+                    <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="NewTab_Click" />
+                </MudTooltip>
+            </Header>
+            <ChildContent>
+                <MudTabPanel Text="Tab One">
+                </MudTabPanel>
+                <MudTabPanel Text="Tab Two">
+                </MudTabPanel>
+                <MudTabPanel Text="Tab Three">
+                </MudTabPanel>
+            </ChildContent>
+        </MudDynamicTabs>
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_menuOpen" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6" Align="Align.Center" Style="width:100%">My App</MudText>
+        </MudDrawerHeader>
         <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="3" Style="width:100%;">
-            <MudIconButton Icon="@Icons.Filled.MonitorHeart" Color="currentHref == hrefHealth ? Color.Primary : Color.Inherit" Size="Size.Small" OnClick="(() => Navigate(hrefHealth))" />
-            <MudIconButton Icon="@Icons.Filled.Settings" Color="currentHref == hrefSettings ? Color.Primary : Color.Inherit" Size="Size.Small" OnClick="(() => Navigate(hrefSettings))" />
+            <MudIconButton Icon="@Icons.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
+            <MudIconButton Icon="@Icons.Filled.Settings" Color="Color.Inherit" Size="Size.Small"  />
             <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
-            <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="currentHref == hrefCreature ? Color.Primary : Color.Inherit" OnClick="(() => Navigate(hrefCreature))" />
-            <MudIconButton Icon="@Icons.Filled.Security" Color="currentHref == hrefItem ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefItem))" />
-            <MudIconButton Icon="@Icons.Filled.LocalFireDepartment" Color="currentHref == hrefSpells ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefSpells))" />
-            <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="currentHref == hrefGameObjects ? Color.Primary : Color.Inherit" Size="Size.Large" OnClick="(() => Navigate(hrefGameObjects))" />
+            <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit"  />
+            <MudIconButton Icon="@Icons.Filled.Security" Color="Color.Inherit" Size="Size.Large"  />
+            <MudIconButton Icon="@Icons.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large"  />
+            <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large"  />
 
             <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
                 <ActivatorContent>
-                    <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="new List<string>(){ hrefSpellVisualKits, hrefSoundKits, hrefAnimKits }.Any(c => c == currentHref) ? Color.Primary : Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                    <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
                 </ActivatorContent>
                 <ChildContent>
-                    <MudMenuItem OnClick="(() => Navigate(hrefSpellVisualKits))">Spell Visual Kits</MudMenuItem>
-                    <MudMenuItem OnClick="(() => Navigate(hrefSoundKits))">Sound Kits</MudMenuItem>
-                    <MudMenuItem OnClick="(() => Navigate(hrefAnimKits))">Anim Kits</MudMenuItem>
+                    <MudMenuItem>Spell Visual Kits</MudMenuItem>
+                    <MudMenuItem>Sound Kits</MudMenuItem>
+                    <MudMenuItem>Anim Kits</MudMenuItem>
+                    <MudMenuItem>Custom Hotfix</MudMenuItem>
                 </ChildContent>
             </MudMenu>
 
@@ -38,7 +59,7 @@
             <MudText Color="Color.Inherit" Typo="Typo.subtitle2">Hotfix Mods</MudText>
 
         </MudStack>
-    </MudAppBar>
+    </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
             <ErrorBoundary>
@@ -56,22 +77,15 @@
 @code {
     private MudTheme _theme = new();
 
-    string hrefHealth = "health";
-    string hrefSettings = "settings";
-    string hrefCreature = "creatures";
-    string hrefItem = "items";
-    string hrefGameObjects = "game-objects";
-    string hrefSoundKits = "sound-kits";
-    string hrefAnimKits = "anim-kits";
-    string hrefSpellVisualKits = "spell-visual-kits";
-    string hrefSpells = "spells";
+    bool _menuOpen = true;
 
-    string currentHref;
-
-    void Navigate(string href)
+    void NewTab_Click()
     {
-        currentHref = href;
-        this.StateHasChanged();
-        NavigationManager.NavigateTo($"/{href}");
+        _menuOpen = true;
+    }
+
+    void CloseTab_Click()
+    {
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿@using HotfixMods.Core.Models;
+﻿@using HotfixMods.Core.Models
+@using HotfixMods.Infrastructure.Razor.Pages.GenericHotfix
+
 @inject IDialogService DialogService
 
 @if(null == PageTab.Dto)
@@ -7,11 +9,11 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false">
+    <TabContentEditHeader IsUpdate="false" ValueLookupCallback="ValueLookupAsync_Click">
             <ChildContent>
                 <MudTabPanel Text="@PageTab.TabName">
                     <TabContentEditBody>
-                        Hello
+                    <DbRow_Tab Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" />
                     </TabContentEditBody>
                 </MudTabPanel>
             </ChildContent>
@@ -30,6 +32,18 @@ else
         {
             PageTab.Dto = result.Data;
             PageTab.TabName = ((DbRow)result.Data).DbName;
+            this.StateHasChanged();
+        }
+    }
+
+    async void ValueLookupAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("Db2Name", PageTab.TabName);
+        var result = await DialogService.Show<GenericHotfixSearch_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            PageTab.DtoLookup = result.Data;
             this.StateHasChanged();
         }
     }

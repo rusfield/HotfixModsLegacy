@@ -1,34 +1,56 @@
-﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudNumericField T="int?" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" Class="@CssClass" />
+﻿@typeparam T
+
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" Class="@CssClass" />
 </MudBadge>
 
 
 @code
 {
     [Parameter]
+    public T TNumber { get; set; }
+
+    [Parameter]
     public string Label { get; set; }
 
     [Parameter]
-    public int? Value { get; set; }
+    public T Value { get; set; }
 
     [Parameter]
-    public int? ValueLookup { get; set; }
+    public T? ValueLookup { get; set; }
 
     [Parameter]
     public string CssClass { get; set; } = "pb-2 pt-2";
 
     [Parameter]
-    public EventCallback<int?> ValueChanged { get; set; }
+    public EventCallback<T?> ValueChanged { get; set; }
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
 
     bool GetBadgeVisibility()
     {
-        return ValueLookup != null && Value != ValueLookup;
+        if (ValueLookup != null)
+        {
+            var valStr = Value.ToString();
+            var lValStr = ValueLookup.ToString();
+            if(valStr.StartsWith("-") || lValStr.StartsWith("-"))
+            {
+                var val = long.Parse(valStr);
+                var lVal = long.Parse(lValStr);
+                return val != lVal;
+            }
+            else
+            {
+                var val = ulong.Parse(valStr);
+                var lVal = ulong.Parse(lValStr);
+                return val != lVal;
+            }
+        }
+        return false;
     }
 
-    async Task SetValueAsync(int? newValue)
+    async Task SetValueAsync(T newValue)
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);

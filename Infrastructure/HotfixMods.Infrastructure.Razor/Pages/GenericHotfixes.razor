@@ -1,0 +1,29 @@
+﻿@inject IDialogService DialogService
+
+@if(null == PageTab.Dto)
+{
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click" />
+}
+else
+{
+    <TabContentEditHeader IsUpdate="false">
+            <ChildContent>
+                <MudTabPanel Text="Anim Kit">
+                    <TabContentEditBody>
+                        Hello
+                    </TabContentEditBody>
+                </MudTabPanel>
+            </ChildContent>
+    </TabContentEditHeader>
+}
+
+
+@code {
+    [Parameter]
+    public PageTab PageTab { get; set; }
+
+    async void NewAsync_Click()
+    {
+        var result = await DialogService.Show<GenericHotfixSearch_Dialog>().Result;
+    }
+}

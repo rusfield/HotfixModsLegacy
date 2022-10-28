@@ -1,0 +1,70 @@
+﻿<MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
+    <MudStack Row="true">
+        <MudButton Variant="Variant.Outlined" Color="Color.Info">Placeholder</MudButton>
+    </MudStack>
+    <MudStack Row="true">
+        <MudButton Variant="Variant.Outlined" Color="Color.Success">
+            Placeholder
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="New_Callback">
+            New
+        </MudButton>
+    </MudStack>
+</MudStack>
+
+<MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
+    <HeaderContent>
+        <MudTh>@*Avatars*@</MudTh>
+        <MudTh>NAME</MudTh>
+        <MudTh>ID</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Avatar"><MudAvatar Elevation="6" Image="@($"{context.AvatarUrl}")" /></MudTd>
+        <MudTd DataLabel="Name">@context.Name</MudTd>
+        <MudTd DataLabel="Id">@context.Id</MudTd>
+        <MudTd DataLabel="Action">
+            <MudStack Row="true" Justify="Justify.FlexEnd">
+                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync(context))" />
+                <MudIconButton Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync_Click(context))" />
+            </MudStack>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudPaper Class="d-flex flex-column align-center">
+            <MudPagination Rectangular="true" Variant="Variant.Text" Count="@((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage)" Class="ma-2" SelectedChanged="PageChanged" />
+        </MudPaper>
+    </PagerContent>
+</MudTable>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public List<DashboardModel> Data { get; set; }
+
+    [Parameter]
+    public Action New_Callback { get; set; }
+
+    MudTable<DashboardModel>? mudTableRef;
+
+    void Add_Click()
+    {
+
+    }
+
+    void EditAsync(DashboardModel model)
+    {
+
+    }
+
+    void DeleteAsync_Click(DashboardModel model)
+    {
+
+    }
+
+    void PageChanged()
+    {
+        
+    }
+}

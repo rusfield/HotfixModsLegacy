@@ -49,7 +49,7 @@
                 <MudMenuItem>Spell Visual Kits</MudMenuItem>
                 <MudMenuItem>Sound Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits)){ Dto = new AnimKitDto()}))">Anim Kits</MudMenuItem>
-                <MudMenuItem>Custom Hotfix</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Generic Hotfix", typeof(GenericHotfixes))))">Custom Hotfix</MudMenuItem>
             </ChildContent>
         </MudMenu>
 

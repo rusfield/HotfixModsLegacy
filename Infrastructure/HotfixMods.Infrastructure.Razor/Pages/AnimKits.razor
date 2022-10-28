@@ -1,39 +1,36 @@
 ﻿@using Infrastructure.Extensions
 @using Core.Models.Db2
 
-<TabContentEdit DtoName="Test" IsUpdate="false">
-    <MudTabs @ref="_mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="mt-n2 mx-2">
-        <ChildContent>
-            <MudTabPanel Text="Anim Kit">
-                <TabContentEditBody>
-                    Hello
-                </TabContentEditBody>
-            </MudTabPanel>
-            @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
-            {
-                <MudTabPanel Text="@($"Segment #{index + 1}")">
-                    Segment tab
+@if(null == PageTab.Dto)
+{
+    <TabContentView Data="new List<DashboardModel>()">
+        </TabContentView>
+}
+else{
+    <TabContentEditHeader IsUpdate="false" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment">
+            <ChildContent>
+                <MudTabPanel Text="Anim Kit">
+                    <TabContentEditBody>
+                        Hello
+                    </TabContentEditBody>
                 </MudTabPanel>
-            }
-        </ChildContent>
-        <Header>
-            <MudTooltip Text="Add new segment">
-                <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddSegment_Click" />
-            </MudTooltip>
-        </Header>
-    </MudTabs>
-</TabContentEdit>
-
+                @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
+                {
+                    <MudTabPanel Text="@($"Segment #{index + 1}")">
+                        Segment tab
+                    </MudTabPanel>
+                }
+            </ChildContent>
+    </TabContentEditHeader>
+}
 
 @code {
     [Parameter]
     public PageTab PageTab { get; set; }
 
-    MudTabs? _mudTabsRef;
-
-
     void AddSegment_Click()
     {
-        ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment());
+        if(PageTab.Dto != null)
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment());
     }
 }

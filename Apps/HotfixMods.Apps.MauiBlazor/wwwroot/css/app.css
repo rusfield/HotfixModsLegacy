@@ -1,1 +1,7 @@
-﻿
+﻿.custom-app-bar {
+    --mud-appbar-height: 0px;
+}
+
+.mud-tabs-toolbar {
+    z-index: 40;
+}

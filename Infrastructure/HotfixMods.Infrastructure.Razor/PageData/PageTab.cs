@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Razor.PageData
 {
-    public class PageTab<T>
-        where T : new()
+    public class PageTab
     {
-        public PageTab(string tabName) 
+        public PageTab(string tabName, Type pageType)
         {
             TabName = tabName;
+            PageType=pageType;
+            TabId = Guid.NewGuid();
         }
 
         public string TabName { get; set; }
-        public T? Dto { get; set; }
-        public T? LookupDto { get; set; }
+        public Guid TabId { get; }
+        public object? Dto { get; set; }
+        public object? LookupDto { get; set; }
+        public Type PageType { get; set; }
+
     }
 }

@@ -10,6 +10,6 @@ namespace HotfixMods.Infrastructure.DtoModels
     public class AnimKitDto
     {
         public AnimKit AnimKit { get; set; } = new();
-        public IEnumerable<AnimKitSegment> AnimKitSegments { get; set; } = new List<AnimKitSegment>();
+        public List<AnimKitSegment> AnimKitSegments { get; set; } = new List<AnimKitSegment>();
     }
 }

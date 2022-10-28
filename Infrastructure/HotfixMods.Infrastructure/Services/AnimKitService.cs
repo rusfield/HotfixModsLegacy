@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 AnimKit = animKit,
-                AnimKitSegments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))
+                AnimKitSegments = (await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))).ToList()
             };
         }
 

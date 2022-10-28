@@ -103,7 +103,7 @@ namespace HotfixMods.Infrastructure.Services
                     hotfixDbRows.Add(existingHotfix);
                 }
 
-                var hotfixDbRow = new DbRow();
+                var hotfixDbRow = new DbRow(tableName);
                 foreach (var definition in hotfixDataTableDefinition.ColumnDefinitions)
                 {
                     var dbColumn = new DbColumn()

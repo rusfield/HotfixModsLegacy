@@ -1,4 +1,5 @@
-﻿@inject IDialogService DialogService
+﻿@using HotfixMods.Core.Models;
+@inject IDialogService DialogService
 
 @if(null == PageTab.Dto)
 {
@@ -8,7 +9,7 @@ else
 {
     <TabContentEditHeader IsUpdate="false">
             <ChildContent>
-                <MudTabPanel Text="Anim Kit">
+                <MudTabPanel Text="@PageTab.TabName">
                     <TabContentEditBody>
                         Hello
                     </TabContentEditBody>
@@ -25,5 +26,11 @@ else
     async void NewAsync_Click()
     {
         var result = await DialogService.Show<GenericHotfixSearch_Dialog>().Result;
+        if(!result.Cancelled && result.Data != null)
+        {
+            PageTab.Dto = result.Data;
+            PageTab.TabName = ((DbRow)result.Data).DbName;
+            this.StateHasChanged();
+        }
     }
 }

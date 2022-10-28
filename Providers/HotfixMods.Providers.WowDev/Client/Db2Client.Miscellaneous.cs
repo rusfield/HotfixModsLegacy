@@ -116,7 +116,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
             foreach (var db2Result in db2Results.Values)
             {
-                var rowResult = new DbRow();
+                var rowResult = new DbRow(db2Name);
 
                 for (int i = 0; i<versionDef.definitions.Length; i++)
                 {
@@ -170,8 +170,6 @@ namespace HotfixMods.Providers.WowDev.Client
                         return results;
                     }
                 }
-
-
             }
 
             return results;

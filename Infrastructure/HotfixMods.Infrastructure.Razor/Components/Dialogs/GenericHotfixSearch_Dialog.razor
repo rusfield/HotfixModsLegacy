@@ -22,7 +22,7 @@
     {
         if(!string.IsNullOrWhiteSpace(_db2Name) && _id != null)
         {
-            dialogSearchRef.SetProgress("test", "test", 15);
+            dialogSearchRef?.SetProgress("test", "test", 15);
             var data = await Service.GetByIdAsync(_db2Name, (int)_id);
             if(data != null)
             {
@@ -30,7 +30,7 @@
             }
             else
             {
-                dialogSearchRef.SetProgressDoneWithMessage("No DB2 record found.");
+                dialogSearchRef?.SetProgressDoneWithMessage("No DB2 record found.");
             }
         }   
     }

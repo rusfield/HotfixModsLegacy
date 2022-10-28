@@ -42,7 +42,7 @@ namespace HotfixMods.Providers.WowDev.Client
             db2Name = TrimDb2Name(db2Name);
 
             var (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, Build);
-            var dbRowDefinition = new DbRowDefinition();
+            var dbRowDefinition = new DbRowDefinition(db2Name);
             foreach (var fieldDefinition in versionDefinition.definitions)
             {
                 var columnDefinition = databaseDefinitions.columnDefinitions[fieldDefinition.name];

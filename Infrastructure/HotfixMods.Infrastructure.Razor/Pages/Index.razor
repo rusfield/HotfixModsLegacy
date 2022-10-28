@@ -20,7 +20,7 @@
                 </ChildContent>
                 <TabContent>
                     <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                        <MudText Typo="Typo.subtitle2">@tab.TabName</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                        <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
                     </MudStack>
                 </TabContent>
             </MudTabPanel>

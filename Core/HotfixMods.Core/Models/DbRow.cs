@@ -2,7 +2,13 @@
 {
     public class DbRow
     {
-        public List<DbColumn> Columns { get; set; } = new();
+        public DbRow(string dbName)
+        {
+            DbName = dbName;
+            Columns = new();
+        }
+        public string DbName { get; set; }
+        public List<DbColumn> Columns { get; set; }
 
         public void SetColumnValue(string columnName, object value)
         {

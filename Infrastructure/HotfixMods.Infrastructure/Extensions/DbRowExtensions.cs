@@ -14,7 +14,7 @@ namespace HotfixMods.Infrastructure.Extensions
             if (null == entity)
                 return null;
 
-            var dbRow = new DbRow();
+            var dbRow = new DbRow(nameof(T));
             foreach (var property in typeof(T).GetProperties())
             {
                 dbRow.Columns.Add(new()
@@ -40,7 +40,7 @@ namespace HotfixMods.Infrastructure.Extensions
             if (null == entity)
                 return null;
 
-            var dbRowDefinition = new DbRowDefinition();
+            var dbRowDefinition = new DbRowDefinition(nameof(T));
             foreach (var property in typeof(T).GetProperties())
             {
                 dbRowDefinition.ColumnDefinitions.Add(new()

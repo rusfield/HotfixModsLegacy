@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace HotfixMods.Infrastructure.Razor.PageData
 {
-    public class PageTab
+    public sealed class PageTab
     {
         public PageTab(string tabName, Type pageType)
         {

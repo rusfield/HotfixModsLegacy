@@ -2,6 +2,12 @@
 {
     public class DbRowDefinition
     {
-        public List<DbColumnDefinition> ColumnDefinitions { get; set; } = new();
+        public DbRowDefinition(string dbName)
+        {
+            DbName = dbName;
+            ColumnDefinitions = new();
+        }
+        public string DbName { get; set; }
+        public List<DbColumnDefinition> ColumnDefinitions { get; set; }
     }
 }

@@ -95,7 +95,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
-                var dbRow = new DbRow();
+                var dbRow = new DbRow(tableName);
                 for (int i = 0; i < dbRowDefinition.ColumnDefinitions.Count(); i++)
                 {
                     var fieldName = dbRowDefinition.ColumnDefinitions.ElementAt(i).Name;
@@ -141,7 +141,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
 
             var query = $"DESCRIBE {schemaName}.{tableName};";
-            var dbRowDefinition = new DbRowDefinition();
+            var dbRowDefinition = new DbRowDefinition(tableName);
 
             using var command = new MySqlCommand(query, _mySqlConnection);
 

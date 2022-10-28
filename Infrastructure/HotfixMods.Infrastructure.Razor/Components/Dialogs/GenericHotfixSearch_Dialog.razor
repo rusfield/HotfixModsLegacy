@@ -1,5 +1,11 @@
-﻿<DialogSearch GetById_Callback="GetById_Click" MudDialogInstance="Dialog">
+﻿@inject GenericHotfixService Service
 
+
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+    <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
+    <MudTextField @bind-Value="@_db2Name" Variant="Variant.Outlined" Label="DB2" />
+    <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" />
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click">Search</MudButton>
 </DialogSearch>
 
 
@@ -7,10 +13,25 @@
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }
 
-    int _id;
+    DialogSearch? dialogSearchRef;
 
-    void GetById_Click()
+    int? _id;
+    string? _db2Name;
+
+    async void GetById_Click()
     {
-        
+        if(!string.IsNullOrWhiteSpace(_db2Name) && _id != null)
+        {
+            dialogSearchRef.SetProgress("test", "test", 15);
+            var data = await Service.GetByIdAsync(_db2Name, (int)_id);
+            if(data != null)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef.SetProgressDoneWithMessage("No DB2 record found.");
+            }
+        }   
     }
 }

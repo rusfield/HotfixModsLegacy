@@ -1,4 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Services;
+using HotfixMods.Providers.MySqlConnector.Client;
+using HotfixMods.Providers.WowDev.Client;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 
 namespace HotfixMods.Apps.MauiBlazor
@@ -21,6 +25,15 @@ namespace HotfixMods.Apps.MauiBlazor
                 config.SnackbarConfiguration.ShowTransitionDuration = 500;
                 config.SnackbarConfiguration.VisibleStateDuration = 2000;
                 config.SnackbarConfiguration.HideTransitionDuration = 500;
+            });
+
+            var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
+            var db2Client = new Db2Client("10.0.2.46259");
+            var appConfig = new AppConfig();
+
+            builder.Services.AddSingleton(config =>
+            {
+                return new GenericHotfixService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig);
             });
 
             /*

@@ -1,4 +1,7 @@
 ﻿@using System.Diagnostics
+
+@inject ISnackbar Snackbar
+
 @if (IsLoading)
 {
     <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center">
@@ -20,9 +23,9 @@
     string loadingSubTitle = "";
     int loadingProgress = 0;
 
-    public bool IsLoading { get; set; } = false;
+    public bool IsLoading { get; private set; } = false;
 
-    public void SetLoading(string progressTitle, string progressSubTitle, int progress)
+    public void SetProgress(string progressTitle, string progressSubTitle, int progress)
     {
         IsLoading = progress < 100;
 
@@ -30,6 +33,13 @@
         loadingTitle = progressTitle;
         loadingSubTitle = progressSubTitle;
         Debug.WriteLine($"{progressTitle} -> {progressSubTitle} ({progress}%)");
+        this.StateHasChanged();
+    }
+
+    public void SetDoneWithMessage(string message, Severity severity = Severity.Info)
+    {
+        IsLoading = false;
+        Snackbar.Add(message, severity);
         this.StateHasChanged();
     }
 }

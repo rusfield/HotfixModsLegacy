@@ -81,6 +81,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
             var results = new List<DbRow>();
 
+            if (!await TableExistsAsync(schemaName, tableName))
+            {
+                return results;
+            }
+
             string columns = string.Join(",", dbRowDefinition.ColumnDefinitions);
             var query = $"SELECT {columns} FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
 
@@ -128,8 +133,13 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             return (await GetAsync(schemaName, tableName, dbRowDefinition, parameters)).FirstOrDefault();
         }
 
-        public async Task<DbRowDefinition> GetDefinitionAsync(string schemaName, string tableName)
+        public async Task<DbRowDefinition?> GetDefinitionAsync(string schemaName, string tableName)
         {
+            if (!await TableExistsAsync(schemaName, tableName))
+            {
+                return null;
+            }
+
             var query = $"DESCRIBE {schemaName}.{tableName};";
             var dbRowDefinition = new DbRowDefinition();
 

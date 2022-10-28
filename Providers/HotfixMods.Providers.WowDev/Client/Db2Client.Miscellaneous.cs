@@ -56,18 +56,14 @@ namespace HotfixMods.Providers.WowDev.Client
 
         async Task<Stream> GetDb2StreamByDb2Name(string db2Name)
         {
-            var url = string.Format(singleDefUrl, db2Name);
-            var data = await _httpClient.GetAsync(url);
-            if (data.IsSuccessStatusCode)
-            {
-                return await data.Content.ReadAsStreamAsync();
-            }
-            throw new Exception($"Unable to load definition columns from URL {url}.");
-        }
+            // GitHub is case-sensitive. Get the DB2 name correct before attempting to query with it.
+            // TODO: Check if the API supports a parameter or something to make it case insensitive.
+            var definitions = await GetAllDefinitionsAsync();
+            var definition = definitions.Where(d => d.Equals(db2Name.Trim(), StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            if (null == definition)
+                throw new Exception($"No DB2 with name {db2Name} found.");
 
-        async Task<Stream> GetDb2Stream(string db2Name)
-        {
-            var url = string.Format(singleDefUrl, db2Name);
+            var url = string.Format(singleDefUrl, definition);
             var data = await _httpClient.GetAsync(url);
             if (data.IsSuccessStatusCode)
             {
@@ -104,7 +100,7 @@ namespace HotfixMods.Providers.WowDev.Client
         async Task<IEnumerable<DbRow>> ReadDb2FileAsync(string location, string db2Name, string build, DbParameter[] parameters, bool firstOnly)
         {
             var results = new List<DbRow>();
-            var streamForStructs = await GetDb2Stream(db2Name);
+            var streamForStructs = await GetDb2StreamByDb2Name(db2Name);
             var streamForProvider = new MemoryStream();
 
             // Need to make 2 because the DBCD closes the one it uses.
@@ -186,7 +182,7 @@ namespace HotfixMods.Providers.WowDev.Client
         {
             foreach(var dbParameter in dbParameters)
             {
-                var column = dbRow.Columns.Where(c => c.Name == dbParameter.Property).FirstOrDefault();
+                var column = dbRow.Columns.Where(c => c.Name.Equals(dbParameter.Property, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                 if (null == column)
                     return false;
 

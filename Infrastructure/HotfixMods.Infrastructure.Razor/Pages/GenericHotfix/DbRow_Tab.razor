@@ -12,6 +12,9 @@
                     <LeftContent>
                         <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
                     </LeftContent>
+                    <MiddleContent>
+                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
+                    </MiddleContent>
                     <RightContent>
                         <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
                     </RightContent>

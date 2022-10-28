@@ -1,14 +1,14 @@
 ﻿<MudStack Row="true" Spacing="0" Style="width: 100%">
-    <div class="input-border-left" style="width:@(widthPercentage)%">
+    <div class="input-border-left" style="width:@(LeftContentWidth ?? widthPercentage)%">
         @LeftContent
     </div>
-    @if(MiddleContent != null)
+    @if (MiddleContent != null)
     {
-        <div class="input-border-middle" style="width:@(widthPercentage)%; display:flex">
+        <div class="input-border-middle" style="width:@(MiddleContentWidth ?? widthPercentage)%; display:flex">
             @MiddleContent
         </div>
     }
-    <div class="input-border-right" style="width:@(widthPercentage)%">
+    <div class="input-border-right" style="width:@(RightContentWidth ?? widthPercentage)%">
         @RightContent
     </div>
 </MudStack>
@@ -23,6 +23,15 @@
 
     [Parameter]
     public RenderFragment? RightContent { get; set; }
+
+    [Parameter]
+    public int? LeftContentWidth { get; set; }
+
+    [Parameter]
+    public int? MiddleContentWidth { get; set; }
+
+    [Parameter]
+    public int? RightContentWidth { get; set; }
 
     decimal widthPercentage = 33.4M;
 

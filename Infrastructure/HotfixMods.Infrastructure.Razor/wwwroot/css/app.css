@@ -5,3 +5,7 @@
 .mud-tabs-toolbar {
     z-index: 40;
 }
+
+.mud-badge {
+    z-index: 50;
+}

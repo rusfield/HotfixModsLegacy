@@ -8,7 +8,14 @@
         <MudItem xs="3">
             @if (column.Type == typeof(int))
             {
-                <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
+                <InlineGroup>
+                    <LeftContent>
+                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
+                    </LeftContent>
+                    <RightContent>
+                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
+                    </RightContent>
+                </InlineGroup>
             }
             else if (column.Type == typeof(uint))
             {

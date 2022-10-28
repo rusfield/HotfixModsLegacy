@@ -1,11 +1,14 @@
 ﻿<MudStack Row="true" Spacing="0" Style="width: 100%">
-    <div class="input-border-left" style="width:33%">
+    <div class="input-border-left" style="width:@(widthPercentage)%">
         @LeftContent
     </div>
-    <div class="input-border-middle" style="width:33%; display:flex">
-        @MiddleContent
-    </div>
-    <div class="input-border-right" style="width:33%">
+    @if(MiddleContent != null)
+    {
+        <div class="input-border-middle" style="width:@(widthPercentage)%; display:flex">
+            @MiddleContent
+        </div>
+    }
+    <div class="input-border-right" style="width:@(widthPercentage)%">
         @RightContent
     </div>
 </MudStack>
@@ -21,7 +24,14 @@
     [Parameter]
     public RenderFragment? RightContent { get; set; }
 
+    decimal widthPercentage = 33.4M;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (null == MiddleContent)
+            widthPercentage = 50.0M;
+    }
 }
 
 

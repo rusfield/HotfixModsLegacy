@@ -49,10 +49,8 @@
 
     async Task<IEnumerable<string>> Db2Name_Autocomplete(string value)
     {
-        // In real life use an asynchronous function for fetching data from an api.
         var db2Names = await Service.GetDefinitionNamesAsync();
 
-        // if text is null or empty, show complete list
         if (string.IsNullOrEmpty(value))
             return db2Names;
         return db2Names.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));

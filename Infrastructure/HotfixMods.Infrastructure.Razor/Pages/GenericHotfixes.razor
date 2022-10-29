@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Core.Models
+@using HotfixMods.Infrastructure.Extensions
 @using HotfixMods.Infrastructure.Razor.Pages.GenericHotfix
 
 @inject IDialogService DialogService
@@ -59,6 +60,20 @@ else
 
     async void NextIdAsync_Click()
     {
-        idColumn.Value = new Random().Next(1, 999);
+        var parameters = new DialogParameters();
+        parameters.Add("Id", idColumn.Value);
+        parameters.Add("IsUpdate", true);
+        parameters.Add("GetNextIdAsync", Service.GetNextIdAsync);
+        parameters.Add("TableName", ((DbRow)PageTab.Dto).DbName.ToTableName());
+        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            var id = (int)result.Data;
+            if(id > 0)
+            {
+                idColumn.Value = id;
+                this.StateHasChanged();
+            }
+        }
     }
 }

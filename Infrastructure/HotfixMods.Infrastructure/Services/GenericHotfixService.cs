@@ -15,6 +15,11 @@ namespace HotfixMods.Infrastructure.Services
             return await GetSingleAsync(db2Name, new DbParameter("id", id));
         }
 
+        public async Task<int> GetNextIdAsync(string db2Name)
+        {
+            return await base.GetNextIdAsync(db2Name);
+        }
+
         public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
             if (null == definitionNames)

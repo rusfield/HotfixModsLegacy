@@ -4,7 +4,7 @@
     <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
     @if (string.IsNullOrWhiteSpace(Db2Name))
     {
-        <MudAutocomplete T="string" Label="DB2" @bind-Value="_db2Name" SearchFunc="@Db2Name_Autocomplete" Variant="Variant.Outlined" Adornment="Adornment.None" MaxItems="null"/>
+        <MudAutocomplete T="string" Label="DB2" @bind-Value="_db2Name" SearchFunc="@Db2Name_Autocomplete" Variant="Variant.Outlined" Adornment="Adornment.None" MaxItems="null" ShowProgressIndicator="true" />
     }
     <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" />
     <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click">Search</MudButton>
@@ -32,11 +32,11 @@
 
     async void GetById_Click()
     {
-        if(!string.IsNullOrWhiteSpace(_db2Name) && _id != null)
+        if (!string.IsNullOrWhiteSpace(_db2Name) && _id != null)
         {
             dialogSearchRef?.SetProgress("test", "test", 15);
             var data = await Service.GetByIdAsync(_db2Name, (int)_id);
-            if(data != null)
+            if (data != null)
             {
                 Dialog.Close(data);
             }
@@ -44,7 +44,7 @@
             {
                 dialogSearchRef?.SetProgressDoneWithMessage("No DB2 record found.");
             }
-        }   
+        }
     }
 
     async Task<IEnumerable<string>> Db2Name_Autocomplete(string value)
@@ -53,6 +53,9 @@
 
         if (string.IsNullOrEmpty(value))
             return db2Names;
-        return db2Names.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        var filtered = db2Names.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        if (filtered.Count() == 1)
+            _db2Name = filtered.First();
+        return filtered;
     }
 }

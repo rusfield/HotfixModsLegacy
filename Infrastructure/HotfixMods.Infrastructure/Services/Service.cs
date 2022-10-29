@@ -166,6 +166,11 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbProvider.GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId);
         }
 
+        protected async Task<int> GetNextIdAsync(string tableName)
+        {
+            return await _serverDbProvider.GetNextIdAsync(_appConfig.HotfixesSchema, tableName, 1);
+        }
+
 
         protected async Task DeleteAsync(string schemaName, string tableName, params DbParameter[] parameters)
         {

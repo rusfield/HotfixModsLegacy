@@ -2,6 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.GenericHotfix
 
 @inject IDialogService DialogService
+@inject GenericHotfixService Service
 
 @if(null == PageTab.Dto)
 {
@@ -9,7 +10,7 @@
 }
 else
 {
-    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click">
+    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged">
             <ChildContent>
                 <MudTabPanel Text="@PageTab.TabName">
                     <TabContentEditBody>
@@ -26,6 +27,11 @@ else
     public PageTab PageTab { get; set; }
 
     DbColumn idColumn;
+
+    void IdChanged(int id)
+    {
+        idColumn.Value = id;
+    }
 
     async void NewAsync_Click()
     {
@@ -53,6 +59,6 @@ else
 
     async void NextIdAsync_Click()
     {
-        
+        idColumn.Value = new Random().Next(1, 999);
     }
 }

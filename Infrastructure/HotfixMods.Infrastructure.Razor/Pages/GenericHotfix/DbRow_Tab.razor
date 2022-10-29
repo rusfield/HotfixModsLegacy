@@ -50,7 +50,7 @@
             }
             else if (column.Type == typeof(decimal))
             {
-                <DecimalInput_Element Value="decimal.Parse(column.Value.ToString())" ValueLookup="@(ValueLookup != null ? decimal.Parse(ValueLookup.Columns[index].Value.ToString()) : null)" ValueChanged="((decimal? value) => column.Value = value ?? 0)" Label="@column.Name" />
+                <DecimalInput_Element Value="decimal.Parse(column.Value.ToString()!)" ValueLookup="@(ValueLookup != null ? decimal.Parse(ValueLookup.Columns[index]!.Value.ToString()) : null)" ValueChanged="((decimal? value) => column.Value = value ?? 0)" Label="@column.Name" />
             }
             else if (column.Type == typeof(string))
             {

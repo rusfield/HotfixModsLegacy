@@ -3,7 +3,7 @@
         <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="ValueLookup_Callback">Lookup</MudButton>
     </MudStack>
     <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Success">
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="NextId_Callback">
             @Id
         </MudButton>
         <MudButton Variant="Variant.Filled" Color="Color.Success">
@@ -17,7 +17,7 @@
     </ChildContent>
 
     <Header>
-        @if (AddClick_Callback != null)
+        @if (AddClick_Callback.HasDelegate)
         {
             <MudTooltip Text="@AddTooltip">
                 <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddClick_Callback" />
@@ -31,20 +31,30 @@
     public int Id { get; set; }
 
     [Parameter]
-    public Action ValueLookup_Callback { get; set; }
+    public EventCallback ValueLookup_Callback { get; set; }
 
     [Parameter]
-    public Action NextId_Callback { get; set; }
+    public EventCallback NextId_Callback { get; set; }
 
     [Parameter]
     public bool IsUpdate { get; set; }
 
     [Parameter]
-    public Action? AddClick_Callback { get; set; }
+    public EventCallback AddClick_Callback { get; set; }
 
     [Parameter]
     public string? AddTooltip { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback<int> IdChanged { get; set; }
+
+    async Task SetValueAsync(int id)
+    {
+        Id = id;
+        await IdChanged.InvokeAsync(id);
+    }
+
 }

@@ -44,7 +44,7 @@
     public List<DashboardModel> Data { get; set; }
 
     [Parameter]
-    public Action New_Callback { get; set; }
+    public EventCallback New_Callback { get; set; }
 
     MudTable<DashboardModel>? mudTableRef;
 

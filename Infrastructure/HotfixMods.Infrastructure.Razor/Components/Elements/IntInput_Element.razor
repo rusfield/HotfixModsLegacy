@@ -1,7 +1,7 @@
 ﻿@typeparam T
 
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" Class="@CssClass" />
+    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@GetHelperText()" HelperTextOnFocus="true" Class="@CssClass" />
 </MudBadge>
 
 
@@ -54,5 +54,22 @@
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
+    }
+
+    string GetHelperText()
+    {
+
+        return Nullable.GetUnderlyingType(typeof(T))?.ToString() switch
+        {
+            "System.SByte" => "(int8)",
+            "System.Int16" => "(int16)",
+            "System.Int32" => "(int32)",
+            "System.Int64" => "(int64)",
+            "System.Byte" => "(uint8)",
+            "System.UInt16" => "(uint16)",
+            "System.UInt32" => "(uint32)",
+            "System.UInt64" => "(uint64)",
+            _ => $"({typeof(T).ToString()})"
+        };
     }
 }

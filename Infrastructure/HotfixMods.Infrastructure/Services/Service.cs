@@ -171,5 +171,10 @@ namespace HotfixMods.Infrastructure.Services
         {
             await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }
+
+        protected async Task<IEnumerable<string>> GetClientDefinitionNamesAsync()
+        {
+            return await _clientDbDefinitionProvider.GetDefinitionNamesAsync();
+        }
     }
 }

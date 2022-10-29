@@ -33,7 +33,7 @@ namespace HotfixMods.Providers.WowDev.Client
             return (await ReadDb2FileAsync(location, db2Name, Build, parameters, true)).FirstOrDefault();
         }
 
-        public async Task<DbRowDefinition> GetDefinitionAsync(string location, string db2Name)
+        public async Task<DbRowDefinition?> GetDefinitionAsync(string location, string db2Name)
         {
             if (string.IsNullOrWhiteSpace(db2Name))
             {
@@ -78,7 +78,7 @@ namespace HotfixMods.Providers.WowDev.Client
             return dbRowDefinition;
         }
 
-        public async Task<IEnumerable<string>> GetAvailableDefinitionsAsync()
+        public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
             return await GetAllDefinitionsAsync();
         }

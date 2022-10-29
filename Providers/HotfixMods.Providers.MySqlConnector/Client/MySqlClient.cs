@@ -246,5 +246,23 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             await _mySqlConnection.CloseAsync();
             return newId;
         }
+
+        // From IClientDbProvider, will be for hotfixes only.
+        public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
+        {
+            var results = new List<string>();
+            await _mySqlConnection.OpenAsync();
+            // TODO: Hotfixes is hardcoded here. Get it from elsewhere
+            using var cmd = new MySqlCommand($"SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = 'hotfixes' ORDER BY TABLE_NAME ASC;", _mySqlConnection);
+            var reader = await cmd.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                var name = reader.GetString(0);
+                // TODO: Normalize name
+                results.Add(name);
+            }
+            await _mySqlConnection.CloseAsync();
+            return results;
+        }
     }
 }

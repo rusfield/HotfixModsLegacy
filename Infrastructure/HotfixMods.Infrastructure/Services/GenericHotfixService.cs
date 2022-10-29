@@ -7,10 +7,20 @@ namespace HotfixMods.Infrastructure.Services
     public class GenericHotfixService : Service
     {
         public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
-    
+
+        static List<string> definitionNames;
+
         public async Task<DbRow?> GetByIdAsync(string db2Name, int id)
         {
             return await GetSingleAsync(db2Name, new DbParameter("id", id));
         }
+
+        public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
+        {
+            if (null == definitionNames)
+                definitionNames = (await GetClientDefinitionNamesAsync()).ToList();
+            return definitionNames;
+        }
+
     }
 }

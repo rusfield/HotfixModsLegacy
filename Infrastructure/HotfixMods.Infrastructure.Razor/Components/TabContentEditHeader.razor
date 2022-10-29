@@ -1,10 +1,10 @@
 ﻿<MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
     <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="ValueLookupCallback">Lookup</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="ValueLookup_Callback">Lookup</MudButton>
     </MudStack>
     <MudStack Row="true">
         <MudButton Variant="Variant.Outlined" Color="Color.Success">
-            123
+            @Id
         </MudButton>
         <MudButton Variant="Variant.Filled" Color="Color.Success">
             @(IsUpdate ? "Update" : "Save")
@@ -28,7 +28,13 @@
 
 @code {
     [Parameter]
-    public Action ValueLookupCallback { get; set; }
+    public int Id { get; set; }
+
+    [Parameter]
+    public Action ValueLookup_Callback { get; set; }
+
+    [Parameter]
+    public Action NextId_Callback { get; set; }
 
     [Parameter]
     public bool IsUpdate { get; set; }

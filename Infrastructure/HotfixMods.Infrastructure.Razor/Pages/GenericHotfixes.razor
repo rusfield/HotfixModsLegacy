@@ -9,7 +9,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" ValueLookupCallback="ValueLookupAsync_Click">
+    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click">
             <ChildContent>
                 <MudTabPanel Text="@PageTab.TabName">
                     <TabContentEditBody>
@@ -25,6 +25,8 @@ else
     [Parameter]
     public PageTab PageTab { get; set; }
 
+    DbColumn idColumn;
+
     async void NewAsync_Click()
     {
         var result = await DialogService.Show<GenericHotfixSearch_Dialog>().Result;
@@ -32,6 +34,7 @@ else
         {
             PageTab.Dto = result.Data;
             PageTab.TabName = ((DbRow)result.Data).DbName;
+            idColumn = ((DbRow)(PageTab.Dto)).Columns.First(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
             this.StateHasChanged();
         }
     }
@@ -46,5 +49,10 @@ else
             PageTab.DtoLookup = result.Data;
             this.StateHasChanged();
         }
+    }
+
+    async void NextIdAsync_Click()
+    {
+        
     }
 }

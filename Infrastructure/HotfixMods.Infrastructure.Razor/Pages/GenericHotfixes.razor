@@ -11,7 +11,7 @@
 }
 else
 {
-    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged">
+    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>

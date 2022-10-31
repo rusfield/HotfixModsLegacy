@@ -65,16 +65,30 @@
 
     bool _menuOpen = false;
     List<PageTab> Tabs = new();
+    Guid tabId = Guid.Empty;
 
     void NewTab_Click()
     {
         _menuOpen = true;
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // Seems hacky... Fix TODO?
+        if(tabId != Guid.Empty)
+        {
+            _mudTabsRef?.ActivatePanel(tabId);
+            tabId = Guid.Empty;
+        }
+        
+        base.OnAfterRender(firstRender);
+    }
+
     void OpenTab_Click(PageTab tab)
     {
         _menuOpen = false;
         Tabs.Add(tab);
+        tabId = tab.TabId;
     }
 
     void CloseTab_Click(Guid tabId)

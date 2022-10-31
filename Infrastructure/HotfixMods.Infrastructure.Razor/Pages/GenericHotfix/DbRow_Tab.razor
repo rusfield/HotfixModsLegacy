@@ -3,22 +3,12 @@
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    @foreach (var (column, index) in Value.Columns.WithIndex())
+    @foreach (var (column, index) in Value.Columns.Skip(0).Take(24).WithIndex())
     {
         <MudItem xs="3">
             @if (column.Type == typeof(int))
             {
-                <InlineGroup>
-                    <LeftContent>
-                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
-                    </LeftContent>
-                    <MiddleContent>
-                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
-                    </MiddleContent>
-                    <RightContent>
-                        <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
-                    </RightContent>
-                </InlineGroup>
+                <IntInput_Element T="int?" Value="(int?)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int? value) => column.Value = value ?? 0)" Label="@column.Name" />
             }
             else if (column.Type == typeof(uint))
             {

@@ -5,20 +5,20 @@
 @inject IDialogService DialogService
 @inject GenericHotfixService Service
 
-@if(null == PageTab.Dto)
+@if (null == PageTab.Dto)
 {
     <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click" />
 }
 else
 {
     <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged">
-            <ChildContent>
-                <MudTabPanel Text="@PageTab.TabName">
-                    <TabContentEditBody>
+        <ChildContent>
+            <MudTabPanel Text="@PageTab.TabName">
+                <TabContentEditBody>
                     <DbRow_Tab Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" />
-                    </TabContentEditBody>
-                </MudTabPanel>
-            </ChildContent>
+                </TabContentEditBody>
+            </MudTabPanel>
+        </ChildContent>
     </TabContentEditHeader>
 }
 
@@ -37,7 +37,7 @@ else
     async void NewAsync_Click()
     {
         var result = await DialogService.Show<GenericHotfixSearch_Dialog>().Result;
-        if(!result.Cancelled && result.Data != null)
+        if (!result.Cancelled && result.Data != null)
         {
             PageTab.Dto = result.Data;
             PageTab.TabName = ((DbRow)result.Data).DbName;
@@ -69,7 +69,7 @@ else
         if (!result.Cancelled && result.Data != null)
         {
             var id = (int)result.Data;
-            if(id > 0)
+            if (id > 0)
             {
                 idColumn.Value = id;
                 this.StateHasChanged();

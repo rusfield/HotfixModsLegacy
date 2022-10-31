@@ -8,6 +8,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
+        // Cache
         static List<string> definitionNames;
 
         public async Task<DbRow?> GetByIdAsync(string db2Name, int id)
@@ -22,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
-            if (null == definitionNames)
+            if (null == definitionNames || !_appConfig.CacheResults)
                 definitionNames = (await GetClientDefinitionNamesAsync()).ToList();
             return definitionNames;
         }

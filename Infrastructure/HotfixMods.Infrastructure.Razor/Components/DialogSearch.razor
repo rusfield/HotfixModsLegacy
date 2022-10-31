@@ -5,18 +5,18 @@
             @if (null == loaderRef || !loaderRef.IsLoading)
             {
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
-                    @if (GetById_Callback != null)
+                    @if (GetById_Action != null)
                     {
                         <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
-                        <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="(() => GetById_Callback(_id))" />
+                        <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="(() => GetById_Action(_id))" />
                     }
 
                     @ChildContent
 
-                    @if (GetNew_Callback != null)
+                    @if (GetNew_Action != null)
                     {
                         <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetNew_Callback">New</MudButton>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetNew_Action">New</MudButton>
                     }
                 </MudStack>
             }
@@ -34,22 +34,22 @@
     public MudDialogInstance MudDialogInstance { get; set; }
 
     [Parameter]
-    public Action<int>? GetById_Callback { get; set; }
+    public Action<int>? GetById_Action { get; set; }
 
     [Parameter]
-    public Action? GetNew_Callback { get; set; }
+    public Action? GetNew_Action { get; set; }
 
     int _id;
     Loader? loaderRef;
 
-    public void SetProgress(string progressTitle, string progressSubTitle, int progress)
+    public void SetLoaderProgress(string progressTitle, string progressSubTitle, int progress)
     {
         loaderRef?.SetProgress(progressTitle, progressSubTitle, progress);
     }
 
-    public void SetProgressDoneWithMessage(string message, Severity severity = Severity.Info)
+    public void CancelLoaderWithMessage(string message, Severity severity = Severity.Info)
     {
-        loaderRef?.SetDoneWithMessage(message, severity);
+        loaderRef?.CancelWithMessage(message, severity);
         this.StateHasChanged();
     }
 }

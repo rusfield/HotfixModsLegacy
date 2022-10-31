@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.Services
         IClientDbDefinitionProvider _clientDbDefinitionProvider;
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
-        AppConfig _appConfig;
+        protected AppConfig _appConfig;
         
         public Service(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig)
         {

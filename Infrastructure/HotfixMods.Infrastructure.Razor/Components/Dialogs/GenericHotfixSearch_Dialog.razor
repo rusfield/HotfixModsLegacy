@@ -1,20 +1,16 @@
-﻿
+﻿@using HotfixMods.Infrastructure.Razor.Extensions
 
 @inject GenericHotfixService Service
 
 <DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
-    @if (string.IsNullOrWhiteSpace(Db2Name))
-    {
-        <MudAutocomplete T="string" Label="DB2" @bind-Value="_db2Name" SearchFunc="@Db2Name_Autocomplete" Variant="Variant.Outlined" Adornment="Adornment.None" MaxItems="null" ShowProgressIndicator="true" CoerceValue="true" />
-    }
-    @*
-    <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" />
-    *@
+        @if (string.IsNullOrWhiteSpace(Db2Name))
+        {
+            <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
+            <TextInput_Element Label="DB2" @bind-Value="_db2Name" HideHelperText="true" Options="options" />
+        }
+        <IntInput_Element T="int?" @bind-Value="_id" Label="ID" HideHelperText="true" Options="optionsTest" />
 
-    <IntInput_Element T="int?" @bind-Value="_id" Label="ID" HideHelperText="true" Options="options"/>
-
-    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click">Search</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click" Disabled="@(string.IsNullOrWhiteSpace(_db2Name) || null == _id)">Search</MudButton>
 </DialogSearch>
 
 
@@ -29,9 +25,10 @@
 
     int? _id;
     string? _db2Name;
+    Dictionary<string, string> options = new();
 
     // Test
-    Dictionary<int?, string> options = new Dictionary<int?, string>(){ {1, "Option 1"}, {2, "Option 2"}, {6, "Option 6"} };
+    Dictionary<int?, string> optionsTest = new Dictionary<int?, string>() { { 1, "Option 1" }, { 2, "Option 2" }, { 25, "Item 25" } };
 
     protected override void OnInitialized()
     {
@@ -39,11 +36,20 @@
         _db2Name = Db2Name;
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+        {
+            options = (await Service.GetDefinitionNamesAsync()).ListToOptions<string>();
+        }
+    }
+
     async void GetById_Click()
     {
         if (!string.IsNullOrWhiteSpace(_db2Name) && _id != null)
         {
-            dialogSearchRef?.SetProgress("test", "test", 15);
+            dialogSearchRef?.SetLoaderProgress("test", "test", 15);
             var data = await Service.GetByIdAsync(_db2Name, (int)_id);
             if (data != null)
             {
@@ -51,17 +57,8 @@
             }
             else
             {
-                dialogSearchRef?.SetProgressDoneWithMessage("No DB2 record found.");
+                dialogSearchRef?.CancelLoaderWithMessage("No DB2 record found.");
             }
         }
-    }
-
-    async Task<IEnumerable<string>> Db2Name_Autocomplete(string value)
-    {
-        var db2Names = await Service.GetDefinitionNamesAsync();
-
-        if (string.IsNullOrEmpty(value))
-            return db2Names;
-        return db2Names.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 }

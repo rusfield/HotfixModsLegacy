@@ -36,10 +36,15 @@
         this.StateHasChanged();
     }
 
-    public void SetDoneWithMessage(string message, Severity severity = Severity.Info)
+    public void CancelWithMessage(string message, Severity severity = Severity.Info)
+    {
+        Snackbar.Add(message, severity);
+        Cancel();
+    }
+
+    public void Cancel()
     {
         IsLoading = false;
-        Snackbar.Add(message, severity);
         this.StateHasChanged();
     }
 }

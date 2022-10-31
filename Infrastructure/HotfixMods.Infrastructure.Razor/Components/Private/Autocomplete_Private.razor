@@ -1,0 +1,82 @@
+﻿@using HotfixMods.Infrastructure.Razor.Business
+
+@typeparam T
+
+<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(HideHelperText ? null : ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="Adornment.None" MaxItems="null" ShowProgressIndicator="true">
+    <NoItemsTemplate>
+        <MudList Clickable="true">
+            <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
+                @Value
+            </MudListItem>
+        </MudList>
+    </NoItemsTemplate>
+</MudAutocomplete>
+
+
+@code {
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public Dictionary<T, string> Options { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public bool HideHelperText { get; set; } = false;
+
+    string? _inputValue;
+    MudAutocomplete<string>? mudAutocompleteRef;
+
+    async Task InputValueChanged(string input)
+    {
+        string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
+        var listItem = Options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
+        var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input;
+
+        if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
+        {
+            Value = (T)Convert.ChangeType(sbyteValue, typeof(sbyte));
+        }
+        else if ("System.Int32" == type && int.TryParse(value, out var intValue))
+        {
+            Value = (T)Convert.ChangeType(intValue, typeof(int));
+        }
+        else if("System.String" == type && value != null)
+        {
+            Value = (T)Convert.ChangeType(value, typeof(string));
+        }
+        else
+        {
+            Value = default(T);
+        }
+
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    async Task<IEnumerable<string>> Search(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return Options.Select(o => o.Value);
+
+        var options = Options.Where(x => x.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == value).Select(o => o.Value).ToList();
+        if(!options.Any(o => o.Equals(value, StringComparison.InvariantCultureIgnoreCase)))
+            options.Add(value);
+        return options;
+    }
+
+    string? ShowValue()
+    {
+        if (null == Value)
+            return "";
+        var option = Options.Where(x => x.Value.Contains(Value.ToString(), StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == Value.ToString()).Select(x => x.Value).FirstOrDefault();
+        return (option ?? Value.ToString()) ?? "Not found";
+    }
+}

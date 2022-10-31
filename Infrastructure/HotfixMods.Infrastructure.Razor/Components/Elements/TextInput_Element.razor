@@ -1,18 +1,32 @@
-﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" Class="@CssClass" />
+﻿@using HotfixMods.Infrastructure.Razor.Components.Private
+
+@using HotfixMods.Infrastructure.Razor.Business
+
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+    @if(null == Options || !Options.Any())
+    {
+        <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" Class="@CssClass" />
+    }
+    else
+    {
+        <Autocomplete_Private T="string" Label="@Label" Value="@Value" ValueChanged="SetValueAsync" HideHelperText="HideHelperText" Variant="@Variant" Options="@Options" />
+    }
 </MudBadge>
 
 
 @code
 {
     [Parameter]
-    public string Label { get; set; }
+    public string? Label { get; set; }
 
     [Parameter]
     public string? Value { get; set; }
 
     [Parameter]
     public string? ValueLookup { get; set; }
+
+    [Parameter]
+    public Dictionary<string, string>? Options { get; set; }
 
     [Parameter]
     public string CssClass { get; set; } = "";
@@ -26,6 +40,10 @@
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
 
+    [Parameter]
+    public bool HideHelperText { get; set; } = false;
+
+
     bool GetBadgeVisibility()
     {
         return ValueLookup != null && Value != ValueLookup;
@@ -36,4 +54,6 @@
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
     }
+
+
 }

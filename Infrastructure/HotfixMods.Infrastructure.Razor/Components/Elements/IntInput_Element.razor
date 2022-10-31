@@ -1,15 +1,18 @@
-﻿@typeparam T
+﻿@using HotfixMods.Infrastructure.Razor.Business
+@using HotfixMods.Infrastructure.Razor.Components.Private
+
+@typeparam T
 
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
 
     @* A normal fields feels faster in the UI *@
     @if (null == Options || Options.Count == 0)
     {
-        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@GetHelperText()" HelperTextOnFocus="true" Class="@CssClass" />
+        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(HideHelperText ? null : ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Class="@CssClass" />
     }
     else
     {
-        <MudAutocomplete T="string" Value="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@GetHelperText()" HelperTextOnFocus="true" Class="@CssClass" Adornment="Adornment.None" MaxItems="null" ShowProgressIndicator="true" CoerceValue="true" />
+        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" HideHelperText="HideHelperText" Options="Options" />
     }
 </MudBadge>
 
@@ -18,16 +21,16 @@
 {
 
     [Parameter]
-    public string Label { get; set; }
+    public string? Label { get; set; }
 
     [Parameter]
-    public T Value { get; set; }
+    public T? Value { get; set; }
 
     [Parameter]
     public T? ValueLookup { get; set; }
 
     [Parameter]
-    public Dictionary<T, string> Options { get; set; } // Value and Display String
+    public Dictionary<T, string>? Options { get; set; }
 
     [Parameter]
     public string CssClass { get; set; } = "";
@@ -40,8 +43,6 @@
 
     [Parameter]
     public bool HideHelperText { get; set; } = false;
-
-    string _inputValue;
 
     bool GetBadgeVisibility()
     {
@@ -71,57 +72,5 @@
         await ValueChanged.InvokeAsync(Value);
     }
 
-    string? GetHelperText()
-    {
 
-        return HideHelperText ? null : Nullable.GetUnderlyingType(typeof(T))?.ToString() switch
-        {
-            "System.SByte" => "(int8)",
-            "System.Int16" => "(int16)",
-            "System.Int32" => "(int32)",
-            "System.Int64" => "(int64)",
-            "System.Byte" => "(uint8)",
-            "System.UInt16" => "(uint16)",
-            "System.UInt32" => "(uint32)",
-            "System.UInt64" => "(uint64)",
-            _ => $"({typeof(T).ToString()})"
-        };
-    }
-
-    async Task InputValueChanged(string input)
-    {
-        string type = Nullable.GetUnderlyingType(typeof(T))?.ToString();
-        var listItem = Options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
-        var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input;
-
-        if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
-        {
-            Value = (T)Convert.ChangeType(sbyteValue, typeof(sbyte));
-        }
-        else if ("System.Int32" == type && int.TryParse(value, out var intValue))
-        {
-            Value = (T)Convert.ChangeType(intValue, typeof(int));
-        }
-        else
-        {
-            // else do nothing
-        }
-
-        await ValueChanged.InvokeAsync(Value);
-    }
-
-    async Task<IEnumerable<string>> Search(string value)
-    {
-        if (string.IsNullOrEmpty(value))
-            return Options.Select(o => o.Value);
-
-        return Options.Where(x => x.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == value).Select(o => o.Value);
-    }
-
-    string ShowValue()
-    {
-        if (null == Value)
-            return "";
-        return Options.FirstOrDefault(x => x.Value.Contains(Value.ToString(), StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == Value.ToString()).Value ?? Value.ToString();
-    }
 }

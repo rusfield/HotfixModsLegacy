@@ -17,6 +17,8 @@ namespace HotfixMods.Infrastructure.Config
         public string HotfixDataTableName { get; } = "hotfix_data";
         public string HotfixDataRecordIdColumnName { get; } = "RecordId";
         public string HotfixDataTableHashColumnName { get; } = "TableHash";
-        public string HotfixDataTableStatusColumnName { get; } = "Status"; 
+        public string HotfixDataTableStatusColumnName { get; } = "Status";
+
+        public bool CacheResults { get; set; } = true;
     }
 }

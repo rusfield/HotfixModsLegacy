@@ -33,9 +33,8 @@
         }
     }
 
-    protected async void NextIdAsync_Click<TDialog, TDto>(Func<string, Task<int>> GetNextIdAsync_Func)
+    protected async void NextIdAsync_Click<TDialog, THotfixEntity>(Func<string, Task<int>> GetNextIdAsync_Func)
         where TDialog : ComponentBase
-        where TDto : BaseDto
     {
         var parameters = new DialogParameters();
         parameters.Add("Id", PageTab.MasterId);

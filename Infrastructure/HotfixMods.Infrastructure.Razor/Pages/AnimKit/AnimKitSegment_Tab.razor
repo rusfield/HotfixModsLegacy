@@ -1,8 +1,8 @@
-﻿<h3>AnimKitSegment_Tab</h3>
+﻿@using HotfixMods.Infrastructure.Extensions
 
 <MudGrid>
     <MudItem xs="3">
-
+        <IntInput_Element T="byte?" @bind-Value="@(Value.OrderIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" ValueLookup="ValueLookup?.OrderIndex" />
     </MudItem>
     <MudItem xs="3">
 
@@ -18,10 +18,10 @@
 
 @code {
     [Parameter]
-    public AnimKitDto Value { get; set; }
+    public AnimKitSegment Value { get; set; }
 
     [Parameter]
-    public AnimKitDto? ValueLookup { get; set; }
+    public AnimKitSegment? ValueLookup { get; set; }
 
     [Parameter]
     public int CurrentPageIndex { get; set; }

@@ -17,5 +17,14 @@ namespace HotfixMods.Infrastructure.Extensions
                 _ => Regex.Replace(str, @"(?<!_|^)([A-Z])", "_$1")
             };
         }
+
+        public static string ToDisplayName(this string str)
+        {
+            // If there ever comes any exceptions, add them here
+            return str switch
+            {
+                _ => Regex.Replace(str, @"(?<!_|^)([A-Z])", " $1")
+            };
+        }
     }
 }

@@ -1,7 +1,9 @@
-﻿using HotfixMods.Infrastructure.Config;
+﻿using HotfixMods.Apps.MauiBlazor.Config;
+using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 
@@ -11,6 +13,9 @@ namespace HotfixMods.Apps.MauiBlazor
     {
         public static MauiApp CreateMauiApp()
         {
+
+            var config = ConfigBuilder.Build();
+
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
@@ -19,6 +24,7 @@ namespace HotfixMods.Apps.MauiBlazor
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
+            //builder.Configuration.AddConfiguration(config);
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddMudServices(config =>
             {
@@ -29,7 +35,7 @@ namespace HotfixMods.Apps.MauiBlazor
 
             var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
             var db2Client = new Db2Client("10.0.2.46259");
-            var appConfig = new AppConfig();
+            var appConfig = config.Get<AppConfig>();
 
             builder.Services.AddSingleton(config =>
             {

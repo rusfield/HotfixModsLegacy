@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
 <MudGrid>
-    @foreach (var (column, index) in Value.Columns.Skip(0).Take(24).WithIndex())
+    @foreach (var (column, index) in Value.Columns.Skip(24 * CurrentPageIndex).Take(24).WithIndex())
     {
         <MudItem xs="3">
             @if (column.Type == typeof(int))
@@ -57,4 +57,7 @@
 
     [Parameter]
     public DbRow? ValueLookup { get; set; }
+
+    [Parameter]
+    public int CurrentPageIndex { get; set; }
 }

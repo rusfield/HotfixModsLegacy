@@ -11,11 +11,11 @@
 }
 else
 {
-    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged">
+    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>
-                    <DbRow_Tab Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" />
+                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" />
                 </TabContentEditBody>
             </MudTabPanel>
         </ChildContent>
@@ -28,10 +28,16 @@ else
     public PageTab PageTab { get; set; }
 
     DbColumn idColumn;
+    int currentPageIndex;
 
     void IdChanged(int id)
     {
         idColumn.Value = id;
+    }
+
+    void CurrentPageChanged(int page)
+    {
+        currentPageIndex = page - 1;
     }
 
     async void NewAsync_Click()

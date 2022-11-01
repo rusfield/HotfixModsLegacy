@@ -33,7 +33,8 @@
     protected override async Task OnInitializedAsync()
     {
         _db2Name = Db2Name;
-        options = (await Service.GetDefinitionNamesAsync()).ListToOptions<string>();
+        var definitionNames = await Service.GetDefinitionNamesAsync();
+        options = definitionNames.ListToOptions<string>();
         await base.OnInitializedAsync();
     }
 

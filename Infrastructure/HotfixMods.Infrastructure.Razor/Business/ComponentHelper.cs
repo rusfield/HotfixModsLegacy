@@ -10,8 +10,9 @@ namespace HotfixMods.Infrastructure.Razor.Business
     {
         public static string GetHelperText<T>()
         {
-
-            return Nullable.GetUnderlyingType(typeof(T))?.ToString() switch
+            var nType = Nullable.GetUnderlyingType(typeof(T))?.ToString();
+            var type = typeof(T).ToString();
+            return (nType ?? type) switch
             {
                 "System.SByte" => "(int8)",
                 "System.Int16" => "(int16)",
@@ -21,6 +22,8 @@ namespace HotfixMods.Infrastructure.Razor.Business
                 "System.UInt16" => "(uint16)",
                 "System.UInt32" => "(uint32)",
                 "System.UInt64" => "(uint64)",
+                "System.String" => "(text)",
+                "System.Decimal" => "(float)",
                 _ => $"({typeof(T)})"
             };
         }

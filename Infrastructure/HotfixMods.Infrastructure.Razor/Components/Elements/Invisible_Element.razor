@@ -1,13 +1,10 @@
-﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" Style="width:100%" Class="@(CssClass + " invisible")">
+﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" Style="width:100%" Class="@("invisible")">
     <MudNumericField Value="-1" Variant="@Variant" HideSpinButtons="true" Class="@CssClass" />
 </MudBadge>
 
 
 @code
 {
-    [Parameter]
-    public string CssClass { get; set; } = "";
-
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
 }

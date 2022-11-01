@@ -3,16 +3,16 @@
 
 @typeparam T
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
 
     @* A normal fields feels faster in the UI *@
     @if (null == Options || Options.Count == 0)
     {
-        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(HideHelperText ? null : ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Class="@CssClass" />
+        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" />
     }
     else
     {
-        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" HideHelperText="HideHelperText" Options="Options" />
+        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" />
     }
 </MudBadge>
 
@@ -33,16 +33,10 @@
     public Dictionary<T, string>? Options { get; set; }
 
     [Parameter]
-    public string CssClass { get; set; } = "";
-
-    [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
-
-    [Parameter]
-    public bool HideHelperText { get; set; } = false;
 
     bool GetBadgeVisibility()
     {

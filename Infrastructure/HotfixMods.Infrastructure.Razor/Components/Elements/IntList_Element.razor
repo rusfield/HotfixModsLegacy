@@ -1,7 +1,7 @@
-﻿<MudMenu PopoverClass="@(Value.Count == 0 ? "invisible" : "mud-popover-open")" FullWidth="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="ListAnchorOrigin" TransformOrigin="ListTransformOrigin" Style="width:100%" Class="@CssClass">
+﻿<MudMenu PopoverClass="@(Value.Count == 0 ? "invisible" : "mud-popover-open")" FullWidth="true" ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="ListAnchorOrigin" TransformOrigin="ListTransformOrigin" Style="width:100%">
     <ActivatorContent>
-        <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync())" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-            <MudTextField T="string" @ref="inputRef" onfocus="@Focused" OnBlur="@Unfocused" Label="@Label" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Add" AdornmentColor="Color.Default" OnAdornmentClick="Adornment_Click" Class="@CssClass" />
+        <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync())" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
+            <MudTextField T="string" @ref="inputRef" onfocus="@Focused" OnBlur="@Unfocused" Label="@Label" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Add" AdornmentColor="Color.Default" OnAdornmentClick="Adornment_Click" />
         </MudBadge>
     </ActivatorContent>
     <ChildContent>
@@ -40,10 +40,6 @@
 
     [Parameter]
     public Origin ListTransformOrigin { get; set; } = Origin.BottomCenter;
-
-    [Parameter]
-    public string CssClass { get; set; } = "";
-
 
     MudTextField<string?> inputRef;
     async Task Add()

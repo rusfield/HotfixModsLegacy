@@ -6,9 +6,9 @@
         @if (string.IsNullOrWhiteSpace(Db2Name))
         {
             <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
-            <TextInput_Element Label="DB2" @bind-Value="_db2Name" HideHelperText="true" Options="options" />
+            <TextInput_Element Label="DB2" @bind-Value="_db2Name" Options="options" />
         }
-        <IntInput_Element T="int?" @bind-Value="_id" Label="ID" HideHelperText="true" Options="optionsTest" />
+        <IntInput_Element T="int?" @bind-Value="_id" Label="ID" Options="optionsTest" />
 
         <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click" Disabled="@(string.IsNullOrWhiteSpace(_db2Name) || null == _id)">Search</MudButton>
 </DialogSearch>

@@ -2,10 +2,10 @@
 
 @using HotfixMods.Infrastructure.Razor.Business
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
     @if(null == Options || !Options.Any())
     {
-        <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" Class="@CssClass" />
+        <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" />
     }
     else
     {
@@ -29,9 +29,6 @@
     public Dictionary<string, string>? Options { get; set; }
 
     [Parameter]
-    public string CssClass { get; set; } = "";
-
-    [Parameter]
     public int Lines { get; set; } = 1;
 
     [Parameter]
@@ -39,10 +36,6 @@
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
-
-    [Parameter]
-    public bool HideHelperText { get; set; } = false;
-
 
     bool GetBadgeVisibility()
     {

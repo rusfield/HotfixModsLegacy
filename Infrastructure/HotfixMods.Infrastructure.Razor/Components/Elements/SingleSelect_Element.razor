@@ -2,8 +2,8 @@
 
 @using HotfixMods.Infrastructure.Extensions
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" Class="@CssClass">
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
+    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync">
         @foreach (var option in Options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
@@ -24,9 +24,6 @@
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
-
-    [Parameter]
-    public string CssClass { get; set; } = "";
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;

@@ -2,8 +2,8 @@
 
 @using HotfixMods.Infrastructure.Extensions
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(((T)ValueLookup).ToValues()))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@(CssClass + " cursor-pointer")">
-    <MudSelect T="T" @bind-Value="internalValue" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true" Class="@CssClass">
+<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(((T)ValueLookup).ToValues()))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
+    <MudSelect T="T" @bind-Value="internalValue" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true">
         @foreach (var item in options)
         {
             <MudSelectItem T="T" Value="@item.Key">@item.Value</MudSelectItem>
@@ -18,9 +18,6 @@
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
-
-    [Parameter]
-    public string CssClass { get; set; } = "";
 
     [Parameter]
     public T? Value { get; set; } // Flag value

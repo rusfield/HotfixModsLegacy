@@ -8,6 +8,12 @@
     background-color: var(--mud-palette-background) !important;
 }
 
+.tab-bar .mud-tab-slider {
+    height: 2px !important;
+    z-index: 0;
+    background-color: var(--mud-palette-primary-text) !important;
+}
+
 .mud-tabs-toolbar {
     z-index: 40;
 }

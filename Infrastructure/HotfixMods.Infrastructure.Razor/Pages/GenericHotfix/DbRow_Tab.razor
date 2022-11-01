@@ -2,6 +2,8 @@
 @using HotfixMods.Infrastructure.Extensions;
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
+@inherits PageTabBase
+
 <MudGrid>
     @foreach (var (column, index) in Value.Columns.Skip(24 * CurrentPageIndex).Take(24).WithIndex())
     {
@@ -52,12 +54,5 @@
 </MudGrid>
 
 @code {
-    [Parameter]
-    public DbRow Value { get; set; }
 
-    [Parameter]
-    public DbRow? ValueLookup { get; set; }
-
-    [Parameter]
-    public int CurrentPageIndex { get; set; }
 }

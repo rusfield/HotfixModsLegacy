@@ -31,7 +31,7 @@
     </RowTemplate>
     <PagerContent>
         <MudPaper Class="d-flex flex-column align-center">
-            <MudPagination Rectangular="true" Variant="Variant.Text" Count="@((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage)" Class="ma-2" SelectedChanged="PageChanged" />
+            <MudPagination  Variant="Variant.Text" Color="Color.Info" Count="@((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage)" Class="ma-2" SelectedChanged="PageChanged" />
         </MudPaper>
     </PagerContent>
 </MudTable>

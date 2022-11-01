@@ -30,19 +30,11 @@
     // Test
     Dictionary<int?, string> optionsTest = new Dictionary<int?, string>() { { 1, "Option 1" }, { 2, "Option 2" }, { 25, "Item 25" } };
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
         _db2Name = Db2Name;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-        {
-            options = (await Service.GetDefinitionNamesAsync()).ListToOptions<string>();
-        }
+        options = (await Service.GetDefinitionNamesAsync()).ListToOptions<string>();
+        await base.OnInitializedAsync();
     }
 
     async void GetById_Click()

@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class AnimKitDto
+    public class AnimKitDto : BaseDto
     {
         public AnimKit AnimKit { get; set; } = new();
         public List<AnimKitSegment> AnimKitSegments { get; set; } = new List<AnimKitSegment>();

@@ -1,7 +1,5 @@
 ﻿<h3>AnimKitSegment_Tab</h3>
 
-@inherits PageTabBase
-
 <MudGrid>
     <MudItem xs="3">
 
@@ -19,5 +17,12 @@
 
 
 @code {
+    [Parameter]
+    public AnimKitDto Value { get; set; }
 
+    [Parameter]
+    public AnimKitDto? ValueLookup { get; set; }
+
+    [Parameter]
+    public int CurrentPageIndex { get; set; }
 }

@@ -1,0 +1,56 @@
+﻿@using HotfixMods.Infrastructure.Extensions
+
+@inject IDialogService DialogService
+
+
+@code {
+    [Parameter]
+    public PageTab PageTab { get; set; }
+
+    protected async void NewAsync_Click<TDialog>()
+        where TDialog : ComponentBase
+    {
+        var result = await DialogService.Show<TDialog>().Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            PageTab.Dto = result.Data;
+            PageTab.TabName = ((BaseDto)result.Data).DisplayName;
+            PageTab.MasterId = ((BaseDto)result.Data).MasterId;
+            this.StateHasChanged();
+        }
+    }
+
+    protected async void ValueLookupAsync_Click<TDialog>()
+        where TDialog : ComponentBase
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("Db2Name", PageTab.TabName);
+        var result = await DialogService.Show<TDialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            PageTab.DtoLookup = result.Data;
+            this.StateHasChanged();
+        }
+    }
+
+    protected async void NextIdAsync_Click<TDialog, TDto>(Func<string, Task<int>> GetNextIdAsync_Func)
+        where TDialog : ComponentBase
+        where TDto : BaseDto
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("Id", PageTab.MasterId);
+        parameters.Add("IsUpdate", true);
+        parameters.Add("GetNextIdAsync", GetNextIdAsync_Func);
+        parameters.Add("TableName", PageTab.MasterDb2Name.ToTableName());
+        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            var id = (int)result.Data;
+            if (id > 0)
+            {
+                PageTab.MasterId = id;
+                this.StateHasChanged();
+            }
+        }
+    }
+}

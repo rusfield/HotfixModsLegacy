@@ -9,7 +9,8 @@ namespace HotfixMods.Infrastructure.Razor.PageData
             PageType=pageType;
             TabId = Guid.NewGuid();
         }
-
+        public int MasterId { get; set; }
+        public int MasterDb2Name { get; set; }
         public string TabName { get; set; }
         public Guid TabId { get; }
         public object? Dto { get; set; }

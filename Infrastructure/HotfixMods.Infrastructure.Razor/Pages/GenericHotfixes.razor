@@ -5,13 +5,15 @@
 @inject IDialogService DialogService
 @inject GenericHotfixService Service
 
+@inherits HotfixPageBase
+
 @if (null == PageTab.Dto)
 {
     <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click" />
 }
 else
 {
-    <TabContentEditHeader Id="@((int)idColumn.Value)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="ValueLookupAsync_Click" NextId_Callback="NextIdAsync_Click" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
+    <TabContentEditHeader Id="@(PageTab.MasterId)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<GenericHotfixSearch_Dialog>())" NextId_Callback="@(async () => NextIdAsync_Click<GenericHotfixSearch_Dialog, DbRow>(Service.GetNextIdAsync))" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>
@@ -24,15 +26,12 @@ else
 
 
 @code {
-    [Parameter]
-    public PageTab PageTab { get; set; }
 
-    DbColumn idColumn;
     int currentPageIndex;
 
     void IdChanged(int id)
     {
-        idColumn.Value = id;
+        PageTab.MasterId = id;
     }
 
     void CurrentPageChanged(int page)
@@ -40,46 +39,15 @@ else
         currentPageIndex = page - 1;
     }
 
-    async void NewAsync_Click()
+    new async void NewAsync_Click()
     {
         var result = await DialogService.Show<GenericHotfixSearch_Dialog>().Result;
         if (!result.Cancelled && result.Data != null)
         {
             PageTab.Dto = result.Data;
             PageTab.TabName = ((DbRow)result.Data).DbName;
-            idColumn = ((DbRow)(PageTab.Dto)).Columns.First(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
+            PageTab.MasterId = (int)((DbRow)(PageTab.Dto)).Columns.First(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).Value;
             this.StateHasChanged();
-        }
-    }
-
-    async void ValueLookupAsync_Click()
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("Db2Name", PageTab.TabName);
-        var result = await DialogService.Show<GenericHotfixSearch_Dialog>(null, parameters).Result;
-        if (!result.Cancelled && result.Data != null)
-        {
-            PageTab.DtoLookup = result.Data;
-            this.StateHasChanged();
-        }
-    }
-
-    async void NextIdAsync_Click()
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("Id", idColumn.Value);
-        parameters.Add("IsUpdate", true);
-        parameters.Add("GetNextIdAsync", Service.GetNextIdAsync);
-        parameters.Add("TableName", ((DbRow)PageTab.Dto).DbName.ToTableName());
-        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
-        if (!result.Cancelled && result.Data != null)
-        {
-            var id = (int)result.Data;
-            if (id > 0)
-            {
-                idColumn.Value = id;
-                this.StateHasChanged();
-            }
         }
     }
 }

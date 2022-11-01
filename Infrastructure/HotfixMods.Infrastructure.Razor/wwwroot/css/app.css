@@ -2,6 +2,12 @@
     --mud-appbar-height: 0px;
 }
 
+.custom-app-bar .mud-tab-slider {
+    height: 48px !important;
+    z-index: -10;
+    background-color: var(--mud-palette-background) !important;
+}
+
 .mud-tabs-toolbar {
     z-index: 40;
 }

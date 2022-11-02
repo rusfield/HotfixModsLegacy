@@ -1,21 +1,21 @@
 ﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
-    <MudNumericField T="decimal?" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true"/>
+    <MudNumericField T="decimal" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true"/>
 </MudBadge>
 
 
 @code
 {
     [Parameter]
-    public string Label { get; set; }
+    public string? Label { get; set; }
 
     [Parameter]
-    public decimal? Value { get; set; }
+    public decimal Value { get; set; }
 
     [Parameter]
     public decimal? ValueLookup { get; set; }
 
     [Parameter]
-    public EventCallback<decimal?> ValueChanged { get; set; }
+    public EventCallback<decimal> ValueChanged { get; set; }
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
@@ -25,9 +25,15 @@
         return ValueLookup != null && Value != ValueLookup;
     }
 
-    async Task SetValueAsync(decimal? newValue)
+    async Task SetValueAsync(decimal newValue)
     {
         Value = newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    async Task SetValueAsync(decimal? newValue)
+    {
+        Value = (decimal)(newValue ?? 0M);
         await ValueChanged.InvokeAsync(Value);
     }
 }

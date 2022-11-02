@@ -9,7 +9,7 @@
     public string Label { get; set; }
 
     [Parameter]
-    public decimal? Value { get; set; }
+    public decimal Value { get; set; }
 
     [Parameter]
     public decimal? ValueLookup { get; set; }
@@ -18,7 +18,7 @@
     public string CssClass { get; set; } = "pb-2 pt-2";
 
     [Parameter]
-    public EventCallback<decimal?> ValueChanged { get; set; }
+    public EventCallback<decimal> ValueChanged { get; set; }
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
@@ -28,7 +28,7 @@
         return ValueLookup != null && Value != ValueLookup;
     }
 
-    async Task SetValueAsync(decimal? newValue)
+    async Task SetValueAsync(decimal newValue)
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);

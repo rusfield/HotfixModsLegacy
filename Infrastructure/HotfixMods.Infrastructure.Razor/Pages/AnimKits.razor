@@ -1,26 +1,28 @@
 ﻿@using Infrastructure.Extensions
 @using Core.Models.Db2
+@using HotfixMods.Infrastructure.Razor.Pages.AnimKitTabs
 
-@if(null == PageTab.Dto)
+@if (null == PageTab.Dto)
 {
     <TabContentView Data="new List<DashboardModel>()">
-        </TabContentView>
+    </TabContentView>
 }
-else{
+else
+{
     <TabContentEditHeader IsUpdate="false" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0">
-            <ChildContent>
-                <MudTabPanel Text="Anim Kit">
-                    <TabContentEditBody>
-                        Hello
-                    </TabContentEditBody>
+        <ChildContent>
+            <MudTabPanel Text="Anim Kit">
+                <TabContentEditBody>
+                    <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueLookup="((AnimKitDto?)PageTab.DtoLookup)?.AnimKit" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
+            {
+                <MudTabPanel Text="@($"Segment #{index + 1}")">
+                    Segment tab
                 </MudTabPanel>
-                @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
-                {
-                    <MudTabPanel Text="@($"Segment #{index + 1}")">
-                        Segment tab
-                    </MudTabPanel>
-                }
-            </ChildContent>
+            }
+        </ChildContent>
     </TabContentEditHeader>
 }
 
@@ -30,7 +32,7 @@ else{
 
     void AddSegment_Click()
     {
-        if(PageTab.Dto != null)
+        if (PageTab.Dto != null)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment());
     }
 }

@@ -19,21 +19,20 @@
 
 @code
 {
+    [Parameter]
+    public T Value { get; set; }
 
     [Parameter]
-    public string? Label { get; set; }
-
-    [Parameter]
-    public T? Value { get; set; }
-
-    [Parameter]
-    public T? ValueLookup { get; set; }
+    public object? ValueLookup { get; set; }
 
     [Parameter]
     public Dictionary<T, string>? Options { get; set; }
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
@@ -60,11 +59,15 @@
         return false;
     }
 
+    async Task SetValueAsync(object newValue)
+    {
+        Value = (T)newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
     async Task SetValueAsync(T newValue)
     {
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
     }
-
-
 }

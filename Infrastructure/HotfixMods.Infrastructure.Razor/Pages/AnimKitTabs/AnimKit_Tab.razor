@@ -1,0 +1,23 @@
+﻿@using HotfixMods.Infrastructure.Extensions
+
+
+@inherits HotfixPageTabBase<AnimKit>
+<MudGrid>
+    <MudItem xs="3">
+        <IntInput_Element T="int" @bind-Value="@(Value.Id)" Label="@(nameof(Value.Id).ToDisplayName())" ValueLookup="ValueLookup?.Id" />
+    </MudItem>
+    <MudItem xs="3">
+
+    </MudItem>
+    <MudItem xs="3">
+
+    </MudItem>
+    <MudItem xs="3">
+
+    </MudItem>
+</MudGrid>
+
+
+@code {
+
+}

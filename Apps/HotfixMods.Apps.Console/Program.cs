@@ -6,6 +6,25 @@ using HotfixMods.Tools.Dev.Business;
 using HotfixMods.Tools.Initializer.Business;
 
 
+
+float myFloat = 123;
+decimal myDecimal = Convert.ToDecimal(myFloat);
+
+var t1 = myFloat.GetType();
+var t2 = myDecimal.GetType();
+
+var myClass = new MyClass();
+var myProperty = myClass.GetType().GetProperty("MyProperty");
+myProperty.SetValue(myClass, myDecimal);
+
+Console.ReadKey();
+
+public class MyClass
+{
+    public decimal MyProperty { get; set; }
+}
+
+
 /*
 var dt = new DbDefinitionTool();
 string build = "10.0.2.46157";
@@ -27,13 +46,13 @@ while (true)
 */
 
 
-
+/*
 var importTool = new Db2ImportTool();
 await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "ItemSearchName", "hotfix_mods", "item_search_name", "localhost", "3306", "root", "root");
 Console.WriteLine("Done");
 
 
-/*
+
 var wowToolsTool = new WowToolsTool();
 
 while (true)

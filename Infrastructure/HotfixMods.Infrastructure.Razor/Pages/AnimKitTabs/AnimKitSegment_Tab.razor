@@ -1,5 +1,7 @@
 ﻿@using HotfixMods.Infrastructure.Extensions
 
+@inherits HotfixPageTabBase<AnimKitSegment>
+
 <MudGrid>
     <MudItem xs="3">
         <IntInput_Element T="byte" @bind-Value="@(Value.OrderIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" />
@@ -47,15 +49,3 @@
         <IntInput_Element T="ushort" @bind-Value="@(Value.BlendOutTimeMs)" Label="@(nameof(Value.BlendOutTimeMs).ToDisplayName())" ValueLookup="ValueLookup?.BlendOutTimeMs" />
     </MudItem>
 </MudGrid>
-
-
-@code {
-    [Parameter]
-    public AnimKitSegment Value { get; set; }
-
-    [Parameter]
-    public AnimKitSegment? ValueLookup { get; set; }
-
-    [Parameter]
-    public int CurrentPageIndex { get; set; }
-}

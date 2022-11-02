@@ -1,0 +1,37 @@
+﻿@using HotfixMods.Infrastructure.Razor.Extensions
+@using HotfixMods.Infrastructure.Razor.Components.Private
+
+@inject AnimKitService Service
+
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+    <IntInput_Element T="int?" @bind-Value="_id" Label="ID" />
+
+    <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click" Disabled="@(null == _id)">Search</MudButton>
+</DialogSearch>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    DialogSearch? dialogSearchRef;
+
+    int? _id;
+
+
+    async void GetById_Click()
+    {
+        if (_id != null)
+        {
+            dialogSearchRef?.SetLoaderProgress("test", "test", 15);
+            var data = await Service.GetByIdAsync((int)_id);
+            if (data != null)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef?.CancelLoaderWithMessage("No DB2 record found.");
+            }
+        }
+    }
+}

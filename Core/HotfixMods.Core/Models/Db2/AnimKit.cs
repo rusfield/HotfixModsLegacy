@@ -6,9 +6,9 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKit
     {
         public int Id { get; set; } = 0;
-        public int OneShotDuration { get; set; } = 0;
-        public int OneShotStopAnimKitId { get; set; } = 0;
-        public int LowDefAnimKitId { get; set; } = 0;
+        public uint OneShotDuration { get; set; } = 0;
+        public uint OneShotStopAnimKitId { get; set; } = 0;
+        public uint LowDefAnimKitId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

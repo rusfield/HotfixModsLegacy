@@ -137,7 +137,7 @@ namespace HotfixMods.Providers.WowDev.Client
                             {
                                 Name = arrayColName,
                                 Type = type,
-                                Value = value!
+                                Value = value!.GetType() == typeof(float) ? Convert.ToDecimal((float)value) : value
                             });
                         }
                     }
@@ -149,7 +149,7 @@ namespace HotfixMods.Providers.WowDev.Client
                         {
                             Name = name,
                             Type = type,
-                            Value = value
+                            Value = value.GetType() == typeof(float) ? Convert.ToDecimal((float)value) : value
                         });
                     }
                 }

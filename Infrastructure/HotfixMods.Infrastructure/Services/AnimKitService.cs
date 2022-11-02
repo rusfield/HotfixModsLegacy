@@ -48,5 +48,10 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
             await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
         }
+
+        public async Task<int> GetNextIdAsync(string unused)
+        {
+            return await GetNextIdAsync<AnimKit>();
+        }
     }
 }

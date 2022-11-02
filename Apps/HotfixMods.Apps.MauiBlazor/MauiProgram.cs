@@ -33,13 +33,26 @@ namespace HotfixMods.Apps.MauiBlazor
                 config.SnackbarConfiguration.HideTransitionDuration = 500;
             });
 
+            var appConfig = config.Get<AppConfig>();
             var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
             var db2Client = new Db2Client("10.0.2.46259");
-            var appConfig = config.Get<AppConfig>();
 
             builder.Services.AddSingleton(config =>
             {
-                return new GenericHotfixService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig);
+                return new GenericHotfixService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
+                {
+                    FromId = 1,
+                    VerifiedBuild = -123
+                };
+            });
+
+            builder.Services.AddSingleton(config =>
+            {
+                return new AnimKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
+                {
+                    FromId = 10000,
+                    VerifiedBuild = -123
+                };
             });
 
             /*

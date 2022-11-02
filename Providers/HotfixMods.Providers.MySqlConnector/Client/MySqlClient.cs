@@ -111,9 +111,10 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                         "System.UInt32" => reader.GetUInt32(i),
                         "System.UInt64" => reader.GetUInt64(i),
                         "System.String" => reader.GetString(i),
-                        "System.Decimal" => (decimal)reader.GetFloat(i),
+                        "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
                         _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
                     };
+
                     dbRow.Columns.Add(new()
                     {
                         Name = fieldName,

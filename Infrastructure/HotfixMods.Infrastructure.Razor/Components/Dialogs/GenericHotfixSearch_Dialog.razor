@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Extensions
+@using HotfixMods.Infrastructure.Razor.Components.Private
 
 @inject GenericHotfixService Service
 
@@ -8,7 +9,7 @@
             <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
             <TextInput_Element Label="DB2" @bind-Value="_db2Name" Options="options" />
         }
-        <IntInput_Element T="int?" @bind-Value="_id" Label="ID" Options="optionsTest" />
+        <IntInput_Element T="int?" @bind-Value="_id" Label="ID" />
 
         <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="GetById_Click" Disabled="@(string.IsNullOrWhiteSpace(_db2Name) || null == _id)">Search</MudButton>
 </DialogSearch>
@@ -26,9 +27,6 @@
     int? _id;
     string? _db2Name;
     Dictionary<string, string> options = new();
-
-    // Test
-    Dictionary<int?, string> optionsTest = new Dictionary<int?, string>() { { 1, "Option 1" }, { 2, "Option 2" }, { 25, "Item 25" } };
 
     protected override async Task OnInitializedAsync()
     {

@@ -37,7 +37,7 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(_appConfig.Location, nameof(T), GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowToEntity<T?>();
+            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowToEntity<T?>();
         }
 
 
@@ -64,7 +64,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
             if(!results.Any())
-                results = await _clientDbProvider.GetAsync(_appConfig.Location, nameof(T), GetDbRowDefinitionOfEntity<T>(), parameters);
+                results = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
 
             return results.DbRowsToEntities<T>();
         }

@@ -5,26 +5,26 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class AnimKitSegment
     {
-        public int? Id { get; set; } = 0;
-        public ushort? ParentAnimKitId { get; set; } = 0;
-        public byte? OrderIndex { get; set; } = 0;
-        public ushort? AnimId { get; set; } = 0;
-        public uint? AnimStartTime { get; set; } = 0;
-        public ushort? AnimKitConfigId { get; set; } = 0;
-        public byte? StartCondition { get; set; } = 0;
-        public byte? StartConditionParam { get; set; } = 0;
-        public uint? StartConditionDelay { get; set; } = 0;
-        public byte? EndCondition { get; set; } = 0;
-        public uint? EndConditionParam { get; set; } = 0;
-        public uint? EndConditionDelay { get; set; } = 0;
-        public decimal? Speed { get; set; } = 1;
-        public ushort? SegmentFlags { get; set; } = 0;
-        public byte? ForcedVariation { get; set; } = 0;
-        public int? OverrideConfigFlags { get; set; } = 0;
-        public sbyte? LoopToSegmentIndex { get; set; } = 0;
-        public ushort? BlendInTimeMs { get; set; } = 0;
-        public ushort? BlendOutTimeMs { get; set; } = 0;
-        public decimal? Field_9_0_1_34278_018 { get; set; } = 1;
-        public int? VerifiedBuild { get; set; } = -1;
+        public int Id { get; set; } = 0;
+        public ushort ParentAnimKitId { get; set; } = 0;
+        public byte OrderIndex { get; set; } = 0;
+        public ushort AnimId { get; set; } = 0;
+        public uint AnimStartTime { get; set; } = 0;
+        public ushort AnimKitConfigId { get; set; } = 0;
+        public byte StartCondition { get; set; } = 0;
+        public byte StartConditionParam { get; set; } = 0;
+        public uint StartConditionDelay { get; set; } = 0;
+        public byte EndCondition { get; set; } = 0;
+        public uint EndConditionParam { get; set; } = 0;
+        public uint EndConditionDelay { get; set; } = 0;
+        public decimal Speed { get; set; } = 1;
+        public ushort SegmentFlags { get; set; } = 0;
+        public byte ForcedVariation { get; set; } = 0;
+        public int OverrideConfigFlags { get; set; } = 0;
+        public sbyte LoopToSegmentIndex { get; set; } = 0;
+        public ushort BlendInTimeMs { get; set; } = 0;
+        public ushort BlendOutTimeMs { get; set; } = 0;
+        public decimal Field_9_0_1_34278_018 { get; set; } = 1;
+        public int VerifiedBuild { get; set; } = -1;
     }
 }

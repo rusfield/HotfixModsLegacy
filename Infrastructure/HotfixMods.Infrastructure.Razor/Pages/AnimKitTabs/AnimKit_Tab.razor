@@ -4,7 +4,10 @@
 @inherits HotfixPageTabBase<AnimKit>
 <MudGrid>
     <MudItem xs="3">
-        <IntInput_Element T="int" @bind-Value="@(Value.Id)" Label="@(nameof(Value.Id).ToDisplayName())" ValueLookup="ValueLookup?.Id" />
+        <IntInput_Element T="int" @bind-Value="@(Value.Id)" Label="@(nameof(Value.Id).ToDisplayName())" />
+        <IntInput_Element T="int" @bind-Value="@(Value.OneShotDuration)" Label="@(nameof(Value.Id).ToDisplayName(null, " (ms)"))" ValueLookup="ValueLookup?.OneShotDuration" />
+        <IntInput_Element T="int" @bind-Value="@(Value.OneShotStopAnimKitId)" Label="@(nameof(Value.OneShotStopAnimKitId).ToDisplayName())" ValueLookup="ValueLookup?.OneShotStopAnimKitId" />
+        <IntInput_Element T="int" @bind-Value="@(Value.LowDefAnimKitId)" Label="@(nameof(Value.LowDefAnimKitId).ToDisplayName())" ValueLookup="ValueLookup?.LowDefAnimKitId" />
     </MudItem>
     <MudItem xs="3">
 

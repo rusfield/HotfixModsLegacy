@@ -19,7 +19,7 @@ else
             @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
             {
                 <MudTabPanel Text="@($"Segment #{index + 1}")">
-                    Segment tab
+                    <AnimKitSegment_Tab Value="item" ValueLookup="@(PageTab.DtoLookup != null ? ((AnimKitDto?)PageTab.DtoLookup)?.AnimKitSegments[index] : null)" />
                 </MudTabPanel>
             }
         </ChildContent>

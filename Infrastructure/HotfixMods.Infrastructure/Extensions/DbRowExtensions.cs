@@ -78,7 +78,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static string ToTableName<T>(this T entity)
             where T : new()
         {
-            return typeof(T).ToString().ToTableName();
+            return typeof(T).Name.ToTableName();
         }
 
         public static int GetId(this DbRow dbRow)

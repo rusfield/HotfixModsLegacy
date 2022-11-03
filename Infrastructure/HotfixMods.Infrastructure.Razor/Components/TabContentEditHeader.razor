@@ -25,7 +25,7 @@
     </Header>
 </MudTabs>
 <MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="3">
-    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@Pages" Color="Color.Info" />
+    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@Pages" Color="Color.Info" Class="@(Pages > 1 ? null : "invisible")"/>
 </MudPaper>
 
 @code {

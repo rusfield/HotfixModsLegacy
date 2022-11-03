@@ -232,6 +232,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
         public async Task<int> GetNextIdAsync(string schemaName, string tableName, int minId, string idPropertyName = "id")
         {
+            if (!await TableExistsAsync(schemaName, tableName))
+            {
+                return 0;
+            }
+
             await _mySqlConnection.OpenAsync();
             using var cmd = new MySqlCommand($"SELECT {idPropertyName} FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} ORDER BY {idPropertyName} ASC;", _mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();

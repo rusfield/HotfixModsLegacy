@@ -8,7 +8,10 @@ namespace HotfixMods.Infrastructure.DtoModels
 {
     public abstract class BaseDto
     {
-        public int MasterId { get; set; }
+        public BaseDto(string displayName)
+        {
+            DisplayName = displayName;
+        }
         public string DisplayName { get; set; }
     }
 }

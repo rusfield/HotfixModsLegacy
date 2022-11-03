@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
-        public async Task<AnimKitDto> GetNewAsync()
+        public async Task<AnimKitDto> GetNewAsync(Action<string, string, int>? callback = null)
         {
             var result = new AnimKitDto();
             result.AnimKit.Id = await GetNextIdAsync<AnimKit>();

@@ -15,7 +15,6 @@
         {
             PageTab.Dto = result.Data;
             PageTab.TabName = ((BaseDto)result.Data).DisplayName;
-            PageTab.MasterId = ((BaseDto)result.Data).MasterId;
             this.StateHasChanged();
         }
     }

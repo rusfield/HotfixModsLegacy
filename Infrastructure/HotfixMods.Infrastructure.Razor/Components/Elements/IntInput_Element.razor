@@ -8,11 +8,11 @@
     @* A normal fields feels faster in the UI *@
     @if (null == Options || Options.Count == 0)
     {
-        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" />
+        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
     }
     else
     {
-        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" />
+        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
     }
 </MudBadge>
 
@@ -36,6 +36,12 @@
 
     [Parameter]
     public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public string? AdornmentIcon { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdornmentClick { get; set; }
 
     bool GetBadgeVisibility()
     {

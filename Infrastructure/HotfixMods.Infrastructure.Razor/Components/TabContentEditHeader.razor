@@ -11,7 +11,7 @@
         </MudButton>
     </MudStack>
 </MudStack>
-<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="mx-2 rounded-0 mud-elevation-0" Class="tab-bar">
+<MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="mx-2 rounded-0 mud-elevation-0" Class="tab-bar">
     <ChildContent>
         @ChildContent
     </ChildContent>
@@ -19,7 +19,7 @@
         @if (AddClick_Callback.HasDelegate)
         {
             <MudTooltip Text="@AddTooltip">
-                <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddClick_Callback" />
+                <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddClick" />
             </MudTooltip>
         }
     </Header>
@@ -59,4 +59,23 @@
     [Parameter]
     public int Pages { get; set; } = 0;
 
+    MudTabs? mudTabsRef;
+    int newPanelIndex = -1;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(newPanelIndex != -1)
+        {
+            mudTabsRef?.ActivatePanel(newPanelIndex);
+            newPanelIndex = -1;
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    async Task AddClick()
+    {
+        await AddClick_Callback.InvokeAsync();
+        if(mudTabsRef != null)
+            newPanelIndex = mudTabsRef.Panels.Count;
+    }
 }

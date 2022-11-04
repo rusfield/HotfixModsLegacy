@@ -1,7 +1,8 @@
-﻿<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
-    <MudNumericField T="decimal" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true"/>
-</MudBadge>
-
+﻿<div class="custom-wrapper">
+    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%;" Class="pt-4">
+        <MudNumericField T="decimal" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true" />
+    </MudBadge>
+</div>
 
 @code
 {

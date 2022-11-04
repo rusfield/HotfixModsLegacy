@@ -1,18 +1,18 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Components.Private
-
 @using HotfixMods.Infrastructure.Razor.Business
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
-    @if(null == Options || !Options.Any())
-    {
-        <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" />
-    }
-    else
-    {
-        <Autocomplete_Private T="string" Label="@Label" Value="@Value" ValueChanged="SetValueAsync" Variant="@Variant" Options="@Options" />
-    }
-</MudBadge>
-
+<div class="custom-wrapper">
+    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%;" Class="pt-4">
+        @if (null == Options || !Options.Any())
+        {
+            <MudTextField T="string" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" Lines="@Lines" HelperText="(string)" HelperTextOnFocus="true" />
+        }
+        else
+        {
+            <Autocomplete_Private T="string" Label="@Label" Value="@Value" ValueChanged="SetValueAsync" Variant="@Variant" Options="@Options" />
+        }
+    </MudBadge>
+</div>
 
 @code
 {

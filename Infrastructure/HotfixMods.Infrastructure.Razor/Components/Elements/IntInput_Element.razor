@@ -3,7 +3,7 @@
 
 @typeparam T
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.TopCenter" Overlap="true" Icon="@Icons.Filled.ArrowDownward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
+    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="pt-4">
 
         @* A normal fields feels faster in the UI *@
         @if (null == Options || Options.Count == 0)

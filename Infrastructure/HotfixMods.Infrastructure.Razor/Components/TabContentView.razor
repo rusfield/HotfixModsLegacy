@@ -1,16 +1,18 @@
-﻿<MudStack Row="true" Justify="Justify.SpaceBetween" Class="mb-2">
-    <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Info">Placeholder</MudButton>
-    </MudStack>
-    <MudStack Row="true">
-        <MudButton Variant="Variant.Outlined" Color="Color.Success">
-            Placeholder
-        </MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="New_Callback">
-            New
-        </MudButton>
-    </MudStack>
-</MudStack>
+﻿<MudGrid Class="mb-2">
+    <MudItem xs="4" />
+    <MudItem xs="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
+            @(Title)
+        </MudText>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="New_Callback">
+                New
+            </MudButton>
+        </MudStack>
+    </MudItem>
+</MudGrid>
 
 <MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
     <HeaderContent>
@@ -37,6 +39,8 @@
 </MudTable>
 
 @code {
+    [Parameter]
+    public string Title { get; set; }
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 

@@ -9,11 +9,11 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click" />
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click" Title="Generic Hotfixes" />
 }
 else
 {
-    <TabContentEditHeader Id="@(PageTab.MasterId)" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<GenericHotfixSearch_Dialog>())" NextId_Callback="@(async () => NextIdAsync_Click<GenericHotfixSearch_Dialog, DbRow>(Service.GetNextIdAsync))" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
+    <TabContentEditHeader Id="@(PageTab.MasterId)" Title="Generic Hotfixes" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<GenericHotfixSearch_Dialog>())" NextId_Callback="@(async () => NextIdAsync_Click<GenericHotfixSearch_Dialog, DbRow>(Service.GetNextIdAsync))" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>

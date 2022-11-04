@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotfixMods.Core.Models.TrinityCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         {
             DisplayName = displayName;
         }
+        public HotfixModsEntity Entity { get; set; } = new();
         public string DisplayName { get; set; }
     }
 }

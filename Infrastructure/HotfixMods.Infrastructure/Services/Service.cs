@@ -163,11 +163,13 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<int> GetNextIdAsync<T>()
             where T : new()
         {
+            return 1337;
             return await _serverDbProvider.GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId);
         }
 
         protected async Task<int> GetNextIdAsync(string tableName)
         {
+            return 1337;
             return await _serverDbProvider.GetNextIdAsync(_appConfig.HotfixesSchema, tableName, 1);
         }
 

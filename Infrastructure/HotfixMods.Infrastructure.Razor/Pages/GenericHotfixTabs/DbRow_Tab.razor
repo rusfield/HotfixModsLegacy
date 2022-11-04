@@ -2,10 +2,14 @@
 @using HotfixMods.Infrastructure.Extensions;
 @using HotfixMods.Infrastructure.Razor.Components.Elements
 
+@inherits HotfixPageTabBase<DbRow>
+@inject GenericHotfixService Service
+@inject IDialogService DialogService
+
 <MudGrid>
     @for (int i = 24 * CurrentPageIndex; i < (24 * CurrentPageIndex) + 24; i++)
     {
-        if(Value.Columns.Count == i)
+        if (Value.Columns.Count == i)
         {
             break;
         }
@@ -13,7 +17,11 @@
         int index = i;
 
         <MudItem xs="3">
-            @if (column.Type == typeof(int))
+            @if (column.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase))
+            {
+                <IntInput_Element T="int" Value="(int)column.Value" ValueChanged="((int value) => column.Value = value)" Label="@column.Name" AdornmentIcon="@Icons.Filled.Refresh" OnAdornmentClick="NextIdAsync_Click" />
+            }
+            else if (column.Type == typeof(int))
             {
                 <IntInput_Element T="int" Value="(int)column.Value" ValueLookup="@(ValueLookup != null ? (int?)ValueLookup.Columns[index].Value : null)" ValueChanged="((int value) => column.Value = value)" Label="@column.Name" />
             }
@@ -60,11 +68,26 @@
 
 @code {
     [Parameter]
-    public DbRow Value { get; set; }
+    public string Db2Name { get; set; }
 
-    [Parameter]
-    public DbRow? ValueLookup { get; set; }
+    async void NextIdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.GetNextIdAsync_Func), GetNextIdAsync);
+        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            var id = (int)result.Data;
+            if (id > 0)
+            {
+                Value.SetColumnValue("id", id);
+                this.StateHasChanged();
+            }
+        }
+    }
 
-    [Parameter]
-    public int CurrentPageIndex { get; set; }
+    async Task<int> GetNextIdAsync()
+    {
+        return await Service.GetNextIdAsync(Db2Name);
+    }
 }

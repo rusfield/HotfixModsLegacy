@@ -13,11 +13,11 @@
 }
 else
 {
-    <TabContentEditHeader Id="@(PageTab.MasterId)" Title="Generic Hotfixes" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<GenericHotfixSearch_Dialog>())" NextId_Callback="@(async () => NextIdAsync_Click<GenericHotfixSearch_Dialog, DbRow>(Service.GetNextIdAsync))" IdChanged="IdChanged" CurrentPageChanged="CurrentPageChanged">
+    <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueLookup_Callback="@(ValueLookupAsync)" CurrentPageChanged="CurrentPageChanged">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>
-                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" />
+                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueLookup="(DbRow)PageTab.DtoLookup" Db2Name="@db2Name" />
                 </TabContentEditBody>
             </MudTabPanel>
         </ChildContent>
@@ -28,11 +28,7 @@ else
 @code {
 
     int currentPageIndex;
-
-    void IdChanged(int id)
-    {
-        PageTab.MasterId = id;
-    }
+    string db2Name;
 
     void CurrentPageChanged(int page)
     {
@@ -45,9 +41,16 @@ else
         if (!result.Cancelled && result.Data != null)
         {
             PageTab.Dto = result.Data;
-            PageTab.TabName = ((DbRow)result.Data).DbName;
-            PageTab.MasterId = (int)((DbRow)(PageTab.Dto)).Columns.First(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).Value;
+            db2Name = ((DbRow)result.Data).Db2Name;
+            PageTab.TabName = db2Name;
             this.StateHasChanged();
         }
+    }
+
+    void ValueLookupAsync()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(GenericHotfixSearch_Dialog.Db2Name), db2Name);
+        ValueLookupAsync_Click<GenericHotfixSearch_Dialog>(parameters);
     }
 }

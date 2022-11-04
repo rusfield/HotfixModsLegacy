@@ -40,13 +40,7 @@
     public string Title { get; set; }
 
     [Parameter]
-    public int Id { get; set; }
-
-    [Parameter]
     public EventCallback ValueLookup_Callback { get; set; }
-
-    [Parameter]
-    public EventCallback NextId_Callback { get; set; }
 
     [Parameter]
     public bool IsUpdate { get; set; }
@@ -59,9 +53,6 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public EventCallback<int> IdChanged { get; set; }
 
     [Parameter]
     public EventCallback<int> CurrentPageChanged { get; set; }

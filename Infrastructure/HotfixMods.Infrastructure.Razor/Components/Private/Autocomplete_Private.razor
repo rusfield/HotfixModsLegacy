@@ -2,7 +2,7 @@
 
 @typeparam T
 
-<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick">
+<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="@(string.IsNullOrWhiteSpace(AdornmentIcon) ? Adornment.None : Adornment.End)" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick">
     <NoItemsTemplate>
         <MudList Clickable="true">
             <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">

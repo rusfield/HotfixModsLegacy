@@ -19,27 +19,21 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public int Id { get; set; }
+    public bool IsUpdate { get; set; } = true;
 
     [Parameter]
-    public bool IsUpdate { get; set; }
-
-    [Parameter]
-    public Func<string, Task<int>> GetNextIdAsync { get; set; }
-
-    [Parameter]
-    public string TableName { get; set; }
+    public Func<Task<int>> GetNextIdAsync_Func { get; set; }
 
     async Task CopyToClipboardAsync_Click()
     {
-        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", Id);
-        Snackbar.Add($"{Id} copied to clipboard", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", "TODO");
+        Snackbar.Add($"TODO copied to clipboard", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
         Dialog.Close(-1);
     }
 
     async Task RefreshAsync_Click()
     {
-        var newId = await GetNextIdAsync(TableName);
+        var newId = await GetNextIdAsync_Func();
 
         if(-1 == newId)
         {

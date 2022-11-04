@@ -19,36 +19,14 @@
         }
     }
 
-    protected async void ValueLookupAsync_Click<TDialog>()
+    protected async void ValueLookupAsync_Click<TDialog>(DialogParameters parameters = null)
         where TDialog : ComponentBase
     {
-        var parameters = new DialogParameters();
-        parameters.Add("Db2Name", PageTab.TabName);
         var result = await DialogService.Show<TDialog>(null, parameters).Result;
         if (!result.Cancelled && result.Data != null)
         {
             PageTab.DtoLookup = result.Data;
             this.StateHasChanged();
-        }
-    }
-
-    protected async void NextIdAsync_Click<TDialog, THotfixEntity>(Func<string, Task<int>> GetNextIdAsync_Func)
-        where TDialog : ComponentBase
-    {
-        var parameters = new DialogParameters();
-        parameters.Add("Id", PageTab.MasterId);
-        parameters.Add("IsUpdate", true);
-        parameters.Add("GetNextIdAsync", GetNextIdAsync_Func);
-        parameters.Add("TableName", PageTab.MasterDb2Name.ToTableName());
-        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
-        if (!result.Cancelled && result.Data != null)
-        {
-            var id = (int)result.Data;
-            if (id > 0)
-            {
-                PageTab.MasterId = id;
-                this.StateHasChanged();
-            }
         }
     }
 }

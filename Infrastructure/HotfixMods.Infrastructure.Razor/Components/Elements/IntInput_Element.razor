@@ -2,20 +2,20 @@
 @using HotfixMods.Infrastructure.Razor.Components.Private
 
 @typeparam T
+<div class="custom-wrapper">
+    <MudBadge Origin="Origin.TopCenter" Overlap="true" Icon="@Icons.Filled.ArrowDownward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
 
-<MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
-
-    @* A normal fields feels faster in the UI *@
-    @if (null == Options || Options.Count == 0)
-    {
-        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
-    }
-    else
-    {
-        <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
-    }
-</MudBadge>
-
+        @* A normal fields feels faster in the UI *@
+        @if (null == Options || Options.Count == 0)
+        {
+            <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
+        }
+        else
+        {
+            <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
+        }
+    </MudBadge>
+</div>
 
 @code
 {

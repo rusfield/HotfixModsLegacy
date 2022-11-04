@@ -7,12 +7,12 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<AnimKitSearch_Dialog>" Title="AnimKits">
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<AnimKitSearch_Dialog>" Title="Anim Kits">
     </TabContentView>
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="AnimKits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<AnimKitSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>

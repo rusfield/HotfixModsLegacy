@@ -33,7 +33,7 @@
     </RowTemplate>
     <PagerContent>
         <MudPaper Class="d-flex flex-column align-center">
-            <MudPagination  Variant="Variant.Text" Color="Color.Info" Count="@((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage)" Class="ma-2" SelectedChanged="PageChanged" />
+            <MudPagination Variant="Variant.Text" Color="Color.Info" Count="@pages" Class="@($"ma-2{(pages > 1 ? "" : " invisible")}")" SelectedChanged="PageChanged" />
         </MudPaper>
     </PagerContent>
 </MudTable>
@@ -51,6 +51,14 @@
     public EventCallback New_Callback { get; set; }
 
     MudTable<DashboardModel>? mudTableRef;
+    int pages;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (mudTableRef != null)
+            pages = ((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage);
+        base.OnAfterRender(firstRender);
+    }
 
     void Add_Click()
     {
@@ -69,6 +77,6 @@
 
     void PageChanged()
     {
-        
+
     }
 }

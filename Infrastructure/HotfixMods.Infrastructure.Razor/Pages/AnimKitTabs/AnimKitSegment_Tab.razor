@@ -4,7 +4,7 @@
 
 <MudGrid>
     <MudItem xs="3">
-        <IntInput_Element T="byte" @bind-Value="@(Value.OrderIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" />
+        <IntInput_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" Options="@(options)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" FilterDuringType="false" AllowUndefinedValues="false"/>
         <IntInput_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueLookup="ValueLookup?.LoopToSegmentIndex" />
         <IntInput_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueLookup="ValueLookup?.AnimKitConfigId" />
         <IntInput_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueLookup="ValueLookup?.SegmentFlags" />
@@ -49,3 +49,51 @@
         <IntInput_Element T="ushort" @bind-Value="@(Value.BlendOutTimeMs)" Label="@(nameof(Value.BlendOutTimeMs).ToDisplayName())" ValueLookup="ValueLookup?.BlendOutTimeMs" />
     </MudItem>
 </MudGrid>
+
+@code {
+    [Parameter]
+    public AnimKits AnimKitPage { get; set; }
+
+    Dictionary<byte, string>? options = null;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if(AnimKitPage != null && null == options)
+        {
+            InitOptions();
+            this.StateHasChanged();
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+    void SegmentChanged(byte newValue)
+    {
+        var segments = ((AnimKitDto)AnimKitPage.PageTab.Dto).AnimKitSegments;
+
+        if (newValue < 0)
+            newValue = 0;
+        else if (newValue >= segments.Count)
+            newValue = (byte)(segments.Count - 1);
+
+        if (Value.OrderIndex != newValue)
+        {
+            segments.RemoveAt(Value.OrderIndex);
+            segments.Insert(newValue, Value);
+            for (byte i = 0; i < segments.Count; i++)
+            {
+                segments[i].OrderIndex = i;
+            }
+        }
+        InitOptions();
+        this.StateHasChanged();
+    }
+
+    void InitOptions()
+    {
+        options = new();
+        for (byte i = 0; i < ((AnimKitDto)AnimKitPage.PageTab.Dto).AnimKitSegments.Count; i++)
+        {
+            options.Add(i, i.ToString());
+        }
+    }
+}

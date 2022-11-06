@@ -38,6 +38,12 @@
     [Parameter]
     public EventCallback OnAdornmentClick { get; set; }
 
+    [Parameter]
+    public bool FilterDuringType { get; set; } = true;
+
+    [Parameter]
+    public bool AllowUndefinedValues { get; set; } = true;
+
     async Task InputValueChanged(string input)
     {
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
@@ -66,11 +72,11 @@
 
     async Task<IEnumerable<string>> Search(string value)
     {
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value) || !FilterDuringType)
             return Options.Select(o => o.Value);
 
         var options = Options.Where(x => x.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == value).Select(o => o.Value).ToList();
-        if(!options.Any(o => o.Equals(value, StringComparison.InvariantCultureIgnoreCase)))
+        if(AllowUndefinedValues && !options.Any(o => o.Equals(value, StringComparison.InvariantCultureIgnoreCase)))
             options.Add(value);
         return options;
     }

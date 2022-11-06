@@ -28,7 +28,7 @@ else
             {
                 <MudTabPanel Text="@($"Segment #{index + 1}")">
                     <TabContentEditBody>
-                        <AnimKitSegment_Tab Value="item" ValueLookup="@(PageTab.DtoLookup != null ? ((AnimKitDto?)PageTab.DtoLookup)?.AnimKitSegments[index] : null)" />
+                        <AnimKitSegment_Tab AnimKitPage="this" Value="item" ValueLookup="@(PageTab.DtoLookup != null ? ((AnimKitDto?)PageTab.DtoLookup)?.AnimKitSegments[index] : null)" />
                     </TabContentEditBody>
                 </MudTabPanel>
             }

@@ -14,7 +14,7 @@
     </MudItem>
 </MudGrid>
 
-<MudTable Items="@Data" Hover="true" @ref="@mudTableRef">
+<MudTable Items="@Data" Hover="true" Height="650px" @ref="@mudTableRef">
     <HeaderContent>
         <MudTh>@*Avatars*@</MudTh>
         <MudTh>NAME</MudTh>
@@ -31,6 +31,9 @@
             </MudStack>
         </MudTd>
     </RowTemplate>
+    <NoRecordsContent>
+        <MudText>There are no @Title yet.</MudText>
+    </NoRecordsContent>
     <PagerContent>
         <MudPaper Class="d-flex flex-column align-center">
             <MudPagination Variant="Variant.Text" Color="Color.Info" Count="@pages" Class="@($"ma-2{(pages > 1 ? "" : " invisible")}")" SelectedChanged="PageChanged" />

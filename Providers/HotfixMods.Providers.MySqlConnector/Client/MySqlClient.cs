@@ -86,7 +86,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 return results;
             }
 
-            string columns = string.Join(",", dbRowDefinition.ColumnDefinitions);
+            string columns = string.Join(",", dbRowDefinition.ColumnDefinitions.Select(c => c.Name));
             var query = $"SELECT {columns} FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
 
             using var command = new MySqlCommand(query, _mySqlConnection);

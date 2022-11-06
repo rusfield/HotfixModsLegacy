@@ -3,11 +3,6 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -17,6 +12,8 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto> GetNewAsync(Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+
             var result = new AnimKitDto();
             result.AnimKit.Id = await GetNextIdAsync<AnimKit>();
 
@@ -25,6 +22,8 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<AnimKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+
             var animKit = await GetSingleByIdAsync<AnimKit>(id);
             if (null == animKit)
             {

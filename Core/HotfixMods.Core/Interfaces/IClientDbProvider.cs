@@ -13,5 +13,6 @@ namespace HotfixMods.Core.Interfaces
         /// <returns></returns>
         Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters);
         Task<DbRow> GetSingleAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters);
+        Task<bool> Db2ExistsAsync(string location, string db2Name);
     }
 }

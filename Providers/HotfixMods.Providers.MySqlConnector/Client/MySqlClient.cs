@@ -270,5 +270,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             await _mySqlConnection.CloseAsync();
             return results;
         }
+
+        // Used by IClientDbProvider interface
+        public async Task<bool> Db2ExistsAsync(string schemaName, string tableName)
+        {
+            return await TableExistsAsync(schemaName, tableName);
+        }
     }
 }

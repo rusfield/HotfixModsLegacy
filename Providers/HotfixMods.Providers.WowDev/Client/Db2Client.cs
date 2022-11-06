@@ -87,5 +87,12 @@ namespace HotfixMods.Providers.WowDev.Client
         {
             return await GetBuildsAsync(db2Name);
         }
+
+        public async Task<bool> Db2ExistsAsync(string location, string db2Name)
+        {
+            if(!location.EndsWith("/"))
+                location += "/";
+            return await Task.Run(() => File.Exists($"{location}{db2Name}.db2"));
+        }
     }
 }

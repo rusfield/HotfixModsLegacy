@@ -1,0 +1,131 @@
+﻿@using HotfixMods.Infrastructure.Razor.Business
+@using HotfixMods.Infrastructure.Razor.Components.Private
+
+@typeparam T
+<div class="custom-wrapper">
+    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup!))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="pt-4">
+
+        @if (!AllowUndefinedValues)
+        {
+            <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+        }
+        else if (null == Options || Options.Count == 0)
+        {
+            if (typeof(T) == typeof(string))
+            {
+                <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+            }
+            else if (typeof(T) == typeof(decimal))
+            {
+                <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+            }
+            else
+            {
+                <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" />
+            }
+        }
+        else
+        {
+            <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" />
+        }
+    </MudBadge>
+</div>
+
+@code
+{
+    [Parameter]
+    public T Value { get; set; }
+
+    [Parameter]
+    public object? ValueLookup { get; set; }
+
+    [Parameter]
+    public Dictionary<T, string>? Options { get; set; }
+
+    [Parameter]
+    public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public EventCallback OnIdAdornmentClick { get; set; }
+
+    [Parameter]
+    public EventCallback OnInfoAdornmentClick { get; set; }
+
+    [Parameter]
+    public bool AllowUndefinedValues { get; set; } = true;
+
+    bool GetBadgeVisibility()
+    {
+
+        var valStr = Value?.ToString();
+        var lValStr = ValueLookup?.ToString();
+
+        if (null == valStr || null == lValStr)
+        {
+            return false;
+        }
+        else if (valStr.StartsWith("-") || lValStr.StartsWith("-"))
+        {
+            var val = long.Parse(valStr);
+            var lVal = long.Parse(lValStr);
+            return val != lVal;
+        }
+        else
+        {
+            var val = ulong.Parse(valStr);
+            var lVal = ulong.Parse(lValStr);
+            return val != lVal;
+        }
+    }
+
+    string? GetAdornmentIcon()
+    {
+        if (OnIdAdornmentClick.HasDelegate)
+            return @Icons.Filled.Refresh;
+        else if (OnInfoAdornmentClick.HasDelegate)
+            return @Icons.Outlined.Info;
+        else
+            return null;
+    }
+
+    EventCallback GetOnAdornmentClick()
+    {
+        if (OnIdAdornmentClick.HasDelegate)
+        {
+            return OnIdAdornmentClick;
+        }
+        else if (OnInfoAdornmentClick.HasDelegate)
+        {
+            return OnInfoAdornmentClick;
+        }
+        else
+        {
+            return default(EventCallback);
+        }
+    }
+
+    Adornment GetAdornment()
+    {
+        if (OnIdAdornmentClick.HasDelegate || OnInfoAdornmentClick.HasDelegate)
+            return Adornment.End;
+        return Adornment.None;
+    }
+
+    async Task SetValueAsync(object newValue)
+    {
+        Value = (T)newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    async Task SetValueAsync(T newValue)
+    {
+        Value = newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

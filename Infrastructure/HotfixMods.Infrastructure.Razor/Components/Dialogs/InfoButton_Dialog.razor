@@ -1,0 +1,22 @@
+﻿@using Microsoft.JSInterop;
+@using HotfixMods.Infrastructure.Services
+
+@inject ISnackbar Snackbar
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())">
+    <MudDialog>
+        <DialogContent>
+            <MudText>
+                @Text
+            </MudText>
+        </DialogContent>
+    </MudDialog>
+</MudBadge>
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+}

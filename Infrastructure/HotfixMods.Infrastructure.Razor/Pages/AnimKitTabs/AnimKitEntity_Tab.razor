@@ -4,13 +4,13 @@
 
 <MudGrid>
     <MudItem xs="3">
-        <IntInput_Element Label="ID" @bind-Value="Value.RecordId" AdornmentIcon="@Icons.Filled.Refresh" OnAdornmentClick="NextIdAsync_Click" />
+        <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
         <Invisible_Element Amount="3" />
     </MudItem>
     <MudItem xs="9" />
     <MudItem xs="3" />
     <MudItem xs="6">
-        <TextInput_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
+        <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
     </MudItem>
     <MudItem xs="3" />
 </MudGrid>

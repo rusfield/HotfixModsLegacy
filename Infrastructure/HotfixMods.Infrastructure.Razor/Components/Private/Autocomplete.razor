@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Business
 
 
-<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="@(string.IsNullOrWhiteSpace(AdornmentIcon) ? Adornment.None : Adornment.End)" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick">
+<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick">
     <NoItemsTemplate>
         <MudList Clickable="true">
             <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
@@ -31,10 +31,13 @@
     public Variant Variant { get; set; } = Variant.Outlined;
 
     [Parameter]
-    public string? AdornmentIcon { get; set; }
+    public string AdornmentIcon { get; set; }
 
     [Parameter]
     public EventCallback OnAdornmentClick { get; set; }
+
+    [Parameter]
+    public Adornment Adornment { get; set; }
 
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;

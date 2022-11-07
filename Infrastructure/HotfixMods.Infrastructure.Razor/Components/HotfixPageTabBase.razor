@@ -1,5 +1,6 @@
 ﻿@typeparam T
 
+@inject IDialogService DialogService
 
 @code {
     [Parameter]
@@ -11,4 +12,10 @@
     [Parameter]
     public int CurrentPageIndex { get; set; }
 
+    protected EventCallback OpenInfoDialog(string infoText)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(InfoButton_Dialog.Text), infoText);
+        return new EventCallbackFactory().Create(this, () => DialogService.Show<InfoButton_Dialog>(null, parameters));
+    }
 }

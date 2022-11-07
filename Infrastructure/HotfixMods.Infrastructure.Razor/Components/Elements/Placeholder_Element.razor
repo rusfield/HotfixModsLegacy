@@ -1,0 +1,17 @@
+﻿@for (int i = 0; i < Amount; i++)
+{
+    <div class="custom-wrapper">
+        <MudStack Style="height:100.91px" Justify="Justify.Center" Class="@(Visible ? "" : "invisible")">
+            <MudSkeleton Height="56px" Width="100%" SkeletonType="SkeletonType.Rectangle" />
+        </MudStack>
+    </div>
+}
+
+@code
+{
+    [Parameter]
+    public int Amount { get; set; } = 1;
+
+    [Parameter]
+    public bool Visible { get; set; } = false;
+}

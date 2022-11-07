@@ -3,27 +3,27 @@
 
 @typeparam T
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" OnClick="@(OnValueLookupClick)" Style="width:100%" Class="pt-4">
+    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" OnClick="@(OnValueLookupClick)" Style="width:100%">
         <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 
             @if (!AllowUndefinedValues)
             {
-                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error"/>
             }
             else if (null == Options || Options.Count == 0)
             {
                 if (typeof(T) == typeof(string))
                 {
-                    <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+                    <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." />
                 }
                 else
                 {
-                    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" />
+                    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value."/>
                 }
             }
             else
             {
-                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" />
+                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" />
             }
         </MudBadge>
     </MudBadge>
@@ -59,11 +59,24 @@
     public EventCallback OnValueLookupClick { get; set; }
 
     [Parameter]
+    public EventCallback OnSearchAdornmentClick { get; set; }
+
+    [Parameter]
     public bool AllowUndefinedValues { get; set; } = true;
+
+    bool error = false;
+    public void SetError(bool newError)
+    {
+        if(error != newError)
+        {
+            error = newError;
+            this.StateHasChanged();
+        }
+    }
 
     bool GetCompareBadgeVisibility()
     {
-        if(typeof(T) == typeof(string))
+        if (typeof(T) == typeof(string))
             return ValueCompare != null && Value.ToString() != ValueCompare.ToString();
 
         var valStr = Value?.ToString();
@@ -90,9 +103,11 @@
     string? GetAdornmentIcon()
     {
         if (OnIdAdornmentClick.HasDelegate)
-            return @Icons.Filled.Refresh;
+            return Icons.Filled.Refresh;
         else if (OnInfoAdornmentClick.HasDelegate)
-            return @Icons.Outlined.Info;
+            return Icons.Outlined.Info;
+        else if (OnSearchAdornmentClick.HasDelegate)
+            return Icons.Filled.Search;
         else
             return null;
     }
@@ -100,34 +115,32 @@
     EventCallback GetOnAdornmentClick()
     {
         if (OnIdAdornmentClick.HasDelegate)
-        {
             return OnIdAdornmentClick;
-        }
         else if (OnInfoAdornmentClick.HasDelegate)
-        {
             return OnInfoAdornmentClick;
-        }
+        else if (OnSearchAdornmentClick.HasDelegate)
+            return OnSearchAdornmentClick;
         else
-        {
             return default(EventCallback);
-        }
     }
 
     Adornment GetAdornment()
     {
-        if (OnIdAdornmentClick.HasDelegate || OnInfoAdornmentClick.HasDelegate)
+        if (OnIdAdornmentClick.HasDelegate || OnInfoAdornmentClick.HasDelegate || OnSearchAdornmentClick.HasDelegate)
             return Adornment.End;
         return Adornment.None;
     }
 
     async Task SetValueAsync(object newValue)
     {
+        error = false;
         Value = (T)newValue;
         await ValueChanged.InvokeAsync(Value);
     }
 
     async Task SetValueAsync(T newValue)
     {
+        error = false;
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
     }

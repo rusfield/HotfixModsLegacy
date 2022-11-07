@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Business
 
 
-<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick">
+<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value.">
     <NoItemsTemplate>
         <MudList Clickable="true">
             <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
@@ -38,6 +38,9 @@
 
     [Parameter]
     public Adornment Adornment { get; set; }
+
+    [Parameter]
+    public bool Error { get; set; }
 
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;
@@ -98,6 +101,7 @@
 
     async Task<IEnumerable<string>> Search(string value)
     {
+        SetError(false);
         if (string.IsNullOrEmpty(value))
             return Options.Select(o => o.Value);
 
@@ -113,5 +117,14 @@
             return "";
         var option = Options.Where(x => x.Value.Contains(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == Value.ToString()).Select(x => x.Value).FirstOrDefault();
         return (option ?? Value.ToString()) ?? "Not found";
+    }
+
+    public void SetError(bool newError)
+    {
+        if (Error != newError)
+        {
+            Error = newError;
+            this.StateHasChanged();
+        }
     }
 }

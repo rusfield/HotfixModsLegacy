@@ -18,4 +18,9 @@
         parameters.Add(nameof(InfoButton_Dialog.Text), infoText);
         return new EventCallbackFactory().Create(this, () => DialogService.Show<InfoButton_Dialog>(null, parameters));
     }
+
+    protected EventCallback OpenLookupDialog(string db2Name, int id)
+    {
+        return default(EventCallback);
+    }
 }

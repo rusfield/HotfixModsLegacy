@@ -2,6 +2,7 @@
 
 @using HotfixMods.Infrastructure.Extensions
 @using HotfixMods.Infrastructure.Razor.PageData
+@using HotfixMods.Infrastructure.Razor.Handlers
 
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true">
     <Header>
@@ -63,25 +64,31 @@
 @code {
     MudTabs? _mudTabsRef;
 
-    static bool _menuOpen = false;
-    static List<PageTab> Tabs = new();
-    static Guid tabId = Guid.Empty;
+    bool _menuOpen = false;
+    List<PageTab> Tabs = new();
+    Guid tabId = Guid.Empty;
 
     void NewTab_Click()
     {
         _menuOpen = true;
     }
 
-    public static void LaunchTab(PageTab tab)
+    void LaunchTab(PageTab tab)
     {
         _menuOpen = false;
         Tabs.Add(tab);
         tabId = tab.TabId;
+        this.StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        GlobalHandler.LaunchTab = LaunchTab;
+        base.OnInitialized();
     }
 
     protected override void OnAfterRender(bool firstRender)
     {
-        // Seems hacky... Fix TODO?
         if(tabId != Guid.Empty)
         {
             _mudTabsRef?.ActivatePanel(tabId);

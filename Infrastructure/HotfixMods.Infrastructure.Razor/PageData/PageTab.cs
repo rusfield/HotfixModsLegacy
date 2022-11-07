@@ -7,7 +7,7 @@ namespace HotfixMods.Infrastructure.Razor.PageData
         {
             TabName = tabName;
             PageType = pageType;
-            TabId = new Guid();
+            TabId = Guid.NewGuid();
         }
 
         public string TabName { get; set; }

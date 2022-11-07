@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Pages;
 @using HotfixMods.Core.Models
+@using HotfixMods.Infrastructure.Razor.Handlers
 
 @typeparam T
 
@@ -36,7 +37,7 @@
 
         if (!data.Cancelled)
         {
-            HotfixMods.Infrastructure.Razor.Pages.Index.LaunchTab(new PageTab(db2Name, typeof(GenericHotfixes))
+            GlobalHandler.LaunchTab?.Invoke(new PageTab(db2Name, typeof(GenericHotfixes))
                 {
                     Dto = (DbRow)data.Data
                 });

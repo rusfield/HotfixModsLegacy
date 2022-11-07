@@ -1,7 +1,7 @@
-﻿<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())">
+﻿<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())" Class="py-4">
     <MudDialog>
         <DialogContent>
-            <Loader @ref="loaderRef" />
+            <Loader @ref="loaderRef" StateHasChanged_EventCallback="this.StateHasChanged" />
             @if (null == loaderRef || !loaderRef.IsLoading)
             {
                 <MudStack Style="max-height: 600px; overflow-y: scroll">

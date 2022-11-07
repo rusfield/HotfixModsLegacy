@@ -25,11 +25,15 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public async Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
         {
+            if (!await Db2ExistsAsync(location, db2Name))
+                return new List<DbRow>();
             return await ReadDb2FileAsync(location, db2Name, Build, parameters, false);
         }
 
         public async Task<DbRow?> GetSingleAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
         {
+            if (!await Db2ExistsAsync(location, db2Name))
+                return null;
             return (await ReadDb2FileAsync(location, db2Name, Build, parameters, true)).FirstOrDefault();
         }
 
@@ -90,8 +94,8 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public async Task<bool> Db2ExistsAsync(string location, string db2Name)
         {
-            if(!location.EndsWith("/"))
-                location += "/";
+            if(!location.EndsWith("\\"))
+                location += "\\";
             return await Task.Run(() => File.Exists($"{location}{db2Name}.db2"));
         }
     }

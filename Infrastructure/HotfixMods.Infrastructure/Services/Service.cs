@@ -183,5 +183,10 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await _clientDbDefinitionProvider.GetDefinitionNamesAsync();
         }
+
+        protected async Task<bool> Db2Exists(string clientDbLocation, string serverSchemaName, string db2Name)
+        {
+            return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
+        }
     }
 }

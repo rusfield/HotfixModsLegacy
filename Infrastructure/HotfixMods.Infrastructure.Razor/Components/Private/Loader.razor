@@ -19,13 +19,16 @@
 }
 
 @code {
+    [Parameter]
+    public EventCallback StateHasChanged_EventCallback { get; set; }
+
     string loadingTitle = "";
     string loadingSubTitle = "";
     int loadingProgress = 0;
 
     public bool IsLoading { get; private set; } = false;
 
-    public void SetProgress(string progressTitle, string progressSubTitle, int progress)
+    public async void SetProgress(string progressTitle, string progressSubTitle, int progress)
     {
         IsLoading = progress < 100;
 
@@ -33,6 +36,7 @@
         loadingTitle = progressTitle;
         loadingSubTitle = progressSubTitle;
         Debug.WriteLine($"{progressTitle} -> {progressSubTitle} ({progress}%)");
+        await StateHasChanged_EventCallback.InvokeAsync();
         this.StateHasChanged();
     }
 

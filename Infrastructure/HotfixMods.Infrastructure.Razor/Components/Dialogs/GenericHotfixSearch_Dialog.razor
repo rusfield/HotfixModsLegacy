@@ -80,15 +80,22 @@
 
         if (!string.IsNullOrWhiteSpace(_db2Name) && Id != null)
         {
-            dialogSearchRef?.SetLoaderProgress("test", "test", 15);
-            var data = await Service.GetByIdAsync(_db2Name, (int)Id);
-            if (data != null)
+            if (!await Service.Db2Exists(_db2Name))
             {
-                Dialog.Close(data);
+                dialogSearchRef?.CancelLoaderWithMessage("DB2 is not loaded.");
             }
             else
             {
-                dialogSearchRef?.CancelLoaderWithMessage("No DB2 record found.");
+                dialogSearchRef?.SetLoaderProgress("test", "test", 15);
+                var data = await Service.GetByIdAsync(_db2Name, (int)Id);
+                if (data != null)
+                {
+                    Dialog.Close(data);
+                }
+                else
+                {
+                    dialogSearchRef?.CancelLoaderWithMessage("No DB2 record found.");
+                }
             }
         }
     }

@@ -28,5 +28,9 @@ namespace HotfixMods.Infrastructure.Services
             return definitionNames;
         }
 
+        public async Task<bool> Db2Exists(string db2Name)
+        {
+            return await Db2Exists(_appConfig.Location, _appConfig.HotfixesSchema, db2Name);
+        }
     }
 }

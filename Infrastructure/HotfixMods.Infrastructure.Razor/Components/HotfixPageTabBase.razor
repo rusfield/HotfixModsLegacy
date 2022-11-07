@@ -1,4 +1,7 @@
-﻿@typeparam T
+﻿@using HotfixMods.Infrastructure.Razor.Pages;
+@using HotfixMods.Core.Models
+
+@typeparam T
 
 @inject IDialogService DialogService
 
@@ -21,6 +24,22 @@
 
     protected EventCallback OpenLookupDialog(string db2Name, int id)
     {
-        return default(EventCallback);
+        return new EventCallbackFactory().Create(this, async () => await LookupDialogEventCallback(db2Name, id));
+    }
+
+    async Task LookupDialogEventCallback(string db2Name, int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(GenericHotfixSearch_Dialog.Db2Name), db2Name);
+        parameters.Add(nameof(GenericHotfixSearch_Dialog.Id), id);
+        var data = await DialogService.Show<GenericHotfixSearch_Dialog>(null, parameters).Result;
+
+        if (!data.Cancelled)
+        {
+            HotfixMods.Infrastructure.Razor.Pages.Index.LaunchTab(new PageTab(db2Name, typeof(GenericHotfixes))
+                {
+                    Dto = (DbRow)data.Data
+                });
+        }
     }
 }

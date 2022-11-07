@@ -1,9 +1,10 @@
-﻿@using HotfixMods.Infrastructure.Razor.Business
+﻿@typeparam T
+
+@using HotfixMods.Infrastructure.Razor.Business
 @using HotfixMods.Infrastructure.Razor.Components.Private
 
-@typeparam T
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" OnClick="@(OnValueLookupClick)" Style="width:100%">
+    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
         <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 
             @if (!AllowUndefinedValues)

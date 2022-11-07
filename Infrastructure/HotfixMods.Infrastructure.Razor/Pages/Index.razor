@@ -63,13 +63,20 @@
 @code {
     MudTabs? _mudTabsRef;
 
-    bool _menuOpen = false;
-    List<PageTab> Tabs = new();
-    Guid tabId = Guid.Empty;
+    static bool _menuOpen = false;
+    static List<PageTab> Tabs = new();
+    static Guid tabId = Guid.Empty;
 
     void NewTab_Click()
     {
         _menuOpen = true;
+    }
+
+    public static void LaunchTab(PageTab tab)
+    {
+        _menuOpen = false;
+        Tabs.Add(tab);
+        tabId = tab.TabId;
     }
 
     protected override void OnAfterRender(bool firstRender)
@@ -80,15 +87,13 @@
             _mudTabsRef?.ActivatePanel(tabId);
             tabId = Guid.Empty;
         }
-        
+
         base.OnAfterRender(firstRender);
     }
 
     void OpenTab_Click(PageTab tab)
     {
-        _menuOpen = false;
-        Tabs.Add(tab);
-        tabId = tab.TabId;
+        LaunchTab(tab);
     }
 
     void CloseTab_Click(Guid tabId)

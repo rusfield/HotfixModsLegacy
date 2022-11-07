@@ -42,8 +42,14 @@
     {
         if (firstRender)
         {
+            _db2Name = Db2Name;
             if (Id != null && _db2Name != null)
+            {
                 await GetByIdAsync();
+
+                // Above function will return data if found. If not, cancel.
+                Dialog.Cancel();
+            }
 
             if (string.IsNullOrWhiteSpace(Db2Name))
             {

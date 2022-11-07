@@ -4,7 +4,7 @@
 
 <MudGrid>
     <MudItem xs="3">
-        <IntInput_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" Options="@(options)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" FilterDuringType="false" AllowUndefinedValues="false"/>
+        <IntInput_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" Options="@(options)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false"/>
         <IntInput_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueLookup="ValueLookup?.LoopToSegmentIndex" />
         <IntInput_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueLookup="ValueLookup?.AnimKitConfigId" />
         <IntInput_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueLookup="ValueLookup?.SegmentFlags" />
@@ -54,16 +54,12 @@
     [Parameter]
     public AnimKits AnimKitPage { get; set; }
 
-    Dictionary<byte, string>? options = null;
+    Dictionary<byte, string> options;
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override void OnInitialized()
     {
-        if(AnimKitPage != null && null == options)
-        {
-            InitOptions();
-            this.StateHasChanged();
-        }
-        base.OnAfterRender(firstRender);
+        InitOptions();
+        base.OnInitialized();
     }
 
     void SegmentChanged(byte newValue)
@@ -85,7 +81,7 @@
             }
         }
         InitOptions();
-        this.StateHasChanged();
+        AnimKitPage.SetPanelIndex(newValue + 2); // +2 is for Entity and Anim Kit tabs
     }
 
     void InitOptions()

@@ -3,16 +3,19 @@
 
 @typeparam T
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="pt-4">
+    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup!))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="pt-4">
 
-        @* A normal fields feels faster in the UI *@
-        @if (null == Options || Options.Count == 0)
+        @if (!AllowUndefinedValues)
+        {
+            <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="OnAdornmentClick" AdornmentIcon="@AdornmentIcon" />
+        }
+        else if (null == Options || Options.Count == 0)
         {
             <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
         }
         else
         {
-            <Autocomplete_Private T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AllowUndefinedValues="AllowUndefinedValues" FilterDuringType="FilterDuringType" />
+            <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" />
         }
     </MudBadge>
 </div>
@@ -44,31 +47,30 @@
     public EventCallback OnAdornmentClick { get; set; }
 
     [Parameter]
-    public bool FilterDuringType { get; set; } = true;
-
-    [Parameter]
     public bool AllowUndefinedValues { get; set; } = true;
 
     bool GetBadgeVisibility()
     {
-        if (Value != null && ValueLookup != null)
+
+        var valStr = Value?.ToString();
+        var lValStr = ValueLookup?.ToString();
+
+        if (null == valStr || null == lValStr)
         {
-            var valStr = Value.ToString();
-            var lValStr = ValueLookup.ToString();
-            if (valStr.StartsWith("-") || lValStr.StartsWith("-"))
-            {
-                var val = long.Parse(valStr);
-                var lVal = long.Parse(lValStr);
-                return val != lVal;
-            }
-            else
-            {
-                var val = ulong.Parse(valStr);
-                var lVal = ulong.Parse(lValStr);
-                return val != lVal;
-            }
+            return false;
         }
-        return false;
+        else if (valStr.StartsWith("-") || lValStr.StartsWith("-"))
+        {
+            var val = long.Parse(valStr);
+            var lVal = long.Parse(lValStr);
+            return val != lVal;
+        }
+        else
+        {
+            var val = ulong.Parse(valStr);
+            var lVal = ulong.Parse(lValStr);
+            return val != lVal;
+        }
     }
 
     async Task SetValueAsync(object newValue)

@@ -73,6 +73,12 @@
         base.OnAfterRender(firstRender);
     }
 
+    public void SetPanelIndex(int panelIndex)
+    {
+        newPanelIndex = panelIndex;
+        this.StateHasChanged();
+    }
+
     async Task AddClick()
     {
         await AddClick_Callback.InvokeAsync();

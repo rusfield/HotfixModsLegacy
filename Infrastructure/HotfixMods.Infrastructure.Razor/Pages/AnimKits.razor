@@ -12,7 +12,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<AnimKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
@@ -37,10 +37,17 @@ else
 }
 
 @code {
+    TabContentEditHeader? tabContentEditHeaderRef;
+
 
     void AddSegment_Click()
     {
         if (PageTab.Dto != null)
-            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment());
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment() { OrderIndex = (byte)((AnimKitDto)PageTab.Dto).AnimKitSegments.Count });
+    }
+
+    public void SetPanelIndex(int panelIndex)
+    {
+        tabContentEditHeaderRef?.SetPanelIndex(panelIndex);
     }
 }

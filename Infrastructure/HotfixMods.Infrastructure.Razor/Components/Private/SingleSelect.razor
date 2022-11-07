@@ -1,0 +1,41 @@
+﻿@typeparam T
+
+@using HotfixMods.Infrastructure.Razor.Business
+@using HotfixMods.Infrastructure.Extensions
+
+<MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" Adornment="Adornment.End" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter">
+    @foreach (var option in Options)
+    {
+        <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
+    }
+</MudSelect>
+
+@code
+{
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public Dictionary<T, string> Options { get; set; } = new();
+
+    [Parameter]
+    public string? AdornmentIcon { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdornmentClick { get; set; }
+
+    async Task SetValueAsync(T newValue)
+    {
+        Value = newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

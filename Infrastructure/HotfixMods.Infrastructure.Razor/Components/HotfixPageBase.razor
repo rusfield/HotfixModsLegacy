@@ -19,10 +19,10 @@
         }
     }
 
-    protected async void ValueLookupAsync_Click<TDialog>(DialogParameters parameters = null)
+    protected async void ValueLookupAsync_Click<TDialog>(DialogParameters? parameters = null)
         where TDialog : ComponentBase
     {
-        var result = await DialogService.Show<TDialog>(null, parameters).Result;
+        var result = await DialogService.Show<TDialog>(null, parameters ?? new DialogParameters()).Result;
         if (!result.Cancelled && result.Data != null)
         {
             PageTab.DtoLookup = result.Data;

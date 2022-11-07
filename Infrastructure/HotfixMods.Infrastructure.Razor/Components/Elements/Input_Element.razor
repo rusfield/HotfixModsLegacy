@@ -3,31 +3,29 @@
 
 @typeparam T
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueLookup!))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="pt-4">
+    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" OnClick="@(OnValueLookupClick)" Style="width:100%" Class="pt-4">
+        <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 
-        @if (!AllowUndefinedValues)
-        {
-            <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
-        }
-        else if (null == Options || Options.Count == 0)
-        {
-            if (typeof(T) == typeof(string))
+            @if (!AllowUndefinedValues)
             {
-                <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
             }
-            else if (typeof(T) == typeof(decimal))
+            else if (null == Options || Options.Count == 0)
             {
-                <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="(float)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+                if (typeof(T) == typeof(string))
+                {
+                    <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" />
+                }
+                else
+                {
+                    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" />
+                }
             }
             else
             {
-                <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" />
+                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" />
             }
-        }
-        else
-        {
-            <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" />
-        }
+        </MudBadge>
     </MudBadge>
 </div>
 
@@ -37,7 +35,7 @@
     public T Value { get; set; }
 
     [Parameter]
-    public object? ValueLookup { get; set; }
+    public object? ValueCompare { get; set; }
 
     [Parameter]
     public Dictionary<T, string>? Options { get; set; }
@@ -58,29 +56,34 @@
     public EventCallback OnInfoAdornmentClick { get; set; }
 
     [Parameter]
+    public EventCallback OnValueLookupClick { get; set; }
+
+    [Parameter]
     public bool AllowUndefinedValues { get; set; } = true;
 
-    bool GetBadgeVisibility()
+    bool GetCompareBadgeVisibility()
     {
+        if(typeof(T) == typeof(string))
+            return ValueCompare != null && Value.ToString() != ValueCompare.ToString();
 
         var valStr = Value?.ToString();
-        var lValStr = ValueLookup?.ToString();
+        var cValStr = ValueCompare?.ToString();
 
-        if (null == valStr || null == lValStr)
+        if (null == valStr || null == cValStr)
         {
             return false;
         }
-        else if (valStr.StartsWith("-") || lValStr.StartsWith("-"))
+        else if (valStr.StartsWith("-") || cValStr.StartsWith("-"))
         {
-            var val = long.Parse(valStr);
-            var lVal = long.Parse(lValStr);
-            return val != lVal;
+            var val = decimal.Parse(valStr);
+            var cVal = decimal.Parse(cValStr);
+            return val != cVal;
         }
         else
         {
-            var val = ulong.Parse(valStr);
-            var lVal = ulong.Parse(lValStr);
-            return val != lVal;
+            var val = decimal.Parse(valStr);
+            var cVal = decimal.Parse(cValStr);
+            return val != cVal;
         }
     }
 

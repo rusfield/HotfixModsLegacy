@@ -30,7 +30,7 @@
     public List<int> Value { get; set; }
 
     [Parameter]
-    public List<int> ValueLookup { get; set; }
+    public List<int> ValueCompare { get; set; }
 
     [Parameter]
     public EventCallback<List<int>> ValueChanged { get; set; }
@@ -90,12 +90,12 @@
 
     bool GetBadgeVisibility()
     {
-        return ValueLookup != null && Value != null && !(Enumerable.SequenceEqual(Value, ValueLookup));
+        return ValueCompare != null && Value != null && !(Enumerable.SequenceEqual(Value, ValueCompare));
     }
 
     async Task SetValueAsync()
     {
-        Value = ValueLookup;
+        Value = ValueCompare;
         await SetText();
     }
 

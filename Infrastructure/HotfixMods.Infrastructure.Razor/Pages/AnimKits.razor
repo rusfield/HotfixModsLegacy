@@ -12,7 +12,7 @@
 }
 else
 {
-    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueLookup_Callback="@(async () => ValueLookupAsync_Click<AnimKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
@@ -21,14 +21,14 @@ else
             </MudTabPanel>
             <MudTabPanel Text="Anim Kit">
                 <TabContentEditBody>
-                    <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueLookup="((AnimKitDto?)PageTab.DtoLookup)?.AnimKit" />
+                    <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueCompare="((AnimKitDto?)PageTab.DtoCompare)?.AnimKit" />
                 </TabContentEditBody>
             </MudTabPanel>
             @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
             {
                 <MudTabPanel Text="@($"Segment #{index + 1}")">
                     <TabContentEditBody>
-                        <AnimKitSegment_Tab AnimKitPage="this" Value="item" ValueLookup="@(PageTab.DtoLookup != null ? ((AnimKitDto?)PageTab.DtoLookup)?.AnimKitSegments[index] : null)" />
+                        <AnimKitSegment_Tab AnimKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
                     </TabContentEditBody>
                 </MudTabPanel>
             }

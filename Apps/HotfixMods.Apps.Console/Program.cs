@@ -7,23 +7,6 @@ using HotfixMods.Tools.Initializer.Business;
 
 
 
-float myFloat = 123;
-decimal myDecimal = Convert.ToDecimal(myFloat);
-
-var t1 = myFloat.GetType();
-var t2 = myDecimal.GetType();
-
-var myClass = new MyClass();
-var myProperty = myClass.GetType().GetProperty("MyProperty");
-myProperty.SetValue(myClass, myDecimal);
-
-Console.ReadKey();
-
-public class MyClass
-{
-    public decimal MyProperty { get; set; }
-}
-
 
 /*
 var dt = new DbDefinitionTool();
@@ -50,14 +33,14 @@ while (true)
 var importTool = new Db2ImportTool();
 await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "ItemSearchName", "hotfix_mods", "item_search_name", "localhost", "3306", "root", "root");
 Console.WriteLine("Done");
-
+*/
 
 
 var wowToolsTool = new WowToolsTool();
 
 while (true)
 {
-    Console.WriteLine("Press 1 for enum and 2 for flag");
+    Console.WriteLine("Press 1 for enum or 2 for flag or 3 for array");
     var key = Console.ReadKey();
     try
     {
@@ -65,6 +48,8 @@ while (true)
             await wowToolsTool.EnumInClipboardToCSharp();
         else if (key.KeyChar == '2')
             await wowToolsTool.FlagInClipboardToCSharp();
+        else if (key.KeyChar == '3')
+            await wowToolsTool.ArrayInClipboardToCSharp();
         else
             Console.WriteLine("Invalid key.");
     }
@@ -75,7 +60,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 

@@ -3,12 +3,60 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HotfixMods.Tools.Dev.Business
 {
     public class WowToolsTool
     {
+        public async Task<string> ArrayInClipboardToCSharp()
+        {
+            var value = await TextCopy.ClipboardService.GetTextAsync();
+            return string.IsNullOrEmpty(value) ? "" : await ArrayInClipboardToCSharp(value);
+        }
+        public async Task<string> ArrayInClipboardToCSharp(string wowToolsArray)
+        {
+            await TextCopy.ClipboardService.SetTextAsync("");
+            var arrayRows = wowToolsArray.Split("\r\n").ToList();
+            string name = arrayRows[0].Split(" ")[1];
+            await WriteToConsoleAndClipboard($"public enum {name}");
+            await WriteToConsoleAndClipboard("{");
+
+            var rows = arrayRows.Where(a => a.Trim().StartsWith("\""));
+
+            int index = 0;
+            foreach(var row in rows)
+            {
+                var enumValue = Regex.Replace(row, @"(?<!_|^)([A-Z])", "_$1").Trim().ToUpper();
+
+                if(enumValue.StartsWith("\"_"))
+                    enumValue = enumValue.Substring(2);
+                if(enumValue.EndsWith(","))
+                    enumValue = enumValue.Substring(0, enumValue.Length - 1);
+                if (enumValue.EndsWith("\""))
+                    enumValue = enumValue.Substring(0, enumValue.Length - 1);
+
+                enumValue = enumValue.Replace("1_H", "_1H");
+                enumValue = enumValue.Replace("2_H", "_2H");
+                enumValue = enumValue.Replace("W_A_", "WA_");
+                enumValue = enumValue.Replace("00", "_00");
+                enumValue = enumValue.Replace("01", "_01");
+                enumValue = enumValue.Replace("02", "_02");
+                enumValue = enumValue.Replace("03", "_03");
+                enumValue = enumValue.Replace("04", "_04");
+                enumValue = enumValue.Replace("05", "_05");
+                enumValue = enumValue.Replace("06", "_06");
+                enumValue = enumValue.Replace("07", "_07");
+                enumValue = enumValue.Replace("08", "_08");
+                enumValue = enumValue.Replace("09", "_09");
+
+                await WriteToConsoleAndClipboard($"{enumValue} = {index++},");
+            }
+            await WriteToConsoleAndClipboard("}");
+
+            return (await TextCopy.ClipboardService.GetTextAsync())!;
+        }
         public async Task<string> FlagInClipboardToCSharp()
         {
             var value = await TextCopy.ClipboardService.GetTextAsync();

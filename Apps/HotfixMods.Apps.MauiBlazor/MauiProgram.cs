@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Apps.MauiBlazor.Config;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Razor.Handlers;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
@@ -36,6 +37,7 @@ namespace HotfixMods.Apps.MauiBlazor
             var appConfig = config.Get<AppConfig>();
             var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
             var db2Client = new Db2Client("10.0.2.46259");
+            GlobalHandler.Config = appConfig;
 
             builder.Services.AddSingleton(config =>
             {

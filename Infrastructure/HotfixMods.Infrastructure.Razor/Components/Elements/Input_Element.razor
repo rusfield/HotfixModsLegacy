@@ -4,14 +4,14 @@
 @using HotfixMods.Infrastructure.Razor.Components.Private
 
 <div class="custom-wrapper">
-    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Secondary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
+    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Primary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
         <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 
-            @if (!AllowUndefinedValues)
+            @if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
             {
-                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" Options="Options" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error"/>
+                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" />
             }
-            else if (null == Options || Options.Count == 0)
+            else if (null == GetOptionsAsync_Func)
             {
                 if (typeof(T) == typeof(string))
                 {
@@ -24,7 +24,7 @@
             }
             else
             {
-                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" Options="Options" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" />
+                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" GetOptionsAsync_Func="GetOptionsAsync_Func" />
             }
         </MudBadge>
     </MudBadge>
@@ -39,7 +39,7 @@
     public object? ValueCompare { get; set; }
 
     [Parameter]
-    public Dictionary<T, string>? Options { get; set; }
+    public Func<Task<Dictionary<T, string>>>? GetOptionsAsync_Func { get; set; }
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }

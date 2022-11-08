@@ -1,22 +1,16 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Extensions
 @using HotfixMods.Infrastructure.Razor.Components.Private
+@using HotfixMods.Infrastructure.Razor.Handlers;
 
 @inject GenericHotfixService Service
 
 <DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
-    @if (options != null)
+    @if (string.IsNullOrWhiteSpace(Db2Name))
     {
-        @if (string.IsNullOrWhiteSpace(Db2Name))
-        {
-            <Input_Element @ref="Db2NameRef" Label="DB2" @bind-Value="_db2Name" Options="options!" />
-        }
-        <Input_Element @ref="IdRef" @bind-Value="Id" Label="ID" OnSearchAdornmentClick="GetByIdAsync" />
+        <MudText Typo="Typo.h6" Align="Align.Center">Search DB2:</MudText>
+        <Input_Element @ref="Db2NameRef" Label="DB2" @bind-Value="_db2Name" GetOptionsAsync_Func="GetDefinitionNamesAsync" />
     }
-    else
-    {
-        <Placeholder_Element Visible="true" Amount="2" />
-    }
+    <Input_Element @ref="IdRef" @bind-Value="Id" Label="ID" OnSearchAdornmentClick="GetByIdAsync" />
 </DialogSearch>
 
 
@@ -36,8 +30,6 @@
     Input_Element<int?>? IdRef;
     string? _db2Name;
 
-    Dictionary<string, string>? options = null;
-
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -51,15 +43,6 @@
                 Dialog.Cancel();
             }
 
-            if (string.IsNullOrWhiteSpace(Db2Name))
-            {
-                var definitionNames = await Service.GetDefinitionNamesAsync();
-                options = definitionNames.ListToOptions<string>();
-            }
-            else
-            {
-                options = new();
-            }
             this.StateHasChanged();
         }
 
@@ -82,7 +65,7 @@
         {
             if (!await Service.Db2Exists(_db2Name))
             {
-                dialogSearchRef?.CancelLoaderWithMessage("DB2 is not loaded.");
+                dialogSearchRef?.CancelLoaderWithMessage($"DB2 {_db2Name} is not loaded.");
             }
             else
             {
@@ -94,9 +77,17 @@
                 }
                 else
                 {
-                    dialogSearchRef?.CancelLoaderWithMessage("No DB2 record found.");
+                    dialogSearchRef?.CancelLoaderWithMessage($"No DB2 record found in {_db2Name}.");
                 }
             }
         }
+    }
+
+    async Task<Dictionary<string, string>> GetDefinitionNamesAsync()
+    {
+        if (GlobalHandler.GetFromCache<List<string>>("definitionNames") == null)
+            GlobalHandler.AddToCache("definitionNames", (await Service.GetDefinitionNamesAsync()).ToList());
+
+        return GlobalHandler.GetFromCache<List<string>>("definitionNames")!.ListToOptions<string>();
     }
 }

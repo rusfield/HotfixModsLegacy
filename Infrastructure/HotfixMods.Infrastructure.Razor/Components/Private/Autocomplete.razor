@@ -2,16 +2,22 @@
 
 @using HotfixMods.Infrastructure.Razor.Business
 
-
-<MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value.">
-    <NoItemsTemplate>
-        <MudList Clickable="true">
-            <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
-                @Value
-            </MudListItem>
-        </MudList>
-    </NoItemsTemplate>
-</MudAutocomplete>
+@if(null == options)
+{
+    <Placeholder_Element Visible="true" IsNested="true" />
+}
+else
+{
+    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value.">
+        <NoItemsTemplate>
+            <MudList Clickable="true">
+                <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
+                    @Value
+                </MudListItem>
+            </MudList>
+        </NoItemsTemplate>
+    </MudAutocomplete>
+}
 
 
 @code {
@@ -22,7 +28,7 @@
     public T? Value { get; set; }
 
     [Parameter]
-    public Dictionary<T, string> Options { get; set; } = new();
+    public Func<Task<Dictionary<T, string>>> GetOptionsAsync_Func { get; set; }
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }
@@ -44,11 +50,22 @@
 
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;
+    Dictionary<T, string>? options;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            options = await GetOptionsAsync_Func.Invoke();
+            this.StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 
     async Task InputValueChanged(string input)
     {
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
-        var listItem = Options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
+        var listItem = options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
         var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input;
 
         if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
@@ -102,21 +119,23 @@
     async Task<IEnumerable<string>> Search(string value)
     {
         SetError(false);
-        if (string.IsNullOrEmpty(value))
-            return Options.Select(o => o.Value);
 
-        var options = Options.Where(x => x.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == value).Select(o => o.Value).ToList();
-        if (!options.Any(o => o.Equals(value, StringComparison.InvariantCultureIgnoreCase)))
-            options.Add(value);
-        return options;
+        if (string.IsNullOrEmpty(value))
+            return options.Select(o => o.Value);
+
+        var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
+        if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
+            filteredOptions.Add(value);
+        return filteredOptions;
     }
 
     string? ShowValue()
     {
         if (null == Value)
             return "";
-        var option = Options.Where(x => x.Value.Contains(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == Value.ToString()).Select(x => x.Value).FirstOrDefault();
-        return (option ?? Value.ToString()) ?? "Not found";
+
+        var option = options!.Where(x => x.Value.Contains(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == Value.ToString()).Select(x => x.Value).FirstOrDefault();
+        return (option ?? Value.ToString()) ?? "Error loading value";
     }
 
     public void SetError(bool newError)

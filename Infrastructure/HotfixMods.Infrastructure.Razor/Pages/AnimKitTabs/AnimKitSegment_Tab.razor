@@ -1,10 +1,11 @@
-﻿@using HotfixMods.Infrastructure.Extensions
+﻿@using HotfixMods.Core.Enums.Db2;
+@using HotfixMods.Infrastructure.Extensions
 
 @inherits HotfixPageTabBase<AnimKitSegment>
 
 <MudGrid>
     <MudItem xs="3">
-        <Input_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" Options="@(options)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog("Hello"))" />
+        <Input_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" GetOptionsAsync_Func="GetOrderIndex" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog("Hello"))" />
         <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" />
         <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnValueLookupClick="@(OpenLookupDialog("AnimKitConfig", Value.AnimKitConfigId))" />
         <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" />
@@ -41,7 +42,7 @@
     </MudItem>
 
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.AnimId)" Label="@(nameof(Value.AnimId).ToDisplayName())" ValueCompare="ValueCompare?.AnimId" />
+        <Input_Element T="ushort" @bind-Value="@(Value.AnimId)" Label="@(nameof(Value.AnimId).ToDisplayName())" ValueCompare="ValueCompare?.AnimId" GetOptionsAsync_Func="GetAnimations" OnValueLookupClick="@(OpenLookupDialog("AnimationData", Value.AnimId))"/>
         <Input_Element T="uint" @bind-Value="@(Value.AnimStartTime)" Label="@(nameof(Value.AnimStartTime).ToDisplayName(null, " (frames)"))" ValueCompare="ValueCompare?.AnimStartTime" />
         <Input_Element T="decimal" @bind-Value="@(Value.Speed)" Label="@(nameof(Value.Speed).ToDisplayName())" ValueCompare="ValueCompare?.Speed" />
         <Input_Element T="byte" @bind-Value="@(Value.ForcedVariation)" Label="@(nameof(Value.ForcedVariation).ToDisplayName())" ValueCompare="ValueCompare?.ForcedVariation" />
@@ -91,5 +92,15 @@
         {
             options.Add(i, i.ToString());
         }
+    }
+
+    async Task<Dictionary<ushort, string>> GetAnimations()
+    {
+        return Enum.GetValues<AnimationDataId>().ToDictionary(key => (ushort)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetOrderIndex()
+    {
+        return options;
     }
 }

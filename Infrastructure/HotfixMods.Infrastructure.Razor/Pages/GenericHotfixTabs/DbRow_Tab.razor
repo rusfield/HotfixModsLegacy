@@ -23,43 +23,43 @@
             }
             else if (column.Type == typeof(int))
             {
-                <Input_Element T="int" Value="(int)column.Value" ValueCompare="@(ValueCompare != null ? (int?)ValueCompare.Columns[index].Value : null)" ValueChanged="((int value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="int" Value="(int)column.Value" ValueCompare="@(ValueCompare != null ? (int?)ValueCompare.Columns[index].Value : null)" ValueChanged="((int value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(uint))
             {
-                <Input_Element T="uint" Value="(uint)column.Value" ValueCompare="@(ValueCompare != null ? (uint?)ValueCompare.Columns[index].Value : null)" ValueChanged="((uint value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="uint" Value="(uint)column.Value" ValueCompare="@(ValueCompare != null ? (uint?)ValueCompare.Columns[index].Value : null)" ValueChanged="((uint value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(long))
             {
-                <Input_Element T="long" Value="(long)column.Value" ValueCompare="@(ValueCompare != null ? (long?)ValueCompare.Columns[index].Value : null)" ValueChanged="((long value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="long" Value="(long)column.Value" ValueCompare="@(ValueCompare != null ? (long?)ValueCompare.Columns[index].Value : null)" ValueChanged="((long value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(ulong))
             {
-                <Input_Element T="ulong" Value="(ulong)column.Value" ValueCompare="@(ValueCompare != null ? (ulong?)ValueCompare.Columns[index].Value : null)" ValueChanged="((ulong value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="ulong" Value="(ulong)column.Value" ValueCompare="@(ValueCompare != null ? (ulong?)ValueCompare.Columns[index].Value : null)" ValueChanged="((ulong value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(sbyte))
             {
-                <Input_Element T="sbyte" Value="(sbyte)column.Value" ValueCompare="@(ValueCompare != null ? (sbyte?)ValueCompare.Columns[index].Value : null)" ValueChanged="((sbyte value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="sbyte" Value="(sbyte)column.Value" ValueCompare="@(ValueCompare != null ? (sbyte?)ValueCompare.Columns[index].Value : null)" ValueChanged="((sbyte value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(byte))
             {
-                <Input_Element T="byte" Value="(byte)column.Value" ValueCompare="@(ValueCompare != null ? (byte?)ValueCompare.Columns[index].Value : null)" ValueChanged="((byte value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="byte" Value="(byte)column.Value" ValueCompare="@(ValueCompare != null ? (byte?)ValueCompare.Columns[index].Value : null)" ValueChanged="((byte value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(short))
             {
-                <Input_Element T="short" Value="(short)column.Value" ValueCompare="@(ValueCompare != null ? (short?)ValueCompare.Columns[index].Value : null)" ValueChanged="((short value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="short" Value="(short)column.Value" ValueCompare="@(ValueCompare != null ? (short?)ValueCompare.Columns[index].Value : null)" ValueChanged="((short value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(ushort))
             {
-                <Input_Element T="ushort" Value="(ushort)column.Value" ValueCompare="@(ValueCompare != null ? (ushort?)ValueCompare.Columns[index].Value : null)" ValueChanged="((ushort value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element T="ushort" Value="(ushort)column.Value" ValueCompare="@(ValueCompare != null ? (ushort?)ValueCompare.Columns[index].Value : null)" ValueChanged="((ushort value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(decimal))
             {
-                <Input_Element Value="decimal.Parse(column.Value.ToString()!)" ValueCompare="@(ValueCompare != null ? decimal.Parse(ValueCompare.Columns[index]!.Value.ToString()) : null)" ValueChanged="((decimal value) => column.Value = value)" Label="@column.Name" />
+                <Input_Element Value="decimal.Parse(column.Value.ToString()!)" ValueCompare="@(ValueCompare != null ? decimal.Parse(ValueCompare.Columns[index]!.Value.ToString()) : null)" ValueChanged="((decimal value) => column.Value = value)" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
             else if (column.Type == typeof(string))
             {
-                <Input_Element Value="@column.Value.ToString()" ValueCompare="@(ValueCompare != null ? ValueCompare.Columns[index].Value.ToString() : null)" ValueChanged="@((string value) => column.Value = value ?? "")" Label="@column.Name" />
+                <Input_Element Value="@column.Value.ToString()" ValueCompare="@(ValueCompare != null ? ValueCompare.Columns[index].Value.ToString() : null)" ValueChanged="@((string value) => column.Value = value ?? "")" Label="@column.Name" OnInfoAdornmentClick="AddInfoIfExists(column.Name)" />
             }
         </MudItem>
     }
@@ -89,5 +89,18 @@
     async Task<int> GetNextIdAsync()
     {
         return await Service.GetNextIdAsync(Db2Name);
+    }
+
+    EventCallback AddInfoIfExists(string name)
+    {
+        var classAndAssembly = $"HotfixMods.Infrastructure.InfoModels.{Db2Name}Info, HotfixMods.Infrastructure";
+        var type = Type.GetType(classAndAssembly, false, true);
+        if (type != null)
+        {
+            var value = type.GetField(name)?.GetValue(null)?.ToString();
+            if (!string.IsNullOrWhiteSpace(value) && value != "TODO")
+                return OpenInfoDialog(value.ToString()!);
+        }
+        return default;
     }
 }

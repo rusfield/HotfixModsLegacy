@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.Db2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace HotfixMods.Infrastructure.Extensions
     {
         public static string ToTableName(this string str)
         {
-            // If there ever comes any exceptions, add them here
+            // If there comes any exceptions, add them here
             var output = str switch
             {
                 _ => Regex.Replace(str, @"(?<!_|^)([A-Z])", "_$1")

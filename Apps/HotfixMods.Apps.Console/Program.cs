@@ -2,11 +2,18 @@
 
 
 using DBDefsLib;
+using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Tools.Dev.Business;
 using HotfixMods.Tools.Initializer.Business;
 
 
 
+
+var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
+var definition = await mySqlClient.GetDefinitionAsync("world", "gameobject_template_addon");
+var tcdTool = new TrinityCoreDbTool();
+await tcdTool.DbDefToCSharp(definition);
+Console.ReadKey();
 
 /*
 var dt = new DbDefinitionTool();
@@ -29,6 +36,10 @@ while (true)
 */
 
 
+
+
+
+
 /*
 var importTool = new Db2ImportTool();
 await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "ItemSearchName", "hotfix_mods", "item_search_name", "localhost", "3306", "root", "root");
@@ -36,6 +47,10 @@ Console.WriteLine("Done");
 */
 
 
+
+
+
+/*
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -60,7 +75,4 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
-
-
-
+*/

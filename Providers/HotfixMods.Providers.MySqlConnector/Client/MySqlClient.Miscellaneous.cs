@@ -53,10 +53,12 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
         Type MySqlDataTypeToCSharpType(string type)
         {
+            type = type.Split("(")[0]; // for varchar(100), etc.
             return type.ToString() switch
             {
                 "tinyint signed" => typeof(sbyte),
                 "smallint signed" => typeof(short),
+                "int" => typeof(int),
                 "int signed" => typeof(int),
                 "bigint signed" => typeof(long),
                 "tinyint unsigned" => typeof(byte),
@@ -64,6 +66,8 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 "int unsigned" => typeof(uint),
                 "bigint unsigned" => typeof(ulong),
                 "text" => typeof(string),
+                "varchar" => typeof(string),
+                "nvarchar" => typeof(string),
                 "float" => typeof(decimal),
                 _ => throw new Exception($"{type} not implemented.")
             };

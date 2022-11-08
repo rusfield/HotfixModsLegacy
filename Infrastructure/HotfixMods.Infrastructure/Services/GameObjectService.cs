@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class GameObjectService
+    public class GameobjectService
     {
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotfixMods.Core.Attributes
+﻿namespace HotfixMods.Core.Attributes
 {
-    public class CharactersSchemaAttribute
+    public class CharactersSchemaAttribute : Attribute
     {
     }
 }

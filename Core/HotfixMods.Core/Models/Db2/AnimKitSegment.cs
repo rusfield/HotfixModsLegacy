@@ -10,7 +10,7 @@ namespace HotfixMods.Core.Models.Db2
         public byte OrderIndex { get; set; } = 0;
         public ushort AnimId { get; set; } = 0;
         public uint AnimStartTime { get; set; } = 0;
-        public ushort AnimKitConfigId { get; set; } = 0;
+        public ushort AnimKitConfigId { get; set; } = 1;
         public byte StartCondition { get; set; } = 0;
         public byte StartConditionParam { get; set; } = 0;
         public uint StartConditionDelay { get; set; } = 0;

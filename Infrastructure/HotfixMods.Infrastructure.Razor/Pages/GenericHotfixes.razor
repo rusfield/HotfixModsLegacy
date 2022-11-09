@@ -13,11 +13,11 @@
 }
 else
 {
-    <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" ValueCompare_Callback="@(ValueCompareAsync)" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))">
+    <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" ValueCompare_Callback="@(ValueCompareAsync)">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>
-                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
+                    <DbRow_Tab Value="(DbRow)PageTab.Dto" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
                 </TabContentEditBody>
             </MudTabPanel>
         </ChildContent>
@@ -27,13 +27,7 @@ else
 
 @code {
 
-    int currentPageIndex;
     string db2Name;
-
-    void CurrentPageChanged(int page)
-    {
-        currentPageIndex = page - 1;
-    }
 
     new async void NewAsync_Click()
     {

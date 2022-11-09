@@ -1,8 +1,4 @@
-﻿:root {
-    --mud-palette-surface: var(--mud-palette-background) !important;
-}
-
-.custom-app-bar {
+﻿.custom-app-bar {
     --mud-appbar-height: 0px;
 }
 

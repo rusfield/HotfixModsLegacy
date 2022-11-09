@@ -7,7 +7,7 @@
 @inject IDialogService DialogService
 
 <MudGrid>
-    @for (int i = 24 * CurrentPageIndex; i < (24 * CurrentPageIndex) + 24; i++)
+    @for (int i = 24 * TabContentEditBody.CurrentPageIndex; i < (24 * TabContentEditBody.CurrentPageIndex) + 24; i++)
     {
         if (Value.Columns.Count == i)
         {
@@ -69,6 +69,15 @@
 @code {
     [Parameter]
     public string Db2Name { get; set; }
+
+    [CascadingParameter]
+    TabContentEditBody TabContentEditBody { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TabContentEditBody.Pages = (int)Math.Ceiling(Value.Columns.Count / 24.0);
+        base.OnInitialized();
+    }
 
     async void NextIdAsync_Click()
     {

@@ -18,7 +18,7 @@
     </MudItem>
 </MudGrid>
 
-<MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="mx-2 rounded-0 mud-elevation-0" Class="tab-bar">
+<MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="rounded-0 mud-elevation-0" Class="tab-bar">
     <ChildContent>
         @ChildContent
     </ChildContent>
@@ -31,9 +31,7 @@
         }
     </Header>
 </MudTabs>
-<MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="3">
-    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@Pages" Color="Color.Info" Class="@(Pages > 1 ? null : "invisible")"/>
-</MudPaper>
+
 
 @code {
     [Parameter]
@@ -53,12 +51,6 @@
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public EventCallback<int> CurrentPageChanged { get; set; }
-
-    [Parameter]
-    public int Pages { get; set; } = 0;
 
     MudTabs? mudTabsRef;
     int newPanelIndex = -1;

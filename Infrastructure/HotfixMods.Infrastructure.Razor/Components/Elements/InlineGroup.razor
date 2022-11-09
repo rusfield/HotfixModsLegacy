@@ -1,14 +1,14 @@
-﻿<MudStack Row="true" Spacing="0" Style="width: 100%">
-    <div class="input-border-left" style="width:@(LeftContentWidth ?? widthPercentage)%">
+﻿<MudStack Row="true" Spacing="0" Style="width: 100%" Class="@GetStackClass()">
+    <div class="@(GetDivClass("left"))" style="width:@(LeftContentWidth ?? widthPercentage)%">
         @LeftContent
     </div>
     @if (MiddleContent != null)
     {
-        <div class="input-border-middle" style="width:@(MiddleContentWidth ?? widthPercentage)%; display:flex">
+        <div class="@(GetDivClass("middle"))" style="width:@(MiddleContentWidth ?? widthPercentage)%; display:flex">
             @MiddleContent
         </div>
     }
-    <div class="input-border-right" style="width:@(RightContentWidth ?? widthPercentage)%">
+    <div class="@(GetDivClass("right"))" style="width:@(RightContentWidth ?? widthPercentage)%">
         @RightContent
     </div>
 </MudStack>
@@ -33,6 +33,12 @@
     [Parameter]
     public int? RightContentWidth { get; set; }
 
+    [Parameter]
+    public bool Merged { get; set; } = true;
+
+    [Parameter]
+    public bool DefaultPadding { get; set; } = true;
+
     decimal widthPercentage = 33.4M;
 
     protected override void OnInitialized()
@@ -40,6 +46,18 @@
         base.OnInitialized();
         if (null == MiddleContent)
             widthPercentage = 50.0M;
+    }
+
+    string GetStackClass()
+    {
+        return DefaultPadding && Merged ? "px-3" : "";
+    }
+
+    string GetDivClass(string contentPosition)
+    {
+        var padding = DefaultPadding && !Merged ? "px-3 " : "";
+        var merged = Merged ? $"input-border-{contentPosition}" : "";
+        return padding + merged;
     }
 }
 

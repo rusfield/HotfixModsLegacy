@@ -16,7 +16,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new AnimKitDto();
-            result.AnimKit.Id = await GetNextIdAsync<AnimKit>();
+            result.AnimKit.Id = await GetNextIdAsync();
 
             return result;
         }

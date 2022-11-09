@@ -48,7 +48,7 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem>Spell Visual Kits</MudMenuItem>
-                <MudMenuItem>Sound Kits</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Sound Kit", typeof(SoundKits))))">Sound Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">Anim Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Generic Hotfix", typeof(GenericHotfixes))))">Custom Hotfix</MudMenuItem>
             </ChildContent>

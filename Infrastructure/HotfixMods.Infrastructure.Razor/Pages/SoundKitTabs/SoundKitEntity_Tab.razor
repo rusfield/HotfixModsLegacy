@@ -1,0 +1,35 @@
+﻿@inherits HotfixPageTabBase<HotfixModsEntity>
+@inject SoundKitService Service
+@inject IDialogService DialogService
+
+<MudGrid>
+    <MudItem xs="3">
+        <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
+        <Placeholder_Element Amount="3" />
+    </MudItem>
+    <MudItem xs="9" />
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
+    </MudItem>
+    <MudItem xs="3" />
+</MudGrid>
+
+
+@code {
+    async void NextIdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.GetNextIdAsync_Func), Service.GetNextIdAsync);
+        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            var id = (int)result.Data;
+            if (id > 0)
+            {
+                Value.RecordId = id;
+                this.StateHasChanged();
+            }
+        }
+    }
+}

@@ -13,11 +13,11 @@
 }
 else
 {
-    <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" ValueCompare_Callback="@(ValueCompareAsync)">
+    <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" ValueCompare_Callback="@(ValueCompareAsync)" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))">
         <ChildContent>
             <MudTabPanel Text="@PageTab.TabName">
                 <TabContentEditBody>
-                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" Pages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" />
+                    <DbRow_Tab CurrentPageIndex="currentPageIndex" Value="(DbRow)PageTab.Dto" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
                 </TabContentEditBody>
             </MudTabPanel>
         </ChildContent>

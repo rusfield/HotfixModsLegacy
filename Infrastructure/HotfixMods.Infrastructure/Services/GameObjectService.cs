@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new GameobjectDto();
-            result.GameobjectTemplate.Entry = (uint)await GetNextIdAsync<GameobjectTemplate>();
+            result.GameobjectTemplate.Entry = (uint)await GetNextIdAsync();
 
             return result;
         }

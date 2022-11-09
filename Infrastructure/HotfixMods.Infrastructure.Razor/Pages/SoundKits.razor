@@ -27,9 +27,7 @@ else
             {
                 <MudTabPanel Text="@($"Entry #{index + 1}")">
                     <TabContentEditBody>
-                        @*
-                        <SoundKitEntry_Tab AnimKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((SoundKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
-                        *@
+                        <SoundKitEntry_Tab SoundKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
                     </TabContentEditBody>
                 </MudTabPanel>
             }

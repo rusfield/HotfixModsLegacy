@@ -1,5 +1,21 @@
-﻿<h3>SoundKitEntry</h3>
+﻿@using HotfixMods.Core.Enums.Db2;
+@using HotfixMods.Infrastructure.Extensions
+@using HotfixMods.Infrastructure.InfoModels
+
+@inherits HotfixPageTabBase<SoundKitEntry>
+
+<MudGrid>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" />
+        <Input_Element T="byte" @bind-Value="@(Value.Frequency)" Label="@(nameof(Value.Frequency).ToDisplayName())" ValueCompare="ValueCompare?.Frequency" />
+        <Input_Element T="decimal" @bind-Value="@(Value.Volume)" Label="@(nameof(Value.Volume).ToDisplayName())" ValueCompare="ValueCompare?.Volume" />
+    </MudItem>
+    <MudItem xs="9" />
+</MudGrid>
 
 @code {
+
+    [Parameter]
+    public SoundKits SoundKitPage { get; set; }
 
 }

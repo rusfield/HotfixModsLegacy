@@ -5,7 +5,7 @@ namespace HotfixMods.Infrastructure.DtoModels
 {
     public class GameobjectDto : BaseDto
     {
-        public GameobjectDto(string displayName) : base(displayName){}
+        public GameobjectDto() : base(nameof(Gameobject)){}
 
         public GameobjectTemplate GameobjectTemplate { get; set; } = new();
         public GameobjectTemplateAddon GameobjectTemplateAddon { get; set; } = new();

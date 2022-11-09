@@ -12,7 +12,7 @@
 }
 else
 {
-    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" Pages="0" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>

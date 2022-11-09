@@ -188,5 +188,10 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
+
+        protected async Task<HotfixModsEntity> GetHotfixModsEntity(int id)
+        {
+            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild)) ?? new();
+        }
     }
 }

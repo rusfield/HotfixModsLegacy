@@ -1,6 +1,7 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 
@@ -32,7 +33,8 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 AnimKit = animKit,
-                AnimKitSegments = (await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))).ToList()
+                AnimKitSegments = (await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))).ToList(),
+                Entity = await GetHotfixModsEntity(animKit.Id)
             };
         }
 
@@ -40,6 +42,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             await SaveAsync(animKitDto.AnimKit);
             await SaveAsync(animKitDto.AnimKitSegments.ToArray());
+            await SaveAsync(animKitDto.Entity);
         }
 
         public async Task DeleteAsync(int id)

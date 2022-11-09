@@ -40,7 +40,7 @@
         <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit" />
         <MudIconButton Icon="@Icons.Filled.Security" Color="Color.Inherit" Size="Size.Large" />
         <MudIconButton Icon="@Icons.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" />
-        <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" />
+        <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Game Objects", typeof(Gameobjects))))" />
 
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
             <ActivatorContent>

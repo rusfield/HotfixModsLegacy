@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Enums\TrinityCore\" />
+    <Compile Remove="Enums\TrinityCore\**" />
+    <EmbeddedResource Remove="Enums\TrinityCore\**" />
+    <None Remove="Enums\TrinityCore\**" />
   </ItemGroup>
 
 </Project>

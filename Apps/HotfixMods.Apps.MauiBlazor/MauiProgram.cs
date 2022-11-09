@@ -57,6 +57,15 @@ namespace HotfixMods.Apps.MauiBlazor
                 };
             });
 
+            builder.Services.AddSingleton(config =>
+            {
+                return new GameobjectService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
+                {
+                    FromId = 10000,
+                    VerifiedBuild = -123
+                };
+            });
+
             /*
             // TODO: Cleanup 
             IDb2Provider db2Provider = new Db2Client();
@@ -100,16 +109,6 @@ namespace HotfixMods.Apps.MauiBlazor
                     IdSize = 50,
                     IdRangeFrom = 60000,
                     IdRangeTo = 70000
-                };
-            });
-            builder.Services.AddSingleton(config =>
-            {
-                return new GameObjectService(db2Provider, mySqlProvider)
-                {
-                    VerifiedBuild = -900,
-                    IdSize = 5, // TODO: Check
-                    IdRangeFrom = 500000,
-                    IdRangeTo = 550000
                 };
             });
             builder.Services.AddSingleton(config =>

@@ -1,0 +1,39 @@
+﻿@using Infrastructure.Extensions
+@using Core.Models.Db2
+@using HotfixMods.Infrastructure.Razor.Pages.GameobjectTabs
+
+@inject GameobjectService Service
+@inherits HotfixPageBase
+
+@if (null == PageTab.Dto)
+{
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<GameobjectSearch_Dialog>" Title="Game Objects">
+    </TabContentView>
+}
+else
+{
+    <TabContentEditHeader IsUpdate="false" Title="Game Objects" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
+        <ChildContent>
+            <MudTabPanel Text="Entity">
+                <TabContentEditBody>
+                    <GameobjectEntity_Tab Value="((GameobjectDto)PageTab.Dto).Entity" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Template">
+                <TabContentEditBody>
+                    <GameobjectTemplate_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplate" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplate" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Template Addon">
+                <TabContentEditBody>
+                    <GameobjectTemplateAddon_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplateAddon" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplateAddon" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Display Info">
+                <TabContentEditBody>
+                    <GameobjectDisplayInfo_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectDisplayInfo" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectDisplayInfo" />
+                </TabContentEditBody>
+            </MudTabPanel>
+        </ChildContent>
+    </TabContentEditHeader>
+}

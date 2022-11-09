@@ -11,7 +11,6 @@ namespace HotfixMods.Core.Models.TrinityCore
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public TableHashes TableHash { get; set; }
         public int RecordId { get; set; }
         public int VerifiedBuild { get; set; }
     }

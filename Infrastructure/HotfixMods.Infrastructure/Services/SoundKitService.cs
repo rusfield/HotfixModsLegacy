@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new SoundKitDto();
-            result.SoundKit.Id = await GetNextIdAsync();
+            result.Entity.RecordId = await GetNextIdAsync();
 
             return result;
         }

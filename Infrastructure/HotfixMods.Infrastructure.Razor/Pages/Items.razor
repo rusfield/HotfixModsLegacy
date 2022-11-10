@@ -1,0 +1,28 @@
+﻿@using Infrastructure.Extensions
+@using HotfixMods.Infrastructure.Razor.Pages.ItemTabs
+
+@inject ItemService Service
+@inherits HotfixPageBase
+
+@if (null == PageTab.Dto)
+{
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<ItemSearch_Dialog>" Title="Items">
+    </TabContentView>
+}
+else
+{
+    <TabContentEditHeader IsUpdate="false" Title="Items" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
+        <ChildContent>
+            <MudTabPanel Text="Entity">
+                <TabContentEditBody>
+                    <ItemEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Item Sparse">
+                <TabContentEditBody>
+                    <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
+                </TabContentEditBody>
+            </MudTabPanel>
+        </ChildContent>
+    </TabContentEditHeader>
+}

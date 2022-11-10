@@ -13,7 +13,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
     public partial class MySqlClient : IServerDbProvider, IServerDbDefinitionProvider, IClientDbProvider, IClientDbDefinitionProvider
     {
         MySqlConnection _mySqlConnection;
-        public int AddBatchSize { get; set; } = 1000; // Run this in MySql and then restart the server:      SET GLOBAL max_allowed_packet=1073741824; 
+        public int AddBatchSize { get; set; } = 2000; // Run this in MySql and then restart the server:      SET GLOBAL max_allowed_packet=1073741824; 
 
         public MySqlClient(string server, string port, string user, string password)
         {
@@ -28,6 +28,8 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
 
             var queries = new List<string>();
+            var columns = string.Join(",", dbRows.First().Columns.Select(d => d.Name));
+            var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
 
             await _mySqlConnection.OpenAsync();
             int batchCount = 1;
@@ -35,24 +37,23 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             {
                 foreach (var dbColumn in dbRows)
                 {
-                    string columns = string.Join(",", dbColumn.Columns.Select(d => d.Name));
-                    string values = string.Join(",", dbColumn.Columns.Select(d => $"'{MySqlHelper.EscapeString(d.Value.ToString()!)}'"));
 
-                    queries.Add($"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES({values});");
+                    string values = string.Join(",", dbColumn.Columns.Select(d => $"'{MySqlHelper.EscapeString(d.Value.ToString()!)}'"));
+                    queries.Add($"({values})");
 
                     if (queries.Count == AddBatchSize)
                     {
                         Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
-                        cmd.CommandText = string.Join("", queries);
+                        cmd.CommandText = replaceQuery + string.Join(",", queries);
                         await cmd.ExecuteNonQueryAsync();
                         queries = new();
                     }
                 }
 
-                if(queries.Count > 0)
+                if (queries.Count > 0)
                 {
                     Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
-                    cmd.CommandText = string.Join("", queries);
+                    cmd.CommandText = replaceQuery + string.Join(",", queries);
                     await cmd.ExecuteNonQueryAsync();
                 }
             }

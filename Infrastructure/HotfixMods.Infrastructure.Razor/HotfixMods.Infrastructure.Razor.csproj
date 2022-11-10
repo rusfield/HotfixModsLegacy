@@ -12,6 +12,11 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Content Remove="Components\Dialogs\ItemSearch_Dialog.razor" />
+	  <Content Remove="Pages\ItemTabs\ItemEntity_Tab.razor" />
+	</ItemGroup>
+
 
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
@@ -24,6 +29,24 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Components\Dialogs\ItemSearch_Dialog.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Components\Dialogs\ItemSearch_Dialog.razor" />
+	  <_ContentIncludedByDefault Remove="Pages\ItemTabs\ItemEntity_Tab.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Components\Dialogs\ItemSearch_Dialog.razor" />
+	  <None Include="Pages\ItemTabs\ItemEntity_Tab.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Pages\ItemTabs\ItemEntity_Tab.razor" />
 	</ItemGroup>
 
 </Project>

@@ -5,11 +5,11 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemDisplayInfoMaterialRes
     {
-        public int Id { get; set; }
-        public sbyte ComponentSection { get; set; }
-        public int MaterialResourcesId { get; set; }
-        public int ItemDisplayInfoId { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int Id { get; set; } = 0;
+        public sbyte ComponentSection { get; set; } = 0;
+        public int MaterialResourcesId { get; set; } = 0;
+        public int ItemDisplayInfoId { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

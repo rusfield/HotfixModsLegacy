@@ -75,21 +75,21 @@ namespace HotfixMods.Apps.MauiBlazor
                 };
             });
 
+            builder.Services.AddSingleton(config =>
+            {
+                return new ItemService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
+                {
+                    FromId = 10000,
+                    VerifiedBuild = -123
+                };
+            });
+
             /*
             // TODO: Cleanup 
             IDb2Provider db2Provider = new Db2Client();
             //IMySqlProvider mySqlProvider = new MySqlClient("127.0.0.1","root","root","world","characters","hotfixes");
             IMySqlProvider mySqlProvider = new MySqlProvider.Debug.Clients.MySqlProvider();
-            builder.Services.AddSingleton(config =>
-            {
-                return new ItemService(db2Provider, mySqlProvider)
-                {
-                    VerifiedBuild = -1200,
-                    IdSize = 10,
-                    IdRangeFrom = 5000000,
-                    IdRangeTo = 6000000
-                };
-            });
+
             builder.Services.AddSingleton(config =>
             {
                 return new CreatureService(db2Provider, mySqlProvider)

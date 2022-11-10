@@ -1,16 +1,22 @@
-﻿<MudStack Row="true" Spacing="0" Style="width: 100%" Class="@GetStackClass()">
-    <div class="@(GetDivClass("left"))" style="width:@(LeftContentWidth ?? widthPercentage)%">
-        @LeftContent
-    </div>
+﻿<MudStack Row="true" Spacing="0" Style="width: 100%" Class="@GetClassForRow()">
+    @if (LeftContent != null)
+    {
+        <div class="@(GetClassForColumn("left"))" style="width:@(LeftContentWidth ?? widthPercentage)%">
+            @LeftContent
+        </div>
+    }
     @if (MiddleContent != null)
     {
-        <div class="@(GetDivClass("middle"))" style="width:@(MiddleContentWidth ?? widthPercentage)%; display:flex">
+        <div class="@(GetClassForColumn("middle"))" style="width:@(MiddleContentWidth ?? widthPercentage)%; display:flex">
             @MiddleContent
         </div>
     }
-    <div class="@(GetDivClass("right"))" style="width:@(RightContentWidth ?? widthPercentage)%">
-        @RightContent
-    </div>
+    @if (RightContent != null)
+    {
+        <div class="@(GetClassForColumn("right"))" style="width:@(RightContentWidth ?? widthPercentage)%">
+            @RightContent
+        </div>
+    }
 </MudStack>
 
 
@@ -39,21 +45,24 @@
     [Parameter]
     public bool DefaultPadding { get; set; } = true;
 
-    decimal widthPercentage = 33.4M;
+    decimal widthPercentage;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        if (null == MiddleContent)
-            widthPercentage = 50.0M;
+        int elementCount = 0;
+        elementCount += Convert.ToInt32(LeftContent != null);
+        elementCount += Convert.ToInt32(MiddleContent != null);
+        elementCount += Convert.ToInt32(RightContent != null);
+        widthPercentage = elementCount != 0 ? 100 / elementCount : 0;
     }
 
-    string GetStackClass()
+    string GetClassForRow()
     {
         return DefaultPadding && Merged ? "px-3" : "";
     }
 
-    string GetDivClass(string contentPosition)
+    string GetClassForColumn(string contentPosition)
     {
         var padding = DefaultPadding && !Merged ? "px-3 " : "";
         var merged = Merged ? $"input-border-{contentPosition}" : "";

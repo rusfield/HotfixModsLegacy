@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Business
 @using HotfixMods.Infrastructure.Razor.Components.Private
 
-<div class="custom-wrapper">
+<div class="custom-wrapper" style="width:100%;">
     <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Primary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
         <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 

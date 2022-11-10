@@ -1,0 +1,231 @@
+﻿@using HotfixMods.Infrastructure.Extensions
+@using HotfixMods.Infrastructure.InfoModels
+
+@inherits HotfixPageTabBase<ItemSparse>
+<MudGrid>
+    @if (TabContentEditBody.CurrentPageIndex == 0)
+    {
+        <MudItem xs="3">
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" @bind-Value="@(Value.Display)" Label="@(nameof(Value.Display).ToDisplayName())" ValueCompare="ValueCompare?.Display" />
+            <Input_Element T="string" @bind-Value="@(Value.Description)" Variant="Variant.Text" Label="@(nameof(Value.Description).ToDisplayName())" ValueCompare="ValueCompare?.Description" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" />
+            <Input_Element T="int" @bind-Value="@(Value.MinReputation)" Label="@(nameof(Value.MinReputation).ToDisplayName())" ValueCompare="ValueCompare?.MinReputation" />
+            <Input_Element T="uint" @bind-Value="@(Value.RequiredAbility)" Label="@(nameof(Value.RequiredAbility).ToDisplayName())" ValueCompare="ValueCompare?.RequiredAbility" />
+
+        </MudItem>
+
+    }
+    else if (TabContentEditBody.CurrentPageIndex == 1)
+    {
+        <MudItem xs="3">
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <InlineGroup Merged="false" DefaultPadding="false">
+                        <MiddleContent>
+                            <Input_Element T="int" @bind-Value="@(Value.Flags1)" Label="@(nameof(Value.Flags1).ToDisplayName())" ValueCompare="ValueCompare?.Flags1" />
+                        </MiddleContent>
+                    </InlineGroup>
+                </LeftContent>
+                <RightContent>
+                    <InlineGroup Merged="false" DefaultPadding="false">
+                        <MiddleContent>
+                            <Input_Element T="int" @bind-Value="@(Value.Flags2)" Label="@(nameof(Value.Flags2).ToDisplayName())" ValueCompare="ValueCompare?.Flags2" />
+                        </MiddleContent>
+                    </InlineGroup>
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <InlineGroup Merged="false" DefaultPadding="false">
+                        <MiddleContent>
+                            <Input_Element T="int" @bind-Value="@(Value.Flags3)" Label="@(nameof(Value.Flags3).ToDisplayName())" ValueCompare="ValueCompare?.Flags3" />
+                        </MiddleContent>
+                    </InlineGroup>
+                </LeftContent>
+                <RightContent>
+                    <InlineGroup Merged="false" DefaultPadding="false">
+                        <MiddleContent>
+                            <Input_Element T="int" @bind-Value="@(Value.Flags4)" Label="@(nameof(Value.Flags4).ToDisplayName())" ValueCompare="ValueCompare?.Flags4" />
+                        </MiddleContent>
+                    </InlineGroup>
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+        </MudItem>
+    }
+    else if (TabContentEditBody.CurrentPageIndex == 3)
+    {
+        <MudItem xs="3">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor1)" Label="Stat 1" ValueCompare="ValueCompare?.StatPercentEditor1" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat1)" Label="Type 1" ValueCompare="ValueCompare?.StatModifier_bonusStat1" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor2)" Label="Stat 2" ValueCompare="ValueCompare?.StatPercentEditor2" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat2)" Label="Type 2" ValueCompare="ValueCompare?.StatModifier_bonusStat2" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor3)" Label="Stat 3" ValueCompare="ValueCompare?.StatPercentEditor3" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat3)" Label="Type 3" ValueCompare="ValueCompare?.StatModifier_bonusStat3" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor4)" Label="Stat 4" ValueCompare="ValueCompare?.StatPercentEditor4" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat4)" Label="Type 4" ValueCompare="ValueCompare?.StatModifier_bonusStat4" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor5)" Label="Stat 5" ValueCompare="ValueCompare?.StatPercentEditor5" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat5)" Label="Type 5" ValueCompare="ValueCompare?.StatModifier_bonusStat5" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="6" />
+        <MudItem xs="3">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor6)" Label="Stat 6" ValueCompare="ValueCompare?.StatPercentEditor6" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat6)" Label="Type 6" ValueCompare="ValueCompare?.StatModifier_bonusStat6" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor7)" Label="Stat 7" ValueCompare="ValueCompare?.StatPercentEditor7" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat7)" Label="Type 7" ValueCompare="ValueCompare?.StatModifier_bonusStat7" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor8)" Label="Stat 8" ValueCompare="ValueCompare?.StatPercentEditor8" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat8)" Label="Type 8" ValueCompare="ValueCompare?.StatModifier_bonusStat8" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor9)" Label="Stat 9" ValueCompare="ValueCompare?.StatPercentEditor9" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat9)" Label="Type 9" ValueCompare="ValueCompare?.StatModifier_bonusStat9" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.StatPercentEditor10)" Label="Stat 10" ValueCompare="ValueCompare?.StatPercentEditor10" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="@(Value.StatModifier_bonusStat10)" Label="Type 10" ValueCompare="ValueCompare?.StatModifier_bonusStat10" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+
+    }
+    else if (TabContentEditBody.CurrentPageIndex == 4)
+    {
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="@(Value.DmgVariance)" Label="@(nameof(Value.DmgVariance).ToDisplayName())" ValueCompare="ValueCompare?.DmgVariance" />
+            <Input_Element T="decimal" @bind-Value="@(Value.ItemRange)" Label="@(nameof(Value.ItemRange).ToDisplayName())" ValueCompare="ValueCompare?.ItemRange" />
+
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false" DefaultPadding="false">
+                <RightContent>
+                    <InlineGroup>
+                        <LeftContent>
+                            <Input_Element T="uint" @bind-Value="@(Value.BuyPrice)" Label="@(nameof(Value.BuyPrice).ToDisplayName())" ValueCompare="ValueCompare?.BuyPrice" />
+                        </LeftContent>
+                        <RightContent>
+                            <Input_Element T="uint" @bind-Value="@(Value.SellPrice)" Label="@(nameof(Value.SellPrice).ToDisplayName())" ValueCompare="ValueCompare?.SellPrice" />
+                        </RightContent>
+                    </InlineGroup>
+                </RightContent>
+                <LeftContent>
+                    <InlineGroup>
+                        <LeftContent>
+                            <Input_Element T="int" @bind-Value="@(Value.MaxCount)" Label="@(nameof(Value.MaxCount).ToDisplayName())" ValueCompare="ValueCompare?.MaxCount" />
+                        </LeftContent>
+                        <RightContent>
+                            <Input_Element T="int" @bind-Value="@(Value.Stackable)" Label="@(nameof(Value.Stackable).ToDisplayName())" ValueCompare="ValueCompare?.Stackable" />
+                        </RightContent>
+                    </InlineGroup>
+                </LeftContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="@(Value.VendorStackCount)" Label="@(nameof(Value.VendorStackCount).ToDisplayName())" ValueCompare="ValueCompare?.VendorStackCount" />
+            <Input_Element T="decimal" @bind-Value="@(Value.PriceVariance)" Label="@(nameof(Value.PriceVariance).ToDisplayName())" ValueCompare="ValueCompare?.PriceVariance" />
+            <Input_Element T="decimal" @bind-Value="@(Value.PriceRandomValue)" Label="@(nameof(Value.PriceRandomValue).ToDisplayName())" ValueCompare="ValueCompare?.PriceRandomValue" />
+
+        </MudItem>
+
+    }
+    else if (TabContentEditBody.CurrentPageIndex == 5)
+    {
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.LanguageId)" Label="@(nameof(Value.LanguageId).ToDisplayName())" ValueCompare="ValueCompare?.LanguageId" />
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" @bind-Value="@(Value.Display)" Label="@(nameof(Value.Display).ToDisplayName())" ValueCompare="ValueCompare?.Display" />
+            <Input_Element T="string" @bind-Value="@(Value.Description)" Variant="Variant.Text" Label="@(nameof(Value.Description).ToDisplayName())" ValueCompare="ValueCompare?.Description" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.ExpansionId)" Label="@(nameof(Value.ExpansionId).ToDisplayName())" ValueCompare="ValueCompare?.ExpansionId" />
+            <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" />
+            <Input_Element T="uint" @bind-Value="@(Value.DurationInInventory)" Label="@(nameof(Value.DurationInInventory).ToDisplayName())" ValueCompare="ValueCompare?.DurationInInventory" />
+            <Input_Element T="decimal" @bind-Value="@(Value.QualityModifier)" Label="@(nameof(Value.QualityModifier).ToDisplayName())" ValueCompare="ValueCompare?.QualityModifier" />
+            <Input_Element T="uint" @bind-Value="@(Value.BagFamily)" Label="@(nameof(Value.BagFamily).ToDisplayName())" ValueCompare="ValueCompare?.BagFamily" />
+            <Input_Element T="int" @bind-Value="@(Value.StartQuestId)" Label="@(nameof(Value.StartQuestId).ToDisplayName())" ValueCompare="ValueCompare?.StartQuestId" />
+
+        </MudItem>
+
+    }
+</MudGrid>
+
+@code {
+
+    [CascadingParameter]
+    TabContentEditBody TabContentEditBody { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TabContentEditBody.SetPages(5);
+        base.OnInitialized();
+    }
+}

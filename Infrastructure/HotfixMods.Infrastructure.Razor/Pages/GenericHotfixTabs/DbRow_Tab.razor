@@ -75,7 +75,7 @@
 
     protected override void OnInitialized()
     {
-        TabContentEditBody.Pages = (int)Math.Ceiling(Value.Columns.Count / 24.0);
+        TabContentEditBody.SetPages((int)Math.Ceiling(Value.Columns.Count / 24.0));
         base.OnInitialized();
     }
 

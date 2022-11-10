@@ -4,7 +4,7 @@
     </CascadingValue>
 </MudPaper>
 <MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
-    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@Pages" Color="Color.Info" Class="@(Pages > 1 ? null : "invisible")" />
+    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
 </MudPaper>
 
 
@@ -12,10 +12,17 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
-    [Parameter]
-    public int Pages { get; set; } = 0;
+
+
 
     public int CurrentPageIndex { get; set; }
+    int pages = 0;
+
+    public void SetPages(int amount)
+    {
+        this.pages = amount;
+        this.StateHasChanged();
+    }
 
     void CurrentPageChanged(int page)
     {

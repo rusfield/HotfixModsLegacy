@@ -18,9 +18,9 @@
     public int CurrentPageIndex { get; set; }
     int pages = 0;
 
-    public void SetPages(int amount)
+    public void SetPagesByIndex(int amount)
     {
-        this.pages = amount;
+        this.pages = amount + 1;
         this.StateHasChanged();
     }
 

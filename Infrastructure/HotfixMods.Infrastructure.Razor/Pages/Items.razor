@@ -29,6 +29,11 @@ else
                     <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfoMaterialRes" />
                 </TabContentEditBody>
             </MudTabPanel>
+            <MudTabPanel Text="Display Info">
+                <TabContentEditBody>
+                    <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
+                </TabContentEditBody>
+            </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
 }

@@ -10,7 +10,6 @@
             <Input_Element T="ushort" @bind-Value="@(Value.ItemLevel)" Label="@(nameof(Value.ItemLevel).ToDisplayName())" ValueCompare="ValueCompare?.ItemLevel" />
             <Input_Element T="sbyte" @bind-Value="@(Value.RequiredLevel)" Label="@(nameof(Value.RequiredLevel).ToDisplayName())" ValueCompare="ValueCompare?.RequiredLevel" />
             <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityId)" Label="@(nameof(Value.OverallQualityId).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityId" />
-            <Input_Element T="int" @bind-Value="@(Value.StartQuestId)" Label="@(nameof(Value.StartQuestId).ToDisplayName())" ValueCompare="ValueCompare?.StartQuestId" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -108,6 +107,7 @@
                     <Input_Element T="ushort" @bind-Value="@(Value.RequiredSkillRank)" Label="Rank" ValueCompare="ValueCompare?.RequiredSkillRank" />
                 </RightContent>
             </InlineGroup>
+            <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" />
         </MudItem>
     }
     else if (TabContentEditBody.CurrentPageIndex == 2)
@@ -167,7 +167,7 @@
                     <Input_Element T="byte" @bind-Value="@(Value.SocketType3)" Label="@(nameof(Value.SocketType3).ToDisplayName())" ValueCompare="ValueCompare?.SocketType3" />
                 </RightContent>
             </InlineGroup>
-            <InlineGroup>
+            <InlineGroup Merged="false" LeftContentWidth="30" RightContentWidth="30" MiddleContentWidth="40">
                 <LeftContent />
                 <MiddleContent>
                     <Input_Element T="ushort" @bind-Value="@(Value.Socket_match_enchantment_Id)" Label="@(nameof(Value.Socket_match_enchantment_Id).ToDisplayName())" ValueCompare="ValueCompare?.Socket_match_enchantment_Id" />
@@ -226,9 +226,7 @@
             <Input_Element T="decimal" @bind-Value="@(Value.DmgVariance)" Label="@(nameof(Value.DmgVariance).ToDisplayName())" ValueCompare="ValueCompare?.DmgVariance" />
             <Input_Element T="decimal" @bind-Value="@(Value.ItemRange)" Label="@(nameof(Value.ItemRange).ToDisplayName())" ValueCompare="ValueCompare?.ItemRange" />
             <Input_Element T="byte" @bind-Value="@(Value.SheatheType)" Label="@(nameof(Value.SheatheType).ToDisplayName())" ValueCompare="ValueCompare?.SheatheType" />
-            <Input_Element T="byte" @bind-Value="@(Value.ContainerSlots)" Label="@(nameof(Value.ContainerSlots).ToDisplayName())" ValueCompare="ValueCompare?.ContainerSlots" />
-            <Input_Element T="ushort" @bind-Value="@(Value.Gem_properties)" Label="Gem Properties" ValueCompare="ValueCompare?.Gem_properties" />
-
+            <Input_Element T="int" @bind-Value="@(Value.StartQuestId)" Label="@(nameof(Value.StartQuestId).ToDisplayName())" ValueCompare="ValueCompare?.StartQuestId" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -259,21 +257,18 @@
             <Input_Element T="uint" @bind-Value="@(Value.VendorStackCount)" Label="@(nameof(Value.VendorStackCount).ToDisplayName())" ValueCompare="ValueCompare?.VendorStackCount" />
             <Input_Element T="decimal" @bind-Value="@(Value.PriceVariance)" Label="@(nameof(Value.PriceVariance).ToDisplayName())" ValueCompare="ValueCompare?.PriceVariance" />
             <Input_Element T="decimal" @bind-Value="@(Value.PriceRandomValue)" Label="@(nameof(Value.PriceRandomValue).ToDisplayName())" ValueCompare="ValueCompare?.PriceRandomValue" />
-
+            <Input_Element T="byte" @bind-Value="@(Value.ContainerSlots)" Label="@(nameof(Value.ContainerSlots).ToDisplayName())" ValueCompare="ValueCompare?.ContainerSlots" />
+            <Input_Element T="ushort" @bind-Value="@(Value.Gem_properties)" Label="Gem Properties" ValueCompare="ValueCompare?.Gem_properties" />
         </MudItem>
 
     }
     else if (TabContentEditBody.CurrentPageIndex == 4)
     {
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="@(Value.LanguageId)" Label="@(nameof(Value.LanguageId).ToDisplayName())" ValueCompare="ValueCompare?.LanguageId" />
-            <Input_Element T="int" @bind-Value="@(Value.OppositeFactionItemId)" Label="@(nameof(Value.OppositeFactionItemId).ToDisplayName())" ValueCompare="ValueCompare?.OppositeFactionItemId" />
             <Input_Element T="int" @bind-Value="@(Value.ModifiedCraftingReagentItemId)" Label="@(nameof(Value.ModifiedCraftingReagentItemId).ToDisplayName())" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemId" />
-            <Input_Element T="int" @bind-Value="@(Value.ContentTuningId)" Label="@(nameof(Value.ContentTuningId).ToDisplayName())" ValueCompare="ValueCompare?.ContentTuningId" />
-            <Input_Element T="int" @bind-Value="@(Value.PlayerLevelToItemLevelCurveId)" Label="@(nameof(Value.PlayerLevelToItemLevelCurveId).ToDisplayName())" ValueCompare="ValueCompare?.PlayerLevelToItemLevelCurveId" />
             <Input_Element T="byte" @bind-Value="@(Value.ArtifactId)" Label="@(nameof(Value.ArtifactId).ToDisplayName())" ValueCompare="ValueCompare?.ArtifactId" />
-
-
+            <Input_Element T="decimal" @bind-Value="@(Value.QualityModifier)" Label="@(nameof(Value.QualityModifier).ToDisplayName())" ValueCompare="ValueCompare?.QualityModifier" />
+            <Input_Element T="uint" @bind-Value="@(Value.BagFamily)" Label="@(nameof(Value.BagFamily).ToDisplayName())" ValueCompare="ValueCompare?.BagFamily" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -288,7 +283,7 @@
                 <RightContent>
                     <InlineGroup Merged="false" DefaultPadding="false">
                         <MiddleContent>
-                            <Input_Element T="ushort" @bind-Value="@(Value.LockId)" Label="@(nameof(Value.LockId).ToDisplayName())" ValueCompare="ValueCompare?.LockId" />
+                            <Input_Element T="int" @bind-Value="@(Value.LanguageId)" Label="@(nameof(Value.LanguageId).ToDisplayName())" ValueCompare="ValueCompare?.LanguageId" />
                         </MiddleContent>
                     </InlineGroup>
                 </RightContent>
@@ -304,18 +299,18 @@
                 <RightContent>
                     <InlineGroup Merged="false" DefaultPadding="false">
                         <MiddleContent>
-                            @* Empty *@
+                            <Input_Element T="ushort" @bind-Value="@(Value.LockId)" Label="@(nameof(Value.LockId).ToDisplayName())" ValueCompare="ValueCompare?.LockId" />
+
                         </MiddleContent>
                     </InlineGroup>
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.OppositeFactionItemId)" Label="@(nameof(Value.OppositeFactionItemId).ToDisplayName())" ValueCompare="ValueCompare?.OppositeFactionItemId" />
             <Input_Element T="int" @bind-Value="@(Value.ExpansionId)" Label="@(nameof(Value.ExpansionId).ToDisplayName())" ValueCompare="ValueCompare?.ExpansionId" />
-            <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" />
-            <Input_Element T="decimal" @bind-Value="@(Value.QualityModifier)" Label="@(nameof(Value.QualityModifier).ToDisplayName())" ValueCompare="ValueCompare?.QualityModifier" />
-            <Input_Element T="uint" @bind-Value="@(Value.BagFamily)" Label="@(nameof(Value.BagFamily).ToDisplayName())" ValueCompare="ValueCompare?.BagFamily" />
-
+            <Input_Element T="int" @bind-Value="@(Value.ContentTuningId)" Label="@(nameof(Value.ContentTuningId).ToDisplayName())" ValueCompare="ValueCompare?.ContentTuningId" />
+            <Input_Element T="int" @bind-Value="@(Value.PlayerLevelToItemLevelCurveId)" Label="@(nameof(Value.PlayerLevelToItemLevelCurveId).ToDisplayName())" ValueCompare="ValueCompare?.PlayerLevelToItemLevelCurveId" />
         </MudItem>
 
     }

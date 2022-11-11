@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemModifiedAppearance ItemMItemModifiedAppearance { get; set; } = new();
         public ItemSearchName ItemSearchName { get; set; } = new();
         public ItemSparse ItemSparse { get; set; } = new();
-        public ItemDisplayInfoMaterialRes MyProperty { get; set; } = new();
+        public List<ItemDisplayInfoMaterialRes> ItemDisplayInfoMaterialRes { get; set; } = new();
         public List<ItemEffect> ItemEffects { get; set; } = new();
         public List<ItemXItemEffect> ItemXIteItems { get; set; } = new();
     }

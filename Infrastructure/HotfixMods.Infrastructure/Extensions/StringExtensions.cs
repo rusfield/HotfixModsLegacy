@@ -1,11 +1,5 @@
-﻿using HotfixMods.Core.Models;
-using HotfixMods.Core.Models.Db2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
+
 
 namespace HotfixMods.Infrastructure.Extensions
 {
@@ -33,6 +27,7 @@ namespace HotfixMods.Infrastructure.Extensions
             if(output.EndsWith("Id", StringComparison.InvariantCulture))
                 output = output.Substring(0, output.Length - 2) + "ID";
 
+            output = output.Replace("_", " ");
             return $"{appendBefore ?? ""}{output}{appendAfter ?? ""}";
         }
     }

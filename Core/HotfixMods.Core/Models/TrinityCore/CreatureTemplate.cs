@@ -24,7 +24,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public int RequiredExpansion { get; set; } = 0;
         public int VignetteId { get; set; } = 0;
         public ushort Faction { get; set; } = 0;
-        public ulong Npcflag { get; set; } = 0;
+        public ulong NpcFlag { get; set; } = 0;
         public decimal Speed_Walk { get; set; } = 1;
         public decimal Speed_Run { get; set; } = 1.14286M;
         public decimal Scale { get; set; } = 1;
@@ -38,7 +38,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint Unit_Flags { get; set; } = 0;
         public uint Unit_Flags2 { get; set; } = 0;
         public uint Unit_Flags3 { get; set; } = 0;
-        public uint Dynamicflags { get; set; } = 0;
+        public uint DynamicFlags { get; set; } = 0;
         public int Family { get; set; } = 0;
         public byte Trainer_Class { get; set; } = 0;
         public byte Type { get; set; } = 0;
@@ -50,7 +50,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint VehicleId { get; set; } = 0;
         public uint MinGold { get; set; } = 0;
         public uint MaxGold { get; set; } = 0;
-        public string AiName { get; set; } = "";
+        public string AiName { get; set; } = "SmartAI";
         public byte MovementType { get; set; } = 0;
         public decimal HoverHeight { get; set; } = 1;
         public decimal HealthModifier { get; set; } = 1;

@@ -6,18 +6,23 @@
 
 @if (null == PageTab.Dto)
 {
-        <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures">
-        </TabContentView>
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures">
+    </TabContentView>
 }
 else
 {
-            <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())">
-            <ChildContent>
-                <MudTabPanel Text="Entity">
-                    <TabContentEditBody>
-                        <CreatureEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" />
-                    </TabContentEditBody>
-                </MudTabPanel>
-            </ChildContent>
-        </TabContentEditHeader>
+    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())">
+        <ChildContent>
+            <MudTabPanel Text="Entity">
+                <TabContentEditBody>
+                    <CreatureEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Template">
+                <TabContentEditBody>
+                    <CreatureTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplate" />
+                </TabContentEditBody>
+            </MudTabPanel>
+        </ChildContent>
+    </TabContentEditHeader>
 }

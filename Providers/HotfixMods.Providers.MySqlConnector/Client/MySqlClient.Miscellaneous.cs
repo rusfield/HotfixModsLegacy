@@ -51,18 +51,22 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             type = type.Split("(")[0]; // for varchar(100), etc.
             return type.ToString() switch
             {
+                "tinyint" => typeof(sbyte),
                 "tinyint signed" => typeof(sbyte),
+                "tinyint unsigned" => typeof(byte),
+                "smallint" => typeof(short),
                 "smallint signed" => typeof(short),
+                "smallint unsigned" => typeof(ushort),
                 "int" => typeof(int),
                 "int signed" => typeof(int),
-                "bigint signed" => typeof(long),
-                "tinyint unsigned" => typeof(byte),
-                "smallint unsigned" => typeof(ushort),
                 "int unsigned" => typeof(uint),
+                "bigint" => typeof(long),
+                "bigint signed" => typeof(long),
                 "bigint unsigned" => typeof(ulong),
                 "text" => typeof(string),
                 "varchar" => typeof(string),
                 "nvarchar" => typeof(string),
+                "mediumtext" => typeof(string), 
                 "float" => typeof(decimal),
                 _ => throw new Exception($"{type} not implemented.")
             };

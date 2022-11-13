@@ -1,8 +1,15 @@
-﻿namespace HotfixMods.Core.Models.TrinityCore
+﻿using HotfixMods.Core.Attributes;
+
+namespace HotfixMods.Core.Models.TrinityCore
 {
-    public class CreatureModelInfo 
+    [WorldSchema]
+    public class CreatureModelInfo
     {
-        public int DisplayId { get; set; }
-        public int VerifiedBuild { get; set; }
+        public uint DisplayId { get; set; } = 0;
+        public decimal BoundingRadius { get; set; } = 0;
+        public decimal CombatReach { get; set; } = 0;
+        public uint DisplayID_Other_Gender { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
+
 }

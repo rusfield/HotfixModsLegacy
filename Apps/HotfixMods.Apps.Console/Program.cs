@@ -8,13 +8,13 @@ using HotfixMods.Tools.Initializer.Business;
 
 
 
-/*
+
 var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
-var definition = await mySqlClient.GetDefinitionAsync("world", "gameobject_template_addon");
+var definition = await mySqlClient.GetDefinitionAsync("world", "creature_model_info");
 var tcdTool = new TrinityCoreDbTool();
 await tcdTool.DbDefToCSharp(definition);
 Console.ReadKey();
-*/
+
 
 
 /*
@@ -42,11 +42,11 @@ while (true)
 
 
 
-
+/*
 var importTool = new Db2ImportTool();
 await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "itemdisplayinfo", "hotfix_mods", "item_display_info", "localhost", "3306", "root", "root");
 Console.WriteLine("Done");
-
+*/
 
 
 

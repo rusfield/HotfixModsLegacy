@@ -16,11 +16,13 @@ namespace HotfixMods.Tools.Dev.Business
 
             foreach (var column in definition.ColumnDefinitions)
             {
+                // Add Column attribute if db name mismatches from C# standard
+                /*
                 var propertyName = FixUnderscoresAndCasing(column.Name);
                 if(!column.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase))
                     await WriteToConsoleAndClipboard($"[Column(\"{column.Name}\")]");
-
-                await WriteToConsoleAndClipboard($"public {GetTypeName(column.Type.Name)} {propertyName}" + " { get; set; }");
+                */
+                await WriteToConsoleAndClipboard($"public {GetTypeName(column.Type.Name)} {FixCasing(column.Name)}" + " { get; set; }");
             }
 
             await WriteToConsoleAndClipboard("}");
@@ -35,6 +37,17 @@ namespace HotfixMods.Tools.Dev.Business
             if(result.EndsWith("ID", StringComparison.InvariantCulture))
                 result = result.Substring(0, result.Length - 2) + "Id";
             return result;
+        }
+
+        string FixCasing(string input)
+        {
+            var nameSplits = input.Split('_');
+            var result = "";
+            foreach (var nameSplit in nameSplits)
+                result += "_" + nameSplit[0].ToString().ToUpper() + nameSplit.Substring(1);
+            if (result.EndsWith("ID", StringComparison.InvariantCulture))
+                result = result.Substring(0, result.Length - 2) + "Id";
+            return result.Substring(1);
         }
 
         string GetTypeName(string prop)

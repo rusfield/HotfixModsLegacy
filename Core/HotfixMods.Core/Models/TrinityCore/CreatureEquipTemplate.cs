@@ -1,18 +1,22 @@
-﻿namespace HotfixMods.Core.Models.TrinityCore
+﻿using HotfixMods.Core.Attributes;
+
+namespace HotfixMods.Core.Models.TrinityCore
 {
-    public class CreatureEquipTemplate 
+    [WorldSchema]
+    public class CreatureEquipTemplate
     {
-        public int CreatureId { get; set; }
-        public int Id { get; set; }
-        public int ItemId1 { get; set; }
-        public int AppearanceModId1 { get; set; }
-        public int ItemVisual1 { get; set; }
-        public int ItemId2 { get; set; }
-        public int AppearanceModId2 { get; set; }
-        public int ItemVisual2 { get; set; }
-        public int ItemId3 { get; set; }
-        public int AppearanceModId3 { get; set; }
-        public int ItemVisual3 { get; set; }
-        public int VerifiedBuild { get; set; }
+        public uint CreatureId { get; set; } = 0;
+        public byte Id { get; set; } = 0;
+        public uint ItemID1 { get; set; } = 0;
+        public ushort AppearanceModID1 { get; set; } = 0;
+        public ushort ItemVisual1 { get; set; } = 0;
+        public uint ItemID2 { get; set; } = 0;
+        public ushort AppearanceModID2 { get; set; } = 0;
+        public ushort ItemVisual2 { get; set; } = 0;
+        public uint ItemID3 { get; set; } = 0;
+        public ushort AppearanceModID3 { get; set; } = 0;
+        public ushort ItemVisual3 { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
+
 }

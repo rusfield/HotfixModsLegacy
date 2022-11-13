@@ -1,11 +1,16 @@
-﻿namespace HotfixMods.Core.Models.TrinityCore
+﻿using HotfixMods.Core.Attributes;
+
+namespace HotfixMods.Core.Models.TrinityCore
 {
-    public class CreatureTemplateModel 
+    [WorldSchema]
+    public class CreatureTemplateModel
     {
-        public int CreatureId { get; set; }
-        public int CreatureDisplayId { get; set; }
-        public int DisplayScale { get; set; }
-        public int Probability { get; set; }
-        public int VerifiedBuild { get; set; }
+        public uint CreatureId { get; set; } = 0;
+        public uint Idx { get; set; } = 0;
+        public uint CreatureDisplayId { get; set; } = 0;
+        public decimal DisplayScale { get; set; } = 1;
+        public decimal Probability { get; set; } = 1;
+        public int VerifiedBuild { get; set; } = -1;
     }
+
 }

@@ -1,6 +1,4 @@
 ﻿using HotfixMods.Core.Interfaces;
-using HotfixMods.Core.Models;
-using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 

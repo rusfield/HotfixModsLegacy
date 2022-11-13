@@ -4,9 +4,33 @@
 
 <MudGrid>
     <MudItem xs="3">
+        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType)" />
+        <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType)" />
+        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material)" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId)" />
     </MudItem>
     <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="byte" @bind-Value="Value.ClassId" ValueCompare="ValueCompare?.ClassId" Label="@nameof(Value.ClassId)" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="byte" @bind-Value="Value.SubclassId" ValueCompare="ValueCompare?.SubclassId" Label="@nameof(Value.SubclassId)" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.IconFileDataId" ValueCompare="ValueCompare?.IconFileDataId" Label="@nameof(Value.IconFileDataId)" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
     </MudItem>
     <MudItem xs="3">
+        <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassId" ValueCompare="ValueCompare?.SoundOverrideSubclassId" Label="@nameof(Value.SoundOverrideSubclassId)" />
+        <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId)" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId)" />
+        <Input_Element T="int" @bind-Value="Value.CraftingQualityId" ValueCompare="ValueCompare?.CraftingQualityId" Label="@nameof(Value.CraftingQualityId)" />
     </MudItem>
 </MudGrid>

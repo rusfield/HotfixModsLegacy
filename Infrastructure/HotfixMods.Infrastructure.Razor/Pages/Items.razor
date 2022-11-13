@@ -12,7 +12,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Items" AddClick_Callback="AddSegment_Click" AddTooltip="Add new item effect" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Items" AddClick_Callback="AddTab_Click" AddTooltip="Add new item effect" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
@@ -51,20 +51,33 @@ else
             </MudTabPanel>
             @foreach (var (item, index) in ((ItemDto)PageTab.Dto).ItemEffects.WithIndex())
             {
-                <MudTabPanel Text="@($"Effect #{index + 1}")">
-                    <TabContentEditBody>
-                        <ItemEffect_Tab Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
-                    </TabContentEditBody>
-                </MudTabPanel>
+                <MudTabPanel>
+                    <ChildContent>
+                        <TabContentEditBody>
+                            <ItemEffect_Tab Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                        </TabContentEditBody>
+                    </ChildContent>
+                    <TabContent>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
+                            <MudText>@($"EFFECT #{index + 1}")</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => RemoveTab_Click(index))" />
+                            </MudStack>
+                        </TabContent>
+                    </MudTabPanel>
             }
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
-    void AddSegment_Click()
+    void AddTab_Click()
     {
         if (PageTab.Dto != null)
             ((ItemDto)PageTab.Dto).ItemEffects.Add(new ItemEffect());
+    }
+
+    void RemoveTab_Click(int index)
+    {
+        if (PageTab.Dto != null)
+            ((ItemDto)PageTab.Dto).ItemEffects.RemoveAt(index);
     }
 }

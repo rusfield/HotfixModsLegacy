@@ -11,7 +11,7 @@
 }
 else
 {
-    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddSegment_Click" AddTooltip="Add new segment" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Anim Kits" AddClick_Callback="AddTab_Click" AddTooltip="Add new segment" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
@@ -25,10 +25,17 @@ else
             </MudTabPanel>
             @foreach (var (item, index) in ((AnimKitDto)PageTab.Dto).AnimKitSegments.WithIndex())
             {
-                <MudTabPanel Text="@($"Segment #{index + 1}")">
-                    <TabContentEditBody>
-                        <AnimKitSegment_Tab AnimKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
-                    </TabContentEditBody>
+                <MudTabPanel>
+                    <ChildContent>
+                        <TabContentEditBody>
+                            <AnimKitSegment_Tab AnimKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
+                        </TabContentEditBody>
+                    </ChildContent>
+                    <TabContent>
+                        <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
+                            <MudText>@($"SEGMENT #{index + 1}")</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => RemoveTab_Click(index))" />
+                        </MudStack>
+                    </TabContent>
                 </MudTabPanel>
             }
         </ChildContent>
@@ -39,10 +46,16 @@ else
     TabContentEditHeader? tabContentEditHeaderRef;
 
 
-    void AddSegment_Click()
+    void AddTab_Click()
     {
         if (PageTab.Dto != null)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment() { OrderIndex = (byte)((AnimKitDto)PageTab.Dto).AnimKitSegments.Count });
+    }
+
+    void RemoveTab_Click(int index)
+    {
+        if (PageTab.Dto != null)
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(index);
     }
 
     public void SetPanelIndex(int panelIndex)

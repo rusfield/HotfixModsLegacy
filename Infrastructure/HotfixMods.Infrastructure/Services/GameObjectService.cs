@@ -1,8 +1,6 @@
-﻿using HotfixMods.Core.Enums;
-using HotfixMods.Core.Interfaces;
+﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
-using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 

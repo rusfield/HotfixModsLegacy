@@ -84,6 +84,15 @@ namespace HotfixMods.Apps.MauiBlazor
                 };
             });
 
+            builder.Services.AddSingleton(config =>
+            {
+                return new CreatureService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
+                {
+                    FromId = 10000,
+                    VerifiedBuild = -123
+                };
+            });
+
             /*
             // TODO: Cleanup 
             IDb2Provider db2Provider = new Db2Client();

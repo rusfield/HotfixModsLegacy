@@ -3,18 +3,20 @@
 @inject IDialogService DialogService
 
 <MudGrid>
-    <MudItem xs="3">
-        <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
-        <Placeholder_Element Amount="3" />
-    </MudItem>
-    <MudItem xs="9" />
     <MudItem xs="3" />
     <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
         <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
+        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
 </MudGrid>
-
 
 @code {
     async void NextIdAsync_Click()

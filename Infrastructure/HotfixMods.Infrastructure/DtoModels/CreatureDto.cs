@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotfixMods.Infrastructure.DtoModels
+﻿namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class CreatureDto
+    public class CreatureDto : BaseDto
     {
+        public CreatureDto() : base("Creature") { }
     }
 }

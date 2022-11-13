@@ -1,0 +1,30 @@
+﻿@using HotfixMods.Infrastructure.Extensions;
+@inherits HotfixPageTabBase<ItemAppearance>
+@inject ItemService Service
+@inject IDialogService DialogService
+
+<MudGrid>
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.DisplayType" ValueCompare="ValueCompare?.DisplayType" Label="@nameof(Value.DisplayType).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.DefaultIconFileDataId" ValueCompare="ValueCompare?.DefaultIconFileDataId" Label="@nameof(Value.DefaultIconFileDataId).ToDisplayName()" />
+            </LeftContent>
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionId" ValueCompare="ValueCompare?.TransmogPlayerConditionId" Label="@nameof(Value.TransmogPlayerConditionId).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</MudGrid>

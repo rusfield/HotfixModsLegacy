@@ -12,11 +12,16 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Items" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Items" AddClick_Callback="AddSegment_Click" AddTooltip="Add new item effect" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
                     <ItemEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Item">
+                <TabContentEditBody>
+                    <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Item Sparse">
@@ -34,6 +39,32 @@ else
                     <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
                 </TabContentEditBody>
             </MudTabPanel>
+            <MudTabPanel Text="Appearance">
+                <TabContentEditBody>
+                    <ItemAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemAppearance" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            <MudTabPanel Text="Modified Appearance">
+                <TabContentEditBody>
+                    <ItemModifiedAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemMItemModifiedAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemMItemModifiedAppearance" />
+                </TabContentEditBody>
+            </MudTabPanel>
+            @foreach (var (item, index) in ((ItemDto)PageTab.Dto).ItemEffects.WithIndex())
+            {
+                <MudTabPanel Text="@($"Effect #{index + 1}")">
+                    <TabContentEditBody>
+                        <ItemEffect_Tab Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                    </TabContentEditBody>
+                </MudTabPanel>
+            }
         </ChildContent>
     </TabContentEditHeader>
+}
+
+@code {
+    void AddSegment_Click()
+    {
+        if (PageTab.Dto != null)
+            ((ItemDto)PageTab.Dto).ItemEffects.Add(new ItemEffect());
+    }
 }

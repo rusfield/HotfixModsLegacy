@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.MauiBlazor"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Razor", "Infrastructure\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj", "{DF7D2454-6D04-493D-AB42-D70E8E9ED4B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Infrastructure.Legacy", "HotfixMods.Infrastructure.Legacy\HotfixMods.Infrastructure.Legacy.csproj", "{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Legacy", "HotfixMods.Infrastructure.Legacy\HotfixMods.Infrastructure.Legacy.csproj", "{A08B6C93-D3F8-459D-978A-2A1B2C4C2F06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -4,7 +4,7 @@
 @inject IDialogService DialogService
 
 <MudGrid>
-    @if (TabContentEditBody.CurrentPageIndex == 0)
+    @if (TabContentEditBody.CurrentSlideIndex == 0)
     {
         <MudItem xs="3">
             <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" />
@@ -35,7 +35,7 @@
             <Input_Element T="int" @bind-Value="Value.ActiveSpellVisualScript" ValueCompare="ValueCompare?.ActiveSpellVisualScript" Label="@nameof(Value.ActiveSpellVisualScript).ToDisplayName()" />
         </MudItem>
     }
-    else if (TabContentEditBody.CurrentPageIndex == 1)
+    else if (TabContentEditBody.CurrentSlideIndex == 1)
     {
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.Attributes1" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
@@ -82,7 +82,7 @@
 
     protected override void OnInitialized()
     {
-        TabContentEditBody.SetPagesByIndex(1);
+        TabContentEditBody.SetSlidesIndex(1);
         base.OnInitialized();
     }
 }

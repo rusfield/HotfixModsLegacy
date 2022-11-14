@@ -7,7 +7,7 @@
 @inject IDialogService DialogService
 
 <MudGrid>
-    @for (int i = 24 * TabContentEditBody.CurrentPageIndex; i < (24 * TabContentEditBody.CurrentPageIndex) + 24; i++)
+    @for (int i = 24 * TabContentEditBody.CurrentSlideIndex; i < (24 * TabContentEditBody.CurrentSlideIndex) + 24; i++)
     {
         if (Value.Columns.Count == i)
         {
@@ -75,7 +75,7 @@
 
     protected override void OnInitialized()
     {
-        TabContentEditBody.SetPagesByIndex((int)Math.Ceiling(Value.Columns.Count / 24.0));
+        TabContentEditBody.SetSlidesIndex((int)Math.Ceiling(Value.Columns.Count / 24.0));
         base.OnInitialized();
     }
 

@@ -6,7 +6,7 @@
 @inject IDialogService DialogService
 
 <MudGrid>
-    @if (TabContentEditBody.CurrentPageIndex == 0)
+    @if (TabContentEditBody.CurrentSlideIndex == 0)
     {
         <MudItem xs="3">
             <InlineGroup>
@@ -51,7 +51,7 @@
             <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" />
         </MudItem>
     }
-    else if (TabContentEditBody.CurrentPageIndex == 1)
+    else if (TabContentEditBody.CurrentSlideIndex == 1)
     {
         <MudItem xs="3">
             <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" />
@@ -88,7 +88,7 @@
             <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionId" ValueCompare="ValueCompare?.WidgetSetUnitConditionId" Label="@nameof(Value.WidgetSetUnitConditionId).ToDisplayName()" />
         </MudItem>
     }
-    else if (TabContentEditBody.CurrentPageIndex == 2)
+    else if (TabContentEditBody.CurrentSlideIndex == 2)
     {
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" />
@@ -138,7 +138,7 @@
             <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" />
         </MudItem>
     }
-    else if (TabContentEditBody.CurrentPageIndex == 3)
+    else if (TabContentEditBody.CurrentSlideIndex == 3)
     {
         <MudItem xs="3">
             <InlineGroup>
@@ -197,7 +197,7 @@
 
     protected override void OnInitialized()
     {
-        TabContentEditBody.SetPagesByIndex(3);
+        TabContentEditBody.SetSlidesIndex(3);
         base.OnInitialized();
     }
 }

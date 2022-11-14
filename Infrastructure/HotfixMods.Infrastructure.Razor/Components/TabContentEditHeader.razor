@@ -21,7 +21,11 @@
 <MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="rounded-0 mud-elevation-0" Class="tab-bar">
     <ChildContent>
         @ChildContent
+        <MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
+            <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
+        </MudPaper>
     </ChildContent>
+
     <Header>
         @if (AddClick_Callback.HasDelegate)
         {
@@ -76,5 +80,30 @@
         await AddClick_Callback.InvokeAsync();
         if(mudTabsRef != null)
             newPanelIndex = mudTabsRef.Panels.Count;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public int CurrentPageIndex { get; set; }
+    int pages = 0;
+
+    public void SetPagesByIndex(int amount)
+    {
+        this.pages = amount + 1;
+        this.StateHasChanged();
+    }
+
+    void CurrentPageChanged(int page)
+    {
+        CurrentPageIndex = page - 1;
     }
 }

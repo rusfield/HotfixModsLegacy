@@ -36,3 +36,13 @@
 .mud-svg-icon {
     cursor: pointer;
 }
+
+.custom-list-navigator {
+    background-color: transparent !important;
+}
+
+    .custom-list-navigator > .mud-icon-root {
+        font-size: 48px !important;
+        margin-inline-start: -20px !important;
+        color: var(--mud-palette-primary) !important;
+    }

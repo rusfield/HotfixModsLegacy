@@ -1,31 +1,37 @@
-﻿<MudPaper Height="650px" Elevation="2" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
-    <CascadingValue Value="@this">
-        @ChildContent
-    </CascadingValue>
-</MudPaper>
-<MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
-    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
-</MudPaper>
+﻿<MudBadge Icon="@Icons.Filled.NavigateBefore" Origin="Origin.CenterLeft" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex - 1))">
+    <MudBadge Icon="@Icons.Filled.NavigateNext" Origin="Origin.CenterRight" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex + 1))">
+        <MudPaper Height="650px" Elevation="0" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
+            <CascadingValue Value="@this">
+                <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%">
+                    @ChildContent
+                </MudCarousel>
+            </CascadingValue>
+        </MudPaper>
+    </MudBadge>
+</MudBadge>
 
 
 @code {
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+    MudCarousel<object>? mudCarouselRef;
 
+    public int CurrentSlideIndex { get; set; }
+    int slides = 0;
 
-
-    public int CurrentPageIndex { get; set; }
-    int pages = 0;
-
-    public void SetPagesByIndex(int amount)
+    public void SetSlidesIndex(int amount)
     {
-        this.pages = amount + 1;
+        slides = amount;
         this.StateHasChanged();
     }
 
-    void CurrentPageChanged(int page)
+    void Navigate(int index)
     {
-        CurrentPageIndex = page - 1;
+        if (index >= 0 && index <= slides)
+        {
+            CurrentSlideIndex = index;
+            mudCarouselRef?.MoveTo(CurrentSlideIndex);
+        }
     }
 }

@@ -2,9 +2,9 @@
 @using HotfixMods.Infrastructure.InfoModels
 
 @inherits HotfixPageTabBase<ItemSparse>
-<MudGrid>
-    @if (TabContentEditBody.CurrentPageIndex == 0)
-    {
+
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" />
             <Input_Element T="ushort" @bind-Value="@(Value.ItemLevel)" Label="@(nameof(Value.ItemLevel).ToDisplayName())" ValueCompare="ValueCompare?.ItemLevel" />
@@ -28,10 +28,10 @@
             <Input_Element T="ushort" @bind-Value="@(Value.ItemNameDescriptionId)" Label="@(nameof(Value.ItemNameDescriptionId).ToDisplayName())" ValueCompare="ValueCompare?.ItemNameDescriptionId" />
             <Input_Element T="byte" @bind-Value="@(Value.Material)" Label="@(nameof(Value.Material).ToDisplayName())" ValueCompare="ValueCompare?.Material" />
         </MudItem>
-
-    }
-    else if (TabContentEditBody.CurrentPageIndex == 1)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" />
             <Input_Element T="short" @bind-Value="@(Value.AllowableClass)" Label="@(nameof(Value.AllowableClass).ToDisplayName())" ValueCompare="ValueCompare?.AllowableClass" />
@@ -109,9 +109,10 @@
             </InlineGroup>
             <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentPageIndex == 2)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
@@ -217,10 +218,10 @@
                 </RightContent>
             </InlineGroup>
         </MudItem>
-
-    }
-    else if (TabContentEditBody.CurrentPageIndex == 3)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="byte" @bind-Value="@(Value.DamageType)" Label="@(nameof(Value.DamageType).ToDisplayName())" ValueCompare="ValueCompare?.DamageType" />
             <Input_Element T="decimal" @bind-Value="@(Value.DmgVariance)" Label="@(nameof(Value.DmgVariance).ToDisplayName())" ValueCompare="ValueCompare?.DmgVariance" />
@@ -260,10 +261,10 @@
             <Input_Element T="byte" @bind-Value="@(Value.ContainerSlots)" Label="@(nameof(Value.ContainerSlots).ToDisplayName())" ValueCompare="ValueCompare?.ContainerSlots" />
             <Input_Element T="ushort" @bind-Value="@(Value.Gem_properties)" Label="Gem Properties" ValueCompare="ValueCompare?.Gem_properties" />
         </MudItem>
-
-    }
-    else if (TabContentEditBody.CurrentPageIndex == 4)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.ModifiedCraftingReagentItemId)" Label="@(nameof(Value.ModifiedCraftingReagentItemId).ToDisplayName())" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemId" />
             <Input_Element T="byte" @bind-Value="@(Value.ArtifactId)" Label="@(nameof(Value.ArtifactId).ToDisplayName())" ValueCompare="ValueCompare?.ArtifactId" />
@@ -312,9 +313,9 @@
             <Input_Element T="int" @bind-Value="@(Value.ContentTuningId)" Label="@(nameof(Value.ContentTuningId).ToDisplayName())" ValueCompare="ValueCompare?.ContentTuningId" />
             <Input_Element T="int" @bind-Value="@(Value.PlayerLevelToItemLevelCurveId)" Label="@(nameof(Value.PlayerLevelToItemLevelCurveId).ToDisplayName())" ValueCompare="ValueCompare?.PlayerLevelToItemLevelCurveId" />
         </MudItem>
+    </MudGrid>
+</MudCarouselItem>
 
-    }
-</MudGrid>
 
 @code {
 
@@ -323,7 +324,7 @@
 
     protected override void OnInitialized()
     {
-        TabContentEditBody.SetPagesByIndex(4);
+        TabContentEditBody.SetSlidesIndex(4);
         base.OnInitialized();
     }
 }

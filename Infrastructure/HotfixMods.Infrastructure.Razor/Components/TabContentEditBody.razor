@@ -1,14 +1,17 @@
-﻿<MudBadge Icon="@Icons.Filled.NavigateBefore" Origin="Origin.CenterLeft" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex - 1))">
-    <MudBadge Icon="@Icons.Filled.NavigateNext" Origin="Origin.CenterRight" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex + 1))">
-        <MudPaper Height="650px" Elevation="2" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
-            <CascadingValue Value="@this">
-                <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%">
-                    @ChildContent
-                </MudCarousel>
-            </CascadingValue>
-        </MudPaper>
-    </MudBadge>
-</MudBadge>
+﻿<div style="position:absolute; top:265px; left:calc(100%)">
+    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(() => Navigate(CurrentSlideIndex + 1))" Class="@("custom-slide-navigator" + (CurrentSlideIndex < slides ? "" : " invisible"))" />
+</div>
+<div style="position:absolute; top:265px;left:-120px">
+    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(() => Navigate(CurrentSlideIndex - 1))" Class="@("custom-slide-navigator " + (CurrentSlideIndex > 0 ? "" : " invisible"))" />
+</div>
+<MudPaper Height="650px" Elevation="2" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
+    <CascadingValue Value="@this">
+        <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%">
+            @ChildContent
+        </MudCarousel>
+    </CascadingValue>
+</MudPaper>
+
 
 
 @code {

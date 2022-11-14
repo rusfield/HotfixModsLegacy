@@ -16,6 +16,7 @@
     [Parameter]
     public int CurrentPageIndex { get; set; }
 
+    protected bool IsLoaded { get; set; } = false;
 
 
     protected EventCallback OpenInfoDialog(string infoText)
@@ -44,5 +45,12 @@
                     Dto = (DbRow)data.Data
                 });
         }
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            IsLoaded = true;
+        return base.OnAfterRenderAsync(firstRender);
     }
 }

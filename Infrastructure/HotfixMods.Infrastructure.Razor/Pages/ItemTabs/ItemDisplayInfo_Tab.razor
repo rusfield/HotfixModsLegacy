@@ -3,9 +3,8 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    @if (TabContentEditBody.CurrentSlideIndex == 0)
-    {
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.ParticleColorId" ValueCompare="ValueCompare?.ParticleColorId" Label="@nameof(Value.ParticleColorId).ToDisplayName()" />
@@ -36,9 +35,10 @@
             <Input_Element T="uint" @bind-Value="Value.UnsheathedSpellVisualKitId" ValueCompare="ValueCompare?.UnsheathedSpellVisualKitId" Label="@nameof(Value.UnsheathedSpellVisualKitId).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentSlideIndex == 1)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.GeosetGroup1" ValueCompare="ValueCompare?.GeosetGroup1" Label="@nameof(Value.GeosetGroup1).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.GeosetGroup2" ValueCompare="ValueCompare?.GeosetGroup2" Label="@nameof(Value.GeosetGroup2).ToDisplayName()" />
@@ -88,8 +88,9 @@
             <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup5" ValueCompare="ValueCompare?.AttachmentGeosetGroup5" Label="@nameof(Value.AttachmentGeosetGroup5).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup6" ValueCompare="ValueCompare?.AttachmentGeosetGroup6" Label="@nameof(Value.AttachmentGeosetGroup6).ToDisplayName()" />
         </MudItem>
-    }
-</MudGrid>
+
+    </MudGrid>
+</MudCarouselItem>
 
 @code {
 
@@ -101,4 +102,4 @@
         TabContentEditBody.SetSlidesIndex(1);
         base.OnInitialized();
     }
-}
+        }

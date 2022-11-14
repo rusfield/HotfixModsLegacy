@@ -18,6 +18,8 @@ namespace HotfixMods.Infrastructure.Extensions
 
         public static string ToDisplayName(this string str, string? appendBefore = null, string? appendAfter = null)
         {
+            str = str.Replace("_", " ");
+
             // If there ever comes any exceptions, add them here
             var output = str switch
             {
@@ -27,7 +29,6 @@ namespace HotfixMods.Infrastructure.Extensions
             if(output.EndsWith("Id", StringComparison.InvariantCulture))
                 output = output.Substring(0, output.Length - 2) + "ID";
 
-            output = output.Replace("_", " ");
             return $"{appendBefore ?? ""}{output}{appendAfter ?? ""}";
         }
     }

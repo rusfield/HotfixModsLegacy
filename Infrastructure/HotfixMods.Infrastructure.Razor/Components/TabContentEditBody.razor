@@ -1,6 +1,6 @@
 ﻿<MudBadge Icon="@Icons.Filled.NavigateBefore" Origin="Origin.CenterLeft" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex - 1))">
     <MudBadge Icon="@Icons.Filled.NavigateNext" Origin="Origin.CenterRight" Style="width:100%;" BadgeClass="custom-list-navigator" OnClick="@(() => Navigate(CurrentSlideIndex + 1))">
-        <MudPaper Height="650px" Elevation="0" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
+        <MudPaper Height="650px" Elevation="2" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="background-color:var(--mud-palette-surface);">
             <CascadingValue Value="@this">
                 <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%">
                     @ChildContent

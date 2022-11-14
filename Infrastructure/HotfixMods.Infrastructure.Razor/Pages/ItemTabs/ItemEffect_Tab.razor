@@ -3,26 +3,28 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.CoolDownMSec" ValueCompare="ValueCompare?.CoolDownMSec" Label="@nameof(Value.CoolDownMSec).ToDisplayName()" />
-        <Input_Element T="short" @bind-Value="Value.Charges" ValueCompare="ValueCompare?.Charges" Label="@nameof(Value.Charges).ToDisplayName()" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup>
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SpellId" ValueCompare="ValueCompare?.SpellId" Label="@nameof(Value.SpellId).ToDisplayName()" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="ushort" @bind-Value="Value.SpellCategoryId" ValueCompare="ValueCompare?.SpellCategoryId" Label="@nameof(Value.SpellCategoryId).ToDisplayName()" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.CategoryCoolDownMSec" ValueCompare="ValueCompare?.CategoryCoolDownMSec" Label="@nameof(Value.CategoryCoolDownMSec).ToDisplayName()" />
-        <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationId" ValueCompare="ValueCompare?.ChrSpecializationId" Label="@nameof(Value.ChrSpecializationId).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.LegacySlotIndex" ValueCompare="ValueCompare?.LegacySlotIndex" Label="@nameof(Value.LegacySlotIndex).ToDisplayName()" />
-    </MudItem>
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="sbyte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.CoolDownMSec" ValueCompare="ValueCompare?.CoolDownMSec" Label="@nameof(Value.CoolDownMSec).ToDisplayName()" />
+            <Input_Element T="short" @bind-Value="Value.Charges" ValueCompare="ValueCompare?.Charges" Label="@nameof(Value.Charges).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.SpellId" ValueCompare="ValueCompare?.SpellId" Label="@nameof(Value.SpellId).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" @bind-Value="Value.SpellCategoryId" ValueCompare="ValueCompare?.SpellCategoryId" Label="@nameof(Value.SpellCategoryId).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.CategoryCoolDownMSec" ValueCompare="ValueCompare?.CategoryCoolDownMSec" Label="@nameof(Value.CategoryCoolDownMSec).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationId" ValueCompare="ValueCompare?.ChrSpecializationId" Label="@nameof(Value.ChrSpecializationId).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.LegacySlotIndex" ValueCompare="ValueCompare?.LegacySlotIndex" Label="@nameof(Value.LegacySlotIndex).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

@@ -1,21 +1,22 @@
 ﻿@using HotfixMods.Infrastructure.Extensions
 @using HotfixMods.Infrastructure.InfoModels
-
 @inherits HotfixPageTabBase<GameobjectTemplateAddon>
 
-<MudGrid>
-    <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" />
-        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" />
-        <Input_Element T="uint" @bind-Value="@(Value.WorldEffectId)" Label="@(nameof(Value.WorldEffectId).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectId" />
-        <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitId)" Label="@(nameof(Value.AiAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitId" />
-    </MudItem>
-    <MudItem xs="6" />
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.Artkit0)" Label="@(nameof(Value.Artkit0).ToDisplayName())" ValueCompare="ValueCompare?.Artkit0" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit1)" Label="@(nameof(Value.Artkit1).ToDisplayName())" ValueCompare="ValueCompare?.Artkit1" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit2)" Label="@(nameof(Value.Artkit2).ToDisplayName())" ValueCompare="ValueCompare?.Artkit2" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit3)" Label="@(nameof(Value.Artkit3).ToDisplayName())" ValueCompare="ValueCompare?.Artkit3" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit4)" Label="@(nameof(Value.Artkit4).ToDisplayName())" ValueCompare="ValueCompare?.Artkit4" />
-    </MudItem>
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" />
+            <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" />
+            <Input_Element T="uint" @bind-Value="@(Value.WorldEffectId)" Label="@(nameof(Value.WorldEffectId).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectId" />
+            <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitId)" Label="@(nameof(Value.AiAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitId" />
+        </MudItem>
+        <MudItem xs="6" />
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.Artkit0)" Label="@(nameof(Value.Artkit0).ToDisplayName())" ValueCompare="ValueCompare?.Artkit0" />
+            <Input_Element T="int" @bind-Value="@(Value.Artkit1)" Label="@(nameof(Value.Artkit1).ToDisplayName())" ValueCompare="ValueCompare?.Artkit1" />
+            <Input_Element T="int" @bind-Value="@(Value.Artkit2)" Label="@(nameof(Value.Artkit2).ToDisplayName())" ValueCompare="ValueCompare?.Artkit2" />
+            <Input_Element T="int" @bind-Value="@(Value.Artkit3)" Label="@(nameof(Value.Artkit3).ToDisplayName())" ValueCompare="ValueCompare?.Artkit3" />
+            <Input_Element T="int" @bind-Value="@(Value.Artkit4)" Label="@(nameof(Value.Artkit4).ToDisplayName())" ValueCompare="ValueCompare?.Artkit4" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

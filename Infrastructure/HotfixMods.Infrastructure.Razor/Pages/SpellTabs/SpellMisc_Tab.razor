@@ -3,9 +3,8 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    @if (TabContentEditBody.CurrentSlideIndex == 0)
-    {
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" />
             <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" />
@@ -13,7 +12,6 @@
             <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" />
             <Input_Element T="decimal" @bind-Value="Value.Speed" ValueCompare="ValueCompare?.Speed" Label="@nameof(Value.Speed).ToDisplayName()" />
             <Input_Element T="decimal" @bind-Value="Value.LaunchDelay" ValueCompare="ValueCompare?.LaunchDelay" Label="@nameof(Value.LaunchDelay).ToDisplayName()" />
-
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -34,9 +32,10 @@
             <Input_Element T="int" @bind-Value="Value.SpellVisualScript" ValueCompare="ValueCompare?.SpellVisualScript" Label="@nameof(Value.SpellVisualScript).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.ActiveSpellVisualScript" ValueCompare="ValueCompare?.ActiveSpellVisualScript" Label="@nameof(Value.ActiveSpellVisualScript).ToDisplayName()" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentSlideIndex == 1)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.Attributes1" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.Attributes2" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" />
@@ -72,8 +71,8 @@
             <Input_Element T="int" @bind-Value="Value.Attributes11" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.Attributes12" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" />
         </MudItem>
-    }
-</MudGrid>
+    </MudGrid>
+</MudCarouselItem>
 
 @code {
 

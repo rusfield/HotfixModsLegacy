@@ -3,17 +3,19 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" />
-    </MudItem>
-    <MudItem xs="3">
-        <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" />
-    </MudItem>
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="3" />
+            <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="3" />
+            <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

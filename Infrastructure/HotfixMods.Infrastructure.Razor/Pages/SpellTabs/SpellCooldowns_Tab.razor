@@ -3,31 +3,33 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Placeholder_Element Amount="3" />
-        <Input_Element T="int" @bind-Value="Value.BuffSpellId" ValueCompare="ValueCompare?.BuffSpellId" Label="@nameof(Value.BuffSpellId).ToDisplayName()" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3">
-        <Placeholder_Element Amount="3" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
-    </MudItem>
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="3" />
+            <Input_Element T="int" @bind-Value="Value.BuffSpellId" ValueCompare="ValueCompare?.BuffSpellId" Label="@nameof(Value.BuffSpellId).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="3" />
+            <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

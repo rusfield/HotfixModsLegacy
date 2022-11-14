@@ -1,35 +1,36 @@
 ﻿@using HotfixMods.Infrastructure.Extensions
 @using HotfixMods.Infrastructure.InfoModels
-
 @inherits HotfixPageTabBase<GameobjectDisplayInfo>
 
-<MudGrid>
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" />
-        <Input_Element T="short" @bind-Value="@(Value.ObjectEffectPackageId)" Label="@(nameof(Value.ObjectEffectPackageId).ToDisplayName())" ValueCompare="ValueCompare?.ObjectEffectPackageId" />
-        <Placeholder_Element Amount="2" />
-    </MudItem>
-    <MudItem xs="6" />
-    <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="@(Value.OverrideNameScale)" Label="@(nameof(Value.OverrideNameScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideNameScale" />
-        <Input_Element T="decimal" @bind-Value="@(Value.OverrideLootEffectScale)" Label="@(nameof(Value.OverrideLootEffectScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideLootEffectScale" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox1)" Label="@(nameof(Value.GeoBox1).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox1" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox2)" Label="@(nameof(Value.GeoBox2).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox2" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox3)" Label="@(nameof(Value.GeoBox3).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox3" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox4)" Label="@(nameof(Value.GeoBox4).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox4" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox5)" Label="@(nameof(Value.GeoBox5).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox5" />
-    </MudItem>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" />
+            <Input_Element T="short" @bind-Value="@(Value.ObjectEffectPackageId)" Label="@(nameof(Value.ObjectEffectPackageId).ToDisplayName())" ValueCompare="ValueCompare?.ObjectEffectPackageId" />
+            <Placeholder_Element Amount="2" />
+        </MudItem>
+        <MudItem xs="6" />
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="@(Value.OverrideNameScale)" Label="@(nameof(Value.OverrideNameScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideNameScale" />
+            <Input_Element T="decimal" @bind-Value="@(Value.OverrideLootEffectScale)" Label="@(nameof(Value.OverrideLootEffectScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideLootEffectScale" />
+        </MudItem>
         <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox6)" Label="@(nameof(Value.GeoBox6).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox6" />
-    </MudItem>
-</MudGrid>
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox1)" Label="@(nameof(Value.GeoBox1).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox1" />
+        </MudItem>
+        <MudItem xs="4">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox2)" Label="@(nameof(Value.GeoBox2).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox2" />
+        </MudItem>
+        <MudItem xs="4">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox3)" Label="@(nameof(Value.GeoBox3).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox3" />
+        </MudItem>
+        <MudItem xs="4">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox4)" Label="@(nameof(Value.GeoBox4).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox4" />
+        </MudItem>
+        <MudItem xs="4">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox5)" Label="@(nameof(Value.GeoBox5).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox5" />
+        </MudItem>
+        <MudItem xs="4">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox6)" Label="@(nameof(Value.GeoBox6).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox6" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

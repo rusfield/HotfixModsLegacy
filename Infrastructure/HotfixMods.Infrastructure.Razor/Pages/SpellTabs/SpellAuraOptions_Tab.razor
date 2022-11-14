@@ -3,18 +3,20 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.CumulativeAura" ValueCompare="ValueCompare?.CumulativeAura" Label="@nameof(Value.CumulativeAura).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.ProcCategoryRecovery" ValueCompare="ValueCompare?.ProcCategoryRecovery" Label="@nameof(Value.ProcCategoryRecovery).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.ProcChance" ValueCompare="ValueCompare?.ProcChance" Label="@nameof(Value.ProcChance).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.ProcCharges" ValueCompare="ValueCompare?.ProcCharges" Label="@nameof(Value.ProcCharges).ToDisplayName()" />
-    </MudItem>
-    <MudItem xs="6" />
-    <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteId" ValueCompare="ValueCompare?.SpellProcsPerMinuteId" Label="@nameof(Value.SpellProcsPerMinuteId).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.ProcTypeMask1" ValueCompare="ValueCompare?.ProcTypeMask1" Label="@nameof(Value.ProcTypeMask1).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.ProcTypeMask2" ValueCompare="ValueCompare?.ProcTypeMask2" Label="@nameof(Value.ProcTypeMask2).ToDisplayName()" />
-    </MudItem>
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.CumulativeAura" ValueCompare="ValueCompare?.CumulativeAura" Label="@nameof(Value.CumulativeAura).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ProcCategoryRecovery" ValueCompare="ValueCompare?.ProcCategoryRecovery" Label="@nameof(Value.ProcCategoryRecovery).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.ProcChance" ValueCompare="ValueCompare?.ProcChance" Label="@nameof(Value.ProcChance).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ProcCharges" ValueCompare="ValueCompare?.ProcCharges" Label="@nameof(Value.ProcCharges).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6" />
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteId" ValueCompare="ValueCompare?.SpellProcsPerMinuteId" Label="@nameof(Value.SpellProcsPerMinuteId).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ProcTypeMask1" ValueCompare="ValueCompare?.ProcTypeMask1" Label="@nameof(Value.ProcTypeMask1).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ProcTypeMask2" ValueCompare="ValueCompare?.ProcTypeMask2" Label="@nameof(Value.ProcTypeMask2).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

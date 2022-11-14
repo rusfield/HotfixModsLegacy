@@ -3,55 +3,57 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Placeholder_Element Amount="2" />
-        <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId1" ValueCompare="ValueCompare?.AppearanceModId1" Label="Appearance Mod" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="ushort" Variant="Variant.Text"  @bind-Value="Value.ItemVisual1" ValueCompare="ValueCompare?.ItemVisual1" Label="Visual" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="6" />
-    <MudItem xs="3">
-        <Placeholder_Element Amount="2" />
-        <Input_Element T="uint" @bind-Value="Value.ItemId2" ValueCompare="ValueCompare?.ItemId2" Label="Off Hand Item ID" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId2" ValueCompare="ValueCompare?.AppearanceModId2" Label="Appearance Mod" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="ushort" Variant="Variant.Text"  @bind-Value="Value.ItemVisual2" ValueCompare="ValueCompare?.ItemVisual2" Label="Visual" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3" />
-    <MudItem xs="6">
-        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element T="uint" @bind-Value="Value.ItemId3" ValueCompare="ValueCompare?.ItemId3" Label="Ranged Item ID" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-        <InlineGroup Merged="false" DefaultPadding="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
-            <LeftContent />
-            <MiddleContent>
-                <InlineGroup Merged="false">
-                    <LeftContent>
-                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId3" ValueCompare="ValueCompare?.AppearanceModId3" Label="Appearance Mod" />
-                    </LeftContent>
-                    <RightContent>
-                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual3" ValueCompare="ValueCompare?.ItemVisual3" Label="Visual" />
-                    </RightContent>
-                </InlineGroup>
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3" />
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="2" />
+            <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId1" ValueCompare="ValueCompare?.AppearanceModId1" Label="Appearance Mod" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual1" ValueCompare="ValueCompare?.ItemVisual1" Label="Visual" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="6" />
+        <MudItem xs="3">
+            <Placeholder_Element Amount="2" />
+            <Input_Element T="uint" @bind-Value="Value.ItemId2" ValueCompare="ValueCompare?.ItemId2" Label="Off Hand Item ID" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId2" ValueCompare="ValueCompare?.AppearanceModId2" Label="Appearance Mod" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual2" ValueCompare="ValueCompare?.ItemVisual2" Label="Visual" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="uint" @bind-Value="Value.ItemId3" ValueCompare="ValueCompare?.ItemId3" Label="Ranged Item ID" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+            <InlineGroup Merged="false" DefaultPadding="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <InlineGroup Merged="false">
+                        <LeftContent>
+                            <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId3" ValueCompare="ValueCompare?.AppearanceModId3" Label="Appearance Mod" />
+                        </LeftContent>
+                        <RightContent>
+                            <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual3" ValueCompare="ValueCompare?.ItemVisual3" Label="Visual" />
+                        </RightContent>
+                    </InlineGroup>
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>

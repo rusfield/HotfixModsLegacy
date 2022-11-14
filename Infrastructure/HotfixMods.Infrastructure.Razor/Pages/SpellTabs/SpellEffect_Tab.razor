@@ -3,17 +3,19 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        @*
-        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" />
-        *@
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            @*
+            <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" />
+            *@
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
 
-    </MudItem>
-    <MudItem xs="3">
+        </MudItem>
+        <MudItem xs="3">
 
-    </MudItem>
-</MudGrid>
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

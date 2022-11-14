@@ -2,37 +2,38 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3">
-        <Input_Element T="int" Value="@GetComponentSection(0)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 0))" Label="Arms Upper" ValueCompare="GetCompareComponentSection(0)" />
-        <Input_Element T="int" Value="@GetComponentSection(1)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 1))" Label="Arms Lower" ValueCompare="GetCompareComponentSection(1)" />
-        <Input_Element T="int" Value="@GetComponentSection(2)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 2))" Label="Hands" ValueCompare="GetCompareComponentSection(2)" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" Value="@GetComponentSection(3)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 3))" Label="Chest Upper" ValueCompare="GetCompareComponentSection(3)" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="int" Value="@GetComponentSection(4)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 4))" Label="Chest Lower" ValueCompare="GetCompareComponentSection(4)" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element T="int" Value="@GetComponentSection(8)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 8))" Label="Accessories" ValueCompare="GetCompareComponentSection(8)" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3">
-        <Input_Element T="int" Value="@GetComponentSection(5)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 5))" Label="Legs Upper" ValueCompare="GetCompareComponentSection(5)" />
-        <Input_Element T="int" Value="@GetComponentSection(6)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 6))" Label="Legs Lower" ValueCompare="GetCompareComponentSection(6)" />
-        <Input_Element T="int" Value="@GetComponentSection(7)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 7))" Label="Feet" ValueCompare="GetCompareComponentSection(7)" />
-    </MudItem>
-</MudGrid>
-
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="int" Value="@GetComponentSection(0)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 0))" Label="Arms Upper" ValueCompare="GetCompareComponentSection(0)" />
+            <Input_Element T="int" Value="@GetComponentSection(1)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 1))" Label="Arms Lower" ValueCompare="GetCompareComponentSection(1)" />
+            <Input_Element T="int" Value="@GetComponentSection(2)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 2))" Label="Hands" ValueCompare="GetCompareComponentSection(2)" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" Value="@GetComponentSection(3)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 3))" Label="Chest Upper" ValueCompare="GetCompareComponentSection(3)" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" Value="@GetComponentSection(4)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 4))" Label="Chest Lower" ValueCompare="GetCompareComponentSection(4)" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" Value="@GetComponentSection(8)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 8))" Label="Accessories" ValueCompare="GetCompareComponentSection(8)" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" Value="@GetComponentSection(5)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 5))" Label="Legs Upper" ValueCompare="GetCompareComponentSection(5)" />
+            <Input_Element T="int" Value="@GetComponentSection(6)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 6))" Label="Legs Lower" ValueCompare="GetCompareComponentSection(6)" />
+            <Input_Element T="int" Value="@GetComponentSection(7)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 7))" Label="Feet" ValueCompare="GetCompareComponentSection(7)" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
 
 @code {
 

@@ -2,21 +2,23 @@
 @inject CreatureService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    <MudItem xs="3" />
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
-        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3" />
-</MudGrid>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
+            <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>
 
 @code {
     async void NextIdAsync_Click()

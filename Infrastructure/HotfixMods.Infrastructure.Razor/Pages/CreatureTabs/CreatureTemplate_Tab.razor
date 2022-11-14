@@ -5,9 +5,8 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudGrid>
-    @if (TabContentEditBody.CurrentSlideIndex == 0)
-    {
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
@@ -50,9 +49,10 @@
             <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" />
             <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentSlideIndex == 1)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" />
             <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" />
@@ -87,9 +87,10 @@
             <Input_Element T="int" @bind-Value="Value.WidgetSetId" ValueCompare="ValueCompare?.WidgetSetId" Label="@nameof(Value.WidgetSetId).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionId" ValueCompare="ValueCompare?.WidgetSetUnitConditionId" Label="@nameof(Value.WidgetSetUnitConditionId).ToDisplayName()" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentSlideIndex == 2)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" />
             <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" />
@@ -137,9 +138,10 @@
             <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" />
             <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" />
         </MudItem>
-    }
-    else if (TabContentEditBody.CurrentSlideIndex == 3)
-    {
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
@@ -185,8 +187,8 @@
             <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" />
 
         </MudItem>
-    }
-</MudGrid>
+    </MudGrid>
+</MudCarouselItem>
 
 
 

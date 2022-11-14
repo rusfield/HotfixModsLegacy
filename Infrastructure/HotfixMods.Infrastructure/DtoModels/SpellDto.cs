@@ -15,7 +15,8 @@ namespace HotfixMods.Infrastructure.DtoModels
         public List<SpellEffect> SpellEffects { get; set; } = new();
         public List<SpellXSpellVisual> SpellXSpellVisuals { get; set; } = new();
 
-        public SpellVisual SpellVisual { get; set; } = new();
-        public SpellVisualEvent SpellVisualEvent { get; set; } = new();
+        // These will be separate
+        // public SpellVisual SpellVisual { get; set; } = new();
+        // public SpellVisualEvent SpellVisualEvent { get; set; } = new();
     }
 }

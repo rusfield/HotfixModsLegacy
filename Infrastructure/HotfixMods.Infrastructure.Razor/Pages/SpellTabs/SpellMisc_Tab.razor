@@ -1,0 +1,88 @@
+﻿@using HotfixMods.Infrastructure.Extensions;
+@inherits HotfixPageTabBase<SpellMisc>
+@inject SpellService Service
+@inject IDialogService DialogService
+
+<MudGrid>
+    @if (TabContentEditBody.CurrentPageIndex == 0)
+    {
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.RangeIndex" ValueCompare="ValueCompare?.RangeIndex" Label="@nameof(Value.RangeIndex).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.Speed" ValueCompare="ValueCompare?.Speed" Label="@nameof(Value.Speed).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.LaunchDelay" ValueCompare="ValueCompare?.LaunchDelay" Label="@nameof(Value.LaunchDelay).ToDisplayName()" />
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.SpellIconFileDataId" ValueCompare="ValueCompare?.SpellIconFileDataId" Label="@nameof(Value.SpellIconFileDataId).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.ActiveIconFileDataId" ValueCompare="ValueCompare?.ActiveIconFileDataId" Label="@nameof(Value.ActiveIconFileDataId).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MinDuration" ValueCompare="ValueCompare?.MinDuration" Label="@nameof(Value.MinDuration).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ShowFutureSpellPlayerConditionId" ValueCompare="ValueCompare?.ShowFutureSpellPlayerConditionId" Label="@nameof(Value.ShowFutureSpellPlayerConditionId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.SpellVisualScript" ValueCompare="ValueCompare?.SpellVisualScript" Label="@nameof(Value.SpellVisualScript).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ActiveSpellVisualScript" ValueCompare="ValueCompare?.ActiveSpellVisualScript" Label="@nameof(Value.ActiveSpellVisualScript).ToDisplayName()" />
+        </MudItem>
+    }
+    else if (TabContentEditBody.CurrentPageIndex == 1)
+    {
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Attributes1" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes2" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes3" ValueCompare="ValueCompare?.Attributes3" Label="@nameof(Value.Attributes3).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes4" ValueCompare="ValueCompare?.Attributes4" Label="@nameof(Value.Attributes4).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes5" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes6" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" />
+
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.Attributes13" ValueCompare="ValueCompare?.Attributes13" Label="@nameof(Value.Attributes13).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.Attributes14" ValueCompare="ValueCompare?.Attributes14" Label="@nameof(Value.Attributes14).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.Attributes15" ValueCompare="ValueCompare?.Attributes15" Label="@nameof(Value.Attributes15).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Attributes7" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes8" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes9" ValueCompare="ValueCompare?.Attributes3" Label="@nameof(Value.Attributes3).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes10" ValueCompare="ValueCompare?.Attributes4" Label="@nameof(Value.Attributes4).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes11" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes12" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" />
+        </MudItem>
+    }
+</MudGrid>
+
+@code {
+
+    [CascadingParameter]
+    TabContentEditBody TabContentEditBody { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TabContentEditBody.SetPagesByIndex(1);
+        base.OnInitialized();
+    }
+}

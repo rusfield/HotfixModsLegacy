@@ -15,7 +15,7 @@
             {
                 if (typeof(T) == typeof(string))
                 {
-                    <MudTextField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." />
+                    <MudTextField T="T" Lines="@Lines" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." />
                 }
                 else
                 {
@@ -64,6 +64,9 @@
 
     [Parameter]
     public bool AllowUndefinedValues { get; set; } = true;
+
+    [Parameter]
+    public int Lines { get; set; } = 1; // For multiline text input
 
     bool error = false;
     public void SetError(bool newError)

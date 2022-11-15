@@ -3,7 +3,7 @@
 @inject CreatureService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="uint" @bind-Value="Value.Bytes1" ValueCompare="ValueCompare?.Bytes1" Label="@nameof(Value.Bytes1).ToDisplayName()" />

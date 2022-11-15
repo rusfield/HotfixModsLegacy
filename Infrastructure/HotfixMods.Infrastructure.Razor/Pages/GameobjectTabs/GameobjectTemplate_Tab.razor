@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.InfoModels
 @inherits HotfixPageTabBase<GameobjectTemplate>
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" />

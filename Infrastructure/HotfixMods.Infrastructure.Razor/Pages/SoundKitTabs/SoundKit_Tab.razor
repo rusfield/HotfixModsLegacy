@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.InfoModels
 @inherits HotfixPageTabBase<SoundKit>
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@(nameof(Value.SoundType).ToDisplayName())" ValueCompare="ValueCompare?.SoundType" />

@@ -9,7 +9,7 @@
 @for (int i = 0; i<slides; i++)
 {
     int slide = i;
-    <MudCarouselItem>
+    <MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
         <MudGrid>
             @for (int j = 24 * slide; j < (slide * 24) + 24; j++)
             {

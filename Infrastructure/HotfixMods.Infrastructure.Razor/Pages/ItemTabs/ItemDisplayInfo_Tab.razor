@@ -3,7 +3,7 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" />

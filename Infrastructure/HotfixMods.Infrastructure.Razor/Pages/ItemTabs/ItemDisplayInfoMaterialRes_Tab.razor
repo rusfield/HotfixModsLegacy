@@ -2,7 +2,7 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" Value="@GetComponentSection(0)" ValueChanged="@((int newValue) => SetComponentSection(newValue, 0))" Label="Arms Upper" ValueCompare="GetCompareComponentSection(0)" />

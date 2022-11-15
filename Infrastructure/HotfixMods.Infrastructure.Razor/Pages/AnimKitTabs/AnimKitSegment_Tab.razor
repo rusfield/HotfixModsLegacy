@@ -4,7 +4,7 @@
 
 @inherits HotfixPageTabBase<AnimKitSegment>
 
-<MudCarouselItem>
+<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" GetOptionsAsync_Func="GetOrderIndex" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" />

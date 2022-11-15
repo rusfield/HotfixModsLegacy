@@ -45,9 +45,14 @@
         var elevation = "box-shadow:var(--mud-elevation-2)";
 
         if (CurrentSlideIndex < slides)
-            elevation += ",3px 0px 3px 1px var(--mud-palette-primary)";
+            elevation += ",2px 0px 2px 1px var(--mud-palette-primary)";
+        else
+            elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
+
         if (CurrentSlideIndex > 0)
-            elevation += ",-3px 0px 3px 1px var(--mud-palette-primary)";
+            elevation += ",-2px 0px 2px 1px var(--mud-palette-primary)";
+        else
+            elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
 
         return $"background-color:var(--mud-palette-surface);{elevation};";
     }

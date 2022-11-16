@@ -12,7 +12,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Items" AddClick_Callback="AddTab_Click" AddTooltip="Add new item effect" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Items" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>

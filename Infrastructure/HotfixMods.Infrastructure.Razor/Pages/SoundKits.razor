@@ -11,7 +11,7 @@
 }
 else
 {
-    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Sound Kits" AddClick_Callback="AddEntry_Click" AddTooltip="Add new segment" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SoundKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Sound Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SoundKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Text="Entity">
                 <TabContentEditBody>
@@ -42,10 +42,5 @@ else
     {
         if (PageTab.Dto != null)
             ((SoundKitDto)PageTab.Dto).SoundKitEntries.Add(new SoundKitEntry());
-    }
-
-    public void SetPanelIndex(int panelIndex)
-    {
-        tabContentEditHeaderRef?.SetPanelIndex(panelIndex);
     }
 }

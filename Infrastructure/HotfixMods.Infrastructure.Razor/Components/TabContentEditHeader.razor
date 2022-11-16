@@ -18,22 +18,10 @@
     </MudItem>
 </MudGrid>
 
-<MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="rounded-0 mud-elevation-0" Class="tab-bar">
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" PanelClass="rounded-0 mud-elevation-0" Class="tab-bar">
     <ChildContent>
         @ChildContent
-        <MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
-            <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
-        </MudPaper>
     </ChildContent>
-
-    <Header>
-        @if (AddClick_Callback.HasDelegate)
-        {
-            <MudTooltip Text="@AddTooltip">
-                <MudIconButton Icon="@Icons.Filled.Add" Style="color:white" OnClick="AddClick" />
-            </MudTooltip>
-        }
-    </Header>
 </MudTabs>
 
 
@@ -48,62 +36,6 @@
     public bool IsUpdate { get; set; }
 
     [Parameter]
-    public EventCallback AddClick_Callback { get; set; }
-
-    [Parameter]
-    public string? AddTooltip { get; set; }
-
-    [Parameter]
     public RenderFragment ChildContent { get; set; }
 
-    MudTabs? mudTabsRef;
-    int newPanelIndex = -1;
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if(newPanelIndex != -1)
-        {
-            mudTabsRef?.ActivatePanel(newPanelIndex);
-            newPanelIndex = -1;
-        }
-        base.OnAfterRender(firstRender);
-    }
-
-    public void SetPanelIndex(int panelIndex)
-    {
-        newPanelIndex = panelIndex;
-        this.StateHasChanged();
-    }
-
-    async Task AddClick()
-    {
-        await AddClick_Callback.InvokeAsync();
-        if(mudTabsRef != null)
-            newPanelIndex = mudTabsRef.Panels.Count;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    public int CurrentPageIndex { get; set; }
-    int pages = 0;
-
-    public void SetPagesByIndex(int amount)
-    {
-        this.pages = amount + 1;
-        this.StateHasChanged();
-    }
-
-    void CurrentPageChanged(int page)
-    {
-        CurrentPageIndex = page - 1;
-    }
 }

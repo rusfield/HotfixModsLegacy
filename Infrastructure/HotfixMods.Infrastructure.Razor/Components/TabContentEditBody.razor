@@ -11,7 +11,13 @@
         </MudCarousel>
     </CascadingValue>
 </MudPaper>
+<MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
+    @*
+    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
+    *@
+    <MudPagination Size="Size.Medium" Count="5" Color="Color.Info" Class="@(5 > 0 ? null : "invisible")" />
 
+</MudPaper>
 
 
 @code {

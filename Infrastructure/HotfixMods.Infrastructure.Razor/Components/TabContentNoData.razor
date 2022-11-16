@@ -1,0 +1,20 @@
+﻿@if (IncludeCarousel)
+{
+    <MudCarouselItem>
+        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Style="height:100%;width:100%;">
+            <MudText>There are no data yet.</MudText>
+        </MudStack>
+    </MudCarouselItem>
+}
+else
+{
+    <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Style="height:100%;width:100%;">
+        <MudText>There are no data yet.</MudText>
+    </MudStack>
+}
+
+@code {
+
+    [Parameter]
+    public bool IncludeCarousel { get; set; } = true;
+}

@@ -25,7 +25,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Item Sparse">
-                <TabContentEditBody>
+                <TabContentEditBody AmountOfSlides="5" CurrentSlide="currentItemSparseSlide" NavigateSlide_EventCallback="NavigateItemSparse_Click">
                     <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -69,6 +69,8 @@ else
 }
 
 @code {
+    int currentItemSparseSlide = 1;
+
     void AddTab_Click()
     {
         if (PageTab.Dto != null)
@@ -79,5 +81,11 @@ else
     {
         if (PageTab.Dto != null)
             ((ItemDto)PageTab.Dto).ItemEffects.RemoveAt(index);
+    }
+
+    void NavigateItemSparse_Click(int slide)
+    {
+        currentItemSparseSlide = slide;
+        this.StateHasChanged();
     }
 }

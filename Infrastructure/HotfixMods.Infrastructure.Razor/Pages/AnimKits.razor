@@ -25,10 +25,10 @@ else
                     </TabContentEditBody>
                 </MudTabPanel>
                 <MudTabPanel Text="Segments">
-                    <TabContentEditBody AmountOfPages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click">
+                    <TabContentEditBody AmountOfPages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click" NavigatePage_EventCallback="NavigateSegmentPage_Click" CurrentPage="currentSegmentPage">
                         @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
                         {
-                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[currentSegmentPage]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > currentSegmentPage ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[currentSegmentPage] : null)" />
+                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[currentSegmentPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > currentSegmentPage - 1 ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[currentSegmentPage - 1] : null)" />
                         }
                         else
                         {
@@ -47,12 +47,22 @@ else
     void AddSegment_Click()
     {
         if (PageTab.Dto != null)
+        {
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new());
+            currentSegmentPage = ((AnimKitDto)PageTab.Dto).AnimKitSegments.Count;
+            this.StateHasChanged();
+        }
     }
 
     void RemoveSegment_Click(int page)
     {
         if (PageTab.Dto != null)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(page - 1);
+    }
+
+    void NavigateSegmentPage_Click(int page)
+    {
+        currentSegmentPage = page;
+        this.StateHasChanged();
     }
 }

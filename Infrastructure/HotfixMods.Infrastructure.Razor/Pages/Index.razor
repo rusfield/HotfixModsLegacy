@@ -4,6 +4,8 @@
 @using HotfixMods.Infrastructure.Razor.PageData
 @using HotfixMods.Infrastructure.Razor.Handlers
 
+@inject IDialogService DialogService
+
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true">
     <Header>
         <MudTooltip Text="New">
@@ -51,6 +53,8 @@
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Sound Kit", typeof(SoundKits))))">Sound Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">Anim Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Generic Hotfix", typeof(GenericHotfixes))))">Custom Hotfix</MudMenuItem>
+
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Test</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -106,5 +110,17 @@
     void CloseTab_Click(Guid tabId)
     {
         Tabs.RemoveAll(t => t.TabId == tabId);
+    }
+
+    protected async void OpenDialog_Click<TDialog>(PageTab pageTab)
+        where TDialog : ComponentBase
+    {
+        var result = await DialogService.Show<TDialog>().Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            pageTab.Dto = result.Data;
+            pageTab.TabName = ((BaseDto)result.Data).DisplayName;
+            LaunchTab(pageTab);
+        }
     }
 }

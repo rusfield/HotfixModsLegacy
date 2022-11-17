@@ -7,7 +7,7 @@
 <MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
     <MudGrid>
         <MudItem xs="3">
-            <Input_Element T="byte" Value="Value.OrderIndex" ValueChanged="SegmentChanged" GetOptionsAsync_Func="GetOrderIndex" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" />
+            <Input_Element T="byte" Value="Value.OrderIndex" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" />
             <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" />
             <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnValueLookupClick="@(OpenLookupDialog("AnimKitConfig", Value.AnimKitConfigId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimKitConfigId))" />
             <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" />
@@ -57,35 +57,8 @@
     [CascadingParameter]
     public AnimKits AnimKitPage { get; set; }
 
-    void SegmentChanged(byte newValue)
-    {
-        var segments = ((AnimKitDto)AnimKitPage.PageTab.Dto).AnimKitSegments;
-
-        if (newValue < 0)
-            newValue = 0;
-        else if (newValue >= segments.Count)
-            newValue = (byte)(segments.Count - 1);
-
-        if (Value.OrderIndex != newValue)
-        {
-            segments.RemoveAt(Value.OrderIndex);
-            segments.Insert(newValue, Value);
-            for (byte i = 0; i < segments.Count; i++)
-            {
-                segments[i].OrderIndex = i;
-            }
-        }
-        AnimKitPage.SegmentIndexChanged(newValue);
-    }
-
     async Task<Dictionary<ushort, string>> GetAnimations()
     {
         return Enum.GetValues<AnimationDataId>().ToDictionary(key => (ushort)key, value => value.ToDisplayString());
     }
-
-    async Task<Dictionary<byte, string>> GetOrderIndex()
-    {
-        return AnimKitPage.PageIndexes;
-    }
-
 }

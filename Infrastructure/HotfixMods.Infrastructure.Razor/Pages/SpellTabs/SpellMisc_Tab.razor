@@ -73,15 +73,3 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-
-@code {
-
-    [CascadingParameter]
-    TabContentEditBody TabContentEditBody { get; set; }
-
-    protected override void OnInitialized()
-    {
-        TabContentEditBody.SetSlidesIndex(1);
-        base.OnInitialized();
-    }
-}

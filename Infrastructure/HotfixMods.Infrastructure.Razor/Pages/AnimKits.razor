@@ -25,10 +25,10 @@ else
                     </TabContentEditBody>
                 </MudTabPanel>
                 <MudTabPanel Text="Segments">
-                    <TabContentEditBody @ref="segmentTabContentEditBodyRef" Pages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click">
+                    <TabContentEditBody AmountOfPages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click">
                         @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
                         {
-                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[segmentTabContentEditBodyRef.CurrentPageIndex]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > segmentTabContentEditBodyRef.CurrentPageIndex ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[segmentTabContentEditBodyRef.CurrentPageIndex] : null)" />
+                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[currentSegmentPage]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > currentSegmentPage ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[currentSegmentPage] : null)" />
                         }
                         else
                         {
@@ -42,36 +42,17 @@ else
 }
 
 @code {
-    TabContentEditBody? segmentTabContentEditBodyRef;
-
-    public void SegmentIndexChanged(int newIndex)
-    {
-        segmentTabContentEditBodyRef?.NavigatePage(newIndex);
-    }
+    int currentSegmentPage = 1;
 
     void AddSegment_Click()
     {
         if (PageTab.Dto != null)
-            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment() { OrderIndex = (byte)((AnimKitDto)PageTab.Dto).AnimKitSegments.Count });
-        SetPageIndexes();
-
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new());
     }
 
-    void RemoveSegment_Click(int index)
+    void RemoveSegment_Click(int page)
     {
         if (PageTab.Dto != null)
-            ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(index);
-        SetPageIndexes();
-    }
-
-    public Dictionary<byte, string> PageIndexes = new();
-
-    void SetPageIndexes()
-    {
-        PageIndexes = new();
-        for (byte i = 0; i < ((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count; i++)
-        {
-            PageIndexes.Add(i, i.ToString());
-        }
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(page - 1);
     }
 }

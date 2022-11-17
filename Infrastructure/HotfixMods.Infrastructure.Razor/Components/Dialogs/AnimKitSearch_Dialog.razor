@@ -30,6 +30,7 @@
     async Task GetNewAsync()
     {
         var data = await Service.GetNewAsync(dialogSearchRef!.SetLoaderProgress);
+        data.AnimKitSegments.Add(new());
         Dialog.Close(data);
     } 
 }

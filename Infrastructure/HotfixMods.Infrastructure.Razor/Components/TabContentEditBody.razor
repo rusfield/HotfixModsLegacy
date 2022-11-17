@@ -1,8 +1,8 @@
 ﻿<div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px; left:calc(100%)")">
-    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(() => Navigate(CurrentSlideIndex + 1))" Class="@("custom-slide-navigator" + (CurrentSlideIndex < slides ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(() => NavigateSlide(CurrentSlideIndex + 1))" Class="@("custom-slide-navigator" + (CurrentSlideIndex < Slides ? "" : " invisible"))" />
 </div>
 <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
-    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(() => Navigate(CurrentSlideIndex - 1))" Class="@("custom-slide-navigator " + (CurrentSlideIndex > 0 ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(() => NavigateSlide(CurrentSlideIndex - 1))" Class="@("custom-slide-navigator " + (CurrentSlideIndex > 0 ? "" : " invisible"))" />
 </div>
 <MudPaper Height=@($"{contentHeight}px") Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="@GetContentStyle()">
     <CascadingValue Value="@this">
@@ -11,12 +11,21 @@
         </MudCarousel>
     </CascadingValue>
 </MudPaper>
-<MudPaper Class="pa-2 mud-theme-primary d-flex flex-column align-center" Elevation="4">
-    @*
-    <MudPagination SelectedChanged="CurrentPageChanged" Size="Size.Medium" Count="@pages" Color="Color.Info" Class="@(pages > 1 ? null : "invisible")" />
-    *@
-    <MudPagination Size="Size.Medium" Count="5" Color="Color.Info" Class="@(5 > 0 ? null : "invisible")" />
-
+<MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
+    @if (AddPage_EventCallback.HasDelegate && RemovePage_EventCallback.HasDelegate)
+    {
+        <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
+            <MudStack Row="true" Class="invisible" Spacing="0">
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" />
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" />
+            </MudStack>
+            <MudPagination @ref="mudPaginationRef" SelectedChanged="NavigatePage" Size="Size.Medium" Count="Pages" Color="Color.Info" />
+            <MudStack Row="true" Spacing="0">
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="RemovePage" Style="color:white;" />
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="AddPage" Style="color:white;" />
+            </MudStack>
+        </MudStack>
+    }
 </MudPaper>
 
 
@@ -24,25 +33,69 @@
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
 
-    MudCarousel<object>? mudCarouselRef;
+    [Parameter]
+    public int Slides { get; set; }
+
+    [Parameter]
+    public int Pages { get; set; }
+
+    [Parameter]
+    public EventCallback AddPage_EventCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemovePage_EventCallback { get; set; }
 
     public int CurrentSlideIndex { get; set; }
-    int contentHeight = 650;
-    int slides = 0;
+    public int CurrentPageIndex { get; set; }
 
-    public void SetSlidesIndex(int amount)
+    MudCarousel<object>? mudCarouselRef;
+    MudPagination? mudPaginationRef;
+    int navigatePage = -1;
+
+    int contentHeight = 650;
+
+    public void SetSlidesIndex(int index)
     {
-        slides = amount;
+        Slides = index;
         this.StateHasChanged();
     }
 
-    void Navigate(int index)
+    public void SetPagesIndex(int index)
     {
-        if (index >= 0 && index <= slides)
+        Pages = index;
+        this.StateHasChanged();
+    }
+
+    public void NavigateSlide(int index)
+    {
+        if (index >= 0 && index <= Slides)
         {
             CurrentSlideIndex = index;
             mudCarouselRef?.MoveTo(CurrentSlideIndex);
         }
+    }
+
+    public void NavigatePage(int page)
+    {
+        int index = page - 1;
+        if (index >= 0 && index <= Pages)
+        {
+            CurrentPageIndex = index;
+            navigatePage = index;
+            this.StateHasChanged();
+        }
+    }
+
+    async void AddPage()
+    {
+        await AddPage_EventCallback.InvokeAsync();
+        NavigatePage(Pages + 1); // Add 1 here because Pages will not be updated to +1 before a few renders later.
+    }
+
+    async void RemovePage()
+    {
+        await RemovePage_EventCallback.InvokeAsync(CurrentPageIndex);
+        CurrentPageIndex--;
     }
 
     string GetContentStyle()
@@ -50,7 +103,7 @@
         // Add elevation value 2
         var elevation = "box-shadow:var(--mud-elevation-2)";
 
-        if (CurrentSlideIndex < slides)
+        if (CurrentSlideIndex < Slides)
             elevation += ",2px 0px 2px 1px var(--mud-palette-primary)";
         else
             elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
@@ -61,5 +114,17 @@
             elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
 
         return $"background-color:var(--mud-palette-surface);{elevation};";
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        // Page is not as static as slide, and needs to be updated here.
+        if(navigatePage > -1)
+        {
+            mudPaginationRef?.NavigateTo(navigatePage);
+            navigatePage = -1;
+        }
+        
+        base.OnAfterRender(firstRender);
     }
 }

@@ -11,46 +11,67 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Anim Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
-        <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <AnimKitEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
-            </MudTabPanel>
-            <MudTabPanel Text="Anim Kit">
-                <TabContentEditBody>
-                    <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueCompare="((AnimKitDto?)PageTab.DtoCompare)?.AnimKit" />
-                </TabContentEditBody>
-            </MudTabPanel>
-            <MudTabPanel Text="Segments">
-                <TabContentEditBody>
-                    @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
-                    {
-                        <AnimKitSegment_Tab AnimKitPage="this" Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[currentSegment]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > currentSegment ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[currentSegment] : null)" />
-                    }
-                    else
-                    {
-                        <TabContentNoData />
-                    }
-                </TabContentEditBody>
-            </MudTabPanel>
-        </ChildContent>
-    </TabContentEditHeader>
+    <CascadingValue Value="this">
+        <TabContentEditHeader IsUpdate="false" Title="Anim Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
+            <ChildContent>
+                <MudTabPanel Text="Entity">
+                    <TabContentEditBody>
+                        <AnimKitEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </MudTabPanel>
+                <MudTabPanel Text="Anim Kit">
+                    <TabContentEditBody>
+                        <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueCompare="((AnimKitDto?)PageTab.DtoCompare)?.AnimKit" />
+                    </TabContentEditBody>
+                </MudTabPanel>
+                <MudTabPanel Text="Segments">
+                    <TabContentEditBody @ref="segmentTabContentEditBodyRef" Pages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click">
+                        @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
+                        {
+                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[segmentTabContentEditBodyRef.CurrentPageIndex]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > segmentTabContentEditBodyRef.CurrentPageIndex ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[segmentTabContentEditBodyRef.CurrentPageIndex] : null)" />
+                        }
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </MudTabPanel>
+            </ChildContent>
+        </TabContentEditHeader>
+    </CascadingValue>
 }
 
 @code {
-    int currentSegment = 0;
+    TabContentEditBody? segmentTabContentEditBodyRef;
+
+    public void SegmentIndexChanged(int newIndex)
+    {
+        segmentTabContentEditBodyRef?.NavigatePage(newIndex);
+    }
 
     void AddSegment_Click()
     {
         if (PageTab.Dto != null)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new AnimKitSegment() { OrderIndex = (byte)((AnimKitDto)PageTab.Dto).AnimKitSegments.Count });
+        SetPageIndexes();
+
     }
 
     void RemoveSegment_Click(int index)
     {
         if (PageTab.Dto != null)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(index);
+        SetPageIndexes();
+    }
+
+    public Dictionary<byte, string> PageIndexes = new();
+
+    void SetPageIndexes()
+    {
+        PageIndexes = new();
+        for (byte i = 0; i < ((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count; i++)
+        {
+            PageIndexes.Add(i, i.ToString());
+        }
     }
 }

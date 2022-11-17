@@ -52,16 +52,10 @@
 </MudCarouselItem>
 
 @code {
-    [Parameter]
+
+
+    [CascadingParameter]
     public AnimKits AnimKitPage { get; set; }
-
-    Dictionary<byte, string> options;
-
-    protected override void OnInitialized()
-    {
-        InitOptions();
-        base.OnInitialized();
-    }
 
     void SegmentChanged(byte newValue)
     {
@@ -81,17 +75,7 @@
                 segments[i].OrderIndex = i;
             }
         }
-        InitOptions();
-        //AnimKitPage.SetPanelIndex(newValue + 2); // +2 is for Entity and Anim Kit tabs
-    }
-
-    void InitOptions()
-    {
-        options = new();
-        for (byte i = 0; i < ((AnimKitDto)AnimKitPage.PageTab.Dto).AnimKitSegments.Count; i++)
-        {
-            options.Add(i, i.ToString());
-        }
+        AnimKitPage.SegmentIndexChanged(newValue);
     }
 
     async Task<Dictionary<ushort, string>> GetAnimations()
@@ -101,6 +85,7 @@
 
     async Task<Dictionary<byte, string>> GetOrderIndex()
     {
-        return options;
+        return AnimKitPage.PageIndexes;
     }
+
 }

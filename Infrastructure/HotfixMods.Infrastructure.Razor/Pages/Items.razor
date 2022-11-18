@@ -35,7 +35,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Display Info">
-                <TabContentEditBody>
+                <TabContentEditBody AmountOfSlides="2" CurrentSlide="currentItemDisplayInfoSlide" NavigateSlide_EventCallback="NavigateItemDisplayInfo_Click">
                     <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -49,27 +49,27 @@ else
                     <ItemModifiedAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemMItemModifiedAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemMItemModifiedAppearance" />
                 </TabContentEditBody>
             </MudTabPanel>
-            @foreach (var (item, index) in ((ItemDto)PageTab.Dto).ItemEffects.WithIndex())
-            {
-                <MudTabPanel>
-                    <ChildContent>
-                        <TabContentEditBody>
-                            <ItemEffect_Tab Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
-                        </TabContentEditBody>
-                    </ChildContent>
-                    <TabContent>
-                        <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                            <MudText>@($"EFFECT #{index + 1}")</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => RemoveTab_Click(index))" />
-                            </MudStack>
-                        </TabContent>
-                    </MudTabPanel>
-            }
+            <MudTabPanel Text="Item Effects">
+                <TabContentEditBody AmountOfPages="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddPage_EventCallback="AddItemEffect_Click" RemovePage_EventCallback="RemoveItemEffect_Click" NavigatePage_EventCallback="NavigateEffectPage_Click" CurrentPage="currentItemEffectPage">
+                    @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
+                    {
+                        <ItemEffect_Tab Value="((ItemDto?)PageTab.Dto)?.ItemEffects[currentItemEffectPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > currentItemEffectPage - 1 ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[currentItemEffectPage - 1] : null)" />
+                    }
+                    else
+                    {
+                        <TabContentNoData />
+                    }
+                </TabContentEditBody>
+            </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
     int currentItemSparseSlide = 1;
+    int currentItemDisplayInfoSlide = 1;
+
+    int currentItemEffectPage = 1;
 
     void AddTab_Click()
     {
@@ -86,6 +86,44 @@ else
     void NavigateItemSparse_Click(int slide)
     {
         currentItemSparseSlide = slide;
+        this.StateHasChanged();
+    }
+
+    void NavigateItemDisplayInfo_Click(int slide)
+    {
+        currentItemDisplayInfoSlide = slide;
+        this.StateHasChanged();
+    }
+
+    void AddItemEffect_Click()
+    {
+        if (PageTab.Dto != null)
+        {
+            ((ItemDto)PageTab.Dto).ItemEffects.Add(new());
+            currentItemEffectPage = ((ItemDto)PageTab.Dto).ItemEffects.Count;
+            this.StateHasChanged();
+        }
+    }
+
+    void RemoveItemEffect_Click(int page)
+    {
+        if (PageTab.Dto != null && ((ItemDto)PageTab.Dto).ItemEffects.Count >= page)
+            ((ItemDto)PageTab.Dto).ItemEffects.RemoveAt(page - 1);
+        else
+            return;
+
+        if (currentItemEffectPage == page)
+        {
+            if (!((ItemDto?)PageTab.Dto).ItemEffects.Any())
+                currentItemEffectPage = 0;
+            else
+                currentItemEffectPage = Math.Max(1, page - 1);
+        }
+    }
+
+    void NavigateEffectPage_Click(int page)
+    {
+        currentItemEffectPage = page;
         this.StateHasChanged();
     }
 }

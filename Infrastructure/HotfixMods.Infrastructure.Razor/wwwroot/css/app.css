@@ -1,4 +1,8 @@
-﻿.custom-app-bar {
+﻿* {
+    --mud-palette-action-default : white;
+}
+
+.custom-app-bar {
     --mud-appbar-height: 0px;
 }
 

@@ -23,7 +23,7 @@
             </MudStack>
             <MudPagination Selected="CurrentPage" SelectedChanged="NavigatePage_EventCallback" Size="Size.Medium" Count="AmountOfPages" Color="Color.Info" Class="@(AmountOfPages > 0 ? "" : "invisible")"/>
             <MudStack Row="true" Spacing="0">
-                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemovePage_EventCallback.InvokeAsync(CurrentPage))" Style="color:white;" />
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemovePage_EventCallback.InvokeAsync(CurrentPage))" Style="color:white;" Disabled="AmountOfPages <= 0" />
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="AddPage_EventCallback" Style="color:white;" />
             </MudStack>
         </MudStack>

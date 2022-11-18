@@ -56,8 +56,18 @@ else
 
     void RemoveSegment_Click(int page)
     {
-        if (PageTab.Dto != null)
+        if (PageTab.Dto != null && ((AnimKitDto)PageTab.Dto).AnimKitSegments.Count >= page)
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.RemoveAt(page - 1);
+        else
+            return;
+
+        if (currentSegmentPage == page)
+        {
+            if (!((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
+                currentSegmentPage = 0;
+            else
+                currentSegmentPage = Math.Max(1, page - 1);
+        }
     }
 
     void NavigateSegmentPage_Click(int page)

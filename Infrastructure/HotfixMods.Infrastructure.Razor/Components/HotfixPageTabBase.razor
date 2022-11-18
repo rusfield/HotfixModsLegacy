@@ -16,8 +16,6 @@
     [Parameter]
     public int CurrentPageIndex { get; set; }
 
-    //protected Transition Transition { get; set; } = Transition.None;
-
 
     protected EventCallback OpenInfoDialog(string infoText)
     {
@@ -45,18 +43,5 @@
                     Dto = (DbRow)data.Data
                 });
         }
-    }
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            //TransitionHandler.Transition = Transition.None;
-        }
-        else
-        {
-            //TransitionHandler.Transition = Transition.Slide;
-        }
-        return base.OnAfterRenderAsync(firstRender);
     }
 }

@@ -23,22 +23,54 @@ else
                     <SoundKit_Tab Value="((SoundKitDto)PageTab.Dto).SoundKit" ValueCompare="((SoundKitDto?)PageTab.DtoCompare)?.SoundKit" />
                 </TabContentEditBody>
             </MudTabPanel>
-            @foreach (var (item, index) in ((SoundKitDto)PageTab.Dto).SoundKitEntries.WithIndex())
-            {
-                <MudTabPanel Text="@($"Entry #{index + 1}")">
-                    <TabContentEditBody>
-                        <SoundKitEntry_Tab SoundKitPage="this" Value="item" ValueCompare="@(PageTab.DtoCompare != null ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
-                    </TabContentEditBody>
-                </MudTabPanel>
-            }
+            <MudTabPanel Text="Entries">
+                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddPage_EventCallback="AddEntry_Click" RemovePage_EventCallback="RemoveEntry_Click" NavigatePage_EventCallback="NavigateEntryPage_Click" CurrentPage="currentEntryPage">
+                    @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
+                    {
+                        <SoundKitEntry_Tab Value="((SoundKitDto?)PageTab.Dto)?.SoundKitEntries[currentEntryPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > currentEntryPage - 1 ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[currentEntryPage - 1] : null)" />
+                    }
+                    else
+                    {
+                        <TabContentNoData />
+                    }
+                </TabContentEditBody>
+            </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
+    int currentEntryPage = 1;
+
     void AddEntry_Click()
     {
         if (PageTab.Dto != null)
-            ((SoundKitDto)PageTab.Dto).SoundKitEntries.Add(new SoundKitEntry());
+        {
+            ((SoundKitDto)PageTab.Dto).SoundKitEntries.Add(new());
+            currentEntryPage = ((SoundKitDto)PageTab.Dto).SoundKitEntries.Count;
+            this.StateHasChanged();
+        }
+    }
+
+    void RemoveEntry_Click(int page)
+    {
+        if (PageTab.Dto != null && ((SoundKitDto)PageTab.Dto).SoundKitEntries.Count >= page)
+            ((SoundKitDto)PageTab.Dto).SoundKitEntries.RemoveAt(page - 1);
+        else
+            return;
+
+        if (currentEntryPage == page)
+        {
+            if (!((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
+                currentEntryPage = 0;
+            else
+                currentEntryPage = Math.Max(1, page - 1);
+        }
+    }
+
+    void NavigateEntryPage_Click(int page)
+    {
+        currentEntryPage = page;
+        this.StateHasChanged();
     }
 }

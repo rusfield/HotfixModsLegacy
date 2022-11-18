@@ -1,12 +1,8 @@
-﻿using HotfixMods.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotfixMods.Core.Attributes;
 
 namespace HotfixMods.Core.Models.TrinityCore
 {
+    [HotfixesSchema]
     public class HotfixModsEntity
     {
         public int Id { get; set; }

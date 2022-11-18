@@ -4,11 +4,12 @@
 <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
     <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(async () => await NavigateSlide_EventCallback.InvokeAsync(CurrentSlide - 1))" Class="@("custom-slide-navigator " + (CurrentSlide > 1 ? "" : " invisible"))" />
 </div>
-<MudPaper Height=@($"{contentHeight}px") Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="@GetContentStyle()">
-    <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%">
+<MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="@($"height:{contentHeight}px; width:100%;")">
+    <MudPaper Height="100%" Width="1208px" Class="px-5 pb-5 pt-8 z-30 mx-3 rounded-0" Style="@GetContentStyle()">
         @ChildContent
-    </MudCarousel>
-</MudPaper>
+    </MudPaper>
+</MudCarousel>
+
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
     @if (AddPage_EventCallback.HasDelegate && RemovePage_EventCallback.HasDelegate)
     {
@@ -60,7 +61,7 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if(mudCarouselRef != null && mudCarouselRef.SelectedIndex != CurrentSlide - 1)
+        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex != CurrentSlide - 1)
         {
             mudCarouselRef.MoveTo(CurrentSlide - 1);
         }

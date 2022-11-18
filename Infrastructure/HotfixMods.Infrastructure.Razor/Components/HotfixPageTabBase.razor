@@ -16,7 +16,7 @@
     [Parameter]
     public int CurrentPageIndex { get; set; }
 
-    protected bool IsLoaded { get; set; } = false;
+    //protected Transition Transition { get; set; } = Transition.None;
 
 
     protected EventCallback OpenInfoDialog(string infoText)
@@ -50,7 +50,13 @@
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-            IsLoaded = true;
+        {
+            //TransitionHandler.Transition = Transition.None;
+        }
+        else
+        {
+            //TransitionHandler.Transition = Transition.Slide;
+        }
         return base.OnAfterRenderAsync(firstRender);
     }
 }

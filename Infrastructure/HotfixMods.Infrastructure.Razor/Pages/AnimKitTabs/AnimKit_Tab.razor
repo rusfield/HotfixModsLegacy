@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.InfoModels
 
 @inherits HotfixPageTabBase<AnimKit>
-<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
+<MudCarouselItem Transition="TransitionHandler.Transition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="uint" @bind-Value="@(Value.OneShotDuration)" Label="@(nameof(Value.OneShotDuration).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.OneShotDuration" />

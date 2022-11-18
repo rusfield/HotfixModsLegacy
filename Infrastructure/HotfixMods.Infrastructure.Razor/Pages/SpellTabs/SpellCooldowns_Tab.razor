@@ -3,7 +3,7 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
+<MudCarouselItem Transition="TransitionHandler.Transition">
     <MudGrid>
         <MudItem xs="3">
             <Placeholder_Element Amount="3" />

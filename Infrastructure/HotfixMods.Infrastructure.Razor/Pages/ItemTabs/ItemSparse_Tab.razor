@@ -3,7 +3,7 @@
 
 @inherits HotfixPageTabBase<ItemSparse>
 
-<MudCarouselItem Transition="IsLoaded ? Transition.Slide : Transition.None">
+<MudCarouselItem Transition="TransitionHandler.Transition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" />

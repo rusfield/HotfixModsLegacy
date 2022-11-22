@@ -3,7 +3,7 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" />

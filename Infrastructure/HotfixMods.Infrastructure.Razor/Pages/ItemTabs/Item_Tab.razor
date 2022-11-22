@@ -3,7 +3,7 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" />

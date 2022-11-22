@@ -2,7 +2,7 @@
 @inject SoundKitService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3" />
         <MudItem xs="6">

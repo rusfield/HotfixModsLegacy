@@ -25,10 +25,13 @@ else
                     </TabContentEditBody>
                 </MudTabPanel>
                 <MudTabPanel Text="Segments">
-                    <TabContentEditBody AmountOfPages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click" NavigatePage_EventCallback="NavigateSegmentPage_Click" CurrentPage="currentSegmentPage">
+                    <TabContentEditBody AmountOfPages="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddPage_EventCallback="AddSegment_Click" RemovePage_EventCallback="RemoveSegment_Click" NavigatePage_EventCallback="NavigateSegmentPage_Click" @bind-CurrentPage="currentSegmentPage">
                         @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
                         {
-                            <AnimKitSegment_Tab Value="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments[currentSegmentPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > currentSegmentPage - 1 ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[currentSegmentPage - 1] : null)" />
+                            foreach ((var animKitSegment, int index) in ((AnimKitDto?)PageTab.Dto).AnimKitSegments.WithIndex())
+                            {
+                                <AnimKitSegment_Tab Value="animKitSegment" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
+                            }
                         }
                         else
                         {
@@ -49,7 +52,6 @@ else
         if (PageTab.Dto != null)
         {
             ((AnimKitDto)PageTab.Dto).AnimKitSegments.Insert(0, new());
-            currentSegmentPage = 1;
             this.StateHasChanged();
         }
     }
@@ -73,6 +75,5 @@ else
     void NavigateSegmentPage_Click(int page)
     {
         currentSegmentPage = page;
-        this.StateHasChanged();
     }
 }

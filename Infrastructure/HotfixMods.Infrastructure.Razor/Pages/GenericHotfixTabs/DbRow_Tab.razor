@@ -9,7 +9,7 @@
 @for (int i = 0; i <= slides; i++)
 {
     int slide = i;
-    <MudCarouselItem Transition="TransitionHandler.Transition">
+    <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
         <MudGrid>
             @for (int j = 24 * slide; j < (slide * 24) + 24; j++)
             {

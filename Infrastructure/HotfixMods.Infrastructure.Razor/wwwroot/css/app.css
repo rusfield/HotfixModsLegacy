@@ -43,3 +43,51 @@
 .custom-slide-navigator > span > .mud-icon-root{
     font-size: 96px !important;
 }
+
+.transition-instance {
+    animation-duration: 0.5s;
+    animation-name: backInUp;
+    animation-fill-mode: forwards;
+}
+
+.transition-tab {
+    animation-duration: 0.5s;
+    animation-name: backInDown;
+    animation-fill-mode: forwards;
+}
+
+.transition-page-remove {
+    animation-duration: 0.5s;
+    animation-name: bounceOut;
+    animation-fill-mode: forwards;
+}
+
+.transition-fade {
+    animation-duration: 0.2s;
+    animation-name: fadeOut;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-enter-left {
+    animation-duration: 0.5s;
+    animation-name: slideInLeft;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-enter-right {
+    animation-duration: 0.5s;
+    animation-name: slideInRight;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-exit-left {
+    animation-duration: 0.5s;
+    animation-name: slideOutLeft;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-exit-right {
+    animation-duration: 0.5s;
+    animation-name: slideOutRight;
+    animation-fill-mode: forwards;
+}

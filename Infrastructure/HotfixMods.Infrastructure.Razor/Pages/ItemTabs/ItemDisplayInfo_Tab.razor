@@ -3,7 +3,7 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" />
@@ -37,7 +37,7 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-<MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.GeosetGroup1" ValueCompare="ValueCompare?.GeosetGroup1" Label="@nameof(Value.GeosetGroup1).ToDisplayName()" />

@@ -3,7 +3,7 @@
 
 @inherits HotfixPageTabBase<ItemSparse>
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" />
@@ -30,7 +30,7 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-<MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" />
@@ -111,7 +111,7 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-<MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <InlineGroup>
@@ -220,7 +220,7 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-<MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="byte" @bind-Value="@(Value.DamageType)" Label="@(nameof(Value.DamageType).ToDisplayName())" ValueCompare="ValueCompare?.DamageType" />
@@ -263,7 +263,7 @@
         </MudItem>
     </MudGrid>
 </MudCarouselItem>
-<MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.ModifiedCraftingReagentItemId)" Label="@(nameof(Value.ModifiedCraftingReagentItemId).ToDisplayName())" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemId" />

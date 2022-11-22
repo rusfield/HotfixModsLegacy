@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.InfoModels
 @inherits HotfixPageTabBase<SoundKitEntry>
 
-<MudCarouselItem Transition="TransitionHandler.Transition">
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" />

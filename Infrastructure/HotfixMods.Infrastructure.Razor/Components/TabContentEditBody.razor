@@ -21,7 +21,7 @@
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" />
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" />
             </MudStack>
-            <MudPagination Selected="CurrentPage" SelectedChanged="NavigatePage_EventCallback" Size="Size.Medium" Count="AmountOfPages" Color="Color.Info" Class="@(AmountOfPages > 0 ? "" : "invisible")" />
+            <MudPagination @ref="mudPaginationRef" Selected="CurrentPage" SelectedChanged="NavigatePage_EventCallback" Size="Size.Medium" Count="AmountOfPages" Color="Color.Info" Class="@(AmountOfPages > 0 ? "" : "invisible")" />
             <MudStack Row="true" Spacing="0">
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemovePageAsync())" Style="color:white;" Disabled="AmountOfPages <= 0" />
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddPageAsync())" Style="color:white;" />
@@ -67,6 +67,7 @@
 
     int contentHeight = 650;
     MudCarousel<object>? mudCarouselRef;
+    MudPagination? mudPaginationRef;
     int currentSlideIndex = 0;
     int type = 0; // 0 is normal, 1 is Page Navigation, 2 is Instance Navigation
     bool slideLeft = true;
@@ -86,7 +87,6 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-
         if (mudCarouselRef != null && mudCarouselRef.SelectedIndex != -1)
         {
             if (1 == type && currentSlideIndex != CurrentSlide - 1)
@@ -100,7 +100,6 @@
                     TransitionHandler.SetToNavigateRightBySlide();
 
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
-                this.StateHasChanged();
             }
             else if (2 == type && currentSlideIndex != CurrentPage - 1)
             {
@@ -113,16 +112,18 @@
 
         }
 
-        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex == currentSlideIndex)
-            TransitionHandler.Reset();
-
         await base.OnAfterRenderAsync(firstRender);
     }
 
     async Task AddPageAsync()
     {
         await AddPage_EventCallback.InvokeAsync();
+        AmountOfPages++;
         CurrentPage = AmountOfPages;
+
+        // VS says setting these properties here are bad, but it is the only thing that works...
+        mudPaginationRef.Count = AmountOfPages;
+        mudPaginationRef.Selected = CurrentPage;
     }
 
     async Task RemovePageAsync()

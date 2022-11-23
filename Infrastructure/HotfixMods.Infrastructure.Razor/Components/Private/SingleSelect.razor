@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value">
+    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled">
         @foreach (var option in options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
@@ -46,6 +46,9 @@ else
 
     [Parameter]
     public bool Error { get; set; } = false;
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
 
     Dictionary<T, string>? options;
 

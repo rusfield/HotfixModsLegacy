@@ -8,7 +8,7 @@
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value.">
+    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled">
         <NoItemsTemplate>
             <MudList Clickable="true">
                 <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
@@ -47,6 +47,9 @@ else
 
     [Parameter]
     public bool Error { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
 
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;

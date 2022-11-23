@@ -25,7 +25,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Item Sparse">
-                <TabContentEditBody AmountOfPages="5" CurrentPage="currentItemSparsePage">
+                <TabContentEditBody AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
                     <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -35,7 +35,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Display Info">
-                <TabContentEditBody AmountOfPages="2" CurrentPage="currentItemDisplayInfoPage">
+                <TabContentEditBody AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
                     <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -99,5 +99,6 @@ else
             else
                 currentItemEffectInstance = Math.Max(1, page - 1);
         }
+        this.StateHasChanged();
     }
 }

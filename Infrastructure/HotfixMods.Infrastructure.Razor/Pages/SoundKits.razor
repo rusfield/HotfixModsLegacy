@@ -24,7 +24,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Entries">
-                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddInstance_EventCallback="AddEntry_Click" RemoveInstance_EventCallback="RemoveEntry_Click" CurrentInstance="currentEntryInstance">
+                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddInstance_EventCallback="AddEntry_Click" RemoveInstance_EventCallback="RemoveEntry_Click" @bind-CurrentInstance="currentEntryInstance">
                     @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
                     {
                         foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).SoundKitEntries.WithIndex())

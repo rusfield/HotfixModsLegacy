@@ -14,55 +14,95 @@ else
 {
     <TabContentEditHeader IsUpdate="false" Title="Items" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <ItemEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <ItemEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Item">
-                <TabContentEditBody>
-                    <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Item Sparse">
-                <TabContentEditBody AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
-                    <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item" Line2="Sparse" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
+                        <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Material Res">
-                <TabContentEditBody>
-                    <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfoMaterialRes" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item Display Info" Line2="Material Res" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfoMaterialRes" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Display Info">
-                <TabContentEditBody AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
-                    <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Display" Line2="Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
+                        <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Appearance">
-                <TabContentEditBody>
-                    <ItemAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemAppearance" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item" Line2="Appearance" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <ItemAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemAppearance" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Modified Appearance">
-                <TabContentEditBody>
-                    <ItemModifiedAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemMItemModifiedAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemMItemModifiedAppearance" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item Modified" Line2="Appearance" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <ItemModifiedAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemModifiedAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemModifiedAppearance" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Item Effects">
-                <TabContentEditBody AmountOfInstances="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddInstance_EventCallback="AddItemEffect_Click" RemoveInstance_EventCallback="RemoveItemEffect_Click" @bind-CurrentInstance="currentItemEffectInstance">
-                    @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
-                    {
-                        foreach ((var itemEffect, int index) in ((ItemDto?)PageTab.Dto).ItemEffects.WithIndex())
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Item" Line2="Effect" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfInstances="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddInstance_EventCallback="AddItemEffect_Click" RemoveInstance_EventCallback="RemoveItemEffect_Click" @bind-CurrentInstance="currentItemEffectInstance">
+                        @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
                         {
-                            <ItemEffect_Tab Value="itemEffect" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > index ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                            foreach ((var itemEffect, int index) in ((ItemDto?)PageTab.Dto).ItemEffects.WithIndex())
+                            {
+                                <ItemEffect_Tab Value="itemEffect" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > index ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                            }
                         }
-                    }
-                    else
-                    {
-                        <TabContentNoData />
-                    }
-                </TabContentEditBody>
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

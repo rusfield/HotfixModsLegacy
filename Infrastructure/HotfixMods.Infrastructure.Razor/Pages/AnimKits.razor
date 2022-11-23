@@ -13,30 +13,45 @@ else
 {
     <TabContentEditHeader IsUpdate="false" Title="Anim Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <AnimKitEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <AnimKitEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Anim Kit">
-                <TabContentEditBody>
-                    <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueCompare="((AnimKitDto?)PageTab.DtoCompare)?.AnimKit" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Anim" Line2="Kit" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <AnimKit_Tab Value="((AnimKitDto)PageTab.Dto).AnimKit" ValueCompare="((AnimKitDto?)PageTab.DtoCompare)?.AnimKit" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Segments">
-                <TabContentEditBody AmountOfInstances="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddInstance_EventCallback="AddSegment_Click" RemoveInstance_EventCallback="RemoveSegment_Click" @bind-CurrentInstance="currentSegmentInstance">
-                    @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
-                    {
-                        foreach ((var animKitSegment, int index) in ((AnimKitDto?)PageTab.Dto).AnimKitSegments.WithIndex())
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Anim Kit" Line2="Segment" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfInstances="((AnimKitDto?)PageTab.Dto).AnimKitSegments.Count" AddInstance_EventCallback="AddSegment_Click" RemoveInstance_EventCallback="RemoveSegment_Click" @bind-CurrentInstance="currentSegmentInstance">
+                        @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
                         {
-                            <AnimKitSegment_Tab Value="animKitSegment" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
+                            foreach ((var animKitSegment, int index) in ((AnimKitDto?)PageTab.Dto).AnimKitSegments.WithIndex())
+                            {
+                                <AnimKitSegment_Tab Value="animKitSegment" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
+                            }
                         }
-                    }
-                    else
-                    {
-                        <TabContentNoData />
-                    }
-                </TabContentEditBody>
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

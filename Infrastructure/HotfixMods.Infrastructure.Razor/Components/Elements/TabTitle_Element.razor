@@ -1,0 +1,18 @@
+﻿<MudStack Spacing="0" Style="height:100%;" Justify="Justify.SpaceBetween">
+    <MudText Class="custom-mud-tabs-title">
+        @Line1.ToUpper()
+    </MudText>
+    @if (!string.IsNullOrWhiteSpace(Line2))
+    {
+        <MudText Class="custom-mud-tabs-title">
+            @Line2.ToUpper()
+        </MudText>
+    }
+</MudStack>
+
+@code {
+    [Parameter]
+    public string Line1 { get; set; } = "";
+    [Parameter]
+    public string? Line2 { get; set; }
+}

@@ -1,5 +1,6 @@
 ﻿* {
     --mud-palette-action-default : white;
+    --custom-transition-time : 0.4s;
 }
 
 .custom-app-bar {
@@ -20,6 +21,19 @@
 
 .mud-tabs-toolbar {
     z-index: 40;
+}
+
+.custom-mud-tabs {
+    min-width:100px !important;
+    padding-left:20px !important;
+    padding-right:20px !important;
+}
+
+.custom-mud-tabs-title {
+    font-family: var(--mud-typography-default-family) !important;
+    font-weight: 500 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.08rem !important;
 }
 
 .mud-badge {
@@ -45,49 +59,49 @@
 }
 
 .transition-instance {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: backInUp;
     animation-fill-mode: forwards;
 }
 
 .transition-tab {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: backInDown;
     animation-fill-mode: forwards;
 }
 
 .transition-page-remove {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: bounceOut;
     animation-fill-mode: forwards;
 }
 
 .transition-fade {
-    animation-duration: 0.2s;
+    animation-duration: var(--custom-transition-time);
     animation-name: fadeOut;
     animation-fill-mode: forwards;
 }
 
 .transition-slide-enter-left {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: slideInLeft;
     animation-fill-mode: forwards;
 }
 
 .transition-slide-enter-right {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: slideInRight;
     animation-fill-mode: forwards;
 }
 
 .transition-slide-exit-left {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: slideOutLeft;
     animation-fill-mode: forwards;
 }
 
 .transition-slide-exit-right {
-    animation-duration: 0.5s;
+    animation-duration: var(--custom-transition-time);
     animation-name: slideOutRight;
     animation-fill-mode: forwards;
 }

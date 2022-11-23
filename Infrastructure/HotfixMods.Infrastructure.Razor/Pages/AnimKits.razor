@@ -51,7 +51,7 @@ else
     {
         if (PageTab.Dto != null)
         {
-            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Insert(0, new());
+            ((AnimKitDto)PageTab.Dto).AnimKitSegments.Add(new());
             this.StateHasChanged();
         }
     }

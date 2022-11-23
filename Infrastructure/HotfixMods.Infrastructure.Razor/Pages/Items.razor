@@ -25,7 +25,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Item Sparse">
-                <TabContentEditBody AmountOfSlides="5" CurrentSlide="currentItemSparseSlide" NavigateSlide_EventCallback="NavigateItemSparse_Click">
+                <TabContentEditBody AmountOfPages="5" CurrentPage="currentItemSparsePage">
                     <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -35,7 +35,7 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Display Info">
-                <TabContentEditBody AmountOfSlides="2" CurrentSlide="currentItemDisplayInfoSlide" NavigateSlide_EventCallback="NavigateItemDisplayInfo_Click">
+                <TabContentEditBody AmountOfPages="2" CurrentPage="currentItemDisplayInfoPage">
                     <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
                 </TabContentEditBody>
             </MudTabPanel>
@@ -50,10 +50,13 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Item Effects">
-                <TabContentEditBody AmountOfPages="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddPage_EventCallback="AddItemEffect_Click" RemovePage_EventCallback="RemoveItemEffect_Click" NavigatePage_EventCallback="NavigateEffectPage_Click" CurrentPage="currentItemEffectPage">
+                <TabContentEditBody AmountOfInstances="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddInstance_EventCallback="AddItemEffect_Click" RemoveInstance_EventCallback="RemoveItemEffect_Click" @bind-CurrentInstance="currentItemEffectInstance">
                     @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
                     {
-                        <ItemEffect_Tab Value="((ItemDto?)PageTab.Dto)?.ItemEffects[currentItemEffectPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > currentItemEffectPage - 1 ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[currentItemEffectPage - 1] : null)" />
+                        foreach ((var itemEffect, int index) in ((ItemDto?)PageTab.Dto).ItemEffects.WithIndex())
+                        {
+                            <ItemEffect_Tab Value="itemEffect" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > index ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                        }
                     }
                     else
                     {
@@ -66,41 +69,18 @@ else
 }
 
 @code {
-    int currentItemSparseSlide = 1;
-    int currentItemDisplayInfoSlide = 1;
+    int currentItemSparsePage = 1;
+    int currentItemDisplayInfoPage = 1;
 
-    int currentItemEffectPage = 1;
+    int currentItemEffectInstance = 1;
 
-    void AddTab_Click()
-    {
-        if (PageTab.Dto != null)
-            ((ItemDto)PageTab.Dto).ItemEffects.Add(new ItemEffect());
-    }
-
-    void RemoveTab_Click(int index)
-    {
-        if (PageTab.Dto != null)
-            ((ItemDto)PageTab.Dto).ItemEffects.RemoveAt(index);
-    }
-
-    void NavigateItemSparse_Click(int slide)
-    {
-        currentItemSparseSlide = slide;
-        this.StateHasChanged();
-    }
-
-    void NavigateItemDisplayInfo_Click(int slide)
-    {
-        currentItemDisplayInfoSlide = slide;
-        this.StateHasChanged();
-    }
 
     void AddItemEffect_Click()
     {
         if (PageTab.Dto != null)
         {
             ((ItemDto)PageTab.Dto).ItemEffects.Add(new());
-            currentItemEffectPage = ((ItemDto)PageTab.Dto).ItemEffects.Count;
+            currentItemEffectInstance = ((ItemDto)PageTab.Dto).ItemEffects.Count;
             this.StateHasChanged();
         }
     }
@@ -112,18 +92,12 @@ else
         else
             return;
 
-        if (currentItemEffectPage == page)
+        if (currentItemEffectInstance == page)
         {
             if (!((ItemDto?)PageTab.Dto).ItemEffects.Any())
-                currentItemEffectPage = 0;
+                currentItemEffectInstance = 0;
             else
-                currentItemEffectPage = Math.Max(1, page - 1);
+                currentItemEffectInstance = Math.Max(1, page - 1);
         }
-    }
-
-    void NavigateEffectPage_Click(int page)
-    {
-        currentItemEffectPage = page;
-        this.StateHasChanged();
     }
 }

@@ -6,7 +6,7 @@
 @inject GenericHotfixService Service
 @inject IDialogService DialogService
 
-@for (int i = 0; i <= slides; i++)
+@for (int i = 0; i <= AmountOfPages; i++)
 {
     int slide = i;
     <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
@@ -75,17 +75,8 @@
     [Parameter]
     public string Db2Name { get; set; }
 
-    [CascadingParameter]
-    TabContentEditBody? TabContentEditBody { get; set; }
-
-    int slides = 0;
-
-    protected override void OnInitialized()
-    {
-        slides = (int)Math.Floor(Value.Columns.Count / 24.0);
-        this.StateHasChanged();
-        base.OnInitialized();
-    }
+    [Parameter]
+    public int AmountOfPages { get; set; } = 0;
 
     async void NextIdAsync_Click()
     {

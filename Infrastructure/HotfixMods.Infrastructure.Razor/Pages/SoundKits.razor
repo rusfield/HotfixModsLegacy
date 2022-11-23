@@ -24,10 +24,13 @@ else
                 </TabContentEditBody>
             </MudTabPanel>
             <MudTabPanel Text="Entries">
-                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddPage_EventCallback="AddEntry_Click" RemovePage_EventCallback="RemoveEntry_Click" NavigatePage_EventCallback="NavigateEntryPage_Click" CurrentPage="currentEntryPage">
+                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddInstance_EventCallback="AddEntry_Click" RemoveInstance_EventCallback="RemoveEntry_Click" CurrentInstance="currentEntryInstance">
                     @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
                     {
-                        <SoundKitEntry_Tab Value="((SoundKitDto?)PageTab.Dto)?.SoundKitEntries[currentEntryPage - 1]" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > currentEntryPage - 1 ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[currentEntryPage - 1] : null)" />
+                        foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).SoundKitEntries.WithIndex())
+                        {
+                            <SoundKitEntry_Tab Value="entry" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > index ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
+                        }
                     }
                     else
                     {
@@ -40,14 +43,14 @@ else
 }
 
 @code {
-    int currentEntryPage = 1;
+    int currentEntryInstance = 1;
 
     void AddEntry_Click()
     {
         if (PageTab.Dto != null)
         {
             ((SoundKitDto)PageTab.Dto).SoundKitEntries.Add(new());
-            currentEntryPage = ((SoundKitDto)PageTab.Dto).SoundKitEntries.Count;
+            currentEntryInstance = ((SoundKitDto)PageTab.Dto).SoundKitEntries.Count;
             this.StateHasChanged();
         }
     }
@@ -59,18 +62,12 @@ else
         else
             return;
 
-        if (currentEntryPage == page)
+        if (currentEntryInstance == page)
         {
             if (!((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
-                currentEntryPage = 0;
+                currentEntryInstance = 0;
             else
-                currentEntryPage = Math.Max(1, page - 1);
+                currentEntryInstance = Math.Max(1, page - 1);
         }
-    }
-
-    void NavigateEntryPage_Click(int page)
-    {
-        currentEntryPage = page;
-        this.StateHasChanged();
     }
 }

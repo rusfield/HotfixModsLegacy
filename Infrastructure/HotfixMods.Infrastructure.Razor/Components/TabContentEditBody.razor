@@ -1,8 +1,8 @@
 ﻿<div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px; left:calc(100%)")">
-    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(async () => await NavigateSlide_EventCallback.InvokeAsync(CurrentSlide + 1))" Class="@("custom-slide-navigator" + (1 == type && CurrentSlide < AmountOfSlides ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(() => CurrentPage++)" Class="@("custom-slide-navigator" + (1 == type && CurrentPage < AmountOfPages ? "" : " invisible"))" />
 </div>
 <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
-    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(async () => await NavigateSlide_EventCallback.InvokeAsync(CurrentSlide - 1))" Class="@("custom-slide-navigator " + (1 == type && CurrentSlide > 1 ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(() => CurrentPage--)" Class="@("custom-slide-navigator " + (1 == type && CurrentPage > 1 ? "" : " invisible"))" />
 </div>
 <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
     <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;">
@@ -14,17 +14,17 @@
 
 
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
-    @if (AddPage_EventCallback.HasDelegate && RemovePage_EventCallback.HasDelegate)
+    @if (AddInstance_EventCallback.HasDelegate && RemoveInstance_EventCallback.HasDelegate)
     {
         <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
             <MudStack Row="true" Class="invisible" Spacing="0">
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" />
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" />
             </MudStack>
-            <MudPagination @ref="mudPaginationRef" Selected="CurrentPage" SelectedChanged="NavigatePage_EventCallback" Size="Size.Medium" Count="AmountOfPages" Color="Color.Info" Class="@(AmountOfPages > 0 ? "" : "invisible")" />
+            <MudPagination @ref="mudPaginationRef" @bind-Selected="CurrentInstance" Size="Size.Medium" Count="AmountOfInstances" Color="Color.Info" Class="@(AmountOfInstances > 0 ? "" : "invisible")" />
             <MudStack Row="true" Spacing="0">
-                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemovePageAsync())" Style="color:white;" Disabled="AmountOfPages <= 0" />
-                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddPageAsync())" Style="color:white;" />
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:white;" Disabled="AmountOfInstances <= 0" />
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:white;" />
             </MudStack>
         </MudStack>
     }
@@ -36,34 +36,28 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public int AmountOfSlides { get; set; } = 1;
-
-    [Parameter]
     public int AmountOfPages { get; set; } = 1;
 
     [Parameter]
-    public int CurrentSlide { get; set; } = -1; //rename to Page
+    public int AmountOfInstances { get; set; } = 1;
 
     [Parameter]
-    public int CurrentPage { get; set; } = -1; // rename to Instance
+    public int CurrentPage { get; set; } = -1;
 
     [Parameter]
-    public EventCallback<int> CurrentSlideChanged { get; set; }
+    public int CurrentInstance { get; set; } = -1;
 
     [Parameter]
     public EventCallback<int> CurrentPageChanged { get; set; }
 
     [Parameter]
-    public EventCallback<int> NavigatePage_EventCallback { get; set; }
+    public EventCallback<int> CurrentInstanceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<int> NavigateSlide_EventCallback { get; set; }
+    public EventCallback AddInstance_EventCallback { get; set; }
 
     [Parameter]
-    public EventCallback AddPage_EventCallback { get; set; }
-
-    [Parameter]
-    public EventCallback<int> RemovePage_EventCallback { get; set; }
+    public EventCallback<int> RemoveInstance_EventCallback { get; set; }
 
     int contentHeight = 650;
     MudCarousel<object>? mudCarouselRef;
@@ -75,9 +69,9 @@
 
     protected override void OnInitialized()
     {
-        if (CurrentSlide > -1)
+        if (CurrentPage > -1)
             type = 1;
-        else if (CurrentPage > -1)
+        else if (CurrentInstance > -1)
             type = 2;
         else
             type = 0;
@@ -87,12 +81,12 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex != -1)
+        if (mudCarouselRef != null)
         {
-            if (1 == type && currentSlideIndex != CurrentSlide - 1)
+            if (type == 1 && currentSlideIndex != CurrentPage - 1)
             {
-                slideLeft = currentSlideIndex < CurrentSlide - 1;
-                currentSlideIndex = CurrentSlide - 1;
+                slideLeft = currentSlideIndex < CurrentPage - 1;
+                currentSlideIndex = CurrentPage - 1;
 
                 if (slideLeft)
                     TransitionHandler.SetToNavigateLeftBySlide();
@@ -101,34 +95,30 @@
 
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
             }
-            else if (2 == type && currentSlideIndex != CurrentPage - 1)
+            else if (type == 2 && currentSlideIndex != CurrentInstance - 1)
             {
-                currentSlideIndex = CurrentPage - 1;
+                currentSlideIndex = CurrentInstance - 1;
 
                 TransitionHandler.SetToNavigateInstance();
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
-                this.StateHasChanged();
             }
-
+            else if(AmountOfPages == 0 || AmountOfInstances == 0)
+            {
+                await InvokeAsync(() => mudCarouselRef.MoveTo(0));
+            }
         }
 
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task AddPageAsync()
+    async Task AddInstanceAsync()
     {
-        await AddPage_EventCallback.InvokeAsync();
-        AmountOfPages++;
-        CurrentPage = AmountOfPages;
-
-        // VS says setting these properties here are bad, but it is the only thing that works...
-        mudPaginationRef.Count = AmountOfPages;
-        mudPaginationRef.Selected = CurrentPage;
+        await AddInstance_EventCallback.InvokeAsync();
     }
 
-    async Task RemovePageAsync()
+    async Task RemoveInstanceAsync()
     {
-        await RemovePage_EventCallback.InvokeAsync(CurrentPage);
+        await RemoveInstance_EventCallback.InvokeAsync(CurrentInstance);
     }
 
     string GetContentStyle()
@@ -136,12 +126,12 @@
         // Add elevation value 2
         var elevation = "box-shadow:var(--mud-elevation-2)";
 
-        if (1 == type && CurrentSlide < AmountOfSlides)
+        if (1 == type && CurrentPage < AmountOfPages)
             elevation += ",2px 0px 2px 1px var(--mud-palette-primary)";
         else
             elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
 
-        if (1 == type && CurrentSlide > 1)
+        if (1 == type && CurrentPage > 1)
             elevation += ",-2px 0px 2px 1px var(--mud-palette-primary)";
         else
             elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";

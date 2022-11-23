@@ -13,30 +13,45 @@ else
 {
     <TabContentEditHeader IsUpdate="false" Title="Sound Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SoundKitSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <SoundKitEntity_Tab Value="((SoundKitDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <SoundKitEntity_Tab Value="((SoundKitDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Sound Kit">
-                <TabContentEditBody>
-                    <SoundKit_Tab Value="((SoundKitDto)PageTab.Dto).SoundKit" ValueCompare="((SoundKitDto?)PageTab.DtoCompare)?.SoundKit" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Sound" Line2="Kit" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <SoundKit_Tab Value="((SoundKitDto)PageTab.Dto).SoundKit" ValueCompare="((SoundKitDto?)PageTab.DtoCompare)?.SoundKit" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Entries">
-                <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddInstance_EventCallback="AddEntry_Click" RemoveInstance_EventCallback="RemoveEntry_Click" @bind-CurrentInstance="currentEntryInstance">
-                    @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
-                    {
-                        foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).SoundKitEntries.WithIndex())
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Sound" Line2="Kit" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" AddInstance_EventCallback="AddEntry_Click" RemoveInstance_EventCallback="RemoveEntry_Click" @bind-CurrentInstance="currentEntryInstance">
+                        @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
                         {
-                            <SoundKitEntry_Tab Value="entry" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > index ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
+                            foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).SoundKitEntries.WithIndex())
+                            {
+                                <SoundKitEntry_Tab Value="entry" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > index ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
+                            }
                         }
-                    }
-                    else
-                    {
-                        <TabContentNoData />
-                    }
-                </TabContentEditBody>
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

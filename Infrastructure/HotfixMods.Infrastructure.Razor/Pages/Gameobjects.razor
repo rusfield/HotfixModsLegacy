@@ -11,27 +11,47 @@
 }
 else
 {
-        <TabContentEditHeader IsUpdate="false" Title="Game Objects" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<GameobjectSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Game Objects" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<GameobjectSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <GameobjectEntity_Tab Value="((GameobjectDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <GameobjectEntity_Tab Value="((GameobjectDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Template">
-                <TabContentEditBody>
-                    <GameobjectTemplate_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplate" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplate" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Game Object" Line2="Template" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <GameobjectTemplate_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplate" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplate" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Template Addon">
-                <TabContentEditBody>
-                    <GameobjectTemplateAddon_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplateAddon" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplateAddon" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Game Object" Line2="Template Addon" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <GameobjectTemplateAddon_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectTemplateAddon" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectTemplateAddon" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Display Info">
-                <TabContentEditBody>
-                    <GameobjectDisplayInfo_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectDisplayInfo" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectDisplayInfo" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Game Object" Line2="Display Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <GameobjectDisplayInfo_Tab Value="((GameobjectDto)PageTab.Dto).GameobjectDisplayInfo" ValueCompare="((GameobjectDto?)PageTab.DtoCompare)?.GameobjectDisplayInfo" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

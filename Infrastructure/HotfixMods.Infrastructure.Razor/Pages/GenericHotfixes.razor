@@ -15,10 +15,15 @@ else
 {
     <TabContentEditHeader Title="Generic Hotfixes" IsUpdate="false" ValueCompare_Callback="@(ValueCompareAsync)">
         <ChildContent>
-            <MudTabPanel Text="@PageTab.TabName">
-                <TabContentEditBody AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" @bind-CurrentPage="currentPage">
-                    <DbRow_Tab Value="(DbRow)PageTab.Dto" AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="@PageTab.TabName" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" @bind-CurrentPage="currentPage">
+                        <DbRow_Tab Value="(DbRow)PageTab.Dto" AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

@@ -13,10 +13,15 @@ else
 {
     <TabContentEditHeader IsUpdate="false" Title="Spells" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <CreatureEntity_Tab Value="((SpellDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureEntity_Tab Value="((SpellDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

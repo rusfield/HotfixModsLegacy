@@ -13,30 +13,55 @@ else
 {
     <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())">
         <ChildContent>
-            <MudTabPanel Text="Entity">
-                <TabContentEditBody>
-                    <CreatureEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Template">
-                <TabContentEditBody>
-                    <CreatureTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplate" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Template" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplate" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Template Addon">
-                <TabContentEditBody>
-                    <CreatureTemplateAddon_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplateAddon" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Template Addon" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureTemplateAddon_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplateAddon" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Model Info">
-                <TabContentEditBody>
-                    <CreatureModelInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureModelInfo" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Model Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureModelInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureModelInfo" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
-            <MudTabPanel Text="Equip Template">
-                <TabContentEditBody>
-                    <CreatureEquipTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureEquipTemplate" />
-                </TabContentEditBody>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Equip Template" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody>
+                        <CreatureEquipTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureEquipTemplate" />
+                    </TabContentEditBody>
+                </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>

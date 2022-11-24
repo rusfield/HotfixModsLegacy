@@ -23,8 +23,8 @@
             </MudStack>
             <MudPagination @ref="mudPaginationRef" @bind-Selected="CurrentInstance" Size="Size.Medium" Count="AmountOfInstances" Color="Color.Info" Class="@(AmountOfInstances > 0 ? "" : "invisible")" />
             <MudStack Row="true" Spacing="0">
-                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:white;" Disabled="AmountOfInstances <= 0" />
-                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:white;" />
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="AmountOfInstances <= 0" />
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" />
             </MudStack>
         </MudStack>
     }
@@ -58,6 +58,9 @@
 
     [Parameter]
     public EventCallback<int> RemoveInstance_EventCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<(int, int)> MoveInstance_EventCallback { get; set; }
 
     [Parameter]
     public EventCallback<int> NavigatePage_EventCallback { get; set;  }
@@ -132,6 +135,11 @@
     async Task RemoveInstanceAsync()
     {
         await RemoveInstance_EventCallback.InvokeAsync(CurrentInstance);
+    }
+
+    async Task MoveInstanceAsync(int oldIndex, int newIndex)
+    {
+        await MoveInstance_EventCallback.InvokeAsync((oldIndex, newIndex));
     }
 
     async Task NavigateAsync(int navigate)

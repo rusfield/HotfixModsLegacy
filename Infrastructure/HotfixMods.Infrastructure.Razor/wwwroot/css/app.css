@@ -1,6 +1,6 @@
 ﻿* {
-    --mud-palette-action-default : white;
-    --custom-transition-time : 0.4s;
+    --mud-palette-action-default: var(--mud-palette-text-primary);
+    --custom-transition-time: 0.4s;
 }
 
 .custom-app-bar {
@@ -104,4 +104,12 @@
     animation-duration: var(--custom-transition-time);
     animation-name: slideOutRight;
     animation-fill-mode: forwards;
+}
+
+.adornment-clickable > * .mud-input-adornment {
+    pointer-events: initial !important;
+}
+
+.adornment-clickable > * svg {
+    color: var(--mud-palette-text-primary) !important
 }

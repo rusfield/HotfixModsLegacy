@@ -20,7 +20,7 @@ else
                     <TabTitle_Element Line1="@PageTab.TabName" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" @bind-CurrentPage="currentPage">
+                    <TabContentEditBody T="object" AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" @bind-CurrentPage="currentPage">
                         <DbRow_Tab Value="(DbRow)PageTab.Dto" AmountOfPages="@((int)Math.Ceiling(((DbRow)PageTab.Dto).Columns.Count / 24.0))" ValueCompare="(DbRow)PageTab.DtoCompare" Db2Name="@db2Name" />
                     </TabContentEditBody>
                 </ChildContent>

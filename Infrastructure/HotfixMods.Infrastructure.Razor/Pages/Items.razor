@@ -19,7 +19,7 @@ else
                     <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody>
+                    <TabContentEditBody T="object">
                         <ItemEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -29,7 +29,7 @@ else
                     <TabTitle_Element Line1="Item" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody>
+                    <TabContentEditBody T="object">
                         <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -39,7 +39,7 @@ else
                     <TabTitle_Element Line1="Item" Line2="Sparse" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
+                    <TabContentEditBody T="object" AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
                         <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -49,7 +49,7 @@ else
                     <TabTitle_Element Line1="Item Display Info" Line2="Material Res" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody>
+                    <TabContentEditBody T="object">
                         <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfoMaterialRes" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -59,7 +59,7 @@ else
                     <TabTitle_Element Line1="Display" Line2="Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
+                    <TabContentEditBody T="object" AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
                         <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -69,7 +69,7 @@ else
                     <TabTitle_Element Line1="Item" Line2="Appearance" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody>
+                    <TabContentEditBody T="object">
                         <ItemAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemAppearance" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -79,7 +79,7 @@ else
                     <TabTitle_Element Line1="Item Modified" Line2="Appearance" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody>
+                    <TabContentEditBody T="object">
                         <ItemModifiedAppearance_Tab Value="((ItemDto)PageTab.Dto).ItemModifiedAppearance" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemModifiedAppearance" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -89,7 +89,7 @@ else
                     <TabTitle_Element Line1="Item" Line2="Effect" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody AmountOfInstances="((ItemDto?)PageTab.Dto).ItemEffects.Count" AddInstance_EventCallback="AddItemEffect_Click" RemoveInstance_EventCallback="RemoveItemEffect_Click" @bind-CurrentInstance="currentItemEffectInstance">
+                    <TabContentEditBody T="ItemEffect" Instances="((ItemDto?)PageTab.Dto).ItemEffects" @bind-CurrentInstance="currentItemEffectInstance">
                         @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
                         {
                             foreach ((var itemEffect, int index) in ((ItemDto?)PageTab.Dto).ItemEffects.WithIndex())
@@ -113,32 +113,4 @@ else
     int currentItemDisplayInfoPage = 1;
 
     int currentItemEffectInstance = 1;
-
-
-    void AddItemEffect_Click()
-    {
-        if (PageTab.Dto != null)
-        {
-            ((ItemDto)PageTab.Dto).ItemEffects.Add(new());
-            currentItemEffectInstance = ((ItemDto)PageTab.Dto).ItemEffects.Count;
-            this.StateHasChanged();
-        }
-    }
-
-    void RemoveItemEffect_Click(int page)
-    {
-        if (PageTab.Dto != null && ((ItemDto)PageTab.Dto).ItemEffects.Count >= page)
-            ((ItemDto)PageTab.Dto).ItemEffects.RemoveAt(page - 1);
-        else
-            return;
-
-        if (currentItemEffectInstance == page)
-        {
-            if (!((ItemDto?)PageTab.Dto).ItemEffects.Any())
-                currentItemEffectInstance = 0;
-            else
-                currentItemEffectInstance = Math.Max(1, page - 1);
-        }
-        this.StateHasChanged();
-    }
 }

@@ -1,10 +1,10 @@
 ﻿@typeparam T where T : new()
 
 <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px; left:calc(100%)")">
-    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(async () => await NavigatePageAsync(1))" Class="@("custom-slide-navigator" + (1 == type && CurrentPage < AmountOfPages ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" OnClick="@(async () => await NavigatePageAsync(CurrentPage + 1))" Class="@("custom-slide-navigator" + (1 == type && CurrentPage < AmountOfPages ? "" : " invisible"))" />
 </div>
 <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
-    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(async () => await NavigatePageAsync(-1))" Class="@("custom-slide-navigator " + (1 == type && CurrentPage > 1 ? "" : " invisible"))" />
+    <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" OnClick="@(async () => await NavigatePageAsync(CurrentPage - 1))" Class="@("custom-slide-navigator " + (1 == type && CurrentPage > 1 ? "" : " invisible"))" />
 </div>
 <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
     <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;" @bind-SelectedIndex="currentSlideIndex">
@@ -25,8 +25,10 @@
             </MudStack>
             <MudPagination @ref="mudPaginationRef" Selected="CurrentInstance" Size="Size.Medium" Count="Instances.Count" Color="Color.Info" Class="@(Instances.Count > 0 ? "" : "invisible")" SelectedChanged="NavigateInstanceAsync" />
             <MudStack Row="true" Spacing="0">
+                <MudIconButton Icon="@Icons.Filled.MoveDown" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance - 2))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == 1)" />
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="Instances.Count <= 0" />
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" />
+                <MudIconButton Icon="@Icons.Filled.MoveUp" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == Instances.Count)" />
             </MudStack>
         </MudStack>
     }
@@ -55,7 +57,7 @@
     public EventCallback<int> CurrentInstanceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<int> NavigatePage_EventCallback { get; set;  }
+    public EventCallback<int> NavigatePage_EventCallback { get; set; }
 
     [Parameter]
     public List<T> Instances { get; set; }
@@ -66,6 +68,7 @@
     int currentSlideIndex = 0;
     int type = 0; // 0 is normal, 1 is Page Navigation, 2 is Instance Navigation
     bool slideLeft = true;
+    bool moveInstance = false;
 
 
     protected override void OnInitialized()
@@ -93,7 +96,20 @@
     {
         if (mudCarouselRef != null)
         {
-            if (type == 1 && currentSlideIndex != CurrentPage - 1)
+            if (moveInstance)
+            {
+                moveInstance = false;
+                slideLeft = currentSlideIndex < CurrentInstance - 1;
+                currentSlideIndex = CurrentInstance - 1;
+
+                if (slideLeft)
+                    TransitionHandler.SetToNavigateLeftBySlide();
+                else
+                    TransitionHandler.SetToNavigateRightBySlide();
+
+                await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
+            }
+            else if (type == 1 && currentSlideIndex != CurrentPage - 1)
             {
                 slideLeft = currentSlideIndex < CurrentPage - 1;
                 currentSlideIndex = CurrentPage - 1;
@@ -112,7 +128,7 @@
                 TransitionHandler.SetToNavigateInstance();
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
             }
-            else if(AmountOfPages == 0 && Instances == null)
+            else if (AmountOfPages == 0 && Instances == null)
             {
                 TransitionHandler.SetToNavigateTab();
                 await InvokeAsync(() => mudCarouselRef.MoveTo(0));
@@ -132,33 +148,33 @@
 
     async Task RemoveInstanceAsync()
     {
-        if(Instances.Count >= CurrentInstance)
+        if (Instances.Count >= CurrentInstance)
         {
             Instances.RemoveAt(CurrentInstance - 1);
             CurrentInstance = Math.Max(0, CurrentInstance - 1);
             TransitionHandler.SetToNavigateInstance();
             await InvokeAsync(() => mudPaginationRef?.NavigateTo(CurrentInstance));
             currentSlideIndex = -1; // to force a refresh incase index does not change
-        }   
+        }
     }
 
-    /*
     async Task MoveInstanceAsync(int oldIndex, int newIndex)
-        {
+    {
+        if(oldIndex == newIndex) // TODO: Add index null check
+            return;
+
         var item = Instances[oldIndex];
         Instances.RemoveAt(oldIndex);
-
-        // the actual index could have shifted due to the removal
-        if (newIndex > oldIndex)
-        newIndex--;
-
         Instances.Insert(newIndex, item);
-    }
-    */
 
-    async Task NavigatePageAsync(int navigate)
+        moveInstance = true;
+        CurrentInstance = newIndex + 1;
+        await CurrentInstanceChanged.InvokeAsync(CurrentInstance);
+    }
+
+    async Task NavigatePageAsync(int page)
     {
-        CurrentPage += navigate;
+        CurrentPage = page;
         await CurrentPageChanged.InvokeAsync(CurrentPage);
     }
 

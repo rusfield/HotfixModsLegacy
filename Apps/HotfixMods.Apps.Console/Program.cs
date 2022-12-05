@@ -17,7 +17,7 @@ Console.ReadKey();
 */
 
 
-/*
+
 var dt = new DbDefinitionTool();
 string build = "10.0.2.46157";
 while (true)
@@ -35,7 +35,6 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
 
 
 
@@ -43,10 +42,11 @@ while (true)
 
 
 
+/*
 var importTool = new Db2ImportTool();
 await importTool.Db2FileToDb2MySql("10.0.2.46157", "C:\\Users\\Disconnected\\Downloads", "spellmisc", "hotfix_mods", "spell_misc", "localhost", "3306", "root", "root");
 Console.WriteLine("Done");
-
+*/
 
 
 

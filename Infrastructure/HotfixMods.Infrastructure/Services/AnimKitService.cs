@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto()
             {
                 AnimKit = animKit,
-                AnimKitSegments = (await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id))).ToList(),
+                SegmentGroups = new(),
                 Entity = await GetHotfixModsEntity(animKit.Id)
             };
         }
@@ -41,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task SaveAsync(AnimKitDto animKitDto)
         {
             await SaveAsync(animKitDto.AnimKit);
-            await SaveAsync(animKitDto.AnimKitSegments.ToArray());
+            // TODO: Segment Groups
             await SaveAsync(animKitDto.Entity);
         }
 

@@ -1,7 +1,5 @@
 ﻿@typeparam T where T : struct, Enum
 
-@using HotfixMods.Infrastructure.Extensions
-
 <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowBack" Color="@Color.Info" OnClick="@(() => SetValueAsync(((T)ValueCompare).ToValues()))" Visible="@(GetBadgeVisibility())" Style="width:100%" Class="@("cursor-pointer")">
     <MudSelect T="T" @bind-Value="internalValue" SelectedValuesChanged="SetValueAsync" SelectedValues="@selectedValues" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))" Label="@Label" AnchorOrigin="Origin.BottomCenter" Variant="@Variant" MultiSelection="true">
         @foreach (var item in options)

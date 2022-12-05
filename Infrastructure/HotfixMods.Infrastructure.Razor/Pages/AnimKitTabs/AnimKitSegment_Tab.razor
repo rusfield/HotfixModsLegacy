@@ -1,5 +1,5 @@
 ﻿@using HotfixMods.Core.Enums.Db2;
-@using HotfixMods.Infrastructure.Extensions
+
 @using HotfixMods.Infrastructure.InfoModels
 
 @inherits HotfixPageTabBase<AnimKitSegment>
@@ -7,7 +7,7 @@
 <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
-            <Input_Element T="byte" Value="Value.OrderIndex" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" Disabled="true" />
+            <Input_Element T="byte" Value="@((byte)OrderIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" Disabled="true" />
             <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" />
             <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnValueLookupClick="@(OpenLookupDialog("AnimKitConfig", Value.AnimKitConfigId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimKitConfigId))" />
             <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" />
@@ -54,8 +54,8 @@
 @code {
 
 
-    [CascadingParameter]
-    public AnimKits AnimKitPage { get; set; }
+    [Parameter]
+    public int OrderIndex { get; set; }
 
     async Task<Dictionary<ushort, string>> GetAnimations()
     {

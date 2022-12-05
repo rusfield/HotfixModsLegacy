@@ -1,0 +1,10 @@
+﻿@inherits HotfixPageTabBase<AnimKitConfig>
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" />
+        </MudItem>
+        <MudItem xs="9" />
+    </MudGrid>
+</MudCarouselItem>

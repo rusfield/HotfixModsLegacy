@@ -38,12 +38,52 @@ else
                     <TabTitle_Element Line1="Anim Kit" Line2="Segment" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="AnimKitSegment" Instances="((AnimKitDto?)PageTab.Dto)?.AnimKitSegments" @bind-CurrentInstance="currentSegmentInstance">
-                        @if (((AnimKitDto?)PageTab.Dto).AnimKitSegments.Any())
+                    <TabContentEditBody T="AnimKitDto.SegmentGroup" Instances="((AnimKitDto?)PageTab.Dto)?.SegmentGroups" @bind-CurrentInstance="currentSegmentInstance">
+                        @if (((AnimKitDto?)PageTab.Dto).SegmentGroups.Any())
                         {
-                            foreach ((var animKitSegment, int index) in ((AnimKitDto?)PageTab.Dto).AnimKitSegments.WithIndex())
+                            foreach ((var segment, int index) in ((AnimKitDto?)PageTab.Dto).SegmentGroups.WithIndex())
                             {
-                                <AnimKitSegment_Tab Value="animKitSegment" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.AnimKitSegments[index] : null)" />
+                                <AnimKitSegment_Tab OrderIndex="index" Value="segment.AnimKitSegment" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups[index].AnimKitSegment : null)" />
+                            }
+                        }
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Anim Kit" Line2="Config" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="AnimKitDto.SegmentGroup" Instances="((AnimKitDto?)PageTab.Dto)?.SegmentGroups" @bind-CurrentInstance="currentSegmentInstance">
+                        @if (((AnimKitDto?)PageTab.Dto).SegmentGroups.Any())
+                        {
+                            foreach ((var segment, int index) in ((AnimKitDto?)PageTab.Dto).SegmentGroups.WithIndex())
+                            {
+                                <AnimKitConfig_Tab Value="segment.AnimKitConfig" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups[index].AnimKitConfig : null)" />
+                            }
+                        }
+                        else
+                        {
+                            <TabContentNoData />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Anim Kit" Line2="Config Bone Set" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="AnimKitDto.SegmentGroup" Instances="((AnimKitDto?)PageTab.Dto)?.SegmentGroups" @bind-CurrentInstance="currentSegmentInstance">
+                        @if (((AnimKitDto?)PageTab.Dto).SegmentGroups.Any())
+                        {
+                            foreach ((var segment, int index) in ((AnimKitDto?)PageTab.Dto).SegmentGroups.WithIndex())
+                            {
+                                <AnimKitConfigBoneSet_Tab Value="segment.AnimKitConfigBoneSet" ValueCompare="@(PageTab.DtoCompare != null && ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups.Count > index ? ((AnimKitDto?)PageTab.DtoCompare)?.SegmentGroups[index].AnimKitConfigBoneSet : null)" />
                             }
                         }
                         else

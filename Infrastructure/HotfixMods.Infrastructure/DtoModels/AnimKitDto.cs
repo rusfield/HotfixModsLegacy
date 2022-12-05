@@ -1,5 +1,4 @@
 ﻿using HotfixMods.Core.Models.Db2;
-using HotfixMods.Core.Models.TrinityCore;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
@@ -8,6 +7,13 @@ namespace HotfixMods.Infrastructure.DtoModels
         public AnimKitDto() : base(nameof(AnimKit)) { }
 
         public AnimKit AnimKit { get; set; } = new();
-        public List<AnimKitSegment> AnimKitSegments { get; set; } = new List<AnimKitSegment>();
+        public List<SegmentGroup> SegmentGroups { get; set; } = new();
+
+        public class SegmentGroup
+        {
+            public AnimKitSegment AnimKitSegment { get; set; } = new();
+            public AnimKitConfig AnimKitConfig { get; set; } = new();
+            public AnimKitConfigBoneSet AnimKitConfigBoneSet { get; set; } = new();
+        }
     }
 }

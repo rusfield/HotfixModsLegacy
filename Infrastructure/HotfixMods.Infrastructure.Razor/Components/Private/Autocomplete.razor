@@ -8,7 +8,7 @@
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable">
+    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" OnBlur="@(() => firstFocus = true)" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable">
         <NoItemsTemplate>
             <MudList Clickable="true">
                 <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
@@ -54,6 +54,7 @@ else
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;
     Dictionary<T, string>? options;
+    bool firstFocus = true;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -75,15 +76,15 @@ else
         {
             Value = (T)Convert.ChangeType(sbyteValue, typeof(sbyte));
         }
-        if ("System.Byte" == type && byte.TryParse(value, out var byteValue))
+        else if ("System.Byte" == type && byte.TryParse(value, out var byteValue))
         {
             Value = (T)Convert.ChangeType(byteValue, typeof(byte));
         }
-        if ("System.Int16" == type && short.TryParse(value, out var shortValue))
+        else if ("System.Int16" == type && short.TryParse(value, out var shortValue))
         {
             Value = (T)Convert.ChangeType(shortValue, typeof(short));
         }
-        if ("System.UInt16" == type && ushort.TryParse(value, out var ushortValue))
+        else if ("System.UInt16" == type && ushort.TryParse(value, out var ushortValue))
         {
             Value = (T)Convert.ChangeType(ushortValue, typeof(ushort));
         }
@@ -123,8 +124,12 @@ else
     {
         SetError(false);
 
-        if (string.IsNullOrEmpty(value))
+        if (string.IsNullOrEmpty(value) || firstFocus)
+        {
+            firstFocus = false;
             return options.Select(o => o.Value);
+        }
+        
 
         var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
         if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))

@@ -32,7 +32,7 @@ namespace HotfixMods.Infrastructure.Services
             return new SoundKitDto()
             {
                 SoundKit = soundKit,
-                SoundKitEntries = (await GetAsync<SoundKitEntry>(new DbParameter(nameof(SoundKitEntry.SoundKitId), id))).ToList(),
+                EntryGroups = new(),
                 Entity = await GetHotfixModsEntity(soundKit.Id)
             };
         }
@@ -40,7 +40,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task SaveAsync(SoundKitDto soundKitDto)
         {
             await SaveAsync(soundKitDto.SoundKit);
-            await SaveAsync(soundKitDto.SoundKitEntries.ToArray());
+            //await SaveAsync(soundKitDto.SoundKitEntries.ToArray()); // TODO: Fix
             await SaveAsync(soundKitDto.Entity);
         }
 

@@ -28,27 +28,17 @@ else
                     <TabTitle_Element Line1="Sound" Line2="Kit" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <SoundKit_Tab Value="((SoundKitDto)PageTab.Dto).SoundKit" ValueCompare="((SoundKitDto?)PageTab.DtoCompare)?.SoundKit" />
-                    </TabContentEditBody>
-                </ChildContent>
-            </MudTabPanel>
-            <MudTabPanel Class="custom-mud-tabs">
-                <TabContent>
-                    <TabTitle_Element Line1="Sound" Line2="Kit" />
-                </TabContent>
-                <ChildContent>
-                    <TabContentEditBody T="SoundKitEntry" Instances="((SoundKitDto?)PageTab.Dto).SoundKitEntries" AmountOfPages="((SoundKitDto?)PageTab.Dto).SoundKitEntries.Count" @bind-CurrentInstance="currentEntryInstance">
-                        @if (((SoundKitDto?)PageTab.Dto).SoundKitEntries.Any())
+                    <TabContentEditBody T="SoundKitDto.EntryGroup" Instances="((SoundKitDto?)PageTab.Dto).EntryGroups" AmountOfPages="((SoundKitDto?)PageTab.Dto).EntryGroups.Count" @bind-CurrentInstance="currentEntryInstance">
+                        @if (((SoundKitDto?)PageTab.Dto).EntryGroups.Any())
                         {
-                            foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).SoundKitEntries.WithIndex())
+                            foreach ((var entry, int index) in ((SoundKitDto?)PageTab.Dto).EntryGroups.WithIndex())
                             {
-                                <SoundKitEntry_Tab Value="entry" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries.Count > index ? ((SoundKitDto?)PageTab.DtoCompare)?.SoundKitEntries[index] : null)" />
+                                <SoundKitEntry_Tab Value="entry.SoundKitEntry" ValueCompare="@(PageTab.DtoCompare != null && ((SoundKitDto?)PageTab.DtoCompare)?.EntryGroups.Count > index ? ((SoundKitDto?)PageTab.DtoCompare)?.EntryGroups[index].SoundKitEntry : null)" />
                             }
                         }
                         else
                         {
-                            <TabContentNoData />
+                            <TabContentNoData Text="There are no Sound Kit Entries yet." />
                         }
                     </TabContentEditBody>
                 </ChildContent>

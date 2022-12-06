@@ -7,6 +7,11 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SoundKitDto() : base(nameof(SoundKit)) { }
 
         public SoundKit SoundKit { get; set; } = new();
-        public List<SoundKitEntry> SoundKitEntries { get; set; } = new();
+        public List<EntryGroup> EntryGroups { get; set; } = new();
+
+        public class EntryGroup
+        {
+            public SoundKitEntry SoundKitEntry { get; set; } = new();
+        }
     }
 }

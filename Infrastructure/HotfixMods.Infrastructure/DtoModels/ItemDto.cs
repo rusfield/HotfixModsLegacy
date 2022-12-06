@@ -14,7 +14,12 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemSearchName ItemSearchName { get; set; } = new();
         public ItemSparse ItemSparse { get; set; } = new();
         public List<ItemDisplayInfoMaterialRes> ItemDisplayInfoMaterialRes { get; set; } = new();
-        public List<ItemEffect> ItemEffects { get; set; } = new();
-        public List<ItemXItemEffect> ItemXIteItems { get; set; } = new();
+        public List<EffectGroup> EffectGroups { get; set; } = new();
+
+        public class EffectGroup
+        {
+            public ItemEffect ItemEffect { get; set; } = new();
+            public ItemXItemEffect ItemXItemEffect { get; set; } = new();
+        }
     }
 }

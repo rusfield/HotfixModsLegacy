@@ -1,5 +1,4 @@
-﻿;
-@inherits HotfixPageTabBase<CreatureModelInfo>
+﻿@inherits HotfixPageTabBase<CreatureModelInfo>
 @inject CreatureService Service
 @inject IDialogService DialogService
 
@@ -8,7 +7,7 @@
         <MudItem xs="3" />
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
-            <InlineGroup>
+            <InlineGroup Merged="false">
                 <LeftContent>
                     <Input_Element T="decimal" @bind-Value="Value.BoundingRadius" ValueCompare="ValueCompare?.BoundingRadius" Label="@nameof(Value.BoundingRadius).ToDisplayName()" />
                 </LeftContent>

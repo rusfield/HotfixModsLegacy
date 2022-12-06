@@ -89,17 +89,17 @@ else
                     <TabTitle_Element Line1="Item" Line2="Effect" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="ItemEffect" Instances="((ItemDto?)PageTab.Dto).ItemEffects" @bind-CurrentInstance="currentItemEffectInstance">
-                        @if (((ItemDto?)PageTab.Dto).ItemEffects.Any())
+                    <TabContentEditBody T="ItemDto.EffectGroup" Instances="((ItemDto?)PageTab.Dto).EffectGroups" @bind-CurrentInstance="currentEffectInstance">
+                        @if (((ItemDto?)PageTab.Dto).EffectGroups.Any())
                         {
-                            foreach ((var itemEffect, int index) in ((ItemDto?)PageTab.Dto).ItemEffects.WithIndex())
+                            foreach ((var effect, int index) in ((ItemDto?)PageTab.Dto).EffectGroups.WithIndex())
                             {
-                                <ItemEffect_Tab Value="itemEffect" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.ItemEffects.Count > index ? ((ItemDto?)PageTab.DtoCompare)?.ItemEffects[index] : null)" />
+                                <ItemEffect_Tab Value="effect.ItemEffect" ValueCompare="@(PageTab.DtoCompare != null && ((ItemDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((ItemDto?)PageTab.DtoCompare)?.EffectGroups[index].ItemEffect : null)" />
                             }
                         }
                         else
                         {
-                            <TabContentNoData />
+                            <TabContentNoData Text="There are no Item Effects yet." />
                         }
                     </TabContentEditBody>
                 </ChildContent>
@@ -112,5 +112,5 @@ else
     int currentItemSparsePage = 1;
     int currentItemDisplayInfoPage = 1;
 
-    int currentItemEffectInstance = 1;
+    int currentEffectInstance = 1;
 }

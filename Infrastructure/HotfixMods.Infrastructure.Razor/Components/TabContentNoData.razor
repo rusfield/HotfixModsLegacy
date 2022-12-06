@@ -1,15 +1,15 @@
 ﻿@if (IncludeCarousel)
 {
     <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
-        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Style="height:100%;width:100%;">
-            <MudText>There are no data yet.</MudText>
+        <MudStack Justify="justify" AlignItems="alignItems" Style="height:100%;width:100%;">
+            <MudText>@Text</MudText>
         </MudStack>
     </MudCarouselItem>
 }
 else
 {
-    <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Style="height:100%;width:100%;">
-        <MudText>There are no data yet.</MudText>
+    <MudStack Justify="justify" AlignItems="alignItems" Style="height:100%;width:100%;">
+        <MudText>@Text</MudText>
     </MudStack>
 }
 
@@ -17,5 +17,11 @@ else
 
     [Parameter]
     public bool IncludeCarousel { get; set; } = true;
+
+    [Parameter]
+    public string Text { get; set; } = "There are no data yet.";
+
+    Justify justify = Justify.Center;
+    AlignItems alignItems = AlignItems.Center;
 
 }

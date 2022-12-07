@@ -12,11 +12,19 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellMisc SpellMisc { get; set; } = new();
         public SpellName SpellName { get; set; } = new();
         public SpellPower SpellPower { get; set; } = new();
-        public List<SpellEffect> SpellEffects { get; set; } = new();
-        public List<SpellXSpellVisual> SpellXSpellVisuals { get; set; } = new();
+        public List<EffectGroup> EffectGroups { get; set; } = new();
+        public List<VisualGroup> VisualGroups { get; set; } = new();
 
-        // These will be separate
-        // public SpellVisual SpellVisual { get; set; } = new();
-        // public SpellVisualEvent SpellVisualEvent { get; set; } = new();
+        public class EffectGroup
+        {
+            public SpellEffect SpellEffect { get; set; } = new();
+        }
+
+        public class VisualGroup
+        {
+            public SpellXSpellVisual SpellXSpellVisual { get; set; } = new();
+            public SpellVisual SpellVisual { get; set; } = new();
+            public SpellVisualEvent SpellVisualEvent { get; set; } = new();
+        }
     }
 }

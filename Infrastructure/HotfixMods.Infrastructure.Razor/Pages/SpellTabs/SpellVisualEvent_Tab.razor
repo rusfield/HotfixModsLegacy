@@ -1,0 +1,31 @@
+﻿@inherits HotfixPageTabBase<SpellVisualEvent>
+@inject SpellService Service
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.StartEvent" ValueCompare="ValueCompare?.StartEvent" Label="@nameof(Value.StartEvent).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.EndEvent" ValueCompare="ValueCompare?.EndEvent" Label="@nameof(Value.EndEvent).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_008" ValueCompare="ValueCompare?.Field_10_0_0_44649_008" Label="@nameof(Value.Field_10_0_0_44649_008).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_009" ValueCompare="ValueCompare?.Field_10_0_0_44649_009" Label="@nameof(Value.Field_10_0_0_44649_009).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.TargetType" ValueCompare="ValueCompare?.TargetType" Label="@nameof(Value.TargetType).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.SpellVisualKitId" ValueCompare="ValueCompare?.SpellVisualKitId" Label="@nameof(Value.SpellVisualKitId).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.StartMinOffsetMs" ValueCompare="ValueCompare?.StartMinOffsetMs" Label="@nameof(Value.StartMinOffsetMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.StartMaxOffsetMs" ValueCompare="ValueCompare?.StartMaxOffsetMs" Label="@nameof(Value.StartMaxOffsetMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.EndMinOffsetMs" ValueCompare="ValueCompare?.EndMinOffsetMs" Label="@nameof(Value.EndMinOffsetMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.EndMaxOffsetMs" ValueCompare="ValueCompare?.EndMaxOffsetMs" Label="@nameof(Value.EndMaxOffsetMs).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

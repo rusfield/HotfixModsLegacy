@@ -1,0 +1,58 @@
+﻿@inherits HotfixPageTabBase<SpellVisual>
+@inject SpellService Service
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset1" ValueCompare="ValueCompare?.MissileCastOffset1" Label="@nameof(Value.MissileCastOffset1).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset2" ValueCompare="ValueCompare?.MissileCastOffset2" Label="@nameof(Value.MissileCastOffset2).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset3" ValueCompare="ValueCompare?.MissileCastOffset3" Label="@nameof(Value.MissileCastOffset3).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.MissileCastPositionerId" ValueCompare="ValueCompare?.MissileCastPositionerId" Label="@nameof(Value.MissileCastPositionerId).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.MissileAttachment" ValueCompare="ValueCompare?.MissileAttachment" Label="@nameof(Value.MissileAttachment).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.MissileDestinationAttachment" ValueCompare="ValueCompare?.MissileDestinationAttachment" Label="@nameof(Value.MissileDestinationAttachment).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset1" ValueCompare="ValueCompare?.MissileImpactOffset1" Label="@nameof(Value.MissileImpactOffset1).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset2" ValueCompare="ValueCompare?.MissileImpactOffset2" Label="@nameof(Value.MissileImpactOffset2).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset3" ValueCompare="ValueCompare?.MissileImpactOffset3" Label="@nameof(Value.MissileImpactOffset3).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.MissileImpactPositionerId" ValueCompare="ValueCompare?.MissileImpactPositionerId" Label="@nameof(Value.MissileImpactPositionerId).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.MissileTargetingKit" ValueCompare="ValueCompare?.MissileTargetingKit" Label="@nameof(Value.MissileTargetingKit).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.CasterSpellVisualId" ValueCompare="ValueCompare?.CasterSpellVisualId" Label="@nameof(Value.CasterSpellVisualId).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.HostileSpellVisualId" ValueCompare="ValueCompare?.HostileSpellVisualId" Label="@nameof(Value.HostileSpellVisualId).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.SpellVisualMissileSetId" ValueCompare="ValueCompare?.SpellVisualMissileSetId" Label="@nameof(Value.SpellVisualMissileSetId).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" @bind-Value="Value.DamageNumberDelay" ValueCompare="ValueCompare?.DamageNumberDelay" Label="@nameof(Value.DamageNumberDelay).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.AnimEventSoundId" ValueCompare="ValueCompare?.AnimEventSoundId" Label="@nameof(Value.AnimEventSoundId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.ReducedUnexpectedCameraMovementSpellVisualId" ValueCompare="ValueCompare?.ReducedUnexpectedCameraMovementSpellVisualId" Label="@nameof(Value.ReducedUnexpectedCameraMovementSpellVisualId).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.RaidSpellVisualMissileSetId" ValueCompare="ValueCompare?.RaidSpellVisualMissileSetId" Label="@nameof(Value.RaidSpellVisualMissileSetId).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.LowViolenceSpellVisualId" ValueCompare="ValueCompare?.LowViolenceSpellVisualId" Label="@nameof(Value.LowViolenceSpellVisualId).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

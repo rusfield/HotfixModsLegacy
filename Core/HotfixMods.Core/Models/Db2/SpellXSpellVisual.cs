@@ -5,20 +5,20 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellXSpellVisual
     {
-        public int Id { get; set; }
-        public byte DifficultyId { get; set; }
-        public uint SpellVisualId { get; set; }
-        public decimal Probability { get; set; }
-        public int Field_10_0_0_44795_004 { get; set; }
-        public int Priority { get; set; }
-        public int SpellIconFileId { get; set; }
-        public int ActiveIconFileId { get; set; }
-        public ushort ViewerUnitConditionId { get; set; }
-        public uint ViewerPlayerConditionId { get; set; }
-        public ushort CasterUnitConditionId { get; set; }
-        public uint CasterPlayerConditionId { get; set; }
-        public int SpellId { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int Id { get; set; } = 0;
+        public byte DifficultyId { get; set; } = 0;
+        public uint SpellVisualId { get; set; } = 0;
+        public decimal Probability { get; set; } = 0;
+        public int Flags2 { get; set; } = 0;
+        public int Priority { get; set; } = 0;
+        public int SpellIconFileId { get; set; } = 0;
+        public int ActiveIconFileId { get; set; } = 0;
+        public ushort ViewerUnitConditionId { get; set; } = 0;
+        public uint ViewerPlayerConditionId { get; set; } = 0;
+        public ushort CasterUnitConditionId { get; set; } = 0;
+        public uint CasterPlayerConditionId { get; set; } = 0;
+        public int SpellId { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

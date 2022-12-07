@@ -19,7 +19,7 @@ Console.ReadKey();
 
 
 var dt = new DbDefinitionTool();
-string build = "10.0.2.46157";
+string build = "10.0.2.46924";
 while (true)
 {
     Console.WriteLine("Enter db2 name:");

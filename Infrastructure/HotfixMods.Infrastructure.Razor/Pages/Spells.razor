@@ -68,7 +68,7 @@ else
                     <TabTitle_Element Line1="Spell" Line2="Misc" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
+                    <TabContentEditBody T="object" AmountOfPages="2" @bind-CurrentPage="currentSpellMiscPage">
                         <SpellMisc_Tab Value="((SpellDto)PageTab.Dto).SpellMisc" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -88,19 +88,22 @@ else
                     <TabTitle_Element Line1="Spell" Line2="Effect" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="SpellDto.EffectGroup" Instances="((SpellDto?)PageTab.Dto)?.EffectGroups" @bind-CurrentInstance="currentEffectInstance">
-                        @if (((SpellDto?)PageTab.Dto).EffectGroups.Any())
-                        {
-                            foreach ((var effect, int index) in ((SpellDto?)PageTab.Dto).EffectGroups.WithIndex())
+                    @if (((SpellDto?)PageTab.Dto).EffectGroups.Any())
+                    {
+                        <TabContentEditBody T="SpellDto.EffectGroup" Instances="((SpellDto?)PageTab.Dto)?.EffectGroups" @bind-CurrentInstance="currentEffectInstance" AmountOfPages="3" @bind-CurrentPage="currentSpellEffectPage">
+
+                            @foreach ((var effect, int index) in ((SpellDto?)PageTab.Dto).EffectGroups.WithIndex())
                             {
                                 <SpellEffect_Tab Value="effect.SpellEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellEffect : null)" />
                             }
-                        }
-                        else
-                        {
+                        </TabContentEditBody>
+                    }
+                    else
+                    {
+                        <TabContentEditBody T="SpellDto.EffectGroup" Instances="((SpellDto?)PageTab.Dto)?.EffectGroups" @bind-CurrentInstance="currentEffectInstance">
                             <TabContentNoData Text="There are no Spell Effects yet." />
-                        }
-                    </TabContentEditBody>
+                        </TabContentEditBody>
+                    }
                 </ChildContent>
             </MudTabPanel>
             <MudTabPanel Class="custom-mud-tabs">
@@ -108,7 +111,7 @@ else
                     <TabTitle_Element Line1="Spell" Line2="Visual Event" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentEffectInstance">
+                    <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentVisualInstance">
                         @if (((SpellDto?)PageTab.Dto).VisualGroups.Any())
                         {
                             foreach ((var visual, int index) in ((SpellDto?)PageTab.Dto).VisualGroups.WithIndex())
@@ -128,19 +131,23 @@ else
                     <TabTitle_Element Line1="Spell" Line2="Visual" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentEffectInstance">
-                        @if (((SpellDto?)PageTab.Dto).VisualGroups.Any())
-                        {
-                            foreach ((var visual, int index) in ((SpellDto?)PageTab.Dto).VisualGroups.WithIndex())
+
+                    @if (((SpellDto?)PageTab.Dto).VisualGroups.Any())
+                    {
+                        <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentVisualInstance" AmountOfPages="2" @bind-CurrentPage="@currentSpellVisualPage">
+                            @foreach ((var visual, int index) in ((SpellDto?)PageTab.Dto).VisualGroups.WithIndex())
                             {
                                 <SpellVisual_Tab Value="visual.SpellVisual" ValueCompare="@(PageTab.DtoCompare != null && ((SpellDto?)PageTab.DtoCompare)?.VisualGroups.Count > index ? ((SpellDto?)PageTab.DtoCompare)?.VisualGroups[index].SpellVisual : null)" />
                             }
-                        }
-                        else
-                        {
+                        </TabContentEditBody>
+                    }
+                    else
+                    {
+                        <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentVisualInstance">
                             <TabContentNoData Text="There are no Spell Visuals yet." />
-                        }
-                    </TabContentEditBody>
+                        </TabContentEditBody>
+
+                    }
                 </ChildContent>
             </MudTabPanel>
         </ChildContent>
@@ -148,6 +155,10 @@ else
 }
 
 @code {
+    int currentSpellEffectPage = 1;
+    int currentSpellMiscPage = 1;
+    int currentSpellVisualPage = 1;
+
     int currentEffectInstance = 1;
     int currentVisualInstance = 1;
 

@@ -18,7 +18,13 @@ namespace HotfixMods.Tools.Dev.Business
             await WriteToConsoleAndClipboard("{");
             foreach (var def in definition.ColumnDefinitions)
             {
-                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString().Replace("ID", "Id", StringComparison.InvariantCulture))} {def.Name} " + "{ get; set; }");
+                string end = "";
+                if (def.Name == "VerifiedBuild")
+                    end = " = -1;";
+                else if (def.Name == "ID")
+                    end = " = 1;";
+
+                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name.Replace("ID", "Id", StringComparison.InvariantCulture)} " + "{ get; set; }" + $"{end}");
             }
             await WriteToConsoleAndClipboard("}");
             return (await TextCopy.ClipboardService.GetTextAsync())!;

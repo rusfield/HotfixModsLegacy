@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisualKitModelAttach
     {
-        public int Id { get; set; }
+        public int Id { get; set; } = 1;
         public decimal Offset1 { get; set; }
         public decimal Offset2 { get; set; }
         public decimal Offset3 { get; set; }
@@ -32,7 +32,6 @@ namespace HotfixMods.Core.Models.Db2
         public decimal StartDelay { get; set; }
         public decimal Field_9_0_1_33978_021 { get; set; }
         public int ParentSpellVisualKitId { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int VerifiedBuild { get; set; } = -1;
     }
-
 }

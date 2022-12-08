@@ -108,6 +108,26 @@ else
             </MudTabPanel>
             <MudTabPanel Class="custom-mud-tabs">
                 <TabContent>
+                    <TabTitle_Element Line1="Spell X" Line2="Spell Visual" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentVisualInstance">
+                        @if (((SpellDto?)PageTab.Dto).VisualGroups.Any())
+                        {
+                            foreach ((var visual, int index) in ((SpellDto?)PageTab.Dto).VisualGroups.WithIndex())
+                            {
+                                <SpellXSpellVisual_Tab Value="visual.SpellXSpellVisual" ValueCompare="@(PageTab.DtoCompare != null && ((SpellDto?)PageTab.DtoCompare)?.VisualGroups.Count > index ? ((SpellDto?)PageTab.DtoCompare)?.VisualGroups[index].SpellXSpellVisual : null)" />
+                            }
+                        }
+                        else
+                        {
+                            <TabContentNoData Text="There are no Spell Visuals yet." />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
                     <TabTitle_Element Line1="Spell" Line2="Visual Event" />
                 </TabContent>
                 <ChildContent>
@@ -146,7 +166,6 @@ else
                         <TabContentEditBody T="SpellDto.VisualGroup" Instances="((SpellDto?)PageTab.Dto)?.VisualGroups" @bind-CurrentInstance="currentVisualInstance">
                             <TabContentNoData Text="There are no Spell Visuals yet." />
                         </TabContentEditBody>
-
                     }
                 </ChildContent>
             </MudTabPanel>

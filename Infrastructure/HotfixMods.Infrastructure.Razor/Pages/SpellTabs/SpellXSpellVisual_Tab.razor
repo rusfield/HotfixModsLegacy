@@ -1,0 +1,14 @@
+﻿@inherits HotfixPageTabBase<SpellXSpellVisual>
+@inject SpellService Service
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            Yolo
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>

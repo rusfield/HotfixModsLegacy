@@ -5,14 +5,14 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisualKit
     {
-        public int Id { get; set; }
-        public sbyte ClutterLevel { get; set; }
-        public int FallbackSpellVisualKitId { get; set; }
-        public ushort DelayMin { get; set; }
-        public ushort DelayMax { get; set; }
-        public int Flags1 { get; set; }
-        public int Flags2 { get; set; }
-        public int VerifiedBuild { get; set; }
+        public int Id { get; set; } = 0;
+        public sbyte ClutterLevel { get; set; } = 0;
+        public int FallbackSpellVisualKitId { get; set; } = 0;
+        public ushort DelayMin { get; set; } = 0;
+        public ushort DelayMax { get; set; } = 0;
+        public int Flags1 { get; set; } = 0;
+        public int Flags2 { get; set; } = 0;
+        public int VerifiedBuild { get; set; } = -1;
     }
 
 }

@@ -6,16 +6,16 @@ namespace HotfixMods.Core.Models.Db2
     public class BeamEffect
     {
         public int Id { get; set; } = 1;
-        public int BeamId { get; set; }
-        public decimal SourceMinDistance { get; set; }
-        public decimal FixedLength { get; set; }
-        public int Flags { get; set; }
-        public int SourceOffset { get; set; }
-        public int DestOffset { get; set; }
-        public int SourceAttachId { get; set; }
-        public int DestAttachId { get; set; }
-        public int SourcePositionerId { get; set; }
-        public int DestPositionerId { get; set; }
+        public int BeamId { get; set; } = 0;
+        public decimal SourceMinDistance { get; set; } = 0;
+        public decimal FixedLength { get; set; } = 0;
+        public int Flags { get; set; } = 0;
+        public int SourceOffset { get; set; } = 0;
+        public int DestOffset { get; set; } = 0;
+        public int SourceAttachId { get; set; } = -1;
+        public int DestAttachId { get; set; } = -1;
+        public int SourcePositionerId { get; set; } = 0;
+        public int DestPositionerId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

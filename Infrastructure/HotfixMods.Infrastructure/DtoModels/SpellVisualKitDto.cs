@@ -12,11 +12,12 @@ namespace HotfixMods.Infrastructure.DtoModels
         public class EffectGroup
         {
             public SpellVisualKitEffect SpellVisualKitEffect { get; set; } = new();
+            public SpellVisualEffectName SpellVisualEffectName { get; set; } = new();
+
             // Effect 1
             public SpellProceduralEffect SpellProceduralEffect { get; set; } = new();
-            // Effect 2 + reference
+            // Effect 2
             public SpellVisualKitModelAttach SpellVisualKitModelAttach { get; set; } = new();
-            public SpellVisualEffectName SpellVisualEffectName { get; set; } = new();
             // Effect 3 and 4
             public CameraEffect CameraEffect { get; set; } = new();
             // Effect 6
@@ -35,6 +36,8 @@ namespace HotfixMods.Infrastructure.DtoModels
             public BeamEffect BeamEffect { get; set; } = new();
             // Effect 14
             public ClientSceneEffect ClientSceneEffect { get; set; } = new();
+            // Effect 15
+            public CloneEffect CloneEffect { get; set; } = new();
             // Effect 16
             public GradientEffect GradientEffect { get; set; } = new();
             // Effect 17

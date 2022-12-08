@@ -6,32 +6,32 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualKitModelAttach
     {
         public int Id { get; set; } = 1;
-        public decimal Offset1 { get; set; }
-        public decimal Offset2 { get; set; }
-        public decimal Offset3 { get; set; }
-        public decimal OffsetVariation1 { get; set; }
-        public decimal OffsetVariation2 { get; set; }
-        public decimal OffsetVariation3 { get; set; }
-        public int SpellVisualEffectNameId { get; set; }
-        public int AttachmentId { get; set; }
-        public int PositionerId { get; set; }
-        public decimal Yaw { get; set; }
-        public decimal Pitch { get; set; }
-        public decimal Roll { get; set; }
-        public decimal YawVariation { get; set; }
-        public decimal PitchVariation { get; set; }
-        public decimal RollVariation { get; set; }
-        public decimal Scale { get; set; }
-        public decimal ScaleVariation { get; set; }
-        public int StartAnimId { get; set; }
-        public int AnimId { get; set; }
-        public int EndAnimId { get; set; }
-        public int AnimKitId { get; set; }
-        public int Flags { get; set; }
-        public int LowDefModelAttachId { get; set; }
-        public decimal StartDelay { get; set; }
-        public decimal Field_9_0_1_33978_021 { get; set; }
-        public int ParentSpellVisualKitId { get; set; }
+        public decimal Offset1 { get; set; } = 0;
+        public decimal Offset2 { get; set; } = 0;
+        public decimal Offset3 { get; set; } = 0;
+        public decimal OffsetVariation1 { get; set; } = 0;
+        public decimal OffsetVariation2 { get; set; } = 0;
+        public decimal OffsetVariation3 { get; set; } = 0;
+        public int SpellVisualEffectNameId { get; set; } = 0;
+        public int AttachmentId { get; set; } = 0;
+        public int PositionerId { get; set; } = 0;
+        public decimal Yaw { get; set; } = 0;
+        public decimal Pitch { get; set; } = 0;
+        public decimal Roll { get; set; } = 0;
+        public decimal YawVariation { get; set; } = 0;
+        public decimal PitchVariation { get; set; } = 0;
+        public decimal RollVariation { get; set; } = 0;
+        public decimal Scale { get; set; } = 1;
+        public decimal ScaleVariation { get; set; } = 0;
+        public int StartAnimId { get; set; } = -1;
+        public int AnimId { get; set; } = -1;
+        public int EndAnimId { get; set; } = -1;
+        public int AnimKitId { get; set; } = 0;
+        public int Flags { get; set; } = 0;
+        public int LowDefModelAttachId { get; set; } = 0;
+        public decimal StartDelay { get; set; } = 0;
+        public decimal Field_9_0_1_33978_021 { get; set; } = 0;
+        public int ParentSpellVisualKitId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

@@ -6,8 +6,8 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualScreenEffect
     {
         public int Id { get; set; } = 1;
-        public int ScreenEffectId { get; set; }
-        public int ScreenEffectTypeId { get; set; }
+        public int ScreenEffectId { get; set; } = 0;
+        public int ScreenEffectTypeId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

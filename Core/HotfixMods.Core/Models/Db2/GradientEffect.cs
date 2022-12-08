@@ -6,22 +6,22 @@ namespace HotfixMods.Core.Models.Db2
     public class GradientEffect
     {
         public int Id { get; set; } = 1;
-        public decimal Colors0_r { get; set; }
-        public decimal Colors0_g { get; set; }
-        public decimal Colors0_b { get; set; }
-        public decimal Colors1_r { get; set; }
-        public decimal Colors1_g { get; set; }
-        public decimal Colors1_b { get; set; }
-        public decimal Colors2_r { get; set; }
-        public decimal Colors2_g { get; set; }
-        public decimal Colors2_b { get; set; }
-        public decimal Alpha1 { get; set; }
-        public decimal Alpha2 { get; set; }
-        public decimal EdgeColor_r { get; set; }
-        public decimal EdgeColor_g { get; set; }
-        public decimal EdgeColor_b { get; set; }
-        public int Field_8_1_0_28440_014 { get; set; }
-        public int Field_8_1_0_28440_015 { get; set; }
+        public decimal Colors0_R { get; set; } = 0;
+        public decimal Colors0_G { get; set; } = 0;
+        public decimal Colors0_B { get; set; } = 0;
+        public decimal Colors1_R { get; set; } = 0;
+        public decimal Colors1_G { get; set; } = 0;
+        public decimal Colors1_B { get; set; } = 0;
+        public decimal Colors2_R { get; set; } = 0;
+        public decimal Colors2_G { get; set; } = 0;
+        public decimal Colors2_B { get; set; } = 0;
+        public decimal Alpha1 { get; set; } = 1;
+        public decimal Alpha2 { get; set; } = 1;
+        public decimal EdgeColor_R { get; set; } = 0;
+        public decimal EdgeColor_G { get; set; } = 0;
+        public decimal EdgeColor_B { get; set; } = 0;
+        public int Field_8_1_0_28440_014 { get; set; } = 0;
+        public int Field_8_1_0_28440_015 { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

@@ -1,0 +1,39 @@
+﻿@inherits HotfixPageTabBase<HotfixModsEntity>
+@inject SpellVisualKitService Service
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" />
+            <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element Label="ID" @bind-Value="Value.RecordId" OnIdAdornmentClick="NextIdAsync_Click" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>
+
+@code {
+    async void NextIdAsync_Click()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(IdButton_Dialog.GetNextIdAsync_Func), Service.GetNextIdAsync);
+        var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
+        if (!result.Cancelled && result.Data != null)
+        {
+            var id = (int)result.Data;
+            if (id > 0)
+            {
+                Value.RecordId = id;
+                this.StateHasChanged();
+            }
+        }
+    }
+}

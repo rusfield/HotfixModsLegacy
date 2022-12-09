@@ -1,0 +1,33 @@
+﻿@using HotfixMods.Infrastructure.Razor.Pages.SpellVisualKitTabs
+
+@inject SpellVisualKitService Service
+@inherits HotfixPageBase
+
+@if (null == PageTab.Dto)
+{
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<SpellVisualKitSearch_Dialog>" Title="Anim Kits">
+    </TabContentView>
+}
+else
+{
+    <TabContentEditHeader IsUpdate="false" Title="Spell Visual Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellVisualKitSearch_Dialog>())">
+        <ChildContent>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object">
+                        <SpellVisualKitEntity_Tab Value="((SpellVisualKitDto)PageTab.Dto).Entity" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+        </ChildContent>
+    </TabContentEditHeader>
+}
+
+@code {
+    //int currentSegmentInstance = 1;
+
+
+}

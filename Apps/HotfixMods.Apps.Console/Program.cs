@@ -55,7 +55,7 @@ Console.WriteLine("Done");
 
 
 
-/*
+
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -80,7 +80,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 // Compare property names to definition names

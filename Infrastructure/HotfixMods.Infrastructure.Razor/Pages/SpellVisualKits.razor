@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Pages.SpellVisualKitTabs
+@using HotfixMods.Core.Enums.Db2;
 
 @inject SpellVisualKitService Service
 @inherits HotfixPageBase
@@ -22,12 +23,41 @@ else
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Spell" Line2="Visual Kit" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object">
+                        <SpellVisualKit_Tab Value="((SpellVisualKitDto)PageTab.Dto).SpellVisualKit" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Spell Visual" Line2="Kit Effect" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" @bind-CurrentInstance="currentEffectInstance">
+                        @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
+                        {
+                            foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
+                            {
+                                <SpellVisualKitEffect_Tab Value="effect.SpellVisualKitEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitEffect : null)" />
+                            }
+                        }
+                        else
+                        {
+                            <TabContentNoData Text="There are no Item Effects yet." />
+                        }
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
-    //int currentSegmentInstance = 1;
-
+    int currentEffectInstance = 1;
 
 }

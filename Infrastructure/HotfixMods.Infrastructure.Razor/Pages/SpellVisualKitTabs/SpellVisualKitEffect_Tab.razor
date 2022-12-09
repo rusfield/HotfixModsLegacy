@@ -1,0 +1,42 @@
+﻿@using HotfixMods.Core.Enums.Db2;
+@inherits HotfixPageTabBase<SpellVisualKitEffect>
+@inject SpellVisualKitService Service
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.EffectType" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+            <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>
+
+@code {
+
+    bool EffectIsDisabled()
+    {
+        return !Enum.IsDefined(typeof(SpellVisualKitEffectEffectType), Value.EffectType)
+        && Value.EffectType != (int)SpellVisualKitEffectEffectType.UNIT_SOUND_TYPE;
+    }
+
+    async Task<Dictionary<int, string>> GetEffectTypes()
+    {
+        return Enum.GetValues<SpellVisualKitEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
+}

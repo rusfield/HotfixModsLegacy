@@ -21,7 +21,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal PitchAdjust { get; set; }
         public ushort BusOverwriteId { get; set; }
         public byte MaxInstances { get; set; }
-        public uint Field_10_0_2_45779_015 { get; set; }
+        public uint SoundMixGroupId { get; set; }
         public int VerifiedBuild { get; set; }
     }
 

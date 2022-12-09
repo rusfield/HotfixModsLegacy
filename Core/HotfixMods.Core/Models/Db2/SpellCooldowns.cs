@@ -10,7 +10,7 @@ namespace HotfixMods.Core.Models.Db2
         public int CategoryRecoveryTime { get; set; } = 0;
         public int RecoveryTime { get; set; } = 0;
         public int StartRecoveryTime { get; set; } = 0;
-        public int BuffSpellId { get; set; } = 0;
+        public int AuraSpellId { get; set; } = 0;
         public int SpellId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

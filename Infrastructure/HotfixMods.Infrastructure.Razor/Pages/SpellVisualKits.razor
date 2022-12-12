@@ -6,7 +6,7 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<SpellVisualKitSearch_Dialog>" Title="Anim Kits">
+    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<SpellVisualKitSearch_Dialog>" Title="Spell Visual Kits">
     </TabContentView>
 }
 else
@@ -38,12 +38,12 @@ else
                     <TabTitle_Element Line1="Spell Visual" Line2="Kit Effect" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" @bind-CurrentInstance="currentEffectInstance">
+                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
                         @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
                         {
                             foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
                             {
-                                <SpellVisualKitEffect_Tab Value="effect.SpellVisualKitEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitEffect : null)" />
+                                <SpellVisualKitEffect_Tab EffectTypeChanged="CurrentEffectTypeChanged" Value="effect.SpellVisualKitEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitEffect : null)" />
                             }
                         }
                         else
@@ -53,11 +53,50 @@ else
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
+            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any() && (currentEffectType == SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH || currentEffectType == SpellVisualEffectEffectType.BARRAGE_EFFECT))
+            {
+                <MudTabPanel Class="custom-mud-tabs">
+                    <TabContent>
+                        <TabTitle_Element Line1="Spell Visual" Line2="Effect Name" />
+                    </TabContent>
+                    <ChildContent>
+                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
+                            <SpellVisualEffectName_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualEffectName" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualEffectName : null)" />
+                        </TabContentEditBody>
+                    </ChildContent>
+                </MudTabPanel>
+            }
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
     int currentEffectInstance = 1;
+    SpellVisualEffectEffectType? currentEffectType = null;
 
+
+    void CurrentInstanceChanged(int newCurrentInstance)
+    {
+        currentEffectInstance = newCurrentInstance;
+        int newCurrentEffectType = ((SpellVisualKitDto?)PageTab.Dto).EffectGroups[newCurrentInstance - 1].SpellVisualKitEffect.EffectType;
+        SetCurrentEffectType(newCurrentEffectType);
+    }
+
+    void CurrentEffectTypeChanged(int newCurrentEffectType)
+    {
+        SetCurrentEffectType(newCurrentEffectType);
+    }
+
+    void SetCurrentEffectType(int newCurrentEffectType)
+    {
+        if (Enum.IsDefined(typeof(SpellVisualEffectEffectType), newCurrentEffectType))
+        {
+            currentEffectType = (SpellVisualEffectEffectType)newCurrentEffectType;
+        }
+        else
+        {
+            currentEffectType = null;
+        }
+        this.StateHasChanged();
+    }
 }

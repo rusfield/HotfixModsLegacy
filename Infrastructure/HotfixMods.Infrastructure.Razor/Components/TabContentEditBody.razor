@@ -160,7 +160,7 @@
 
     async Task MoveInstanceAsync(int oldIndex, int newIndex)
     {
-        if(oldIndex == newIndex) // TODO: Add index null check
+        if (oldIndex == newIndex) // TODO: Add index null check
             return;
 
         var item = Instances[oldIndex];
@@ -180,8 +180,13 @@
 
     async Task NavigateInstanceAsync(int instance)
     {
-        CurrentInstance = instance;
-        await CurrentInstanceChanged.InvokeAsync(CurrentInstance);
+        // MudBlazor (or perhapse a misconception of the framework usage) causes the instance parameter
+        // to be 2 isntead of 1 when adding the first instance on the first render. Thus, this condition.
+        if (instance <= Instances.Count)
+        {
+            CurrentInstance = instance;
+            await CurrentInstanceChanged.InvokeAsync(CurrentInstance);
+        }
     }
 
     string GetContentStyle()

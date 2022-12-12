@@ -11,7 +11,7 @@
             <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
                 <LeftContent />
                 <MiddleContent>
-                    <Input_Element T="int" @bind-Value="Value.EffectType" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
+                    <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
                 </MiddleContent>
                 <RightContent />
             </InlineGroup>
@@ -28,15 +28,25 @@
 </MudCarouselItem>
 
 @code {
+    [Parameter]
+    public EventCallback<int> EffectTypeChanged { get; set; }
+
+    async void OnEffectTypeChanged(int newEffectType)
+    {
+        Value.EffectType = newEffectType;
+        await EffectTypeChanged.InvokeAsync(newEffectType);
+    }    
 
     bool EffectIsDisabled()
     {
-        return !Enum.IsDefined(typeof(SpellVisualKitEffectEffectType), Value.EffectType)
-        && Value.EffectType != (int)SpellVisualKitEffectEffectType.UNIT_SOUND_TYPE;
+        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType);
+        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.UNIT_SOUND_TYPE);
+
+        return effectIsDefined && !effectIsUnitSoundType;
     }
 
     async Task<Dictionary<int, string>> GetEffectTypes()
     {
-        return Enum.GetValues<SpellVisualKitEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+        return Enum.GetValues<SpellVisualEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
     }
 }

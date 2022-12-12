@@ -1,6 +1,6 @@
 ﻿namespace HotfixMods.Core.Enums.Db2
 {
-    public enum SpellVisualKitEffectEffectType
+    public enum SpellVisualEffectEffectType
     {
         SPELL_PROCEDURAL_EFFECT = 1,
         SPELL_VISUAL_KIT_MODEL_ATTACH = 2,

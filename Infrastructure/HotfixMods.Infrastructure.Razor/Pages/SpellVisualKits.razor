@@ -53,19 +53,47 @@ else
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
-            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any() && (currentEffectType == SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH || currentEffectType == SpellVisualEffectEffectType.BARRAGE_EFFECT))
+            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
             {
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Spell Visual" Line2="Effect Name" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                            <SpellVisualEffectName_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualEffectName" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualEffectName : null)" />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
+                bool displaySpellVisualEffectName = false;
+
+                switch (currentEffectType)
+                {
+                    case SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT:
+                        {
+                            break;
+                        }
+                    case SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH:
+                        {
+                            <MudTabPanel Class="custom-mud-tabs">
+                                <TabContent>
+                                    <TabTitle_Element Line1="Spell Visual Kit" Line2="Model Attach" />
+                                </TabContent>
+                                <ChildContent>
+                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
+                                        <SpellVisualKitModelAttach_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualKitModelAttach" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualKitModelAttach : null)" />
+                                    </TabContentEditBody>
+                                </ChildContent>
+                            </MudTabPanel>
+                            displaySpellVisualEffectName = true;
+                            break;
+                        }
+                }
+                if (displaySpellVisualEffectName)
+                {
+                    <MudTabPanel Class="custom-mud-tabs">
+                        <TabContent>
+                            <TabTitle_Element Line1="Spell Visual" Line2="Effect Name" />
+                        </TabContent>
+                        <ChildContent>
+                            <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
+                                <SpellVisualEffectName_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualEffectName" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualEffectName : null)" />
+                            </TabContentEditBody>
+                        </ChildContent>
+                    </MudTabPanel>
+                }
             }
+
         </ChildContent>
     </TabContentEditHeader>
 }

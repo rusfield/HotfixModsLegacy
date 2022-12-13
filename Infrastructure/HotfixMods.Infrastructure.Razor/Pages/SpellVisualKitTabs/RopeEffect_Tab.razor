@@ -1,5 +1,32 @@
-﻿<h3>RopeEffect_Tab</h3>
+﻿@inherits HotfixPageTabBase<RopeEffect>
+@inject SpellVisualKitService Service
+@inject IDialogService DialogService
 
-@code {
-
-}
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.Stiffness" ValueCompare="ValueCompare?.Stiffness" Label="@nameof(Value.Stiffness).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.Damping" ValueCompare="ValueCompare?.Damping" Label="@nameof(Value.Damping).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.NumberOfJoints" ValueCompare="ValueCompare?.NumberOfJoints" Label="@nameof(Value.NumberOfJoints).ToDisplayName()" />
+                </LeftContent>
+                <MiddleContent>
+                    <Input_Element T="decimal" @bind-Value="Value.Field_8_3_0_32712_005" ValueCompare="ValueCompare?.Field_8_3_0_32712_005" Label="@nameof(Value.Field_8_3_0_32712_005).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.IntegrateAtJointIndex" ValueCompare="ValueCompare?.IntegrateAtJointIndex" Label="@nameof(Value.IntegrateAtJointIndex).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="sbyte" @bind-Value="Value.Field_8_3_0_32712_001" ValueCompare="ValueCompare?.Field_8_3_0_32712_001" Label="@nameof(Value.Field_8_3_0_32712_001).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Field_8_3_0_32712_002" ValueCompare="ValueCompare?.Field_8_3_0_32712_002" Label="@nameof(Value.Field_8_3_0_32712_002).ToDisplayName()" />
+            <Input_Element T="sbyte" @bind-Value="Value.Field_8_3_0_32712_003" ValueCompare="ValueCompare?.Field_8_3_0_32712_003" Label="@nameof(Value.Field_8_3_0_32712_003).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

@@ -1,5 +1,21 @@
-﻿<h3>CloneEffect_Tab</h3>
+﻿@inherits HotfixPageTabBase<SpellVisualKit>
+@inject SpellVisualKitService Service
+@inject IDialogService DialogService
 
-@code {
-
-}
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" />
+            <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.DelayMax" ValueCompare="ValueCompare?.DelayMax" Label="@nameof(Value.DelayMax).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.FallbackSpellVisualKitId" ValueCompare="ValueCompare?.FallbackSpellVisualKitId" Label="@nameof(Value.FallbackSpellVisualKitId).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>

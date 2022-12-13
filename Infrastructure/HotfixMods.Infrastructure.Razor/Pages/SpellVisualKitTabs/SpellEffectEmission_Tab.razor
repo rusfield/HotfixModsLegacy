@@ -1,5 +1,29 @@
-﻿<h3>SpellEffectEmission_Tab</h3>
+﻿@inherits HotfixPageTabBase<SpellEffectEmission>
+@inject SpellVisualKitService Service
+@inject IDialogService DialogService
 
-@code {
-
-}
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.EmissionRate" ValueCompare="ValueCompare?.EmissionRate" Label="@nameof(Value.EmissionRate).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.AreaModelId" ValueCompare="ValueCompare?.AreaModelId" Label="@nameof(Value.AreaModelId).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>

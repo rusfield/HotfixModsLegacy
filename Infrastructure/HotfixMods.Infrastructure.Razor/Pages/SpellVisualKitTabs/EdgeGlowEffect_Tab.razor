@@ -1,21 +1,36 @@
-﻿@inherits HotfixPageTabBase<SpellVisualKit>
+﻿@inherits HotfixPageTabBase<EdgeGlowEffect>
 @inject SpellVisualKitService Service
 @inject IDialogService DialogService
 
 <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" />
-            <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.GlowBlue" ValueCompare="ValueCompare?.GlowBlue" Label="@nameof(Value.GlowBlue).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.GlowAlpha" ValueCompare="ValueCompare?.GlowAlpha" Label="@nameof(Value.GlowAlpha).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.GlowMultiplier" ValueCompare="ValueCompare?.GlowMultiplier" Label="@nameof(Value.GlowMultiplier).ToDisplayName()" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.FadeIn" ValueCompare="ValueCompare?.FadeIn" Label="@nameof(Value.FadeIn).ToDisplayName()" />
+                </LeftContent>
+                <MiddleContent>
+                    <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.FadeOut" ValueCompare="ValueCompare?.FadeOut" Label="@nameof(Value.FadeOut).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.DelayMax" ValueCompare="ValueCompare?.DelayMax" Label="@nameof(Value.DelayMax).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.FallbackSpellVisualKitId" ValueCompare="ValueCompare?.FallbackSpellVisualKitId" Label="@nameof(Value.FallbackSpellVisualKitId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
+            <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
         </MudItem>
     </MudGrid>
 </MudCarouselItem>

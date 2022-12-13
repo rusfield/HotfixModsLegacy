@@ -8,9 +8,11 @@
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false" LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60">
+                <LeftContent />
                 <MiddleContent>
                     <Input_Element T="ushort" @bind-Value="Value.AnimKitId" ValueCompare="ValueCompare?.AnimKitId" Label="@nameof(Value.AnimKitId).ToDisplayName()" />
                 </MiddleContent>
+                <RightContent />
             </InlineGroup>
             <InlineGroup Merged="false">
                 <LeftContent>

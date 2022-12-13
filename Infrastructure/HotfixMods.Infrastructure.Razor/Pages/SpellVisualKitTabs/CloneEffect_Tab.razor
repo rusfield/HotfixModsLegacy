@@ -1,21 +1,23 @@
-﻿@inherits HotfixPageTabBase<SpellVisualKit>
+﻿@inherits HotfixPageTabBase<CloneEffect>
 @inject SpellVisualKitService Service
 @inject IDialogService DialogService
 
 <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" />
-            <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.DurationMs" ValueCompare="ValueCompare?.DurationMs" Label="@nameof(Value.DurationMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.DelayMs" ValueCompare="ValueCompare?.DelayMs" Label="@nameof(Value.DelayMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.FadeInTimeMs" ValueCompare="ValueCompare?.FadeInTimeMs" Label="@nameof(Value.FadeInTimeMs).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.FadeOutTimeMs" ValueCompare="ValueCompare?.FadeOutTimeMs" Label="@nameof(Value.FadeOutTimeMs).ToDisplayName()" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.DelayMax" ValueCompare="ValueCompare?.DelayMax" Label="@nameof(Value.DelayMax).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.FallbackSpellVisualKitId" ValueCompare="ValueCompare?.FallbackSpellVisualKitId" Label="@nameof(Value.FallbackSpellVisualKitId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.StartSpellVisualKitId" ValueCompare="ValueCompare?.StartSpellVisualKitId" Label="@nameof(Value.StartSpellVisualKitId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.OffsetMatrixId" ValueCompare="ValueCompare?.OffsetMatrixId" Label="@nameof(Value.OffsetMatrixId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
         </MudItem>
     </MudGrid>
 </MudCarouselItem>

@@ -2,15 +2,4 @@
 @inject SpellVisualKitService Service
 @inject IDialogService DialogService
 
-<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
-    <MudGrid>
-        <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.ScreenEffectId" ValueCompare="ValueCompare?.ScreenEffectId" Label="@nameof(Value.ScreenEffectId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.ScreenEffectTypeId" ValueCompare="ValueCompare?.ScreenEffectTypeId" Label="@nameof(Value.ScreenEffectTypeId).ToDisplayName()" />
-        </MudItem>
-        <MudItem xs="6">
-            <Placeholder_Element Amount="4" />
-        </MudItem>
-        <MudItem xs="3" />
-    </MudGrid>
-</MudCarouselItem>
+@* TODO? *@

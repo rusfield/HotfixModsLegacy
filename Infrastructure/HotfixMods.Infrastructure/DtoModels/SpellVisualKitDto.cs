@@ -18,8 +18,10 @@ namespace HotfixMods.Infrastructure.DtoModels
             public SpellProceduralEffect SpellProceduralEffect { get; set; } = new();
             // Effect 2
             public SpellVisualKitModelAttach SpellVisualKitModelAttach { get; set; } = new();
-            // Effect 3 and 4
+            // Effect 3
             public CameraEffect CameraEffect { get; set; } = new();
+            // Effect 4
+            public CameraEffect CameraEffect2 { get; set; } = new();
             // Effect 6
             public SpellVisualAnim SpellVisualAnim { get; set; } = new();
             // Effect 7

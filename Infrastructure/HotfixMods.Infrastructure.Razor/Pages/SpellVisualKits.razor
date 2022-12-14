@@ -62,13 +62,13 @@ else
             {
                 int currentPage = -1;
                 int amountOfPages = 1;
-                EventCallback<int> currentPageChanged = default;
+                Action<int> currentPageChanged = ((int value) => { });
 
                 if(currentEffectType == SpellVisualEffectEffectType.DISSOLVE_EFFECT)
                 {
                     currentPage = currentDissolveEffectPage;
                     amountOfPages = 2;
-
+                    currentPageChanged = ((int value) => CurentDissolveEffectPageChanged(value));
                 }
 
                 <MudTabPanel Class="custom-mud-tabs">
@@ -76,7 +76,7 @@ else
                         <TabTitle_Element @ref="tabTitleRef" />
                     </TabContent>
                     <ChildContent>
-                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" CurrentPage="currentPage" AmountOfPages="amountOfPages" CurrentPageChanged="CurentDissolveEffectPageChanged">
+                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" CurrentPage="currentPage" AmountOfPages="amountOfPages" CurrentPageChanged="currentPageChanged">
                             @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
                             {
                                 foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())

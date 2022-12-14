@@ -180,13 +180,8 @@
 
     async Task NavigateInstanceAsync(int instance)
     {
-        // MudBlazor (or perhapse a misconception of the framework usage) causes the instance parameter
-        // to be 2 isntead of 1 when adding the first instance on the first render. Thus, this condition.
-        if (instance <= Instances.Count)
-        {
-            CurrentInstance = instance;
-            await CurrentInstanceChanged.InvokeAsync(CurrentInstance);
-        }
+        CurrentInstance = instance;
+        await CurrentInstanceChanged.InvokeAsync(CurrentInstance);
     }
 
     string GetContentStyle()

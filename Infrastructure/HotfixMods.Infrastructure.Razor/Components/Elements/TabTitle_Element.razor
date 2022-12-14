@@ -15,4 +15,62 @@
     public string Line1 { get; set; } = "";
     [Parameter]
     public string? Line2 { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if(string.IsNullOrWhiteSpace(Line1) && !string.IsNullOrWhiteSpace(Title))
+        {
+            (Line1, Line2) = SplitByCenterSpace(Title);
+        }
+    }
+
+    public void SetTitle(string title)
+    {
+        (Line1, Line2) = SplitByCenterSpace(title);
+        this.StateHasChanged();
+    }
+
+
+    // Made by chat.openai.com
+    (string, string?) SplitByCenterSpace(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+        {
+            return ("", null);
+        }
+
+        int left = input.Length / 2;
+        int right = left;
+
+        if (input.Length % 2 == 0)
+        {
+            // If the string has an even length, we want to start
+            // by looking at the space between the two characters
+            // in the middle of the string.
+            left--;
+        }
+
+        while (left >= 0 && right < input.Length)
+        {
+            if (input[left] == ' ')
+            {
+                return (input.Substring(0, left), input.Substring(left + 1));
+            }
+
+            if (input[right] == ' ')
+            {
+                return (input.Substring(0, right), input.Substring(right + 1));
+            }
+
+            left--;
+            right++;
+        }
+
+        return ("", null);
+    }
+
+
 }

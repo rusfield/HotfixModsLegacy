@@ -4,6 +4,10 @@
 @inject SpellVisualKitService Service
 @inherits HotfixPageBase
 
+@*
+    This page turned out a little bit messy. If the code is unreadable at a later time, consider replacing the custom foreach code with simple if-conditions to load the effects instead.
+*@
+
 @if (null == PageTab.Dto)
 {
     <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<SpellVisualKitSearch_Dialog>" Title="Spell Visual Kits">
@@ -11,7 +15,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Spell Visual Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellVisualKitSearch_Dialog>())">
+    <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Spell Visual Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellVisualKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
                 <TabContent>
@@ -43,7 +47,7 @@ else
                         {
                             foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
                             {
-                                <SpellVisualKitEffect_Tab EffectDisabled="effectInputDisabled" EffectTypeChanged="CurrentEffectTypeChanged" Value="effect.SpellVisualKitEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitEffect : null)" />
+                                <SpellVisualKitEffect_Tab EffectDisabled="@(displayEffectTab)" EffectTypeChanged="CurrentEffectTypeChanged" Value="effect.SpellVisualKitEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > index ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitEffect : null)" />
                             }
                         }
                         else
@@ -53,283 +57,186 @@ else
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
-            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
+
+            @if (displayEffectTab || firstRender)
             {
-                bool displaySpellVisualEffectName = false;
+                int currentPage = -1;
+                int amountOfPages = 1;
+                EventCallback<int> currentPageChanged = default;
 
-                switch (currentEffectType)
+                if(currentEffectType == SpellVisualEffectEffectType.DISSOLVE_EFFECT)
                 {
-                    case SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Spell Procedural" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <SpellProceduralEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellProceduralEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellProceduralEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Spell Visual Kit" Line2="Model Attach" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <SpellVisualKitModelAttach_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualKitModelAttach" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualKitModelAttach : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            displaySpellVisualEffectName = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.CAMERA_EFFECT:
-                        {
-                            @* TODO? *@
-                            effectInputDisabled = false;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.CAMERA_EFFECT_2:
-                        {
-                            @* TODO? *@
-                            effectInputDisabled = false;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SOUND_KIT:
-                        {
-                            @* Use ID of existing Sound Kit*@
-                            effectInputDisabled = false;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SPELL_VISUAL_ANIM:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Spell" Line2="Visual Anim" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <SpellVisualAnim_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualAnim" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualAnim : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                                                        effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SHADOWY_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Shadowy" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <ShadowyEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].ShadowyEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].ShadowyEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SPELL_EFFECT_EMISSION:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Spell Effect" Line2="Emission" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <SpellEffectEmission_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellEffectEmission" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellEffectEmission : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.OUTLINE_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Outline" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <OutlineEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].OutlineEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].OutlineEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.UNIT_SOUND_TYPE:
-                        {
-                            @* No table for this type *@
-                            effectInputDisabled = false;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.DISSOLVE_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Dissolve" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" @bind-CurrentPage="currentDissolveEffectPage" AmountOfPages="2">
-                                        <DissolveEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].DissolveEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].DissolveEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.EDGE_GLOW_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Edge Glow" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <EdgeGlowEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].EdgeGlowEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].EdgeGlowEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.BEAM_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Beam" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <BeamEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].BeamEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].BeamEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.CLIENT_SCENE_EFFECT:
-                        {
-                            @* Use existing IDs for this (for now) *@
-                            effectInputDisabled = false;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.CLONE_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Clone" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <CloneEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].CloneEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].CloneEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.GRADIENT_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Gradient" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <GradientEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].GradientEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].GradientEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.BARRAGE_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Barrage" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <BarrageEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].BarrageEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].BarrageEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            displaySpellVisualEffectName = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.ROPE_EFFECT:
-                        {
-                            <MudTabPanel Class="custom-mud-tabs">
-                                <TabContent>
-                                    <TabTitle_Element Line1="Rope" Line2="Effect" />
-                                </TabContent>
-                                <ChildContent>
-                                    <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                        <RopeEffect_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].RopeEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].RopeEffect : null)" />
-                                    </TabContentEditBody>
-                                </ChildContent>
-                            </MudTabPanel>
-                            effectInputDisabled = true;
-                            break;
-                        }
-                    case SpellVisualEffectEffectType.SPELL_VISUAL_SCREEN_EFFECT:
-                        {
-                            @* Use existing IDs for this (for now) *@
-                            effectInputDisabled = false;
-                            break;
-                        }
+                    currentPage = currentDissolveEffectPage;
+                    amountOfPages = 2;
+
                 }
-                if (displaySpellVisualEffectName)
-                {
-                    <MudTabPanel Class="custom-mud-tabs">
-                        <TabContent>
-                            <TabTitle_Element Line1="Spell Visual" Line2="Effect Name" />
-                        </TabContent>
-                        <ChildContent>
-                            <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
-                                <SpellVisualEffectName_Tab Value="((SpellVisualKitDto)PageTab.Dto).EffectGroups[currentEffectInstance - 1].SpellVisualEffectName" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[currentEffectInstance - 1].SpellVisualEffectName : null)" />
-                            </TabContentEditBody>
-                        </ChildContent>
-                    </MudTabPanel>
-                }
+
+                <MudTabPanel Class="custom-mud-tabs">
+                    <TabContent>
+                        <TabTitle_Element @ref="tabTitleRef" />
+                    </TabContent>
+                    <ChildContent>
+                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" CurrentPage="currentPage" AmountOfPages="amountOfPages" CurrentPageChanged="CurentDissolveEffectPageChanged">
+                            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
+                            {
+                                foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
+                                {
+                                    switch (currentEffectType)
+                                    {
+                                        case SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT:
+                                            {
+                                                <SpellProceduralEffect_Tab Value="effect.SpellProceduralEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellProceduralEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH:
+                                            {
+                                                <SpellVisualKitModelAttach_Tab Value="effect.SpellVisualKitModelAttach" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualKitModelAttach : null)" />
+                                                break;
+                                            }
+
+                                        case SpellVisualEffectEffectType.SPELL_VISUAL_ANIM:
+                                            {
+                                                <SpellVisualAnim_Tab Value="effect.SpellVisualAnim" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualAnim : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.SHADOWY_EFFECT:
+                                            {
+                                                <ShadowyEffect_Tab Value="effect.ShadowyEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].ShadowyEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.SPELL_EFFECT_EMISSION:
+                                            {
+                                                <SpellEffectEmission_Tab Value="effect.SpellEffectEmission" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellEffectEmission : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.OUTLINE_EFFECT:
+                                            {
+                                                <OutlineEffect_Tab Value="effect.OutlineEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].OutlineEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.DISSOLVE_EFFECT:
+                                            {
+                                                <DissolveEffect_Tab Value="effect.DissolveEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].DissolveEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.EDGE_GLOW_EFFECT:
+                                            {
+                                                <EdgeGlowEffect_Tab Value="effect.EdgeGlowEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].EdgeGlowEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.BEAM_EFFECT:
+                                            {
+                                                <BeamEffect_Tab Value="effect.BeamEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].BeamEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.CLONE_EFFECT:
+                                            {
+                                                <CloneEffect_Tab Value="effect.CloneEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].CloneEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.GRADIENT_EFFECT:
+                                            {
+                                                <GradientEffect_Tab Value="effect.GradientEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].GradientEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.BARRAGE_EFFECT:
+                                            {
+                                                <BarrageEffect_Tab Value="effect.BarrageEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].BarrageEffect : null)" />
+                                                break;
+                                            }
+                                        case SpellVisualEffectEffectType.ROPE_EFFECT:
+                                            {
+                                                <RopeEffect_Tab Value="effect.RopeEffect" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].RopeEffect : null)" />
+                                                break;
+                                            }
+                                        default:
+                                            {
+                                                <TabContentNoData Text="Content not available." />
+                                                break;
+                                            }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <TabContentNoData Text="There are no Spell Visual Effects yet." />
+
+                                displayEffectTab = false;
+                            }
+                        </TabContentEditBody>
+
+
+                    </ChildContent>
+                </MudTabPanel>
             }
+            @if (displaySpellVisualEffectNameTab || firstRender)
+            {
+                <MudTabPanel Class="custom-mud-tabs">
+                    <TabContent>
+                        <TabTitle_Element Line1="Spell Visual" Line2="Effect Name" />
+                    </TabContent>
+                    <ChildContent>
+                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance">
 
+                            @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
+                            {
+                                foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
+                                {
+                                    <SpellVisualEffectName_Tab Value="effect.SpellVisualEffectName" ValueCompare="@(PageTab.DtoCompare != null && ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups.Count > currentEffectInstance ? ((SpellVisualKitDto?)PageTab.DtoCompare)?.EffectGroups[index].SpellVisualEffectName : null)" />
+                                }
+                            }
+                            else
+                            {
+                                <TabContentNoData Text="There are no Spell Visual Effects yet." />
+                            }
+                        </TabContentEditBody>
+
+                    </ChildContent>
+                </MudTabPanel>
+            }
         </ChildContent>
     </TabContentEditHeader>
 }
 
 @code {
+    TabContentEditHeader? tabContentEditHeaderRef;
+
     int currentEffectInstance = 1;
     int currentDissolveEffectPage = 1;
     SpellVisualEffectEffectType? currentEffectType = null;
-    bool effectInputDisabled = false;
+    bool displayEffectTab = false;
+    bool displaySpellVisualEffectNameTab = false;
+    TabTitle_Element? tabTitleRef;
+    bool firstRender = true;
 
-
-    void CurrentInstanceChanged(int newCurrentInstance)
+    protected override void OnAfterRender(bool firstRender)
     {
-        currentEffectInstance = newCurrentInstance;
-        int newCurrentEffectType = ((SpellVisualKitDto?)PageTab.Dto).EffectGroups[newCurrentInstance - 1].SpellVisualKitEffect.EffectType;
-        SetCurrentEffectType(newCurrentEffectType);
+        if(firstRender)
+            this.firstRender = false;
+
+        base.OnAfterRender(firstRender);
     }
 
-    void CurrentEffectTypeChanged(int newCurrentEffectType)
+    async void CurrentInstanceChanged(int newCurrentInstance)
     {
-        SetCurrentEffectType(newCurrentEffectType);
+        // I do not understand this part, but when adding the very first instance, the newCurrentInstance is 2, anod not 1 as expected.
+        // It will correct itself somehow on a followup call, but for now, add this condition to stop the exception.
+        // The error is probably due to a misconception of the specific MudBlazor component usage.
+
+        if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Count >= newCurrentInstance)
+        {
+            currentEffectInstance = newCurrentInstance;
+            int newCurrentEffectType = ((SpellVisualKitDto?)PageTab.Dto).EffectGroups[newCurrentInstance - 1].SpellVisualKitEffect.EffectType;
+            await SetCurrentEffectType(newCurrentEffectType);
+        }
     }
 
-    void SetCurrentEffectType(int newCurrentEffectType)
+    async void CurrentEffectTypeChanged(int newCurrentEffectType)
+    {
+        await SetCurrentEffectType(newCurrentEffectType);
+    }
+
+    async Task SetCurrentEffectType(int newCurrentEffectType)
     {
         if (Enum.IsDefined(typeof(SpellVisualEffectEffectType), newCurrentEffectType))
         {
@@ -339,6 +246,95 @@ else
         {
             currentEffectType = null;
         }
-        this.StateHasChanged();
+
+        if (tabTitleRef != null)
+        {
+            displayEffectTab = true;
+            displaySpellVisualEffectNameTab = false;
+            switch (currentEffectType)
+            {
+                case SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(SpellProceduralEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH:
+                    {
+                        displaySpellVisualEffectNameTab = true;
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(SpellVisualKitModelAttach).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.SPELL_VISUAL_ANIM:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(SpellVisualAnim).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.SHADOWY_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(ShadowyEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.SPELL_EFFECT_EMISSION:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(SpellEffectEmission).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.OUTLINE_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(OutlineEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.DISSOLVE_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(DissolveEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.EDGE_GLOW_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(EdgeGlowEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.BEAM_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(BeamEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.CLONE_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(CloneEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.GRADIENT_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(GradientEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.BARRAGE_EFFECT:
+                    {
+                        displaySpellVisualEffectNameTab = true;
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(BarrageEffect).ToDisplayName()));
+                        break;
+                    }
+                case SpellVisualEffectEffectType.ROPE_EFFECT:
+                    {
+                        await InvokeAsync(() => tabTitleRef.SetTitle(nameof(RopeEffect).ToDisplayName()));
+                        break;
+                    }
+                default:
+                    {
+                        displayEffectTab = false;
+                        await InvokeAsync(() => tabTitleRef.SetTitle("No effect")); // Placeholder value. Should not be visible
+                        break;
+                    }
+            }
+        }
+
+        await InvokeAsync(() => this.StateHasChanged());
+        await InvokeAsync(() => tabContentEditHeaderRef?.ReloadState());
+    }
+
+    void CurentDissolveEffectPageChanged(int newPage)
+    {
+        currentDissolveEffectPage = newPage;
     }
 }

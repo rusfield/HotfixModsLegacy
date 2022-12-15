@@ -76,7 +76,7 @@ else
                         <TabTitle_Element @ref="tabTitleRef" />
                     </TabContent>
                     <ChildContent>
-                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" CurrentPage="currentPage" AmountOfPages="amountOfPages" CurrentPageChanged="currentPageChanged">
+                        <TabContentEditBody T="SpellVisualKitDto.EffectGroup" Instances="((SpellVisualKitDto?)PageTab.Dto).EffectGroups" CurrentInstanceChanged="CurrentInstanceChanged" CurrentInstance="currentEffectInstance" CurrentPage="currentPage" AmountOfPages="amountOfPages" CurrentPageChanged="currentPageChanged" DisableFooter="true">
                             @if (((SpellVisualKitDto?)PageTab.Dto).EffectGroups.Any())
                             {
                                 foreach ((var effect, int index) in ((SpellVisualKitDto?)PageTab.Dto).EffectGroups.WithIndex())
@@ -330,7 +330,6 @@ else
         }
 
         await InvokeAsync(() => this.StateHasChanged());
-        await InvokeAsync(() => tabContentEditHeaderRef?.ReloadState());
     }
 
     void CurentDissolveEffectPageChanged(int newPage)

@@ -18,7 +18,7 @@
     </MudItem>
 </MudGrid>
 
-<MudTabs @ref="mudTabsRef" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
     @ChildContent
 </MudTabs>
 
@@ -36,11 +36,4 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
-    MudTabs? mudTabsRef;
-
-    public void ReloadState()
-    {
-        // This method is used for refreshing tab header names when they are changed (for example by effects in Spell Visual Kit)
-        this.StateHasChanged();
-    }
 }

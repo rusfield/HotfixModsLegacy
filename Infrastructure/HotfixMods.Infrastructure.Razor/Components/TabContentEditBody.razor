@@ -23,12 +23,12 @@
                 <MudIconButton Icon="@Icons.Filled.AddCircleOutline" />
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" />
             </MudStack>
-            <MudPagination @ref="mudPaginationRef" Selected="CurrentInstance" Size="Size.Medium" Count="Instances.Count" Color="Color.Info" Class="@(Instances.Count > 0 ? "" : "invisible")" SelectedChanged="NavigateInstanceAsync" />
+            <MudPagination @ref="mudPaginationRef" Selected="CurrentInstance" Size="Size.Medium" Count="Instances.Count" Color="Color.Info" Class="@(Instances.Count > 0 ? "" : "invisible")" SelectedChanged="NavigateInstanceAsync" Disabled="DisableFooter" />
             <MudStack Row="true" Spacing="0">
-                <MudIconButton Icon="@Icons.Filled.MoveDown" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance - 2))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == 1)" />
-                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="Instances.Count <= 0" />
-                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" />
-                <MudIconButton Icon="@Icons.Filled.MoveUp" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == Instances.Count)" />
+                <MudIconButton Icon="@Icons.Filled.MoveDown" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance - 2))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == 1 || DisableFooter)" />
+                <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="Instances.Count <= 0 || DisableFooter" />
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="DisableFooter"/>
+                <MudIconButton Icon="@Icons.Filled.MoveUp" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == Instances.Count || DisableFooter)" />
             </MudStack>
         </MudStack>
     }
@@ -61,6 +61,9 @@
 
     [Parameter]
     public List<T> Instances { get; set; }
+
+    [Parameter]
+    public bool DisableFooter { get; set; } = false;
 
     int contentHeight = 650;
     MudCarousel<object>? mudCarouselRef;

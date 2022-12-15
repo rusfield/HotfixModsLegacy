@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class ItemDto : BaseDto
+    public class ItemDto : DtoBase
     {
         public ItemDto(): base(nameof(Item)) { }
 

@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class SoundKitDto : BaseDto
+    public class SoundKitDto : DtoBase
     {
         public SoundKitDto() : base(nameof(SoundKit)) { }
 

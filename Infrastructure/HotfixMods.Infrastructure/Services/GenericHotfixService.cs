@@ -4,7 +4,7 @@ using HotfixMods.Infrastructure.Config;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class GenericHotfixService : Service
+    public class GenericHotfixService : ServiceBase
     {
         public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 

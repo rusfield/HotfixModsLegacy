@@ -6,7 +6,7 @@ using HotfixMods.Infrastructure.DtoModels;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class SpellVisualKitService : Service
+    public class SpellVisualKitService : ServiceBase
     {
         public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
         public async Task<SpellVisualKitDto> GetNewAsync(Action<string, string, int>? callback = null)

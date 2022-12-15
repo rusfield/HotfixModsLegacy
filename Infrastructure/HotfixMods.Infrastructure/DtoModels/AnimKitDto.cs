@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class AnimKitDto : BaseDto
+    public class AnimKitDto : DtoBase
     {
         public AnimKitDto() : base(nameof(AnimKit)) { }
 

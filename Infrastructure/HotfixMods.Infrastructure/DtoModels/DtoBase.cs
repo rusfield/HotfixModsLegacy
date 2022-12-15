@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public abstract class BaseDto
+    public abstract class DtoBase
     {
-        public BaseDto(string displayName)
+        public DtoBase(string displayName)
         {
             DisplayName = displayName;
         }

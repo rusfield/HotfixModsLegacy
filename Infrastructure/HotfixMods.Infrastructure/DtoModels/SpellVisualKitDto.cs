@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class SpellVisualKitDto : BaseDto
+    public class SpellVisualKitDto : DtoBase
     {
         public SpellVisualKitDto() : base(nameof(SpellVisualKit)) { }
 

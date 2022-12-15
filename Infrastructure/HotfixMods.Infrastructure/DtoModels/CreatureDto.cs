@@ -3,7 +3,7 @@ using HotfixMods.Core.Models.TrinityCore;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class CreatureDto : BaseDto
+    public class CreatureDto : DtoBase
     {
         public CreatureDto() : base("Creature") { }
 

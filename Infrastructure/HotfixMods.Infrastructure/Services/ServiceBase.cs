@@ -7,7 +7,7 @@ using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public partial class Service
+    public partial class ServiceBase
     {
         public int VerifiedBuild { get; set; }
         public int FromId { get; set; }
@@ -19,7 +19,7 @@ namespace HotfixMods.Infrastructure.Services
         IClientDbProvider _clientDbProvider;
         protected AppConfig _appConfig;
         
-        public Service(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig)
+        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
             _clientDbDefinitionProvider = clientDbDefinitionProvider;

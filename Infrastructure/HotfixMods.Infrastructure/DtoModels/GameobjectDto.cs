@@ -3,7 +3,7 @@ using HotfixMods.Core.Models.Db2;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public class GameobjectDto : BaseDto
+    public class GameobjectDto : DtoBase
     {
         public GameobjectDto() : base(nameof(Gameobject)){}
 

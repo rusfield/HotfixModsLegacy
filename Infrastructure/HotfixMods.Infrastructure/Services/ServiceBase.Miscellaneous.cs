@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public partial class Service
+    public partial class ServiceBase
     {
         protected void DefaultProgressCallback(string title, string subtitle, int progress)
         {

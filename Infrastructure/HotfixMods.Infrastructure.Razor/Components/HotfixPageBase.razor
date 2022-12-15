@@ -13,7 +13,7 @@
         var result = await DialogService.Show<TDialog>().Result;
         if (!result.Cancelled && result.Data != null)
         {
-            var pageTab = new PageTab(((BaseDto)result.Data).DisplayName, this.GetType());
+            var pageTab = new PageTab(((DtoBase)result.Data).DisplayName, this.GetType());
             pageTab.Dto = result.Data;
             GlobalHandler.LaunchTab(pageTab);
         }

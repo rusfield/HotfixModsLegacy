@@ -118,7 +118,7 @@
         if (!result.Cancelled && result.Data != null)
         {
             pageTab.Dto = result.Data;
-            pageTab.TabName = ((DtoBase)result.Data).DisplayName;
+            pageTab.TabName = ((DtoBase)result.Data).GetDisplayName();
             LaunchTab(pageTab);
         }
     }

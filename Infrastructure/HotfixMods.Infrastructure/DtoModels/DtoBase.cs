@@ -11,9 +11,16 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public DtoBase(string displayName)
         {
-            DisplayName = displayName;
+            _displayName = displayName;
         }
         public HotfixModsEntity Entity { get; set; } = new();
-        public string DisplayName { get; private set; }
+        string _displayName;
+
+        public string GetDisplayName()
+        {
+            return _displayName;
+        }
+
+
     }
 }

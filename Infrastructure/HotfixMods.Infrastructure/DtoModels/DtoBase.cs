@@ -14,6 +14,8 @@ namespace HotfixMods.Infrastructure.DtoModels
             _displayName = displayName;
         }
         public HotfixModsEntity Entity { get; set; } = new();
+        public bool IsUpdate { get; set; } = false;
+
         string _displayName;
 
         public string GetDisplayName()

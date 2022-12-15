@@ -59,18 +59,22 @@ namespace HotfixMods.Infrastructure.Services
         }
         
 
-        protected async Task<IEnumerable<T>> GetAsync<T>(params DbParameter[] parameters)
+        protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
             var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
             if(!results.Any())
                 results = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
 
-            return results.DbRowsToEntities<T>();
+            return results.DbRowsToEntities<T>().ToList();
         }
 
 
-
+        protected async Task SaveAsync<T>(IEnumerable<T> entities)
+            where T : new()
+        {
+            await SaveAsync(entities.ToArray());
+        }
 
         protected async Task SaveAsync<T>(params T[] entities)
             where T : new()
@@ -179,9 +183,9 @@ namespace HotfixMods.Infrastructure.Services
             await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }
 
-        protected async Task<IEnumerable<string>> GetClientDefinitionNamesAsync()
+        protected async Task<List<string>> GetClientDefinitionNamesAsync()
         {
-            return await _clientDbDefinitionProvider.GetDefinitionNamesAsync();
+            return (await _clientDbDefinitionProvider.GetDefinitionNamesAsync()).ToList();
         }
 
         protected async Task<bool> Db2Exists(string clientDbLocation, string serverSchemaName, string db2Name)

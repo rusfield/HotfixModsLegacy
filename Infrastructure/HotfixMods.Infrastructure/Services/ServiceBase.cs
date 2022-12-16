@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
         protected AppConfig _appConfig;
-        
+
         public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
@@ -48,22 +48,22 @@ namespace HotfixMods.Infrastructure.Services
             if (serverDbDefinition != null)
                 result = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, tableName, serverDbDefinition, parameters);
 
-            if(null == result)
+            if (null == result)
             {
                 var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Location, tableName);
-                if(clientDbDefinition != null)
+                if (clientDbDefinition != null)
                     result = await _clientDbProvider.GetSingleAsync(_appConfig.Location, tableName, clientDbDefinition, parameters);
             }
 
             return result;
         }
-        
+
 
         protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
             var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
-            if(!results.Any())
+            if (!results.Any())
                 results = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
 
             return results.DbRowsToEntities<T>().ToList();
@@ -85,13 +85,13 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync(string schemaName, string tableName, params DbRow[] dbRows)
         {
             var hotfixDataTableDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName);
-            if(null == hotfixDataTableDefinition)
+            if (null == hotfixDataTableDefinition)
             {
                 throw new Exception("Unable to load Hotfix Data table.");
             }
 
             var hotfixDbRows = new List<DbRow>();
-            foreach(var dbRow in dbRows)
+            foreach (var dbRow in dbRows)
             {
                 var tableHash = Enum.Parse<TableHashes>(tableName.Replace("_", ""), true);
 
@@ -101,7 +101,7 @@ namespace HotfixMods.Infrastructure.Services
                 dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, tableHash);
 
                 var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDataTableDefinition, dbParameters);
-                if(existingHotfix != null)
+                if (existingHotfix != null)
                 {
                     existingHotfix.SetColumnValue(_appConfig.HotfixDataTableStatusColumnName, HotfixStatuses.INVALID);
                     hotfixDbRows.Add(existingHotfix);
@@ -133,11 +133,11 @@ namespace HotfixMods.Infrastructure.Services
                 hotfixDbRows.Add(hotfixDbRow);
             }
 
-            if(dbRows.Length > 0)
+            if (dbRows.Length > 0)
                 await _serverDbProvider.AddOrUpdateAsync(schemaName, tableName, dbRows);
 
-            if(hotfixDbRows.Count > 0)
-                await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray()); 
+            if (hotfixDbRows.Count > 0)
+                await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray());
         }
 
         protected async Task<bool> DeleteAsync<T>(T entity)
@@ -152,17 +152,17 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             var schemaName = GetSchemaNameOfEntity<T>();
-            if(schemaName == _appConfig.HotfixesSchema)
+            if (schemaName == _appConfig.HotfixesSchema)
             {
                 var entities = await GetAsync<T>(parameters);
                 var tableHash = GetTableHashOfEntity<T>();
 
-                foreach(var entity in entities)
+                foreach (var entity in entities)
                 {
                     var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetIdValue()), new DbParameter(nameof(HotfixData.TableHash), tableHash) };
 
                     var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
-                    if(hotfixData != null)
+                    if (hotfixData != null)
                     {
                         hotfixData.Status = HotfixStatuses.RECORD_REMOVED;
                         await SaveAsync(hotfixData);
@@ -204,7 +204,13 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(int id)
         {
-            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild)) ?? new();
+            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild))
+                ??
+                new()
+                {
+                    RecordId = id,
+                    VerifiedBuild = VerifiedBuild
+                };
         }
     }
 }

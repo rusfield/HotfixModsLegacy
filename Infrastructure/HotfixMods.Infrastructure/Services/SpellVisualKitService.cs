@@ -31,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
             return new SpellVisualKitDto()
             {
                 SpellVisualKit = spellVisualKit,
-                Entity = await GetHotfixModsEntity(spellVisualKit.Id)
+                Entity = await GetExistingOrNewHotfixModsEntity(spellVisualKit.Id)
             };
         }
 

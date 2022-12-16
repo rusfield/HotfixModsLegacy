@@ -2,17 +2,12 @@
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class GameobjectService
     {
-        protected async Task SetIdAndVerifiedBuild(GameobjectDto gameobjectDto)
+        async Task SetIdAndVerifiedBuild(GameobjectDto gameobjectDto)
         {
             if (!gameobjectDto.IsUpdate)
             {
@@ -24,13 +19,21 @@ namespace HotfixMods.Infrastructure.Services
                 gameobjectDto.Entity.RecordId = newGameobjectDisplayInfoId;
                 gameobjectDto.GameobjectTemplate.DisplayId = (uint)newGameobjectDisplayInfoId;
                 gameobjectDto.GameobjectTemplate.Entry = (uint)newGameobjectTemplateId;
-                gameobjectDto.GameobjectTemplateAddon.Entry = (uint)newGameobjectTemplateId;
-                gameobjectDto.GameobjectDisplayInfo.Id = newGameobjectDisplayInfoId;
+
+                if (gameobjectDto.GameobjectTemplateAddon != null)
+                    gameobjectDto.GameobjectTemplateAddon.Entry = (uint)newGameobjectTemplateId;
+
+                if (gameobjectDto.GameobjectDisplayInfo != null)
+                    gameobjectDto.GameobjectDisplayInfo.Id = newGameobjectDisplayInfoId;
             }
 
             gameobjectDto.Entity.VerifiedBuild = VerifiedBuild;
             gameobjectDto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
-            gameobjectDto.GameobjectDisplayInfo.VerifiedBuild = VerifiedBuild;
+
+            if(gameobjectDto.GameobjectDisplayInfo != null)
+                gameobjectDto.GameobjectDisplayInfo.VerifiedBuild = VerifiedBuild;
+
+            // VerifiedBuild currently not in this model
             // gameobjectDto.GameobjectTemplateAddon.VerifiedBuild = VerifiedBuild;
         }
     }

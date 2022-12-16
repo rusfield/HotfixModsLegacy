@@ -4,6 +4,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using static HotfixMods.Infrastructure.DtoModels.AnimKitDto;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -15,9 +16,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var result = new AnimKitDto();
-
-            return result;
+            return new AnimKitDto();
         }
 
         public async Task<AnimKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
@@ -34,7 +33,8 @@ namespace HotfixMods.Infrastructure.Services
             {
                 AnimKit = animKit,
                 SegmentGroups = new(),
-                Entity = await GetHotfixModsEntity(animKit.Id)
+                Entity = await GetExistingOrNewHotfixModsEntity(animKit.Id),
+                IsUpdate = true
             };
 
             var segments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
@@ -81,14 +81,15 @@ namespace HotfixMods.Infrastructure.Services
             {
                 return false;
             }
-                
 
-            foreach(var segmentGroup in animKitDto.SegmentGroups)
+
+            animKitDto.SegmentGroups.ForEach(async s =>
             {
-                await DeleteAsync(segmentGroup.AnimKitSegment);
-                await DeleteAsync(segmentGroup.AnimKitConfig);
-                await DeleteAsync(segmentGroup.AnimKitConfigBoneSet);
-            }
+                await DeleteAsync(s.AnimKitSegment);
+                await DeleteAsync(s.AnimKitConfig);
+                await DeleteAsync(s.AnimKitConfigBoneSet);
+            });
+            
             await DeleteAsync(animKitDto.AnimKit);
             await DeleteAsync(animKitDto.Entity);
 

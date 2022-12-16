@@ -79,7 +79,7 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync<T>(params T[] entities)
             where T : new()
         {
-            await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.EntitiesToDbRows().ToArray());
+            await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.Where(e => e != null).EntitiesToDbRows().ToArray());
         }
 
         protected async Task SaveAsync(string schemaName, string tableName, params DbRow[] dbRows)
@@ -202,7 +202,7 @@ namespace HotfixMods.Infrastructure.Services
             return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
 
-        protected async Task<HotfixModsEntity> GetHotfixModsEntity(int id)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(int id)
         {
             return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild)) ?? new();
         }

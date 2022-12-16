@@ -31,9 +31,10 @@ namespace HotfixMods.Infrastructure.Services
             return new GameobjectDto()
             {
                 GameobjectTemplate = gameobjectTemplate,
-                GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)) ?? new(),
-                GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(new DbParameter(nameof(GameobjectTemplate.DisplayId), id)) ?? new(),
-                Entity = await GetHotfixModsEntity((int)gameobjectTemplate.Entry)
+                GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
+                GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(new DbParameter(nameof(GameobjectTemplate.DisplayId), id)),
+                Entity = await GetExistingOrNewHotfixModsEntity((int)gameobjectTemplate.Entry),
+                IsUpdate = true
             };
         }
 
@@ -60,21 +61,16 @@ namespace HotfixMods.Infrastructure.Services
 
             // Delete gameobjects placed around
             var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.Id), id));
-            foreach(var existingGameobject in  existingGameobjects)
+            existingGameobjects.ForEach(async g =>
             {
-                await DeleteAsync(existingGameobject);
-            }
+                await DeleteAsync(g);
+            });
 
             await DeleteAsync(gameobjectDto.GameobjectDisplayInfo);
             await DeleteAsync(gameobjectDto.GameobjectTemplateAddon);
             await DeleteAsync(gameobjectDto.GameobjectTemplate);
             await DeleteAsync(gameobjectDto.Entity);
             return true;
-        }
-
-        public async Task<int> GetNextIdAsync()
-        {
-            return await GetNextIdAsync<GameobjectTemplate>();
         }
     }
 }

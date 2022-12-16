@@ -1,4 +1,6 @@
 ﻿using HotfixMods.Core.Interfaces;
+using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 
@@ -13,7 +15,6 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new CreatureDto();
-            result.Entity.RecordId = await GetNextIdAsync();
 
             return result;
         }
@@ -22,22 +23,28 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            return null;
+            var creatureTemplate = await GetSingleAsync<CreatureTemplate>(new DbParameter(nameof(CreatureTemplate.Entry), id));
+            if(creatureTemplate == null)
+            {
+                return null;
+            }
+
+            return new CreatureDto()
+            {
+                CreatureTemplate = creatureTemplate,
+                
+                IsUpdate = true
+            };
         }
 
-        public async Task SaveAsync(CreatureDto dto)
+        public async Task SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
         {
             // TODO
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             // TODO
-        }
-
-        public async Task<int> GetNextIdAsync()
-        {
-            return await GetNextIdAsync<CreatureDto>();
         }
     }
 }

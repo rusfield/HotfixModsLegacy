@@ -6,7 +6,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService
     {
-        protected async Task SetIdAndVerifiedBuild(AnimKitDto animKitDto)
+        async Task SetIdAndVerifiedBuild(AnimKitDto animKitDto)
         {
             if (!animKitDto.IsUpdate)
             {
@@ -20,20 +20,19 @@ namespace HotfixMods.Infrastructure.Services
                 var newAnimKitConfigId = await GetNextIdAsync<AnimKitConfig>();
                 var newAnimKitConfigBoneSetId = await GetNextIdAsync<AnimKitConfigBoneSet>();
 
-                foreach (var segmentGroup in animKitDto.SegmentGroups)
+                animKitDto.SegmentGroups.ForEach(s =>
                 {
-                    segmentGroup.AnimKitSegment.ParentAnimKitId = (ushort)newAnimKitId; // TODO: maybe add a validation to ensure the ID is not greater than ushort
-                    segmentGroup.AnimKitSegment.Id = newAnimKitSegmentId;
-                    segmentGroup.AnimKitSegment.AnimKitConfigId = (ushort)newAnimKitConfigId;
-
-                    segmentGroup.AnimKitConfig.Id = newAnimKitConfigId;
-                    segmentGroup.AnimKitConfigBoneSet.Id = newAnimKitConfigBoneSetId;
-                    segmentGroup.AnimKitConfigBoneSet.ParentAnimKitConfigId = newAnimKitConfigId;
+                    s.AnimKitSegment.ParentAnimKitId = (ushort)newAnimKitId;
+                    s.AnimKitSegment.Id = newAnimKitSegmentId;
+                    s.AnimKitSegment.AnimKitConfigId = (ushort)newAnimKitConfigId;
+                    s.AnimKitConfig.Id = newAnimKitConfigId;
+                    s.AnimKitConfigBoneSet.Id = newAnimKitConfigBoneSetId;
+                    s.AnimKitConfigBoneSet.ParentAnimKitConfigId = newAnimKitConfigId;
 
                     newAnimKitSegmentId++;
                     newAnimKitConfigId++;
                     newAnimKitConfigBoneSetId++;
-                }
+                });
             }
 
             animKitDto.Entity.VerifiedBuild = VerifiedBuild;

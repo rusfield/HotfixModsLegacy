@@ -59,39 +59,39 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task SaveAsync(AnimKitDto animKitDto, Action<string, string, int>? callback = null)
+        public async Task SaveAsync(AnimKitDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
-            await SetIdAndVerifiedBuild(animKitDto);
+            await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(animKitDto.Entity);
-            await SaveAsync(animKitDto.AnimKit);
-            await SaveAsync(animKitDto.SegmentGroups.Select(s => s.AnimKitSegment));
-            await SaveAsync(animKitDto.SegmentGroups.Select(s => s.AnimKitConfig));
-            await SaveAsync(animKitDto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet));
+            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.AnimKit);
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment));
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig));
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet));
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var animKitDto = await GetByIdAsync(id);
-            if (null == animKitDto)
+            var dto = await GetByIdAsync(id);
+            if (null == dto)
             {
                 return false;
             }
 
 
-            animKitDto.SegmentGroups.ForEach(async s =>
+            dto.SegmentGroups.ForEach(async s =>
             {
                 await DeleteAsync(s.AnimKitSegment);
                 await DeleteAsync(s.AnimKitConfig);
                 await DeleteAsync(s.AnimKitConfigBoneSet);
             });
             
-            await DeleteAsync(animKitDto.AnimKit);
-            await DeleteAsync(animKitDto.Entity);
+            await DeleteAsync(dto.AnimKit);
+            await DeleteAsync(dto.Entity);
 
             return true;
         }

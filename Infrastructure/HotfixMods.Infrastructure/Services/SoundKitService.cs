@@ -46,33 +46,33 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task SaveAsync(SoundKitDto soundKitDto, Action<string, string, int>? callback = null)
+        public async Task SaveAsync(SoundKitDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
-            await SetIdAndVerifiedBuild(soundKitDto);
+            await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(soundKitDto.Entity);
-            await SaveAsync(soundKitDto.SoundKit);
-            await SaveAsync(soundKitDto.EntryGroups.Select(s => s.SoundKitEntry));
+            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.SoundKit);
+            await SaveAsync(dto.EntryGroups.Select(s => s.SoundKitEntry));
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var soundKitDto = await GetByIdAsync(id);
-            if(null == soundKitDto)
+            var dto = await GetByIdAsync(id);
+            if(null == dto)
             {
                 return false;
             }
 
-            soundKitDto.EntryGroups.ForEach(async s =>
+            dto.EntryGroups.ForEach(async s =>
             {
                 await DeleteAsync(s);
             });
-            await DeleteAsync(soundKitDto.SoundKit);
-            await DeleteAsync(soundKitDto.Entity);
+            await DeleteAsync(dto.SoundKit);
+            await DeleteAsync(dto.Entity);
 
             return true;
         }

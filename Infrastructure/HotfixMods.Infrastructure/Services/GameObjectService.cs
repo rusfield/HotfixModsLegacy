@@ -38,24 +38,24 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task SaveAsync(GameobjectDto gameobjectDto, Action<string, string, int>? callback = null)
+        public async Task SaveAsync(GameobjectDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             
-            await SetIdAndVerifiedBuild(gameobjectDto);
+            await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(gameobjectDto.GameobjectTemplate);
-            await SaveAsync(gameobjectDto.GameobjectTemplateAddon);
-            await SaveAsync(gameobjectDto.GameobjectDisplayInfo);
-            await SaveAsync(gameobjectDto.Entity);
+            await SaveAsync(dto.GameobjectTemplate);
+            await SaveAsync(dto.GameobjectTemplateAddon);
+            await SaveAsync(dto.GameobjectDisplayInfo);
+            await SaveAsync(dto.Entity);
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var gameobjectDto = await GetByIdAsync(id);
-            if (gameobjectDto == null) {  
+            var dto = await GetByIdAsync(id);
+            if (dto == null) {  
                 return false; 
             }
 
@@ -66,10 +66,10 @@ namespace HotfixMods.Infrastructure.Services
                 await DeleteAsync(g);
             });
 
-            await DeleteAsync(gameobjectDto.GameobjectDisplayInfo);
-            await DeleteAsync(gameobjectDto.GameobjectTemplateAddon);
-            await DeleteAsync(gameobjectDto.GameobjectTemplate);
-            await DeleteAsync(gameobjectDto.Entity);
+            await DeleteAsync(dto.GameobjectDisplayInfo);
+            await DeleteAsync(dto.GameobjectTemplateAddon);
+            await DeleteAsync(dto.GameobjectTemplate);
+            await DeleteAsync(dto.Entity);
             return true;
         }
     }

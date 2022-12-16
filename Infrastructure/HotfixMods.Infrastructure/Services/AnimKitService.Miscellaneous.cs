@@ -6,21 +6,21 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService
     {
-        async Task SetIdAndVerifiedBuild(AnimKitDto animKitDto)
+        async Task SetIdAndVerifiedBuild(AnimKitDto dto)
         {
-            if (!animKitDto.IsUpdate)
+            if (!dto.IsUpdate)
             {
                 var newAnimKitId = await GetNextIdAsync<AnimKit>();
 
-                animKitDto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                animKitDto.Entity.RecordId = newAnimKitId;
-                animKitDto.AnimKit.Id = newAnimKitId;
+                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.Entity.RecordId = newAnimKitId;
+                dto.AnimKit.Id = newAnimKitId;
 
                 var newAnimKitSegmentId = await GetNextIdAsync<AnimKitSegment>();
                 var newAnimKitConfigId = await GetNextIdAsync<AnimKitConfig>();
                 var newAnimKitConfigBoneSetId = await GetNextIdAsync<AnimKitConfigBoneSet>();
 
-                animKitDto.SegmentGroups.ForEach(s =>
+                dto.SegmentGroups.ForEach(s =>
                 {
                     s.AnimKitSegment.ParentAnimKitId = (ushort)newAnimKitId;
                     s.AnimKitSegment.Id = newAnimKitSegmentId;
@@ -35,9 +35,9 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
-            animKitDto.Entity.VerifiedBuild = VerifiedBuild;
-            animKitDto.AnimKit.VerifiedBuild = VerifiedBuild;
-            animKitDto.SegmentGroups.ForEach(s =>
+            dto.Entity.VerifiedBuild = VerifiedBuild;
+            dto.AnimKit.VerifiedBuild = VerifiedBuild;
+            dto.SegmentGroups.ForEach(s =>
             {
                 s.AnimKitConfig.VerifiedBuild = VerifiedBuild;
                 s.AnimKitConfigBoneSet.VerifiedBuild = VerifiedBuild;

@@ -7,11 +7,11 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellDto() : base(nameof(Spell)) { }
 
         public Spell Spell { get; set; } = new();
-        public SpellAuraOptions SpellAuraOptions { get; set; } = new();
-        public SpellCooldowns SpellCooldowns { get; set; } = new();
-        public SpellMisc SpellMisc { get; set; } = new();
-        public SpellName SpellName { get; set; } = new();
-        public SpellPower SpellPower { get; set; } = new();
+        public SpellAuraOptions? SpellAuraOptions { get; set; } = new();
+        public SpellCooldowns? SpellCooldowns { get; set; } = new();
+        public SpellMisc? SpellMisc { get; set; } = new();
+        public SpellName? SpellName { get; set; } = new();
+        public SpellPower? SpellPower { get; set; } = new();
         public List<EffectGroup> EffectGroups { get; set; } = new();
         public List<VisualGroup> VisualGroups { get; set; } = new();
 

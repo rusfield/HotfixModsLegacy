@@ -7,31 +7,31 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class GameobjectService
     {
-        async Task SetIdAndVerifiedBuild(GameobjectDto gameobjectDto)
+        async Task SetIdAndVerifiedBuild(GameobjectDto dto)
         {
-            if (!gameobjectDto.IsUpdate)
+            if (!dto.IsUpdate)
             {
                 var newGameobjectTemplateId = await GetNextIdAsync<GameobjectTemplate>();
                 var newGameobjectDisplayInfoId = await GetNextIdAsync<GameobjectDisplayInfo>();
 
 
-                gameobjectDto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                gameobjectDto.Entity.RecordId = newGameobjectDisplayInfoId;
-                gameobjectDto.GameobjectTemplate.DisplayId = (uint)newGameobjectDisplayInfoId;
-                gameobjectDto.GameobjectTemplate.Entry = (uint)newGameobjectTemplateId;
+                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.Entity.RecordId = newGameobjectDisplayInfoId;
+                dto.GameobjectTemplate.DisplayId = (uint)newGameobjectDisplayInfoId;
+                dto.GameobjectTemplate.Entry = (uint)newGameobjectTemplateId;
 
-                if (gameobjectDto.GameobjectTemplateAddon != null)
-                    gameobjectDto.GameobjectTemplateAddon.Entry = (uint)newGameobjectTemplateId;
+                if (dto.GameobjectTemplateAddon != null)
+                    dto.GameobjectTemplateAddon.Entry = (uint)newGameobjectTemplateId;
 
-                if (gameobjectDto.GameobjectDisplayInfo != null)
-                    gameobjectDto.GameobjectDisplayInfo.Id = newGameobjectDisplayInfoId;
+                if (dto.GameobjectDisplayInfo != null)
+                    dto.GameobjectDisplayInfo.Id = newGameobjectDisplayInfoId;
             }
 
-            gameobjectDto.Entity.VerifiedBuild = VerifiedBuild;
-            gameobjectDto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
+            dto.Entity.VerifiedBuild = VerifiedBuild;
+            dto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
 
-            if(gameobjectDto.GameobjectDisplayInfo != null)
-                gameobjectDto.GameobjectDisplayInfo.VerifiedBuild = VerifiedBuild;
+            if(dto.GameobjectDisplayInfo != null)
+                dto.GameobjectDisplayInfo.VerifiedBuild = VerifiedBuild;
 
             // VerifiedBuild currently not in this model
             // gameobjectDto.GameobjectTemplateAddon.VerifiedBuild = VerifiedBuild;

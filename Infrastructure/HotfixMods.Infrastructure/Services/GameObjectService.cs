@@ -6,7 +6,7 @@ using HotfixMods.Infrastructure.DtoModels;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class GameobjectService : ServiceBase
+    public partial class GameobjectService : ServiceBase
     {
         public GameobjectService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
@@ -15,7 +15,6 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new GameobjectDto();
-            result.Entity.RecordId = await GetNextIdAsync();
 
             return result;
         }
@@ -38,17 +37,39 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task SaveAsync(GameobjectDto gameobjectDto)
+        public async Task SaveAsync(GameobjectDto gameobjectDto, Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+            
+            await SetIdAndVerifiedBuild(gameobjectDto);
+
             await SaveAsync(gameobjectDto.GameobjectTemplate);
             await SaveAsync(gameobjectDto.GameobjectTemplateAddon);
             await SaveAsync(gameobjectDto.GameobjectDisplayInfo);
             await SaveAsync(gameobjectDto.Entity);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
-            // TODO
+            callback = callback ?? DefaultProgressCallback;
+
+            var gameobjectDto = await GetByIdAsync(id);
+            if (gameobjectDto == null) {  
+                return false; 
+            }
+
+            // Delete gameobjects placed around
+            var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.Id), id));
+            foreach(var existingGameobject in  existingGameobjects)
+            {
+                await DeleteAsync(existingGameobject);
+            }
+
+            await DeleteAsync(gameobjectDto.GameobjectDisplayInfo);
+            await DeleteAsync(gameobjectDto.GameobjectTemplateAddon);
+            await DeleteAsync(gameobjectDto.GameobjectTemplate);
+            await DeleteAsync(gameobjectDto.Entity);
+            return true;
         }
 
         public async Task<int> GetNextIdAsync()

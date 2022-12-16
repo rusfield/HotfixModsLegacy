@@ -81,7 +81,7 @@ namespace HotfixMods.Infrastructure.Extensions
             return typeof(T).Name.ToTableName();
         }
 
-        public static int GetId(this DbRow dbRow)
+        public static int GetIdValue(this DbRow dbRow)
         {
             var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
             if (int.TryParse(idColumn?.Value?.ToString(), out int id) && id > 0)
@@ -91,35 +91,49 @@ namespace HotfixMods.Infrastructure.Extensions
             throw new Exception("DbRow does not contain a valid ID column.");
         }
 
-        public static int GetId<T>(this T entity)
+        public static int GetIdValue<T>(this T entity)
             where T : new()
         {
-            string idPropertyName = "id";
-            var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
-            if (idProperties.Count() > 1)
-                throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");
+            (string name, int value) = GetId(entity);
+            return value;
+        }
 
-            if (idProperties.Count() == 1)
-            {
-                if (int.TryParse(idProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
-                {
-                    return id;
-                }
-            }
+        public static string GetIdName<T>(this T entity) 
+            where T : new()
+        {
+            (string name, int value) = GetId(entity);
+            return name;
+        }
 
+        static (string, int) GetId<T>(T entity)
+            where T : new()
+        {
             var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IdAttribute)));
             if (idAttributeProperties.Count() > 1)
-                throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
+                throw new Exception($"{typeof(T).Name} contains multiple ID attributes.");
 
             if (idAttributeProperties.Count() == 1)
             {
                 if (int.TryParse(idAttributeProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
                 {
-                    return id;
+                    return (idAttributeProperties.First().Name, id);
                 }
             }
 
-            throw new Exception($"{typeof(T)} does not contain any {idPropertyName} properties");
+            string defaultIdPropertyName = "Id";
+            var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(defaultIdPropertyName, StringComparison.InvariantCultureIgnoreCase));
+            if (idProperties.Count() > 1)
+                throw new Exception($"{typeof(T).Name} contains multiple {defaultIdPropertyName} properties.");
+
+            if (idProperties.Count() == 1)
+            {
+                if (int.TryParse(idProperties.First().GetValue(entity)?.ToString(), out int id) && id > 0)
+                {
+                    return (defaultIdPropertyName, id);
+                }
+            }
+
+            throw new Exception($"{typeof(T)} does not contain any {defaultIdPropertyName} properties.");
         }
     }
 }

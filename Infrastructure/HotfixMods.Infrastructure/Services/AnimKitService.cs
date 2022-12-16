@@ -72,25 +72,27 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(animKitDto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet));
         }
 
-        public async Task DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
             var animKitDto = await GetByIdAsync(id);
             if (null == animKitDto)
             {
-                return;
+                return false;
             }
                 
 
             foreach(var segmentGroup in animKitDto.SegmentGroups)
             {
-                await DeleteAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.Id), segmentGroup.AnimKitSegment.Id));
-                await DeleteAsync<AnimKitConfig>(new DbParameter(nameof(AnimKitConfig.Id), segmentGroup.AnimKitConfig.Id));
-                await DeleteAsync<AnimKitConfigBoneSet>(new DbParameter(nameof(AnimKitConfigBoneSet.Id), segmentGroup.AnimKitConfigBoneSet.Id));
+                await DeleteAsync(segmentGroup.AnimKitSegment);
+                await DeleteAsync(segmentGroup.AnimKitConfig);
+                await DeleteAsync(segmentGroup.AnimKitConfigBoneSet);
             }
-            await DeleteAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
-            await DeleteAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.Id), animKitDto.Entity.Id));
+            await DeleteAsync(animKitDto.AnimKit);
+            await DeleteAsync(animKitDto.Entity);
+
+            return true;
         }
     }
 }

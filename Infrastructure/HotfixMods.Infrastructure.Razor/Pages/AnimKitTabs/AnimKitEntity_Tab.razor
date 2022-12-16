@@ -24,7 +24,7 @@
     async void NextIdAsync_Click()
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(IdButton_Dialog.GetNextIdAsync_Func), Service.GetNextIdAsync);
+        //parameters.Add(nameof(IdButton_Dialog.GetNextIdAsync_Func), Service.GetNextIdAsync);
         var result = await DialogService.Show<IdButton_Dialog>(null, parameters).Result;
         if (!result.Cancelled && result.Data != null)
         {

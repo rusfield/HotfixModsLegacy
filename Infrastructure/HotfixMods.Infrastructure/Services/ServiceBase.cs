@@ -96,7 +96,7 @@ namespace HotfixMods.Infrastructure.Services
                 var tableHash = Enum.Parse<TableHashes>(tableName.Replace("_", ""), true);
 
                 var dbParameters = new DbParameter[3];
-                dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIdColumnName, dbRow.GetId());
+                dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIdColumnName, dbRow.GetIdValue());
                 dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, HotfixStatuses.VALID);
                 dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, tableHash);
 
@@ -118,7 +118,7 @@ namespace HotfixMods.Infrastructure.Services
                     };
 
                     if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIdColumnName, StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = dbRow.GetId();
+                        dbColumn.Value = dbRow.GetIdValue();
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableStatusColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = HotfixStatuses.VALID;
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableHashColumnName, StringComparison.CurrentCultureIgnoreCase))
@@ -140,7 +140,15 @@ namespace HotfixMods.Infrastructure.Services
                 await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray()); 
         }
 
-        protected async Task DeleteAsync<T>(params DbParameter[] parameters)
+        protected async Task<bool> DeleteAsync<T>(T entity)
+            where T : new()
+        {
+            var idName = entity.GetIdName();
+            var idValue = entity.GetIdValue();
+            return await DeleteAsync<T>(new DbParameter(idName, idValue));
+        }
+
+        protected async Task<bool> DeleteAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
             var schemaName = GetSchemaNameOfEntity<T>();
@@ -151,7 +159,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 foreach(var entity in entities)
                 {
-                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetId()), new DbParameter(nameof(HotfixData.TableHash), tableHash) };
+                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetIdValue()), new DbParameter(nameof(HotfixData.TableHash), tableHash) };
 
                     var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
                     if(hotfixData != null)
@@ -162,6 +170,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
             }
             await _serverDbProvider.DeleteAsync(schemaName, GetTableNameOfEntity<T>(), parameters);
+            return true;
         }
 
         protected async Task<int> GetNextIdAsync<T>()

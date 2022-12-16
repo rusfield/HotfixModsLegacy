@@ -18,5 +18,4 @@ namespace HotfixMods.Core.Models.Db2
         public decimal OverrideNameScale { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
-
 }

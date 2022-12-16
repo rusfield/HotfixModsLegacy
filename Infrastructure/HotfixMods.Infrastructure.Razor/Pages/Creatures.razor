@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Pages.CreatureTabs
+@using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject CreatureService Service
 @inherits HotfixPageBase
@@ -18,7 +19,7 @@ else
                 </TabContent>
                 <ChildContent>
                     <TabContentEditBody T="object">
-                        <CreatureEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" />
+                        <HotfixModsEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" @bind-IsUpdate="((CreatureDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>

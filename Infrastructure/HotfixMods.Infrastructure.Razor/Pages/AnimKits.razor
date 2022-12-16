@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Pages.AnimKitTabs
+@using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject AnimKitService Service
 @inherits HotfixPageBase
@@ -18,7 +19,7 @@ else
                 </TabContent>
                 <ChildContent>
                     <TabContentEditBody T="object">
-                        <AnimKitEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" />
+                        <HotfixModsEntity_Tab Value="((AnimKitDto)PageTab.Dto).Entity" @bind-IsUpdate="((AnimKitDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>

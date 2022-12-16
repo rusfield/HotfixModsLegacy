@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Razor.Pages.SpellVisualKitTabs
-@using HotfixMods.Core.Enums.Db2;
+@using HotfixMods.Infrastructure.Razor.Pages.Shared
+@using HotfixMods.Core.Enums.Db2
 
 @inject SpellVisualKitService Service
 @inherits HotfixPageBase
@@ -23,7 +24,7 @@ else
                 </TabContent>
                 <ChildContent>
                     <TabContentEditBody T="object">
-                        <SpellVisualKitEntity_Tab Value="((SpellVisualKitDto)PageTab.Dto).Entity" />
+                        <HotfixModsEntity_Tab Value="((SpellVisualKitDto)PageTab.Dto).Entity" @bind-IsUpdate="((SpellVisualKitDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>

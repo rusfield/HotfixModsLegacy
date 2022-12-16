@@ -1,0 +1,56 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@inherits HotfixPageTabBase<HotfixModsEntity>
+@inject IDialogService DialogService
+
+<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+    <MudGrid>
+        <MudItem xs="3" />
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" Variant="Variant.Text" />
+            <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
+                <LeftContent />
+                <MiddleContent>
+                    <InlineGroup LeftContentWidth="70" RightContentWidth="30" Merged="false">
+                        <LeftContent>
+                            <Input_Element Label="ID" @bind-Value="Value.RecordId" OnInfoAdornmentClick="@(OpenInfoDialog(HotfixModsEntityInfo.Id))" Disabled="IsUpdate" />
+                        </LeftContent>
+                        <RightContent>
+                            <Input_Element T="bool" AllowUndefinedValues="false" GetOptionsAsync_Func="GetOptions" Value="IsUpdate" ValueChanged="UpdateChanged" />
+                        </RightContent>
+                    </InlineGroup>
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </MudGrid>
+</MudCarouselItem>
+
+@code {
+    [Parameter]
+    public int RecordId { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RecordIdChanged { get; set; }
+
+    [Parameter]
+    public bool IsUpdate { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsUpdateChanged { get; set; }
+
+    async Task<Dictionary<bool, string>> GetOptions()
+    {
+        return new() {
+            { true, "Update" },
+            { false, "Save as"}
+        };
+    }
+
+    async Task UpdateChanged(bool newValue)
+    {
+        IsUpdate = newValue;
+        await IsUpdateChanged.InvokeAsync(IsUpdate);
+    }
+}

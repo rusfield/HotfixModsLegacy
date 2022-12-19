@@ -1,9 +1,4 @@
-﻿
-@using HotfixMods.Infrastructure.Razor.Components
-
-@inherits HotfixPageTabBase<CreatureTemplate>
-@inject ItemService Service
-@inject IDialogService DialogService
+﻿@inherits HotfixPageTabBase<CreatureTemplate>
 
 <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudGrid>

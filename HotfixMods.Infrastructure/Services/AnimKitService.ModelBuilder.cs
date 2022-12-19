@@ -43,7 +43,7 @@ namespace HotfixMods.Infrastructure.Services
                     EndConditionParam = segment.EndConditionParam ?? Default.AnimKitSegment.EndConditionParam,
                     OrderIndex = segment.OrderIndex ?? Default.AnimKitSegment.OrderIndex,
                     OverrideConfigFlags = segment.OverrideConfigFlags ?? Default.AnimKitSegment.OverrideConfigFlags,
-                    SegmentFlags = segment.OverrideConfigFlags ?? Default.AnimKitSegment.OverrideConfigFlags,
+                    SegmentFlags = segment.SegmentFlags ?? Default.AnimKitSegment.SegmentFlags,
                     Speed = segment.Speed ?? Default.AnimKitSegment.Speed,
                     StartCondition = segment.StartCondition ?? Default.AnimKitSegment.StartCondition,
                     StartConditionDelay = segment.StartConditionDelay ?? Default.AnimKitSegment.StartConditionDelay,

@@ -20,7 +20,7 @@ namespace HotfixMods.Core.Models.Db2
         public int PortraitTextureFileDataId { get; set; } = 0;
         public ushort ObjectEffectPackageId { get; set; } = 0;
         public ushort AnimReplacementSetId { get; set; } = 0;
-        public sbyte Flags { get; set; } = 0;
+        public byte Flags { get; set; } = 0;
         public int StateSpellVisualKitId { get; set; } = 0;
         public decimal PlayerOverrideScale { get; set; } = 0;
         public decimal PetInstanceScale { get; set; } = 1;

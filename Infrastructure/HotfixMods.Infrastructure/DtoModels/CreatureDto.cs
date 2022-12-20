@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public CreatureModelInfo? CreatureModelInfo { get; set; } = new();
         public List<CreatureDisplayInfoOption> CreatureDisplayInfoOptions { get; set; } = new();
         public List<NpcModelItemSlotDisplayInfo> NpcModelItemSlotDisplayInfos { get; set; } = new();
-        public int? ChrModelId { get; set; } = 0; // Used to help load correct customizations
+        public int ChrModelId { get; set; } = 0; // Used to help load correct customizations
 
         // TODO: CreatureDisplayInfoGeosetData
     }

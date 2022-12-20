@@ -66,7 +66,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public int WidgetSetId { get; set; } = 0;
         public int WidgetSetUnitConditionId { get; set; } = 0;
         public byte RegenHealth { get; set; } = 1;
-        public uint Mechanic_Immune_Mask { get; set; } = 0;
+        public ulong Mechanic_Immune_Mask { get; set; } = 0;
         public uint Spell_School_Immune_Mask { get; set; } = 0;
         public uint Flags_Extra { get; set; } = 0;
         public string ScriptName { get; set; } = "";

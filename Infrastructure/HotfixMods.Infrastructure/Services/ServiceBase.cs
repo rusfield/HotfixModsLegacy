@@ -201,7 +201,7 @@ namespace HotfixMods.Infrastructure.Services
                     var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
                     if (hotfixData != null)
                     {
-                        hotfixData.Status = HotfixStatuses.RECORD_REMOVED;
+                        hotfixData.Status = (byte)HotfixStatuses.RECORD_REMOVED;
                         await SaveAsync(hotfixData);
                     }
                 }

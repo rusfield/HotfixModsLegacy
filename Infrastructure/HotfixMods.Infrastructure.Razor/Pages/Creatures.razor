@@ -89,7 +89,7 @@ else
                 </TabContent>
                 <ChildContent>
                     <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1">
-                        <CreatureDisplayInfoOption_Tab @bind-ChrModelId="chrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
+                        <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -108,7 +108,6 @@ else
 }
 
 @code {
-    int chrModelId = 0; // store value here, not used in DTO
     int amountOfCustomizationPages = 0;
     int currentDisplayInfoPage = 1;
     int currentCreatureTemplatePage = 1;

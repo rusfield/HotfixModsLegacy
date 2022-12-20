@@ -96,6 +96,7 @@ var serverAssembly = Assembly.Load("HotfixMods.Core");
 var serverModels = serverAssembly.GetTypes().Where(t => t.Namespace == "HotfixMods.Core.Models.TrinityCore").ToList();
 foreach (var model in serverModels)
 {
+    Console.WriteLine($"Checking {model.Name}");
     var properties = model.GetProperties().Select(p => p.Name).ToList();
 
     string schema = "";
@@ -125,6 +126,21 @@ foreach (var model in serverModels)
     }
     var newDefinitions = definition.ColumnDefinitions.Where(d => !properties.Any(p => p.Equals(d.Name, StringComparison.InvariantCultureIgnoreCase)));
     var oldNames = properties.Where(p => !definition.ColumnDefinitions.Any(d => d.Name.Equals(p, StringComparison.InvariantCultureIgnoreCase)));
+
+    foreach (var prop in model.GetProperties())
+    {
+        var defProp = definition.ColumnDefinitions.Where(d => d.Name.Equals(prop.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+        if (defProp == null)
+        {
+            Console.WriteLine($"{prop.Name} not found");
+            continue;
+        }
+        else if (prop.PropertyType != defProp.Type)
+        {
+            Console.WriteLine($"Property mismatch on {prop.Name}. {prop.PropertyType} should be {defProp.Type}");
+            Console.ReadKey();
+        }
+    }
 
     if (oldNames.Any() || newDefinitions.Any())
     {
@@ -163,9 +179,25 @@ foreach (var model in models)
     var properties = model.GetProperties().Select(p => p.Name).ToList();
     try
     {
+        Console.WriteLine($"Checking {model.Name}");
         var definition = await defHelper.GetDefinitionAsync(null, model.Name);
         var newDefinitions = definition.ColumnDefinitions.Where(d => !properties.Any(p => p.Equals(d.Name, StringComparison.InvariantCultureIgnoreCase)));
         var oldNames = properties.Where(p => !definition.ColumnDefinitions.Any(d => d.Name.Equals(p, StringComparison.InvariantCultureIgnoreCase)));
+
+        foreach(var prop in model.GetProperties())
+        {
+            var defProp = definition.ColumnDefinitions.Where(d => d.Name.Equals(prop.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            if(defProp == null)
+            {
+                Console.WriteLine($"{prop.Name} not found");
+                continue;
+            }
+            else if(prop.PropertyType != defProp.Type)
+            {
+                Console.WriteLine($"Property mismatch on {prop.Name}. {prop.PropertyType} should be {defProp.Type}");
+                Console.ReadKey();
+            }
+        }
 
         if (oldNames.Any() || newDefinitions.Any())
         {

@@ -7,8 +7,8 @@ namespace HotfixMods.Core.Models.Db2
     {
         public int Id { get; set; } = 0;
         public uint OneShotDuration { get; set; } = 0;
-        public uint OneShotStopAnimKitId { get; set; } = 0;
-        public uint LowDefAnimKitId { get; set; } = 0;
+        public ushort OneShotStopAnimKitId { get; set; } = 0;
+        public ushort LowDefAnimKitId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

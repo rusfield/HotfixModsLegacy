@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
@@ -29,12 +30,37 @@ namespace HotfixMods.Infrastructure.Services
                 return null;
             }
 
-            return new CreatureDto()
+            var result = new CreatureDto()
             {
+                Entity = await GetExistingOrNewHotfixModsEntity(id),
                 CreatureTemplate = creatureTemplate,
-                
+                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)) ?? new(),
+                CreatureTemplateAddon = await GetSingleByIdAsync<CreatureTemplateAddon>(id) ?? new(),
+                CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(new DbParameter(nameof(CreatureEquipTemplate.CreatureId), id)) ?? new(),
                 IsUpdate = true
             };
+
+            if(result.CreatureTemplateModel != null)
+            {
+                result.CreatureModelInfo = await GetSingleByIdAsync<CreatureModelInfo>((int)result.CreatureTemplateModel.CreatureDisplayId);
+                result.CreatureDisplayInfo = await GetSingleByIdAsync<CreatureDisplayInfo>((int)result.CreatureTemplateModel.CreatureDisplayId);
+                result.CreatureDisplayInfoExtra = await GetSingleByIdAsync<CreatureDisplayInfoExtra>((int)result.CreatureTemplateModel.CreatureDisplayId);
+                result.CreatureDisplayInfoOptions = await GetAsync<CreatureDisplayInfoOption>(new DbParameter(nameof(CreatureDisplayInfoOption), (int)result.CreatureTemplateModel.CreatureDisplayId));
+            }
+            if(result.CreatureDisplayInfoExtra != null)
+            {
+                result.NpcModelItemSlotDisplayInfos = await GetAsync<NpcModelItemSlotDisplayInfo>(new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
+            }
+            if(result.CreatureDisplayInfoOptions.Count > 0)
+            {
+                var customizationOption = await GetSingleByIdAsync<ChrCustomizationOption>(result.CreatureDisplayInfoOptions.First().ChrCustomizationOptionId);
+                if(customizationOption != null)
+                {
+                    result.ChrModelId = customizationOption.ChrModelId;
+                }
+            }
+
+            return result;
         }
 
         public async Task SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)

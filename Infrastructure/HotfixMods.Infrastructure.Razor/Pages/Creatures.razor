@@ -28,7 +28,7 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Template" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
+                    <TabContentEditBody T="object" AmountOfPages="4" @bind-CurrentPage="currentCreatureTemplatePage">
                         <CreatureTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplate" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -68,7 +68,7 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Display Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
+                    <TabContentEditBody T="object" AmountOfPages="2" @bind-CurrentPage="currentDisplayInfoPage">
                         <CreatureDisplayInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfo" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -110,6 +110,13 @@ else
 @code {
     int chrModelId = 0; // store value here, not used in DTO
     int amountOfCustomizationPages = 0;
+    int currentDisplayInfoPage = 1;
+    int currentCreatureTemplatePage = 1;
+
+    protected override void OnParametersSet()
+    {
+        
+    }
 
     void SetAmountOfCustomizationPages(int pages)
     {

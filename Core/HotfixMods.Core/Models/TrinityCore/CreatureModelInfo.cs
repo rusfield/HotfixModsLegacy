@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [WorldSchema]
     public class CreatureModelInfo
     {
+        [Id]
         public uint DisplayId { get; set; } = 0;
         public decimal BoundingRadius { get; set; } = 0;
         public decimal CombatReach { get; set; } = 0;

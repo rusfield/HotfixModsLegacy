@@ -6,12 +6,12 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 {
     public partial class MySqlClient : IServerDbProvider, IServerDbDefinitionProvider, IClientDbProvider, IClientDbDefinitionProvider
     {
-        MySqlConnection _mySqlConnection;
+        string _connectionString;
         public int AddBatchSize { get; set; } = 2000; // Run this in MySql and then restart the server:      SET GLOBAL max_allowed_packet=1073741824; 
 
         public MySqlClient(string server, string port, string user, string password)
         {
-            _mySqlConnection = new MySqlConnection($"Server={server}; Port={port}; Uid={user}; Pwd={password};default command timeout=3600;");
+            _connectionString = $"Server={server}; Port={port}; Uid={user}; Pwd={password};default command timeout=3600;";
         }
 
         public async Task AddOrUpdateAsync(string schemaName, string tableName, params DbRow[] dbRows)
@@ -22,12 +22,13 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
 
             var queries = new List<string>();
-            var columns = string.Join(",", dbRows.First().Columns.Select(d => d.Name));
+            var columns = string.Join(",", dbRows.First().Columns.Select(d => $"`{d.Name}`"));
             var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
 
-            await _mySqlConnection.OpenAsync();
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            await mySqlConnection.OpenAsync();
             int batchCount = 1;
-            using (var cmd = new MySqlCommand(_mySqlConnection, null))
+            using (var cmd = new MySqlCommand(mySqlConnection, null))
             {
                 foreach (var dbColumn in dbRows)
                 {
@@ -51,7 +52,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     await cmd.ExecuteNonQueryAsync();
                 }
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
         }
 
         public async Task DeleteAsync(string schemaName, string tableName, params DbParameter[] parameters)
@@ -60,11 +61,13 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 throw new Exception("Parameter required for delete.");
 
             var query = $"DELETE FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
-            using var cmd = new MySqlCommand(query, _mySqlConnection);
+            using var mySqlConnection = new MySqlConnection(_connectionString);
 
-            await _mySqlConnection.OpenAsync();
+            using var cmd = new MySqlCommand(query, mySqlConnection);
+
+            await mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
         }
 
         public async Task<IEnumerable<DbRow>> GetAsync(string schemaName, string tableName, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
@@ -81,12 +84,12 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 return results;
             }
 
-            string columns = string.Join(",", dbRowDefinition.ColumnDefinitions.Select(c => c.Name));
+            string columns = string.Join(",", dbRowDefinition.ColumnDefinitions.Select(c => $"`{c.Name}`"));
             var query = $"SELECT {columns} FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            using var command = new MySqlCommand(query, mySqlConnection);
 
-            using var command = new MySqlCommand(query, _mySqlConnection);
-
-            await _mySqlConnection.OpenAsync();
+            await mySqlConnection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
@@ -95,31 +98,54 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 {
                     var fieldName = dbRowDefinition.ColumnDefinitions.ElementAt(i).Name;
                     var fieldType = dbRowDefinition.ColumnDefinitions.ElementAt(i).Type;
-                    object fieldValue = fieldType.ToString() switch
-                    {
-                        "System.SByte" => reader.GetSByte(i),
-                        "System.Int16" => reader.GetInt16(i),
-                        "System.Int32" => reader.GetInt32(i),
-                        "System.Int64" => reader.GetInt64(i),
-                        "System.Byte" => reader.GetByte(i),
-                        "System.UInt16" => reader.GetUInt16(i),
-                        "System.UInt32" => reader.GetUInt32(i),
-                        "System.UInt64" => reader.GetUInt64(i),
-                        "System.String" => reader.GetString(i),
-                        "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
-                        _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
-                    };
 
+                    object fieldValue;
+                    if (reader.IsDBNull(i))
+                    {
+                        fieldValue = fieldType.ToString() switch
+                        {
+                            "System.SByte" => 0,
+                            "System.Int16" => 0,
+                            "System.Int32" => 0,
+                            "System.Int64" => 0,
+                            "System.Byte" => 0,
+                            "System.UInt16" => 0,
+                            "System.UInt32" => 0,
+                            "System.UInt64" => 0,
+                            "System.String" => "",
+                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
+                            _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
+                        };
+                    }
+                    else
+                    {
+                        fieldValue = fieldType.ToString() switch
+                        {
+                            "System.SByte" => reader.GetSByte(i),
+                            "System.Int16" => reader.GetInt16(i),
+                            "System.Int32" => reader.GetInt32(i),
+                            "System.Int64" => reader.GetInt64(i),
+                            "System.Byte" => reader.GetByte(i),
+                            "System.UInt16" => reader.GetUInt16(i),
+                            "System.UInt32" => reader.GetUInt32(i),
+                            "System.UInt64" => reader.GetUInt64(i),
+                            "System.String" => reader.GetString(i),
+                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
+                            _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
+                        };
+                    }
                     dbRow.Columns.Add(new()
                     {
                         Name = fieldName,
                         Type = fieldType,
                         Value = fieldValue
                     });
+
+
                 }
                 results.Add(dbRow);
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
 
             return results;
         }
@@ -138,10 +164,10 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
             var query = $"DESCRIBE {schemaName}.{tableName};";
             var dbRowDefinition = new DbRowDefinition(tableName);
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            using var command = new MySqlCommand(query, mySqlConnection);
 
-            using var command = new MySqlCommand(query, _mySqlConnection);
-
-            await _mySqlConnection.OpenAsync();
+            await mySqlConnection.OpenAsync();
             using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
@@ -151,7 +177,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     Type = MySqlDataTypeToCSharpType(reader.GetString(1))
                 });
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
             return dbRowDefinition;
         }
 
@@ -167,19 +193,21 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
             string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS {schemaName};";
             string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID));";
-            using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, _mySqlConnection);
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, mySqlConnection);
 
-            await _mySqlConnection.OpenAsync();
+            await mySqlConnection.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
         }
 
         public async Task<bool> IsAvailableAsync()
         {
             try
             {
-                await _mySqlConnection.OpenAsync();
-                await _mySqlConnection.CloseAsync();
+                using var mySqlConnection = new MySqlConnection(_connectionString);
+                await mySqlConnection.OpenAsync();
+                await mySqlConnection.CloseAsync();
                 return true;
             }
             catch
@@ -192,8 +220,9 @@ namespace HotfixMods.Providers.MySqlConnector.Client
         {
             try
             {
-                await _mySqlConnection.OpenAsync();
-                using var cmd = new MySqlCommand($"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{schemaName}';", _mySqlConnection);
+                using var mySqlConnection = new MySqlConnection(_connectionString);
+                await mySqlConnection.OpenAsync();
+                using var cmd = new MySqlCommand($"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{schemaName}';", mySqlConnection);
                 var reader = await cmd.ExecuteReaderAsync();
                 bool exists = false;
                 while (reader.Read())
@@ -201,7 +230,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     int count = reader.GetInt32(0);
                     exists = count > 0;
                 }
-                await _mySqlConnection.CloseAsync();
+                await mySqlConnection.CloseAsync();
                 return exists;
             }
             catch
@@ -212,8 +241,9 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
         public async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
-            await _mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}' AND table_name = '{tableName}';", _mySqlConnection);
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            await mySqlConnection.OpenAsync();
+            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}' AND table_name = '{tableName}';", mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
             bool exists = false;
             while (reader.Read())
@@ -221,7 +251,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 int count = reader.GetInt32(0);
                 exists = count > 0;
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
             return exists;
         }
 
@@ -231,9 +261,9 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             {
                 return 0;
             }
-
-            await _mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT {idPropertyName} FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} ORDER BY {idPropertyName} ASC;", _mySqlConnection);
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            await mySqlConnection.OpenAsync();
+            using var cmd = new MySqlCommand($"SELECT {idPropertyName} FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} ORDER BY {idPropertyName} ASC;", mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
             var newId = minId;
             while (reader.Read())
@@ -244,7 +274,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
                 newId++;
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
             return newId;
         }
 
@@ -252,9 +282,10 @@ namespace HotfixMods.Providers.MySqlConnector.Client
         public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
             var results = new List<string>();
-            await _mySqlConnection.OpenAsync();
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            await mySqlConnection.OpenAsync();
             // TODO: Hotfixes is hardcoded here. Get it from elsewhere
-            using var cmd = new MySqlCommand($"SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = 'hotfixes' ORDER BY TABLE_NAME ASC;", _mySqlConnection);
+            using var cmd = new MySqlCommand($"SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = 'hotfixes' ORDER BY TABLE_NAME ASC;", mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
             while (reader.Read())
             {
@@ -262,7 +293,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 // TODO: Normalize name
                 results.Add(name);
             }
-            await _mySqlConnection.CloseAsync();
+            await mySqlConnection.CloseAsync();
             return results;
         }
 

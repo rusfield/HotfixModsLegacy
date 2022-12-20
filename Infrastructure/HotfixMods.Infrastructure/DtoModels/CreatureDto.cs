@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models.Db2;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 
 namespace HotfixMods.Infrastructure.DtoModels
@@ -16,5 +17,8 @@ namespace HotfixMods.Infrastructure.DtoModels
         public CreatureModelInfo? CreatureModelInfo { get; set; } = new();
         public List<CreatureDisplayInfoOption> CreatureDisplayInfoOptions { get; set; } = new();
         public List<NpcModelItemSlotDisplayInfo> NpcModelItemSlotDisplayInfos { get; set; } = new();
+        public int? ChrModelId { get; set; } = 0; // Used to help load correct customizations
+
+        // TODO: CreatureDisplayInfoGeosetData
     }
 }

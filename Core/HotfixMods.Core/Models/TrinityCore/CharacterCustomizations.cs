@@ -1,6 +1,8 @@
-﻿namespace HotfixMods.Core.Models.TrinityCore
+﻿using HotfixMods.Core.Attributes;
 
+namespace HotfixMods.Core.Models.TrinityCore
 {
+    [CharactersSchema]
     public class CharacterCustomizations 
     {
         public int Guid { get; set; }

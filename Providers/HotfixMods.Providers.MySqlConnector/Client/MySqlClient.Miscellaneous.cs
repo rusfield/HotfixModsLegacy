@@ -67,6 +67,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 "varchar" => typeof(string),
                 "nvarchar" => typeof(string),
                 "mediumtext" => typeof(string), 
+                "longtext" => typeof(string),
                 "float" => typeof(decimal),
                 _ => throw new Exception($"{type} not implemented.")
             };

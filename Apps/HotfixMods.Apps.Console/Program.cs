@@ -2,6 +2,9 @@
 
 
 using DBDefsLib;
+using HotfixMods.Core.Attributes;
+using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
 using HotfixMods.Tools.Dev.Business;
@@ -55,7 +58,7 @@ Console.WriteLine("Done");
 
 
 
-
+/*
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -80,9 +83,74 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
+*/
 
 
 
+
+
+// Compare property names to db definition
+var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
+var serverAssembly = Assembly.Load("HotfixMods.Core");
+
+var serverModels = serverAssembly.GetTypes().Where(t => t.Namespace == "HotfixMods.Core.Models.TrinityCore").ToList();
+foreach (var model in serverModels)
+{
+    var properties = model.GetProperties().Select(p => p.Name).ToList();
+
+    string schema = "";
+    if (model.GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
+        schema = "hotfixes";
+
+    if (model.GetCustomAttribute(typeof(WorldSchemaAttribute)) != null)
+        schema = "world";
+
+    if (model.GetCustomAttribute(typeof(HotfixModsSchemaAttribute)) != null)
+        schema = "hotfixMods";
+
+    if (model.GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
+        schema = "characters";
+
+    if(schema == "")
+    {
+        Console.WriteLine("No schema found for " + model.Name);
+        continue;
+    }
+
+    var definition = await serverDefHelper.GetDefinitionAsync(schema, model.Name.ToTableName());
+    if(null == definition)
+    {
+        Console.WriteLine("No definitions found for " + model.Name);
+        continue;
+    }
+    var newDefinitions = definition.ColumnDefinitions.Where(d => !properties.Any(p => p.Equals(d.Name, StringComparison.InvariantCultureIgnoreCase)));
+    var oldNames = properties.Where(p => !definition.ColumnDefinitions.Any(d => d.Name.Equals(p, StringComparison.InvariantCultureIgnoreCase)));
+
+    if (oldNames.Any() || newDefinitions.Any())
+    {
+        Console.Clear();
+        Console.WriteLine($"Updated values for {model.Name}");
+        Console.WriteLine("New names:");
+        foreach (var nd in newDefinitions)
+        {
+            Console.WriteLine($"{nd.Name}");
+        }
+        Console.WriteLine("Old names:");
+        foreach (var on in oldNames)
+        {
+            Console.WriteLine(on);
+        }
+        Console.ReadKey();
+        Console.Clear();
+    }
+    else
+    {
+        Console.WriteLine($"{model.Name} OK");
+    }
+}
+
+
+/*
 // Compare property names to definition names
 string build = "10.0.2.46924";
 var defHelper = new Db2Client(build);
@@ -95,33 +163,21 @@ foreach (var model in models)
     var properties = model.GetProperties().Select(p => p.Name).ToList();
     try
     {
-        // Use this to continue after reaching GitHub anonymous limitation (or just get a token)
-        /*
-        if(model.Name  == "SpellVisual")
-        {
-            skip = false;
-        }
-        if (skip)
-        {
-            continue;
-        }
-        */
-
         var definition = await defHelper.GetDefinitionAsync(null, model.Name);
         var newDefinitions = definition.ColumnDefinitions.Where(d => !properties.Any(p => p.Equals(d.Name, StringComparison.InvariantCultureIgnoreCase)));
         var oldNames = properties.Where(p => !definition.ColumnDefinitions.Any(d => d.Name.Equals(p, StringComparison.InvariantCultureIgnoreCase)));
 
-        if(oldNames.Any() || newDefinitions.Any())
+        if (oldNames.Any() || newDefinitions.Any())
         {
             Console.Clear();
             Console.WriteLine($"Updated values for {model.Name}");
             Console.WriteLine("New names:");
-            foreach(var nd in newDefinitions)
+            foreach (var nd in newDefinitions)
             {
                 Console.WriteLine($"{nd.Name}");
             }
             Console.WriteLine("Old names:");
-            foreach(var on in oldNames)
+            foreach (var on in oldNames)
             {
                 Console.WriteLine(on);
             }
@@ -139,3 +195,4 @@ foreach (var model in models)
     }
 }
 
+*/

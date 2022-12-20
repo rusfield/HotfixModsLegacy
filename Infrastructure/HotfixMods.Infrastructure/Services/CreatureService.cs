@@ -6,7 +6,7 @@ using HotfixMods.Infrastructure.DtoModels;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public class CreatureService : ServiceBase
+    public partial class CreatureService : ServiceBase
     {
         public CreatureService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 

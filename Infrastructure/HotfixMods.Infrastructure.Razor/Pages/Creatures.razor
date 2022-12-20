@@ -63,6 +63,16 @@ else
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature Display" Line2="Info Option"/>
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object">
+                        <CreatureDisplayInfoOption_Tab Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
 }

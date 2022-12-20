@@ -1,5 +1,115 @@
-﻿<h3>CreatureDisplayInfoOption_Tab</h3>
+﻿@using HotfixMods.Core.Enums.Db2
+@inherits HotfixPageTabBase<CreatureDisplayInfoOption>
+@inject CreatureService Service
+
+@if (customizations.Count > 0)
+{
+    int sum = (int)Math.Ceiling(customizations.Count / 12.0);
+    for (int i = 0; i < sum; i++)
+    {
+        int iVal = i;
+        <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+            <MudGrid>
+                <MudItem xs="3">
+                    @for (int j = 0; j < 6; j++)
+                    {
+                        int jVal = j;
+                        if ((12 * iVal) + jVal >= customizations.Count)
+                        {
+                            <Placeholder_Element Amount="1" />
+                        }
+                        else
+                        {
+                            var customization = customizations.ElementAt(jVal);
+                            var bindValue = GetCreatureDisplayInfoOption(customization);
+                            <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                        }
+                    }
+                </MudItem>
+                <MudItem xs="6">
+                    <Placeholder_Element Amount="6" />
+                </MudItem>
+                <MudItem xs="3">
+                    @for (int j = 0; j < 6; j++)
+                    {
+                        int jVal = 6 + j;
+                        if ((12 * iVal) + jVal >= customizations.Count)
+                        {
+                            <Placeholder_Element Amount="1" />
+                        }
+                        else
+                        {
+                            var customization = customizations.ElementAt(jVal);
+                            var bindValue = GetCreatureDisplayInfoOption(customization);
+                            <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                        }
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudCarouselItem>
+    }
+}
+else
+{
+    <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+        <MudItem xs="12">
+            <Placeholder_Element Amount="6" />
+        </MudItem>
+    </MudCarouselItem>
+}
 
 @code {
+    [Parameter]
+    public int ChrModelId { get; set; } = 128;
 
+    [Parameter]
+    public List<CreatureDisplayInfoOption> Values { get; set; }
+
+    [Parameter]
+    public List<CreatureDisplayInfoOption>? ValueCompares { get; set; }
+
+    Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> customizations = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SetValues();
+            this.StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task<Dictionary<int, string>> GetCustomizationChoices(int chrCustomizationOptionId)
+    {
+        if (customizations.Count == 0 || customizations.First().Key.ChrModelId != ChrModelId)
+        {
+            customizations = await Service.GetCustomizationOptions(ChrModelId);
+        }
+
+        if (customizations.Any(k => k.Key.Id == chrCustomizationOptionId))
+        {
+            return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : c.Name);
+        }
+        return new();
+    }
+
+    CreatureDisplayInfoOption GetCreatureDisplayInfoOption(KeyValuePair<ChrCustomizationOption, List<ChrCustomizationChoice>> customization)
+    {
+        if (!Values.Any(v => v.ChrCustomizationOptionId == customization.Key.Id))
+        {
+            Values.Add(new()
+                {
+                    ChrCustomizationOptionId = customization.Key.Id,
+                    ChrCustomizationChoiceId = customization.Value.First().Id
+                });
+        }
+        return Values.Where(v => v.ChrCustomizationOptionId == customization.Key.Id).First();
+    }
+
+    async Task SetValues()
+    {
+        customizations = await Service.GetCustomizationOptions(ChrModelId);
+
+    }
 }

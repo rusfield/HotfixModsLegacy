@@ -37,7 +37,27 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            return (await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters) ?? await _clientDbProvider.GetSingleAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters)).DbRowToEntity<T?>();
+            try
+            {
+                var serverResult = await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
+                if (serverResult != null)
+                    return serverResult.DbRowToEntity<T?>();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            try
+            {
+                var clientResult = await _clientDbProvider.GetSingleAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                if (clientResult != null)
+                    return clientResult.DbRowToEntity<T?>();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return default;
         }
 
 
@@ -62,11 +82,28 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            var results = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
-            if (!results.Any())
-                results = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+            try
+            {
+                var serverResults = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
+                if(serverResults.Any())
+                    return serverResults.DbRowsToEntities<T>().ToList();
+            }
+            catch(Exception ex)
+            {
 
-            return results.DbRowsToEntities<T>().ToList();
+            }
+            try
+            {
+                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                if(clientResults.Any())
+                    return clientResults.DbRowsToEntities<T>().ToList();
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+            return new();
         }
 
 

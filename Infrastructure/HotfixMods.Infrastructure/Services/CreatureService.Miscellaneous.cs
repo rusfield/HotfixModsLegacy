@@ -10,8 +10,16 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrModelId)
         {
-            if (customizationCache.ContainsKey(chrModelId))
+            if(chrModelId == 0)
+            {
+                // This selection seems to be a bit bugged in DB.
+                // Use it as default and return nothing.
+                return new();
+            }
+            else if (customizationCache.ContainsKey(chrModelId))
+            {
                 return customizationCache[chrModelId];
+            }
 
             var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
 

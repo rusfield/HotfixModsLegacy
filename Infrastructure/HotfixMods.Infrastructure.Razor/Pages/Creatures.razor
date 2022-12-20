@@ -65,14 +65,55 @@ else
             </MudTabPanel>
             <MudTabPanel Class="custom-mud-tabs">
                 <TabContent>
-                    <TabTitle_Element Line1="Creature Display" Line2="Info Option"/>
+                    <TabTitle_Element Line1="Creature" Line2="Display Info" />
                 </TabContent>
                 <ChildContent>
                     <TabContentEditBody T="object">
-                        <CreatureDisplayInfoOption_Tab Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" />
+                        <CreatureDisplayInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfo" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature Display" Line2="Info Extra" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object">
+                        <CreatureDisplayInfoExtra_Tab Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfoExtra" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature Display" Line2="Info Option" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1">
+                        <CreatureDisplayInfoOption_Tab @bind-ChrModelId="chrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="NPC Model Item" Line2="Slot Display Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object">
+                        <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfos" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+}
+
+@code {
+    int chrModelId = 0; // store value here, not used in DTO
+    int amountOfCustomizationPages = 0;
+
+    void SetAmountOfCustomizationPages(int pages)
+    {
+        amountOfCustomizationPages = pages;
+        this.StateHasChanged();
+    }
 }

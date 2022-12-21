@@ -129,6 +129,8 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             var hotfixDbRows = new List<DbRow>();
+            int newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");
+
             foreach (var dbRow in dbRows)
             {
                 if(!Enum.TryParse<TableHashes>(tableName, true, out var tableHash))
@@ -165,13 +167,14 @@ namespace HotfixMods.Infrastructure.Services
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableHashColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (uint)tableHash;
                     else if (dbColumn.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, 1, 2, "id");
+                        dbColumn.Value = newHotfixDataId;
                     else if (dbColumn.Name.Equals("verifiedbuild", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = VerifiedBuild;
 
                     hotfixDbRow.Columns.Add(dbColumn);
                 };
                 hotfixDbRows.Add(hotfixDbRow);
+                newHotfixDataId++;
             }
 
             if (dbRows.Length > 0)

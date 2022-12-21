@@ -49,14 +49,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 {
                     Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
                     cmd.CommandText = replaceQuery + string.Join(",", queries);
-                    try
-                    {
-                        await cmd.ExecuteNonQueryAsync();
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
+                    await cmd.ExecuteNonQueryAsync();
                 }
             }
             await mySqlConnection.CloseAsync();

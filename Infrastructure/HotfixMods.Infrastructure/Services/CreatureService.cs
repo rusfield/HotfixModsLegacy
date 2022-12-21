@@ -71,12 +71,51 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
         {
-            // TODO
+            callback = callback ?? DefaultProgressCallback;
+            await SetIdAndVerifiedBuild(dto);
+
+            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.CreatureTemplate);
+            await SaveAsync(dto.CreatureDisplayInfo);
+            await SaveAsync(dto.CreatureEquipTemplate);
+            await SaveAsync(dto.CreatureTemplateAddon);
+            await SaveAsync(dto.CreatureModelInfo);
+            await SaveAsync(dto.CreatureDisplayInfoExtra);
+            await SaveAsync(dto.CreatureTemplateModel);
+            await SaveAsync(dto.CreatureDisplayInfoOptions.ToArray());
+            await SaveAsync(dto.NpcModelItemSlotDisplayInfos.ToArray());
         }
 
-        public async Task DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
-            // TODO
+            callback = callback ?? DefaultProgressCallback;
+
+            var dto = await GetByIdAsync(id);
+            if(null == dto)
+            {
+                return false;
+            }
+
+            dto.CreatureDisplayInfoOptions.ForEach(async s =>
+            {
+                await DeleteAsync(s);
+            });
+
+            dto.NpcModelItemSlotDisplayInfos.ForEach(async s => 
+            {
+                await DeleteAsync(s);
+            });
+
+            await DeleteAsync(dto.CreatureDisplayInfoExtra);
+            await DeleteAsync(dto.CreatureDisplayInfo);
+            await DeleteAsync(dto.CreatureModelInfo);
+            await DeleteAsync(dto.CreatureTemplateModel);
+            await DeleteAsync(dto.CreatureEquipTemplate);
+            await DeleteAsync(dto.CreatureTemplateAddon);
+            await DeleteAsync(dto.CreatureTemplate);
+            await DeleteAsync(dto.Entity);
+
+            return true;
         }
     }
 }

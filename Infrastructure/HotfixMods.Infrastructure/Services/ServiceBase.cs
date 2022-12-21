@@ -180,6 +180,9 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<bool> DeleteAsync<T>(T entity)
             where T : new()
         {
+            if (null == entity)
+                return false;
+
             var idName = entity.GetIdName();
             var idValue = entity.GetIdValue();
             return await DeleteAsync<T>(new DbParameter(idName, idValue));

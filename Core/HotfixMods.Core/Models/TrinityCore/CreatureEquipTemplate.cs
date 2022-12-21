@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     public class CreatureEquipTemplate
     {
         public uint CreatureId { get; set; } = 0;
-        public byte Id { get; set; } = 0;
+        public byte Id { get; set; } = 1;
         public uint ItemId1 { get; set; } = 0;
         public ushort AppearanceModId1 { get; set; } = 0;
         public ushort ItemVisual1 { get; set; } = 0;

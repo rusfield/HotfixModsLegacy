@@ -255,27 +255,24 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             return exists;
         }
 
-        public async Task<int> GetNextIdAsync(string schemaName, string tableName, int minId, string idPropertyName = "id")
+        public async Task<int> GetHighestIdAsync(string schemaName, string tableName, int minId, int maxId, string idPropertyName = "id")
         {
             if (!await TableExistsAsync(schemaName, tableName))
             {
-                return 0;
+                return -1;
             }
             using var mySqlConnection = new MySqlConnection(_connectionString);
             await mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT {idPropertyName} FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} ORDER BY {idPropertyName} ASC;", mySqlConnection);
+            using var cmd = new MySqlCommand($"SELECT max({idPropertyName}) FROM {schemaName}.{tableName} WHERE {idPropertyName} >= {minId} AND {idPropertyName} <= {maxId};", mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
-            var newId = minId;
+            var highestId = minId;
             while (reader.Read())
             {
-                var dbId = reader.GetInt32(0);
-                if (newId != dbId)
-                    break;
-
-                newId++;
+                highestId = reader.GetInt32(0);
+                break;
             }
             await mySqlConnection.CloseAsync();
-            return newId;
+            return highestId;
         }
 
         // From IClientDbProvider, will be for hotfixes only.

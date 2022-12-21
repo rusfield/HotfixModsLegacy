@@ -1,4 +1,5 @@
-﻿using HotfixMods.Providers.WowDev.Client;
+﻿using HotfixMods.Core.Models;
+using HotfixMods.Providers.WowDev.Client;
 using System.Runtime.CompilerServices;
 
 namespace HotfixMods.Tools.Dev.Business
@@ -28,6 +29,45 @@ namespace HotfixMods.Tools.Dev.Business
             }
             await WriteToConsoleAndClipboard("}");
             return (await TextCopy.ClipboardService.GetTextAsync())!;
+        }
+
+        public List<string> CompareDefinitions(DbRowDefinition masterDefinition, DbRowDefinition otherDefinition)
+        {
+            if(null == masterDefinition || null == otherDefinition)
+            {
+                Console.WriteLine($"One of the definitions is null.");
+                return new();
+            }
+            var result = new List<string>();
+
+            foreach (var def in masterDefinition.ColumnDefinitions)
+            {
+                var otherDef = otherDefinition.ColumnDefinitions.Where(d => d.Name.Equals(def.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (null == otherDef)
+                {
+                    result.Add($"{def.Name} with type {GetPropertyName(def.Type.Name)} is missing.");
+                }
+                else if (def.Type != otherDef.Type)
+                {
+                    result.Add($"{def.Name} with type {GetPropertyName(otherDef.Type.Name)} should be {GetPropertyName(def.Type.Name)}.");
+                }
+            }
+            foreach (var def in otherDefinition.ColumnDefinitions)
+            {
+                var masterDef = masterDefinition.ColumnDefinitions.Where(d => d.Name.Equals(def.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                if (null == masterDef)
+                {
+                    result.Add($"Property {def.Name} does not exist in master.");
+                }
+            }
+            if (result.Count == 0)
+                Console.WriteLine($"{masterDefinition.DbName} is OK");
+            else
+                foreach (var r in result)
+                {
+                    Console.WriteLine(r);
+                }
+            return result;
         }
 
         string GetPropertyName(string prop)

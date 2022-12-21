@@ -62,6 +62,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new GameobjectService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
+                    ToId = 20000,
                     VerifiedBuild = -123
                 };
             });
@@ -71,6 +72,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new SoundKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
+                    ToId = 20000,
                     VerifiedBuild = -123
                 };
             });
@@ -80,6 +82,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new ItemService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
+                    ToId = 20000,
                     VerifiedBuild = -123
                 };
             });
@@ -88,7 +91,8 @@ namespace HotfixMods.Apps.MauiBlazor
             {
                 return new CreatureService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
-                    FromId = 10000,
+                    FromId = 3200000,
+                    ToId = 3300000,
                     VerifiedBuild = -123
                 };
             });
@@ -98,6 +102,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new SpellService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
+                    ToId = 20000,
                     VerifiedBuild = -123
                 };
             });
@@ -107,6 +112,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new SpellVisualKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
+                    ToId = 20000,
                     VerifiedBuild = -123
                 };
             });

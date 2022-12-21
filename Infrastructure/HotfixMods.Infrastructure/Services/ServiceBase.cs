@@ -11,6 +11,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public int VerifiedBuild { get; set; }
         public int FromId { get; set; }
+        public int ToId { get; set; }
 
 
         IServerDbDefinitionProvider _serverDbDefinitionProvider;
@@ -43,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (serverResult != null)
                     return serverResult.DbRowToEntity<T?>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -53,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (clientResult != null)
                     return clientResult.DbRowToEntity<T?>();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -85,20 +86,20 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var serverResults = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
-                if(serverResults.Any())
+                if (serverResults.Any())
                     return serverResults.DbRowsToEntities<T>().ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
             try
             {
                 var clientResults = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
-                if(clientResults.Any())
+                if (clientResults.Any())
                     return clientResults.DbRowsToEntities<T>().ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -150,7 +151,7 @@ namespace HotfixMods.Infrastructure.Services
                     var dbColumn = new DbColumn()
                     {
                         Name = definition.Name,
-                        Type= definition.Type,
+                        Type = definition.Type,
                         Value = Activator.CreateInstance(definition.Type)!
                     };
 
@@ -161,7 +162,7 @@ namespace HotfixMods.Infrastructure.Services
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableHashColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = tableHash;
                     else if (dbColumn.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = await _serverDbProvider.GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, 1);
+                        dbColumn.Value = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, 1, 2);
                     else if (dbColumn.Name.Equals("verifiedbuild", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = VerifiedBuild;
 
@@ -216,14 +217,30 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<int> GetNextIdAsync<T>()
             where T : new()
         {
-            return 1337;
-            return await _serverDbProvider.GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId);
+            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId);
         }
 
         protected async Task<int> GetNextIdAsync(string tableName)
         {
-            return 1337;
-            return await _serverDbProvider.GetNextIdAsync(_appConfig.HotfixesSchema, tableName, 1);
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId);
+        }
+
+        async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId, int toId)
+        {
+            var entity = await _serverDbProvider.GetHighestIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId);
+
+            if (entity > 0)
+            {
+                if (entity.GetIdValue() == ToId)
+                {
+                    throw new Exception("Database is full.");
+                }
+                return entity.GetIdValue() + 1;
+            }
+            else
+            {
+                return FromId;
+            }
         }
 
 

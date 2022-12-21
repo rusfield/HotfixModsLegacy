@@ -87,8 +87,19 @@ while (true)
 
 
 
+// Compare client (master) and server definition
+var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
+string build = "10.0.2.46924";
+var clientDefHelper = new Db2Client(build);
+
+var serverDef = await serverDefHelper.GetDefinitionAsync("hotfixes", "creature_display_info_option");
+var clientDef = await clientDefHelper.GetDefinitionAsync(@"C:\hotfixMods", "creaturedisplayinfooption");
+var tool = new DbDefinitionTool();
+tool.CompareDefinitions(clientDef, serverDef);
+Console.ReadKey();
 
 
+/*
 // Compare property names to db definition
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 var serverAssembly = Assembly.Load("HotfixMods.Core");
@@ -164,7 +175,7 @@ foreach (var model in serverModels)
         Console.WriteLine($"{model.Name} OK");
     }
 }
-
+*/
 
 /*
 // Compare property names to definition names

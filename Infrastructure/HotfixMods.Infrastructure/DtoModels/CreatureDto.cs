@@ -1,5 +1,4 @@
-﻿using HotfixMods.Core.Enums.Db2;
-using HotfixMods.Core.Models.Db2;
+﻿using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 
 namespace HotfixMods.Infrastructure.DtoModels

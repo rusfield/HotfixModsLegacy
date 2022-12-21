@@ -131,17 +131,20 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixDbRows = new List<DbRow>();
             foreach (var dbRow in dbRows)
             {
-                var tableHash = Enum.Parse<TableHashes>(tableName.Replace("_", ""), true);
+                if(!Enum.TryParse<TableHashes>(tableName, true, out var tableHash))
+                {
+                    continue;
+                }
 
                 var dbParameters = new DbParameter[3];
                 dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIdColumnName, dbRow.GetIdValue());
-                dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, HotfixStatuses.VALID);
-                dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, tableHash);
+                dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.VALID);
+                dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, (uint)tableHash);
 
                 var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDataTableDefinition, dbParameters);
                 if (existingHotfix != null)
                 {
-                    existingHotfix.SetColumnValue(_appConfig.HotfixDataTableStatusColumnName, HotfixStatuses.INVALID);
+                    existingHotfix.SetColumnValue(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.INVALID);
                     hotfixDbRows.Add(existingHotfix);
                 }
 
@@ -158,11 +161,11 @@ namespace HotfixMods.Infrastructure.Services
                     if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIdColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = dbRow.GetIdValue();
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableStatusColumnName, StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = HotfixStatuses.VALID;
+                        dbColumn.Value = (byte)HotfixStatuses.VALID;
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableHashColumnName, StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = tableHash;
+                        dbColumn.Value = (uint)tableHash;
                     else if (dbColumn.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, 1, 2);
+                        dbColumn.Value = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, 1, 2, "id");
                     else if (dbColumn.Name.Equals("verifiedbuild", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = VerifiedBuild;
 
@@ -217,25 +220,25 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<int> GetNextIdAsync<T>()
             where T : new()
         {
-            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId);
+            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId, GetIdPropertyNameOfEntity<T>());
         }
 
         protected async Task<int> GetNextIdAsync(string tableName)
         {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId);
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId, "id");
         }
 
-        async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId, int toId)
+        async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId, int toId, string idPropertyName)
         {
-            var entity = await _serverDbProvider.GetHighestIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId);
+            var highestId = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
 
-            if (entity > 0)
+            if (highestId > 0)
             {
-                if (entity.GetIdValue() == ToId)
+                if (highestId == ToId)
                 {
                     throw new Exception("Database is full.");
                 }
-                return entity.GetIdValue() + 1;
+                return highestId + 1;
             }
             else
             {

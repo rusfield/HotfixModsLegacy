@@ -11,7 +11,7 @@
     </MudItem>
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexEnd">
-            <MudButton Variant="Variant.Filled" Color="Color.Success">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save_Callback">
                 @(IsUpdate ? "Update" : "Save")
             </MudButton>
         </MudStack>
@@ -29,6 +29,9 @@
 
     [Parameter]
     public EventCallback ValueCompare_Callback { get; set; }
+
+    [Parameter]
+    public EventCallback Save_Callback { get; set; }
 
     [Parameter]
     public bool IsUpdate { get; set; }

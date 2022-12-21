@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotfixMods.Core.Enums
+﻿namespace HotfixMods.Core.Enums
 {
-    public enum TableHashes : long
+    public enum TableHashes : uint
     {
         GAME_OBJECT_ART_KIT = 2407661,
         CAMPAIGN_X_QUEST_LINE = 13326836,

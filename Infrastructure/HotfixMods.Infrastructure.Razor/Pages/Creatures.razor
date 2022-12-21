@@ -11,7 +11,7 @@
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())">
+    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())" Save_Callback="Save">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
                 <TabContent>
@@ -112,14 +112,16 @@ else
     int currentDisplayInfoPage = 1;
     int currentCreatureTemplatePage = 1;
 
-    protected override void OnParametersSet()
-    {
-        
-    }
-
     void SetAmountOfCustomizationPages(int pages)
     {
         amountOfCustomizationPages = pages;
         this.StateHasChanged();
+    }
+
+
+    // Temp
+    async void Save()
+    {
+        await Service.SaveAsync((CreatureDto)PageTab.Dto);
     }
 }

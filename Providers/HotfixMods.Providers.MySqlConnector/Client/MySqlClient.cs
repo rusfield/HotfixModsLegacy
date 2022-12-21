@@ -49,7 +49,14 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 {
                     Console.WriteLine($"Inserting {AddBatchSize * batchCount++} queries");
                     cmd.CommandText = replaceQuery + string.Join(",", queries);
-                    await cmd.ExecuteNonQueryAsync();
+                    try
+                    {
+                        await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
             await mySqlConnection.CloseAsync();
@@ -268,7 +275,8 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             var highestId = minId;
             while (reader.Read())
             {
-                highestId = reader.GetInt32(0);
+                if (!reader.IsDBNull(0))
+                    highestId = reader.GetInt32(0);
                 break;
             }
             await mySqlConnection.CloseAsync();

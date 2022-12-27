@@ -8,9 +8,15 @@
     public PageTab PageTab { get; set; }
 
     protected async void NewAsync_Click<TDialog>()
+    where TDialog : ComponentBase
+    {
+        await InvokeAsync(() => NewAsync_Click<TDialog>(new DialogParameters()));
+    }
+
+    protected async void NewAsync_Click<TDialog>(DialogParameters parameters)
         where TDialog : ComponentBase
     {
-        var result = await DialogService.Show<TDialog>().Result;
+        var result = await DialogService.Show<TDialog>(null, parameters).Result;
         if (!result.Cancelled && result.Data != null)
         {
             var pageTab = new PageTab(((DtoBase)result.Data).GetDisplayName(), this.GetType());

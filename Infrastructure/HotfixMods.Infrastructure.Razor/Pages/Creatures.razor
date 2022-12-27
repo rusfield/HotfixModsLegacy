@@ -6,7 +6,7 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView Data="new List<DashboardModel>()" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures">
+    <TabContentView GetDashboardModelsAsync_Func="GetDashboardModelsAsync" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures" EditAsync_Action="EditAsync">
     </TabContentView>
 }
 else
@@ -123,5 +123,29 @@ else
     async void Save()
     {
         await Service.SaveAsync((CreatureDto)PageTab.Dto);
+    }
+
+    async Task<List<DashboardModel>> GetDashboardModelsAsync()
+    {
+        return await Service.GetDashboardModelsAsync();
+    }
+
+    async Task DeleteAsync(int id)
+    {
+        await Service.DeleteAsync(id);
+    }
+
+    async void EditAsync(DashboardModel model)
+    {
+        var data = await Service.GetByIdAsync(model.Id);
+        if(data != null)
+        {
+            var parameters = new DialogParameters() { { "Id", model.Id } };
+            NewAsync_Click<CreatureSearch_Dialog>(parameters);
+        }
+        else
+        {
+            // TODO: Toast; not found
+        }
     }
 }

@@ -14,19 +14,25 @@
     </MudItem>
 </MudGrid>
 
-<MudTable Items="@Data" Hover="true" Height="650px" @ref="@mudTableRef">
+<MudTable Items="@data" Hover="true" Height="650px" @ref="@mudTableRef">
     <HeaderContent>
         <MudTh>@*Avatars*@</MudTh>
         <MudTh>NAME</MudTh>
         <MudTh>ID</MudTh>
+        <MudTh>@*Actions*@</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Avatar"><MudAvatar Elevation="6" Image="@($"{context.AvatarUrl}")" /></MudTd>
+        <MudTd DataLabel="Avatar">
+            @if (!string.IsNullOrWhiteSpace(context.AvatarUrl))
+            {
+                <MudAvatar Elevation="6" Image="@context.AvatarUrl" />
+            }
+        </MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Action">
             <MudStack Row="true" Justify="Justify.FlexEnd">
-                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync(context))" />
+                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync_Action(context))" />
                 <MudIconButton Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync_Click(context))" />
             </MudStack>
         </MudTd>
@@ -48,27 +54,35 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public List<DashboardModel> Data { get; set; }
+    public Func<Task<List<DashboardModel>>>? GetDashboardModelsAsync_Func { get; set; }
 
     [Parameter]
     public EventCallback New_Callback { get; set; }
 
+    [Parameter]
+    public Action<DashboardModel> EditAsync_Action { get; set; } 
+
     MudTable<DashboardModel>? mudTableRef;
+    List<DashboardModel> data = new();
     int pages;
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async void OnAfterRender(bool firstRender)
     {
-        if (mudTableRef != null)
+        if (firstRender)
+        {
+            if (GetDashboardModelsAsync_Func != null || mudTableRef != null)
+            {
+                // These should not be null in release.
+            }
+            data = await GetDashboardModelsAsync_Func.Invoke();
             pages = ((mudTableRef.GetFilteredItemsCount() + mudTableRef.RowsPerPage - 1) / mudTableRef.RowsPerPage);
+            this.StateHasChanged();
+        }
+
         base.OnAfterRender(firstRender);
     }
 
     void Add_Click()
-    {
-
-    }
-
-    void EditAsync(DashboardModel model)
     {
 
     }

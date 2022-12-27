@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     {
         [Id]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int RecordId { get; set; }
         public int VerifiedBuild { get; set; }
     }

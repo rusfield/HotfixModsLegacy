@@ -9,7 +9,19 @@
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }
 
+    [Parameter]
+    public int? Id { get; set; }
+
     DialogSearch? dialogSearchRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender && Id != null)
+        {
+            await GetByIdAsync(Id);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
 
     async Task GetByIdAsync(int? id)
     {

@@ -9,7 +9,7 @@
     </MudItem>
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexEnd">
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="New_Callback">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="NewAsync_Callback">
                 New
             </MudButton>
         </MudStack>
@@ -59,7 +59,7 @@
     public Func<Task<List<DashboardModel>>>? GetDashboardModelsAsync_Func { get; set; }
 
     [Parameter]
-    public EventCallback New_Callback { get; set; }
+    public EventCallback NewAsync_Callback { get; set; }
 
     [Parameter]
     public EventCallback<DashboardModel> EditAsync_Callback { get; set; } 
@@ -100,6 +100,8 @@
     async void DeleteAsync_Click(DashboardModel model)
     {
         await DeleteAsync_Callback.InvokeAsync(model);
+        data.Remove(model);
         Snackbar.Add($"{model.Name} deleted.", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        this.StateHasChanged();
     }
 }

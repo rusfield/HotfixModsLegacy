@@ -2,13 +2,13 @@
 @using HotfixMods.Core.Models
 @using HotfixMods.Infrastructure.Razor.Handlers
 
-@typeparam T
+@typeparam T where T : new()
 
 @inject IDialogService DialogService
 
 @code {
-    [Parameter]
-    public T? Value { get; set; }
+    [CascadingParameter(Name ="Value")]
+    public T Value { get; set; }
 
     [Parameter]
     public T? ValueCompare { get; set; }

@@ -6,7 +6,7 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView GetDashboardModelsAsync_Func="GetDashboardModelsAsync" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures" EditAsync_Callback="EditAsync" DeleteAsync_Callback="DeleteAsync" />
+    <TabContentView GetDashboardModelsAsync_Func="GetDashboardModelsAsync" NewAsync_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures" EditAsync_Callback="EditAsync" DeleteAsync_Callback="DeleteAsync" />
 }
 else
 {
@@ -17,8 +17,8 @@ else
                     <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <HotfixModsEntity_Tab Value="((CreatureDto)PageTab.Dto).Entity" @bind-IsUpdate="((CreatureDto)PageTab.Dto).IsUpdate" />
+                    <TabContentEditBody T="HotfixModsEntity" @bind-Value="((CreatureDto)PageTab.Dto).Entity">
+                        <HotfixModsEntity_Tab @bind-IsUpdate="((CreatureDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -27,8 +27,8 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Template" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object" AmountOfPages="4" @bind-CurrentPage="currentCreatureTemplatePage">
-                        <CreatureTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplate" />
+                    <TabContentEditBody T="CreatureTemplate" AmountOfPages="4" @bind-CurrentPage="currentCreatureTemplatePage" @bind-Value="((CreatureDto)PageTab.Dto).CreatureTemplate">
+                        <CreatureTemplate_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -37,8 +37,8 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Template Addon" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <CreatureTemplateAddon_Tab Value="((CreatureDto)PageTab.Dto).CreatureTemplateAddon" />
+                    <TabContentEditBody T="CreatureTemplateAddon" @bind-Value="((CreatureDto)PageTab.Dto).CreatureTemplateAddon">
+                        <CreatureTemplateAddon_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -47,8 +47,8 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Model Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <CreatureModelInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureModelInfo" />
+                    <TabContentEditBody T="CreatureModelInfo" @bind-Value="((CreatureDto)PageTab.Dto).CreatureModelInfo">
+                        <CreatureModelInfo_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -57,8 +57,8 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Equip Template" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <CreatureEquipTemplate_Tab Value="((CreatureDto)PageTab.Dto).CreatureEquipTemplate" />
+                    <TabContentEditBody T="CreatureEquipTemplate" @bind-Value="((CreatureDto)PageTab.Dto).CreatureEquipTemplate">
+                        <CreatureEquipTemplate_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -67,8 +67,8 @@ else
                     <TabTitle_Element Line1="Creature" Line2="Display Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object" AmountOfPages="2" @bind-CurrentPage="currentDisplayInfoPage">
-                        <CreatureDisplayInfo_Tab Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfo" />
+                    <TabContentEditBody T="CreatureDisplayInfo" AmountOfPages="2" @bind-CurrentPage="currentDisplayInfoPage" @bind-Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfo">
+                        <CreatureDisplayInfo_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -77,8 +77,8 @@ else
                     <TabTitle_Element Line1="Creature Display" Line2="Info Extra" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <CreatureDisplayInfoExtra_Tab Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfoExtra" />
+                    <TabContentEditBody T="CreatureDisplayInfoExtra" @bind-Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfoExtra">
+                        <CreatureDisplayInfoExtra_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -87,7 +87,7 @@ else
                     <TabTitle_Element Line1="Creature Display" Line2="Info Option" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1">
+                    <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1" CustomValueHandling="true">
                         <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -97,7 +97,7 @@ else
                     <TabTitle_Element Line1="NPC Model Item" Line2="Slot Display Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
+                    <TabContentEditBody T="object" CustomValueHandling="true">
                         <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfos" />
                     </TabContentEditBody>
                 </ChildContent>
@@ -128,15 +128,15 @@ else
         return await Service.GetDashboardModelsAsync();
     }
 
-    async void DeleteAsync(DashboardModel model)
+    async Task DeleteAsync(DashboardModel model)
     {
         await Service.DeleteAsync(model.Id);
     }
 
-    async void EditAsync(DashboardModel model)
+    async Task EditAsync(DashboardModel model)
     {
         var data = await Service.GetByIdAsync(model.Id);
-        if(data != null)
+        if (data != null)
         {
             var parameters = new DialogParameters() { { "Id", model.Id } };
             NewAsync_Click<CreatureSearch_Dialog>(parameters);

@@ -9,7 +9,16 @@
 <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
     <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;" @bind-SelectedIndex="currentSlideIndex">
         <div class="px-5 pb-5 pt-8">
-            @ChildContent
+            @if (null == Value && !CustomValueHandling)
+            {
+                <TabContentNoValue Value="Value" ValueChanged="ValueChanged" />
+            }
+            else
+            {
+                <CascadingValue Value="Value" Name="Value">
+                    @ChildContent
+                </CascadingValue>
+            }
         </div>
     </MudCarousel>
 </MudPaper>
@@ -27,7 +36,7 @@
             <MudStack Row="true" Spacing="0">
                 <MudIconButton Icon="@Icons.Filled.MoveDown" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance - 2))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == 1 || DisableFooter)" />
                 <MudIconButton Icon="@Icons.Filled.RemoveCircleOutline" OnClick="@(async () => await RemoveInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="Instances.Count <= 0 || DisableFooter" />
-                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="DisableFooter"/>
+                <MudIconButton Icon="@Icons.Filled.AddCircleOutline" OnClick="@(async () => await AddInstanceAsync())" Style="color:var(--mud-palette-text-primary);" Disabled="DisableFooter" />
                 <MudIconButton Icon="@Icons.Filled.MoveUp" OnClick="@(async () => await MoveInstanceAsync(CurrentInstance - 1, CurrentInstance))" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="@(Instances.Count == 0 || CurrentInstance == Instances.Count || DisableFooter)" />
             </MudStack>
         </MudStack>
@@ -36,6 +45,11 @@
 
 
 @code {
+    [Parameter]
+    public T Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -64,6 +78,9 @@
 
     [Parameter]
     public bool DisableFooter { get; set; } = false;
+
+    [Parameter]
+    public bool CustomValueHandling { get; set; } = false;
 
     int contentHeight = 650;
     MudCarousel<object>? mudCarouselRef;

@@ -1,63 +1,70 @@
 ﻿@inherits HotfixPageTabBase<CreatureDisplayInfo>
 
-<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
-    <MudGrid>
-        <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.CreatureModelAlpha" ValueCompare="ValueCompare?.CreatureModelAlpha" Label="@nameof(Value.CreatureModelAlpha).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.PortraitCreatureDisplayInfoId" ValueCompare="ValueCompare?.PortraitCreatureDisplayInfoId" Label="@nameof(Value.PortraitCreatureDisplayInfoId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.PortraitTextureFileDataId" ValueCompare="ValueCompare?.PortraitTextureFileDataId" Label="@nameof(Value.PortraitTextureFileDataId).ToDisplayName()" />
-            <Input_Element T="sbyte" @bind-Value="Value.SizeClass" ValueCompare="ValueCompare?.SizeClass" Label="@nameof(Value.SizeClass).ToDisplayName()" />
-            <Input_Element T="sbyte" @bind-Value="Value.UnarmedWeaponType" ValueCompare="ValueCompare?.UnarmedWeaponType" Label="@nameof(Value.UnarmedWeaponType).ToDisplayName()" />
-        </MudItem>
-        <MudItem xs="6">
-            <Placeholder_Element Amount="4" />
-            <InlineGroup Merged="false">
-                <LeftContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.ModelId" ValueCompare="ValueCompare?.ModelId" Label="@nameof(Value.ModelId).ToDisplayName()" />
-                </RightContent>
-            </InlineGroup>
-        </MudItem>
-        <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.BloodId" ValueCompare="ValueCompare?.BloodId" Label="@nameof(Value.BloodId).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.ParticleColorId" ValueCompare="ValueCompare?.ParticleColorId" Label="@nameof(Value.ParticleColorId).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.ObjectEffectPackageId" ValueCompare="ValueCompare?.ObjectEffectPackageId" Label="@nameof(Value.ObjectEffectPackageId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.DissolveEffectId" ValueCompare="ValueCompare?.DissolveEffectId" Label="@nameof(Value.DissolveEffectId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.DissolveOutEffectId" ValueCompare="ValueCompare?.DissolveOutEffectId" Label="@nameof(Value.DissolveOutEffectId).ToDisplayName()" />
+@if (null == Value)
+{
+    <TabContentNoValue T="CreatureDisplayInfo" @bind-Value="Value" />
+}
+else
+{
+    <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+        <MudGrid>
+            <MudItem xs="3">
+                <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" />
+                <Input_Element T="byte" @bind-Value="Value.CreatureModelAlpha" ValueCompare="ValueCompare?.CreatureModelAlpha" Label="@nameof(Value.CreatureModelAlpha).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.PortraitCreatureDisplayInfoId" ValueCompare="ValueCompare?.PortraitCreatureDisplayInfoId" Label="@nameof(Value.PortraitCreatureDisplayInfoId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.PortraitTextureFileDataId" ValueCompare="ValueCompare?.PortraitTextureFileDataId" Label="@nameof(Value.PortraitTextureFileDataId).ToDisplayName()" />
+                <Input_Element T="sbyte" @bind-Value="Value.SizeClass" ValueCompare="ValueCompare?.SizeClass" Label="@nameof(Value.SizeClass).ToDisplayName()" />
+                <Input_Element T="sbyte" @bind-Value="Value.UnarmedWeaponType" ValueCompare="ValueCompare?.UnarmedWeaponType" Label="@nameof(Value.UnarmedWeaponType).ToDisplayName()" />
+            </MudItem>
+            <MudItem xs="6">
+                <Placeholder_Element Amount="4" />
+                <InlineGroup Merged="false">
+                    <LeftContent>
+                        <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" />
+                    </LeftContent>
+                    <RightContent>
+                        <Input_Element T="ushort" @bind-Value="Value.ModelId" ValueCompare="ValueCompare?.ModelId" Label="@nameof(Value.ModelId).ToDisplayName()" />
+                    </RightContent>
+                </InlineGroup>
+            </MudItem>
+            <MudItem xs="3">
+                <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                <Input_Element T="byte" @bind-Value="Value.BloodId" ValueCompare="ValueCompare?.BloodId" Label="@nameof(Value.BloodId).ToDisplayName()" />
+                <Input_Element T="ushort" @bind-Value="Value.ParticleColorId" ValueCompare="ValueCompare?.ParticleColorId" Label="@nameof(Value.ParticleColorId).ToDisplayName()" />
+                <Input_Element T="ushort" @bind-Value="Value.ObjectEffectPackageId" ValueCompare="ValueCompare?.ObjectEffectPackageId" Label="@nameof(Value.ObjectEffectPackageId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.DissolveEffectId" ValueCompare="ValueCompare?.DissolveEffectId" Label="@nameof(Value.DissolveEffectId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.DissolveOutEffectId" ValueCompare="ValueCompare?.DissolveOutEffectId" Label="@nameof(Value.DissolveOutEffectId).ToDisplayName()" />
 
-        </MudItem>
-    </MudGrid>
-</MudCarouselItem>
-<MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
-    <MudGrid>
-        <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.PlayerOverrideScale" ValueCompare="ValueCompare?.PlayerOverrideScale" Label="@nameof(Value.PlayerOverrideScale).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.PetInstanceScale" ValueCompare="ValueCompare?.PetInstanceScale" Label="@nameof(Value.PetInstanceScale).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.AnimReplacementSetId" ValueCompare="ValueCompare?.AnimReplacementSetId" Label="@nameof(Value.AnimReplacementSetId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.MountPoofSpellVisualKitId" ValueCompare="ValueCompare?.MountPoofSpellVisualKitId" Label="@nameof(Value.MountPoofSpellVisualKitId).ToDisplayName()" />
-        </MudItem>
-        <MudItem xs="6">
-            <Placeholder_Element Amount="4" />
-            <InlineGroup Merged="false">
-                <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="Value.SoundId" ValueCompare="ValueCompare?.SoundId" Label="@nameof(Value.SoundId).ToDisplayName()" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.NPCSoundId" ValueCompare="ValueCompare?.NPCSoundId" Label="@nameof(Value.NPCSoundId).ToDisplayName()" />
-                </RightContent>
-            </InlineGroup>
-        </MudItem>
-        <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID1" ValueCompare="ValueCompare?.TextureVariationFileDataID1" Label="Texture Variation File Data ID1" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID2" ValueCompare="ValueCompare?.TextureVariationFileDataID2" Label="Texture Variation File Data ID2" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID3" ValueCompare="ValueCompare?.TextureVariationFileDataID3" Label="Texture Variation File Data ID3" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID4" ValueCompare="ValueCompare?.TextureVariationFileDataID4" Label="Texture Variation File Data ID4" />
-            <Input_Element T="sbyte" @bind-Value="Value.CreatureModelMinLod" ValueCompare="ValueCompare?.CreatureModelMinLod" Label="@nameof(Value.CreatureModelMinLod).ToDisplayName()" />
-        </MudItem>
-    </MudGrid>
-</MudCarouselItem>
+            </MudItem>
+        </MudGrid>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
+        <MudGrid>
+            <MudItem xs="3">
+                <Input_Element T="decimal" @bind-Value="Value.PlayerOverrideScale" ValueCompare="ValueCompare?.PlayerOverrideScale" Label="@nameof(Value.PlayerOverrideScale).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.PetInstanceScale" ValueCompare="ValueCompare?.PetInstanceScale" Label="@nameof(Value.PetInstanceScale).ToDisplayName()" />
+                <Input_Element T="ushort" @bind-Value="Value.AnimReplacementSetId" ValueCompare="ValueCompare?.AnimReplacementSetId" Label="@nameof(Value.AnimReplacementSetId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.MountPoofSpellVisualKitId" ValueCompare="ValueCompare?.MountPoofSpellVisualKitId" Label="@nameof(Value.MountPoofSpellVisualKitId).ToDisplayName()" />
+            </MudItem>
+            <MudItem xs="6">
+                <Placeholder_Element Amount="4" />
+                <InlineGroup Merged="false">
+                    <LeftContent>
+                        <Input_Element T="ushort" @bind-Value="Value.SoundId" ValueCompare="ValueCompare?.SoundId" Label="@nameof(Value.SoundId).ToDisplayName()" />
+                    </LeftContent>
+                    <RightContent>
+                        <Input_Element T="ushort" @bind-Value="Value.NPCSoundId" ValueCompare="ValueCompare?.NPCSoundId" Label="@nameof(Value.NPCSoundId).ToDisplayName()" />
+                    </RightContent>
+                </InlineGroup>
+            </MudItem>
+            <MudItem xs="3">
+                <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID1" ValueCompare="ValueCompare?.TextureVariationFileDataID1" Label="Texture Variation File Data ID1" />
+                <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID2" ValueCompare="ValueCompare?.TextureVariationFileDataID2" Label="Texture Variation File Data ID2" />
+                <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID3" ValueCompare="ValueCompare?.TextureVariationFileDataID3" Label="Texture Variation File Data ID3" />
+                <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID4" ValueCompare="ValueCompare?.TextureVariationFileDataID4" Label="Texture Variation File Data ID4" />
+                <Input_Element T="sbyte" @bind-Value="Value.CreatureModelMinLod" ValueCompare="ValueCompare?.CreatureModelMinLod" Label="@nameof(Value.CreatureModelMinLod).ToDisplayName()" />
+            </MudItem>
+        </MudGrid>
+    </MudCarouselItem>
+}

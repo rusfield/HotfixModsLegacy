@@ -6,12 +6,11 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView GetDashboardModelsAsync_Func="GetDashboardModelsAsync" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures" EditAsync_Action="EditAsync">
-    </TabContentView>
+    <TabContentView GetDashboardModelsAsync_Func="GetDashboardModelsAsync" New_Callback="NewAsync_Click<CreatureSearch_Dialog>" Title="Creatures" EditAsync_Callback="EditAsync" DeleteAsync_Callback="DeleteAsync" />
 }
 else
 {
-    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())" Save_Callback="Save">
+    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())" Save_Callback="SaveAsync">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
                 <TabContent>
@@ -119,8 +118,7 @@ else
     }
 
 
-    // Temp
-    async void Save()
+    async void SaveAsync()
     {
         await Service.SaveAsync((CreatureDto)PageTab.Dto);
     }
@@ -130,9 +128,9 @@ else
         return await Service.GetDashboardModelsAsync();
     }
 
-    async Task DeleteAsync(int id)
+    async void DeleteAsync(DashboardModel model)
     {
-        await Service.DeleteAsync(id);
+        await Service.DeleteAsync(model.Id);
     }
 
     async void EditAsync(DashboardModel model)

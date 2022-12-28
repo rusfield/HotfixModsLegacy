@@ -44,7 +44,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new GenericHotfixService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 1,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5501
                 };
             });
 
@@ -53,7 +53,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 return new AnimKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
                     FromId = 10000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5502
                 };
             });
 
@@ -63,7 +63,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 10000,
                     ToId = 20000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5503
                 };
             });
 
@@ -73,7 +73,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 10000,
                     ToId = 20000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5504
                 };
             });
 
@@ -83,7 +83,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 10000,
                     ToId = 20000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5505
                 };
             });
 
@@ -93,7 +93,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 3200000,
                     ToId = 3300000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5506
                 };
             });
 
@@ -103,7 +103,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 10000,
                     ToId = 20000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5507
                 };
             });
 
@@ -113,7 +113,7 @@ namespace HotfixMods.Apps.MauiBlazor
                 {
                     FromId = 10000,
                     ToId = 20000,
-                    VerifiedBuild = -123
+                    VerifiedBuild = -5508
                 };
             });
 

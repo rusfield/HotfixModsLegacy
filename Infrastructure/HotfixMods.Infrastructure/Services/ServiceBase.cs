@@ -202,11 +202,10 @@ namespace HotfixMods.Infrastructure.Services
             if (schemaName == _appConfig.HotfixesSchema)
             {
                 var entities = await GetAsync<T>(parameters);
-                var tableHash = GetTableHashOfEntity<T>();
 
                 foreach (var entity in entities)
                 {
-                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetIdValue()), new DbParameter(nameof(HotfixData.TableHash), tableHash) };
+                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
 
                     var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
                     if (hotfixData != null)

@@ -51,9 +51,9 @@ namespace HotfixMods.Infrastructure.Services
             {
                 Entity = await GetExistingOrNewHotfixModsEntity(id),
                 CreatureTemplate = creatureTemplate,
-                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)) ?? new(),
-                CreatureTemplateAddon = await GetSingleByIdAsync<CreatureTemplateAddon>(id) ?? new(),
-                CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(new DbParameter(nameof(CreatureEquipTemplate.CreatureId), id)) ?? new(),
+                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)),
+                CreatureTemplateAddon = await GetSingleByIdAsync<CreatureTemplateAddon>(id),
+                CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(new DbParameter(nameof(CreatureEquipTemplate.CreatureId), id)),
                 IsUpdate = true
             };
 

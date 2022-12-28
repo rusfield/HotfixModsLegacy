@@ -46,10 +46,10 @@ namespace HotfixMods.Infrastructure.Services
             var newNpcModelItemSlotDisplayInfoId = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
             var newCreatureDisplayInfoOptionsId = await GetNextIdAsync<CreatureDisplayInfoOption>();
 
-            dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
             if (dto.Entity.RecordId == 0 || !dto.IsUpdate)
             {
                 dto.Entity.RecordId = newCreatureTemplateId;
+                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
             }
 
             if (dto.CreatureTemplate.Entry == 0 || !dto.IsUpdate)

@@ -1,4 +1,6 @@
-﻿<MudGrid Class="mb-1 px-3">
+﻿@inject ISnackbar Snackbar
+
+<MudGrid Class="mb-1 px-3">
     <MudItem xs="4" />
     <MudItem xs="4">
         <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
@@ -32,7 +34,7 @@
         <MudTd DataLabel="Id">@context.Id</MudTd>
         <MudTd DataLabel="Action">
             <MudStack Row="true" Justify="Justify.FlexEnd">
-                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync_Action(context))" />
+                <MudIconButton Size="Size.Small" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(() => EditAsync_Click(context))" />
                 <MudIconButton Size="Size.Small" Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(() => DeleteAsync_Click(context))" />
             </MudStack>
         </MudTd>
@@ -60,7 +62,10 @@
     public EventCallback New_Callback { get; set; }
 
     [Parameter]
-    public Action<DashboardModel> EditAsync_Action { get; set; } 
+    public EventCallback<DashboardModel> EditAsync_Callback { get; set; } 
+
+    [Parameter]
+    public EventCallback<DashboardModel> DeleteAsync_Callback { get; set; }
 
     MudTable<DashboardModel>? mudTableRef;
     List<DashboardModel> data = new();
@@ -82,18 +87,19 @@
         base.OnAfterRender(firstRender);
     }
 
-    void Add_Click()
-    {
-
-    }
-
-    void DeleteAsync_Click(DashboardModel model)
-    {
-
-    }
-
     void PageChanged()
     {
 
+    }
+
+    async void EditAsync_Click(DashboardModel model)
+    {
+        await EditAsync_Callback.InvokeAsync(model);
+    }
+
+    async void DeleteAsync_Click(DashboardModel model)
+    {
+        await DeleteAsync_Callback.InvokeAsync(model);
+        Snackbar.Add($"{model.Name} deleted.", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
     }
 }

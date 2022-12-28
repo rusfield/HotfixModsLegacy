@@ -40,6 +40,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<CreatureDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            callback("Test", "Test", 50);
 
             var creatureTemplate = await GetSingleAsync<CreatureTemplate>(new DbParameter(nameof(CreatureTemplate.Entry), id));
             if (creatureTemplate == null)

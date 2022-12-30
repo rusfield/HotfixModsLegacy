@@ -14,7 +14,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new SpellVisualKitDto();
-            result.Entity.RecordId = await GetNextIdAsync();
+            result.HotfixModsEntity.RecordId = await GetNextIdAsync();
 
             return result;
         }
@@ -31,14 +31,14 @@ namespace HotfixMods.Infrastructure.Services
             return new SpellVisualKitDto()
             {
                 SpellVisualKit = spellVisualKit,
-                Entity = await GetExistingOrNewHotfixModsEntity(spellVisualKit.Id)
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(spellVisualKit.Id)
             };
         }
 
         public async Task SaveAsync(SpellVisualKitDto spellVisualKitDto)
         {
             await SaveAsync(spellVisualKitDto.SpellVisualKit);
-            await SaveAsync(spellVisualKitDto.Entity);
+            await SaveAsync(spellVisualKitDto.HotfixModsEntity);
         }
 
         public async Task DeleteAsync(int id)

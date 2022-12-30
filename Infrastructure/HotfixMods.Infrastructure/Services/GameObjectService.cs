@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
                 GameobjectTemplate = gameobjectTemplate,
                 GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
                 GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(new DbParameter(nameof(GameobjectTemplate.DisplayId), id)),
-                Entity = await GetExistingOrNewHotfixModsEntity((int)gameobjectTemplate.Entry),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity((int)gameobjectTemplate.Entry),
                 IsUpdate = true
             };
         }
@@ -47,7 +47,7 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.GameobjectTemplate);
             await SaveAsync(dto.GameobjectTemplateAddon);
             await SaveAsync(dto.GameobjectDisplayInfo);
-            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.HotfixModsEntity);
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
@@ -69,7 +69,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteAsync(dto.GameobjectDisplayInfo);
             await DeleteAsync(dto.GameobjectTemplateAddon);
             await DeleteAsync(dto.GameobjectTemplate);
-            await DeleteAsync(dto.Entity);
+            await DeleteAsync(dto.HotfixModsEntity);
             return true;
         }
     }

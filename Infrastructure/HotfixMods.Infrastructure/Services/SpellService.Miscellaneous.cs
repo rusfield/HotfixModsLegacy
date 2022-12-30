@@ -16,8 +16,8 @@ namespace HotfixMods.Infrastructure.Services
                 var newSpellXSpellVisualId = await GetNextIdAsync<SpellXSpellVisual>();
                 var newSpellVisualEventId = await GetNextIdAsync<SpellVisualEvent>();
 
-                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.Entity.RecordId = newSpellId;
+                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.HotfixModsEntity.RecordId = newSpellId;
                 dto.Spell.Id = newSpellId;
 
                 dto.SpellAuraOptions.Id = await GetNextIdAsync<SpellAuraOptions>();
@@ -59,7 +59,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
-            dto.Entity.VerifiedBuild = VerifiedBuild;
+            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
             dto.Spell.VerifiedBuild = VerifiedBuild;
             dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
             dto.SpellCooldowns.VerifiedBuild = VerifiedBuild;

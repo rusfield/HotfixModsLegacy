@@ -13,8 +13,8 @@ namespace HotfixMods.Infrastructure.Services
                 var newSoundKitId = await GetNextIdAsync<SoundKit>();
                 var newSoundKitEntryId = await GetNextIdAsync<SoundKitEntry>();
 
-                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.Entity.RecordId = newSoundKitId;
+                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.HotfixModsEntity.RecordId = newSoundKitId;
                 dto.SoundKit.Id = newSoundKitId;
 
                 dto.EntryGroups.ForEach(s =>
@@ -26,7 +26,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
-            dto.Entity.VerifiedBuild = VerifiedBuild;
+            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
             dto.SoundKit.VerifiedBuild = VerifiedBuild;
             dto.EntryGroups.ForEach(s =>
             {

@@ -7,15 +7,31 @@
 @inject IDialogService DialogService
 
 @code {
-    [CascadingParameter(Name ="Value")]
-    public T Value { get; set; }
-
-    [Parameter]
-    public T? ValueCompare { get; set; }
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
 
     [Parameter]
     public int CurrentPageIndex { get; set; }
 
+    protected T Value { get; set; }
+    protected T ValueCompare { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var dtoProperty = PageTab.Dto.GetType().GetProperty(typeof(T).Name);
+        Value = (T)dtoProperty.GetValue(PageTab.Dto);
+        base.OnInitialized();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (PageTab.DtoCompare != null)
+        {
+            var dtoCompareProperty = PageTab.DtoCompare.GetType().GetProperty(typeof(T).Name);
+            ValueCompare = (T)dtoCompareProperty.GetValue(PageTab.DtoCompare);
+        }
+        base.OnAfterRender(firstRender);
+    }
 
     protected EventCallback OpenInfoDialog(string infoText)
     {

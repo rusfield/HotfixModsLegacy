@@ -50,7 +50,7 @@ namespace HotfixMods.Infrastructure.Services
 
             var result = new CreatureDto()
             {
-                Entity = await GetExistingOrNewHotfixModsEntity(id),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(id),
                 CreatureTemplate = creatureTemplate,
                 CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)),
                 CreatureTemplateAddon = await GetSingleByIdAsync<CreatureTemplateAddon>(id),
@@ -92,7 +92,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.HotfixModsEntity);
             await SaveAsync(dto.CreatureTemplate);
             await SaveAsync(dto.CreatureDisplayInfo);
             await SaveAsync(dto.CreatureEquipTemplate);
@@ -131,7 +131,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteAsync(dto.CreatureEquipTemplate);
             await DeleteAsync(dto.CreatureTemplateAddon);
             await DeleteAsync(dto.CreatureTemplate);
-            await DeleteAsync(dto.Entity);
+            await DeleteAsync(dto.HotfixModsEntity);
 
             return true;
         }

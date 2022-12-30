@@ -15,7 +15,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new ItemDto();
-            result.Entity.RecordId = await GetNextIdAsync();
+            result.HotfixModsEntity.RecordId = await GetNextIdAsync();
 
             return result;
         }

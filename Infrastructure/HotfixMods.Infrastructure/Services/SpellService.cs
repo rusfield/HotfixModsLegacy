@@ -31,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
 
             var result = new SpellDto()
             {
-                Entity = await GetExistingOrNewHotfixModsEntity(id),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(id),
                 Spell = spell,
                 SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(new DbParameter(nameof(SpellAuraOptions.SpellId), id)),
                 SpellCooldowns = await GetSingleAsync<SpellCooldowns>(new DbParameter(nameof(SpellCooldowns.SpellId), id)),
@@ -81,7 +81,7 @@ namespace HotfixMods.Infrastructure.Services
 
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.Entity);
+            await SaveAsync(dto.HotfixModsEntity);
             await SaveAsync(dto.Spell);
             await SaveAsync(dto.SpellAuraOptions);
             await SaveAsync(dto.SpellCooldowns);
@@ -126,7 +126,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteAsync(dto.SpellCooldowns);
             await DeleteAsync(dto.SpellAuraOptions);
             await DeleteAsync(dto.Spell);
-            await DeleteAsync(dto.Entity);
+            await DeleteAsync(dto.HotfixModsEntity);
 
             return true;
         }

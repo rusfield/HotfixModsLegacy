@@ -15,8 +15,8 @@ namespace HotfixMods.Infrastructure.Services
                 var newGameobjectDisplayInfoId = await GetNextIdAsync<GameobjectDisplayInfo>();
 
 
-                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.Entity.RecordId = newGameobjectDisplayInfoId;
+                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.HotfixModsEntity.RecordId = newGameobjectDisplayInfoId;
                 dto.GameobjectTemplate.DisplayId = (uint)newGameobjectDisplayInfoId;
                 dto.GameobjectTemplate.Entry = (uint)newGameobjectTemplateId;
 
@@ -27,7 +27,7 @@ namespace HotfixMods.Infrastructure.Services
                     dto.GameobjectDisplayInfo.Id = newGameobjectDisplayInfoId;
             }
 
-            dto.Entity.VerifiedBuild = VerifiedBuild;
+            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
             dto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
 
             if(dto.GameobjectDisplayInfo != null)

@@ -1,14 +1,10 @@
 ﻿using HotfixMods.Core.Models.TrinityCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
-    public abstract class DtoBase
+    public abstract class DtoBase : IDto
     {
+        public DtoBase() { }
         public DtoBase(string displayName)
         {
             _displayName = displayName;

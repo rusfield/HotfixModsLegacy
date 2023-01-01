@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject CreatureService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<IDto>
 
 @if (null == PageTab.Dto)
 {

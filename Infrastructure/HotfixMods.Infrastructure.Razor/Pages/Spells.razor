@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject SpellService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<SpellDto>
 
 @if (null == PageTab.Dto)
 {
@@ -11,6 +11,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader IsUpdate="false" Title="Spells" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -171,6 +172,7 @@ else
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }
 
 @code {

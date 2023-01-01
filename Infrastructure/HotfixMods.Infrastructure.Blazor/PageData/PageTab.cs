@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HotfixMods.Infrastructure.DtoModels;
 
-namespace HotfixMods.Infrastructure.Razor.PageData
+namespace HotfixMods.Infrastructure.Blazor.PageData
 {
-    public class PageTab<T>
-        where T : new()
+    public abstract class PageTab
     {
-        public PageTab(string tabName) 
+        public PageTab(string tabName, Type pageType, Type dtoType)
         {
             TabName = tabName;
+            PageType = pageType;
+            DtoType = dtoType;
+            TabId = Guid.NewGuid();
         }
 
         public string TabName { get; set; }
-        public T? Dto { get; set; }
-        public T? LookupDto { get; set; }
+        public IDto Dto { get; set; }
+        public IDto DtoCompare { get; set; }
+        public Type PageType { get; set; }
+        public Type DtoType { get; set; }
+        public Guid TabId { get; set; }
     }
 }

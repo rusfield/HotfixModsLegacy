@@ -2,24 +2,14 @@
 
 <MudCarouselItem Transition="TransitionHandler.Transition" CustomTransitionEnter="@TransitionHandler.EnterTransition" CustomTransitionExit="@TransitionHandler.ExitTransition">
     <MudStack Justify="justify" AlignItems="alignItems" Style="height:100%;width:100%;">
-        <MudButton Variant="Variant.Outlined" OnClick="InitValue_Click">Init</MudButton>
+        <MudButton Variant="Variant.Outlined" OnClick="InitValue">Init</MudButton>
     </MudStack>
 </MudCarouselItem>
 
 @code {
-
     [Parameter]
-    public T Value { get; set; }
-
-    [Parameter]
-    public EventCallback<T> ValueChanged { get; set; }
+    public EventCallback InitValue { get; set; }
 
     Justify justify = Justify.Center;
     AlignItems alignItems = AlignItems.Center;
-
-    async Task InitValue_Click()
-    {
-        Value = new();
-        await ValueChanged.InvokeAsync(Value);
-    }
 }

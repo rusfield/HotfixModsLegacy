@@ -1,12 +1,13 @@
 ﻿
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Razor.PageData;
 
 namespace HotfixMods.Infrastructure.Razor.Handlers
 {
     public static class GlobalHandler
     {
-        public static Action<PageTab>? LaunchTab;
+        public static Action<PageTab<IDto>>? LaunchTab;
         public static AppConfig? Config;
 
         static Dictionary<string, object> cache = new();

@@ -1,0 +1,27 @@
+﻿@for (int i = 0; i < Amount; i++)
+{
+    if (IsNested)
+    {
+        <MudSkeleton Height="56px" Width="100%" SkeletonType="SkeletonType.Rectangle" Class="@(Visible ? "" : "invisible")" Style="margin-bottom:16.91px;margin-top:6px;" />
+    }
+    else
+    {
+        <div class="custom-wrapper">
+            <MudStack Style="height:100.91px" Justify="Justify.Center">
+                <MudSkeleton Height="56px" Width="100%" SkeletonType="SkeletonType.Rectangle" Class="@(Visible ? "" : "invisible")" />
+            </MudStack>
+        </div>
+    }
+}
+
+@code
+{
+    [Parameter]
+    public int Amount { get; set; } = 1;
+
+    [Parameter]
+    public bool Visible { get; set; } = false;
+
+    [Parameter]
+    public bool IsNested { get; set; } = false; // Used for when its a placeholder for Autocomplete, Single select etc, and uses different paddings and margins.
+}

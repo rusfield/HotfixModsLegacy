@@ -1,61 +1,190 @@
-﻿@using HotfixMods.Infrastructure.DtoModels
-@using HotfixMods.Infrastructure.Razor.Components.Elements
-@using HotfixMods.Core.Flags
+﻿
 
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.Minlevel" ValueCompare="ValueCompare?.Minlevel" Label="@nameof(Value.Minlevel).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.Maxlevel" ValueCompare="ValueCompare?.Maxlevel" Label="@nameof(Value.Maxlevel).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="string" @bind-Value="Value.FemaleName" ValueCompare="ValueCompare?.FemaleName" Label="@nameof(Value.FemaleName).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.Subname" ValueCompare="ValueCompare?.Subname" Label="@nameof(Value.Subname).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.TitleAlt" ValueCompare="ValueCompare?.TitleAlt" Label="@nameof(Value.TitleAlt).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.Speed_Walk" ValueCompare="ValueCompare?.Speed_Walk" Label="@nameof(Value.Speed_Walk).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.Speed_Run" ValueCompare="ValueCompare?.Speed_Run" Label="@nameof(Value.Speed_Run).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.MovementId" ValueCompare="ValueCompare?.MovementId" Label="@nameof(Value.MovementId).ToDisplayName()" />
+            <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" />
+            <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" />
+            <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" />
+            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags" ValueCompare="ValueCompare?.Unit_Flags" Label="@nameof(Value.Unit_Flags).ToDisplayName()" />
+                </LeftContent>
+                <MiddleContent>
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags2" ValueCompare="ValueCompare?.Unit_Flags2" Label="@nameof(Value.Unit_Flags2).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.Type_Flags" ValueCompare="ValueCompare?.Type_Flags" Label="@nameof(Value.Type_Flags).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.VignetteId" ValueCompare="ValueCompare?.VignetteId" Label="@nameof(Value.VignetteId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.WidgetSetId" ValueCompare="ValueCompare?.WidgetSetId" Label="@nameof(Value.WidgetSetId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionId" ValueCompare="ValueCompare?.WidgetSetUnitConditionId" Label="@nameof(Value.WidgetSetUnitConditionId).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>
+    <MudGrid>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.ExperienceModifier" ValueCompare="ValueCompare?.ExperienceModifier" Label="@nameof(Value.ExperienceModifier).ToDisplayName()" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.HealthModifierExtra" ValueCompare="ValueCompare?.HealthModifierExtra" Label="Extra" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ManaModifierExtra" ValueCompare="ValueCompare?.ManaModifierExtra" Label="Extra" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="int" @bind-Value="Value.HealthScalingExpansion" ValueCompare="ValueCompare?.HealthScalingExpansion" Label="@nameof(Value.HealthScalingExpansion).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@nameof(Value.Dmgschool).ToDisplayName()" />
+            <InlineGroup LeftContentWidth="60" RightContentWidth="40">
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.BaseAttackTime" ValueCompare="ValueCompare?.BaseAttackTime" Label="@nameof(Value.BaseAttackTime).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.BaseVariance" ValueCompare="ValueCompare?.BaseVariance" Label="Variance" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup LeftContentWidth="60" RightContentWidth="40">
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.RangeAttackTime" ValueCompare="ValueCompare?.RangeAttackTime" Label="@nameof(Value.RangeAttackTime).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" />
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
+<MudCarouselItem>    <MudGrid>
+        <MudItem xs="3">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.MinGold" ValueCompare="ValueCompare?.MinGold" Label="@nameof(Value.MinGold).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.MaxGold" ValueCompare="ValueCompare?.MaxGold" Label="@nameof(Value.MaxGold).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="uint" @bind-Value="Value.LootId" ValueCompare="ValueCompare?.LootId" Label="@nameof(Value.LootId).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()" />
+            <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_1" ValueCompare="ValueCompare?.Difficulty_Entry_1" Label="@nameof(Value.Difficulty_Entry_1).ToDisplayName()" />
+                </LeftContent>
+                <MiddleContent>
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_2" ValueCompare="ValueCompare?.Difficulty_Entry_2" Label="@nameof(Value.Difficulty_Entry_2).ToDisplayName()" />
+                </MiddleContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_3" ValueCompare="ValueCompare?.Difficulty_Entry_3" Label="@nameof(Value.Difficulty_Entry_3).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.KillCredit1" ValueCompare="ValueCompare?.KillCredit1" Label="@nameof(Value.KillCredit1).ToDisplayName()" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.KillCredit2" ValueCompare="ValueCompare?.KillCredit2" Label="@nameof(Value.KillCredit2).ToDisplayName()" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.CreatureDifficultyId" ValueCompare="ValueCompare?.CreatureDifficultyId" Label="@nameof(Value.CreatureDifficultyId).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.VehicleId" ValueCompare="ValueCompare?.VehicleId" Label="@nameof(Value.VehicleId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_Id" ValueCompare="ValueCompare?.Gossip_Menu_Id" Label="@nameof(Value.Gossip_Menu_Id).ToDisplayName()" />
+            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" />
 
-<MudGrid>
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Faction" @bind-Value="Creature.Faction" ValueLookup="@CreatureLookup?.Faction" />
-        <IntInput_Element Label="Level" @bind-Value="Creature.Level" ValueLookup="@CreatureLookup?.Level" />
-        <SingleSelect_Element Label="Rank" @bind-Value="Creature.Rank" ValueLookup="CreatureLookup?.Rank" />
-        <SingleSelect_Element Label="Type" @bind-Value="Creature.CreatureType" ValueLookup="CreatureLookup?.CreatureType" />
-        <SingleSelect_Element Label="Unit Class" @bind-Value="Creature.CreatureUnitClass" ValueLookup="CreatureLookup?.CreatureUnitClass" />
-        <DecimalInput_Element Label="Scale" @bind-Value="Creature.Scale" ValueLookup="@CreatureLookup?.Scale" />
-    </MudItem>
-    <MudItem xs="6" Class="@gridItemCssClass" Style="@($"background-position:center; background-repeat:no-repeat; background-size:auto 100%; background-image:url('images/creatures/portraits/{Creature.Gender.ToString().ToLower()}/{Creature.Race.ToString().ToLower().Replace("_","")}.png')")">
-        @* BG *@
-    </MudItem>
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <MultiSelect_Element T="UnitFlags" Label="Unit Flags" @bind-Value="Creature.UnitFlags" ValueLookup="CreatureLookup?.UnitFlags" />
-        <MultiSelect_Element T="UnitFlags2" Label="Unit Flags" @bind-Value="Creature.UnitFlags2" ValueLookup="CreatureLookup?.UnitFlags2" />
-        <MultiSelect_Element T="UnitFlags3" Label="Unit Flags" @bind-Value="Creature.UnitFlags3" ValueLookup="CreatureLookup?.UnitFlags3" />
-        <MultiSelect_Element T="UnitFlagsExtra" Label="Unit Flags" @bind-Value="Creature.FlagsExtra" ValueLookup="CreatureLookup?.FlagsExtra" />
-        <DecimalInput_Element Label="Health Modifier" @bind-Value="Creature.HealthModifier" ValueLookup="@CreatureLookup?.HealthModifier" />
-        <DecimalInput_Element Label="Damage Modifier" @bind-Value="Creature.DamageModifier" ValueLookup="@CreatureLookup?.DamageModifier" />
-    </MudItem>
+        </MudItem>
+    </MudGrid>
+</MudCarouselItem>
 
-
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <IntInput_Element Label="Sound ID" @bind-Value="Creature.SoundId" ValueLookup="@CreatureLookup?.SoundId" />
-    </MudItem>
-    <MudItem xs="6" Class="@gridItemCssClass">
-        <TextInput_Element Label="Name" @bind-Value="Creature.Name" ValueLookup="@CreatureLookup?.Name" Variant="Variant.Text" />
-    </MudItem>
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <DecimalInput_Element Label="Armor Modifier" @bind-Value="Creature.ArmorModifier" ValueLookup="@CreatureLookup?.ArmorModifier" />
-    </MudItem>
-
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <BoolSelect_Element Label="Regen Health" @bind-Value="Creature.RegenHealth" ValueLookup="CreatureLookup?.RegenHealth" />
-    </MudItem>
-    <MudItem xs="1" Class="@gridItemCssClass" />
-    <MudItem xs="4" Class="@gridItemCssClass">
-        <TextInput_Element Label="Sub Name" @bind-Value="Creature.SubName" ValueLookup="@CreatureLookup?.SubName" Variant="Variant.Text" />
-    </MudItem>
-    <MudItem xs="1" Class="@gridItemCssClass" />
-    <MudItem xs="3" Class="@gridItemCssClass">
-        <IntList_Element Label="Auras" PluralItemName="auras" SingularItemName="aura" @bind-Value="Creature.Auras" ValueLookup="CreatureLookup?.Auras" />
-    </MudItem>
-
-</MudGrid>
-
-@code
-{
-    [Parameter]
-    public CreatureDto Creature { get; set; }
-
-    [Parameter]
-    public CreatureDto? CreatureLookup { get; set; }
-
-    string gridItemCssClass = "pb-0 pt-0";
+@code {
+    CreatureTemplate Value = new();
+    CreatureTemplate? ValueCompare = null;
 }

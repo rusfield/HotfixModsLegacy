@@ -1,13 +1,12 @@
 ﻿@typeparam T where T : IDto
-
-@using HotfixMods.Infrastructure.Razor.Handlers;
+@using HotfixMods.Infrastructure.Blazor.PageData
 
 @inject IDialogService DialogService
 
 
 @code {
     [Parameter]
-    public PageTab<T> PageTab { get; set; }
+    public PageTab PageTab { get; set; }
 
     protected async void NewAsync_Click<TDialog>()
     where TDialog : ComponentBase
@@ -21,9 +20,9 @@
         var result = await DialogService.Show<TDialog>(null, parameters).Result;
         if (!result.Cancelled && result.Data != null)
         {
-            var pageTab = new PageTab<IDto>(((DtoBase)result.Data).GetDisplayName(), this.GetType());
-            pageTab.Dto = (T)result.Data;
-            GlobalHandler.LaunchTab(pageTab);
+            //var pageTab = new PageTab(((DtoBase)result.Data).GetDisplayName(), this.GetType(), result.Data.GetType());
+            //pageTab.Dto = (T)result.Data;
+            //GlobalHandler.LaunchTab(pageTab);
         }
     }
 

@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject SoundKitService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<SoundKitDto>
 
 @if (null == PageTab.Dto)
 {
@@ -11,6 +11,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader IsUpdate="false" Title="Sound Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SoundKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -45,6 +46,7 @@ else
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }
 
 @code {

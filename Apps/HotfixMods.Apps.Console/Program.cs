@@ -13,6 +13,21 @@ using System.Reflection;
 using static DBDefsLib.Structs;
 
 
+List<ITab> tabs = new();
+tabs.Add(new DashboardTab());
+
+
+public class DashboardTab : TabBase<int>, ITab
+{
+
+}
+public interface ITab { }
+
+public class TabBase<T>
+{
+    public T Content { get; set; }
+}
+
 
 /*
 var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
@@ -86,7 +101,7 @@ while (true)
 */
 
 
-
+/*
 // Compare client (master) and server definition
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 string build = "10.0.2.46924";
@@ -97,7 +112,7 @@ var clientDef = await clientDefHelper.GetDefinitionAsync(@"C:\hotfixMods", "crea
 var tool = new DbDefinitionTool();
 tool.CompareDefinitions(clientDef, serverDef);
 Console.ReadKey();
-
+*/
 
 /*
 // Compare property names to db definition
@@ -239,3 +254,4 @@ foreach (var model in models)
 }
 
 */
+

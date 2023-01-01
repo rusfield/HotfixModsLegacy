@@ -52,7 +52,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure.Razor\HotfixMods.Infrastructure.Razor.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj" />
     </ItemGroup>
 
 </Project>

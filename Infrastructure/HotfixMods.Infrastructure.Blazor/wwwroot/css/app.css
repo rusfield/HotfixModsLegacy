@@ -1,0 +1,120 @@
+﻿* {
+    --mud-palette-action-default: var(--mud-palette-text-primary);
+    --custom-transition-time: 0.4s;
+}
+
+.custom-app-bar {
+    --mud-appbar-height: 0px;
+}
+
+    .custom-app-bar .mud-tab-slider {
+        height: 48px !important;
+        z-index: -10;
+        background-color: var(--mud-palette-background) !important;
+    }
+
+.tab-bar .mud-tab-slider {
+    height: 2px !important;
+    z-index: 0;
+    background-color: var(--mud-palette-primary-text) !important;
+}
+
+.mud-tabs-toolbar {
+    z-index: 40;
+}
+
+.custom-mud-tabs {
+    min-width: 80px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.custom-mud-tabs-title {
+    font-family: var(--mud-typography-default-family) !important;
+    font-weight: 500 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.08rem !important;
+}
+
+.mud-badge {
+    z-index: 50;
+}
+
+.mud-grid-item > .custom-wrapper {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.mud-grid-item {
+    padding: 0px !important;
+}
+
+.mud-svg-icon {
+    cursor: pointer;
+}
+
+.custom-slide-navigator > span > .mud-icon-root {
+    font-size: 96px !important;
+}
+
+.transition-instance {
+    animation-duration: var(--custom-transition-time);
+    animation-name: backInUp;
+    animation-fill-mode: forwards;
+}
+
+.transition-tab {
+    animation-duration: var(--custom-transition-time);
+    animation-name: backInDown;
+    animation-fill-mode: forwards;
+}
+
+.transition-page-remove {
+    animation-duration: var(--custom-transition-time);
+    animation-name: bounceOut;
+    animation-fill-mode: forwards;
+}
+
+.transition-fade {
+    animation-duration: var(--custom-transition-time);
+    animation-name: fadeOut;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-enter-left {
+    animation-duration: var(--custom-transition-time);
+    animation-name: slideInLeft;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-enter-right {
+    animation-duration: var(--custom-transition-time);
+    animation-name: slideInRight;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-exit-left {
+    animation-duration: var(--custom-transition-time);
+    animation-name: slideOutLeft;
+    animation-fill-mode: forwards;
+}
+
+.transition-slide-exit-right {
+    animation-duration: var(--custom-transition-time);
+    animation-name: slideOutRight;
+    animation-fill-mode: forwards;
+}
+
+.adornment-clickable > * .mud-input-adornment {
+    pointer-events: initial !important;
+}
+
+.adornment-clickable > * svg {
+    color: var(--mud-palette-text-primary) !important;
+}
+
+.mud-carousel-swipe {
+    width: 100% !important;
+}

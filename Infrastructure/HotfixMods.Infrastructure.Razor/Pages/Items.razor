@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Razor.Components.Dialogs
 
 @inject ItemService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<ItemDto>
 
 @if (null == PageTab.Dto)
 {
@@ -12,6 +12,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader IsUpdate="false" Title="Items" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<ItemSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -106,6 +107,7 @@ else
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }
 
 @code {

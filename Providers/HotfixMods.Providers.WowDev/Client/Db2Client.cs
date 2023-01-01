@@ -21,6 +21,7 @@ namespace HotfixMods.Providers.WowDev.Client
             Build = build;
             _httpClient = new();
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "HotfixMods");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer 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"); // useless scope with limited lifetime, but try not to deploy this...
         }
 
         public async Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)

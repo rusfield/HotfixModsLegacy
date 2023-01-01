@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject AnimKitService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<AnimKitDto>
 
 @if (null == PageTab.Dto)
 {
@@ -11,6 +11,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader IsUpdate="false" Title="Anim Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<AnimKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -95,6 +96,7 @@ else
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }
 
 @code {

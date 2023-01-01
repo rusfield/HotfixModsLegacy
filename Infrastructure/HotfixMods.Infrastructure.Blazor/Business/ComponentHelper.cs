@@ -1,4 +1,4 @@
-﻿namespace HotfixMods.Infrastructure.Razor.Business
+﻿namespace HotfixMods.Infrastructure.Blazor.Business
 {
     public static class ComponentHelper
     {

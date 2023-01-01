@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Razor.Pages.Shared
 
 @inject GameobjectService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<GameobjectDto>
 
 @if (null == PageTab.Dto)
 {
@@ -11,6 +11,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader IsUpdate="false" Title="Game Objects" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<GameobjectSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -55,4 +56,5 @@ else
             </MudTabPanel>
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }

@@ -3,7 +3,7 @@
 @using HotfixMods.Core.Enums.Db2
 
 @inject SpellVisualKitService Service
-@inherits HotfixPageBase
+@inherits HotfixPageBase<SpellVisualKitDto>
 
 @*
     This page turned out a little bit messy. If the code is unreadable at a later time, consider replacing the custom foreach code with simple if-conditions to load the effects instead.
@@ -16,6 +16,7 @@
 }
 else
 {
+    @*
     <TabContentEditHeader @ref="tabContentEditHeaderRef" IsUpdate="false" Title="Spell Visual Kits" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<SpellVisualKitSearch_Dialog>())">
         <ChildContent>
             <MudTabPanel Class="custom-mud-tabs">
@@ -197,6 +198,7 @@ else
             }
         </ChildContent>
     </TabContentEditHeader>
+    *@
 }
 
 @code {

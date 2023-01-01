@@ -1,0 +1,22 @@
+﻿<MudCarousel TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;width:100%" SelectedIndex="SelectedIndex" SelectedIndexChanged="SelectedIndexChanged">
+    @ChildContent
+</MudCarousel>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public int SelectedIndex { get; set; }
+
+    [Parameter]
+    public EventCallback SelectedIndexChanged { get; set; }
+
+
+    int contentHeight = 650;
+
+    async Task NavigatePageAsync(int index)
+    {
+
+    }
+}

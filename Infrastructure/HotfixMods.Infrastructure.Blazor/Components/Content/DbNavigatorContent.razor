@@ -1,0 +1,91 @@
+﻿<MudGrid Class="mb-1 px-3">
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexStart">
+            <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="ValueCompare_Callback">Compare</MudButton>
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
+            @(Title)
+        </MudText>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
+                @if (saving)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    @(IsUpdate ? "Update" : "Save")
+                }
+            </MudButton>
+        </MudStack>
+    </MudItem>
+</MudGrid>
+
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
+    <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
+
+        <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px; left:calc(100%)")">
+            <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+        </div>
+        <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
+            <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+        </div>
+
+        <MudCarousel TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;width:100%" SelectedIndex="SelectedIndex" SelectedIndexChanged="SelectedIndexChanged">
+            @ChildContent
+        </MudCarousel>
+    </MudPaper>
+</MudTabs>
+
+
+
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public int SelectedIndex { get; set; }
+
+    [Parameter]
+    public EventCallback SelectedIndexChanged { get; set; }
+
+    [Parameter]
+    public EventCallback ValueCompare_Callback { get; set; }
+
+    [Parameter]
+    public bool IsUpdate { get; set; } = false;
+
+    int contentHeight = 650;
+    bool saving = false;
+
+    void SaveAsync_Click()
+    {
+        
+    }
+
+    string GetContentStyle()
+    {
+        // Add elevation value 2
+        var elevation = "box-shadow:var(--mud-elevation-2)";
+
+        //if (1 == type && CurrentPage < AmountOfPages)
+            elevation += ",2px 0px 2px 1px var(--mud-palette-primary)";
+        //else
+            elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
+
+        //if (1 == type && CurrentPage > 1)
+            elevation += ",-2px 0px 2px 1px var(--mud-palette-primary)";
+        //else
+            elevation += ",0px 0px 0px 0px var(--mud-palette-primary)";
+
+        return $"background-color:var(--mud-palette-surface);{elevation};";
+    }
+}

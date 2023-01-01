@@ -8,6 +8,7 @@
         public GithubDBDProvider()
         {
             client.BaseAddress = BaseURI;
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer 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"); // scope to public repo only, but try not to deploy this...
         }
 
         public Stream StreamForTableName(string tableName, string? build = null)

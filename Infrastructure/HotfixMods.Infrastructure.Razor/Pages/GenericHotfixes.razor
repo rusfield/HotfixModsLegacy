@@ -5,8 +5,9 @@
 @inject IDialogService DialogService
 @inject GenericHotfixService Service
 
-@inherits HotfixPageBase
+@inherits HotfixPageBase<IDto>
 
+    @*
 @if (null == PageTab.Dto)
 {
     <TabContentView Data="new List<DashboardModel>()" NewAsync_Callback="NewAsync_Click" Title="Generic Hotfixes" />
@@ -52,4 +53,4 @@ else
         parameters.Add(nameof(GenericHotfixSearch_Dialog.Db2Name), db2Name);
         ValueCompareAsync_Click<GenericHotfixSearch_Dialog>(parameters);
     }
-}
+}*@

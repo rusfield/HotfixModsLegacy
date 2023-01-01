@@ -108,7 +108,7 @@
             type = 0;
         }
 
-        TransitionHandler.SetToNavigateTab();
+        // TransitionHandler.SetToNavigateTab();
         base.OnInitialized();
     }
 
@@ -122,10 +122,10 @@
                 slideLeft = currentSlideIndex < CurrentInstance - 1;
                 currentSlideIndex = CurrentInstance - 1;
 
-                if (slideLeft)
-                    TransitionHandler.SetToNavigateLeftBySlide();
-                else
-                    TransitionHandler.SetToNavigateRightBySlide();
+                //if (slideLeft)
+                    // TransitionHandler.SetToNavigateLeftBySlide();
+                //else
+                    // TransitionHandler.SetToNavigateRightBySlide();
 
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
             }
@@ -134,10 +134,10 @@
                 slideLeft = currentSlideIndex < CurrentPage - 1;
                 currentSlideIndex = CurrentPage - 1;
 
-                if (slideLeft)
-                    TransitionHandler.SetToNavigateLeftBySlide();
-                else
-                    TransitionHandler.SetToNavigateRightBySlide();
+                //if (slideLeft)
+                    // TransitionHandler.SetToNavigateLeftBySlide();
+                //else
+                    // TransitionHandler.SetToNavigateRightBySlide();
 
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
             }
@@ -145,12 +145,12 @@
             {
                 currentSlideIndex = CurrentInstance - 1;
 
-                TransitionHandler.SetToNavigateInstance();
+                // TransitionHandler.SetToNavigateInstance();
                 await InvokeAsync(() => mudCarouselRef.MoveTo(currentSlideIndex));
             }
             else if (AmountOfPages == 0 && Instances == null)
             {
-                TransitionHandler.SetToNavigateTab();
+                // TransitionHandler.SetToNavigateTab();
                 await InvokeAsync(() => mudCarouselRef.MoveTo(0));
             }
         }
@@ -162,7 +162,7 @@
     {
         Instances.Add(new());
         CurrentInstance = Instances.Count;
-        TransitionHandler.SetToNavigateInstance();
+        // TransitionHandler.SetToNavigateInstance();
         await InvokeAsync(() => mudPaginationRef?.NavigateTo(CurrentInstance));
     }
 
@@ -172,7 +172,7 @@
         {
             Instances.RemoveAt(CurrentInstance - 1);
             CurrentInstance = Math.Max(0, CurrentInstance - 1);
-            TransitionHandler.SetToNavigateInstance();
+            // TransitionHandler.SetToNavigateInstance();
             await InvokeAsync(() => mudPaginationRef?.NavigateTo(CurrentInstance));
             currentSlideIndex = -1; // to force a refresh incase index does not change
         }

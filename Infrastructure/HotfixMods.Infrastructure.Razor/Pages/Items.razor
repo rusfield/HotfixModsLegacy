@@ -7,7 +7,7 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView Data="new List<DashboardModel>()" NewAsync_Callback="NewAsync_Click<ItemSearch_Dialog>" Title="Items">
+    <TabContentView NewAsync_Callback="NewAsync_Click<ItemSearch_Dialog>" Title="Items">
     </TabContentView>
 }
 else
@@ -19,8 +19,8 @@ else
                     <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <HotfixModsEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" @bind-IsUpdate="((ItemDto)PageTab.Dto).IsUpdate" />
+                    <TabContentEditBody T="HotfixModsEntity" Value="((ItemDto)PageTab.Dto).Entity">
+                        <HotfixModsEntity_Tab @bind-IsUpdate="((ItemDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -29,8 +29,8 @@ else
                     <TabTitle_Element Line1="Item" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
+                    <TabContentEditBody T="Item" Value="((ItemDto)PageTab.Dto).Item">
+                        <Item_Tab  />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -39,8 +39,8 @@ else
                     <TabTitle_Element Line1="Item" Line2="Sparse" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object" AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
-                        <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
+                    <TabContentEditBody T="ItemSparse" AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage" Value="((ItemDto)PageTab.Dto).ItemSparse">
+                        <ItemSparse_Tab />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -49,8 +49,8 @@ else
                     <TabTitle_Element Line1="Item Display Info" Line2="Material Res" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object">
-                        <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfoMaterialRes" />
+                    <TabContentEditBody T="ItemDisplayInfoMaterialRes" >
+                        <ItemDisplayInfoMaterialRes_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfoMaterialRes" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -59,8 +59,8 @@ else
                     <TabTitle_Element Line1="Display" Line2="Info" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="object" AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage">
-                        <ItemDisplayInfo_Tab Value="((ItemDto)PageTab.Dto).ItemDisplayInfo" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemDisplayInfo" />
+                    <TabContentEditBody T="ItemDisplayInfo" AmountOfPages="2" @bind-CurrentPage="currentItemDisplayInfoPage" Value="((ItemDto)PageTab.Dto).ItemDisplayInfo">
+                        <ItemDisplayInfo_Tab/>
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>

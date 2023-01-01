@@ -33,7 +33,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 AnimKit = animKit,
                 SegmentGroups = new(),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(animKit.Id),
+                Entity = await GetExistingOrNewHotfixModsEntity(animKit.Id),
                 IsUpdate = true
             };
 
@@ -65,7 +65,7 @@ namespace HotfixMods.Infrastructure.Services
 
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.HotfixModsEntity);
+            await SaveAsync(dto.Entity);
             await SaveAsync(dto.AnimKit);
             await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment));
             await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig));
@@ -91,7 +91,7 @@ namespace HotfixMods.Infrastructure.Services
             });
             
             await DeleteAsync(dto.AnimKit);
-            await DeleteAsync(dto.HotfixModsEntity);
+            await DeleteAsync(dto.Entity);
 
             return true;
         }

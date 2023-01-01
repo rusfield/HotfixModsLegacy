@@ -46,10 +46,10 @@ namespace HotfixMods.Infrastructure.Services
             var newNpcModelItemSlotDisplayInfoId = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
             var newCreatureDisplayInfoOptionsId = await GetNextIdAsync<CreatureDisplayInfoOption>();
 
-            if (dto.HotfixModsEntity.RecordId == 0 || !dto.IsUpdate)
+            if (dto.Entity.RecordId == 0 || !dto.IsUpdate)
             {
-                dto.HotfixModsEntity.RecordId = newCreatureTemplateId;
-                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.Entity.RecordId = newCreatureTemplateId;
+                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
             }
 
             if (dto.CreatureTemplate.Entry == 0 || !dto.IsUpdate)
@@ -112,7 +112,7 @@ namespace HotfixMods.Infrastructure.Services
             });
 
 
-            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
+            dto.Entity.VerifiedBuild = VerifiedBuild;
             dto.CreatureTemplate.VerifiedBuild = VerifiedBuild;
             //dto.CreatureTemplateAddon.VerifiedBuild = VerifiedBuild; 
 

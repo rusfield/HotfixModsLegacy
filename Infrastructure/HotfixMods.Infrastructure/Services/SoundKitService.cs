@@ -30,7 +30,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 SoundKit = soundKit,
                 EntryGroups = new(),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(soundKit.Id),
+                Entity = await GetExistingOrNewHotfixModsEntity(soundKit.Id),
                 IsUpdate = true
             };
 
@@ -52,7 +52,7 @@ namespace HotfixMods.Infrastructure.Services
 
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.HotfixModsEntity);
+            await SaveAsync(dto.Entity);
             await SaveAsync(dto.SoundKit);
             await SaveAsync(dto.EntryGroups.Select(s => s.SoundKitEntry));
         }
@@ -72,7 +72,7 @@ namespace HotfixMods.Infrastructure.Services
                 await DeleteAsync(s);
             });
             await DeleteAsync(dto.SoundKit);
-            await DeleteAsync(dto.HotfixModsEntity);
+            await DeleteAsync(dto.Entity);
 
             return true;
         }

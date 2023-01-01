@@ -10,100 +10,100 @@
 }
 else
 {
-        <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())" SaveAsync_Callback="SaveAsync">
-            <ChildContent>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="HotfixModsEntity">
-                            <HotfixModsEntity_Tab @bind-IsUpdate="((CreatureDto)PageTab.Dto).IsUpdate" />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature" Line2="Template" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureTemplate" AmountOfPages="4" @bind-CurrentPage="currentCreatureTemplatePage">
-                            <CreatureTemplate_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature" Line2="Template Addon" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureTemplateAddon">
-                            <CreatureTemplateAddon_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature" Line2="Model Info" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureModelInfo">
-                            <CreatureModelInfo_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature" Line2="Equip Template" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureEquipTemplate">
-                            <CreatureEquipTemplate_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature" Line2="Display Info" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureDisplayInfo" AmountOfPages="2" @bind-CurrentPage="currentDisplayInfoPage">
-                            <CreatureDisplayInfo_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature Display" Line2="Info Extra" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="CreatureDisplayInfoExtra" >
-                            <CreatureDisplayInfoExtra_Tab />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="Creature Display" Line2="Info Option" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1" CustomValueHandling="true">
-                            <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-                <MudTabPanel Class="custom-mud-tabs">
-                    <TabContent>
-                        <TabTitle_Element Line1="NPC Model Item" Line2="Slot Display Info" />
-                    </TabContent>
-                    <ChildContent>
-                        <TabContentEditBody T="object" CustomValueHandling="true">
-                            <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfos" />
-                        </TabContentEditBody>
-                    </ChildContent>
-                </MudTabPanel>
-            </ChildContent>
-        </TabContentEditHeader>
+    <TabContentEditHeader IsUpdate="false" Title="Creatures" ValueCompare_Callback="@(async () => ValueCompareAsync_Click<CreatureSearch_Dialog>())" SaveAsync_Callback="SaveAsync">
+        <ChildContent>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="HotfixModsEntity" @bind-Value="((CreatureDto)PageTab.Dto).Entity">
+                        <HotfixModsEntity_Tab @bind-IsUpdate="((CreatureDto)PageTab.Dto).IsUpdate" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Template" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureTemplate" AmountOfPages="4" @bind-CurrentPage="currentCreatureTemplatePage" @bind-Value="((CreatureDto)PageTab.Dto).CreatureTemplate">
+                        <CreatureTemplate_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Template Addon" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureTemplateAddon" @bind-Value="((CreatureDto)PageTab.Dto).CreatureTemplateAddon">
+                        <CreatureTemplateAddon_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Model Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureModelInfo" @bind-Value="((CreatureDto)PageTab.Dto).CreatureModelInfo">
+                        <CreatureModelInfo_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Equip Template" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureEquipTemplate" @bind-Value="((CreatureDto)PageTab.Dto).CreatureEquipTemplate">
+                        <CreatureEquipTemplate_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature" Line2="Display Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureDisplayInfo" AmountOfPages="2" @bind-CurrentPage="currentDisplayInfoPage" @bind-Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfo">
+                        <CreatureDisplayInfo_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature Display" Line2="Info Extra" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="CreatureDisplayInfoExtra" @bind-Value="((CreatureDto)PageTab.Dto).CreatureDisplayInfoExtra">
+                        <CreatureDisplayInfoExtra_Tab />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="Creature Display" Line2="Info Option" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1" CustomValueHandling="true">
+                        <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+            <MudTabPanel Class="custom-mud-tabs">
+                <TabContent>
+                    <TabTitle_Element Line1="NPC Model Item" Line2="Slot Display Info" />
+                </TabContent>
+                <ChildContent>
+                    <TabContentEditBody T="object" CustomValueHandling="true">
+                        <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfos" />
+                    </TabContentEditBody>
+                </ChildContent>
+            </MudTabPanel>
+        </ChildContent>
+    </TabContentEditHeader>
 }
 
 @code {

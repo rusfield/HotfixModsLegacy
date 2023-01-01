@@ -7,7 +7,7 @@
 
 @if (null == PageTab.Dto)
 {
-    <TabContentView NewAsync_Callback="NewAsync_Click<ItemSearch_Dialog>" Title="Items">
+    <TabContentView Data="new List<DashboardModel>()" NewAsync_Callback="NewAsync_Click<ItemSearch_Dialog>" Title="Items">
     </TabContentView>
 }
 else
@@ -19,8 +19,8 @@ else
                     <TabTitle_Element Line1="HotfixMods" Line2="Entity" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="HotfixModsEntity" Value="((ItemDto)PageTab.Dto).HotfixModsEntity">
-                        <HotfixModsEntity_Tab @bind-IsUpdate="((ItemDto)PageTab.Dto).IsUpdate" />
+                    <TabContentEditBody T="object">
+                        <HotfixModsEntity_Tab Value="((ItemDto)PageTab.Dto).Entity" @bind-IsUpdate="((ItemDto)PageTab.Dto).IsUpdate" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -29,8 +29,8 @@ else
                     <TabTitle_Element Line1="Item" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="Item" Value="((ItemDto)PageTab.Dto).Item">
-                        <Item_Tab />
+                    <TabContentEditBody T="object">
+                        <Item_Tab Value="((ItemDto)PageTab.Dto).Item" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>
@@ -39,8 +39,8 @@ else
                     <TabTitle_Element Line1="Item" Line2="Sparse" />
                 </TabContent>
                 <ChildContent>
-                    <TabContentEditBody T="ItemSparse" AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage" Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse">
-                        <ItemSparse_Tab />
+                    <TabContentEditBody T="object" AmountOfPages="5" @bind-CurrentPage="currentItemSparsePage">
+                        <ItemSparse_Tab Value="((ItemDto)PageTab.Dto).ItemSparse" ValueCompare="((ItemDto?)PageTab.DtoCompare)?.ItemSparse" />
                     </TabContentEditBody>
                 </ChildContent>
             </MudTabPanel>

@@ -14,20 +14,18 @@
     <ChildContent>
         @foreach (var (tab, index) in Tabs.WithIndex())
         {
-            <CascadingValue Name="PageTab" Value="tab">
-                <MudTabPanel ID="@tab.TabId">
-                    <ChildContent>
-                        <MudContainer MaxWidth="MaxWidth.Large" Class="my-12 pt-12">
-                            <DynamicComponent Type="tab.PageType" Parameters="@(new Dictionary<string, object>(){ {nameof(PageTab), tab } })" />
-                        </MudContainer>
-                    </ChildContent>
-                    <TabContent>
-                        <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
-                        </MudStack>
-                    </TabContent>
-                </MudTabPanel>
-            </CascadingValue>
+            <MudTabPanel ID="@tab.TabId">
+                <ChildContent>
+                    <MudContainer MaxWidth="MaxWidth.Large" Class="my-12 pt-12">
+                        <DynamicComponent Type="tab.PageType" Parameters="@(new Dictionary<string, object>(){ {nameof(PageTab), tab } })" />
+                    </MudContainer>
+                </ChildContent>
+                <TabContent>
+                    <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
+                        <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                    </MudStack>
+                </TabContent>
+            </MudTabPanel>
         }
     </ChildContent>
 </MudTabs>
@@ -94,7 +92,7 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        if (tabId != Guid.Empty)
+        if(tabId != Guid.Empty)
         {
             _mudTabsRef?.ActivatePanel(tabId);
             tabId = Guid.Empty;

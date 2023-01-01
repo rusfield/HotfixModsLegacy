@@ -12,8 +12,8 @@ namespace HotfixMods.Infrastructure.Services
             {
                 var newAnimKitId = await GetNextIdAsync<AnimKit>();
 
-                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.HotfixModsEntity.RecordId = newAnimKitId;
+                dto.Entity.Id = await GetNextIdAsync<HotfixModsEntity>();
+                dto.Entity.RecordId = newAnimKitId;
                 dto.AnimKit.Id = newAnimKitId;
 
                 var newAnimKitSegmentId = await GetNextIdAsync<AnimKitSegment>();
@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
 
-            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
+            dto.Entity.VerifiedBuild = VerifiedBuild;
             dto.AnimKit.VerifiedBuild = VerifiedBuild;
             dto.SegmentGroups.ForEach(s =>
             {

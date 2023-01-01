@@ -9,13 +9,15 @@
 <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
     <MudCarousel @ref="mudCarouselRef" TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;" @bind-SelectedIndex="currentSlideIndex">
         <div class="px-5 pb-5 pt-8">
-            @if (null == dtoValue && !CustomValueHandling)
+            @if (null == Value && !CustomValueHandling)
             {
-                <TabContentNoValue @bind-Value="dtoValue" />
+                <TabContentNoValue Value="Value" ValueChanged="ValueChanged" />
             }
             else
             {
-                @ChildContent
+                <CascadingValue Value="Value" Name="Value">
+                    @ChildContent
+                </CascadingValue>
             }
         </div>
     </MudCarousel>
@@ -43,8 +45,11 @@
 
 
 @code {
-    [CascadingParameter(Name = "PageTab")]
-    public PageTab PageTab { get; set; }
+    [Parameter]
+    public T Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -84,13 +89,10 @@
     int type = 0; // 0 is normal, 1 is Page Navigation, 2 is Instance Navigation
     bool slideLeft = true;
     bool moveInstance = false;
-    T dtoValue;
+
 
     protected override void OnInitialized()
     {
-        var dtoProperty = PageTab.Dto.GetType().GetProperty(typeof(T).Name);
-        dtoValue = (T)dtoProperty.GetValue(PageTab.Dto);
-
         if (CurrentPage > -1)
         {
             type = 1;

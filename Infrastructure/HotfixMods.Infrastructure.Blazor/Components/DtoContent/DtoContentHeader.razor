@@ -1,38 +1,41 @@
 ﻿@typeparam T where T : IDto
 
-<MudTabs Style="margin-top:0px !important;" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
-    @foreach (var tab in tabNames)
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelChanged">
+    @foreach (var tab in tabs)
     {
-        var type = TryGetTabType(tab);
-        if (null == type)
-            continue;
-
-        <MudTabPanel Text="@tab">
+        <MudTabPanel>
             <TabContent>
-                <TabTitle_Element Title="@tab" />
+                <TabTitle_Element Title="@tab.Key" />
             </TabContent>
-            <ChildContent>
-                <div class="animate__animated animate__backInDown">
-                    <DynamicComponent Type="type" />
-                </div>
-            </ChildContent>
         </MudTabPanel>
     }
-
 </MudTabs>
+<MudCarousel @ref="mudCarouselRef" Style="width:100%; height:640px;" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false">
+    @foreach (var tab in tabs)
+    {
+        <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
+            <DynamicComponent Type="tab.Value" />
+        </MudCarouselItem>
+    }
+</MudCarousel>
 
 
 @code {
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
-    List<string> tabNames = new();
+    Dictionary<string, Type> tabs = new();
+    MudCarousel<object>? mudCarouselRef;
 
     protected override void OnInitialized()
     {
         foreach (var property in typeof(T).GetProperties())
         {
-            tabNames.Add(property.Name);
+            var tabName = property.Name;
+            var tabType = TryGetTabType(tabName);
+            if (null == tabType)
+                continue;
+            tabs.Add(tabName, tabType);
         }
         base.OnInitialized();
     }
@@ -44,5 +47,10 @@
         var type = Type.GetType($"{pagesNamespace}.{propertyName}_Tab");
 
         return type;
+    }
+
+    void PanelChanged(int newIndex)
+    {
+        mudCarouselRef?.MoveTo(newIndex);
     }
 }

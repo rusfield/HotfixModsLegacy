@@ -5,7 +5,7 @@
 
 
 @code {
-    [Parameter]
+    [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
     protected async void NewAsync_Click<TDialog>()

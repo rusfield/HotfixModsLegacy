@@ -3,11 +3,9 @@
 @using HotfixMods.Infrastructure.Blazor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
-<CascadingValue Name="Dto" Value="PageTab.Dto">
-    <CascadingValue Name="DtoCompare" Value="PageTab.DtoCompare">
-        <DtoContentHeader T="CreatureDto" />
-    </CascadingValue>
-</CascadingValue>
+
+        <DtoTabsContent T="CreatureDto" />
+
 
 @code {
 

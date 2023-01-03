@@ -1,4 +1,5 @@
-﻿using HotfixMods.Infrastructure.DtoModels;
+﻿using HotfixMods.Infrastructure.Blazor.PageData;
+using HotfixMods.Infrastructure.DtoModels;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -8,10 +9,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         where TDto : IDto
         where TValue : class
     {
-        [CascadingParameter(Name = "Dto")]
-        public IDto Dto { get; set; }
-        [CascadingParameter(Name = "DtoCompare")]
-        public IDto DtoCompare { get; set; }
+        [CascadingParameter(Name = "PageTab")]
+        public PageTab PageTab { get; set; }
 
         public Transition Transition { get; set; }
         public TValue Value { get; set; }
@@ -19,19 +18,19 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         protected override void OnParametersSet()
         {
-            var dtoType = Dto.GetType();
+            var dtoType = PageTab.Dto.GetType();
             var dtoProperty = dtoType.GetProperty(typeof(TValue).Name);
-            Value = (TValue)dtoProperty.GetValue(Dto);
+            Value = (TValue)dtoProperty.GetValue(PageTab.Dto);
             base.OnParametersSet();
         }
 
         protected override void OnAfterRender(bool firstRender)
         {
-            if(DtoCompare != null)
+            if(PageTab.DtoCompare != null)
             {
-                var dtoCompareType = DtoCompare.GetType();
+                var dtoCompareType = PageTab.DtoCompare.GetType();
                 var dtoCompareProperty = dtoCompareType.GetProperty(typeof(TValue).Name);
-                ValueCompare = (TValue)dtoCompareProperty.GetValue(DtoCompare);
+                ValueCompare = (TValue)dtoCompareProperty.GetValue(PageTab.DtoCompare);
             }
             else
             {

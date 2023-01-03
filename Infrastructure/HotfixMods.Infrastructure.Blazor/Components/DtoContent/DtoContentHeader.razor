@@ -1,6 +1,6 @@
 ﻿@typeparam T where T : IDto
 
-<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
+<MudTabs Style="margin-top:0px !important;" Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar">
     @foreach (var tab in tabNames)
     {
         var type = TryGetTabType(tab);
@@ -12,12 +12,9 @@
                 <TabTitle_Element Title="@tab" />
             </TabContent>
             <ChildContent>
-               @type.Name
-                    <DynamicComponent Type="type" />
-                    @*
                 <div class="animate__animated animate__backInDown">
-                </div> *@
-                @type.Name
+                    <DynamicComponent Type="type" />
+                </div>
             </ChildContent>
         </MudTabPanel>
     }
@@ -30,6 +27,7 @@
     public RenderFragment ChildContent { get; set; }
 
     List<string> tabNames = new();
+
     protected override void OnInitialized()
     {
         foreach (var property in typeof(T).GetProperties())

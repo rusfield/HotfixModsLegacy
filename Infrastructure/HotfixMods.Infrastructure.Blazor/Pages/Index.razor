@@ -1,7 +1,7 @@
 ﻿@page "/"
 @using HotfixMods.Infrastructure.Blazor.PageData
 
-<MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true">
+<MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true" Style="z-index:101">
     <Header>
         <MudTooltip Text="New">
             <MudIconButton Icon="@Icons.Filled.AddCircleOutline" Style="color:var(--mud-palette-text-primary)" OnClick="NewTab_Click" />
@@ -13,7 +13,8 @@
             <CascadingValue Name="PageTab" Value="tab">
                 <MudTabPanel ID="@tab.TabId">
                     <ChildContent>
-                        <MudContainer MaxWidth="MaxWidth.Large" Class="my-12 pt-12">
+                        <MudPaper Elevation="0" Style="background-color:var(--mud-palette-background); height:96px; width:100%;z-index:100; position:relative;" Class="rounded-0" />
+                        <MudContainer MaxWidth="MaxWidth.Large" Class="mb-12 pt-0 mt-0">
                             <DynamicComponent Type="tab.PageType" Parameters="@(new Dictionary<string, object>(){ {nameof(PageTab), tab } })" />
                         </MudContainer>
                     </ChildContent>

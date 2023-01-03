@@ -4,7 +4,7 @@
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true" Style="z-index:101">
     <Header>
         <MudTooltip Text="New">
-            <MudIconButton Icon="@Icons.Filled.AddCircleOutline" Style="color:var(--mud-palette-text-primary)" OnClick="NewTab_Click" />
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" Style="color:var(--mud-palette-text-primary)" OnClick="NewTab_Click" />
         </MudTooltip>
     </Header>
     <ChildContent>
@@ -20,7 +20,7 @@
                     </ChildContent>
                     <TabContent>
                         <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
                         </MudStack>
                     </TabContent>
                 </MudTabPanel>
@@ -34,19 +34,19 @@
         <MudText Typo="Typo.h6" Align="Align.Center" Style="width:100%">My App</MudText>
     </MudDrawerHeader>
     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="3" Style="width:100%;">
-        <MudIconButton Icon="@Icons.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
-        <MudIconButton Icon="@Icons.Filled.Settings" Color="Color.Inherit" Size="Size.Small" />
+        <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
+        <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" />
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
-        <MudIconButton Icon="@Icons.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit" OnClick="@(() => OpenTab_Click(new CreaturePageTab()))" />
+        <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit" OnClick="@(() => OpenTab_Click(new CreaturePageTab()))" />
             @*
-        <MudIconButton Icon="@Icons.Filled.Security" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Items", typeof(Items))))" />
-        <MudIconButton Icon="@Icons.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Spells", typeof(Spells))))" />
-        <MudIconButton Icon="@Icons.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Game Objects", typeof(Gameobjects))))" />
+        <MudIconButton Icon="@Icons.Material.Filled.Security" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Items", typeof(Items))))" />
+        <MudIconButton Icon="@Icons.Material.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Spells", typeof(Spells))))" />
+        <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Game Objects", typeof(Gameobjects))))" />
             *@
 
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Filled.MoreHoriz" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 @*

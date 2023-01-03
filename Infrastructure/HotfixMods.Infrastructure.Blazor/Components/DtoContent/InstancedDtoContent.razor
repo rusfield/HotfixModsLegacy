@@ -1,4 +1,4 @@
-﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="NavigatePage">
+﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="NavigateInstance">
     @ChildContent
 </MudCarousel>
 
@@ -15,7 +15,7 @@
 
     bool first = true;
 
-    void NavigatePage(int newIndex)
+    void NavigateInstance(int newIndex)
     {
         if (first)
         {
@@ -23,9 +23,9 @@
         }
         else
         {
-            Transition = Transition.Slide;
+            Transition = Transition.Custom;
             TransitionChanged.InvokeAsync(Transition);
         }
-        
+
     }
 }

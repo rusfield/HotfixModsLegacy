@@ -12,7 +12,8 @@
     // Temp
     protected override void OnParametersSet()
     {
-        PageTab.Dto = new CreatureDto();
+        if(null == PageTab.Dto)
+            PageTab.Dto = new CreatureDto();
         base.OnParametersSet();
     }
 }

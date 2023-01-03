@@ -2,13 +2,12 @@
 
 namespace HotfixMods.Infrastructure.Blazor.PageData
 {
-    public abstract class PageTab
+    public class PageTab
     {
-        public PageTab(string tabName, Type pageType, Type dtoType)
+        public PageTab(string tabName, Type pageType)
         {
             TabName = tabName;
             PageType = pageType;
-            DtoType = dtoType;
             TabId = Guid.NewGuid();
         }
 
@@ -16,7 +15,6 @@ namespace HotfixMods.Infrastructure.Blazor.PageData
         public IDto Dto { get; set; }
         public IDto DtoCompare { get; set; }
         public Type PageType { get; set; }
-        public Type DtoType { get; set; }
         public Guid TabId { get; set; }
     }
 }

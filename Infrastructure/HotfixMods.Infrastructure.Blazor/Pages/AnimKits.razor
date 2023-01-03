@@ -1,0 +1,19 @@
+﻿@inherits PageBase<AnimKitDto>
+
+@using HotfixMods.Infrastructure.Blazor.Pages.AnimKitTabs
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+
+<DtoTabsContent T="AnimKitDto" />
+
+
+@code {
+
+    // Temp
+    protected override void OnParametersSet()
+    {
+        if(PageTab.Dto == null)
+            PageTab.Dto = new AnimKitDto();
+        base.OnParametersSet();
+    }
+}

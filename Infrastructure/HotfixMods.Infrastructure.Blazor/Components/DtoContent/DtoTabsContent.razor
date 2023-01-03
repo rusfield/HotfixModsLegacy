@@ -1,11 +1,12 @@
 ﻿@typeparam T where T : IDto
+@using System.Reflection
 
 <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelChanged">
     @foreach (var tab in tabs)
     {
         <MudTabPanel>
             <TabContent>
-                <TabTitle_Element Title="@tab.Key" />
+                <TabTitle_Element Title="@tab.TabPanelName" />
             </TabContent>
         </MudTabPanel>
     }
@@ -14,7 +15,7 @@
     @foreach (var tab in tabs)
     {
         <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
-            <DynamicComponent Type="tab.Value" />
+            <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupName", tab.GroupName } })" />
         </MudCarouselItem>
     }
 </MudCarousel>
@@ -24,20 +25,42 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
-    Dictionary<string, Type> tabs = new();
+    List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
 
     protected override void OnInitialized()
     {
-        foreach (var property in typeof(T).GetProperties())
-        {
-            var tabName = property.Name;
-            var tabType = TryGetTabType(tabName);
-            if (null == tabType)
-                continue;
-            tabs.Add(tabName, tabType);
-        }
+        var properties = typeof(T).GetProperties();
+        // TODO: Hardcode Entity here, to come first
+        InitTabsList(properties);
+
         base.OnInitialized();
+    }
+
+    // Recusrive method to extract properties from DTO and DTO group lists
+    void InitTabsList(PropertyInfo[] properties, string? groupName = null)
+    {
+        foreach (var property in properties)
+        {
+            if (property.Name.EndsWith("Groups"))
+            {
+                if (property.PropertyType.IsAssignableFrom(typeof(List<>)))
+                {
+                    // TODO: Why does this fail?
+                }
+                var groupType = property.PropertyType.GetGenericArguments()[0];
+                var groupProperties = groupType.GetProperties();
+                InitTabsList(groupProperties, groupType.Name);
+            }
+            else
+            {
+                var tabName = property.Name;
+                var tabType = TryGetTabType(tabName);
+                if (null == tabType)
+                    continue;
+                tabs.Add(new Content(tabName, tabType, groupName));
+            }
+        }
     }
 
     Type? TryGetTabType(string propertyName)
@@ -52,5 +75,18 @@
     void PanelChanged(int newIndex)
     {
         mudCarouselRef?.MoveTo(newIndex);
+    }
+
+    class Content
+    {
+        public Content(string tabPanelName, Type componentType, string? groupName)
+        {
+            TabPanelName = tabPanelName;
+            ComponentType = componentType;
+            GroupName = groupName;
+        }
+        public string TabPanelName { get; set; }
+        public Type ComponentType { get; set; }
+        public string? GroupName { get; set; }
     }
 }

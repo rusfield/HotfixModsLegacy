@@ -1,0 +1,25 @@
+﻿@using Microsoft.JSInterop;
+@using HotfixMods.Infrastructure.Services
+
+@inject ISnackbar Snackbar
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Class="py-4">
+    <MudDialog>
+        <DialogContent>
+            @foreach (var paragraph in Text.Split("\n"))
+            {
+                <MudText Align="Align.Center">
+                    @paragraph
+                </MudText>
+            }
+        </DialogContent>
+    </MudDialog>
+</MudBadge>
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+}

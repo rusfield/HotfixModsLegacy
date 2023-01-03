@@ -9,7 +9,7 @@
     public PageTab PageTab { get; set; }
 
     protected async void NewAsync_Click<TDialog>()
-    where TDialog : ComponentBase
+        where TDialog : ComponentBase
     {
         await InvokeAsync(() => NewAsync_Click<TDialog>(new DialogParameters()));
     }

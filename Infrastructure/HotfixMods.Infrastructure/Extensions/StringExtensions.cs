@@ -31,5 +31,14 @@ namespace HotfixMods.Infrastructure.Extensions
 
             return $"{appendBefore ?? ""}{output}{appendAfter ?? ""}";
         }
+
+        // Made by chat.openai.com
+        public static string AppendSpaceBeforeCapitalLetters(this string str)
+        {
+            string pattern = "(?<=[a-z])(?=[A-Z])";
+            string replacement = " ";
+            var output = Regex.Replace(str, pattern, replacement);
+            return output;
+        }
     }
 }

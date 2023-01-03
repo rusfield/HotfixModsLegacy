@@ -1,0 +1,32 @@
+﻿
+<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="Navigate">
+    @ChildContent
+</MudCarousel>
+
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Transition Transition { get; set; }
+
+    [Parameter]
+    public EventCallback<Transition> TransitionChanged { get; set; }
+
+    bool first = true;
+
+    void Navigate(int newIndex)
+    {
+        if (first)
+        {
+            first = false;
+        }
+        else
+        {
+            Transition = Transition.Slide;
+            TransitionChanged.InvokeAsync(Transition);
+        }
+        
+    }
+}

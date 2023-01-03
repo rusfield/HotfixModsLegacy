@@ -1,0 +1,22 @@
+﻿<MudGrid>
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="decimal" @bind-Value="Value.BoundingRadius" ValueCompare="ValueCompare?.BoundingRadius" Label="@nameof(Value.BoundingRadius).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="decimal" @bind-Value="Value.CombatReach" ValueCompare="ValueCompare?.CombatReach" Label="@nameof(Value.CombatReach).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="uint" @bind-Value="Value.DisplayId_Other_Gender" ValueCompare="ValueCompare?.DisplayId_Other_Gender" Label="@nameof(Value.DisplayId_Other_Gender).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</MudGrid>

@@ -9,6 +9,13 @@ namespace HotfixMods.Infrastructure.DtoModels
         public AnimKit AnimKit { get; set; } = new();
         public List<SegmentGroup> SegmentGroups { get; set; } = new();
 
+        public override void AddToGroup(Type groupType)
+        {
+            if (groupType == typeof(SegmentGroup))
+                SegmentGroups.Add(new SegmentGroup());
+            else
+                base.AddToGroup(groupType);
+        }
         public class SegmentGroup
         {
             public AnimKitSegment AnimKitSegment { get; set; } = new();

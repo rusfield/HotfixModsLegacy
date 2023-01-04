@@ -15,18 +15,31 @@
     @foreach (var tab in tabs)
     {
         <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
-            <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupName", tab.GroupName } })" />
+            <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupType", tab.GroupType } })" />
         </MudCarouselItem>
     }
 </MudCarousel>
-
+<MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
+    <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
+        <MudStack Row="true" Class="invisible" Spacing="0">
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
+            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
+        </MudStack>
+        <MudPagination @ref="mudPaginationRef" Selected="0" Size="Size.Medium" Count="5" Color="Color.Info" />
+        <MudStack Row="true" Spacing="0">
+            <MudIconButton Icon="@Icons.Material.Filled.MoveDown" />
+            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
+            <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" />
+        </MudStack>
+    </MudStack>
+</MudPaper>
 
 @code {
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
 
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
+    MudPagination? mudPaginationRef;
 
     protected override void OnInitialized()
     {
@@ -38,19 +51,15 @@
     }
 
     // Recusrive method to extract properties from DTO and DTO group lists
-    void InitTabsList(PropertyInfo[] properties, string? groupName = null)
+    void InitTabsList(PropertyInfo[] properties, Type? groupType = null)
     {
         foreach (var property in properties)
         {
-            if (property.Name.EndsWith("Groups"))
+            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
             {
-                if (property.PropertyType.IsAssignableFrom(typeof(List<>)))
-                {
-                    // TODO: Why does this fail?
-                }
-                var groupType = property.PropertyType.GetGenericArguments()[0];
+                groupType = property.PropertyType.GetGenericArguments()[0];
                 var groupProperties = groupType.GetProperties();
-                InitTabsList(groupProperties, groupType.Name);
+                InitTabsList(groupProperties, groupType);
             }
             else
             {
@@ -58,7 +67,7 @@
                 var tabType = TryGetTabType(tabName);
                 if (null == tabType)
                     continue;
-                tabs.Add(new Content(tabName, tabType, groupName));
+                tabs.Add(new Content(tabName, tabType, groupType));
             }
         }
     }
@@ -79,14 +88,14 @@
 
     class Content
     {
-        public Content(string tabPanelName, Type componentType, string? groupName)
+        public Content(string tabPanelName, Type componentType, Type? groupType)
         {
             TabPanelName = tabPanelName;
             ComponentType = componentType;
-            GroupName = groupName;
+            GroupType = groupType;
         }
         public string TabPanelName { get; set; }
         public Type ComponentType { get; set; }
-        public string? GroupName { get; set; }
+        public Type? GroupType { get; set; }
     }
 }

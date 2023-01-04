@@ -1,5 +1,13 @@
 ﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="NavigateInstance">
-    @ChildContent
+    @for (int i = 0; i<instances; i++)
+    {
+        int index = i;
+        <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
+            <CascadingValue Name="GroupIndex" Value="index">
+                @ChildContent
+            </CascadingValue>
+        </MudCarouselItem>
+    }
 </MudCarousel>
 
 
@@ -14,6 +22,7 @@
     public EventCallback<Transition> TransitionChanged { get; set; }
 
     bool first = true;
+    int instances = 5;
 
     void NavigateInstance(int newIndex)
     {

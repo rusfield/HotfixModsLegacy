@@ -19,6 +19,19 @@ namespace HotfixMods.Infrastructure.DtoModels
             return _displayName;
         }
 
+        public virtual void AddToGroup(Type groupType)
+        {
+            throw new NotImplementedException();
+        }
 
+        public virtual void RemoveFromGroup(Type groupType, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

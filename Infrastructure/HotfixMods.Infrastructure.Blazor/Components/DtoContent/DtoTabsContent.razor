@@ -11,14 +11,18 @@
         </MudTabPanel>
     }
 </MudTabs>
-<MudCarousel @ref="mudCarouselRef" Style="width:100%; height:640px;" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false">
-    @foreach (var tab in tabs)
-    {
-        <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
-            <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupType", tab.GroupType } })" />
-        </MudCarouselItem>
-    }
-</MudCarousel>
+<MudPaper Style="height:640px;background-color:var(--mud-palette-surface)" Class="mx-3 rounded-0">
+    <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false">
+        @foreach (var tab in tabs)
+        {
+            <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
+                <div style="width:1232px; margin: 0 auto;">
+                    <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupType", tab.GroupType } })" />
+                </div>
+            </MudCarouselItem>
+        }
+    </MudCarousel>
+</MudPaper>
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
     <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
         <MudStack Row="true" Class="invisible" Spacing="0">

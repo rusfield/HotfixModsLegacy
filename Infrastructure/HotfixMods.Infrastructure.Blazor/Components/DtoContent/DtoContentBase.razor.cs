@@ -76,7 +76,7 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
                 PageTab.Dto.AddToGroup(GroupType);
                 PageTab.Dto.AddToGroup(GroupType);
                 PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType); // Temp before null chec on Value exists
+                PageTab.Dto.AddToGroup(GroupType); // Temp before null check on Value exists
 
                 Value = PageTab.Dto.GetDtoGroupValue<TValue>(GroupType, GroupIndex);
             }

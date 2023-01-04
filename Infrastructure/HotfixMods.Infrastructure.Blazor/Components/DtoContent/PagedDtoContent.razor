@@ -1,5 +1,13 @@
-﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="NavigatePage">
-    @ChildContent
+﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="true" ShowBullets="false" AutoCycle="false" EnableSwipeGesture="false" SelectedIndexChanged="NavigatePage">
+    <NextButtonTemplate>
+        <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+    </NextButtonTemplate>
+    <PreviousButtonTemplate>
+        <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator ")" />
+    </PreviousButtonTemplate>
+    <ChildContent>
+        @ChildContent
+    </ChildContent>
 </MudCarousel>
 
 
@@ -14,6 +22,7 @@
     public EventCallback<Transition> TransitionChanged { get; set; }
 
     bool first = true;
+
 
     void NavigatePage(int newIndex)
     {

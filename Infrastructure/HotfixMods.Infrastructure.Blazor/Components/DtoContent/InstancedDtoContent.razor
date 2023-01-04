@@ -4,7 +4,11 @@
         int index = i;
         <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
             <CascadingValue Name="GroupIndex" Value="index">
-                @ChildContent
+                <div class="mx-6 mt-7">
+                    <MudGrid>
+                        @ChildContent
+                    </MudGrid>
+                </div>
             </CascadingValue>
         </MudCarouselItem>
     }

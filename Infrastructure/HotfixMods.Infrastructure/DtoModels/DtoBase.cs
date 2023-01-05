@@ -1,4 +1,8 @@
 ﻿using HotfixMods.Core.Models.TrinityCore;
+using HotfixMods.Infrastructure.Extensions;
+using System;
+using System.Collections;
+using System.Reflection;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
@@ -21,17 +25,22 @@ namespace HotfixMods.Infrastructure.DtoModels
 
         public virtual void AddToGroup(Type groupType)
         {
-            throw new NotImplementedException();
+            this.GetDtoGroup(groupType).Add(Activator.CreateInstance(groupType));
         }
 
         public virtual void RemoveFromGroup(Type groupType, int index)
         {
-            throw new NotImplementedException();
+            this.GetDtoGroup(groupType).RemoveAt(index);
         }
 
         public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)
         {
-            throw new NotImplementedException();
+            // TODO
+        }
+
+        public virtual int GetGroupCount(Type groupType)
+        {
+            return this.GetDtoGroup(groupType).Count;
         }
     }
 }

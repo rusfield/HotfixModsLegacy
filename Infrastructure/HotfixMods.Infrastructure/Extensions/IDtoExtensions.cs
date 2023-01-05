@@ -1,11 +1,12 @@
 ﻿using HotfixMods.Infrastructure.DtoModels;
+using System.Collections;
 
-namespace HotfixMods.Infrastructure.Blazor.BlazorExtensions
+namespace HotfixMods.Infrastructure.Extensions
 {
     public static class IDtoExtensions
     {
         public static TValue? GetDtoValue<TValue>(this IDto dto)
-         where TValue : class, new()
+            where TValue : class, new()
         {
             var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
             if (dtoProperty != null)
@@ -28,6 +29,19 @@ namespace HotfixMods.Infrastructure.Blazor.BlazorExtensions
                 return (TValue?)groupValue?.GetType()?.GetProperty(typeof(TValue).Name)?.GetValue(groupValue);
             }
             return null;
+        }
+
+        public static IList GetDtoGroup(this IDto dto, Type groupType)
+        {
+            var properties = dto.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && property.PropertyType.GetGenericArguments()[0] == groupType)
+                {
+                    return (IList)property.GetValue(dto);
+                }
+            }
+            throw new Exception($"{dto.GetType().Name} does not have any lists of type {groupType.Name}.");
         }
 
         public static void SetDtoValueToDefault<TValue>(this IDto dto)

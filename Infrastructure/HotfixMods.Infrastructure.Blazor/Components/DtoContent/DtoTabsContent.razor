@@ -17,7 +17,7 @@
         {
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
-                    <CascadingValue Name="InstanceData" Value="GetInstanceDataFromList(tab.GroupType)">
+                    <CascadingValue Name="InstanceData" Value="GetInstanceData(tab.GroupType)">
                         <DynamicComponent Type="tab.ComponentType" />
                     </CascadingValue>
                 </div>
@@ -34,26 +34,35 @@
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
         </MudStack>
-        <MudPagination @ref="mudPaginationRef" Selected="currentInstanceData?.CurrentInstance ?? 0" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" />
+        <MudPagination @ref="mudPaginationRef" Selected="currentInstanceData != null ? currentInstanceData.CurrentInstance : 1" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" SelectedChanged="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
-            <MudIconButton Icon="@Icons.Material.Filled.MoveDown" />
+            <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" />
             <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
             <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
-            <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" />
+            <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance >= currentInstanceData.InstanceCount" />
         </MudStack>
     </MudStack>
 </MudPaper>
 
 @code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
-    Dictionary<Type?, InstanceData> instanceData = new();
+    Dictionary<Type, InstanceData> instanceData = new();
     InstanceData? currentInstanceData;
-
 
     protected override void OnInitialized()
     {
+        // Temp
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
+
+
         var properties = typeof(T).GetProperties();
         // TODO: Hardcode Entity here, to come first
         InitTabsList(properties);
@@ -76,7 +85,11 @@
                 groupType = property.PropertyType.GetGenericArguments()[0];
 
                 if (!instanceData.ContainsKey(groupType))
-                    instanceData[groupType] = new(groupType, 1, 1);
+                {
+                    var count = PageTab.Dto.GetDtoGroup(groupType).Count;
+                    instanceData[groupType] = new(groupType, 1, count);
+                }
+
 
                 var groupProperties = groupType.GetProperties();
                 InitTabsList(groupProperties, groupType);
@@ -110,10 +123,18 @@
     void PanelContentChanged(int newIndex)
     {
         var tab = tabs[newIndex];
-        currentInstanceData = GetInstanceDataFromList(tab.GroupType);
+        currentInstanceData = GetInstanceData(tab.GroupType);
     }
 
-    InstanceData? GetInstanceDataFromList(Type? groupType)
+    void NavigateInstance(int newInstanceNumber)
+    {
+        if(currentInstanceData != null)
+        {
+            currentInstanceData.CurrentInstance = newInstanceNumber;
+        }
+    }
+
+    InstanceData? GetInstanceData(Type? groupType)
     {
         if (groupType != null && instanceData.ContainsKey(groupType))
             return instanceData[groupType];

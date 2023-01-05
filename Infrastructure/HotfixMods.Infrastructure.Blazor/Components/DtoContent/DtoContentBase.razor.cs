@@ -1,4 +1,4 @@
-﻿using HotfixMods.Infrastructure.Blazor.BlazorExtensions;
+﻿using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 using HotfixMods.Infrastructure.Blazor.PageData;
 using HotfixMods.Infrastructure.DtoModels;
@@ -71,13 +71,6 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             }
             else
             {
-                PageTab.Dto.AddToGroup(InstanceData.GroupType);
-                PageTab.Dto.AddToGroup(InstanceData.GroupType);
-                PageTab.Dto.AddToGroup(InstanceData.GroupType);
-                PageTab.Dto.AddToGroup(InstanceData.GroupType);
-                PageTab.Dto.AddToGroup(InstanceData.GroupType);
-                PageTab.Dto.AddToGroup(InstanceData.GroupType); // Temp before null check on Value exists
-
                 Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
             }
         }

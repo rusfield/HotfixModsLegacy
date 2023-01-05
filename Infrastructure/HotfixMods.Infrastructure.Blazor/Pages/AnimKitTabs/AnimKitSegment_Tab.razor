@@ -52,6 +52,16 @@
 @code {
     int OrderIndex = 0;
 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
     async Task<Dictionary<ushort, string>> GetAnimations()
     {
         return Enum.GetValues<AnimationDataId>().ToDictionary(key => (ushort)key, value => value.ToDisplayString());

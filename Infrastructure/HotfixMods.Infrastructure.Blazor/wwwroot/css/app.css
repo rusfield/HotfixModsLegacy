@@ -114,7 +114,3 @@
 .adornment-clickable > * svg {
     color: var(--mud-palette-text-primary) !important;
 }
-
-.mud-carousel-swipe {
-    width: 100% !important;
-}

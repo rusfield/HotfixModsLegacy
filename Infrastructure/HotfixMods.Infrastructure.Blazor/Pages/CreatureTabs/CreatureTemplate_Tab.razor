@@ -2,8 +2,8 @@
 @inherits PagedDtoContentBase<CreatureDto, CreatureTemplate>
 
 <PagedDtoContent @bind-Transition="Transition">
-    <MudCarouselItem Transition="Transition" Class="mx-6 mt-7">
-        <MudGrid>
+    <MudCarouselItem Transition="Transition">
+        <MudGrid Class="px-6 mt-7">
             <MudItem xs="3">
                 <InlineGroup>
                     <LeftContent>
@@ -48,8 +48,8 @@
             </MudItem>
         </MudGrid>
     </MudCarouselItem>
-    <MudCarouselItem Transition="Transition" Class="mx-6 mt-7">
-        <MudGrid>
+    <MudCarouselItem Transition="Transition">
+        <MudGrid Class="px-6 mt-7">
             <MudItem xs="3">
                 <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" />
                 <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" />
@@ -86,8 +86,8 @@
             </MudItem>
         </MudGrid>
     </MudCarouselItem>
-    <MudCarouselItem Transition="Transition" Class="mx-6 mt-7">
-        <MudGrid>
+    <MudCarouselItem Transition="Transition">
+        <MudGrid Class="px-6 mt-7">
             <MudItem xs="3">
                 <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" />
                 <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" />
@@ -137,8 +137,8 @@
             </MudItem>
         </MudGrid>
     </MudCarouselItem>
-    <MudCarouselItem Transition="Transition" Class="mx-6 mt-7">
-        <MudGrid>
+    <MudCarouselItem Transition="Transition">
+        <MudGrid Class="px-6 mt-7">
             <MudItem xs="3">
                 <InlineGroup>
                     <LeftContent>

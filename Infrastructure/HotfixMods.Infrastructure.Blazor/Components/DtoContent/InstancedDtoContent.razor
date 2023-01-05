@@ -1,14 +1,12 @@
-﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="true" AutoCycle="false" SelectedIndexChanged="NavigateInstance">
+﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance">
     @for (int i = 0; i<instances; i++)
     {
         int index = i;
         <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
             <CascadingValue Name="GroupIndex" Value="index">
-                <div class="mx-6 mt-7">
-                    <MudGrid>
+                <MudGrid Class="px-6 mt-7">
                         @ChildContent
                     </MudGrid>
-                </div>
             </CascadingValue>
         </MudCarouselItem>
     }
@@ -16,6 +14,9 @@
 
 
 @code {
+    [CascadingParameter(Name = "InstanceData")]
+    public InstanceData? InstanceData { get; set; }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
@@ -27,6 +28,11 @@
 
     bool first = true;
     int instances = 5;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
 
     void NavigateInstance(int newIndex)
     {

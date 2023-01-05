@@ -1,7 +1,7 @@
 ﻿@typeparam T where T : IDto
 @using System.Reflection
 
-<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelChanged">
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelTabChanged">
     @foreach (var tab in tabs)
     {
         <MudTabPanel>
@@ -12,12 +12,14 @@
     }
 </MudTabs>
 <MudPaper Style="height:640px;background-color:var(--mud-palette-surface)" Class="mx-3 rounded-0">
-    <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false">
+    <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="PanelContentChanged">
         @foreach (var tab in tabs)
         {
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
-                    <DynamicComponent Type="tab.ComponentType" Parameters="@(new Dictionary<string, object>(){ { "GroupType", tab.GroupType } })" />
+                    <CascadingValue Name="InstanceData" Value="GetInstanceDataFromList(tab.GroupType)">
+                        <DynamicComponent Type="tab.ComponentType" />
+                    </CascadingValue>
                 </div>
             </MudCarouselItem>
         }
@@ -26,11 +28,14 @@
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
     <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
         <MudStack Row="true" Class="invisible" Spacing="0">
-            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
-            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
+            @* Space placeholders *@
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
         </MudStack>
-        <MudPagination @ref="mudPaginationRef" Selected="0" Size="Size.Medium" Count="5" Color="Color.Info" />
-        <MudStack Row="true" Spacing="0">
+        <MudPagination @ref="mudPaginationRef" Selected="currentInstanceData?.CurrentInstance ?? 0" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" />
+        <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
             <MudIconButton Icon="@Icons.Material.Filled.MoveDown" />
             <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
             <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
@@ -40,10 +45,12 @@
 </MudPaper>
 
 @code {
-
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
+    Dictionary<Type?, InstanceData> instanceData = new();
+    InstanceData? currentInstanceData;
+
 
     protected override void OnInitialized()
     {
@@ -54,14 +61,23 @@
         base.OnInitialized();
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+
     // Recusrive method to extract properties from DTO and DTO group lists
     void InitTabsList(PropertyInfo[] properties, Type? groupType = null)
     {
-        foreach (var property in properties)
+        foreach (var (property, index) in properties.WithIndex())
         {
             if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
             {
                 groupType = property.PropertyType.GetGenericArguments()[0];
+
+                if (!instanceData.ContainsKey(groupType))
+                    instanceData[groupType] = new(groupType, 1, 1);
+
                 var groupProperties = groupType.GetProperties();
                 InitTabsList(groupProperties, groupType);
             }
@@ -85,9 +101,23 @@
         return type;
     }
 
-    void PanelChanged(int newIndex)
+    void PanelTabChanged(int newIndex)
     {
+        var tab = tabs[newIndex];
         mudCarouselRef?.MoveTo(newIndex);
+    }
+
+    void PanelContentChanged(int newIndex)
+    {
+        var tab = tabs[newIndex];
+        currentInstanceData = GetInstanceDataFromList(tab.GroupType);
+    }
+
+    InstanceData? GetInstanceDataFromList(Type? groupType)
+    {
+        if (groupType != null && instanceData.ContainsKey(groupType))
+            return instanceData[groupType];
+        return null;
     }
 
     class Content
@@ -102,4 +132,6 @@
         public Type ComponentType { get; set; }
         public Type? GroupType { get; set; }
     }
+
+
 }

@@ -1,9 +1,13 @@
-﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="true" ShowBullets="false" AutoCycle="false" EnableSwipeGesture="false" SelectedIndexChanged="NavigatePage">
+﻿<MudCarousel Style="height:640px" TData="object" ShowArrows="true" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
     <NextButtonTemplate>
-        <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+        <div class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon" style="font-size: 96px !important">
+            <MudIcon Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+        </div>
     </NextButtonTemplate>
     <PreviousButtonTemplate>
-        <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator ")" />
+        <div class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon" style="font-size: 96px !important">
+            <MudIcon Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator ")" />
+        </div>
     </PreviousButtonTemplate>
     <ChildContent>
         @ChildContent
@@ -35,6 +39,6 @@
             Transition = Transition.Slide;
             TransitionChanged.InvokeAsync(Transition);
         }
-        
+
     }
 }

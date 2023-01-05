@@ -16,8 +16,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         [CascadingParameter(Name = "GroupIndex")]
         public int GroupIndex { get; set; }  
 
-        [Parameter]
-        public Type? GroupType { get; set; }
+        [CascadingParameter(Name = "InstanceData")]
+        public InstanceData? InstanceData { get; set; }
 
         [Inject]
         public IDialogService DialogService { get; set; }
@@ -65,26 +65,26 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         void SetValue()
         {
-            if(GroupType == null)
+            if(InstanceData == null)
             {
                 Value = PageTab.Dto.GetDtoValue<TValue>();
             }
             else
             {
-                PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType);
-                PageTab.Dto.AddToGroup(GroupType); // Temp before null check on Value exists
+                PageTab.Dto.AddToGroup(InstanceData.GroupType);
+                PageTab.Dto.AddToGroup(InstanceData.GroupType);
+                PageTab.Dto.AddToGroup(InstanceData.GroupType);
+                PageTab.Dto.AddToGroup(InstanceData.GroupType);
+                PageTab.Dto.AddToGroup(InstanceData.GroupType);
+                PageTab.Dto.AddToGroup(InstanceData.GroupType); // Temp before null check on Value exists
 
-                Value = PageTab.Dto.GetDtoGroupValue<TValue>(GroupType, GroupIndex);
+                Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
             }
         }
 
         void ResetValue()
         {
-            if(GroupType == null)
+            if(InstanceData == null)
             {
                 PageTab.Dto.SetDtoValueToDefault<TValue>();
             }

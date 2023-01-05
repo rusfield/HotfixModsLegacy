@@ -30,7 +30,9 @@ namespace HotfixMods.Infrastructure.DtoModels
 
         public virtual void RemoveFromGroup(Type groupType, int index)
         {
-            this.GetDtoGroup(groupType).RemoveAt(index);
+            var group = this.GetDtoGroup(groupType);
+            if(group.Count > index)
+                group.RemoveAt(index);
         }
 
         public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)

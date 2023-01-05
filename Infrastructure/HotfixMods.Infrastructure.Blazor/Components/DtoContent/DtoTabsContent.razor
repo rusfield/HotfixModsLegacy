@@ -37,8 +37,8 @@
         <MudPagination @ref="mudPaginationRef" Selected="currentInstanceData != null ? currentInstanceData.CurrentInstance : 1" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" SelectedChanged="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
             <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" />
-            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" />
-            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" />
+            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" OnClick="RemoveInstance_Click" />
+            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" OnClick="AddInstance_Click" />
             <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance >= currentInstanceData.InstanceCount" />
         </MudStack>
     </MudStack>
@@ -131,6 +131,26 @@
         if(currentInstanceData != null)
         {
             currentInstanceData.CurrentInstance = newInstanceNumber;
+        }
+    }
+
+    void AddInstance_Click()
+    {
+        if(currentInstanceData != null)
+        {
+            PageTab.Dto.AddToGroup(currentInstanceData.GroupType);
+            currentInstanceData.InstanceCount++;
+            currentInstanceData.CurrentInstance = currentInstanceData.InstanceCount;
+        }
+    }
+
+    void RemoveInstance_Click()
+    {
+        if (currentInstanceData != null)
+        {
+            PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
+            currentInstanceData.InstanceCount--;
+            currentInstanceData.CurrentInstance = Math.Max(Math.Min(currentInstanceData.CurrentInstance, currentInstanceData.InstanceCount), 1); 
         }
     }
 

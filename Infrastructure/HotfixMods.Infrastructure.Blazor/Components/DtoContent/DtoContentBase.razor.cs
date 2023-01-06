@@ -13,8 +13,6 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
     {
         [CascadingParameter(Name = "PageTab")]
         public PageTab PageTab { get; set; }
-        [CascadingParameter(Name = "GroupIndex")]
-        public int GroupIndex { get; set; }  
 
         [CascadingParameter(Name = "InstanceData")]
         public InstanceData? InstanceData { get; set; }
@@ -71,7 +69,7 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             }
             else
             {
-                Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
+                Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, InstanceData.CurrentInstance);
             }
         }
 

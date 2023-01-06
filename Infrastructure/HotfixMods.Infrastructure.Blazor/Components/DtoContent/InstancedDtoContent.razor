@@ -3,11 +3,9 @@
     {
         int index = i;
         <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
-            <CascadingValue Name="GroupIndex" Value="index">
-                <MudGrid Class="px-6 mt-7">
-                        @ChildContent
-                    </MudGrid>
-            </CascadingValue>
+            <MudGrid Class="px-6 mt-7">
+                @ChildContent
+            </MudGrid>
         </MudCarouselItem>
     }
 </MudCarousel>
@@ -40,5 +38,12 @@
             TransitionChanged.InvokeAsync(Transition);
         }
 
+    }
+}
+
+@functions {
+    public int GetGroupIndex()
+    {
+        return InstanceData?.CurrentInstance ?? 0;
     }
 }

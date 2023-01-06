@@ -15,11 +15,22 @@
     <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="PanelContentChanged">
         @foreach (var tab in tabs)
         {
+            var instance = GetInstanceData(tab.GroupType);
+
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
-                    <CascadingValue Name="InstanceData" Value="GetInstanceData(tab.GroupType)">
+                    @if (null == instance)
+                    {
                         <DynamicComponent Type="tab.ComponentType" />
-                    </CascadingValue>
+                    }
+                    else
+                    {
+                        <CascadingValue Name="InstanceData" Value="instance">
+                            <InstancedDtoContent>
+                                <DynamicComponent Type="tab.ComponentType" />
+                            </InstancedDtoContent>
+                        </CascadingValue>
+                    }
                 </div>
             </MudCarouselItem>
         }
@@ -128,7 +139,7 @@
 
     void NavigateInstance(int newInstanceNumber)
     {
-        if(currentInstanceData != null)
+        if (currentInstanceData != null)
         {
             currentInstanceData.CurrentInstance = newInstanceNumber;
         }
@@ -136,7 +147,7 @@
 
     void AddInstance_Click()
     {
-        if(currentInstanceData != null)
+        if (currentInstanceData != null)
         {
             PageTab.Dto.AddToGroup(currentInstanceData.GroupType);
             currentInstanceData.InstanceCount++;
@@ -150,7 +161,7 @@
         {
             PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
             currentInstanceData.InstanceCount--;
-            currentInstanceData.CurrentInstance = Math.Max(Math.Min(currentInstanceData.CurrentInstance, currentInstanceData.InstanceCount), 1); 
+            currentInstanceData.CurrentInstance = Math.Max(Math.Min(currentInstanceData.CurrentInstance, currentInstanceData.InstanceCount), 1);
         }
     }
 

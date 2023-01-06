@@ -1,11 +1,13 @@
-﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance">
+﻿<MudCarousel Style="width:100%; height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance - 1">
     @for (int i = 0; i<InstanceData.InstanceCount; i++)
     {
         int index = i;
         <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
-            <MudGrid Class="px-6 mt-7">
-                @ChildContent
-            </MudGrid>
+            <CascadingValue Name="GroupIndex" Value="index">
+                <MudGrid Class="px-6 mt-7">
+                        @ChildContent
+                    </MudGrid>
+            </CascadingValue>
         </MudCarouselItem>
     }
 </MudCarousel>
@@ -13,7 +15,7 @@
 
 @code {
     [CascadingParameter(Name = "InstanceData")]
-    public InstanceData? InstanceData { get; set; }
+    public InstanceData InstanceData { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
@@ -38,12 +40,5 @@
             TransitionChanged.InvokeAsync(Transition);
         }
 
-    }
-}
-
-@functions {
-    public int GetGroupIndex()
-    {
-        return InstanceData?.CurrentInstance ?? 0;
     }
 }

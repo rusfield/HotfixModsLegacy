@@ -47,10 +47,11 @@
         </MudStack>
         <MudPagination @ref="mudPaginationRef" Selected="currentInstanceData != null ? currentInstanceData.CurrentInstance : 1" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" SelectedChanged="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
-            <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" />
+            <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" OnClick="MoveInstanceBackward_Click" />
             <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" OnClick="RemoveInstance_Click" />
+            <MudIconButton Icon="@Icons.Material.Filled.ControlPointDuplicate" OnClick="CloneInstance_Click" />
             <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" OnClick="AddInstance_Click" />
-            <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance >= currentInstanceData.InstanceCount" />
+            <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance >= currentInstanceData.InstanceCount" OnClick="MoveInstanceForward_Click" />
         </MudStack>
     </MudStack>
 </MudPaper>
@@ -68,10 +69,10 @@
     protected override void OnInitialized()
     {
         // Temp
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup));
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
+        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
 
 
         var properties = typeof(T).GetProperties();
@@ -79,11 +80,6 @@
         InitTabsList(properties);
 
         base.OnInitialized();
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
     }
 
     // Recusrive method to extract properties from DTO and DTO group lists
@@ -149,9 +145,19 @@
     {
         if (currentInstanceData != null)
         {
-            PageTab.Dto.AddToGroup(currentInstanceData.GroupType);
+            PageTab.Dto.AddToGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
             currentInstanceData.InstanceCount++;
-            currentInstanceData.CurrentInstance = currentInstanceData.InstanceCount;
+            currentInstanceData.CurrentInstance++;
+        }
+    }
+
+    void CloneInstance_Click()
+    {
+        if (currentInstanceData != null)
+        {
+            PageTab.Dto.CloneInGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
+            currentInstanceData.InstanceCount++;
+            currentInstanceData.CurrentInstance++;
         }
     }
 
@@ -161,8 +167,24 @@
         {
             PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
             currentInstanceData.InstanceCount--;
-            currentInstanceData.CurrentInstance = Math.Max(Math.Min(currentInstanceData.CurrentInstance, currentInstanceData.InstanceCount), 1);
+            currentInstanceData.CurrentInstance = Math.Max(currentInstanceData.CurrentInstance - 1, 1);
         }
+    }
+
+    void MoveInstanceForward_Click()
+    {
+        int currentIndex = currentInstanceData.CurrentInstance - 1;
+        int newIndex = currentInstanceData.CurrentInstance;
+        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex);
+        currentInstanceData.CurrentInstance++;
+    }
+
+    void MoveInstanceBackward_Click()
+    {
+        int currentIndex = currentInstanceData.CurrentInstance - 1;
+        int newIndex = currentInstanceData.CurrentInstance - 2;
+        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex);
+        currentInstanceData.CurrentInstance--;
     }
 
     InstanceData? GetInstanceData(Type? groupType)
@@ -184,6 +206,4 @@
         public Type ComponentType { get; set; }
         public Type? GroupType { get; set; }
     }
-
-
 }

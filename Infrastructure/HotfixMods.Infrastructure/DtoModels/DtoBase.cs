@@ -1,8 +1,7 @@
 ﻿using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
-using System;
-using System.Collections;
-using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {
@@ -23,21 +22,39 @@ namespace HotfixMods.Infrastructure.DtoModels
             return _displayName;
         }
 
-        public virtual void AddToGroup(Type groupType)
+        public virtual void AddToGroup(Type groupType, int index)
         {
-            this.GetDtoGroup(groupType).Add(Activator.CreateInstance(groupType));
+            this.GetDtoGroup(groupType).Insert(index, Activator.CreateInstance(groupType));
         }
 
         public virtual void RemoveFromGroup(Type groupType, int index)
         {
             var group = this.GetDtoGroup(groupType);
-            if(group.Count > index)
+            if (group.Count > index)
                 group.RemoveAt(index);
         }
 
         public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)
         {
-            // TODO
+            var group = this.GetDtoGroup(groupType);
+            if (oldIndex >= 0 && oldIndex < group.Count && newIndex >= 0 && newIndex < group.Count)
+            {
+                var item = group[oldIndex];
+                group.RemoveAt(oldIndex);
+                group.Insert(newIndex, item);
+            }
+        }
+
+        public virtual void CloneInGroup(Type groupType, int index)
+        {
+            var group = this.GetDtoGroup(groupType);
+            if(index >= 0 && index < group.Count)
+            {
+                var item = group[index];
+                string json = JsonSerializer.Serialize(item);
+                var copy = JsonSerializer.Deserialize(json, item!.GetType());
+                group.Insert(index , copy);
+            }
         }
 
         public virtual int GetGroupCount(Type groupType)

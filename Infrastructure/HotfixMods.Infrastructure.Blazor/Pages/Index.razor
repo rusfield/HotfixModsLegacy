@@ -68,6 +68,17 @@
     MudTabs? _mudTabsRef;
     bool _menuOpen = false;
     List<PageTab> tabs = new();
+    bool tabAdded = false;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (tabAdded)
+        {
+            tabAdded = false;
+            _mudTabsRef?.ActivatePanel(tabs.Count - 1);
+        }
+        base.OnAfterRender(firstRender);
+    }
 
     void NewTab_Click()
     {
@@ -88,6 +99,6 @@
     {
         _menuOpen = false;
         tabs.Add(tab);
-        //_mudTabsRef?.ActivatePanel(tabs.Count - 1);
+        tabAdded = true;
     }
 }

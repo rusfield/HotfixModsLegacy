@@ -48,8 +48,8 @@
         <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null || currentInstanceData.InstanceCount <= 0 ? "invisible" : "")" @bind-Selected:after="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
             <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" OnClick="MoveInstanceBackward_Click" />
-            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" OnClick="RemoveInstance_Click" />
-            <MudIconButton Icon="@Icons.Material.Filled.ControlPointDuplicate" OnClick="CloneInstance_Click" />
+            <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" OnClick="RemoveInstance_Click" Disabled="currentInstanceData == null ||  currentInstanceData.InstanceCount <= 0" />
+            <MudIconButton Icon="@Icons.Material.Filled.ControlPointDuplicate" OnClick="CloneInstance_Click" Disabled="currentInstanceData == null ||  currentInstanceData.InstanceCount <= 0" />
             <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" OnClick="AddInstance_Click" />
             <MudIconButton Icon="@Icons.Material.Filled.MoveUp" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance >= currentInstanceData.InstanceCount" OnClick="MoveInstanceForward_Click" />
         </MudStack>

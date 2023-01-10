@@ -7,3 +7,10 @@
     <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" />
 </MudItem>
 <MudItem xs="9" />
+
+@code{
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+}

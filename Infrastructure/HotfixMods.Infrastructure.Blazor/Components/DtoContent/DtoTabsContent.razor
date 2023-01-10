@@ -45,7 +45,7 @@
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
         </MudStack>
-        <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null ? "invisible" : "")" @bind-Selected:after="NavigateInstance" />
+        <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null || currentInstanceData.InstanceCount <= 0 ? "invisible" : "")" @bind-Selected:after="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
             <MudIconButton Icon="@Icons.Material.Filled.MoveDown" Style="color:var(--mud-palette-text-primary);transform: rotate(90deg)" Disabled="currentInstanceData == null || currentInstanceData.CurrentInstance <= 1" OnClick="MoveInstanceBackward_Click" />
             <MudIconButton Icon="@Icons.Material.Filled.RemoveCircleOutline" OnClick="RemoveInstance_Click" />
@@ -69,12 +69,6 @@
 
     protected override void OnInitialized()
     {
-        // Temp
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
-        PageTab.Dto.AddToGroup(typeof(HotfixMods.Infrastructure.DtoModels.AnimKitDto.SegmentGroup), 0);
-
         var properties = typeof(T).GetProperties();
         // TODO: Hardcode Entity here, to come first
         InitTabsList(properties);
@@ -170,7 +164,18 @@
         {
             PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
             currentInstanceData.InstanceCount--;
-            currentInstanceData.CurrentInstance = Math.Max(currentInstanceData.CurrentInstance - 1, 1);
+            if (currentInstanceData.InstanceCount == 0)
+            {
+                currentInstanceData.CurrentInstance = 1;
+            }
+            else if (currentInstanceData.CurrentInstance == 1)
+            {
+                // Do nothing
+            }
+            else
+            {
+                currentInstanceData.CurrentInstance--;
+            }
             currentPage = currentInstanceData.CurrentInstance;
         }
     }

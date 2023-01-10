@@ -27,9 +27,22 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         protected override void OnParametersSet()
         {
-            ResetValue();
             SetValue();
+            if(null == Value)
+                SetValueToDefault();
             base.OnParametersSet();
+        }
+
+        protected override void OnInitialized()
+        {
+            SetValue();
+            base.OnInitialized();
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            SetValue();
+            base.OnAfterRender(firstRender);
         }
 
         protected EventCallback OpenInfoDialog(string infoText)
@@ -75,13 +88,13 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             }
         }
 
-        void ResetValue()
+        void SetValueToDefault()
         {
-            if(InstanceData == null)
-            {
-                PageTab.Dto.SetDtoValueToDefault<TValue>();
-            }
+            // The rendering order is a bit bad, and during removal of instances may cause the GroupIndex to be out of range and set Value to null, which in turn crashes the tab pages.
+            // This Value should not be visible or used, it will only prevent the exception and the render will clean it up on its own.
+            Value = (TValue?)Activator.CreateInstance(typeof(TValue));
         }
+
 
         void SetValueCompare()
         {

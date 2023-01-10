@@ -1,5 +1,8 @@
 ﻿@page "/"
 @using HotfixMods.Infrastructure.Blazor.PageData
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject IDialogService DialogService
 
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true" Style="z-index:101">
     <Header>
@@ -49,6 +52,7 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">Anim Kits</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Test</MudMenuItem>
                 @*
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Spell Visual Kit", typeof(SpellVisualKits))))">Spell Visual Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Sound Kit", typeof(SoundKits))))">Sound Kits</MudMenuItem>
@@ -100,5 +104,18 @@
         _menuOpen = false;
         tabs.Add(tab);
         tabAdded = true;
+    }
+
+    async void OpenDialog_Click<TDialog>(PageTab pageTab)
+    where TDialog : ComponentBase
+    {
+        var result = await DialogService.Show<TDialog>().Result;
+        if (!result.Canceled && result.Data != null)
+        {
+            pageTab.Dto = (DtoBase)result.Data;
+            pageTab.TabName = ((DtoBase)result.Data).GetDisplayName();
+            LaunchTab(pageTab);
+            this.StateHasChanged();
+        }
     }
 }

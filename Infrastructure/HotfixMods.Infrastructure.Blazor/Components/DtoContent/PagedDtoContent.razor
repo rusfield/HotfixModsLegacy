@@ -1,32 +1,67 @@
-﻿<MudGrid Style="position:absolute; width:1232px">
-    <MudItem xs="12">
-        <div style="@($"position:absolute; top:{(650 / 2) - 60}px; left:calc(100%)")">
-            <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex >= mudCarouselRef.Items.Count - 1)" OnClick="NavigateForward_Click" />
-        </div>
-        <div style="@($"position:absolute; top:{(650 / 2) - 60}px;left:-120px")">
-            <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex <= 0)" OnClick="NavigateBackward_Click" />
-        </div>
-    </MudItem>
-</MudGrid>
+﻿@typeparam T where T : class, new()
 
-<div class="px-6">
-    <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
-        <CascadingValue Name="Transition" Value="Transition">
-            @ChildContent
-        </CascadingValue>
-    </MudCarousel>
-</div>
+@if (valueIsNull)
+{
+    <MudGrid Class="px-6 mt-7">
+        <MudItem xs="12">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="4" />
+        <MudItem xs="4">
+            <MudButton OnClick="CreateValue" Variant="Variant.Outlined">Init</MudButton>
+        </MudItem>
+        <MudItem xs="4" />
+    </MudGrid>
+}
+else
+{
+    <MudGrid Style="position:absolute; width:1232px">
+        <MudItem xs="12">
+            <div style="@($"position:absolute; top:{(650 / 2) - 60}px; left:calc(100%)")">
+                <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex >= mudCarouselRef.Items.Count - 1)" OnClick="NavigateForward_Click" />
+            </div>
+            <div style="@($"position:absolute; top:{(650 / 2) - 60}px;left:-120px")">
+                <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex <= 0)" OnClick="NavigateBackward_Click" />
+            </div>
+        </MudItem>
+    </MudGrid>
+
+    <div class="px-6">
+        <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
+            <CascadingValue Name="Transition" Value="Transition">
+                @ChildContent
+            </CascadingValue>
+        </MudCarousel>
+    </div>
+}
+
 
 
 @code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
     public Transition Transition { get; set; }
 
+    bool valueIsNull = true;
     bool first = true;
     MudCarousel<object>? mudCarouselRef;
+
+    protected override void OnParametersSet()
+    {
+        valueIsNull = null == PageTab?.Dto?.GetDtoValue<T>();
+        base.OnParametersSet();
+    }
+
+    void CreateValue()
+    {
+        PageTab.Dto.SetDtoValueToDefault<T>();
+        valueIsNull = false;
+    }
 
     void NavigateForward_Click()
     {

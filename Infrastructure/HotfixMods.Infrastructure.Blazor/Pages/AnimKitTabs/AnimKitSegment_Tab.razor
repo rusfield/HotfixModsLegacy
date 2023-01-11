@@ -3,48 +3,47 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<AnimKitDto, AnimKitSegment>
 
-    <MudItem xs="3">
-        <Input_Element T="byte" Value="@((byte)GroupIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" Disabled="true" />
-        <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" />
-        <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnValueLookupClick="@(OpenLookupDialog("AnimKitConfig", Value.AnimKitConfigId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimKitConfigId))" />
-        <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" />
-        <Input_Element T="int" @bind-Value="@(Value.OverrideConfigFlags)" Label="@(nameof(Value.OverrideConfigFlags).ToDisplayName())" ValueCompare="ValueCompare?.OverrideConfigFlags" />
-        <Input_Element T="decimal" @bind-Value="@(Value.Field_9_0_1_34278_018)" Label="@(nameof(Value.Field_9_0_1_34278_018).ToDisplayName())" ValueCompare="ValueCompare?.Field_9_0_1_34278_018" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup>
-            <LeftContent>
-                <Input_Element T="byte" @bind-Value="@(Value.StartCondition)" Label="@(nameof(Value.StartCondition).ToDisplayName())" ValueCompare="ValueCompare?.StartCondition" />
-            </LeftContent>
-            <MiddleContent>
-                <Input_Element T="byte" @bind-Value="@(Value.StartConditionParam)" Label="@(nameof(Value.StartConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.StartConditionParam" />
-            </MiddleContent>
-            <RightContent>
-                <Input_Element T="uint" @bind-Value="@(Value.StartConditionDelay)" Label="@(nameof(Value.StartConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.StartConditionDelay" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup>
-            <LeftContent>
-                <Input_Element T="byte" @bind-Value="@(Value.EndCondition)" Label="@(nameof(Value.EndCondition).ToDisplayName())" ValueCompare="ValueCompare?.EndCondition" />
-            </LeftContent>
-            <MiddleContent>
-                <Input_Element T="uint" @bind-Value="@(Value.EndConditionParam)" Label="@(nameof(Value.EndConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.EndConditionParam" />
-            </MiddleContent>
-            <RightContent>
-                <Input_Element T="uint" @bind-Value="@(Value.EndConditionDelay)" Label="@(nameof(Value.EndConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.EndConditionDelay" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-
-    <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.AnimId)" Label="@(nameof(Value.AnimId).ToDisplayName())" ValueCompare="ValueCompare?.AnimId" GetOptionsAsync_Func="GetAnimations" OnValueLookupClick="@(OpenLookupDialog("AnimationData", Value.AnimId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimId))" />
-        <Input_Element T="uint" @bind-Value="@(Value.AnimStartTime)" Label="@(nameof(Value.AnimStartTime).ToDisplayName(null, " (frames)"))" ValueCompare="ValueCompare?.AnimStartTime" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimStartTime))" />
-        <Input_Element T="decimal" @bind-Value="@(Value.Speed)" Label="@(nameof(Value.Speed).ToDisplayName())" ValueCompare="ValueCompare?.Speed" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.Speed))" />
-        <Input_Element T="byte" @bind-Value="@(Value.ForcedVariation)" Label="@(nameof(Value.ForcedVariation).ToDisplayName())" ValueCompare="ValueCompare?.ForcedVariation" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.ForcedVariation))" />
-        <Input_Element T="ushort" @bind-Value="@(Value.BlendInTimeMs)" Label="@(nameof(Value.BlendInTimeMs).ToDisplayName())" ValueCompare="ValueCompare?.BlendInTimeMs" />
-        <Input_Element T="ushort" @bind-Value="@(Value.BlendOutTimeMs)" Label="@(nameof(Value.BlendOutTimeMs).ToDisplayName())" ValueCompare="ValueCompare?.BlendOutTimeMs" />
-    </MudItem>
+<MudItem xs="3">
+    <Input_Element T="byte" Value="@((byte)GroupIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.OrderIndex))" Disabled="true" />
+    <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" />
+    <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnValueLookupClick="@(OpenLookupDialog("AnimKitConfig", Value.AnimKitConfigId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimKitConfigId))" />
+    <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" />
+    <Input_Element T="int" @bind-Value="@(Value.OverrideConfigFlags)" Label="@(nameof(Value.OverrideConfigFlags).ToDisplayName())" ValueCompare="ValueCompare?.OverrideConfigFlags" />
+    <Input_Element T="decimal" @bind-Value="@(Value.Field_9_0_1_34278_018)" Label="@(nameof(Value.Field_9_0_1_34278_018).ToDisplayName())" ValueCompare="ValueCompare?.Field_9_0_1_34278_018" />
+</MudItem>
+<MudItem xs="6">
+    <Placeholder_Element Amount="4" />
+    <InlineGroup>
+        <LeftContent>
+            <Input_Element T="byte" @bind-Value="@(Value.StartCondition)" Label="@(nameof(Value.StartCondition).ToDisplayName())" ValueCompare="ValueCompare?.StartCondition" />
+        </LeftContent>
+        <MiddleContent>
+            <Input_Element T="byte" @bind-Value="@(Value.StartConditionParam)" Label="@(nameof(Value.StartConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.StartConditionParam" />
+        </MiddleContent>
+        <RightContent>
+            <Input_Element T="uint" @bind-Value="@(Value.StartConditionDelay)" Label="@(nameof(Value.StartConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.StartConditionDelay" />
+        </RightContent>
+    </InlineGroup>
+    <InlineGroup>
+        <LeftContent>
+            <Input_Element T="byte" @bind-Value="@(Value.EndCondition)" Label="@(nameof(Value.EndCondition).ToDisplayName())" ValueCompare="ValueCompare?.EndCondition" />
+        </LeftContent>
+        <MiddleContent>
+            <Input_Element T="uint" @bind-Value="@(Value.EndConditionParam)" Label="@(nameof(Value.EndConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.EndConditionParam" />
+        </MiddleContent>
+        <RightContent>
+            <Input_Element T="uint" @bind-Value="@(Value.EndConditionDelay)" Label="@(nameof(Value.EndConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.EndConditionDelay" />
+        </RightContent>
+    </InlineGroup>
+</MudItem>
+<MudItem xs="3">
+    <Input_Element T="ushort" @bind-Value="@(Value.AnimId)" Label="@(nameof(Value.AnimId).ToDisplayName())" ValueCompare="ValueCompare?.AnimId" GetOptionsAsync_Func="GetAnimations" OnValueLookupClick="@(OpenLookupDialog("AnimationData", Value.AnimId))" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimId))" />
+    <Input_Element T="uint" @bind-Value="@(Value.AnimStartTime)" Label="@(nameof(Value.AnimStartTime).ToDisplayName(null, " (frames)"))" ValueCompare="ValueCompare?.AnimStartTime" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.AnimStartTime))" />
+    <Input_Element T="decimal" @bind-Value="@(Value.Speed)" Label="@(nameof(Value.Speed).ToDisplayName())" ValueCompare="ValueCompare?.Speed" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.Speed))" />
+    <Input_Element T="byte" @bind-Value="@(Value.ForcedVariation)" Label="@(nameof(Value.ForcedVariation).ToDisplayName())" ValueCompare="ValueCompare?.ForcedVariation" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitSegmentInfo.ForcedVariation))" />
+    <Input_Element T="ushort" @bind-Value="@(Value.BlendInTimeMs)" Label="@(nameof(Value.BlendInTimeMs).ToDisplayName())" ValueCompare="ValueCompare?.BlendInTimeMs" />
+    <Input_Element T="ushort" @bind-Value="@(Value.BlendOutTimeMs)" Label="@(nameof(Value.BlendOutTimeMs).ToDisplayName())" ValueCompare="ValueCompare?.BlendOutTimeMs" />
+</MudItem>
 
 
 @code {

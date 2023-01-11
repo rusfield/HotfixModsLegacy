@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureTemplateAddon>
 
-<DtoContent>
+<StandardDtoContent T="CreatureTemplateAddon">
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="Value.Bytes1" ValueCompare="ValueCompare?.Bytes1" Label="@nameof(Value.Bytes1).ToDisplayName()" />
         <Input_Element T="uint" @bind-Value="Value.Bytes2" ValueCompare="ValueCompare?.Bytes2" Label="@nameof(Value.Bytes2).ToDisplayName()" />
@@ -27,4 +27,4 @@
         <Input_Element T="short" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" />
         <Input_Element T="byte" @bind-Value="Value.VisibilityDistanceType" ValueCompare="ValueCompare?.VisibilityDistanceType" Label="@nameof(Value.VisibilityDistanceType).ToDisplayName()" />
     </MudItem>
-</DtoContent>
+</StandardDtoContent>

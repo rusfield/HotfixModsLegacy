@@ -11,6 +11,10 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</EmbeddedResource>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Components\DtoContent\PagedDtoContent.razor~RF2f67ecb1.TMP" />
+	</ItemGroup>
 	
   <ItemGroup>
     <SupportedPlatform Include="browser" />

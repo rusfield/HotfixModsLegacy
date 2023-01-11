@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfoExtra>
 
-<DtoContent>
+<StandardDtoContent T="CreatureDisplayInfoExtra">
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceId" ValueCompare="ValueCompare?.DisplayRaceId" Label="@nameof(Value.DisplayRaceId).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.DisplayClassId" ValueCompare="ValueCompare?.DisplayClassId" Label="@nameof(Value.DisplayClassId).ToDisplayName()" />
@@ -16,4 +16,4 @@
         <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesId" ValueCompare="ValueCompare?.HDBakeMaterialResourcesId" Label="HD Bake Material Resources ID" />
         <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesId" ValueCompare="ValueCompare?.BakeMaterialResourcesId" Label="@nameof(Value.BakeMaterialResourcesId).ToDisplayName()" />
     </MudItem>
-</DtoContent>
+</StandardDtoContent>

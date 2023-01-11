@@ -2,7 +2,6 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<AnimKitDto, AnimKitConfig>
 
-
 <MudItem xs="3">
     <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" />
 </MudItem>

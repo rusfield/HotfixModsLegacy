@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureModelInfo>
 
-<DtoContent>
+<StandardDtoContent T="CreatureModelInfo">
     <MudItem xs="3" />
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -23,4 +23,4 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
-</DtoContent>
+</StandardDtoContent>

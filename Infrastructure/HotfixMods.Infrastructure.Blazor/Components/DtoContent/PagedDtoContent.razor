@@ -1,20 +1,21 @@
-﻿<MudCarousel Style="height:640px" TData="object" ShowArrows="true" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
-    <NextButtonTemplate>
-        <div class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon" style="font-size: 96px !important">
-            <MudIcon Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+﻿<MudGrid Style="position:absolute; width:1232px">
+    <MudItem xs="12">
+        <div style="@($"position:absolute; top:{(650 / 2) - 60}px; left:calc(100%)")">
+            <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex >= mudCarouselRef.Items.Count - 1)" OnClick="NavigateForward_Click" />
         </div>
-    </NextButtonTemplate>
-    <PreviousButtonTemplate>
-        <div class="mud-button-root mud-icon-button mud-ripple mud-ripple-icon" style="font-size: 96px !important">
-            <MudIcon Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator ")" />
+        <div style="@($"position:absolute; top:{(650 / 2) - 60}px;left:-120px")">
+            <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex <= 0)" OnClick="NavigateBackward_Click" />
         </div>
-    </PreviousButtonTemplate>
-    <ChildContent>
+    </MudItem>
+</MudGrid>
+
+<div class="px-6">
+    <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
         <CascadingValue Name="Transition" Value="Transition">
             @ChildContent
         </CascadingValue>
-    </ChildContent>
-</MudCarousel>
+    </MudCarousel>
+</div>
 
 
 @code {
@@ -25,7 +26,19 @@
     public Transition Transition { get; set; }
 
     bool first = true;
+    MudCarousel<object>? mudCarouselRef;
 
+    void NavigateForward_Click()
+    {
+        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex < mudCarouselRef.Items.Count)
+            mudCarouselRef.MoveTo(mudCarouselRef.SelectedIndex + 1);
+    }
+
+    void NavigateBackward_Click()
+    {
+        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex > 0)
+            mudCarouselRef?.MoveTo(mudCarouselRef.SelectedIndex - 1);
+    }
 
     void NavigatePage(int newIndex)
     {
@@ -37,6 +50,5 @@
         {
             Transition = Transition.Slide;
         }
-
     }
 }

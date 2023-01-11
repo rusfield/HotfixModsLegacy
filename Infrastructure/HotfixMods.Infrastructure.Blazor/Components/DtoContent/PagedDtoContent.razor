@@ -10,7 +10,9 @@
         </div>
     </PreviousButtonTemplate>
     <ChildContent>
-        @ChildContent
+        <CascadingValue Name="Transition" Value="Transition">
+            @ChildContent
+        </CascadingValue>
     </ChildContent>
 </MudCarousel>
 
@@ -21,9 +23,6 @@
 
     [Parameter]
     public Transition Transition { get; set; }
-
-    [Parameter]
-    public EventCallback<Transition> TransitionChanged { get; set; }
 
     bool first = true;
 
@@ -37,7 +36,6 @@
         else
         {
             Transition = Transition.Slide;
-            TransitionChanged.InvokeAsync(Transition);
         }
 
     }

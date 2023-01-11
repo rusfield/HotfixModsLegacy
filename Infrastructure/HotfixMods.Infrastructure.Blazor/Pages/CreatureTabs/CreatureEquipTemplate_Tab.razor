@@ -1,4 +1,8 @@
-﻿<MudGrid>
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<CreatureDto, CreatureEquipTemplate>
+
+<DtoContent>
     <MudItem xs="3">
         <Placeholder_Element Amount="2" />
         <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" />
@@ -49,4 +53,4 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
-</MudGrid>
+</DtoContent>

@@ -1,0 +1,13 @@
+﻿<MudCarouselItem Transition="Transition">
+    <MudGrid Class="px-6 mt-7">
+        @ChildContent
+    </MudGrid>
+</MudCarouselItem>
+
+@code {
+    [CascadingParameter(Name = "Transition")]
+    public Transition Transition { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

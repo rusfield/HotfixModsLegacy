@@ -1,4 +1,8 @@
-﻿<MudGrid>
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<CreatureDto, CreatureModelInfo>
+
+<DtoContent>
     <MudItem xs="3" />
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -19,4 +23,4 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
-</MudGrid>
+</DtoContent>

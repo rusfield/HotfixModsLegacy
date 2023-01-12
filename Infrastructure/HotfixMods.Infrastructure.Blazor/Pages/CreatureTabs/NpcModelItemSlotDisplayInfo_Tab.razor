@@ -1,0 +1,144 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.Db2
+
+<CustomDtoContent>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="head.ItemDisplayInfoId" ValueCompare="headCompare?.ItemDisplayInfoId" Label="Head Display Info ID" />
+        <Input_Element T="int" @bind-Value="shoulders.ItemDisplayInfoId" ValueCompare="shouldersCompare?.ItemDisplayInfoId" Label="Shoulders Display Info ID" />
+        <Input_Element T="int" @bind-Value="shirt.ItemDisplayInfoId" ValueCompare="shirtCompare?.ItemDisplayInfoId" Label="Shirt Display Info ID" />
+        <Input_Element T="int" @bind-Value="chest.ItemDisplayInfoId" ValueCompare="chestCompare?.ItemDisplayInfoId" Label="Chest Display Info ID" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="hands.ItemDisplayInfoId" ValueCompare="handsCompare?.ItemDisplayInfoId" Label="Hands Display Info ID" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="tabard.ItemDisplayInfoId" ValueCompare="tabardCompare?.ItemDisplayInfoId" Label="Tabard Display Info ID" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="cape.ItemDisplayInfoId" ValueCompare="capeCompare?.ItemDisplayInfoId" Label="Cape Display Info ID" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="quiver.ItemDisplayInfoId" ValueCompare="quiverCompare?.ItemDisplayInfoId" Label="Quiver Display Info ID" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="waist.ItemDisplayInfoId" ValueCompare="waistCompare?.ItemDisplayInfoId" Label="Waist Display Info ID" />
+        <Input_Element T="int" @bind-Value="legs.ItemDisplayInfoId" ValueCompare="legsCompare?.ItemDisplayInfoId" Label="Legs Display Info ID" />
+        <Input_Element T="int" @bind-Value="feet.ItemDisplayInfoId" ValueCompare="feetCompare?.ItemDisplayInfoId" Label="Feet Display Info ID" />
+        <Input_Element T="int" @bind-Value="wrists.ItemDisplayInfoId" ValueCompare="wristsCompare?.ItemDisplayInfoId" Label="Wrists Display Info ID" />
+    </MudItem>
+</CustomDtoContent>
+
+@code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
+    //List<NpcModelItemSlotDisplayInfo> Values = new();
+    //List<NpcModelItemSlotDisplayInfo> ValueCompares = new();
+
+    NpcModelItemSlotDisplayInfo head;
+    NpcModelItemSlotDisplayInfo shoulders;
+    NpcModelItemSlotDisplayInfo shirt;
+    NpcModelItemSlotDisplayInfo chest;
+    NpcModelItemSlotDisplayInfo hands;
+    NpcModelItemSlotDisplayInfo tabard;
+    NpcModelItemSlotDisplayInfo cape;
+    NpcModelItemSlotDisplayInfo quiver;
+    NpcModelItemSlotDisplayInfo waist;
+    NpcModelItemSlotDisplayInfo legs;
+    NpcModelItemSlotDisplayInfo feet;
+    NpcModelItemSlotDisplayInfo wrists;
+
+    NpcModelItemSlotDisplayInfo? headCompare;
+    NpcModelItemSlotDisplayInfo? shouldersCompare;
+    NpcModelItemSlotDisplayInfo? shirtCompare;
+    NpcModelItemSlotDisplayInfo? chestCompare;
+    NpcModelItemSlotDisplayInfo? handsCompare;
+    NpcModelItemSlotDisplayInfo? tabardCompare;
+    NpcModelItemSlotDisplayInfo? capeCompare;
+    NpcModelItemSlotDisplayInfo? quiverCompare;
+    NpcModelItemSlotDisplayInfo? waistCompare;
+    NpcModelItemSlotDisplayInfo? legsCompare;
+    NpcModelItemSlotDisplayInfo? feetCompare;
+    NpcModelItemSlotDisplayInfo? wristsCompare;
+
+    protected override void OnParametersSet()
+    {
+        SetValues();
+    }
+
+    void SetValues()
+    {
+        head = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.HEAD);
+        shoulders = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.SHOULDERS);
+        shirt = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.SHIRT);
+        chest = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.CHEST);
+        hands = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.HANDS);
+        tabard = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.TABARD);
+        cape = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.CAPE);
+        quiver = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.QUIVER);
+        waist = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.WAIST);
+        legs = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.LEGS);
+        feet = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.FEET);
+        wrists = SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot.WRISTS);
+
+        if (PageTab.DtoCompare != null)
+        {
+            var valueCompareList = PageTab.DtoCompare.GetDtoListValue<NpcModelItemSlotDisplayInfo>();
+            headCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.HEAD).FirstOrDefault();
+            shouldersCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.SHOULDERS).FirstOrDefault();
+            shirtCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.SHIRT).FirstOrDefault();
+            chestCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.CHEST).FirstOrDefault();
+            handsCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.HANDS).FirstOrDefault();
+            tabardCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.TABARD).FirstOrDefault();
+            capeCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.CAPE).FirstOrDefault();
+            quiverCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.QUIVER).FirstOrDefault();
+            waistCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.WAIST).FirstOrDefault();
+            legsCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.LEGS).FirstOrDefault();
+            feetCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.FEET).FirstOrDefault();
+            wristsCompare = valueCompareList.Where(v => (NpcModelItemSlotDisplayInfoItemSlot)v.ItemSlot == NpcModelItemSlotDisplayInfoItemSlot.WRISTS).FirstOrDefault();
+        }
+        else
+        {
+            headCompare = null;
+            shouldersCompare = null;
+            shirtCompare = null;
+            chestCompare = null;
+            handsCompare = null;
+            tabardCompare = null;
+            capeCompare = null;
+            quiverCompare = null;
+            waistCompare = null;
+            legsCompare = null;
+            feetCompare = null;
+            wristsCompare = null;
+        }
+    }
+
+    NpcModelItemSlotDisplayInfo SetAndGetValue(NpcModelItemSlotDisplayInfoItemSlot slot)
+    {
+        var valueList = PageTab.Dto.GetDtoListValue<NpcModelItemSlotDisplayInfo>();
+        var value = valueList.Where(v => v.ItemSlot == (sbyte)slot).FirstOrDefault();
+        if (null == value)
+        {
+            value = new()
+                {
+                    ItemSlot = (sbyte)slot
+                };
+            valueList.Add(value);
+        }
+        return value;
+    }
+
+    void InitValue()
+    {
+        // Value should not be necessary to init.
+    }
+}

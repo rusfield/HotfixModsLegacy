@@ -16,6 +16,17 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
+        public static List<TValue>? GetDtoListValue<TValue>(this IDto dto)
+            where TValue : class, new()
+        {
+            var listProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == typeof(TValue)).FirstOrDefault();
+            if(listProperty != null)
+            {
+                return (List<TValue>)listProperty.GetValue(dto);
+            }
+            return null;
+        }
+
         public static TValue? GetDtoGroupValue<TValue>(this IDto dto, Type groupType, int groupIndex)
             where TValue : class, new()
         {

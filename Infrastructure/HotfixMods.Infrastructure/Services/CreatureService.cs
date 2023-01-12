@@ -69,15 +69,15 @@ namespace HotfixMods.Infrastructure.Services
             }
             if (result.CreatureDisplayInfoExtra != null)
             {
-                result.CreatureDisplayInfoOptions = await GetAsync<CreatureDisplayInfoOption>(new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId),result.CreatureDisplayInfoExtra.Id));
+                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId),result.CreatureDisplayInfoExtra.Id));
             }
             if (result.CreatureDisplayInfoExtra != null)
             {
-                result.NpcModelItemSlotDisplayInfos = await GetAsync<NpcModelItemSlotDisplayInfo>(new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
+                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
             }
-            if (result.CreatureDisplayInfoOptions.Count > 0)
+            if (result.CreatureDisplayInfoOption.Count > 0)
             {
-                var customizationOption = await GetSingleByIdAsync<ChrCustomizationOption>(result.CreatureDisplayInfoOptions.First().ChrCustomizationOptionId);
+                var customizationOption = await GetSingleByIdAsync<ChrCustomizationOption>(result.CreatureDisplayInfoOption.First().ChrCustomizationOptionId);
                 if (customizationOption != null)
                 {
                     result.ChrModelId = customizationOption.ChrModelId;
@@ -100,8 +100,8 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.CreatureModelInfo);
             await SaveAsync(dto.CreatureDisplayInfoExtra);
             await SaveAsync(dto.CreatureTemplateModel);
-            await SaveAsync(dto.CreatureDisplayInfoOptions.ToArray());
-            await SaveAsync(dto.NpcModelItemSlotDisplayInfos.ToArray());
+            await SaveAsync(dto.CreatureDisplayInfoOption.ToArray());
+            await SaveAsync(dto.NpcModelItemSlotDisplayInfo.ToArray());
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
@@ -114,12 +114,12 @@ namespace HotfixMods.Infrastructure.Services
                 return false;
             }
 
-            dto.CreatureDisplayInfoOptions.ForEach(async s =>
+            dto.CreatureDisplayInfoOption.ForEach(async s =>
             {
                 await DeleteAsync(s);
             });
 
-            dto.NpcModelItemSlotDisplayInfos.ForEach(async s => 
+            dto.NpcModelItemSlotDisplayInfo.ForEach(async s => 
             {
                 await DeleteAsync(s);
             });

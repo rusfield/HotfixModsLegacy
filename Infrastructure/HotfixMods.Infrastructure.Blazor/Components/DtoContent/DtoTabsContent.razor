@@ -81,7 +81,7 @@
     {
         foreach (var (property, index) in properties.WithIndex())
         {
-            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && property.Name.EndsWith("group", StringComparison.OrdinalIgnoreCase))
             {
                 groupType = property.PropertyType.GetGenericArguments()[0];
 

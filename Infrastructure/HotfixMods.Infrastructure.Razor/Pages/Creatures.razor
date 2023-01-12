@@ -88,7 +88,7 @@ else
                     </TabContent>
                     <ChildContent>
                         <TabContentEditBody T="object" AmountOfPages="amountOfCustomizationPages" CurrentPage="1" CustomValueHandling="true">
-                            <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOptions" CustomizationsChanged="SetAmountOfCustomizationPages" />
+                            <CreatureDisplayInfoOption_Tab @bind-ChrModelId="((CreatureDto)PageTab.Dto).ChrModelId" Values="((CreatureDto)PageTab.Dto).CreatureDisplayInfoOption" CustomizationsChanged="SetAmountOfCustomizationPages" />
                         </TabContentEditBody>
                     </ChildContent>
                 </MudTabPanel>
@@ -98,7 +98,7 @@ else
                     </TabContent>
                     <ChildContent>
                         <TabContentEditBody T="object" CustomValueHandling="true">
-                            <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfos" />
+                            <NpcModelItemSlotDisplayInfo_Tab Values="((CreatureDto)PageTab.Dto).NpcModelItemSlotDisplayInfo" />
                         </TabContentEditBody>
                     </ChildContent>
                 </MudTabPanel>

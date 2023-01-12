@@ -89,7 +89,7 @@ namespace HotfixMods.Infrastructure.Services
                 dto.CreatureModelInfo.DisplayId = (uint)dto.CreatureDisplayInfo.Id;
             }
 
-            dto.NpcModelItemSlotDisplayInfos.ForEach(s =>
+            dto.NpcModelItemSlotDisplayInfo.ForEach(s =>
             {
                 if (s.Id == 0 || !dto.IsUpdate)
                 {
@@ -100,7 +100,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
             });
 
-            dto.CreatureDisplayInfoOptions.ForEach(s =>
+            dto.CreatureDisplayInfoOption.ForEach(s =>
             {
                 if (s.Id == 0 || !dto.IsUpdate)
                 {
@@ -131,11 +131,11 @@ namespace HotfixMods.Infrastructure.Services
             if (dto.CreatureModelInfo != null)
                 dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
 
-            dto.NpcModelItemSlotDisplayInfos.ForEach(s =>
+            dto.NpcModelItemSlotDisplayInfo.ForEach(s =>
             {
                 s.VerifiedBuild = VerifiedBuild;
             });
-            dto.CreatureDisplayInfoOptions.ForEach(s =>
+            dto.CreatureDisplayInfoOption.ForEach(s =>
             {
                 s.VerifiedBuild = VerifiedBuild;
             });

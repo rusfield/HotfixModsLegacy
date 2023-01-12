@@ -31,7 +31,7 @@
                     <InlineGroup Merged="false" LeftContentWidth="10" RightContentWidth="10" MiddleContentWidth="80">
                         <LeftContent />
                         <MiddleContent>
-                            <Input_Element T="int" Value="chrModelId" ValueChanged="ChrModelIdOptionChanged" Label="Chr Model ID" GetOptionsAsync_Func="LoadChrModelId" />
+                            <Input_Element T="int" Value="chrModelId" ValueChanged="ChrModelIdOptionChanged" Label="Chr Model ID" GetOptionsAsync_Func="LoadChrModelId" Disabled="loading" />
                         </MiddleContent>
                         <RightContent />
                     </InlineGroup>
@@ -120,6 +120,7 @@
         customizations = await Service.GetCustomizationOptions(chrModelId);
         amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 12.0), 1); // Run at least once
         loading = false;
+        this.StateHasChanged();
     }
 
     async Task<Dictionary<int, string>> LoadChrModelId()
@@ -130,6 +131,7 @@
 
     async Task ChrModelIdOptionChanged(int newValue)
     {
+        amountOfCustomizationPages = 1;
         chrModelId = newValue;
         ((CreatureDto)PageTab.Dto).ChrModelId = newValue;
         customizations = new();

@@ -11,7 +11,7 @@ else
     <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" OnBlur="@(() => firstFocus = true)" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable">
         <NoItemsTemplate>
             <MudList Clickable="true">
-                <MudListItem OnClick="(async () => mudAutocompleteRef?.ToggleMenu())">
+                <MudListItem>
                     @Value
                 </MudListItem>
             </MudList>
@@ -68,6 +68,7 @@ else
 
     async Task InputValueChanged(string input)
     {
+        mudAutocompleteRef?.ToggleMenu();
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
         var listItem = options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
         var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input;

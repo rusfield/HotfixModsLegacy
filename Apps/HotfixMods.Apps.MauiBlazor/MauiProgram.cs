@@ -36,7 +36,7 @@ namespace HotfixMods.Apps.MauiBlazor
 
             var appConfig = config.Get<AppConfig>();
             var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
-            var db2Client = new Db2Client("10.0.2.46259");
+            var db2Client = new Db2Client("10.0.2.46259", appConfig.GitHubAccessToken);
             //GlobalHandler.Config = appConfig;
 
             builder.Services.AddSingleton(config =>

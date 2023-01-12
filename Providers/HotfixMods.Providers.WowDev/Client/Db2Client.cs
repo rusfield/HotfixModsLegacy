@@ -16,12 +16,13 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public string Build { get; set; }
 
-        public Db2Client(string build)
+        public Db2Client(string build, string? githubAccessToken = null)
         {
             Build = build;
             _httpClient = new();
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "HotfixMods");
-            //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer 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"); // useless scope with limited lifetime, but try not to deploy this... EDIT: shit
+            if (!string.IsNullOrWhiteSpace(githubAccessToken))
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {githubAccessToken}");
         }
 
         public async Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
@@ -95,7 +96,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public async Task<bool> Db2ExistsAsync(string location, string db2Name)
         {
-            if(!location.EndsWith("\\"))
+            if (!location.EndsWith("\\"))
                 location += "\\";
             return await Task.Run(() => File.Exists($"{location}{db2Name}.db2"));
         }

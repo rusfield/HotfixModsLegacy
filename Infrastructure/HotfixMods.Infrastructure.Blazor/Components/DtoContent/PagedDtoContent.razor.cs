@@ -20,13 +20,19 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         [Parameter]
         public EventCallback OnInitValue { get; set; }
 
-        bool valueIsNull = true;
+        [Parameter]
+        public bool IsCustom { get; set; } = false;
+
+        bool showInitButton = true;
         bool first = true;
         MudCarousel<object>? mudCarouselRef;
 
         protected override void OnParametersSet()
         {
-            valueIsNull = null == PageTab?.Dto?.GetDtoValue<T>();
+            if (IsCustom)
+                showInitButton= false;
+            else
+                showInitButton = null == PageTab?.Dto?.GetDtoValue<T>();
             base.OnParametersSet();
         }
 

@@ -1,0 +1,139 @@
+﻿@using HotfixMods.Core.Enums.Db2
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject CreatureService Service
+
+<PagedDtoContent T="CreatureDisplayInfoOption" IsCustom="true">
+    @for (int i = 0; i < amountOfCustomizationPages; i++)
+    {
+        int iVal = i;
+        <PagedDtoContentPage>
+            <MudItem xs="3">
+                @for (int j = 0; j < 6; j++)
+                {
+                    int jVal = (12 * iVal) + j;
+                    if (jVal >= customizations.Count)
+                    {
+                        <Placeholder_Element Amount="1" Visible="loading" />
+                    }
+                    else
+                    {
+                        var customization = customizations.ElementAt(jVal);
+                        var bindValue = GetCreatureDisplayInfoOption(customization);
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                    }
+                }
+            </MudItem>
+            <MudItem xs="6">
+                @if (iVal == 0)
+                {
+                    <Placeholder_Element Amount="4" />
+                    <InlineGroup Merged="false" LeftContentWidth="10" RightContentWidth="10" MiddleContentWidth="80">
+                        <LeftContent />
+                        <MiddleContent>
+                            <Input_Element T="int" Value="chrModelId" ValueChanged="ChrModelIdOptionChanged" Label="Chr Model ID" GetOptionsAsync_Func="LoadChrModelId" />
+                        </MiddleContent>
+                        <RightContent />
+                    </InlineGroup>
+                }
+                else
+                {
+                    <Placeholder_Element Amount="6" />
+                }
+            </MudItem>
+            <MudItem xs="3">
+                @for (int j = 0; j < 6; j++)
+                {
+                    int jVal = (12 * iVal) + 6 + j;
+                    if (jVal >= customizations.Count)
+                    {
+                        <Placeholder_Element Amount="1" Visible="loading" />
+                    }
+                    else
+                    {
+                        var customization = customizations.ElementAt(jVal);
+                        var bindValue = GetCreatureDisplayInfoOption(customization);
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                    }
+                }
+            </MudItem>
+        </PagedDtoContentPage>
+    }
+</PagedDtoContent>
+
+@code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
+
+    Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> customizations = new();
+    int amountOfCustomizationPages = 1;
+    bool loading = true;
+    int chrModelId = 0;
+    List<CreatureDisplayInfoOption> values;
+
+    protected override void OnParametersSet()
+    {
+        values = PageTab.Dto.GetDtoListValue<CreatureDisplayInfoOption>();
+        chrModelId = ((CreatureDto)PageTab.Dto).ChrModelId;
+        base.OnParametersSet();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await SetValues();
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+
+    async Task<Dictionary<int, string>> GetCustomizationChoices(int chrCustomizationOptionId)
+    {
+        if (customizations.Count == 0 || customizations.First().Key.ChrModelId != chrModelId)
+        {
+            customizations = await Service.GetCustomizationOptions(chrModelId);
+        }
+
+        if (customizations.Any(k => k.Key.Id == chrCustomizationOptionId))
+        {
+            return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : $"{c.Name} ({c.Id})");
+        }
+        return new();
+    }
+
+    CreatureDisplayInfoOption GetCreatureDisplayInfoOption(KeyValuePair<ChrCustomizationOption, List<ChrCustomizationChoice>> customization)
+    {
+        if (!values.Any(v => v.ChrCustomizationOptionId == customization.Key.Id))
+        {
+            values.Add(new()
+                {
+                    ChrCustomizationOptionId = customization.Key.Id,
+                    ChrCustomizationChoiceId = customization.Value.First().Id
+                });
+        }
+        return values.Where(v => v.ChrCustomizationOptionId == customization.Key.Id).First();
+    }
+
+    async Task SetValues()
+    {
+        loading = true;
+        customizations = await Service.GetCustomizationOptions(chrModelId);
+        amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 12.0), 1); // Run at least once
+        loading = false;
+    }
+
+    async Task<Dictionary<int, string>> LoadChrModelId()
+    {
+        await SetValues();
+        return Enum.GetValues<ChrModelId>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
+
+    async Task ChrModelIdOptionChanged(int newValue)
+    {
+        chrModelId = newValue;
+        ((CreatureDto)PageTab.Dto).ChrModelId = newValue;
+        customizations = new();
+        values.Clear();
+        await SetValues();
+    }
+}

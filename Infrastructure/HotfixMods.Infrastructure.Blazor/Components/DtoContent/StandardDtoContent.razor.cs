@@ -11,6 +11,9 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         public PageTab PageTab { get; set; }
 
         [Parameter]
+        public EventCallback OnInitValue { get; set; }
+
+        [Parameter]
         public RenderFragment ChildContent { get; set; }
         bool valueIsNull = true;
 
@@ -24,12 +27,6 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         {
             valueIsNull = null == PageTab?.Dto?.GetDtoValue<T>();
             base.OnParametersSet();
-        }
-
-        void CreateValue()
-        {
-            PageTab.Dto.SetDtoValueToDefault<T>();
-            valueIsNull = false;
         }
     }
 }

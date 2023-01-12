@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureEquipTemplate>
 
-<StandardDtoContent T="CreatureEquipTemplate">
+<StandardDtoContent T="CreatureEquipTemplate" OnInitValue="InitValue">
     <MudItem xs="3">
         <Placeholder_Element Amount="2" />
         <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" />

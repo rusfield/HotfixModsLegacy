@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureTemplate>
 
-<PagedDtoContent T="CreatureTemplate">
+<PagedDtoContent T="CreatureTemplate" OnInitValue="InitValue">
     <PagedDtoContentPage>
         <MudItem xs="3">
             <InlineGroup>

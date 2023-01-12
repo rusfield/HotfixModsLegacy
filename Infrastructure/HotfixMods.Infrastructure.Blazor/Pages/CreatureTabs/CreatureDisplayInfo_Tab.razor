@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfo>
 
-<PagedDtoContent T="CreatureDisplayInfo">
+<PagedDtoContent T="CreatureDisplayInfo" OnInitValue="InitValue">
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" />
@@ -62,10 +62,3 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
-
-@code{
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-    }
-}

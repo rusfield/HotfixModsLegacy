@@ -100,5 +100,11 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         {
             // TODO
         }
+
+        protected void InitValue()
+        {
+            PageTab.Dto.SetDtoValueToDefault<TValue>();
+            SetValue();
+        }
     }
 }

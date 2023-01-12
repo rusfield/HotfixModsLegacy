@@ -8,7 +8,7 @@
         </MudItem>
         <MudItem xs="4" />
         <MudItem xs="4">
-            <MudButton OnClick="CreateValue" Variant="Variant.Outlined">Init</MudButton>
+            <MudButton OnClick="OnInitValue" Variant="Variant.Outlined">Init</MudButton>
         </MudItem>
         <MudItem xs="4" />
     </MudGrid>
@@ -33,57 +33,4 @@ else
             </CascadingValue>
         </MudCarousel>
     </div>
-}
-
-
-
-@code {
-    [CascadingParameter(Name = "PageTab")]
-    public PageTab PageTab { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public Transition Transition { get; set; }
-
-    bool valueIsNull = true;
-    bool first = true;
-    MudCarousel<object>? mudCarouselRef;
-
-    protected override void OnParametersSet()
-    {
-        valueIsNull = null == PageTab?.Dto?.GetDtoValue<T>();
-        base.OnParametersSet();
-    }
-
-    void CreateValue()
-    {
-        PageTab.Dto.SetDtoValueToDefault<T>();
-        valueIsNull = false;
-    }
-
-    void NavigateForward_Click()
-    {
-        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex < mudCarouselRef.Items.Count)
-            mudCarouselRef.MoveTo(mudCarouselRef.SelectedIndex + 1);
-    }
-
-    void NavigateBackward_Click()
-    {
-        if (mudCarouselRef != null && mudCarouselRef.SelectedIndex > 0)
-            mudCarouselRef?.MoveTo(mudCarouselRef.SelectedIndex - 1);
-    }
-
-    void NavigatePage(int newIndex)
-    {
-        if (first)
-        {
-            first = false;
-        }
-        else
-        {
-            Transition = Transition.Slide;
-        }
-    }
 }

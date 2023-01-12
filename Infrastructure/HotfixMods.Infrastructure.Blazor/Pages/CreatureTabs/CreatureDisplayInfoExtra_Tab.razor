@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfoExtra>
 
-<StandardDtoContent T="CreatureDisplayInfoExtra">
+<StandardDtoContent T="CreatureDisplayInfoExtra" OnInitValue="InitValue">
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceId" ValueCompare="ValueCompare?.DisplayRaceId" Label="@nameof(Value.DisplayRaceId).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.DisplayClassId" ValueCompare="ValueCompare?.DisplayClassId" Label="@nameof(Value.DisplayClassId).ToDisplayName()" />

@@ -1,5 +1,6 @@
 ﻿@typeparam T where T : IDto
 @using System.Reflection
+@using HotfixMods.Infrastructure.Blazor.Pages.Shared;
 
 @inject ISnackbar Snackbar
 
@@ -23,7 +24,7 @@
                 }
                 else
                 {
-                    @(true ? "Update" : "Save")
+                    @(PageTab.Dto.IsUpdate ? "Update" : "Save")
                 }
             </MudButton>
         </MudStack>
@@ -105,7 +106,10 @@
     protected override void OnInitialized()
     {
         var properties = typeof(T).GetProperties();
-        // TODO: Hardcode Entity here, to come first
+        
+        // Hardcode in the shared HotfixMods entity tab
+        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), null));
+
         InitTabsList(properties);
 
         base.OnInitialized();

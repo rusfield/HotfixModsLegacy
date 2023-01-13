@@ -1,0 +1,21 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@typeparam TDto where TDto : IDto
+
+@inherits DtoContentBase<TDto, HotfixModsEntity>
+
+<StandardDtoContent T="HotfixModsEntity">
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element @bind-Value="Value.Name" Label="@nameof(HotfixModsEntity.Name)" Variant="Variant.Text" />
+        <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="bool" Label="ID" OnInfoAdornmentClick="@(OpenInfoDialog(HotfixModsEntityInfo.Id))" Disabled="@(Value.RecordId <= 0)" AllowUndefinedValues="false" GetOptionsAsync_Func="GetOptions" @bind-Value="PageTab.Dto.IsUpdate" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>

@@ -2,7 +2,6 @@
 
 @inherits DtoContentBase<SpellDto, SpellAuraOptions>
 
-
 <StandardDtoContent T="SpellAuraOptions">
     <MudItem xs="3">
         <Input_Element T="ushort" @bind-Value="Value.CumulativeAura" ValueCompare="ValueCompare?.CumulativeAura" Label="@nameof(Value.CumulativeAura).ToDisplayName()" />

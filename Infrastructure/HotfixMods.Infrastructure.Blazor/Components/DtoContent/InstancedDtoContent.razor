@@ -10,9 +10,16 @@ else
             int index = i;
             <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
                 <CascadingValue Name="GroupIndex" Value="index">
-                    <MudGrid Class="px-6 mt-7">
+                    @if (IsPaged)
+                    {
                         @ChildContent
-                    </MudGrid>
+                    }
+                    else
+                    {
+                        <MudGrid Class="px-6 mt-7">
+                            @ChildContent
+                        </MudGrid>
+                    }
                 </CascadingValue>
             </MudCarouselItem>
         }

@@ -11,6 +11,12 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         [CascadingParameter(Name = "PageTab")]
         public PageTab PageTab { get; set; }
 
+        [CascadingParameter(Name = "InstanceData")]
+        public InstanceData InstanceData { get; set; }
+
+        [CascadingParameter(Name = "GroupIndex")]
+        public int GroupIndex { get; set; }
+
         [Parameter]
         public RenderFragment ChildContent { get; set; }
 
@@ -30,9 +36,21 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         protected override void OnParametersSet()
         {
             if (IsCustom)
+            {
                 showInitButton= false;
+            }
             else
-                showInitButton = null == PageTab?.Dto?.GetDtoValue<T>();
+            {
+                if(null == InstanceData?.GroupType)
+                {
+                    showInitButton = null == PageTab?.Dto?.GetDtoValue<T>();
+                }
+                else
+                {
+                    showInitButton = null == PageTab?.Dto?.GetDtoGroupValue<T>(InstanceData.GroupType, GroupIndex);
+                }
+            }
+                
             base.OnParametersSet();
         }
 

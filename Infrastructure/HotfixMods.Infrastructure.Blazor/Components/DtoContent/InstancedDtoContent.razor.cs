@@ -18,6 +18,9 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         [Parameter]
         public EventCallback<Transition> TransitionChanged { get; set; }
 
+        [Parameter]
+        public bool IsPaged { get; set; } = false;
+
         bool first = true;
 
         protected override void OnAfterRender(bool firstRender)

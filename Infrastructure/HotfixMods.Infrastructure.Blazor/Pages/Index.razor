@@ -39,10 +39,11 @@
         <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" />
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
-        <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Size="Size.Large" Color="Color.Inherit" OnClick="@(() => OpenTab_Click(new PageTab("Creature", typeof(Creatures))))" />
+        <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Creature", typeof(Creatures))))" />
+        <MudIconButton Icon="@Icons.Material.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Spell", typeof(Spells))))" />
+
             @*
         <MudIconButton Icon="@Icons.Material.Filled.Security" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Items", typeof(Items))))" />
-        <MudIconButton Icon="@Icons.Material.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Spells", typeof(Spells))))" />
         <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Game Objects", typeof(Gameobjects))))" />
             *@
 
@@ -52,7 +53,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">Anim Kits</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Test</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Search Anim Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearch_Dialog>(new PageTab("Spell", typeof(Spells))))">Search Spells</MudMenuItem>
+
                 @*
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Spell Visual Kit", typeof(SpellVisualKits))))">Spell Visual Kits</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Sound Kit", typeof(SoundKits))))">Sound Kits</MudMenuItem>

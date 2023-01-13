@@ -42,7 +42,10 @@
             return ("", null);
         }
 
+        // Only one word
         input = input.AppendSpaceBeforeCapitalLetters();
+        if (!input.Contains(" "))
+            return (input, null);
 
         int left = input.Length / 2;
         int right = left;

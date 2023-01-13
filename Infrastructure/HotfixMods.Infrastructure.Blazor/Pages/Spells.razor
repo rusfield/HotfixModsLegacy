@@ -1,0 +1,25 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject SpellService Service
+@inherits PageBase<SpellDto>
+
+<DtoTabsContent T="SpellDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearch_Dialog>())" />
+
+
+@code {
+
+    // Temp
+    protected override void OnParametersSet()
+    {
+        if (null == PageTab.Dto)
+            PageTab.Dto = new SpellDto();
+        base.OnParametersSet();
+    }
+
+    async void SaveAsync()
+    {
+        if (PageTab.Dto != null)
+            await Service.SaveAsync((SpellDto)PageTab.Dto);
+    }
+}

@@ -1,0 +1,13 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SpellDto, SpellName>
+
+
+<StandardDtoContent T="SpellName">
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" />
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>

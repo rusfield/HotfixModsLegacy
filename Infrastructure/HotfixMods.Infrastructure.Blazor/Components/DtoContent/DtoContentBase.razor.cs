@@ -28,7 +28,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         protected override void OnParametersSet()
         {
             SetValue();
-            if(null == Value)
+            SetValueCompare();
+            if (null == Value)
                 SetValueToDefault();
             base.OnParametersSet();
         }
@@ -36,12 +37,14 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         protected override void OnInitialized()
         {
             SetValue();
+            SetValueCompare();
             base.OnInitialized();
         }
 
         protected override void OnAfterRender(bool firstRender)
         {
             SetValue();
+            SetValueCompare();
             base.OnAfterRender(firstRender);
         }
 
@@ -78,7 +81,7 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         void SetValue()
         {
-            if(InstanceData == null)
+            if (InstanceData == null)
             {
                 Value = PageTab.Dto.GetDtoValue<TValue>();
             }
@@ -98,7 +101,17 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         void SetValueCompare()
         {
-            // TODO
+            if (PageTab.DtoCompare != null)
+            {
+                if (InstanceData == null)
+                {
+                    ValueCompare = PageTab.DtoCompare.GetDtoValue<TValue>();
+                }
+                else
+                {
+                    ValueCompare = PageTab.DtoCompare.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
+                }
+            }
         }
 
         protected void InitValue()

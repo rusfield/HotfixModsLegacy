@@ -8,17 +8,17 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
-    protected async void NewAsync_Click<TDialog>()
+    protected async void NewAsync<TDialog>()
         where TDialog : ComponentBase
     {
-        await InvokeAsync(() => NewAsync_Click<TDialog>(new DialogParameters()));
+        await InvokeAsync(() => NewAsync<TDialog>(new DialogParameters()));
     }
 
-    protected async void NewAsync_Click<TDialog>(DialogParameters parameters)
+    protected async void NewAsync<TDialog>(DialogParameters parameters)
         where TDialog : ComponentBase
     {
         var result = await DialogService.Show<TDialog>(null, parameters).Result;
-        if (!result.Cancelled && result.Data != null)
+        if (!result.Canceled && result.Data != null)
         {
             //var pageTab = new PageTab(((DtoBase)result.Data).GetDisplayName(), this.GetType(), result.Data.GetType());
             //pageTab.Dto = (T)result.Data;
@@ -26,11 +26,11 @@
         }
     }
 
-    protected async void ValueCompareAsync_Click<TDialog>(DialogParameters? parameters = null)
+    protected async void ValueCompareAsync<TDialog>(DialogParameters? parameters = null)
         where TDialog : ComponentBase
     {
         var result = await DialogService.Show<TDialog>(null, parameters ?? new DialogParameters()).Result;
-        if (!result.Cancelled && result.Data != null)
+        if (!result.Canceled && result.Data != null)
         {
             PageTab.DtoCompare = (T)result.Data;
             this.StateHasChanged();

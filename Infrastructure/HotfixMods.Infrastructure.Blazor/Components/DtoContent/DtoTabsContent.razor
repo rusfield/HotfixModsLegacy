@@ -1,6 +1,34 @@
 ﻿@typeparam T where T : IDto
 @using System.Reflection
 
+@inject ISnackbar Snackbar
+
+<MudGrid Class="mb-1 px-3">
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexStart">
+            <MudButton Variant="@(PageTab.DtoCompare != null ? Variant.Filled : Variant.Outlined)" Color="Color.Info" OnClick="ValueCompare_Callback">Compare</MudButton>
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
+            @PageTab.TabName
+        </MudText>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
+                @if (saving)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    @(true ? "Update" : "Save")
+                }
+            </MudButton>
+        </MudStack>
+    </MudItem>
+</MudGrid>
 <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelTabChanged">
     @foreach (var tab in tabs)
     {
@@ -60,12 +88,19 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
+    [Parameter]
+    public EventCallback SaveAsync_Callback { get; set; }
+
+    [Parameter]
+    public EventCallback ValueCompare_Callback { get; set; }
+
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
     Dictionary<Type, InstanceData> instanceData = new();
     InstanceData? currentInstanceData;
     int currentPage = 1;
+    bool saving = false;
 
     protected override void OnInitialized()
     {
@@ -81,7 +116,7 @@
     {
         foreach (var (property, index) in properties.WithIndex())
         {
-            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && property.Name.EndsWith("group", StringComparison.OrdinalIgnoreCase))
+            if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && property.Name.EndsWith("groups", StringComparison.OrdinalIgnoreCase))
             {
                 groupType = property.PropertyType.GetGenericArguments()[0];
 
@@ -216,5 +251,14 @@
         public string TabPanelName { get; set; }
         public Type ComponentType { get; set; }
         public Type? GroupType { get; set; }
+    }
+
+    async Task SaveAsync_Click()
+    {
+        saving = true;
+        await SaveAsync_Callback.InvokeAsync();
+        await Task.Delay(500); // UI trick to make saving more user friendly
+        saving = false;
+        Snackbar.Add($"Saved.", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
     }
 }

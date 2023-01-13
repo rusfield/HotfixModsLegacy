@@ -1,0 +1,46 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+
+@inject CreatureService Service
+
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog" GetById_Func="GetByIdAsync" GetNewAsync_Func="GetNewAsync" />
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    DialogSearch? dialogSearchRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender && Id != null)
+        {
+            await GetByIdAsync(Id);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GetByIdAsync(int? id)
+    {
+        if (id != null)
+        {
+            var data = await Service.GetByIdAsync((int)id, dialogSearchRef!.SetLoaderProgress);
+            if (data != null)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef.CancelLoaderWithMessage("No DB2 record found.");
+            }
+        }
+    }
+
+    async Task GetNewAsync()
+    {
+        var data = await Service.GetNewAsync(dialogSearchRef!.SetLoaderProgress);
+        Dialog.Close(data);
+    } 
+}

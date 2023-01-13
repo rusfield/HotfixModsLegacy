@@ -1,10 +1,11 @@
-﻿@inherits PageBase<CreatureDto>
-
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
+@inject CreatureService Service
+@inherits PageBase<CreatureDto>
 
-<DtoTabsContent T="CreatureDto" />
+<DtoTabsContent T="CreatureDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />
 
 
 @code {
@@ -12,8 +13,14 @@
     // Temp
     protected override void OnParametersSet()
     {
-        if(null == PageTab.Dto)
+        if (null == PageTab.Dto)
             PageTab.Dto = new CreatureDto();
         base.OnParametersSet();
+    }
+
+    async void SaveAsync()
+    {
+        if (PageTab.Dto != null)
+            await Service.SaveAsync((CreatureDto)PageTab.Dto);
     }
 }

@@ -1,14 +1,16 @@
-﻿@inherits PageBase<AnimKitDto>
-
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.AnimKitTabs
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject AnimKitService Service
+@inherits PageBase<AnimKitDto>
 
 @* IDEA FOR MIDDLE IMAGE DISPLAY
     Stack a bunch of images on top of each other. One image for each body part + children. Use Z-index to order images, so that you can verify that the priorities are right.
 
 *@
 
-<DtoTabsContent T="AnimKitDto" />
+<DtoTabsContent T="AnimKitDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<AnimKitSearch_Dialog>())" />
 
 
 @code {
@@ -21,5 +23,9 @@
         base.OnParametersSet();
     }
 
-
+    async void SaveAsync()
+    {
+        if (PageTab.Dto != null)
+            await Service.SaveAsync((AnimKitDto)PageTab.Dto);
+    }
 }

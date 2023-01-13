@@ -9,31 +9,45 @@ namespace HotfixMods.Infrastructure.Services
     {
         Dictionary<int, Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> customizationCache = new();
 
-        public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrModelId)
+        public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrModelId, bool includeDruidForms = false)
         {
+            var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
             if (chrModelId == 0)
             {
                 // This selection seems to be a bit bugged in DB.
                 // Use it as default and return nothing.
-                return new();
+                return result;
             }
             else if (customizationCache.ContainsKey(chrModelId))
             {
-                return customizationCache[chrModelId];
+                result = customizationCache[chrModelId];
             }
-
-            var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-
-            var options = await GetAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrModelId));
-            foreach (var option in options)
+            else
             {
-                var choices = await GetAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
-                result.Add(option, choices);
+                var options = await GetAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrModelId));
+                foreach (var option in options)
+                {
+                    var choices = await GetAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
+                    result.Add(option, choices);
+                }
+
+                // In case it has been added elsewhere in the meantime
+                if (!customizationCache.ContainsKey(chrModelId) && result.Count > 0)
+                    customizationCache.Add(chrModelId, result);
             }
 
-            // In case it has been added elsewhere in the meantime
-            if (!customizationCache.ContainsKey(chrModelId) && result.Count > 0)
-                customizationCache.Add(chrModelId, result);
+            if (!includeDruidForms)
+            {
+                var filteredResult = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
+                foreach(var option in result)
+                {
+                    // Currently, only druid forms are named like "Moonkin Form", etc.
+                    // Edit this condition if it should affect new customizations at some point.
+                    if (!option.Key.Name.ToLower().EndsWith(" form"))
+                        filteredResult.Add(option.Key, option.Value);
+                }
+                return filteredResult;
+            }
             return result;
         }
 

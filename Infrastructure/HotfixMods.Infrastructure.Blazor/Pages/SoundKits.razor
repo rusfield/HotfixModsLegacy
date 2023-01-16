@@ -1,0 +1,25 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject SoundKitService Service
+@inherits PageBase<SoundKitDto>
+
+<DtoTabsContent T="SoundKitDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SoundKitSearch_Dialog>())" />
+
+
+@code {
+
+    // Temp
+    protected override void OnParametersSet()
+    {
+        if (null == PageTab.Dto)
+            PageTab.Dto = new SoundKitDto();
+        base.OnParametersSet();
+    }
+
+    async void SaveAsync()
+    {
+        if (PageTab.Dto != null)
+            await Service.SaveAsync((SoundKitDto)PageTab.Dto);
+    }
+}

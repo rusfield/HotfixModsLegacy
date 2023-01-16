@@ -1,0 +1,25 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject SpellVisualKitService Service
+@inherits PageBase<SpellVisualKitDto>
+
+<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearch_Dialog>())" />
+
+
+@code {
+
+    // Temp
+    protected override void OnParametersSet()
+    {
+        if (null == PageTab.Dto)
+            PageTab.Dto = new SpellVisualKitDto();
+        base.OnParametersSet();
+    }
+
+    async void SaveAsync()
+    {
+        if (PageTab.Dto != null)
+            await Service.SaveAsync((SpellVisualKitDto)PageTab.Dto);
+    }
+}

@@ -1,0 +1,53 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SoundKitDto, SoundKit>
+
+<StandardDtoContent T="SoundKit">
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@(nameof(Value.SoundType).ToDisplayName())" ValueCompare="ValueCompare?.SoundType" />
+        <Input_Element T="sbyte" @bind-Value="@(Value.DialogType)" Label="@(nameof(Value.DialogType).ToDisplayName())" ValueCompare="ValueCompare?.DialogType" />
+        <Input_Element T="int" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" />
+        <Input_Element T="decimal" @bind-Value="@(Value.MinDistance)" Label="@(nameof(Value.MinDistance).ToDisplayName())" ValueCompare="ValueCompare?.MinDistance" />
+        <Input_Element T="decimal" @bind-Value="@(Value.DistanceCutoff)" Label="@(nameof(Value.DistanceCutoff).ToDisplayName())" ValueCompare="ValueCompare?.DistanceCutoff" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="decimal" @bind-Value="@(Value.VolumeFloat)" Label="@(nameof(Value.VolumeFloat).ToDisplayName())" ValueCompare="ValueCompare?.VolumeFloat" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="decimal" @bind-Value="@(Value.PitchAdjust)" Label="@(nameof(Value.PitchAdjust).ToDisplayName())" ValueCompare="ValueCompare?.PitchAdjust" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup Merged="false" DefaultPadding="false">
+            <LeftContent>
+                <InlineGroup Merged="false">
+                    <LeftContent>
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.VolumeVariationPlus" />
+                    </LeftContent>
+                    <RightContent>
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.VolumeVariationMinus" />
+                    </RightContent>
+                </InlineGroup>
+            </LeftContent>
+            <RightContent>
+                <InlineGroup Merged="false">
+                    <LeftContent>
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.PitchVariationPlus" />
+                    </LeftContent>
+                    <RightContent>
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.PitchVariationMinus" />
+                    </RightContent>
+                </InlineGroup>
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="byte" @bind-Value="@(Value.MaxInstances)" Label="@(nameof(Value.MaxInstances).ToDisplayName())" ValueCompare="ValueCompare?.MaxInstances" />
+        <Input_Element T="byte" @bind-Value="@(Value.EAXDef)" Label="EAX Def" ValueCompare="ValueCompare?.EAXDef" />
+        <Input_Element T="uint" @bind-Value="@(Value.SoundKitAdvancedId)" Label="@(nameof(Value.SoundKitAdvancedId).ToDisplayName())" ValueCompare="ValueCompare?.SoundKitAdvancedId" />
+        <Input_Element T="ushort" @bind-Value="@(Value.BusOverwriteId)" Label="@(nameof(Value.BusOverwriteId).ToDisplayName())" ValueCompare="ValueCompare?.BusOverwriteId" />
+        <Input_Element T="uint" @bind-Value="@(Value.SoundMixGroupId)" Label="@(nameof(Value.SoundMixGroupId).ToDisplayName())" ValueCompare="ValueCompare?.SoundMixGroupId" />
+    </MudItem>
+</StandardDtoContent>

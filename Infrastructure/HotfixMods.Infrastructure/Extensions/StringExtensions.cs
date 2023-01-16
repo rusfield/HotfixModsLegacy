@@ -32,12 +32,19 @@ namespace HotfixMods.Infrastructure.Extensions
             return $"{appendBefore ?? ""}{output}{appendAfter ?? ""}";
         }
 
-        // Made by chat.openai.com
         public static string AppendSpaceBeforeCapitalLetters(this string str)
         {
-            string pattern = "(?<=[a-z])(?=[A-Z])";
-            string replacement = " ";
-            var output = Regex.Replace(str, pattern, replacement);
+            if (str.Length <= 1)
+                return str;
+
+            string output = str[0].ToString();
+            foreach(var c in str.Substring(1).ToCharArray())
+            {
+                if (char.IsUpper(c))
+                    output += " ";
+
+                output += c;
+            }
             return output;
         }
     }

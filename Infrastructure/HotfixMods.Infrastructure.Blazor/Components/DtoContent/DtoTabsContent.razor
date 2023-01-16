@@ -55,9 +55,7 @@
                     else
                     {
                         <CascadingValue Name="InstanceData" Value="instance">
-                            <InstancedDtoContent>
-                                <DynamicComponent Type="tab.ComponentType" />
-                            </InstancedDtoContent>
+                            <DynamicComponent Type="tab.ComponentType" />
                         </CascadingValue>
                     }
                 </div>
@@ -106,7 +104,7 @@
     protected override void OnInitialized()
     {
         var properties = typeof(T).GetProperties();
-        
+
         // Hardcode in the shared HotfixMods entity tab
         tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), null));
 

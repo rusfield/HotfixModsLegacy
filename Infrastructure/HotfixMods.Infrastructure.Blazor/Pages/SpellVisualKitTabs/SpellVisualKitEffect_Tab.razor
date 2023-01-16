@@ -1,0 +1,54 @@
+﻿@using HotfixMods.Core.Enums.Db2;
+@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SpellVisualKitDto, SpellVisualKitEffect>
+
+<InstancedDtoContent>
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectDisabled" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</InstancedDtoContent>
+
+@code {
+    [Parameter]
+    public EventCallback<int> EffectTypeChanged { get; set; }
+
+    [Parameter]
+    public bool EffectDisabled { get; set; } = true;
+
+    async void OnEffectTypeChanged(int newEffectType)
+    {
+        Value.EffectType = newEffectType;
+        await EffectTypeChanged.InvokeAsync(newEffectType);
+    }
+
+    bool EffectIsDisabled()
+    {
+        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType);
+        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.UNIT_SOUND_TYPE);
+
+        return effectIsDefined && !effectIsUnitSoundType;
+    }
+
+    async Task<Dictionary<int, string>> GetEffectTypes()
+    {
+        return Enum.GetValues<SpellVisualEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
+}

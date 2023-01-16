@@ -2,7 +2,7 @@
 
 @inherits DtoContentBase<SpellDto, Spell>
 
-<StandardDtoContent T="Spell">
+<StandardDtoContent T="Spell" OnInitValue="InitValue">
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
         <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" />

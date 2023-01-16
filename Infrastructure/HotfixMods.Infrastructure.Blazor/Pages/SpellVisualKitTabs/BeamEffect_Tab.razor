@@ -1,0 +1,48 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SpellVisualKitDto, BeamEffect>
+
+<InstancedDtoContent>
+    <MudItem xs="3">
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.SourceOffset" ValueCompare="ValueCompare?.SourceOffset" Label="@nameof(Value.SourceOffset).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.DestOffset" ValueCompare="ValueCompare?.DestOffset" Label="@nameof(Value.DestOffset).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.SourcePositionerId" ValueCompare="ValueCompare?.SourcePositionerId" Label="@nameof(Value.SourcePositionerId).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.DestPositionerId" ValueCompare="ValueCompare?.DestPositionerId" Label="@nameof(Value.DestPositionerId).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.SourceAttachId" ValueCompare="ValueCompare?.SourceAttachId" Label="@nameof(Value.SourceAttachId).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.DestAttachId" ValueCompare="ValueCompare?.DestAttachId" Label="@nameof(Value.DestAttachId).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.BeamId" ValueCompare="ValueCompare?.BeamId" Label="@nameof(Value.BeamId).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="decimal" @bind-Value="Value.SourceMinDistance" ValueCompare="ValueCompare?.SourceMinDistance" Label="@nameof(Value.SourceMinDistance).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.FixedLength" ValueCompare="ValueCompare?.FixedLength" Label="@nameof(Value.FixedLength).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+    </MudItem>
+</InstancedDtoContent>

@@ -1,0 +1,19 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SpellVisualKitDto, SpellProceduralEffect>
+
+<InstancedDtoContent>
+    <MudItem xs="3">
+        <Input_Element T="sbyte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="decimal" @bind-Value="Value.Value1" ValueCompare="ValueCompare?.Value1" Label="@nameof(Value.Value1).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.Value2" ValueCompare="ValueCompare?.Value2" Label="@nameof(Value.Value2).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.Value3" ValueCompare="ValueCompare?.Value3" Label="@nameof(Value.Value3).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.Value4" ValueCompare="ValueCompare?.Value4" Label="@nameof(Value.Value4).ToDisplayName()" />
+    </MudItem>
+</InstancedDtoContent>

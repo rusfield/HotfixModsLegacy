@@ -3,7 +3,7 @@
 @inherits DtoContentBase<AnimKitDto, AnimKit>
 
 
-<StandardDtoContent T="AnimKit">
+<StandardDtoContent T="AnimKit" OnInitValue="InitValue">
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="@(Value.OneShotDuration)" Label="@(nameof(Value.OneShotDuration).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.OneShotDuration" />
         <Input_Element T="ushort" @bind-Value="@(Value.OneShotStopAnimKitId)" Label="@(nameof(Value.OneShotStopAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.OneShotStopAnimKitId" OnInfoAdornmentClick="@(OpenInfoDialog(AnimKitInfo.OneShotStopAnimKitId))" />

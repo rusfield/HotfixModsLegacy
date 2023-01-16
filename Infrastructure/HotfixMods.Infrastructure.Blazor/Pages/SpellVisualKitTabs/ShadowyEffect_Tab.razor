@@ -1,0 +1,41 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<SpellVisualKitDto, ShadowyEffect>
+
+<InstancedDtoContent>
+    <MudItem xs="3">
+        <Input_Element T="decimal" @bind-Value="Value.InnerStrength" ValueCompare="ValueCompare?.InnerStrength" Label="@nameof(Value.InnerStrength).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.OuterStrength" ValueCompare="ValueCompare?.OuterStrength" Label="@nameof(Value.OuterStrength).ToDisplayName()" />
+        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.PrimaryColor" ValueCompare="ValueCompare?.PrimaryColor" Label="@nameof(Value.PrimaryColor).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.SecondaryColor" ValueCompare="ValueCompare?.SecondaryColor" Label="@nameof(Value.SecondaryColor).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="decimal" @bind-Value="Value.FadeInTime" ValueCompare="ValueCompare?.FadeInTime" Label="@nameof(Value.FadeInTime).ToDisplayName()" />
+            </LeftContent>
+            <MiddleContent>
+                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent>
+                <Input_Element T="decimal" @bind-Value="Value.FadeOutTime" ValueCompare="ValueCompare?.FadeOutTime" Label="@nameof(Value.FadeOutTime).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.Value" ValueCompare="ValueCompare?.Value" Label="@nameof(Value.Value).ToDisplayName()" />
+        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
+        <Input_Element T="sbyte" @bind-Value="Value.AttachPos" ValueCompare="ValueCompare?.AttachPos" Label="@nameof(Value.AttachPos).ToDisplayName()" />
+    </MudItem>
+</InstancedDtoContent>

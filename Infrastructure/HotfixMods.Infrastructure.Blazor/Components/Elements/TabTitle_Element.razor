@@ -42,8 +42,9 @@
             return ("", null);
         }
 
-        // Only one word
         input = input.AppendSpaceBeforeCapitalLetters();
+
+        // Only one word
         if (!input.Contains(" "))
             return (input, null);
 

@@ -33,7 +33,7 @@
 <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" ActivePanelIndexChanged="PanelTabChanged">
     @foreach (var tab in tabs)
     {
-        <MudTabPanel>
+        <MudTabPanel Class="custom-mud-tabs">
             <TabContent>
                 <TabTitle_Element Title="@tab.TabPanelName" />
             </TabContent>

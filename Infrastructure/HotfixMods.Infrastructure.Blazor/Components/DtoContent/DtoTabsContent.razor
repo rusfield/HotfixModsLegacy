@@ -261,6 +261,6 @@
         await SaveAsync_Callback.InvokeAsync();
         await Task.Delay(500); // UI trick to make saving more user friendly
         saving = false;
-        Snackbar.Add($"Saved.", Severity.Info, config => { config.Icon = Icons.Filled.Check; });
+        Snackbar.Add($"Saved.", Severity.Info, config => { config.Icon = Icons.Material.Filled.Check; });
     }
 }

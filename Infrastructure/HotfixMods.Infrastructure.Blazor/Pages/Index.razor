@@ -33,41 +33,50 @@
 
 <MudDrawer @bind-Open="@_menuOpen" Anchor="Anchor.Bottom" Elevation="1" Variant="@DrawerVariant.Temporary">
     <MudDrawerHeader>
-        <MudText Typo="Typo.h6" Align="Align.Center" Style="width:100%">My App</MudText>
+        <MudText Typo="Typo.h6" Align="Align.Center" Style="width:100%">Hotfix Mods</MudText>
     </MudDrawerHeader>
-    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="3" Style="width:100%;">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="2" Style="width:100%;">
         <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
         <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" />
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
-        <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Creature", typeof(Creatures))))" />
-        <MudIconButton Icon="@Icons.Material.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Spell", typeof(Spells))))" />
-        <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab("Game Objects", typeof(Gameobjects))))" />
 
-        @*
-        <MudIconButton Icon="@Icons.Material.Filled.Security" Color="Color.Inherit" Size="Size.Large" OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Items", typeof(Items))))" />
-        *@
-
-        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+        @* Creatures *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Creatures"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.MoreHoriz" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">Anim Kits</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Search Anim Kit</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearch_Dialog>(new PageTab("Spell", typeof(Spells))))">Search Spells</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">Spell Visual Kits</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Sound Kit", typeof(SoundKits))))">Sound Kits</MudMenuItem>
-
-                @*
-
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab<IDto>("Generic Hotfix", typeof(GenericHotfixes))))">Custom Hotfix</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab<IDto>("Anim Kit", typeof(AnimKits))))">Test</MudMenuItem>
-                *@
+                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearch_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
+
+        @* Spells *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Spells"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@Icons.Material.Filled.LocalFireDepartment" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearch_Dialog>(new PageTab("Spell", typeof(Spells))))">Search by ID</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
+        @* Gameobjects *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Game Objects"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearch_Dialog>(new PageTab("Game Object", typeof(Gameobjects))))">Search by ID</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
+
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
-        <MudText Color="Color.Inherit" Typo="Typo.subtitle2">Hotfix Mods</MudText>
+        <MudText Color="Color.Inherit" Typo="Typo.subtitle2" Style="min-width:120px">@hover</MudText>
 
     </MudStack>
 </MudDrawer>
@@ -77,6 +86,7 @@
     bool _menuOpen = false;
     List<PageTab> tabs = new();
     bool tabAdded = false;
+    string hover = "";
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -85,6 +95,8 @@
             tabAdded = false;
             _mudTabsRef?.ActivatePanel(tabs.Count - 1);
         }
+        if (!_menuOpen)
+            hover = "";
         base.OnAfterRender(firstRender);
     }
 
@@ -108,6 +120,11 @@
         _menuOpen = false;
         tabs.Add(tab);
         tabAdded = true;
+    }
+
+    void SetHover(string menuItem)
+    {
+        hover = menuItem;
     }
 
     async void OpenDialog_Click<TDialog>(PageTab pageTab)

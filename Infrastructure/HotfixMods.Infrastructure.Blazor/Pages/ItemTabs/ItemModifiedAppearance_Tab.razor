@@ -1,0 +1,27 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ItemDto, ItemModifiedAppearance>
+
+<StandardDtoContent T="ItemModifiedAppearance" OnInitValue="InitValue">
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.ItemAppearanceModifierId" ValueCompare="ValueCompare?.ItemAppearanceModifierId" Label="@nameof(Value.ItemAppearanceModifierId).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="byte" @bind-Value="Value.TransmogSourceTypeEnum" ValueCompare="ValueCompare?.TransmogSourceTypeEnum" Label="@nameof(Value.TransmogSourceTypeEnum).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>

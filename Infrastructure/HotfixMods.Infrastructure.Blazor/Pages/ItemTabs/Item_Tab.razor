@@ -1,0 +1,37 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ItemDto, Item>
+
+<StandardDtoContent T="Item" OnInitValue="InitValue">
+    <MudItem xs="3">
+        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup>
+            <LeftContent>
+                <Input_Element T="byte" @bind-Value="Value.ClassId" ValueCompare="ValueCompare?.ClassId" Label="@nameof(Value.ClassId).ToDisplayName()" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="byte" @bind-Value="Value.SubclassId" ValueCompare="ValueCompare?.SubclassId" Label="@nameof(Value.SubclassId).ToDisplayName()" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.IconFileDataId" ValueCompare="ValueCompare?.IconFileDataId" Label="@nameof(Value.IconFileDataId).ToDisplayName()" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassId" ValueCompare="ValueCompare?.SoundOverrideSubclassId" Label="@nameof(Value.SoundOverrideSubclassId).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.CraftingQualityId" ValueCompare="ValueCompare?.CraftingQualityId" Label="@nameof(Value.CraftingQualityId).ToDisplayName()" />
+    </MudItem>
+</StandardDtoContent>

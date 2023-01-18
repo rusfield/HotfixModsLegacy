@@ -1,0 +1,125 @@
+﻿@using HotfixMods.Infrastructure.InfoModels
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.Db2
+
+<CustomDtoContent>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="armUpper.ItemDisplayInfoId" ValueCompare="armUpperCompare?.ItemDisplayInfoId" Label="Arms Upper" />
+        <Input_Element T="int" @bind-Value="armLower.ItemDisplayInfoId" ValueCompare="armLowerCompare?.ItemDisplayInfoId" Label="Arms Lower" />
+        <Input_Element T="int" @bind-Value="hands.ItemDisplayInfoId" ValueCompare="handsCompare?.ItemDisplayInfoId" Label="Hands" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="torsoUpper.ItemDisplayInfoId" ValueCompare="torsoUpperCompare?.ItemDisplayInfoId" Label="Chest Upper" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="torsoLower.ItemDisplayInfoId" ValueCompare="torsoLowerCompare?.ItemDisplayInfoId" Label="Chest Lower" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="accessory.ItemDisplayInfoId" ValueCompare="accessoryCompare?.ItemDisplayInfoId" Label="Accessories" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="legUpper.ItemDisplayInfoId" ValueCompare="legUpperCompare?.ItemDisplayInfoId" Label="Legs Upper" />
+        <Input_Element T="int" @bind-Value="legLower.ItemDisplayInfoId" ValueCompare="legLowerCompare?.ItemDisplayInfoId" Label="Legs Lower" />
+        <Input_Element T="int" @bind-Value="foot.ItemDisplayInfoId" ValueCompare="foot?.ItemDisplayInfoId" Label="Feet" />
+    </MudItem>
+</CustomDtoContent>
+
+@code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
+    ItemDisplayInfoMaterialRes armUpper;
+    ItemDisplayInfoMaterialRes armLower;
+    ItemDisplayInfoMaterialRes hands;
+    ItemDisplayInfoMaterialRes torsoUpper;
+    ItemDisplayInfoMaterialRes torsoLower;
+    ItemDisplayInfoMaterialRes legUpper;
+    ItemDisplayInfoMaterialRes legLower;
+    ItemDisplayInfoMaterialRes foot;
+    ItemDisplayInfoMaterialRes accessory;
+    // TODO: Check rest
+    //ItemDisplayInfoMaterialRes scalpUpper;
+    //ItemDisplayInfoMaterialRes scalpLower;
+    //ItemDisplayInfoMaterialRes unk11;
+    //ItemDisplayInfoMaterialRes unk12;
+    //ItemDisplayInfoMaterialRes unk13;
+
+    ItemDisplayInfoMaterialRes? armUpperCompare;
+    ItemDisplayInfoMaterialRes? armLowerCompare;
+    ItemDisplayInfoMaterialRes? handsCompare;
+    ItemDisplayInfoMaterialRes? torsoUpperCompare;
+    ItemDisplayInfoMaterialRes? torsoLowerCompare;
+    ItemDisplayInfoMaterialRes? legUpperCompare;
+    ItemDisplayInfoMaterialRes? legLowerCompare;
+    ItemDisplayInfoMaterialRes? footCompare;
+    ItemDisplayInfoMaterialRes? accessoryCompare;
+
+    protected override void OnParametersSet()
+    {
+        SetValues();
+    }
+
+    void SetValues()
+    {
+        armUpper = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.ARM_UPPER);
+        armLower = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.ARM_LOWER);
+        hands = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.HAND);
+        torsoUpper = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.TORSO_UPPER);
+        torsoLower = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.TORSO_LOWER);
+        legUpper = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.LEG_UPPER);
+        legLower = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.LEG_LOWER);
+        foot = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.FOOT);
+        accessory = SetAndGetValue(ItemDisplayInfoMaterialResComponentSection.ACCESSORY);
+
+
+        if (PageTab.DtoCompare != null)
+        {
+            var valueCompareList = PageTab.DtoCompare.GetDtoListValue<ItemDisplayInfoMaterialRes>();
+            armUpperCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.ARM_UPPER).FirstOrDefault();
+            armLowerCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.ARM_LOWER).FirstOrDefault();
+            handsCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.HAND).FirstOrDefault();
+            torsoUpperCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.TORSO_UPPER).FirstOrDefault();
+            torsoLowerCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.TORSO_LOWER).FirstOrDefault();
+            legUpperCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.LEG_UPPER).FirstOrDefault();
+            legLowerCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.LEG_LOWER).FirstOrDefault();
+            footCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.FOOT).FirstOrDefault();
+            accessoryCompare = valueCompareList.Where(v => (ItemDisplayInfoMaterialResComponentSection)v.ComponentSection == ItemDisplayInfoMaterialResComponentSection.ACCESSORY).FirstOrDefault();
+        }
+        else
+        {
+            armUpperCompare = null;
+            armLowerCompare = null;
+            handsCompare = null;
+            torsoUpperCompare = null;
+            torsoLowerCompare = null;
+            legUpperCompare = null;
+            legLowerCompare = null;
+            footCompare = null;
+            accessoryCompare = null;
+        }
+    }
+
+    ItemDisplayInfoMaterialRes SetAndGetValue(ItemDisplayInfoMaterialResComponentSection section)
+    {
+        var valueList = PageTab.Dto.GetDtoListValue<ItemDisplayInfoMaterialRes>();
+        var value = valueList.Where(v => v.ComponentSection == (sbyte)section).FirstOrDefault();
+        if (null == value)
+        {
+            value = new()
+                {
+                    ComponentSection = (sbyte)section
+                };
+            valueList.Add(value);
+        }
+        return value;
+    }
+}

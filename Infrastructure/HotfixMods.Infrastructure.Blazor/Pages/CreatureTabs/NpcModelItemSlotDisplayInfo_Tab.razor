@@ -40,9 +40,6 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
-    //List<NpcModelItemSlotDisplayInfo> Values = new();
-    //List<NpcModelItemSlotDisplayInfo> ValueCompares = new();
-
     NpcModelItemSlotDisplayInfo head;
     NpcModelItemSlotDisplayInfo shoulders;
     NpcModelItemSlotDisplayInfo shirt;
@@ -135,10 +132,5 @@
             valueList.Add(value);
         }
         return value;
-    }
-
-    void InitValue()
-    {
-        // Value should not be necessary to init.
     }
 }

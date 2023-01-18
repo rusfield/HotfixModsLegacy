@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task SaveAsync(AnimKitDto animKitDto)
+        public async Task SaveAsync(ItemDto dto)
         {
             // TODO
         }

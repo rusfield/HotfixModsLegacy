@@ -1,9 +1,11 @@
 ﻿@typeparam T where T : IDto
 @using System.Reflection
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.Shared;
 @using System.Diagnostics;
 
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
 
 <MudGrid Class="mb-1 px-3">
     <MudItem xs="4">

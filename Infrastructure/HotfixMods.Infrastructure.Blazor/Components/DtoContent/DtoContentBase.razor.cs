@@ -50,8 +50,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         protected EventCallback OpenInfoDialog(string infoText)
         {
             var parameters = new DialogParameters();
-            parameters.Add(nameof(InfoButton_Dialog.Text), infoText);
-            return new EventCallbackFactory().Create(this, () => DialogService.Show<InfoButton_Dialog>(null, parameters));
+            parameters.Add(nameof(Message_Dialog.Text), infoText);
+            return new EventCallbackFactory().Create(this, () => DialogService.Show<Message_Dialog>(null, parameters));
         }
 
         protected EventCallback OpenLookupDialog(string db2Name, int id)

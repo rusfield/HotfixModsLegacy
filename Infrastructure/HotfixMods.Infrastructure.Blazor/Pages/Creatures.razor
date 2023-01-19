@@ -3,6 +3,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inject CreatureService Service
+@inject IDialogService DialogService
 @inherits PageBase<CreatureDto>
 
 <DtoTabsContent T="CreatureDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />
@@ -20,8 +21,21 @@
 
     async Task<bool> SaveAsync()
     {
+        var result = false;
         if (PageTab.Dto != null)
-            return await Service.SaveAsync((CreatureDto)PageTab.Dto);
-        return false;
+        {
+            List<string> logs = new();
+            result = await Service.SaveAsync((CreatureDto)PageTab.Dto, (string title, string subtitle, int progress) =>
+            {
+                logs.Add(subtitle);
+            });
+            if (!result)
+            {
+                var parameters = new DialogParameters();
+                parameters.Add(nameof(Message_Dialog.Text), string.Join('\n', logs));
+                DialogService.Show<Message_Dialog>(null, parameters);
+            }
+        }
+        return result;
     }
 }

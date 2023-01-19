@@ -90,18 +90,51 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            await SetIdAndVerifiedBuild(dto);
-            await SaveAsync(dto.HotfixModsEntity);
-            await SaveAsync(dto.CreatureTemplate);
-            await SaveAsync(dto.CreatureDisplayInfo);
-            await SaveAsync(dto.CreatureEquipTemplate);
-            await SaveAsync(dto.CreatureTemplateAddon);
-            await SaveAsync(dto.CreatureModelInfo);
-            await SaveAsync(dto.CreatureDisplayInfoExtra);
-            await SaveAsync(dto.CreatureTemplateModel);
-            await SaveAsync(dto.CreatureDisplayInfoOption.ToArray());
-            await SaveAsync(dto.NpcModelItemSlotDisplayInfo.ToArray());
+            int currentInvoke = 1;
+            Func<int> increaseProgress = () => currentInvoke++ * 100 / 12; // divide by total invokes
+            
+            try
+            {
+                callback.Invoke("Saving", "Preparing ID", increaseProgress());
+                await SetIdAndVerifiedBuild(dto);
 
+                callback.Invoke("Saving", $"Saving {nameof(HotfixModsEntity)}", increaseProgress());
+                await SaveAsync(dto.HotfixModsEntity);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureTemplate)}", increaseProgress());
+                await SaveAsync(dto.CreatureTemplate);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureDisplayInfo)}", increaseProgress());
+                await SaveAsync(dto.CreatureDisplayInfo);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureEquipTemplate)}", increaseProgress());
+                await SaveAsync(dto.CreatureEquipTemplate);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureTemplateAddon)}", increaseProgress());
+                await SaveAsync(dto.CreatureTemplateAddon);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureModelInfo)}", increaseProgress());
+                await SaveAsync(dto.CreatureModelInfo);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureDisplayInfoExtra)}", increaseProgress());
+                await SaveAsync(dto.CreatureDisplayInfoExtra);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureTemplateModel)}", increaseProgress());
+                await SaveAsync(dto.CreatureTemplateModel);
+
+                callback.Invoke("Saving", $"Saving {nameof(CreatureDisplayInfoOption)}", increaseProgress());
+                await SaveAsync(dto.CreatureDisplayInfoOption.ToArray());
+
+                callback.Invoke("Saving", $"Saving {nameof(NpcModelItemSlotDisplayInfo)}", increaseProgress());
+                await SaveAsync(dto.NpcModelItemSlotDisplayInfo.ToArray());
+            }
+            catch(Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                return false;
+            }
+
+            callback.Invoke("Saving", "Saving successful.", 100);
             dto.IsUpdate = true;
             return true;
         }

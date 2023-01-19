@@ -14,6 +14,15 @@ using System.Reflection;
 using static DBDefsLib.Structs;
 
 
+int totalInvokes = 4;
+int current = 1;
+Func<int> exp = () => current++ * 100 / totalInvokes;
+Console.WriteLine(exp());
+Console.WriteLine(exp());
+Console.WriteLine(exp());
+Console.WriteLine(exp());
+Console.ReadKey();
+
 
 var hotfixTool = new HotfixTableTool();
 var db2Type = typeof(SpellXSpellVisual);

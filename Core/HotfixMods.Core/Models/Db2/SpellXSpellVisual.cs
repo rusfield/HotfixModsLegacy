@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellXSpellVisual
     {
+        [Id]
         public int Id { get; set; } = 0;
         public byte DifficultyId { get; set; } = 0;
         public uint SpellVisualId { get; set; } = 0;
@@ -17,6 +18,7 @@ namespace HotfixMods.Core.Models.Db2
         public uint ViewerPlayerConditionId { get; set; } = 0;
         public ushort CasterUnitConditionId { get; set; } = 0;
         public uint CasterPlayerConditionId { get; set; } = 0;
+        [ParentIndexField]
         public int SpellId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

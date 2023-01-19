@@ -3,6 +3,7 @@
 
 using DBDefsLib;
 using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
@@ -13,20 +14,12 @@ using System.Reflection;
 using static DBDefsLib.Structs;
 
 
-List<ITab> tabs = new();
-tabs.Add(new DashboardTab());
 
+var hotfixTool = new HotfixTableTool();
+var db2Type = typeof(SpellXSpellVisual);
+hotfixTool.GenerateAll(db2Type);
+Console.ReadKey();
 
-public class DashboardTab : TabBase<int>, ITab
-{
-
-}
-public interface ITab { }
-
-public class TabBase<T>
-{
-    public T Content { get; set; }
-}
 
 
 /*

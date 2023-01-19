@@ -4,7 +4,7 @@
 @inject GameobjectService Service
 @inherits PageBase<GameobjectDto>
 
-<DtoTabsContent T="GameobjectDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearch_Dialog>())" />
+<DtoTabsContent T="GameobjectDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearch_Dialog>())" />
 
 
 @code {
@@ -17,9 +17,10 @@
         base.OnParametersSet();
     }
 
-    async void SaveAsync()
+    async Task<bool> SaveAsync()
     {
         if (PageTab.Dto != null)
-            await Service.SaveAsync((GameobjectDto)PageTab.Dto);
+            return await Service.SaveAsync((GameobjectDto)PageTab.Dto);
+        return false;
     }
 }

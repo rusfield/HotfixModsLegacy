@@ -10,7 +10,7 @@
 
 *@
 
-<DtoTabsContent T="AnimKitDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<AnimKitSearch_Dialog>())" />
+<DtoTabsContent T="AnimKitDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<AnimKitSearch_Dialog>())" />
 
 
 @code {
@@ -18,14 +18,15 @@
     // Temp
     protected override void OnParametersSet()
     {
-        if(PageTab.Dto == null)
+        if (PageTab.Dto == null)
             PageTab.Dto = new AnimKitDto();
         base.OnParametersSet();
     }
 
-    async void SaveAsync()
+    async Task<bool> SaveAsync()
     {
         if (PageTab.Dto != null)
             await Service.SaveAsync((AnimKitDto)PageTab.Dto);
+        return false;
     }
 }

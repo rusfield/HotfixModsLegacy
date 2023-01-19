@@ -1,6 +1,7 @@
 ﻿@typeparam T where T : IDto
 @using System.Reflection
 @using HotfixMods.Infrastructure.Blazor.Pages.Shared;
+@using System.Diagnostics;
 
 @inject ISnackbar Snackbar
 
@@ -48,16 +49,18 @@
 
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
-                    @if (null == instance)
-                    {
-                        <DynamicComponent Type="tab.ComponentType" />
-                    }
-                    else
-                    {
-                        <CascadingValue Name="InstanceData" Value="instance">
+                    <CascadingValue Name="RefreshPage" Value="RefreshPage">
+                        @if (null == instance)
+                        {
                             <DynamicComponent Type="tab.ComponentType" />
-                        </CascadingValue>
-                    }
+                        }
+                        else
+                        {
+                            <CascadingValue Name="InstanceData" Value="instance">
+                                <DynamicComponent Type="tab.ComponentType" />
+                            </CascadingValue>
+                        }
+                    </CascadingValue>
                 </div>
             </MudCarouselItem>
         }
@@ -88,7 +91,7 @@
     public PageTab PageTab { get; set; }
 
     [Parameter]
-    public EventCallback SaveAsync_Callback { get; set; }
+    public Func<Task<bool>> SaveAsync_Func { get; set; }
 
     [Parameter]
     public EventCallback ValueCompare_Callback { get; set; }
@@ -242,6 +245,32 @@
         return null;
     }
 
+    async Task SaveAsync_Click()
+    {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+        saving = true;
+        var result = await SaveAsync_Func();
+        stopwatch.Stop();
+        var remainingTime = 500 - stopwatch.ElapsedMilliseconds;
+
+        // Wait for a minimum of 500ms (UI trick)
+        if (remainingTime > 0)
+        {
+            await Task.Delay((int)remainingTime);
+        }
+
+        saving = false;
+        if (result)
+        {
+            Snackbar.Add($"Saved successfully.", Severity.Info, config => { config.Icon = Icons.Material.Filled.Check; });
+        }
+        else
+        {
+            Snackbar.Add($"Saving failed.", Severity.Error, config => { config.Icon = Icons.Material.Filled.Error; });
+        }
+    }
+
     class Content
     {
         public Content(string tabPanelName, Type componentType, Type? groupType)
@@ -255,12 +284,8 @@
         public Type? GroupType { get; set; }
     }
 
-    async Task SaveAsync_Click()
+    void RefreshPage()
     {
-        saving = true;
-        await SaveAsync_Callback.InvokeAsync();
-        await Task.Delay(500); // UI trick to make saving more user friendly
-        saving = false;
-        Snackbar.Add($"Saved.", Severity.Info, config => { config.Icon = Icons.Material.Filled.Check; });
+        this.StateHasChanged();
     }
 }

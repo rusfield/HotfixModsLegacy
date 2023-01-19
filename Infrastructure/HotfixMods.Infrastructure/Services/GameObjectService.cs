@@ -38,7 +38,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task SaveAsync(GameobjectDto dto, Action<string, string, int>? callback = null)
+        public async Task<bool> SaveAsync(GameobjectDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             
@@ -48,6 +48,9 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.GameobjectTemplateAddon);
             await SaveAsync(dto.GameobjectDisplayInfo);
             await SaveAsync(dto.HotfixModsEntity);
+
+            dto.IsUpdate = true;
+            return true;
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)

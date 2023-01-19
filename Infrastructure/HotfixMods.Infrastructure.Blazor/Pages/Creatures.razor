@@ -5,7 +5,7 @@
 @inject CreatureService Service
 @inherits PageBase<CreatureDto>
 
-<DtoTabsContent T="CreatureDto" SaveAsync_Callback="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />
+<DtoTabsContent T="CreatureDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />
 
 
 @code {
@@ -18,9 +18,10 @@
         base.OnParametersSet();
     }
 
-    async void SaveAsync()
+    async Task<bool> SaveAsync()
     {
         if (PageTab.Dto != null)
-            await Service.SaveAsync((CreatureDto)PageTab.Dto);
+            return await Service.SaveAsync((CreatureDto)PageTab.Dto);
+        return false;
     }
 }

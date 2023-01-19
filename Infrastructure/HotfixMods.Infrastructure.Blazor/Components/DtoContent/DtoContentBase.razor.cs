@@ -18,7 +18,6 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         [CascadingParameter(Name = "GroupIndex")]
         public int GroupIndex { get; set; }
 
-
         [Inject]
         public IDialogService DialogService { get; set; }
 

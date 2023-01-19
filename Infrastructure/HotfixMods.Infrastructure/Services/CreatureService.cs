@@ -87,11 +87,10 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
+        public async Task<bool> SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             await SetIdAndVerifiedBuild(dto);
-
             await SaveAsync(dto.HotfixModsEntity);
             await SaveAsync(dto.CreatureTemplate);
             await SaveAsync(dto.CreatureDisplayInfo);
@@ -102,6 +101,9 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.CreatureTemplateModel);
             await SaveAsync(dto.CreatureDisplayInfoOption.ToArray());
             await SaveAsync(dto.NpcModelItemSlotDisplayInfo.ToArray());
+
+            dto.IsUpdate = true;
+            return true;
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)

@@ -35,10 +35,13 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task SaveAsync(SpellVisualKitDto spellVisualKitDto)
+        public async Task<bool> SaveAsync(SpellVisualKitDto dto)
         {
-            await SaveAsync(spellVisualKitDto.SpellVisualKit);
-            await SaveAsync(spellVisualKitDto.HotfixModsEntity);
+            await SaveAsync(dto.SpellVisualKit);
+            await SaveAsync(dto.HotfixModsEntity);
+
+            dto.IsUpdate = true;
+            return true;
         }
 
         public async Task DeleteAsync(int id)

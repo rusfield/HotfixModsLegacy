@@ -57,7 +57,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task SaveAsync(AnimKitDto dto, Action<string, string, int>? callback = null)
+        public async Task<bool> SaveAsync(AnimKitDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -68,6 +68,9 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment));
             await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig));
             await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet));
+
+            dto.IsUpdate = true;
+            return true;
         }
 
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)

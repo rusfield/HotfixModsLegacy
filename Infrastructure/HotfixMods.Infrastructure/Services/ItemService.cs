@@ -34,9 +34,13 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task SaveAsync(ItemDto dto)
+        public async Task<bool> SaveAsync(ItemDto dto)
         {
             // TODO
+
+
+            dto.IsUpdate = true;
+            return true;
         }
 
         public async Task DeleteAsync(int id)

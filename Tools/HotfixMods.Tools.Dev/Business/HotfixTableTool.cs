@@ -119,20 +119,41 @@ namespace HotfixMods.Tools.Dev.Business
             foreach(var propertyInfo in db2Type.GetProperties())
             {
                 output += $"{GetUnderscoreBetweenUpperCase(propertyInfo.Name).ToLower()} ";
-                output += propertyInfo.PropertyType.ToString() switch
+                if (IsParentIndexField(propertyInfo))
                 {
-                    "System.SByte" => "tinyint signed",
-                    "System.Int16" => "smallint signed",
-                    "System.Int32" => "int signed",
-                    "System.Int64" => "bigint signed",
-                    "System.Byte" => "tinyint unsigned",
-                    "System.UInt16" => "smallint unsigned",
-                    "System.UInt32" => "int unsigned",
-                    "System.UInt64" => "bigint unsigned",
-                    "System.String" => "text",
-                    "System.Decimal" => "float",
-                    _ => $"(ERROR-({propertyInfo.PropertyType}))"
-                };
+                    // Force unsigned
+                    output += propertyInfo.PropertyType.ToString() switch
+                    {
+                        "System.SByte" => "tinyint unsigned",
+                        "System.Int16" => "smallint unsigned",
+                        "System.Int32" => "int unsigned",
+                        "System.Int64" => "bigint unsigned",
+                        "System.Byte" => "tinyint unsigned",
+                        "System.UInt16" => "smallint unsigned",
+                        "System.UInt32" => "int unsigned",
+                        "System.UInt64" => "bigint unsigned",
+                        "System.String" => "text",
+                        "System.Decimal" => "float",
+                        _ => $"(ERROR-({propertyInfo.PropertyType}))"
+                    };
+                }
+                else
+                {
+                    output += propertyInfo.PropertyType.ToString() switch
+                    {
+                        "System.SByte" => "tinyint signed",
+                        "System.Int16" => "smallint signed",
+                        "System.Int32" => "int signed",
+                        "System.Int64" => "bigint signed",
+                        "System.Byte" => "tinyint unsigned",
+                        "System.UInt16" => "smallint unsigned",
+                        "System.UInt32" => "int unsigned",
+                        "System.UInt64" => "bigint unsigned",
+                        "System.String" => "text",
+                        "System.Decimal" => "float",
+                        _ => $"(ERROR-({propertyInfo.PropertyType}))"
+                    };
+                }
                 output += ",";
             }
             output = output.Substring(0, output.Length - 1);
@@ -160,31 +181,42 @@ namespace HotfixMods.Tools.Dev.Business
 
         string GetMySqlFieldType(PropertyInfo propertyInfo)
         {
-            var attributes = propertyInfo.GetCustomAttributes(true).OfType<Attribute>();
-            foreach (var attribute in attributes)
+
+            if (IsParentIndexField(propertyInfo))
             {
-                var attrType = attribute.GetType();
-                if (attrType.Name.Contains("parentindexfield", StringComparison.OrdinalIgnoreCase))
+                // Force unsigned
+                return propertyInfo.PropertyType.ToString() switch
                 {
-                    return "uint32";
-                }
+                    "System.SByte" => "uint8",
+                    "System.Int16" => "uint16",
+                    "System.Int32" => "uint32",
+                    "System.Int64" => "uint64",
+                    "System.Byte" => "uint8",
+                    "System.UInt16" => "uint16",
+                    "System.UInt32" => "uint32",
+                    "System.UInt64" => "uint64",
+                    "System.String" => "text",
+                    "System.Decimal" => "float",
+                    _ => $"(ERROR-({propertyInfo.PropertyType}))"
+                };
             }
-
-
-            return propertyInfo.PropertyType.ToString() switch
+            else
             {
-                "System.SByte" => "int8",
-                "System.Int16" => "int16",
-                "System.Int32" => "int32",
-                "System.Int64" => "int64",
-                "System.Byte" => "uint8",
-                "System.UInt16" => "uint16",
-                "System.UInt32" => "uint32",
-                "System.UInt64" => "uint64",
-                "System.String" => "text",
-                "System.Decimal" => "float",
-                _ => $"(ERROR-({propertyInfo.PropertyType}))"
-            };
+                return propertyInfo.PropertyType.ToString() switch
+                {
+                    "System.SByte" => "int8",
+                    "System.Int16" => "int16",
+                    "System.Int32" => "int32",
+                    "System.Int64" => "int64",
+                    "System.Byte" => "uint8",
+                    "System.UInt16" => "uint16",
+                    "System.UInt32" => "uint32",
+                    "System.UInt64" => "uint64",
+                    "System.String" => "text",
+                    "System.Decimal" => "float",
+                    _ => $"(ERROR-({propertyInfo.PropertyType}))"
+                };
+            }
         }
 
         string GetMySqlFieldName(PropertyInfo propertyInfo)
@@ -195,6 +227,20 @@ namespace HotfixMods.Tools.Dev.Business
                 name = name.Substring(0, name.Length - 2) + "ID";
             }
             return name;
+        }
+
+        bool IsParentIndexField(PropertyInfo propertyInfo)
+        {
+            var attributes = propertyInfo.GetCustomAttributes(true).OfType<Attribute>();
+            foreach (var attribute in attributes)
+            {
+                var attrType = attribute.GetType();
+                if (attrType.Name.Contains("parentindexfield", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

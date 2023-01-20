@@ -50,6 +50,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(DtoDashboard))))">My Creatures</MudMenuItem>
                 <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearch_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by ID</MudMenuItem>
             </ChildContent>
@@ -156,6 +157,11 @@
         where TDto : IDto
     {
         tab.Dto = (TDto)Activator.CreateInstance(typeof(TDto))!;
+        LaunchTab(tab);
+    }
+
+    void OpenDashboard_Click(PageTab tab)
+    {
         LaunchTab(tab);
     }
 

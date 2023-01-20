@@ -1,0 +1,85 @@
+﻿<MudTable Items="items" Hover="true" Striped="true" Filter="Filter">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Periodic Elements</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="search" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" />
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Avatar</MudTh>
+        <MudTh>@IdTitle</MudTh>
+        @if (!string.IsNullOrWhiteSpace(AdditionalIdTitle))
+        {
+            <MudTh>@AdditionalIdTitle</MudTh>
+        }
+        <MudTh>Actions</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Avatar">@context.AvatarUrl</MudTd>
+        <MudTd DataLabel="@IdTitle">@context.Id</MudTd>
+        @if (!string.IsNullOrWhiteSpace(AdditionalIdTitle))
+        {
+            <MudTd DataLabel="@AdditionalIdTitle">@context.AdditionalId</MudTd>
+        }
+        <MudTd DataLabel="Action">BTN</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+    [Parameter]
+    public string IdTitle { get; set; } = "ID";
+
+    [Parameter]
+    public string? AdditionalIdTitle { get; set; }
+
+
+    List<DashboardModel> items = new();
+    string search;
+
+    // Temp
+    protected override void OnParametersSet()
+    {
+        items.Add(new()
+            {
+                AvatarUrl = "#",
+                Id = 123,
+                AdditionalId = 456,
+                Name = "Dummy Ta"
+            });
+        items.Add(new()
+            {
+                AvatarUrl = "#",
+                Id = 1234,
+                AdditionalId = 4567,
+                Name = "Dummy Ba"
+            });
+        items.Add(new()
+            {
+                AvatarUrl = "#",
+                Id = 12345,
+                AdditionalId = 45678,
+                Name = "Dummy Yo"
+            });
+        base.OnParametersSet();
+    }
+
+
+    private bool Filter(DashboardModel model)
+    {
+        if (string.IsNullOrWhiteSpace(search))
+            return true;
+
+        if (model.Name?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false)
+            return true;
+
+        if (model.Id.ToString().Contains(search))
+            return true;
+
+        if (model.AdditionalId?.ToString().Contains(search) ?? false)
+            return true;
+
+        return false;
+    }
+}

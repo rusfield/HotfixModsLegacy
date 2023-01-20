@@ -4,7 +4,7 @@
 @inject SpellVisualKitService Service
 @inherits PageBase<SpellVisualKitDto>
 
-<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearch_Dialog>())" />
+<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearch_Dialog>())" />
 
 
 @code {
@@ -15,12 +15,5 @@
         if (null == PageTab.Dto)
             PageTab.Dto = new SpellVisualKitDto();
         base.OnParametersSet();
-    }
-
-    async Task<bool> SaveAsync()
-    {
-        if (PageTab.Dto != null)
-            return await Service.SaveAsync((SpellVisualKitDto)PageTab.Dto);
-        return false;
     }
 }

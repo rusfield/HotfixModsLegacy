@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<bool> SaveAsync(ItemDto dto)
+        public async Task<bool> SaveAsync(ItemDto dto, Action<string, string, int>? callback = null)
         {
             // TODO
 

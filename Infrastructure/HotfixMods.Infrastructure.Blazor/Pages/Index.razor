@@ -50,7 +50,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearch_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -61,7 +61,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearch_Dialog>(new PageTab("Game Object", typeof(Gameobjects))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -72,7 +72,7 @@
                 <MudIconButton Icon="@Icons.Material.Outlined.Shield" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearch_Dialog>(new PageTab("Item", typeof(Items))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -83,7 +83,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AutoFixHigh" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearch_Dialog>(new PageTab("Spell", typeof(Spells))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -94,7 +94,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AutoAwesome" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellVisualKitSearch_Dialog>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -105,7 +105,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Group" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -116,7 +116,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenTab_Click(new PageTab("Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SoundKitSearch_Dialog>(new PageTab("Sound Kit", typeof(SoundKits))))">Search by ID</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -152,8 +152,10 @@
         _menuOpen = true;
     }
 
-    void OpenTab_Click(PageTab tab)
+    void NewDto_Click<TDto>(PageTab tab)
+        where TDto : IDto
     {
+        tab.Dto = (TDto)Activator.CreateInstance(typeof(TDto))!;
         LaunchTab(tab);
     }
 

@@ -93,7 +93,7 @@
     public PageTab PageTab { get; set; }
 
     [Parameter]
-    public Func<Task<bool>> SaveAsync_Func { get; set; }
+    public Func<T, Action<string, string, int>, Task<bool>> SaveAsync_Func { get; set; }
 
     [Parameter]
     public EventCallback ValueCompare_Callback { get; set; }
@@ -252,7 +252,13 @@
         var stopwatch = new Stopwatch();
         stopwatch.Start();
         saving = true;
-        var result = await SaveAsync_Func();
+
+        List<string> logs = new();
+        var result = await SaveAsync_Func((T)PageTab.Dto, (string title, string subtitle, int progress) =>
+            {
+                logs.Add(subtitle);
+            });
+
         stopwatch.Stop();
         var remainingTime = 500 - stopwatch.ElapsedMilliseconds;
 
@@ -270,6 +276,9 @@
         else
         {
             Snackbar.Add($"Saving failed.", Severity.Error, config => { config.Icon = Icons.Material.Filled.Error; });
+            var parameters = new DialogParameters();
+            parameters.Add(nameof(Message_Dialog.Text), string.Join('\n', logs));
+            DialogService.Show<Message_Dialog>(null, parameters);
         }
     }
 

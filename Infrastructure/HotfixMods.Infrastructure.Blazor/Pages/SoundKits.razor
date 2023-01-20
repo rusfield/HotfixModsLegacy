@@ -4,7 +4,7 @@
 @inject SoundKitService Service
 @inherits PageBase<SoundKitDto>
 
-<DtoTabsContent T="SoundKitDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SoundKitSearch_Dialog>())" />
+<DtoTabsContent T="SoundKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SoundKitSearch_Dialog>())" />
 
 
 @code {
@@ -15,12 +15,5 @@
         if (null == PageTab.Dto)
             PageTab.Dto = new SoundKitDto();
         base.OnParametersSet();
-    }
-
-    async Task<bool> SaveAsync()
-    {
-        if (PageTab.Dto != null)
-            return await Service.SaveAsync((SoundKitDto)PageTab.Dto);
-        return false;
     }
 }

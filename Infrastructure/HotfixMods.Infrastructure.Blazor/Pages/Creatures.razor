@@ -6,36 +6,4 @@
 @inject IDialogService DialogService
 @inherits PageBase<CreatureDto>
 
-<DtoTabsContent T="CreatureDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />
-
-
-@code {
-
-    // Temp
-    protected override void OnParametersSet()
-    {
-        if (null == PageTab.Dto)
-            PageTab.Dto = new CreatureDto();
-        base.OnParametersSet();
-    }
-
-    async Task<bool> SaveAsync()
-    {
-        var result = false;
-        if (PageTab.Dto != null)
-        {
-            List<string> logs = new();
-            result = await Service.SaveAsync((CreatureDto)PageTab.Dto, (string title, string subtitle, int progress) =>
-            {
-                logs.Add(subtitle);
-            });
-            if (!result)
-            {
-                var parameters = new DialogParameters();
-                parameters.Add(nameof(Message_Dialog.Text), string.Join('\n', logs));
-                DialogService.Show<Message_Dialog>(null, parameters);
-            }
-        }
-        return result;
-    }
-}
+<DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearch_Dialog>())" />

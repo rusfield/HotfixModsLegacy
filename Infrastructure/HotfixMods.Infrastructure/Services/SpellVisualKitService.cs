@@ -35,8 +35,10 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        public async Task<bool> SaveAsync(SpellVisualKitDto dto)
+        public async Task<bool> SaveAsync(SpellVisualKitDto dto, Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+
             await SaveAsync(dto.SpellVisualKit);
             await SaveAsync(dto.HotfixModsEntity);
 

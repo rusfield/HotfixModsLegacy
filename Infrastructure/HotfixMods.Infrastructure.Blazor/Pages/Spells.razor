@@ -4,7 +4,7 @@
 @inject SpellService Service
 @inherits PageBase<SpellDto>
 
-<DtoTabsContent T="SpellDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearch_Dialog>())" />
+<DtoTabsContent T="SpellDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearch_Dialog>())" />
 
 
 @code {
@@ -15,13 +15,5 @@
         if (null == PageTab.Dto)
             PageTab.Dto = new SpellDto();
         base.OnParametersSet();
-    }
-
-    async Task<bool> SaveAsync()
-    {
-        if (PageTab.Dto != null)
-            return await Service.SaveAsync((SpellDto)PageTab.Dto);
-
-        return false;
     }
 }

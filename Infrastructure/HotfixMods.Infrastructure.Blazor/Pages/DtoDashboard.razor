@@ -1,7 +1,25 @@
-﻿<MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Filled" Style="height:42px" />
+﻿
+<MudGrid Class="mb-1 px-3">
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexStart">
+            <MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Style="height:36.5px" @bind-Value="search" />
+        </MudStack>
+    </MudItem>
+    <MudItem xs="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
+            @PageTab.TabName
+        </MudText>
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
+            <MudButton Variant="Variant.Filled" Color="Color.Success">New</MudButton>
+        </MudStack>
+    </MudItem>
+</MudGrid>
 
-<MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;" />
-<MudTable Items="items" Hover="true" Striped="false" Filter="Filter" Height="736px" FixedHeader="true">
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" />
+
+<MudTable Items="items" Hover="true" Striped="false" Filter="Filter" Height="640px" FixedHeader="true" Class="rounded-0 mx-3">
     <HeaderContent>
         <MudTh>Avatar</MudTh>
         <MudTh>Name</MudTh>
@@ -20,18 +38,24 @@
         {
             <MudTd DataLabel="@AdditionalIdTitle">@context.AdditionalId</MudTd>
         }
-        <MudTd DataLabel="Action">BTN</MudTd>
+        <MudTd DataLabel="Action">
+            <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" />
+            <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" />
+        </MudTd>
     </RowTemplate>
 </MudTable>
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
     <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
         <div />
-        <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="items.Count" Color="Color.Info" @bind-Selected:after="Navigate" />
+        <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="pages" Color="Color.Info" @bind-Selected:after="Navigate" Style="height:48px;" />
         <div />
     </MudStack>
 </MudPaper>
 
 @code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
     [Parameter]
     public string IdTitle { get; set; } = "ID";
 
@@ -40,14 +64,14 @@
 
     int currentPage = 1;
     int pages = 1;
-    int itemsPerPage = 10;
+    int itemsPerPage = 100;
     MudPagination? mudPaginationRef;
 
     List<DashboardModel> items = new();
     string search;
 
     // Temp
-    protected override void OnParametersSet()
+    protected override void OnInitialized()
     {
         for (int i = 0; i < 100; i++)
         {
@@ -60,7 +84,7 @@
                 });
         }
 
-        base.OnParametersSet();
+        base.OnInitialized();
     }
 
     protected override void OnAfterRender(bool firstRender)

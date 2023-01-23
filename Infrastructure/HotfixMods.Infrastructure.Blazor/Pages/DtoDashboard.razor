@@ -55,15 +55,15 @@
             }
         </MudTd>
     </RowTemplate>
+    <NoRecordsContent>
+        <MudText>Nothing to see here</MudText>
+    </NoRecordsContent>
 </MudTable>
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;" />
 
 @code {
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
-
-    [Parameter]
-    public List<DashboardModel> Items { get; set; }
 
     [Parameter]
     public string IdTitle { get; set; } = "ID";
@@ -78,16 +78,23 @@
     public Func<int, Action<string, string, int>, Task<bool>> DeleteByIdAsync_Func { get; set; }
 
     [Parameter]
+    public Func<Task<List<DashboardModel>>> GetItemsAsync_Func { get; set; }
+
+    [Parameter]
     public Type LaunchType { get; set; }
 
+    List<DashboardModel> items;
     List<DashboardModel> filteredItems = new();
     string search;
     List<int> idInAction = new();
 
-    protected override void OnParametersSet()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        filteredItems = Items;
-        base.OnParametersSet();
+        if (firstRender)
+        {
+            items = await GetItemsAsync_Func();
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     async Task EditAsync_Click(int id)
@@ -111,7 +118,7 @@
         idInAction.Add(id);
         await Task.Delay(500);
         Snackbar.Add("Entity deleted.", Severity.Info);
-        Items.RemoveAll(i => i.Id == id);
+        items.RemoveAll(i => i.Id == id);
         filteredItems.RemoveAll(i => i.Id == id);
         idInAction.Remove(id);
     }
@@ -119,7 +126,7 @@
     void Filter(string filter)
     {
         search = filter;
-        filteredItems = Items.Where(i => (i.Name != null && i.Name.Contains(filter)) || i.Id.ToString().Contains(filter)).ToList();
+        filteredItems = items.Where(i => (i.Name != null && i.Name.Contains(filter)) || i.Id.ToString().Contains(filter)).ToList();
     }
 
 }

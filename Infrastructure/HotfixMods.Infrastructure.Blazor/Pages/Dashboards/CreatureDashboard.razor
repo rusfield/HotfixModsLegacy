@@ -2,25 +2,4 @@
 
 @inject CreatureService Service
 
-<DtoDashboard TDto="CreatureDto" IdTitle="Creature ID" AdditionalIdTitle="Creature Display ID" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" Items="items" />
-
-
-@code {
-    List<DashboardModel> items = new();
-
-    protected override void OnInitialized()
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            items.Add(new DashboardModel()
-                {
-                    AdditionalId = 100 + i,
-                    Id = i,
-                    AvatarUrl = "#",
-                    Name = Guid.NewGuid().ToString()
-                });
-        }
-
-        base.OnInitialized();
-    }
-}
+<DtoDashboard TDto="CreatureDto" IdTitle="Creature ID" AdditionalIdTitle="Creature Display ID" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

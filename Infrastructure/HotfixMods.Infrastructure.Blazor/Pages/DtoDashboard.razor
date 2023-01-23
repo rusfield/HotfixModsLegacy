@@ -1,8 +1,13 @@
-﻿
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject ISnackbar Snackbar
+
+@typeparam TDto where TDto : IDto
+
 <MudGrid Class="mb-1 px-3">
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexStart">
-            <MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Style="height:36.5px" @bind-Value="search" />
+            <MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Style="height:36.5px" Value="search" Immediate="true" ValueChanged="Filter" />
         </MudStack>
     </MudItem>
     <MudItem xs="4">
@@ -19,42 +24,46 @@
 
 <MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" Class="tab-bar" />
 
-<MudTable Items="items" Hover="true" Striped="false" Filter="Filter" Height="640px" FixedHeader="true" Class="rounded-0 mx-3">
+<MudTable Items="filteredItems" Hover="true" Striped="false" Height="640px" FixedHeader="true" Class="rounded-0 mx-3">
     <HeaderContent>
-        <MudTh>Avatar</MudTh>
-        <MudTh>Name</MudTh>
-        <MudTh>@IdTitle</MudTh>
+        <MudTh></MudTh>
+        <MudTh Style="text-align: center">Name</MudTh>
+        <MudTh Style="text-align: center">@IdTitle</MudTh>
         @if (!string.IsNullOrWhiteSpace(AdditionalIdTitle))
         {
-            <MudTh>@AdditionalIdTitle</MudTh>
+            <MudTh Style="text-align: center">@AdditionalIdTitle</MudTh>
         }
-        <MudTh>Actions</MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Avatar">@context.AvatarUrl</MudTd>
-        <MudTd DataLabel="Name">@context.Name</MudTd>
-        <MudTd DataLabel="@IdTitle">@context.Id</MudTd>
+        <MudTd DataLabel="Avatar" Style="text-align:left">@context.AvatarUrl</MudTd>
+        <MudTd DataLabel="Name" Style="text-align: center">@context.Name</MudTd>
+        <MudTd DataLabel="@IdTitle" Style="text-align: center">@context.Id</MudTd>
         @if (!string.IsNullOrWhiteSpace(AdditionalIdTitle))
         {
-            <MudTd DataLabel="@AdditionalIdTitle">@context.AdditionalId</MudTd>
+            <MudTd Style="text-align: center" DataLabel="@AdditionalIdTitle">@context.AdditionalId</MudTd>
         }
-        <MudTd DataLabel="Action">
-            <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" />
-            <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" />
+        <MudTd DataLabel="Action" Style="text-align:right">
+            @if (idInAction.Contains(context.Id))
+            {
+                <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+            }
+            else
+            {
+                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(async () => await EditAsync_Click(context.Id))" />
+                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(async () => await DeleteAsync_Click(context.Id))" />
+            }
         </MudTd>
     </RowTemplate>
 </MudTable>
-<MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
-    <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
-        <div />
-        <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="pages" Color="Color.Info" @bind-Selected:after="Navigate" Style="height:48px;" />
-        <div />
-    </MudStack>
-</MudPaper>
+<MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;" />
 
 @code {
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
+
+    [Parameter]
+    public List<DashboardModel> Items { get; set; }
 
     [Parameter]
     public string IdTitle { get; set; } = "ID";
@@ -62,57 +71,55 @@
     [Parameter]
     public string? AdditionalIdTitle { get; set; }
 
-    int currentPage = 1;
-    int pages = 1;
-    int itemsPerPage = 100;
-    MudPagination? mudPaginationRef;
+    [Parameter]
+    public Func<int, Action<string, string, int>, Task<TDto>> GetByIdAsync_Func { get; set; }
 
-    List<DashboardModel> items = new();
+    [Parameter]
+    public Func<int, Action<string, string, int>, Task<bool>> DeleteByIdAsync_Func { get; set; }
+
+    [Parameter]
+    public Type LaunchType { get; set; }
+
+    List<DashboardModel> filteredItems = new();
     string search;
+    List<int> idInAction = new();
 
-    // Temp
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
-        for (int i = 0; i < 100; i++)
+        filteredItems = Items;
+        base.OnParametersSet();
+    }
+
+    async Task EditAsync_Click(int id)
+    {
+        idInAction.Add(id);
+        var dto = await GetByIdAsync_Func(id, null);
+        if (dto != null)
         {
-            items.Add(new()
-                {
-                    AvatarUrl = "#",
-                    Id = i,
-                    AdditionalId = 100 + i,
-                    Name = "Dummy " + i
-                });
+            TabHandler.LaunchTab(new PageTab(dto.HotfixModsEntity.Name, LaunchType));
         }
-
-        base.OnInitialized();
+        else
+        {
+            Snackbar.Add("Entity not found.", Severity.Error);
+        }
+        await Task.Delay(500);
+        idInAction.Remove(id);
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    async Task DeleteAsync_Click(int id)
     {
-        pages = (int)Math.Ceiling((double)(items.Count / itemsPerPage));
-        base.OnAfterRender(firstRender);
+        idInAction.Add(id);
+        await Task.Delay(500);
+        Snackbar.Add("Entity deleted.", Severity.Info);
+        Items.RemoveAll(i => i.Id == id);
+        filteredItems.RemoveAll(i => i.Id == id);
+        idInAction.Remove(id);
     }
 
-
-    private bool Filter(DashboardModel model)
+    void Filter(string filter)
     {
-        if (string.IsNullOrWhiteSpace(search))
-            return true;
-
-        if (model.Name?.Contains(search, StringComparison.OrdinalIgnoreCase) ?? false)
-            return true;
-
-        if (model.Id.ToString().Contains(search))
-            return true;
-
-        if (model.AdditionalId?.ToString().Contains(search) ?? false)
-            return true;
-
-        return false;
+        search = filter;
+        filteredItems = Items.Where(i => (i.Name != null && i.Name.Contains(filter)) || i.Id.ToString().Contains(filter)).ToList();
     }
 
-    void Navigate()
-    {
-
-    }
 }

@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using HotfixMods.Infrastructure.Blazor.PageData
 @using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+@using HotfixMods.Infrastructure.Blazor.Handlers;
+@using HotfixMods.Infrastructure.Blazor.Pages.Dashboards
 
 @inject IDialogService DialogService
 
@@ -50,7 +52,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(DtoDashboard))))">My Creatures</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
                 <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearch_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by ID</MudMenuItem>
             </ChildContent>
@@ -135,6 +137,12 @@
     List<PageTab> tabs = new();
     bool tabAdded = false;
     string hover = "";
+
+    protected override void OnInitialized()
+    {
+        TabHandler.LaunchTab = LaunchTab;
+        base.OnInitialized();
+    }
 
     protected override void OnAfterRender(bool firstRender)
     {

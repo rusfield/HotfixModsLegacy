@@ -8,6 +8,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
     {
         [CascadingParameter(Name = "InstanceData")]
         public InstanceData InstanceData { get; set; }
+        [CascadingParameter(Name = "ValueIsNull")]
+        public bool ValueIsNull { get; set; }
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }

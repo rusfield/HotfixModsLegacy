@@ -37,6 +37,16 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
+        public static object? GetDtoListValue(this IDto dto, Type type)
+        {
+            var listProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == type).FirstOrDefault();
+            if (listProperty != null)
+            {
+                return listProperty.GetValue(dto);
+            }
+            return null;
+        }
+
         public static TValue? GetDtoGroupValue<TValue>(this IDto dto, Type groupType, int groupIndex)
             where TValue : class, new()
         {
@@ -68,26 +78,26 @@ namespace HotfixMods.Infrastructure.Extensions
         public static void SetDtoValueToDefault<TValue>(this IDto dto)
             where TValue : class, new()
         {
-            var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
+            var dtoProperty = typeof(TValue).IsGenericType ? dto.GetType().GetProperty(typeof(TValue).GetGenericArguments()[0].Name) : dto.GetType().GetProperty(typeof(TValue).Name);
             dtoProperty?.SetValue(dto, Activator.CreateInstance(dtoProperty.PropertyType));
         }
 
         public static void SetDtoValueToDefault(this IDto dto, Type type)
         {
-            var dtoProperty = dto.GetType().GetProperty(type.Name);
+            var dtoProperty = type.IsGenericType ? dto.GetType().GetProperty(type.GetGenericArguments()[0].Name) : dto.GetType().GetProperty(type.Name);
             dtoProperty?.SetValue(dto, Activator.CreateInstance(dtoProperty.PropertyType));
         }
 
         public static void SetDtoValueToNull<TValue>(this IDto dto)
             where TValue : class, new()
         {
-            var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
+            var dtoProperty = typeof(TValue).IsGenericType ? dto.GetType().GetProperty(typeof(TValue).GetGenericArguments()[0].Name) : dto.GetType().GetProperty(typeof(TValue).Name);
             dtoProperty?.SetValue(dto, null);
         }
 
         public static void SetDtoValueToNull(this IDto dto, Type type)
         {
-            var dtoProperty = dto.GetType().GetProperty(type.Name);
+            var dtoProperty = type.IsGenericType ? dto.GetType().GetProperty(type.GetGenericArguments()[0].Name) : dto.GetType().GetProperty(type.Name);
             dtoProperty?.SetValue(dto, null);
         }
     }

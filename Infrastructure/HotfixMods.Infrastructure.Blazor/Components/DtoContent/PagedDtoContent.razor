@@ -1,18 +1,6 @@
 ﻿@typeparam T where T : class, new()
 
-@if (ValueIsNull)
-{
-    <div class="px-6">
-        <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
-            <CascadingValue Name="Transition" Value="Transition">
-                <PagedDtoContentPage>
-                    <DtoContentNoValue />
-                </PagedDtoContentPage>
-            </CascadingValue>
-        </MudCarousel>
-    </div>
-}
-else
+@if (!ValueIsNull)
 {
     <MudGrid Style="position:absolute; width:1232px">
         <MudItem xs="12">
@@ -24,12 +12,22 @@ else
             </div>
         </MudItem>
     </MudGrid>
-
-    <div class="px-6">
-        <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
-            <CascadingValue Name="Transition" Value="Transition">
-                @ChildContent
-            </CascadingValue>
-        </MudCarousel>
-    </div>
 }
+
+
+<div class="px-6">
+    <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
+        <CascadingValue Name="Transition" Value="Transition">
+            @if (ValueIsNull)
+            {
+                <PagedDtoContentPage>
+                    <DtoContentNoValue />
+                </PagedDtoContentPage>
+            }
+            else
+            {
+                @ChildContent
+            }
+        </CascadingValue>
+    </MudCarousel>
+</div>

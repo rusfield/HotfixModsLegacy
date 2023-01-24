@@ -1,12 +1,15 @@
-﻿@if (InstanceData.InstanceCount <= 0)
-{
-    <DtoContentNoValue />
-}
-else
-{
-    <MudCarousel Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance - 1">
-
-        @for (int i = 0; i<InstanceData.InstanceCount; i++)
+﻿<MudCarousel Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance - 1">
+    @if (ValueIsNull)
+    {
+        <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
+            <MudGrid Class="px-6 mt-7">
+                <DtoContentNoValue />
+            </MudGrid>
+        </MudCarouselItem>
+    }
+    else
+    {
+        for (int i = 0; i<InstanceData.InstanceCount; i++)
         {
             int index = i;
             <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
@@ -26,5 +29,5 @@ else
                 </div>
             </MudCarouselItem>
         }
-    </MudCarousel>
-}
+    }
+</MudCarousel>

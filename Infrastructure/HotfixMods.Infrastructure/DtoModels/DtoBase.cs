@@ -1,6 +1,5 @@
 ﻿using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 
 namespace HotfixMods.Infrastructure.DtoModels

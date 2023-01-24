@@ -72,6 +72,8 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
+    [CascadingParameter(Name = "ValueIsNull")]
+    public bool ValueIsNull { get; set; }
 
     Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> customizations = new();
     int amountOfCustomizationPages = 1;

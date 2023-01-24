@@ -3,42 +3,48 @@
 @using HotfixMods.Core.Enums.Db2
 
 <CustomDtoContent>
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="head.ItemDisplayInfoId" ValueCompare="headCompare?.ItemDisplayInfoId" Label="Head Display Info ID" />
-        <Input_Element T="int" @bind-Value="shoulders.ItemDisplayInfoId" ValueCompare="shouldersCompare?.ItemDisplayInfoId" Label="Shoulders Display Info ID" />
-        <Input_Element T="int" @bind-Value="shirt.ItemDisplayInfoId" ValueCompare="shirtCompare?.ItemDisplayInfoId" Label="Shirt Display Info ID" />
-        <Input_Element T="int" @bind-Value="chest.ItemDisplayInfoId" ValueCompare="chestCompare?.ItemDisplayInfoId" Label="Chest Display Info ID" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="hands.ItemDisplayInfoId" ValueCompare="handsCompare?.ItemDisplayInfoId" Label="Hands Display Info ID" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="int" @bind-Value="tabard.ItemDisplayInfoId" ValueCompare="tabardCompare?.ItemDisplayInfoId" Label="Tabard Display Info ID" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="cape.ItemDisplayInfoId" ValueCompare="capeCompare?.ItemDisplayInfoId" Label="Cape Display Info ID" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="int" @bind-Value="quiver.ItemDisplayInfoId" ValueCompare="quiverCompare?.ItemDisplayInfoId" Label="Quiver Display Info ID" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="waist.ItemDisplayInfoId" ValueCompare="waistCompare?.ItemDisplayInfoId" Label="Waist Display Info ID" />
-        <Input_Element T="int" @bind-Value="legs.ItemDisplayInfoId" ValueCompare="legsCompare?.ItemDisplayInfoId" Label="Legs Display Info ID" />
-        <Input_Element T="int" @bind-Value="feet.ItemDisplayInfoId" ValueCompare="feetCompare?.ItemDisplayInfoId" Label="Feet Display Info ID" />
-        <Input_Element T="int" @bind-Value="wrists.ItemDisplayInfoId" ValueCompare="wristsCompare?.ItemDisplayInfoId" Label="Wrists Display Info ID" />
-    </MudItem>
+    @if (valuesExists)
+    {
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="head.ItemDisplayInfoId" ValueCompare="headCompare?.ItemDisplayInfoId" Label="Head Display Info ID" />
+            <Input_Element T="int" @bind-Value="shoulders.ItemDisplayInfoId" ValueCompare="shouldersCompare?.ItemDisplayInfoId" Label="Shoulders Display Info ID" />
+            <Input_Element T="int" @bind-Value="shirt.ItemDisplayInfoId" ValueCompare="shirtCompare?.ItemDisplayInfoId" Label="Shirt Display Info ID" />
+            <Input_Element T="int" @bind-Value="chest.ItemDisplayInfoId" ValueCompare="chestCompare?.ItemDisplayInfoId" Label="Chest Display Info ID" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="hands.ItemDisplayInfoId" ValueCompare="handsCompare?.ItemDisplayInfoId" Label="Hands Display Info ID" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="tabard.ItemDisplayInfoId" ValueCompare="tabardCompare?.ItemDisplayInfoId" Label="Tabard Display Info ID" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="cape.ItemDisplayInfoId" ValueCompare="capeCompare?.ItemDisplayInfoId" Label="Cape Display Info ID" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="quiver.ItemDisplayInfoId" ValueCompare="quiverCompare?.ItemDisplayInfoId" Label="Quiver Display Info ID" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="waist.ItemDisplayInfoId" ValueCompare="waistCompare?.ItemDisplayInfoId" Label="Waist Display Info ID" />
+            <Input_Element T="int" @bind-Value="legs.ItemDisplayInfoId" ValueCompare="legsCompare?.ItemDisplayInfoId" Label="Legs Display Info ID" />
+            <Input_Element T="int" @bind-Value="feet.ItemDisplayInfoId" ValueCompare="feetCompare?.ItemDisplayInfoId" Label="Feet Display Info ID" />
+            <Input_Element T="int" @bind-Value="wrists.ItemDisplayInfoId" ValueCompare="wristsCompare?.ItemDisplayInfoId" Label="Wrists Display Info ID" />
+        </MudItem>
+    }
 </CustomDtoContent>
 
 @code {
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
+
+    [CascadingParameter(Name = "ValueIsNull")]
+    public bool ValueIsNull { get; set; }
 
     NpcModelItemSlotDisplayInfo head;
     NpcModelItemSlotDisplayInfo shoulders;
@@ -66,9 +72,14 @@
     NpcModelItemSlotDisplayInfo? feetCompare;
     NpcModelItemSlotDisplayInfo? wristsCompare;
 
+    bool valuesExists = false;
+
     protected override void OnParametersSet()
     {
-        SetValues();
+        valuesExists = PageTab.Dto.GetDtoListValue<NpcModelItemSlotDisplayInfo>() != null;
+        if (valuesExists)
+            SetValues();
+        base.OnParametersSet();
     }
 
     void SetValues()

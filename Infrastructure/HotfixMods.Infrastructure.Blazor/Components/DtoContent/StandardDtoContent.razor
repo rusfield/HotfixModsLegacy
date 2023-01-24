@@ -1,16 +1,9 @@
 ﻿@typeparam T where T : class, new()
 
 <MudGrid Class="px-6 mt-7">
-    @if (valueIsNull)
+    @if (ValueIsNull)
     {
-        <MudItem xs="12">
-            <Placeholder_Element Amount="4" />
-        </MudItem>
-        <MudItem xs="4" />
-        <MudItem xs="4">
-            <MudButton OnClick="OnInitValue" Variant="Variant.Outlined">Init</MudButton>
-        </MudItem>
-        <MudItem xs="4" />
+        <DtoContentNoValue />
     }
     else
     {

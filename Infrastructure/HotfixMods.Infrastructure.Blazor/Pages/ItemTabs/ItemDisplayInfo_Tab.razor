@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<ItemDto, ItemDisplayInfo>
 
-<PagedDtoContent T="ItemDisplayInfo" OnInitValue="InitValue">
+<PagedDtoContent T="ItemDisplayInfo" >
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" />

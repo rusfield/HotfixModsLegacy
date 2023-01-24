@@ -1,17 +1,16 @@
 ﻿@typeparam T where T : class, new()
 
-@if (showInitButton)
+@if (ValueIsNull)
 {
-    <MudGrid Class="px-6 mt-7">
-        <MudItem xs="12">
-            <Placeholder_Element Amount="4" />
-        </MudItem>
-        <MudItem xs="4" />
-        <MudItem xs="4">
-            <MudButton OnClick="OnInitValue" Variant="Variant.Outlined">Init</MudButton>
-        </MudItem>
-        <MudItem xs="4" />
-    </MudGrid>
+    <div class="px-6">
+        <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
+            <CascadingValue Name="Transition" Value="Transition">
+                <PagedDtoContentPage>
+                    <DtoContentNoValue />
+                </PagedDtoContentPage>
+            </CascadingValue>
+        </MudCarousel>
+    </div>
 }
 else
 {

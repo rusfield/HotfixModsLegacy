@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<GameobjectDto, GameobjectDisplayInfo>
 
-<StandardDtoContent T="GameobjectDisplayInfo" OnInitValue="InitValue">
+<StandardDtoContent T="GameobjectDisplayInfo" >
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" />
         <Input_Element T="short" @bind-Value="@(Value.ObjectEffectPackageId)" Label="@(nameof(Value.ObjectEffectPackageId).ToDisplayName())" ValueCompare="ValueCompare?.ObjectEffectPackageId" />

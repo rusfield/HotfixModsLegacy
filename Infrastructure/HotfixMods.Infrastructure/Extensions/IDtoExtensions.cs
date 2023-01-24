@@ -16,6 +16,16 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
+        public static object GetDtoValue(this IDto dto, Type valueType)
+        {
+            var dtoProperty = dto.GetType().GetProperty(valueType.Name);
+            if (dtoProperty != null)
+            {
+                return dtoProperty?.GetValue(dto);
+            }
+            return null;
+        }
+
         public static List<TValue>? GetDtoListValue<TValue>(this IDto dto)
             where TValue : class, new()
         {
@@ -60,6 +70,25 @@ namespace HotfixMods.Infrastructure.Extensions
         {
             var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
             dtoProperty?.SetValue(dto, Activator.CreateInstance(dtoProperty.PropertyType));
+        }
+
+        public static void SetDtoValueToDefault(this IDto dto, Type type)
+        {
+            var dtoProperty = dto.GetType().GetProperty(type.Name);
+            dtoProperty?.SetValue(dto, Activator.CreateInstance(dtoProperty.PropertyType));
+        }
+
+        public static void SetDtoValueToNull<TValue>(this IDto dto)
+            where TValue : class, new()
+        {
+            var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
+            dtoProperty?.SetValue(dto, null);
+        }
+
+        public static void SetDtoValueToNull(this IDto dto, Type type)
+        {
+            var dtoProperty = dto.GetType().GetProperty(type.Name);
+            dtoProperty?.SetValue(dto, null);
         }
     }
 }

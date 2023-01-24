@@ -3,6 +3,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.Shared;
 @using System.Diagnostics;
+@using HotfixMods.Infrastructure.InfoModels;
 
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
@@ -48,10 +49,12 @@
         @foreach (var tab in tabs)
         {
             var instance = GetInstanceData(tab.GroupType);
+            var valueIsNull = PageTab.Dto.GetDtoValue(tab.DtoPropertyType) == null;
 
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="RefreshPage" Value="RefreshPage">
+                        <CascadingValue Name="ValueIsNull" Value="valueIsNull"> 
                         @if (null == instance)
                         {
                             <DynamicComponent Type="tab.ComponentType" />
@@ -62,6 +65,7 @@
                                 <DynamicComponent Type="tab.ComponentType" />
                             </CascadingValue>
                         }
+                        </CascadingValue>
                     </CascadingValue>
                 </div>
             </MudCarouselItem>
@@ -69,13 +73,23 @@
     </MudCarousel>
 </MudPaper>
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
-    <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%">
-        <MudStack Row="true" Class="invisible" Spacing="0">
-            @* Space placeholders *@
-            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
-            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
-            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
-            <MudIconButton Icon="@Icons.Material.Filled.CropFree" />
+    <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%" Class="px-1">
+        <MudStack Row="true" Spacing="0">
+            <MudIconButton Icon="@Icons.Material.Filled.Info" Disabled="@(infoModel == null)" OnClick="@(() => OpenInfoDialog(infoModel?.ModelInfo))" />
+            @if (currentInstanceData != null || infoModel == null || infoModel.IsRequired)
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
+            }
+            else if (dtoPropertyIsNull)
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="@(() => InitValue(dtoValueType))" />
+            }
+            else
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" OnClick="@(() => DeleteValue(dtoValueType))" />
+            }
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
         </MudStack>
         <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null || currentInstanceData.InstanceCount <= 0 ? "invisible" : "")" @bind-Selected:after="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">
@@ -105,13 +119,16 @@
     InstanceData? currentInstanceData;
     int currentPage = 1;
     bool saving = false;
+    IInfoModel? infoModel;
+    bool dtoPropertyIsNull = false;
+    Type? dtoValueType = null;
 
     protected override void OnInitialized()
     {
         var properties = typeof(T).GetProperties();
 
         // Hardcode in the shared HotfixMods entity tab
-        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), null));
+        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), typeof(HotfixModsEntity), null));
 
         InitTabsList(properties);
 
@@ -133,7 +150,6 @@
                     instanceData[groupType] = new(groupType, 1, count);
                 }
 
-
                 var groupProperties = groupType.GetProperties();
                 InitTabsList(groupProperties, groupType);
             }
@@ -143,7 +159,7 @@
                 var tabType = TryGetTabType(tabName);
                 if (null == tabType)
                     continue;
-                tabs.Add(new Content(tabName, tabType, groupType));
+                tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType));
             }
         }
     }
@@ -157,6 +173,18 @@
         return type;
     }
 
+    IInfoModel? TryGetInfoModel(Type dtoType)
+    {
+        string infoNamespace = "HotfixMods.Infrastructure.InfoModels";
+        infoNamespace += $".{dtoType.Name}Info";
+        var type = Assembly.Load("HotfixMods.Infrastructure").GetType(infoNamespace);
+        if (type != null && type.GetInterfaces().Contains(typeof(IInfoModel)))
+        {
+            return (IInfoModel)Activator.CreateInstance(type);
+        }
+        return null;
+    }
+
     void PanelTabChanged(int newIndex)
     {
         var tab = tabs[newIndex];
@@ -168,6 +196,10 @@
         var tab = tabs[newIndex];
         currentInstanceData = GetInstanceData(tab.GroupType);
         currentPage = currentInstanceData?.CurrentInstance ?? 1;
+
+        infoModel = TryGetInfoModel(tab.DtoPropertyType);
+        dtoValueType = tab.DtoPropertyType;
+        dtoPropertyIsNull = PageTab.Dto.GetDtoValue(tab.DtoPropertyType) == null;
     }
 
     void NavigateInstance()
@@ -284,19 +316,50 @@
 
     class Content
     {
-        public Content(string tabPanelName, Type componentType, Type? groupType)
+        public Content(string tabPanelName, Type componentType, Type dtoPropertyType, Type? groupType)
         {
             TabPanelName = tabPanelName;
             ComponentType = componentType;
+            DtoPropertyType = dtoPropertyType;
             GroupType = groupType;
         }
         public string TabPanelName { get; set; }
         public Type ComponentType { get; set; }
+        public Type DtoPropertyType { get; set; }
         public Type? GroupType { get; set; }
     }
 
     void RefreshPage()
     {
         this.StateHasChanged();
+    }
+
+    void OpenInfoDialog(string? infoText)
+    {
+        if (!string.IsNullOrWhiteSpace(infoText))
+        {
+            var parameters = new DialogParameters();
+            parameters.Add(nameof(Message_Dialog.Text), infoText);
+            DialogService.Show<Message_Dialog>(null, parameters);
+        }
+    }
+
+    void InitValue(Type? dtoValueType)
+    {
+        if (dtoValueType != null)
+        {
+            PageTab.Dto.SetDtoValueToDefault(dtoValueType);
+            dtoPropertyIsNull = false;
+        }
+
+    }
+
+    void DeleteValue(Type? dtoValueType)
+    {
+        if (dtoValueType != null)
+        {
+            PageTab.Dto.SetDtoValueToNull(dtoValueType);
+            dtoPropertyIsNull = true;
+        }
     }
 }

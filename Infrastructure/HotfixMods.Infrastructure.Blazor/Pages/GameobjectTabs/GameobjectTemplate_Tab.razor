@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<GameobjectDto, GameobjectTemplate>
 
-<StandardDtoContent T="GameobjectTemplate" OnInitValue="InitValue">
+<StandardDtoContent T="GameobjectTemplate" >
     <MudItem xs="3">
         <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" />
         <Input_Element T="decimal" @bind-Value="@(Value.Size)" Label="@(nameof(Value.Size).ToDisplayName())" ValueCompare="ValueCompare?.Size" />

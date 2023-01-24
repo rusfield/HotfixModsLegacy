@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<ItemDto, ItemSparse>
 
-<PagedDtoContent T="ItemSparse" OnInitValue="InitValue">
+<PagedDtoContent T="ItemSparse" >
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" />

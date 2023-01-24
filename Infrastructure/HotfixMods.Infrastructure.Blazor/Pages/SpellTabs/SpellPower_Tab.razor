@@ -3,7 +3,7 @@
 @inherits DtoContentBase<SpellDto, SpellPower>
 
 
-<StandardDtoContent T="SpellPower" OnInitValue="InitValue">
+<StandardDtoContent T="SpellPower" >
     <MudItem xs="3">
         <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" />

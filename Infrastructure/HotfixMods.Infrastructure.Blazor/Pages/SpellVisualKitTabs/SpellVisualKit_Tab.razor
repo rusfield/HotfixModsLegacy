@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKit>
 
-<StandardDtoContent T="SpellVisualKit" OnInitValue="InitValue">
+<StandardDtoContent T="SpellVisualKit" >
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" />

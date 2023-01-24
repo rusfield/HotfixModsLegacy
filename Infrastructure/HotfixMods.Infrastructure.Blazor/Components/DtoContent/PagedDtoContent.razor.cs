@@ -16,6 +16,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         [CascadingParameter(Name = "GroupIndex")]
         public int GroupIndex { get; set; }
+        [CascadingParameter(Name = "ValueIsNull")]
+        public bool ValueIsNull { get; set; }
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }
@@ -24,35 +26,10 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
         public Transition Transition { get; set; }
 
         [Parameter]
-        public EventCallback OnInitValue { get; set; }
-
-        [Parameter]
         public bool IsCustom { get; set; } = false;
 
-        bool showInitButton = true;
         bool first = true;
         MudCarousel<object>? mudCarouselRef;
-
-        protected override void OnParametersSet()
-        {
-            if (IsCustom)
-            {
-                showInitButton= false;
-            }
-            else
-            {
-                if(null == InstanceData?.GroupType)
-                {
-                    showInitButton = null == PageTab?.Dto?.GetDtoValue<T>();
-                }
-                else
-                {
-                    showInitButton = null == PageTab?.Dto?.GetDtoGroupValue<T>(InstanceData.GroupType, GroupIndex);
-                }
-            }
-                
-            base.OnParametersSet();
-        }
 
         void NavigateForward_Click()
         {

@@ -1,7 +1,9 @@
 ﻿namespace HotfixMods.Infrastructure.InfoModels
 {
-    public static class SpellNameInfo
+    public class SpellNameInfo : IInfoModel
     {
-        public static string Name = "The name of the spell.";
+        public string Name = "The name of the spell.";
+        public string ModelInfo { get; set; } = "TODO";
+        public bool IsRequired { get; set; } = false;
     }
 }

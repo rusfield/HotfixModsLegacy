@@ -1,7 +1,7 @@
 ﻿
 namespace HotfixMods.Infrastructure.InfoModels
 {
-    public class SpellEffectInfo
+    public class SpellEffectInfo : IInfoModel
     {
         public string EffectAura = "TODO";
         public string DifficultyId = "TODO";
@@ -37,5 +37,8 @@ namespace HotfixMods.Infrastructure.InfoModels
         public string EffectSpellClassMask4 = "TODO";
         public string ImplicitTarget1 = "TODO";
         public string ImplicitTarget2 = "TODO";
+
+        public string ModelInfo { get; set; } = "TODO";
+        public bool IsRequired { get; set; } = false;
     }
 }

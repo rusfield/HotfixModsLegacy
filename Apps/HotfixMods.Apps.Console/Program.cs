@@ -40,7 +40,7 @@ Console.ReadKey();
 */
 
 
-/*
+
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47660";
 while (true)
@@ -58,7 +58,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 
@@ -258,7 +258,7 @@ foreach (var model in models)
 */
 
 
-
+/*
 // Generate InfoModel
 Console.WriteLine("Enter name of DTO ( ex. CreatureDto )");
 var input = Console.ReadLine();
@@ -305,3 +305,4 @@ else
 }
 Console.WriteLine("Done");
 Console.ReadKey();
+*/

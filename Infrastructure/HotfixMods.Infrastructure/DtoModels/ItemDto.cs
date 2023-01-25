@@ -21,5 +21,6 @@ namespace HotfixMods.Infrastructure.DtoModels
             public ItemEffect ItemEffect { get; set; } = new();
             public ItemXItemEffect ItemXItemEffect { get; set; } = new();
         }
+        // TODO: ItemDisplayInfoModelMatRes
     }
 }

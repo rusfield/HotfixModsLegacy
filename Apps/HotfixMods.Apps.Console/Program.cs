@@ -40,7 +40,7 @@ Console.ReadKey();
 */
 
 
-
+/*
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47660";
 while (true)
@@ -58,7 +58,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 
 
@@ -256,3 +256,52 @@ foreach (var model in models)
 }
 
 */
+
+
+
+// Generate InfoModel
+Console.WriteLine("Enter name of DTO ( ex. CreatureDto )");
+var input = Console.ReadLine();
+var assembly = Assembly.Load("HotfixMods.Infrastructure");
+var dto = assembly.GetType($"HotfixMods.Infrastructure.DtoModels.{input}");
+if (dto== null)
+{
+    Console.WriteLine("DTO not found");
+    Console.ReadKey();
+}
+else
+{
+    var properties = dto.GetProperties();
+
+    foreach (var property in properties)
+    {
+        var type = property.PropertyType;
+        if (type.IsGenericType)
+        {
+            type = type.GetGenericArguments()[0];
+        }
+        if (!type.IsValueType)
+        {
+            Console.WriteLine("namespace HotfixMods.Infrastructure.InfoModels");
+            Console.WriteLine("{");
+            Console.WriteLine($"public class {type.Name}Info : IInfoModel");
+            Console.WriteLine("{");
+            var db2Properties = type.GetProperties();
+            foreach (var db2Property in db2Properties)
+            {
+                if (db2Property.Name == "VerifiedBuild" || db2Property.Name == "Id")
+                    continue;
+                Console.WriteLine($"public string {db2Property.Name}" + " { get; set; } = \"TODO\";");
+            }
+            Console.WriteLine();
+            Console.WriteLine("public string ModelInfo { get; set; } = \"TODO\";");
+            Console.WriteLine("public bool IsRequired { get; set; } = false;");
+            Console.WriteLine("}");
+            Console.WriteLine("}");
+        }
+        Console.ReadKey();
+        Console.Clear();
+    }
+}
+Console.WriteLine("Done");
+Console.ReadKey();

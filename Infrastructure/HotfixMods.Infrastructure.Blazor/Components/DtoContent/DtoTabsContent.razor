@@ -53,17 +53,17 @@
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="RefreshPage" Value="RefreshPage">
-                        <CascadingValue Name="ValueIsNull" Value="tab.ValueIsNull"> 
-                        @if (null == tab.Instance)
-                        {
-                            <DynamicComponent Type="tab.ComponentType" />
-                        }
-                        else
-                        {
-                            <CascadingValue Name="InstanceData" Value="tab.Instance">
+                        <CascadingValue Name="ValueIsNull" Value="tab.ValueIsNull">
+                            @if (null == tab.Instance)
+                            {
                                 <DynamicComponent Type="tab.ComponentType" />
-                            </CascadingValue>
-                        }
+                            }
+                            else
+                            {
+                                <CascadingValue Name="InstanceData" Value="tab.Instance">
+                                    <DynamicComponent Type="tab.ComponentType" />
+                                </CascadingValue>
+                            }
                         </CascadingValue>
                     </CascadingValue>
                 </div>
@@ -208,7 +208,7 @@
         infoModel = TryGetInfoModel(tab.DtoPropertyType);
         dtoValueType = tab.DtoPropertyType;
         var dto = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
-        if(dto == null && tab.DtoPropertyType.IsGenericType)
+        if (dto == null && tab.DtoPropertyType.IsGenericType)
         {
             dto = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
         }
@@ -232,6 +232,7 @@
             currentInstanceData.InstanceCount++;
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
+            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
         }
     }
 
@@ -243,6 +244,7 @@
             currentInstanceData.InstanceCount++;
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
+            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
         }
     }
 
@@ -265,6 +267,7 @@
                 currentInstanceData.CurrentInstance--;
             }
             currentPage = currentInstanceData.CurrentInstance;
+            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
         }
     }
 
@@ -371,7 +374,7 @@
 
     void InitValue(Type? dtoValueType)
     {
-        if (dtoValueType != null && currentTab != null) 
+        if (dtoValueType != null && currentTab != null)
         {
             PageTab.Dto.SetDtoValueToDefault(dtoValueType);
             currentTab.ValueIsNull = false;

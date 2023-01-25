@@ -23,12 +23,12 @@ Console.WriteLine(exp());
 Console.WriteLine(exp());
 Console.ReadKey();
 */
-
+/*
 var hotfixTool = new HotfixTableTool();
 var db2Type = typeof(NpcModelItemSlotDisplayInfo);
 hotfixTool.GenerateAll(db2Type);
 Console.ReadKey();
-
+*/
 
 
 /*
@@ -40,9 +40,9 @@ Console.ReadKey();
 */
 
 
-/*
+
 var dt = new DbDefinitionTool();
-string build = "10.0.2.47631";
+string build = "10.0.5.47660";
 while (true)
 {
     Console.WriteLine("Enter db2 name:");
@@ -58,7 +58,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 
@@ -196,7 +196,7 @@ foreach (var model in serverModels)
 
 /*
 // Compare property names to definition names
-string build = "10.0.2.46924";
+string build = "10.0.5.47660";
 var defHelper = new Db2Client(build);
 var assembly = Assembly.Load("HotfixMods.Core");
 var models = assembly.GetTypes().Where(t => t.Namespace == "HotfixMods.Core.Models.Db2").ToList();
@@ -256,4 +256,3 @@ foreach (var model in models)
 }
 
 */
-

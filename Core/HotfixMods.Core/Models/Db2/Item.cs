@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class Item
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public byte ClassId { get; set; } = 0;
         public byte SubclassId { get; set; } = 0;

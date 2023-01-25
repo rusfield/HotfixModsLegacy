@@ -7,8 +7,10 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSearchName
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public long AllowableRace { get; set; } = 0;
+        [LocalizedString]
         public string Display { get; set; } = "";
         public byte OverallQualityId { get; set; } = 0;
         public int ExpansionId { get; set; } = 0;

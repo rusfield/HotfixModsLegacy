@@ -63,7 +63,7 @@ namespace HotfixMods.Infrastructure.Services
                 return idProperties.First().Name;
             }
 
-            var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IdAttribute)));
+            var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IndexFieldAttribute)));
             if (idAttributeProperties.Count() > 1)
                 throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
 

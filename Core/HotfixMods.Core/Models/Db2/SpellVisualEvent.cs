@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisualEvent
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public int StartEvent { get; set; } = 0;
         public int EndEvent { get; set; } = 0;
@@ -16,6 +17,7 @@ namespace HotfixMods.Core.Models.Db2
         public int SpellVisualKitId { get; set; } = 0;
         public int Field_10_0_0_44649_008 { get; set; } = 0;
         public int Field_10_0_0_44649_009 { get; set; } = 0;
+        [ParentIndexField]
         public int SpellVisualId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

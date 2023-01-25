@@ -5,12 +5,18 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSparse
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public long AllowableRace { get; set; } = 0;
+        [LocalizedString]
         public string Description { get; set; } = "";
+        [LocalizedString]
         public string Display3 { get; set; } = "";
+        [LocalizedString]
         public string Display2 { get; set; } = "";
+        [LocalizedString]
         public string Display1 { get; set; } = "";
+        [LocalizedString]
         public string Display { get; set; } = "";
         public int ExpansionId { get; set; } = 0;
         public decimal DmgVariance { get; set; } = 0;

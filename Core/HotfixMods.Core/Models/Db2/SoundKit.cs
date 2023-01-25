@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SoundKit
     {
+        [IndexField]
         public int Id { get; set; }
         public int SoundType { get; set; }
         public decimal VolumeFloat { get; set; }

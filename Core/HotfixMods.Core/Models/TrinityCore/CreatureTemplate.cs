@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [WorldSchema]
     public class CreatureTemplate
     {
-        [Id]
+        [IndexField]
         public uint Entry { get; set; } = 0;
         public uint Difficulty_Entry_1 { get; set; } = 0;
         public uint Difficulty_Entry_2 { get; set; } = 0;

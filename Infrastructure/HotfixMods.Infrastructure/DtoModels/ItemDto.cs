@@ -6,7 +6,6 @@ namespace HotfixMods.Infrastructure.DtoModels
     {
         public ItemDto(): base(nameof(Item)) { }
 
-
         public Item Item { get; set; } = new();
         public ItemAppearance ItemAppearance { get; set; } = new();
         public ItemDisplayInfo ItemDisplayInfo { get; set; } = new();

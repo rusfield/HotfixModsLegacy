@@ -1,11 +1,11 @@
 ﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Flags;
 
 namespace HotfixMods.Core.Models.Db2
 {
     [HotfixesSchema]
     public class CreatureDisplayInfo
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public ushort ModelId { get; set; } = 0;
         public ushort SoundId { get; set; } = 0;

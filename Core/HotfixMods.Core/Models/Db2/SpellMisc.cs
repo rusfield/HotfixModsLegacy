@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellMisc
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public int Attributes1 { get; set; } = 0;
         public int Attributes2 { get; set; } = 0;
@@ -35,6 +36,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ShowFutureSpellPlayerConditionId { get; set; } = 0;
         public int SpellVisualScript { get; set; } = 0;
         public int ActiveSpellVisualScript { get; set; } = 0;
+        [ParentIndexField]
         public int SpellId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

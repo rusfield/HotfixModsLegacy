@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellPower
     {
+        [IndexField]
         public int Id { get; set; } = 0;
         public byte OrderIndex { get; set; } = 0;
         public int ManaCost { get; set; } = 0;
@@ -19,6 +20,7 @@ namespace HotfixMods.Core.Models.Db2
         public sbyte PowerType { get; set; } = 0;
         public int RequiredAuraSpellId { get; set; } = 0;
         public uint OptionalCost { get; set; } = 0;
+        [ParentIndexField]
         public int SpellId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

@@ -8,6 +8,7 @@ namespace HotfixMods.Core.Models.Db2
         public int Id { get; set; } = 0;
         public sbyte ComponentSection { get; set; } = 0;
         public int MaterialResourcesId { get; set; } = 0;
+        [ParentIndexField] 
         public int ItemDisplayInfoId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

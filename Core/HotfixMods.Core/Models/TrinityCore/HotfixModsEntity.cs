@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [HotfixesSchema]
     public class HotfixModsEntity
     {
-        [Id]
+        [IndexField]
         public int Id { get; set; }
         public string? Name { get; set; }
         public int RecordId { get; set; }

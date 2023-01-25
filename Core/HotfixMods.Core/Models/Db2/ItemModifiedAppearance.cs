@@ -5,7 +5,9 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemModifiedAppearance
     {
+        [IndexField]
         public int Id { get; set; } = 0;
+        [ParentIndexField]
         public int ItemId { get; set; } = 0;
         public int ItemAppearanceModifierId { get; set; } = 0;
         public int ItemAppearanceId { get; set; } = 0;

@@ -48,24 +48,19 @@
     <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="PanelContentChanged">
         @foreach (var tab in tabs)
         {
-            var instance = GetInstanceData(tab.GroupType);
-            var valueIsNull = PageTab.Dto.GetDtoValue(tab.DtoPropertyType) == null && (instance == null || instance.InstanceCount <= 0);
-            if (valueIsNull && tab.DtoPropertyType.IsGenericType)
-            {
-                valueIsNull = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]) == null;
-            }
+
 
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="RefreshPage" Value="RefreshPage">
-                        <CascadingValue Name="ValueIsNull" Value="valueIsNull"> 
-                        @if (null == instance)
+                        <CascadingValue Name="ValueIsNull" Value="tab.ValueIsNull"> 
+                        @if (null == tab.Instance)
                         {
                             <DynamicComponent Type="tab.ComponentType" />
                         }
                         else
                         {
-                            <CascadingValue Name="InstanceData" Value="instance">
+                            <CascadingValue Name="InstanceData" Value="tab.Instance">
                                 <DynamicComponent Type="tab.ComponentType" />
                             </CascadingValue>
                         }
@@ -84,7 +79,7 @@
             {
                 <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
             }
-            else if (dtoPropertyIsNull)
+            else if (currentTab.ValueIsNull)
             {
                 <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="@(() => InitValue(dtoValueType))" />
             }
@@ -124,7 +119,7 @@
     int currentPage = 1;
     bool saving = false;
     IInfoModel? infoModel;
-    bool dtoPropertyIsNull = false;
+    Content? currentTab = null;
     Type? dtoValueType = null;
 
     protected override void OnInitialized()
@@ -132,10 +127,10 @@
         var properties = typeof(T).GetProperties();
 
         // Hardcode in the shared HotfixMods entity tab
-        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), typeof(HotfixModsEntity), null));
+        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), typeof(HotfixModsEntity), null, PageTab.Dto, GetInstanceData(null)));
 
         InitTabsList(properties);
-
+        currentTab = tabs.FirstOrDefault();
         base.OnInitialized();
     }
 
@@ -163,7 +158,7 @@
                 var tabType = TryGetTabType(tabName);
                 if (null == tabType)
                     continue;
-                tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType));
+                tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType, PageTab.Dto, GetInstanceData(groupType)));
             }
         }
     }
@@ -212,11 +207,13 @@
 
         infoModel = TryGetInfoModel(tab.DtoPropertyType);
         dtoValueType = tab.DtoPropertyType;
-        dtoPropertyIsNull = PageTab.Dto.GetDtoValue(tab.DtoPropertyType) == null;
-        if(dtoPropertyIsNull && tab.DtoPropertyType.IsGenericType)
+        var dto = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
+        if(dto == null && tab.DtoPropertyType.IsGenericType)
         {
-            dtoPropertyIsNull = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]) == null;
+            dto = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
         }
+        tab.ValueIsNull = dto == null;
+        currentTab = tab;
     }
 
     void NavigateInstance()
@@ -333,17 +330,28 @@
 
     class Content
     {
-        public Content(string tabPanelName, Type componentType, Type dtoPropertyType, Type? groupType)
+        public Content(string tabPanelName, Type componentType, Type dtoPropertyType, Type? groupType, IDto dto, InstanceData? instance)
         {
             TabPanelName = tabPanelName;
             ComponentType = componentType;
             DtoPropertyType = dtoPropertyType;
             GroupType = groupType;
+
+            Instance = instance;
+
+            ValueIsNull = dto.GetDtoValue(dtoPropertyType) == null && (Instance == null || Instance.InstanceCount <= 0);
+            if (ValueIsNull && DtoPropertyType.IsGenericType)
+            {
+                ValueIsNull = dto.GetDtoListValue(dtoPropertyType.GetGenericArguments()[0]) == null;
+            }
         }
         public string TabPanelName { get; set; }
         public Type ComponentType { get; set; }
         public Type DtoPropertyType { get; set; }
         public Type? GroupType { get; set; }
+
+        public bool ValueIsNull { get; set; }
+        public InstanceData? Instance { get; set; }
     }
 
     void RefreshPage()
@@ -363,20 +371,20 @@
 
     void InitValue(Type? dtoValueType)
     {
-        if (dtoValueType != null)
+        if (dtoValueType != null && currentTab != null) 
         {
             PageTab.Dto.SetDtoValueToDefault(dtoValueType);
-            dtoPropertyIsNull = false;
+            currentTab.ValueIsNull = false;
         }
 
     }
 
     void DeleteValue(Type? dtoValueType)
     {
-        if (dtoValueType != null)
+        if (dtoValueType != null && currentTab != null)
         {
             PageTab.Dto.SetDtoValueToNull(dtoValueType);
-            dtoPropertyIsNull = true;
+            currentTab.ValueIsNull = true;
         }
     }
 }

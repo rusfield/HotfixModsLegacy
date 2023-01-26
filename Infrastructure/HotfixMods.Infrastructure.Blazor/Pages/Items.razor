@@ -4,17 +4,4 @@
 @inject ItemService Service
 @inherits PageBase<ItemDto>
 
-<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<ItemSearch_Dialog>())" />
-
-
-@code {
-
-    // Temp
-    protected override void OnParametersSet()
-    {
-        if (null == PageTab.Dto)
-            PageTab.Dto = new ItemDto();
-        base.OnParametersSet();
-    }
-
-}
+<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<ItemSearch_Dialog>())"  />

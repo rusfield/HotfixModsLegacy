@@ -219,6 +219,21 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
+        protected async Task<int> GetIdByConditionsAsync<T>(int? currentId, bool isUpdate)
+            where T : new()
+        {
+            // Entity is null, and this ID will not be used.
+            if (null == currentId)
+                return 0;
+
+            // Entity is new, or entity should be saved as new
+            if ((int)currentId == 0 || !isUpdate)
+                return await GetNextIdAsync<T>();
+
+            // Entity is being updated
+            return (int)currentId;
+        }
+
         protected async Task<int> GetNextIdAsync<T>()
             where T : new()
         {

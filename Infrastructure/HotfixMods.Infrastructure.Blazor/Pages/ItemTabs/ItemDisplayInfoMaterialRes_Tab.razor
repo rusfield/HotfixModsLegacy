@@ -37,6 +37,9 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
+    [CascadingParameter(Name = "ValueIsNull")]
+    public bool ValueIsNull { get; set; }
+
     ItemDisplayInfoMaterialRes armUpper;
     ItemDisplayInfoMaterialRes armLower;
     ItemDisplayInfoMaterialRes hands;
@@ -65,7 +68,8 @@
 
     protected override void OnParametersSet()
     {
-        SetValues();
+        if (!ValueIsNull)
+            SetValues();
     }
 
     void SetValues()

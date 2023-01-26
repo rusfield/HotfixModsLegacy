@@ -39,7 +39,7 @@
     {
         <MudTabPanel Class="custom-mud-tabs">
             <TabContent>
-                <TabTitle_Element Title="@tab.TabPanelName" />
+                <TabTitle_Element Title="@tab.TabPanelName" Color="@(tab.ValueIsNull ? Color.Dark : Color.Inherit)" />
             </TabContent>
         </MudTabPanel>
     }

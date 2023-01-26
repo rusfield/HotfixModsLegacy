@@ -1,10 +1,10 @@
 ﻿<MudStack Spacing="0" Style="height:100%;" Justify="Justify.SpaceBetween">
-    <MudText Class="custom-mud-tabs-title">
+    <MudText Class="custom-mud-tabs-title" Color="@Color">
         @Line1.ToUpper()
     </MudText>
     @if (!string.IsNullOrWhiteSpace(Line2))
     {
-        <MudText Class="custom-mud-tabs-title">
+        <MudText Class="custom-mud-tabs-title" Color="@Color">
             @Line2.ToUpper()
         </MudText>
     }
@@ -18,6 +18,9 @@
 
     [Parameter]
     public string? Title { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; } = Color.Inherit;
 
     protected override void OnParametersSet()
     {

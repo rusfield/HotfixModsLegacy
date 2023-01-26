@@ -11,7 +11,7 @@
             <MudItem xs="3">
                 @for (int j = 0; j < 6; j++)
                 {
-                    int jVal = (12 * iVal) + j;
+                    int jVal = (16 * iVal) + j;
                     if (jVal >= customizations.Count)
                     {
                         <Placeholder_Element Amount="1" Visible="loading" />
@@ -25,33 +25,48 @@
                 }
             </MudItem>
             <MudItem xs="6">
-                @if (iVal == 0)
+                <Placeholder_Element Amount="4" />
+
+                @for (int j = 0; j < 4; j++)
                 {
-                    <Placeholder_Element Amount="4" />
-                    <InlineGroup Merged="false" LeftContentWidth="10" RightContentWidth="10" MiddleContentWidth="80">
-                        <LeftContent />
-                        <MiddleContent>
-                            <Input_Element T="int" Value="chrModelId" ValueChanged="ChrModelIdOptionChanged" Label="Chr Model ID" GetOptionsAsync_Func="LoadChrModelId" Disabled="loading" />
-                        </MiddleContent>
-                        <RightContent />
-                    </InlineGroup>
-                    <InlineGroup Merged="false" LeftContentWidth="15" MiddleContentWidth="70" RightContentWidth="15">
-                        <LeftContent />
-                        <MiddleContent>
-                            <Input_Element T="bool" Value="displayDruidForms" ValueChanged="DisplayDruidFormsChanged" GetOptionsAsync_Func="GetDisplayDruidFormsOptions" Label="Druid Customization Options" AllowUndefinedValues="false" />
-                        </MiddleContent>
-                        <RightContent />
-                    </InlineGroup>
-                }
-                else
-                {
-                    <Placeholder_Element Amount="6" />
+                    int jVal = (16 * iVal) + 12 + j;
+                    if (j == 1 || j == 3)
+                    {
+                        <InlineGroup Merged="false">
+                            <LeftContent>
+                                @if (jVal - 1 >= customizations.Count)
+                                {
+                                    <Placeholder_Element Amount="1" Visible="loading" />
+                                }
+                                else
+                                {
+                                    var customization = customizations.ElementAt(jVal - 1);
+                                    var bindValue = GetCreatureDisplayInfoOption(customization);
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                                }
+                            </LeftContent>
+                            <RightContent>
+                                @if (jVal >= customizations.Count)
+                                {
+                                    <Placeholder_Element Amount="1" Visible="loading" />
+                                }
+                                else
+                                {
+                                    var customization = customizations.ElementAt(jVal);
+                                    var bindValue = GetCreatureDisplayInfoOption(customization);
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                                }
+                            </RightContent>
+
+
+                        </InlineGroup>
+                    }
                 }
             </MudItem>
             <MudItem xs="3">
                 @for (int j = 0; j < 6; j++)
                 {
-                    int jVal = (12 * iVal) + 6 + j;
+                    int jVal = (16 * iVal) + 6 + j;
                     if (jVal >= customizations.Count)
                     {
                         <Placeholder_Element Amount="1" Visible="loading" />
@@ -78,14 +93,11 @@
     Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> customizations = new();
     int amountOfCustomizationPages = 1;
     bool loading = true;
-    int chrModelId = 0;
-    bool displayDruidForms = false;
     List<CreatureDisplayInfoOption> values;
 
     protected override void OnParametersSet()
     {
         values = PageTab.Dto.GetDtoListValue<CreatureDisplayInfoOption>();
-        chrModelId = ((CreatureDto)PageTab.Dto).ChrModelId;
         base.OnParametersSet();
     }
 
@@ -99,11 +111,6 @@
 
     async Task<Dictionary<int, string>> GetCustomizationChoices(int chrCustomizationOptionId)
     {
-        if (customizations.Count == 0 || customizations.First().Key.ChrModelId != chrModelId)
-        {
-            customizations = await Service.GetCustomizationOptions(chrModelId, displayDruidForms);
-        }
-
         if (customizations.Any(k => k.Key.Id == chrCustomizationOptionId))
         {
             return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : $"{c.Name} ({c.Id})");
@@ -127,36 +134,17 @@
     async Task SetValues()
     {
         loading = true;
-        customizations = await Service.GetCustomizationOptions(chrModelId, displayDruidForms);
-        amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 12.0), 1); // Run at least once
+        var creatureDisplayInfoExtra = ((CreatureDto?)PageTab?.Dto)?.CreatureDisplayInfoExtra;
+        if (creatureDisplayInfoExtra != null)
+        {
+            customizations = await Service.GetCustomizationOptions(creatureDisplayInfoExtra.DisplayRaceId, creatureDisplayInfoExtra.DisplaySexId);
+        }
+        else
+        {
+            customizations = new();
+        }
+        amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 16.0), 1); // Minimum 1 page
         loading = false;
         this.StateHasChanged();
-    }
-
-    async Task<Dictionary<int, string>> LoadChrModelId()
-    {
-        await SetValues();
-        return Enum.GetValues<ChrModelId>().ToDictionary(key => (int)key, value => value.ToDisplayString());
-    }
-
-    async Task ChrModelIdOptionChanged(int newValue)
-    {
-        amountOfCustomizationPages = 1;
-        chrModelId = newValue;
-        ((CreatureDto)PageTab.Dto).ChrModelId = newValue;
-        customizations = new();
-        values.Clear();
-        await SetValues();
-    }
-
-    async void DisplayDruidFormsChanged(bool newValue)
-    {
-        displayDruidForms = newValue;
-        await SetValues();
-    }
-
-    async Task<Dictionary<bool, string>> GetDisplayDruidFormsOptions()
-    {
-        return new() { { false, "Hide" }, { true, "Show If Available" } };
     }
 }

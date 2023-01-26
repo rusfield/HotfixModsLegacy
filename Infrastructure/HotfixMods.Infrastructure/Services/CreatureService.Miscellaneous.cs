@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
@@ -9,22 +10,22 @@ namespace HotfixMods.Infrastructure.Services
     {
         Dictionary<int, Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> customizationCache = new();
 
-        public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrModelId, bool includeDruidForms = false)
+        public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrRaceId, int gender, bool includeDruidForms = false)
         {
             var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-            if (chrModelId == 0)
+            var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesId), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
+            if (null == chrRaceXChrModel)
             {
-                // This selection seems to be a bit bugged in DB.
-                // Use it as default and return nothing.
+                // No customizations for this combination, or possibly old/missing data from ChrRaceXChrModel.
                 return result;
             }
-            else if (customizationCache.ContainsKey(chrModelId))
+            else if (customizationCache.ContainsKey(chrRaceXChrModel.ChrModelId))
             {
-                result = customizationCache[chrModelId];
+                result = customizationCache[chrRaceXChrModel.ChrModelId];
             }
             else
             {
-                var options = await GetAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrModelId));
+                var options = await GetAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrRaceXChrModel.ChrModelId));
                 foreach (var option in options)
                 {
                     var choices = await GetAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
@@ -32,8 +33,8 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 // In case it has been added elsewhere in the meantime
-                if (!customizationCache.ContainsKey(chrModelId) && result.Count > 0)
-                    customizationCache.Add(chrModelId, result);
+                if (!customizationCache.ContainsKey(chrRaceXChrModel.ChrModelId) && result.Count > 0)
+                    customizationCache.Add(chrRaceXChrModel.ChrModelId, result);
             }
 
             if (!includeDruidForms)

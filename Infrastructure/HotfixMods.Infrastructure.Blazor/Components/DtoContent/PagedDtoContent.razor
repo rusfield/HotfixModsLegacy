@@ -5,10 +5,10 @@
     <MudGrid Style="position:absolute; width:1232px">
         <MudItem xs="12">
             <div style="@($"position:absolute; top:{(650 / 2) - 60}px; left:calc(100%)")">
-                <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex >= mudCarouselRef.Items.Count - 1)" OnClick="NavigateForward_Click" />
+                <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="custom-slide-navigator" @bind-Disabled="@nextPageDisabled" OnClick="NavigateForward_Click" />
             </div>
             <div style="@($"position:absolute; top:{(650 / 2) - 60}px;left:-120px")">
-                <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="custom-slide-navigator" Disabled="@(mudCarouselRef == null || mudCarouselRef.SelectedIndex <= 0)" OnClick="NavigateBackward_Click" />
+                <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="custom-slide-navigator" @bind-Disabled="@previousPageDisabled" OnClick="NavigateBackward_Click" />
             </div>
         </MudItem>
     </MudGrid>

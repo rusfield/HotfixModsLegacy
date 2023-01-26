@@ -75,14 +75,6 @@ namespace HotfixMods.Infrastructure.Services
             {
                 result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
             }
-            if (result.CreatureDisplayInfoOption?.Count > 0)
-            {
-                var customizationOption = await GetSingleByIdAsync<ChrCustomizationOption>(result.CreatureDisplayInfoOption.First().ChrCustomizationOptionId);
-                if (customizationOption != null)
-                {
-                    result.ChrModelId = customizationOption.ChrModelId;
-                }
-            }
 
             return result;
         }

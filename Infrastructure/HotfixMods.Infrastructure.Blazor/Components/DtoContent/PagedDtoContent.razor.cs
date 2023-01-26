@@ -1,5 +1,4 @@
 ﻿using HotfixMods.Infrastructure.Blazor.PageData;
-using HotfixMods.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -30,6 +29,22 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         bool first = true;
         MudCarousel<object>? mudCarouselRef;
+        bool nextPageDisabled = true;
+        bool previousPageDisabled = true;
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            // Re-render if things changes.
+            // Without this, the navigation arrows would "fall behind". 
+            var nextPageDisabledChanged = nextPageDisabled;
+            var previousPageDisabledChanged = previousPageDisabled;
+
+            nextPageDisabled = mudCarouselRef == null || mudCarouselRef.SelectedIndex >= mudCarouselRef.Items.Count - 1;
+            previousPageDisabled = mudCarouselRef == null || mudCarouselRef.SelectedIndex <= 0;
+            if (nextPageDisabledChanged != nextPageDisabled || previousPageDisabledChanged != previousPageDisabled)
+                StateHasChanged();
+            base.OnAfterRender(firstRender);
+        }
 
         void NavigateForward_Click()
         {

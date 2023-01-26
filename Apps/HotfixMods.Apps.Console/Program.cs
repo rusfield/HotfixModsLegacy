@@ -23,12 +23,14 @@ Console.WriteLine(exp());
 Console.WriteLine(exp());
 Console.ReadKey();
 */
-/*
+
+
+
 var hotfixTool = new HotfixTableTool();
 var db2Type = typeof(NpcModelItemSlotDisplayInfo);
 hotfixTool.GenerateAll(db2Type);
 Console.ReadKey();
-*/
+
 
 
 /*
@@ -40,7 +42,7 @@ Console.ReadKey();
 */
 
 
-
+/*
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47660";
 while (true)
@@ -58,7 +60,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 
 

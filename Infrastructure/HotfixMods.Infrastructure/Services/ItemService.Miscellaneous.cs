@@ -1,11 +1,29 @@
 ﻿using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Core.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
+        public async Task<List<ItemModifiedAppearance>> GetAvailableItemModifiedAppearancesAsync(int itemId)
+        {
+            return await GetAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), itemId));
+        }
+
+        public string ItemAppearanceModifierIdToString(int itemAppearanceModifierId)
+        {
+            return itemAppearanceModifierId switch
+            {
+                0 => "Normal",
+                1 => "Heroic",
+                3 => "Mythic",
+                4 => "LFR",
+                _ => $"Modifier ID {itemAppearanceModifierId}"
+            };
+        }
+
         async Task SetIdAndVerifiedBuild(ItemDto dto, List<ItemXItemEffect> itemXItemEffects, ItemSearchName? itemSearchName)
         {
             // Step 1: Init IDs of single entities

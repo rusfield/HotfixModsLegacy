@@ -37,6 +37,8 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
+
+
         public async Task<CreatureDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
@@ -65,7 +67,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             if (result.CreatureDisplayInfo != null)
             {
-                result.CreatureDisplayInfoExtra = await GetSingleByIdAsync<CreatureDisplayInfoExtra>((int)result.CreatureDisplayInfo.ExtendedDisplayInfoId);
+                result.CreatureDisplayInfoExtra = await GetSingleByIdAsync<CreatureDisplayInfoExtra>(result.CreatureDisplayInfo.ExtendedDisplayInfoId);
             }
             if (result.CreatureDisplayInfoExtra != null)
             {

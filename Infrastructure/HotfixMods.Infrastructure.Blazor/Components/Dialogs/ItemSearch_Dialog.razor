@@ -2,19 +2,36 @@
 
 @inject ItemService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog" GetById_Func="GetByIdAsync" GetNewAsync_Func="GetNewAsync" />
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+    <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
+    @if (isLoading)
+    {
+        <Placeholder_Element Amount="1" Visible="true" />
+    }
+    else
+    {
+        <MudNumericField @bind-Value="@id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="(async () => await GetAvailableOptionsAsync(id))" />
+    }
+    @foreach (var option in options)
+    {
+        <MudButton Variant="Variant.Outlined" OnClick="@(async () => await GetByIdAsync(id, option.Key))">@option.Value</MudButton>
+    }
+</DialogSearch>
 
 @code {
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }
 
     DialogSearch? dialogSearchRef;
+    int? id;
+    Dictionary<int, string> options = new();
+    bool isLoading = false;
 
-    async Task GetByIdAsync(int? id)
+    async Task GetByIdAsync(int? id, int orderIndex)
     {
         if (id != null)
         {
-            var data = await Service.GetByIdAsync((int)id, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((int)id, orderIndex, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);
@@ -24,6 +41,24 @@
                 dialogSearchRef.CancelLoaderWithMessage("No DB2 record found.");
             }
         }
+    }
+
+    async Task GetAvailableOptionsAsync(int? id)
+    {
+        isLoading = true;
+        if (id != null)
+        {
+            var availableItemModifiedAppearances = await Service.GetAvailableItemModifiedAppearancesAsync((int)id);
+            if (availableItemModifiedAppearances.Any())
+            {
+                options = availableItemModifiedAppearances.ToDictionary(k => k.OrderIndex, v => Service.ItemAppearanceModifierIdToString(v.ItemAppearanceModifierId));
+            }
+            else
+            {
+                await GetByIdAsync(id, 0);
+            }
+        }
+        isLoading = false;
     }
 
     async Task GetNewAsync()

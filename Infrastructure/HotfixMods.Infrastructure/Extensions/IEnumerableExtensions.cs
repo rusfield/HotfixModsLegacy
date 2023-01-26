@@ -7,5 +7,13 @@
         {
             return source.Select((item, index) => (item, index));
         }
+
+        // https://stackoverflow.com/questions/30260858/async-await-using-linq-foreach
+        public static async Task ForEachAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> action)
+        {
+            await Parallel.ForEachAsync(
+                enumerable,
+                async (item, _) => await action(item));
+        }
     }
 }

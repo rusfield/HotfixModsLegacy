@@ -4,6 +4,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 using System.Text.Json;
 
 namespace HotfixMods.Infrastructure.Services
@@ -22,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<ItemDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<ItemDto?> GetByIdAsync(int id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             int currentInvoke = 1;
@@ -47,20 +48,22 @@ namespace HotfixMods.Infrastructure.Services
             result.ItemSparse = await GetSingleAsync<ItemSparse>(new DbParameter(nameof(ItemSparse.Id), id));
 
             callback.Invoke("Loading", $"Loading {nameof(ItemModifiedAppearance)}", increaseProgress());
-            result.ItemModifiedAppearance= await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), id));
+            result.ItemModifiedAppearance= await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
 
             callback.Invoke("Loading", $"Loading {nameof(ItemXItemEffect)}", increaseProgress());
-            var itemXItemEffect = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemSparse.Id), id));
+            var itemXItemEffect = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemId), id));
 
             callback.Invoke("Loading", $"Loading {nameof(ItemEffect)}", increaseProgress());
-            itemXItemEffect.ForEach(async i =>
+            await itemXItemEffect.ForEachAsync(async i =>
             {
                 var itemEffect = await GetSingleAsync<ItemEffect>(new DbParameter(nameof(ItemEffect.Id), i.ItemEffectId));
                 if (itemEffect != null)
+                {
                     result.EffectGroups.Add(new()
                     {
                         ItemEffect = itemEffect
                     });
+                }
             });
 
             if (result.ItemModifiedAppearance != null)

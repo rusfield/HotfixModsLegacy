@@ -4,6 +4,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using System.Text.Json;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -46,10 +47,14 @@ namespace HotfixMods.Infrastructure.Services
 
                 foreach(var animKitConfigBoneSet in animKitConfigBoneSets)
                 {
+                    // Make new copies and references 
+                    var newAnimKitSegment = JsonSerializer.Deserialize<AnimKitSegment>(JsonSerializer.Serialize(segment))!;
+                    var newAnimKitConfig = JsonSerializer.Deserialize<AnimKitConfig>(JsonSerializer.Serialize(animKitConfig))!;
+
                     result.SegmentGroups.Add(new()
                     {
-                        AnimKitSegment = segment,
-                        AnimKitConfig = animKitConfig,
+                        AnimKitSegment = newAnimKitSegment, 
+                        AnimKitConfig = newAnimKitConfig,
                         AnimKitConfigBoneSet = animKitConfigBoneSet
                     });
                 }

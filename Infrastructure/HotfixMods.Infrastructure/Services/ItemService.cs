@@ -18,7 +18,6 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var result = new ItemDto();
-            result.HotfixModsEntity.RecordId = await GetNextIdAsync();
 
             return result;
         }
@@ -42,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
             };
 
             callback.Invoke("Loading", $"Loading {nameof(HotfixModsEntity)}", increaseProgress());
-            result.HotfixModsEntity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild)) ?? new();
+            result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(item.Id);
 
             callback.Invoke("Loading", $"Loading {nameof(ItemSparse)}", increaseProgress());
             result.ItemSparse = await GetSingleAsync<ItemSparse>(new DbParameter(nameof(ItemSparse.Id), id));

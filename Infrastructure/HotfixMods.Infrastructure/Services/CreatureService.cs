@@ -5,6 +5,7 @@ using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -143,12 +144,12 @@ namespace HotfixMods.Infrastructure.Services
                 return false;
             }
 
-            dto.CreatureDisplayInfoOption.ForEach(async s =>
+            await dto.CreatureDisplayInfoOption.ForEachAsync(async s =>
             {
                 await DeleteAsync(s);
             });
 
-            dto.NpcModelItemSlotDisplayInfo.ForEach(async s => 
+            await dto.NpcModelItemSlotDisplayInfo.ForEachAsync(async s => 
             {
                 await DeleteAsync(s);
             });

@@ -207,12 +207,12 @@
 
         infoModel = TryGetInfoModel(tab.DtoPropertyType);
         dtoValueType = tab.DtoPropertyType;
-        var dto = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
-        if (dto == null && tab.DtoPropertyType.IsGenericType)
+        var dtoValue = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
+        if (dtoValue == null && tab.DtoPropertyType.IsGenericType)
         {
-            dto = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
+            dtoValue = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
         }
-        tab.ValueIsNull = dto == null;
+        tab.ValueIsNull = dtoValue == null && (currentInstanceData == null || currentInstanceData.InstanceCount <= 0);
         currentTab = tab;
     }
 

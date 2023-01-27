@@ -3,7 +3,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
-
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
 
             var spell = await GetSingleAsync<Spell>(new DbParameter(nameof(Spell.Id), id));
 
-            if(null == spell)
+            if (null == spell)
             {
                 return null;
             }
@@ -54,10 +54,10 @@ namespace HotfixMods.Infrastructure.Services
 
             // TODO: This must be tested. There may be spells where sv, sve or sxsv are null.
             var spellXSpellVisuals = await GetAsync<SpellXSpellVisual>(new DbParameter(nameof(SpellXSpellVisual.SpellId), id));
-            spellXSpellVisuals.ForEach(async sxsv =>
+            await spellXSpellVisuals.ForEachAsync(async sxsv =>
             {
                 var spellVisualEvents = await GetAsync<SpellVisualEvent>(new DbParameter(nameof(SpellVisualEvent.SpellVisualId), sxsv.SpellVisualId));
-                spellVisualEvents.ForEach(async sve =>
+                await spellVisualEvents.ForEachAsync(async sve =>
                 {
                     var spellVisuals = await GetAsync<SpellVisual>(new DbParameter(nameof(SpellVisual.Id), sve.SpellVisualId));
                     spellVisuals.ForEach(sv =>
@@ -88,11 +88,11 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(dto.SpellMisc);
             await SaveAsync(dto.SpellName);
             await SaveAsync(dto.SpellPower);
-            dto.EffectGroups.ForEach(async e =>
+            await dto.EffectGroups.ForEachAsync(async e =>
             {
                 await SaveAsync(e.SpellEffect);
             });
-            dto.VisualGroups.ForEach(async v =>
+            await dto.VisualGroups.ForEachAsync(async v =>
             {
                 await SaveAsync(v.SpellXSpellVisual);
                 await SaveAsync(v.SpellVisual);
@@ -109,18 +109,18 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
 
             var dto = await GetByIdAsync(id);
-            if(null == dto)
+            if (null == dto)
             {
                 return false;
             }
 
-            dto.VisualGroups.ForEach(async v =>
+            await dto.VisualGroups.ForEachAsync(async v =>
             {
                 await DeleteAsync(v.SpellVisualEvent);
                 await DeleteAsync(v.SpellVisualEvent);
                 await DeleteAsync(v.SpellXSpellVisual);
             });
-            dto.EffectGroups.ForEach(async e =>
+            await dto.EffectGroups.ForEachAsync(async e =>
             {
                 await DeleteAsync(e.SpellEffect);
             });

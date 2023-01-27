@@ -3,6 +3,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -84,7 +85,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
 
-            dto.SegmentGroups.ForEach(async s =>
+            await dto.SegmentGroups.ForEachAsync(async s =>
             {
                 await DeleteAsync(s.AnimKitSegment);
                 await DeleteAsync(s.AnimKitConfig);

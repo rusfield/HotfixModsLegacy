@@ -3,6 +3,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -64,7 +65,7 @@ namespace HotfixMods.Infrastructure.Services
 
             // Delete gameobjects placed around
             var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.Id), id));
-            existingGameobjects.ForEach(async g =>
+            await existingGameobjects.ForEachAsync(async g =>
             {
                 await DeleteAsync(g);
             });

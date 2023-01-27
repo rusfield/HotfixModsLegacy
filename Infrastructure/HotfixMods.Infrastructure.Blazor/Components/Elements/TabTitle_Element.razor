@@ -1,10 +1,10 @@
 ﻿<MudStack Spacing="0" Style="height:100%;" Justify="Justify.SpaceBetween">
-    <MudText Class="custom-mud-tabs-title" Color="@Color">
+    <MudText Class="custom-mud-tabs-title" Color="@Color" Style="@(string.IsNullOrWhiteSpace(FontGlowHtmlColor) ? "" : $"text-shadow:1px 1px 1px {FontGlowHtmlColor}")">
         @Line1.ToUpper()
     </MudText>
     @if (!string.IsNullOrWhiteSpace(Line2))
     {
-        <MudText Class="custom-mud-tabs-title" Color="@Color">
+    <MudText Class="custom-mud-tabs-title" Color="@Color" Style="@(string.IsNullOrWhiteSpace(FontGlowHtmlColor) ? "" : $"text-shadow:1px 1px 1px {FontGlowHtmlColor}")">
             @Line2.ToUpper()
         </MudText>
     }
@@ -21,6 +21,9 @@
 
     [Parameter]
     public Color Color { get; set; } = Color.Inherit;
+
+    [Parameter]
+    public string FontGlowHtmlColor { get; set; } = // Prepared for group colors. Input should be for example #ED1C24
 
     protected override void OnParametersSet()
     {

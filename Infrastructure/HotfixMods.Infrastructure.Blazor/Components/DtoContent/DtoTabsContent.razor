@@ -234,7 +234,10 @@
             currentInstanceData.InstanceCount++;
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
-            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
+            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType))
+            {
+                tab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
+            }
         }
     }
 
@@ -246,7 +249,6 @@
             currentInstanceData.InstanceCount++;
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
-            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
         }
     }
 
@@ -269,7 +271,10 @@
                 currentInstanceData.CurrentInstance--;
             }
             currentPage = currentInstanceData.CurrentInstance;
-            currentTab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
+            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType))
+            {
+                tab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
+            }
         }
     }
 

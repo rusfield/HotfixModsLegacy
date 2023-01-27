@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public CreatureService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
-        public async Task<CreatureDto> GetNewAsync(Action<string, string, int>? callback = null)
+        public CreatureDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -56,19 +56,19 @@ namespace HotfixMods.Infrastructure.Services
                 HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(id),
                 CreatureTemplate = creatureTemplate,
                 CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)),
-                CreatureTemplateAddon = await GetSingleByIdAsync<CreatureTemplateAddon>(id),
+                CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(new DbParameter(nameof(CreatureTemplateAddon.Entry), id)),
                 CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(new DbParameter(nameof(CreatureEquipTemplate.CreatureId), id)),
                 IsUpdate = true
             };
 
             if (result.CreatureTemplateModel != null)
             {
-                result.CreatureModelInfo = await GetSingleByIdAsync<CreatureModelInfo>((int)result.CreatureTemplateModel.CreatureDisplayId);
-                result.CreatureDisplayInfo = await GetSingleByIdAsync<CreatureDisplayInfo>((int)result.CreatureTemplateModel.CreatureDisplayId);
+                result.CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(new DbParameter(nameof(CreatureModelInfo.DisplayId), (int)result.CreatureTemplateModel.CreatureDisplayId));
+                result.CreatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.Id), (int)result.CreatureTemplateModel.CreatureDisplayId));
             }
             if (result.CreatureDisplayInfo != null)
             {
-                result.CreatureDisplayInfoExtra = await GetSingleByIdAsync<CreatureDisplayInfoExtra>(result.CreatureDisplayInfo.ExtendedDisplayInfoId);
+                result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(new DbParameter(nameof(CreatureDisplayInfoExtra.Id), result.CreatureDisplayInfo.ExtendedDisplayInfoId));
             }
             if (result.CreatureDisplayInfoExtra != null)
             {

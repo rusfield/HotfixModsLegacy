@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -29,14 +30,15 @@ namespace HotfixMods.Infrastructure.Services
             _appConfig = appConfig;
         }
 
-        protected async Task<T?> GetSingleByIdAsync<T>(int id)
+        protected async Task<T?> GetSingleAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
             where T : new()
         {
-            return await GetSingleAsync<T>(new DbParameter(GetIdPropertyNameOfEntity<T>(), id));
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            return await GetSingleAsync<T>(parameters);
         }
 
         protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
-            where T : new()
+        where T : new()
         {
             try
             {
@@ -80,7 +82,14 @@ namespace HotfixMods.Infrastructure.Services
         }
 
 
-        protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
+        protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            return await GetAsync<T>(parameters);
+        }
+
+            protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
             try
@@ -107,11 +116,25 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
+        protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, IEnumerable<T> entities)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            await SaveAsync(entities.ToArray());
+        }
 
         protected async Task SaveAsync<T>(IEnumerable<T> entities)
             where T : new()
         {
             await SaveAsync(entities.ToArray());
+        }
+
+
+        protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, params T[] entities)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            await SaveAsync(entities);
         }
 
         protected async Task SaveAsync<T>(params T[] entities)
@@ -133,7 +156,7 @@ namespace HotfixMods.Infrastructure.Services
 
             foreach (var dbRow in dbRows)
             {
-                if(!Enum.TryParse<TableHashes>(tableName, true, out var tableHash))
+                if (!Enum.TryParse<TableHashes>(tableName, true, out var tableHash))
                 {
                     continue;
                 }
@@ -182,6 +205,14 @@ namespace HotfixMods.Infrastructure.Services
 
             if (hotfixDbRows.Count > 0)
                 await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray());
+        }
+
+
+        protected async Task<bool> DeleteAsync<T>(Action<string, string, int> callback, Func<int> progress, T entity)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {typeof(T).Name}", progress());
+            return await DeleteAsync(entity);
         }
 
         protected async Task<bool> DeleteAsync<T>(T entity)

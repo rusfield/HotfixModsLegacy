@@ -6,14 +6,3 @@
 
 <DtoTabsContent T="SpellDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearch_Dialog>())" />
 
-
-@code {
-
-    // Temp
-    protected override void OnParametersSet()
-    {
-        if (null == PageTab.Dto)
-            PageTab.Dto = new SpellDto();
-        base.OnParametersSet();
-    }
-}

@@ -10,7 +10,7 @@ namespace HotfixMods.Infrastructure.Services
     public partial class SoundKitService : ServiceBase
     {
         public SoundKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
-        public async Task<SoundKitDto> GetNewAsync(Action<string, string, int>? callback = null)
+        public SoundKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -21,7 +21,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var soundKit = await GetSingleByIdAsync<SoundKit>(id);
+            var soundKit = await GetSingleAsync<SoundKit>(new DbParameter(nameof(SoundKit.Id), id));
             if (null == soundKit)
             {
                 return null;

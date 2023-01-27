@@ -9,12 +9,11 @@ namespace HotfixMods.Infrastructure.Services
     public class SpellVisualKitService : ServiceBase
     {
         public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
-        public async Task<SpellVisualKitDto> GetNewAsync(Action<string, string, int>? callback = null)
+        public SpellVisualKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
             var result = new SpellVisualKitDto();
-            result.HotfixModsEntity.RecordId = await GetNextIdAsync();
 
             return result;
         }
@@ -23,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var spellVisualKit = await GetSingleByIdAsync<SpellVisualKit>(id);
+            var spellVisualKit = await GetSingleAsync<SpellVisualKit>(new DbParameter(nameof(SpellVisualKit.Id), id));
             if (null == spellVisualKit)
             {
                 return null;

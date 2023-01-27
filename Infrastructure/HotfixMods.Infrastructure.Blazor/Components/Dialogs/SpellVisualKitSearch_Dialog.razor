@@ -2,7 +2,7 @@
 
 @inject SpellVisualKitService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog" GetById_Func="GetByIdAsync" GetNewAsync_Func="GetNewAsync" />
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog" GetById_Func="GetByIdAsync" GetNew_Action="GetNew" />
 
 @code {
     [CascadingParameter]
@@ -26,9 +26,9 @@
         }
     }
 
-    async Task GetNewAsync()
+    void GetNew()
     {
-        var data = await Service.GetNewAsync(dialogSearchRef!.SetLoaderProgress);
+        var data = Service.GetNew(dialogSearchRef!.SetLoaderProgress);
         Dialog.Close(data);
     }
 }

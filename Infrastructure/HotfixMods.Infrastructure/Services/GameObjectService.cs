@@ -11,7 +11,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public GameobjectService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
-        public async Task<GameobjectDto> GetNewAsync(Action<string, string, int>? callback = null)
+        public GameobjectDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var gameobjectTemplate = await GetSingleByIdAsync<GameobjectTemplate>(id);
+            var gameobjectTemplate = await GetSingleAsync<GameobjectTemplate>(new DbParameter(nameof(GameobjectTemplate.Entry), id));
             if (null == gameobjectTemplate)
             {
                 return null;

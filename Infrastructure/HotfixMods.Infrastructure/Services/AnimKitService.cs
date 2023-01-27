@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
 
-        public async Task<AnimKitDto> GetNewAsync(Action<string, string, int>? callback = null)
+        public AnimKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
 
-            var animKit = await GetSingleByIdAsync<AnimKit>(id);
+            var animKit = await GetSingleAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
             if (null == animKit)
             {
                 return null;

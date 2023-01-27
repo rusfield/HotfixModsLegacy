@@ -61,9 +61,9 @@
         isLoading = false;
     }
 
-    async Task GetNewAsync()
+    void GetNew()
     {
-        var data = await Service.GetNewAsync(dialogSearchRef!.SetLoaderProgress);
+        var data = Service.GetNew(dialogSearchRef!.SetLoaderProgress);
         Dialog.Close(data);
     }
 }

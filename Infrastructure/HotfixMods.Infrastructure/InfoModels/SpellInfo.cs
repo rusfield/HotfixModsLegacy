@@ -7,6 +7,6 @@
         public string AuraDescription = "The text in the tooltip that appears when you hover over the icon buff/debuff.";
 
         public string ModelInfo { get; set; } = "TODO";
-        public bool IsRequired { get; set; } = false;
+        public bool IsRequired { get; set; } = true;
     }
 }

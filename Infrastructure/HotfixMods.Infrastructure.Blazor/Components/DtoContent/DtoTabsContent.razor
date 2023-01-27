@@ -61,7 +61,9 @@
                             else
                             {
                                 <CascadingValue Name="InstanceData" Value="tab.Instance">
-                                    <DynamicComponent Type="tab.ComponentType" />
+                                    <InstancedDtoContent>
+                                        <DynamicComponent Type="tab.ComponentType" />
+                                    </InstancedDtoContent>
                                 </CascadingValue>
                             }
                         </CascadingValue>

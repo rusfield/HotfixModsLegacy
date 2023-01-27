@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellProceduralEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" />
     </MudItem>
@@ -16,4 +16,4 @@
         <Input_Element T="decimal" @bind-Value="Value.Value3" ValueCompare="ValueCompare?.Value3" Label="@nameof(Value.Value3).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.Value4" ValueCompare="ValueCompare?.Value4" Label="@nameof(Value.Value4).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

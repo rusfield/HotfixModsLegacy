@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, CloneEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="Value.DurationMs" ValueCompare="ValueCompare?.DurationMs" Label="@nameof(Value.DurationMs).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.DelayMs" ValueCompare="ValueCompare?.DelayMs" Label="@nameof(Value.DelayMs).ToDisplayName()" />
@@ -19,4 +19,4 @@
         <Input_Element T="int" @bind-Value="Value.OffsetMatrixId" ValueCompare="ValueCompare?.OffsetMatrixId" Label="@nameof(Value.OffsetMatrixId).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

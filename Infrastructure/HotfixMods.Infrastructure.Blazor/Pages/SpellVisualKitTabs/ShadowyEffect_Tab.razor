@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, ShadowyEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.InnerStrength" ValueCompare="ValueCompare?.InnerStrength" Label="@nameof(Value.InnerStrength).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.OuterStrength" ValueCompare="ValueCompare?.OuterStrength" Label="@nameof(Value.OuterStrength).ToDisplayName()" />
@@ -38,4 +38,4 @@
         <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.AttachPos" ValueCompare="ValueCompare?.AttachPos" Label="@nameof(Value.AttachPos).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

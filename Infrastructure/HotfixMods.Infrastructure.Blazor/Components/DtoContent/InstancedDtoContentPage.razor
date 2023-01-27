@@ -1,0 +1,8 @@
+﻿<MudGrid Class="px-6 mt-7">
+    @ChildContent
+</MudGrid>
+
+@code{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

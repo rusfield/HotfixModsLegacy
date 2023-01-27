@@ -15,16 +15,7 @@
             <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="GroupIndex" Value="index">
-                        @if (IsPaged)
-                        {
-                            @ChildContent
-                        }
-                        else
-                        {
-                            <MudGrid Class="px-6 mt-7">
-                                @ChildContent
-                            </MudGrid>
-                        }
+                        @ChildContent
                     </CascadingValue>
                 </div>
             </MudCarouselItem>

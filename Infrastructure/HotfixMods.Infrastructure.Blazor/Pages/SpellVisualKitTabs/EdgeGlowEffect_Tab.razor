@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, EdgeGlowEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" />
@@ -32,4 +32,4 @@
         <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

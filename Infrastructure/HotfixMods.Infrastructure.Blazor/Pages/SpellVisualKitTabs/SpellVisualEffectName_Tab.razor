@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualEffectName>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.GenericId" ValueCompare="ValueCompare?.GenericId" Label="@nameof(Value.GenericId).ToDisplayName()" />
@@ -40,4 +40,4 @@
         <Input_Element T="int" @bind-Value="Value.ModelPosition" ValueCompare="ValueCompare?.ModelPosition" Label="@nameof(Value.ModelPosition).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.Field_9_1_0_38549_014" ValueCompare="ValueCompare?.Field_9_1_0_38549_014" Label="@nameof(Value.Field_9_1_0_38549_014).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

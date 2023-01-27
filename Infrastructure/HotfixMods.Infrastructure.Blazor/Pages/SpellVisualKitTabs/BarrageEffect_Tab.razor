@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, BarrageEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.ConeAngle" ValueCompare="ValueCompare?.ConeAngle" Label="@nameof(Value.ConeAngle).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" />
@@ -28,4 +28,4 @@
         <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_003Max" ValueCompare="ValueCompare?.Field_8_1_0_28440_003Max" Label="@nameof(Value.Field_8_1_0_28440_003Max).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_005" ValueCompare="ValueCompare?.Field_8_1_0_28440_005" Label="@nameof(Value.Field_8_1_0_28440_005).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

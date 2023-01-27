@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, GradientEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.Colors0_R" ValueCompare="ValueCompare?.Colors0_R" Label="@nameof(Value.Colors0_R).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.Colors0_G" ValueCompare="ValueCompare?.Colors0_G" Label="@nameof(Value.Colors0_G).ToDisplayName()" />
@@ -39,4 +39,4 @@
         <Input_Element T="decimal" @bind-Value="Value.EdgeColor_G" ValueCompare="ValueCompare?.EdgeColor_G" Label="@nameof(Value.EdgeColor_G).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.EdgeColor_B" ValueCompare="ValueCompare?.EdgeColor_B" Label="@nameof(Value.EdgeColor_B).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, RopeEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.Stiffness" ValueCompare="ValueCompare?.Stiffness" Label="@nameof(Value.Stiffness).ToDisplayName()" />
         <Input_Element T="decimal" @bind-Value="Value.Damping" ValueCompare="ValueCompare?.Damping" Label="@nameof(Value.Damping).ToDisplayName()" />
@@ -28,4 +28,4 @@
         <Input_Element T="int" @bind-Value="Value.Field_8_3_0_32712_002" ValueCompare="ValueCompare?.Field_8_3_0_32712_002" Label="@nameof(Value.Field_8_3_0_32712_002).ToDisplayName()" />
         <Input_Element T="sbyte" @bind-Value="Value.Field_8_3_0_32712_003" ValueCompare="ValueCompare?.Field_8_3_0_32712_003" Label="@nameof(Value.Field_8_3_0_32712_003).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

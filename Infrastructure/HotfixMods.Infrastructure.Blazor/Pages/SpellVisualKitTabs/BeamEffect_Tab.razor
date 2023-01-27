@@ -3,7 +3,7 @@
 
 @inherits DtoContentBase<SpellVisualKitDto, BeamEffect>
 
-<InstancedDtoContent>
+<InstancedDtoContentPage>
     <MudItem xs="3">
         <InlineGroup>
             <LeftContent>
@@ -45,4 +45,4 @@
         <Input_Element T="decimal" @bind-Value="Value.FixedLength" ValueCompare="ValueCompare?.FixedLength" Label="@nameof(Value.FixedLength).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContent>
+</InstancedDtoContentPage>

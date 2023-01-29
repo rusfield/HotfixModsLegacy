@@ -34,20 +34,6 @@ namespace HotfixMods.Tools.Dev.Business
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.WriteLine("* * * * * * * * * * *");
-            Console.WriteLine("* HotfixDatabase.h  *");
-            Console.WriteLine("* * * * * * * * * * *");
-            Console.WriteLine(GenerateHotfixDatabaseH(db2Type));
-            Console.WriteLine();
-            Console.WriteLine();
-
-            Console.WriteLine("* * * * * * * * * * * *");
-            Console.WriteLine("* HotfixDatabase.cpp  *");
-            Console.WriteLine("* * * * * * * * * * * *");
-            Console.WriteLine(GenerateHotfixDatabaseCpp(db2Type));
-            Console.WriteLine();
-            Console.WriteLine();
-
             Console.WriteLine("* * * * * * * *");
             Console.WriteLine("* MySQL Query *");
             Console.WriteLine("* * * * * * * *");
@@ -65,7 +51,7 @@ namespace HotfixMods.Tools.Dev.Business
         public string GenerateDb2StoresCpp1(Type db2Type)
         {
             string db2Name = db2Type.Name;
-            return $"DB2Storage<{db2Name}Entry> s{db2Name}Store(\"{db2Name}.db2\", {db2Name}LoadInfo::Instance());";
+            return $"DB2Storage<{db2Name}Entry> s{db2Name}Store(\"{db2Name}.db2\", &{db2Name}LoadInfo::Instance);";
         }
 
         public string GenerateDb2StoresCpp2(Type db2Type)
@@ -195,7 +181,7 @@ namespace HotfixMods.Tools.Dev.Business
                     "System.UInt16" => "uint16",
                     "System.UInt32" => "uint32",
                     "System.UInt64" => "uint64",
-                    "System.String" => "text",
+                    "System.String" => GetStringValue(propertyInfo),
                     "System.Decimal" => "float",
                     _ => $"(ERROR-({propertyInfo.PropertyType}))"
                 };
@@ -212,11 +198,25 @@ namespace HotfixMods.Tools.Dev.Business
                     "System.UInt16" => "uint16",
                     "System.UInt32" => "uint32",
                     "System.UInt64" => "uint64",
-                    "System.String" => "text",
+                    "System.String" => GetStringValue(propertyInfo),
                     "System.Decimal" => "float",
                     _ => $"(ERROR-({propertyInfo.PropertyType}))"
                 };
             }
+        }
+
+        string GetStringValue(PropertyInfo propertyInfo)
+        {
+            var attributes = propertyInfo.GetCustomAttributes(true).OfType<Attribute>();
+            foreach (var attribute in attributes)
+            {
+                var attrType = attribute.GetType();
+                if (attrType.Name.Contains("LocalizedString", StringComparison.OrdinalIgnoreCase))
+                {
+                    return "LocalizedString";
+                }
+            }
+            return "char const*";
         }
 
         string GetMySqlFieldName(PropertyInfo propertyInfo)

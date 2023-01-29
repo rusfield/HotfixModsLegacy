@@ -25,9 +25,8 @@ Console.ReadKey();
 */
 
 
-
 var hotfixTool = new HotfixTableTool();
-var db2Type = typeof(NpcModelItemSlotDisplayInfo);
+var db2Type = typeof(ItemDisplayInfoMaterialRes);
 hotfixTool.GenerateAll(db2Type);
 Console.ReadKey();
 

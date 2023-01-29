@@ -30,10 +30,10 @@ namespace HotfixMods.Core.Models.Db2
         public sbyte Gender { get; set; } = 0;
         public int DissolveOutEffectId { get; set; } = 0;
         public sbyte CreatureModelMinLod { get; set; } = 0;
-        public int TextureVariationFileDataID1 { get; set; } = 0; 
-        public int TextureVariationFileDataID2 { get; set; } = 0;
-        public int TextureVariationFileDataID3 { get; set; } = 0;
-        public int TextureVariationFileDataID4 { get; set; } = 0;
+        public int TextureVariationFileDataID1 { get => 0; set { } } // Should always be 0
+        public int TextureVariationFileDataID2 { get => 0; set { } } // Should always be 0
+        public int TextureVariationFileDataID3 { get => 0; set { } } // Should always be 0
+        public int TextureVariationFileDataID4 { get => 0; set { } } // Should always be 0
         public int VerifiedBuild { get; set; } = -1;
     }
 

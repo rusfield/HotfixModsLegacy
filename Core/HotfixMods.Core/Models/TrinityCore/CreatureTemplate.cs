@@ -70,6 +70,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint Spell_School_Immune_Mask { get; set; } = 0;
         public uint Flags_Extra { get; set; } = 0;
         public string ScriptName { get; set; } = "";
+        public string StringId { get; set; } = "";
         public int VerifiedBuild { get; set; } = -1;
     }
 

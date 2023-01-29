@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class BarrageEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int Flags { get; set; } = 0;
         public decimal Field_8_1_0_28616_001Max { get; set; } = 0;
         public decimal Field_8_1_0_28616_001Min { get; set; } = 0;

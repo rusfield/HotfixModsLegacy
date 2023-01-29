@@ -36,7 +36,7 @@ namespace HotfixMods.Apps.MauiBlazor
 
             var appConfig = config.Get<AppConfig>();
             var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
-            var db2Client = new Db2Client("10.0.2.46259", appConfig.GitHubAccessToken);
+            var db2Client = new Db2Client(appConfig.BuildInfo, appConfig.GitHubAccessToken);
             //GlobalHandler.Config = appConfig;
 
             builder.Services.AddSingleton(config =>
@@ -81,8 +81,8 @@ namespace HotfixMods.Apps.MauiBlazor
             {
                 return new ItemService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
-                    FromId = 10000,
-                    ToId = 20000,
+                    FromId = 2000000,
+                    ToId = 2100000,
                     VerifiedBuild = -5505
                 };
             });

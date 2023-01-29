@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class RopeEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int Flags { get; set; } = 0;
         public sbyte Field_8_3_0_32712_001 { get; set; } = 0;
         public int Field_8_3_0_32712_002 { get; set; } = 0;

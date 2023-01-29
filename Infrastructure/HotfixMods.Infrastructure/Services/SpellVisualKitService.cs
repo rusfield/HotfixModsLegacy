@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<SpellVisualKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<SpellVisualKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -45,13 +45,13 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(uint id)
         {
             await DeleteAsync<SpellVisualKit>(new DbParameter(nameof(AnimKit.Id), id));
             // TODO: HotfixMods
         }
 
-        public async Task<int> GetNextIdAsync()
+        public async Task<uint> GetNextIdAsync()
         {
             return await GetNextIdAsync<SpellVisualKit>();
         }

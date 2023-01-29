@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfoOption
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int ChrCustomizationOptionId { get; set; } = 0;
         public int ChrCustomizationChoiceId { get; set; } = 0;
         [ParentIndexField]

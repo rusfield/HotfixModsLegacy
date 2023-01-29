@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ChrCustomizationCategory
     {
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public string CategoryName { get; set; } = "";
         public int CustomizeIcon { get; set; } = 0;
         public int CustomizeIconSelected { get; set; } = 0;

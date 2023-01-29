@@ -1,8 +1,6 @@
 ﻿using DBDefsLib;
-using DBCD.Providers;
 using HotfixMods.Providers.Db2.WoWDev.Providers;
 using HotfixMods.Core.Models;
-using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace HotfixMods.Providers.WowDev.Client
@@ -82,7 +80,7 @@ namespace HotfixMods.Providers.WowDev.Client
                         {
                             8 => field.isSigned ? typeof(sbyte) : typeof(byte),
                             16 => field.isSigned ? typeof(short) : typeof(ushort),
-                            32 => field.isSigned ? typeof(int) : typeof(uint),
+                            32 => field.isSigned && !field.isID ? typeof(int) : typeof(uint),
                             64 => field.isSigned ? typeof(long) : typeof(ulong),
                             _ => throw new Exception(@"Invalid int size {field.size}")
                         };
@@ -133,23 +131,35 @@ namespace HotfixMods.Providers.WowDev.Client
                         {
                             var arrayColName = $"{name}{j + 1}";
                             var value = values?.GetValue(j);
+
+                            if (value!.GetType() == typeof(float))
+                                value = Convert.ToDecimal((float)value);
+                            else if (fieldDef.isID)
+                                value = uint.Parse(value.ToString());
+
                             rowResult.Columns.Add(new()
                             {
                                 Name = arrayColName,
                                 Type = type,
-                                Value = value!.GetType() == typeof(float) ? Convert.ToDecimal((float)value) : value
+                                Value =  value
                             });
                         }
                     }
                     else
                     {
                         var value = db2Result.Field<object>(name);
+
+                        if (value!.GetType() == typeof(float))
+                            value = Convert.ToDecimal((float)value);
+                        else if (fieldDef.isID)
+                            value = uint.Parse(value.ToString());
+
                         name = name.Replace("_lang", "");
                         rowResult.Columns.Add(new()
                         {
                             Name = name,
                             Type = type,
-                            Value = value.GetType() == typeof(float) ? Convert.ToDecimal((float)value) : value
+                            Value = value
                         });
                     }
                 }

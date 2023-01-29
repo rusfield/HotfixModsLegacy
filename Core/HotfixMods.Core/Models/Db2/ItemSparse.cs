@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemSparse
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public long AllowableRace { get; set; } = 0;
         [LocalizedString]
         public string Description { get; set; } = "";

@@ -72,10 +72,10 @@
     public string? AdditionalIdTitle { get; set; }
 
     [Parameter]
-    public Func<int, Action<string, string, int>, Task<TDto>> GetByIdAsync_Func { get; set; }
+    public Func<uint, Action<string, string, int>, Task<TDto>> GetByIdAsync_Func { get; set; }
 
     [Parameter]
-    public Func<int, Action<string, string, int>, Task<bool>> DeleteByIdAsync_Func { get; set; }
+    public Func<uint, Action<string, string, int>, Task<bool>> DeleteByIdAsync_Func { get; set; }
 
     [Parameter]
     public Func<Task<List<DashboardModel>>> GetItemsAsync_Func { get; set; }
@@ -86,7 +86,7 @@
     List<DashboardModel> items;
     List<DashboardModel> filteredItems = new();
     string search;
-    List<int> idInAction = new();
+    List<uint> idInAction = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -97,7 +97,7 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task EditAsync_Click(int id)
+    async Task EditAsync_Click(uint id)
     {
         idInAction.Add(id);
         var dto = await GetByIdAsync_Func(id, null);
@@ -113,7 +113,7 @@
         idInAction.Remove(id);
     }
 
-    async Task DeleteAsync_Click(int id)
+    async Task DeleteAsync_Click(uint id)
     {
         idInAction.Add(id);
         await Task.Delay(500);

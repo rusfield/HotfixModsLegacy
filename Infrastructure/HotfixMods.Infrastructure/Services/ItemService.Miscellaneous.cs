@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
-        async Task SetIdAndVerifiedBuild(ItemDto dto, List<ItemXItemEffect> itemXItemEffects, ItemSearchName? itemSearchName)
+        async Task SetIdAndVerifiedBuild(ItemDto dto, List<ItemXItemEffect> itemXItemEffects, ItemSearchName? itemSearchName, List<ItemDisplayInfoModelMatRes> itemDisplayInfoModelMatRes)
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
@@ -37,6 +37,7 @@ namespace HotfixMods.Infrastructure.Services
             var nextItemDisplayInfoMaterialResId = await GetNextIdAsync<ItemDisplayInfoMaterialRes>();
             var nextItemXItemEffectId = await GetNextIdAsync<ItemXItemEffect>();
             var nextItemEffectId = await GetNextIdAsync<ItemEffect>();
+            var nextItemDisplayInfoModelMatResId = await GetNextIdAsync<ItemDisplayInfoModelMatRes>();
 
             // Step 3: Populate entities
             dto.HotfixModsEntity.Id = hotfixModsEntityId;
@@ -46,7 +47,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.Item.Id = itemId;
             dto.Item.VerifiedBuild = VerifiedBuild;
 
-            if(itemSearchName != null)
+            if (itemSearchName != null)
             {
                 itemSearchName.Id = itemId;
                 itemSearchName.VerifiedBuild = VerifiedBuild;
@@ -61,28 +62,54 @@ namespace HotfixMods.Infrastructure.Services
             if (dto.ItemModifiedAppearance != null)
             {
                 dto.ItemModifiedAppearance.Id = itemModifiedAppearanceId;
-                dto.ItemModifiedAppearance.ItemId = itemId;
-                dto.ItemModifiedAppearance.ItemAppearanceId= itemAppearanceId;
+                dto.ItemModifiedAppearance.ItemId = (int)itemId;
+                dto.ItemModifiedAppearance.ItemAppearanceId = (int)itemAppearanceId;
                 dto.ItemModifiedAppearance.VerifiedBuild = VerifiedBuild;
 
                 if (dto.ItemAppearance != null)
                 {
                     dto.ItemAppearance.Id = itemAppearanceId;
-                    dto.ItemAppearance.ItemDisplayInfoId = itemDisplayInfoId;
+                    dto.ItemAppearance.ItemDisplayInfoId = (int)itemDisplayInfoId;
                     dto.ItemAppearance.VerifiedBuild = VerifiedBuild;
 
-                    if(dto.ItemDisplayInfo != null)
+                    if (dto.ItemDisplayInfo != null)
                     {
                         dto.ItemDisplayInfo.Id = itemDisplayInfoId;
                         dto.ItemDisplayInfo.VerifiedBuild = VerifiedBuild;
 
                         dto.ItemDisplayInfoMaterialRes?.ForEach(x =>
                         {
-                            x.ItemDisplayInfoId= itemDisplayInfoId;
+                            x.ItemDisplayInfoId = (int)itemDisplayInfoId;
                             x.VerifiedBuild = VerifiedBuild;
                             if (x.Id == 0 || !dto.IsUpdate)
                                 x.Id = nextItemDisplayInfoMaterialResId++;
                         });
+
+                        if (dto.ItemDisplayInfo.ModelMaterialResourcesID1 != 0)
+                        {
+                            itemDisplayInfoModelMatRes.Add(new()
+                            {
+                                Id = nextItemDisplayInfoModelMatResId++,
+                                ItemDisplayInfoId = (int)itemDisplayInfoId,
+                                ModelIndex = 0,
+                                MaterialResourcesId = dto.ItemDisplayInfo.ModelMaterialResourcesID1,
+                                TextureType = 2, // TODO: Check
+                                VerifiedBuild = VerifiedBuild
+                            });
+                        }
+
+                        if (dto.ItemDisplayInfo.ModelMaterialResourcesID2 != 0)
+                        {
+                            itemDisplayInfoModelMatRes.Add(new()
+                            {
+                                Id = nextItemDisplayInfoModelMatResId++,
+                                ItemDisplayInfoId = (int)itemDisplayInfoId,
+                                ModelIndex = 1,
+                                MaterialResourcesId = dto.ItemDisplayInfo.ModelMaterialResourcesID2,
+                                TextureType = 2, // TODO: Check
+                                VerifiedBuild = VerifiedBuild
+                            });
+                        }
                     }
                 }
             }
@@ -109,19 +136,19 @@ namespace HotfixMods.Infrastructure.Services
             dto.EffectGroups.ForEach(eg =>
             {
                 var itemXItemEffect = itemXItemEffects.FirstOrDefault(i => i.ItemEffectId == eg.ItemEffect.Id);
-                if(null == itemXItemEffect)
+                if (null == itemXItemEffect)
                 {
                     itemXItemEffects.Add(new()
                     {
                         Id = nextItemXItemEffectId++,
-                        ItemEffectId = eg.ItemEffect.Id,
-                        ItemId = itemId,
+                        ItemEffectId = (int)eg.ItemEffect.Id,
+                        ItemId = (int)itemId,
                         VerifiedBuild = VerifiedBuild
                     });
                 }
                 else
                 {
-                    itemXItemEffect.ItemId = itemId;
+                    itemXItemEffect.ItemId = (int)itemId;
                     itemXItemEffect.VerifiedBuild = VerifiedBuild;
                 }
             });

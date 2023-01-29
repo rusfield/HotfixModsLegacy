@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKitConfigBoneSet
     {
         [IndexField]
-        public int Id { get; set; }
+        public uint Id { get; set; }
         public byte AnimKitBoneSetId { get; set; }
         public ushort AnimKitPriorityId { get; set; }
         [ParentIndexField]

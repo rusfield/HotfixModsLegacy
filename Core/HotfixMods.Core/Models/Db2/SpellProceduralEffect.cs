@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellProceduralEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public sbyte Type { get; set; } = 0;
         public decimal Value1 { get; set; } = 0;
         public decimal Value2 { get; set; } = 0;

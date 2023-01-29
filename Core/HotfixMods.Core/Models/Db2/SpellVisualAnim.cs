@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualAnim
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int InitialAnimId { get; set; } = -1;
         public int LoopAnimId { get; set; } = -1; 
         public ushort AnimKitId { get; set; } = 0; 

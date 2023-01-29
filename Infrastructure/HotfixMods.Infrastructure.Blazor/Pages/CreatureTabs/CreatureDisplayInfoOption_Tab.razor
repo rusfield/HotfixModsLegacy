@@ -20,7 +20,7 @@
                     {
                         var customization = customizations.ElementAt(jVal);
                         var bindValue = GetCreatureDisplayInfoOption(customization);
-                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
                     }
                 }
             </MudItem>
@@ -42,7 +42,7 @@
                                 {
                                     var customization = customizations.ElementAt(jVal - 1);
                                     var bindValue = GetCreatureDisplayInfoOption(customization);
-                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
                                 }
                             </LeftContent>
                             <RightContent>
@@ -54,7 +54,7 @@
                                 {
                                     var customization = customizations.ElementAt(jVal);
                                     var bindValue = GetCreatureDisplayInfoOption(customization);
-                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
                                 }
                             </RightContent>
 
@@ -75,7 +75,7 @@
                     {
                         var customization = customizations.ElementAt(jVal);
                         var bindValue = GetCreatureDisplayInfoOption(customization);
-                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices(customization.Key.Id))" />
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
                     }
                 }
             </MudItem>
@@ -113,7 +113,7 @@
     {
         if (customizations.Any(k => k.Key.Id == chrCustomizationOptionId))
         {
-            return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : $"{c.Name} ({c.Id})");
+            return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => (int)c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : $"{c.Name} ({c.Id})");
         }
         return new();
     }
@@ -124,8 +124,8 @@
         {
             values.Add(new()
                 {
-                    ChrCustomizationOptionId = customization.Key.Id,
-                    ChrCustomizationChoiceId = customization.Value.First().Id
+                    ChrCustomizationOptionId = (int)customization.Key.Id,
+                    ChrCustomizationChoiceId = (int)customization.Value.First().Id
                 });
         }
         return values.Where(v => v.ChrCustomizationOptionId == customization.Key.Id).First();

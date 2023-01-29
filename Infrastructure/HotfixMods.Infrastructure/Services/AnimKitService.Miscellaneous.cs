@@ -27,7 +27,7 @@ namespace HotfixMods.Infrastructure.Services
                     s.AnimKitSegment.AnimKitConfigId = (ushort)newAnimKitConfigId;
                     s.AnimKitConfig.Id = newAnimKitConfigId;
                     s.AnimKitConfigBoneSet.Id = newAnimKitConfigBoneSetId;
-                    s.AnimKitConfigBoneSet.ParentAnimKitConfigId = newAnimKitConfigId;
+                    s.AnimKitConfigBoneSet.ParentAnimKitConfigId = (int)newAnimKitConfigId;
 
                     newAnimKitSegmentId++;
                     newAnimKitConfigId++;

@@ -20,7 +20,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<GameobjectDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<GameobjectDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
                 GameobjectTemplate = gameobjectTemplate,
                 GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
                 GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(new DbParameter(nameof(GameobjectTemplate.DisplayId), id)),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity((int)gameobjectTemplate.Entry),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(gameobjectTemplate.Entry),
                 IsUpdate = true
             };
         }
@@ -54,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 

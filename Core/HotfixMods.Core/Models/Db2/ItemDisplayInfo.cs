@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemDisplayInfo
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int Field_3_4_1_46917_000 { get; set; } = 0;
         public int ItemVisual { get; set; } = 0;
         public int ParticleColorId { get; set; } = 0;

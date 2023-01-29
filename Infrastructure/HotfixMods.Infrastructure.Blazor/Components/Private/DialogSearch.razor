@@ -34,12 +34,12 @@
     public MudDialogInstance MudDialogInstance { get; set; }
 
     [Parameter]
-    public Func<int?, Task>? GetById_Func { get; set; }
+    public Func<uint?, Task>? GetById_Func { get; set; }
 
     [Parameter]
     public Action? GetNew_Action { get; set; }
 
-    int? _id;
+    uint? _id;
     Loader? loaderRef;
 
     public void SetLoaderProgress(string progressTitle, string progressSubTitle, int progress)

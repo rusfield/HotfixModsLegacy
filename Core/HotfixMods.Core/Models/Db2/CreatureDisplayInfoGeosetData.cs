@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfoGeosetData
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public byte GeosetIndex { get; set; }
         public byte GeosetValue { get; set; }
         [ParentIndexField]

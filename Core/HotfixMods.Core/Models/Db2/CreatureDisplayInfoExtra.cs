@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfoExtra
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public sbyte DisplayRaceId { get; set; } = 0;
         public sbyte DisplaySexId { get; set; } = 0;
         public sbyte DisplayClassId { get; set; } = 0;

@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class CreatureSoundData
     {
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public uint SoundExertionId { get; set; } = 0;
         public uint SoundExertionCriticalId { get; set; } = 0;
         public uint SoundInjuryId { get; set; } = 0;

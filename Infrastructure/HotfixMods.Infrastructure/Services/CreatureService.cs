@@ -40,7 +40,7 @@ namespace HotfixMods.Infrastructure.Services
 
 
 
-        public async Task<CreatureDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<CreatureDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             callback("Test", "Test", 50);
@@ -134,7 +134,7 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 

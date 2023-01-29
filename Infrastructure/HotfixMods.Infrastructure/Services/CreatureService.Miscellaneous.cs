@@ -85,13 +85,13 @@ namespace HotfixMods.Infrastructure.Services
             if (dto.CreatureDisplayInfo != null && (dto.CreatureDisplayInfo.Id == 0 || !dto.IsUpdate))
             {
                 dto.CreatureDisplayInfo.Id = newCreatureDisplayInfoId;
-                dto.CreatureDisplayInfo.ExtendedDisplayInfoId = dto.CreatureDisplayInfoExtra.Id;
+                dto.CreatureDisplayInfo.ExtendedDisplayInfoId = (int)dto.CreatureDisplayInfoExtra.Id;
             }
 
             if (dto.CreatureTemplateModel != null && (dto.CreatureTemplateModel.CreatureId == 0 || !dto.IsUpdate))
             {
                 dto.CreatureTemplateModel.CreatureId = dto.CreatureTemplate.Entry;
-                dto.CreatureTemplateModel.CreatureDisplayId = (uint)dto.CreatureDisplayInfo.Id;
+                dto.CreatureTemplateModel.CreatureDisplayId = dto.CreatureDisplayInfo.Id;
             }
 
             if (dto.CreatureEquipTemplate != null && (dto.CreatureEquipTemplate.Id == 0 || !dto.IsUpdate))
@@ -101,7 +101,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (dto.CreatureModelInfo != null && (dto.CreatureModelInfo.DisplayId == 0 || !dto.IsUpdate))
             {
-                dto.CreatureModelInfo.DisplayId = (uint)dto.CreatureDisplayInfo.Id;
+                dto.CreatureModelInfo.DisplayId = dto.CreatureDisplayInfo.Id;
             }
 
             dto.NpcModelItemSlotDisplayInfo.ForEach(s =>
@@ -109,7 +109,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (s.Id == 0 || !dto.IsUpdate)
                 {
                     s.Id = newNpcModelItemSlotDisplayInfoId;
-                    s.NpcModelId = dto.CreatureDisplayInfoExtra.Id;
+                    s.NpcModelId = (int)dto.CreatureDisplayInfoExtra.Id;
 
                     newNpcModelItemSlotDisplayInfoId++;
                 }
@@ -120,7 +120,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (s.Id == 0 || !dto.IsUpdate)
                 {
                     s.Id = newCreatureDisplayInfoOptionsId;
-                    s.CreatureDisplayInfoExtraId = newCreatureDisplayInfoExtraId;
+                    s.CreatureDisplayInfoExtraId =(int) newCreatureDisplayInfoExtraId;
 
                     newCreatureDisplayInfoOptionsId++;
                 }

@@ -17,7 +17,7 @@ namespace HotfixMods.Infrastructure.Services
             return new SoundKitDto();
         }
 
-        public async Task<SoundKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<SoundKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -55,13 +55,13 @@ namespace HotfixMods.Infrastructure.Services
 
             await SaveAsync(dto.HotfixModsEntity);
             await SaveAsync(dto.SoundKit);
-            await SaveAsync(dto.EntryGroups.Select(s => s.SoundKitEntry));
+            await SaveAsync(dto.EntryGroups.Select(s => s.SoundKitEntry).ToList());
 
             dto.IsUpdate = true;
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 

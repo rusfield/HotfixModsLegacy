@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemDisplayInfoMaterialRes
     {
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public sbyte ComponentSection { get; set; } = 0;
         public int MaterialResourcesId { get; set; } = 0;
         [ParentIndexField] 

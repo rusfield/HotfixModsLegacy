@@ -12,9 +12,10 @@ namespace HotfixMods.Infrastructure.Config
         public string HotfixDataRecordIdColumnName { get; set; } = "RecordId";
         public string HotfixDataTableHashColumnName { get; set; } = "TableHash";
         public string HotfixDataTableStatusColumnName { get; set; } = "Status";
-        public int HotfixDataTableFromId { get; set; } = 15000000;
-        public int HotfixDataTableToId { get; set; } = 16000000;
+        public uint HotfixDataTableFromId { get; set; } = 15000000;
+        public uint HotfixDataTableToId { get; set; } = 16000000;
         public string GitHubAccessToken { get; set; } = "";
+        public string BuildInfo { get; set; } = "10.0.5.47871";
         public bool CacheResults { get; set; } = true;
     }
 }

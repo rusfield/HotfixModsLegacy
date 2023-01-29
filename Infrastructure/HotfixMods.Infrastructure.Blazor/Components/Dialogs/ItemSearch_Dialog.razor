@@ -31,7 +31,7 @@
     {
         if (id != null)
         {
-            var data = await Service.GetByIdAsync((int)id, orderIndex, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((uint)id, orderIndex, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);

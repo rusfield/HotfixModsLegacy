@@ -68,6 +68,8 @@ namespace HotfixMods.Tools.Dev.Business
             output += "{\r\n";
             foreach (var propertyInfo in db2Type.GetProperties())
             {
+                if (propertyInfo.Name == "VerifiedBuild")
+                    continue;
                 output += $"\t{GetMySqlFieldType(propertyInfo)} {GetMySqlFieldName(propertyInfo)};\r\n";
             }
             output += "};\r\n";

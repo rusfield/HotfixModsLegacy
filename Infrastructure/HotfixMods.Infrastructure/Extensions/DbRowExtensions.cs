@@ -24,7 +24,6 @@ namespace HotfixMods.Infrastructure.Extensions
                     Value = property.GetValue(entity)!
                 });
             }
-            dbRow.Columns.Reverse();
             return dbRow;
         }
 
@@ -49,7 +48,6 @@ namespace HotfixMods.Infrastructure.Extensions
                     Type = property.PropertyType
                 });
             }
-            dbRowDefinition.ColumnDefinitions.Reverse();
             return dbRowDefinition;
         }
 

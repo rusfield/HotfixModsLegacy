@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellEffectEmission
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public decimal EmissionRate { get; set; } = 1;
         public decimal ModelScale { get; set; } = 1;
         public short AreaModelId { get; set; } = 0;

@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualEffectName
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int ModelFileDataId { get; set; } = 0;
         public decimal BaseMissileSpeed { get; set; } = 0;
         public decimal Scale { get; set; } = 1;

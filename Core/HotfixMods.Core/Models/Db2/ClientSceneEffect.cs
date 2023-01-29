@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ClientSceneEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int SceneScriptPackageId { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

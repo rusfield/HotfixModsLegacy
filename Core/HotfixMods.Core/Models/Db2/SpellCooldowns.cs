@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellCooldowns
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public byte DifficultyId { get; set; } = 0;
         public int CategoryRecoveryTime { get; set; } = 0;
         public int RecoveryTime { get; set; } = 0;

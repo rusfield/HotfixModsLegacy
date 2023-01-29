@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellMisc
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int Attributes1 { get; set; } = 0;
         public int Attributes2 { get; set; } = 0;
         public int Attributes3 { get; set; } = 0;

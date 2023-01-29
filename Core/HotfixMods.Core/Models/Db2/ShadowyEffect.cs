@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ShadowyEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int PrimaryColor { get; set; } = 0;
         public int SecondaryColor { get; set; } = 0;
         public decimal Duration { get; set; } = 0;

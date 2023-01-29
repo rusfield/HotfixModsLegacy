@@ -2,6 +2,7 @@
 
 using HotfixMods.Core.Models;
 using System.Data.Common;
+using TextCopy;
 
 namespace HotfixMods.Tools.Dev.Business
 {
@@ -26,6 +27,33 @@ namespace HotfixMods.Tools.Dev.Business
             }
 
             await WriteToConsoleAndClipboard("}");
+        }
+
+        public async Task Db2HashEnumInClipboardToCSharp()
+        {
+            // Copy content between brackets only.
+            // https://github.com/TrinityCore/WowPacketParser/blob/master/WowPacketParser/Enums/DB2Hash.cs
+
+            var rows = await ClipboardService.GetTextAsync();
+            await ClipboardService.SetTextAsync("");
+            foreach(var row in rows.Split(Environment.NewLine))
+            {
+                var rowData = row.Split("=");
+                var tempName = rowData[0].Trim();
+                string name = "";
+                foreach(var c in tempName)
+                {
+                    if (char.IsUpper(c) && name.Length > 0)
+                    {
+                        name += "_";
+                    }
+                    name += c;
+                }
+                var stringValue = rowData[1].Trim();
+                stringValue = stringValue.Substring(0, stringValue.Length - 1);
+                var value = Convert.ToUInt32(stringValue, 16);
+                await WriteToConsoleAndClipboard($"{name.ToUpper()} = {value},");
+            }
         }
 
         string FixUnderscoresAndCasing(string input)

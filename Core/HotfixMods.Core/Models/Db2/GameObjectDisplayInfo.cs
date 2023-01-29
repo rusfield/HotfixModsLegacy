@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class GameobjectDisplayInfo
     {
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public decimal GeoBox1 { get; set; } = 0;
         public decimal GeoBox2 { get; set; } = 0;
         public decimal GeoBox3 { get; set; } = 0;

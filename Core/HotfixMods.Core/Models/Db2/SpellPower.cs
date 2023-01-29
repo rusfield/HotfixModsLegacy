@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellPower
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public byte OrderIndex { get; set; } = 0;
         public int ManaCost { get; set; } = 0;
         public int ManaCostPerLevel { get; set; } = 0;

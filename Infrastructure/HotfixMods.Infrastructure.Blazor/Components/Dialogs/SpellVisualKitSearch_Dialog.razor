@@ -10,11 +10,11 @@
 
     DialogSearch? dialogSearchRef;
 
-    async Task GetByIdAsync(int? id)
+    async Task GetByIdAsync(uint? id)
     {
         if (id != null)
         {
-            var data = await Service.GetByIdAsync((int)id, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((uint)id, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);

@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class OutlineEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public uint PassiveHighlightColorId { get; set; } = 0;
         public uint HighlightColorId { get; set; } = 0;
         public int Priority { get; set; } = 0;

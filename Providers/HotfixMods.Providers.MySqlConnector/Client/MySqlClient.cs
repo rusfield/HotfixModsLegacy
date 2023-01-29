@@ -22,8 +22,9 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
 
             var queries = new List<string>();
-            var columns = string.Join(",", dbRows.First().Columns.Select(d => $"`{d.Name}`"));
-            var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
+            //var columns = string.Join(",", dbRows.First().Columns.Select(d => $"`{d.Name}`"));
+            //var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
+            var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} VALUES ";
 
             using var mySqlConnection = new MySqlConnection(_connectionString);
             await mySqlConnection.OpenAsync();
@@ -84,8 +85,10 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 return results;
             }
 
-            string columns = string.Join(",", dbRowDefinition.ColumnDefinitions.Select(c => $"`{c.Name}`"));
-            var query = $"SELECT {columns} FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
+            // EDIT: Try for a while to not select by name, as names changes much more often than types in DB2
+            //string columns = string.Join(",", dbRowDefinition.ColumnDefinitions.Select(c => $"`{c.Name}`"));
+            //var query = $"SELECT {columns} FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
+            var query = $"SELECT * FROM {schemaName}.{tableName} {DbParameterToWhereClause(parameters)};";
             using var mySqlConnection = new MySqlConnection(_connectionString);
             using var command = new MySqlCommand(query, mySqlConnection);
 
@@ -255,11 +258,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             return exists;
         }
 
-        public async Task<int> GetHighestIdAsync(string schemaName, string tableName, int minId, int maxId, string idPropertyName = "id")
+        public async Task<uint> GetHighestIdAsync(string schemaName, string tableName, uint minId, uint maxId, string idPropertyName = "id")
         {
             if (!await TableExistsAsync(schemaName, tableName))
             {
-                return -1;
+                return 0;
             }
             using var mySqlConnection = new MySqlConnection(_connectionString);
             await mySqlConnection.OpenAsync();
@@ -269,7 +272,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             while (reader.Read())
             {
                 if (!reader.IsDBNull(0))
-                    highestId = reader.GetInt32(0);
+                    highestId = reader.GetUInt32(0);
                 break;
             }
             await mySqlConnection.CloseAsync();

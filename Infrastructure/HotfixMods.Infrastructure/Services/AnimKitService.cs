@@ -19,7 +19,7 @@ namespace HotfixMods.Infrastructure.Services
             return new AnimKitDto();
         }
 
-        public async Task<AnimKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<AnimKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 
@@ -71,15 +71,15 @@ namespace HotfixMods.Infrastructure.Services
 
             await SaveAsync(dto.HotfixModsEntity);
             await SaveAsync(dto.AnimKit);
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment));
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig));
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet));
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment).ToList());
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig).ToList());
+            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet).ToList());
 
             dto.IsUpdate = true;
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
 

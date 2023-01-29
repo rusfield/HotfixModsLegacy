@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class BeamEffect
     {
         [IndexField]
-        public int Id { get; set; } = 0;
+        public uint Id { get; set; } = 0;
         public int BeamId { get; set; } = 0;
         public decimal SourceMinDistance { get; set; } = 0;
         public decimal FixedLength { get; set; } = 0;

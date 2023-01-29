@@ -21,23 +21,23 @@ namespace HotfixMods.Infrastructure.Services
                 dto.Spell.Id = newSpellId;
 
                 dto.SpellAuraOptions.Id = await GetNextIdAsync<SpellAuraOptions>();
-                dto.SpellAuraOptions.SpellId = newSpellId;
+                dto.SpellAuraOptions.SpellId = (int)newSpellId;
 
                 dto.SpellCooldowns.Id = await GetNextIdAsync<SpellAuraOptions>();
-                dto.SpellCooldowns.SpellId = newSpellId;
+                dto.SpellCooldowns.SpellId = (int)newSpellId;
 
                 dto.SpellMisc.Id = await GetNextIdAsync<SpellMisc>();
-                dto.SpellMisc.SpellId = newSpellId;
+                dto.SpellMisc.SpellId = (int)newSpellId;
 
                 dto.SpellName.Id = newSpellId;
 
                 dto.SpellPower.Id = await GetNextIdAsync<SpellPower>();
-                dto.SpellPower.SpellId = newSpellId;
+                dto.SpellPower.SpellId = (int)newSpellId;
 
                 dto.EffectGroups.ForEach(s =>
                 {
                     s.SpellEffect.Id = newSpellEffectId;
-                    s.SpellEffect.SpellId = newSpellId;
+                    s.SpellEffect.SpellId = (int)newSpellId;
 
                     newSpellEffectId++;
                 });
@@ -45,13 +45,13 @@ namespace HotfixMods.Infrastructure.Services
                 dto.VisualGroups.ForEach(v =>
                 {
                     v.SpellXSpellVisual.Id = newSpellXSpellVisualId;
-                    v.SpellXSpellVisual.SpellId = newSpellId;
-                    v.SpellXSpellVisual.SpellVisualId = (uint)newSpellVisualId;
+                    v.SpellXSpellVisual.SpellId = (int)newSpellId;
+                    v.SpellXSpellVisual.SpellVisualId = newSpellVisualId;
 
                     v.SpellVisual.Id = newSpellVisualId;
 
                     v.SpellVisualEvent.Id = newSpellVisualEventId;
-                    v.SpellVisualEvent.SpellVisualId = newSpellVisualId;
+                    v.SpellVisualEvent.SpellVisualId = (int)newSpellVisualId;
 
                     newSpellXSpellVisualId++;
                     newSpellVisualId++;

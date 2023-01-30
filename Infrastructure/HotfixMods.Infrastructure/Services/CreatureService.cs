@@ -6,6 +6,7 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -16,10 +17,8 @@ namespace HotfixMods.Infrastructure.Services
         public CreatureDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-
-            var result = new CreatureDto();
-
-            return result;
+            callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
+            return new();
         }
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()

@@ -3,6 +3,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -12,10 +13,8 @@ namespace HotfixMods.Infrastructure.Services
         public SpellVisualKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-
-            var result = new SpellVisualKitDto();
-
-            return result;
+            callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
+            return new();
         }
 
         public async Task<SpellVisualKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)

@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<ItemDto?> GetByIdAsync(uint id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var progress = LoadingHelper.GetLoaderFunc(9);
+            var progress = LoadingHelper.GetLoaderFunc(11);
 
             var item = await GetSingleAsync<Item>(callback, progress, new DbParameter(nameof(Item.Id), id));
             if (null == item)
@@ -76,6 +76,8 @@ namespace HotfixMods.Infrastructure.Services
                 }
             }
 
+            result.IsUpdate = result.Item.VerifiedBuild == VerifiedBuild;
+
             callback.Invoke(LoadingHelper.Loading, "Loading successful", 100);
             return result;
         }
@@ -83,7 +85,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(ItemDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var progress = LoadingHelper.GetLoaderFunc(3);
+            var progress = LoadingHelper.GetLoaderFunc(14);
 
             try
             {
@@ -130,8 +132,8 @@ namespace HotfixMods.Infrastructure.Services
                 callback.Invoke(LoadingHelper.Saving, $"Saving to {nameof(ItemEffect)} and {nameof(ItemXItemEffect)}", progress());
                 if (dto.EffectGroups.Any())
                 {
-                    await SaveAsync(callback, progress, dto.EffectGroups.Select(s => s.ItemEffect).ToList());
-                    await SaveAsync(callback, progress, itemXItemEffects);
+                    await SaveAsync(dto.EffectGroups.Select(s => s.ItemEffect).ToList());
+                    await SaveAsync(itemXItemEffects);
                 }
 
             }
@@ -150,7 +152,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var progress = LoadingHelper.GetLoaderFunc(12);
+            var progress = LoadingHelper.GetLoaderFunc(11);
 
             var dto = await GetByIdAsync(id);
             if(null == dto)

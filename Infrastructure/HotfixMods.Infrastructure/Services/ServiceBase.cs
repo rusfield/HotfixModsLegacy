@@ -89,8 +89,8 @@ namespace HotfixMods.Infrastructure.Services
             return await GetAsync<T>(parameters);
         }
 
-            protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
-            where T : new()
+        protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
+        where T : new()
         {
             try
             {
@@ -207,10 +207,10 @@ namespace HotfixMods.Infrastructure.Services
                 await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray());
         }
 
-        protected async Task<bool> DeleteAsync<T>(List<T> entities) 
+        protected async Task<bool> DeleteAsync<T>(List<T> entities)
             where T : new()
         {
-            foreach(var entity in entities)
+            foreach (var entity in entities)
                 await DeleteAsync(entity);
             return true;
         }
@@ -265,8 +265,15 @@ namespace HotfixMods.Infrastructure.Services
                 return 0;
 
             // Entity is new, or entity should be saved as new
+            // Also check if entity is HotfixModsEntity, which does not use the FromId/ToId rules
             if ((uint)currentId == 0 || !isUpdate)
-                return await GetNextIdAsync<T>();
+            {
+                if (typeof(T) == typeof(HotfixModsEntity))
+                    return await GetNextHotfixModsEntityIdAsync();
+                else
+                    return await GetNextIdAsync<T>();
+            }
+
 
             // Entity is being updated
             return (uint)currentId;
@@ -317,21 +324,31 @@ namespace HotfixMods.Infrastructure.Services
             return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(Action<string, string, int> callback, Func<int> progress, uint id)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(Action<string, string, int> callback, Func<int> progress, uint entityId)
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());
-            return await GetExistingOrNewHotfixModsEntity(id);
+            return await GetExistingOrNewHotfixModsEntity(entityId);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(uint id)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(uint entityId)
         {
-            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.Id), id))
-                ??
-                new()
+            var entity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
+            if (null == entity)
+            {
+                entity = new()
                 {
-                    Id = id,
+                    Id = 0,
+                    Name = "",
+                    RecordId= entityId,
                     VerifiedBuild = VerifiedBuild
                 };
+            }
+            return entity;
+        }
+
+        protected async Task<uint> GetNextHotfixModsEntityIdAsync()
+        {
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), uint.MinValue, uint.MaxValue, nameof(HotfixModsEntity.Id));
         }
     }
 }

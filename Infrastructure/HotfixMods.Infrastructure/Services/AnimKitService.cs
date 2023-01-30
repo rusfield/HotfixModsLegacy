@@ -4,6 +4,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Helpers;
 using System.Text.Json;
 
 namespace HotfixMods.Infrastructure.Services
@@ -15,29 +16,32 @@ namespace HotfixMods.Infrastructure.Services
         public AnimKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-
-            return new AnimKitDto();
+            callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
+            return new();
         }
 
         public async Task<AnimKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(5);
 
-            var animKit = await GetSingleAsync<AnimKit>(new DbParameter(nameof(AnimKit.Id), id));
+            var animKit = await GetSingleAsync<AnimKit>(callback, progress, new DbParameter(nameof(AnimKit.Id), id));
             if (null == animKit)
             {
+                callback.Invoke(LoadingHelper.Loading, $"{nameof(AnimKit)} not found", 100);
                 return null;
             }
 
+            var hotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, animKit.Id);
             var result = new AnimKitDto()
             {
                 AnimKit = animKit,
                 SegmentGroups = new(),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(animKit.Id),
-                IsUpdate = true
+                HotfixModsEntity = hotfixModsEntity
             };
 
-            var segments = await GetAsync<AnimKitSegment>(new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
+            var segments = await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
+            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(AnimKitConfig)} and {nameof(AnimKitConfigBoneSet)}", progress());
             foreach (var segment in segments)
             {
                 var animKitConfig = await GetSingleAsync<AnimKitConfig>(new DbParameter(nameof(AnimKitConfig.Id), segment.AnimKitConfigId)) ?? new();
@@ -60,36 +64,44 @@ namespace HotfixMods.Infrastructure.Services
                 }
             }
 
+            result.IsUpdate = result.AnimKit.VerifiedBuild == VerifiedBuild;
+
+            callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
             return result;
         }
 
         public async Task<bool> SaveAsync(AnimKitDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(7);
 
+            callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.HotfixModsEntity);
-            await SaveAsync(dto.AnimKit);
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitSegment).ToList());
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfig).ToList());
-            await SaveAsync(dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet).ToList());
+            await SaveAsync(callback, progress, dto.HotfixModsEntity);
+            await SaveAsync(callback, progress, dto.AnimKit);
+            await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitSegment).ToList());
+            await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitConfig).ToList());
+            await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet).ToList());
 
             dto.IsUpdate = true;
+            callback.Invoke(LoadingHelper.Saving, $"Saving successful", 100);
             return true;
         }
 
         public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(4);
 
             var dto = await GetByIdAsync(id);
             if (null == dto)
             {
+                callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
                 return false;
             }
 
-
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(AnimKitSegment)}, {nameof(AnimKitConfig)} and {nameof(AnimKitConfigBoneSet)}", 100);
             await dto.SegmentGroups.ForEachAsync(async s =>
             {
                 await DeleteAsync(s.AnimKitSegment);
@@ -97,9 +109,10 @@ namespace HotfixMods.Infrastructure.Services
                 await DeleteAsync(s.AnimKitConfigBoneSet);
             });
             
-            await DeleteAsync(dto.AnimKit);
-            await DeleteAsync(dto.HotfixModsEntity);
+            await DeleteAsync(callback, progress, dto.AnimKit);
+            await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
+            callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
             return true;
         }
     }

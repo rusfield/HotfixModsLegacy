@@ -40,7 +40,7 @@ namespace HotfixMods.Infrastructure.Services
             if (!includeDruidForms)
             {
                 var filteredResult = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-                foreach(var option in result)
+                foreach (var option in result)
                 {
                     // Currently, only druid forms are named like "Moonkin Form", etc.
                     // Edit this condition if it should affect new customizations at some point.
@@ -54,106 +54,79 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task SetIdAndVerifiedBuild(CreatureDto dto)
         {
+            // Step 1: Init IDs of single entities
+            var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
+            var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>(dto.CreatureTemplate.Entry, dto.IsUpdate);
+            var creatureEquipTemplateId = await GetIdByConditionsAsync<CreatureEquipTemplate>(dto.CreatureEquipTemplate?.CreatureId, dto.IsUpdate);
+            var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>(dto.CreatureDisplayInfo.Id, dto.IsUpdate);
+            var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>(dto.CreatureDisplayInfoExtra?.Id, dto.IsUpdate);
+            var creatureTemplateAddonId = await GetIdByConditionsAsync<CreatureTemplateAddon>(dto.CreatureTemplateAddon?.Entry, dto.IsUpdate);
+            var creatureTemplateModelId = await GetIdByConditionsAsync<CreatureTemplateModel>(dto.CreatureTemplateModel.CreatureId, dto.IsUpdate);
+            var creatureModelInfoId = await GetIdByConditionsAsync<CreatureModelInfo>(dto.CreatureModelInfo.DisplayId, dto.IsUpdate);
 
-            var newCreatureTemplateId = await GetNextIdAsync<CreatureTemplate>();
-            var newCreatureDisplayInfoId = await GetNextIdAsync<CreatureDisplayInfo>();
-            var newCreatureDisplayInfoExtraId = await GetNextIdAsync<CreatureDisplayInfoExtra>();
-            var newNpcModelItemSlotDisplayInfoId = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
-            var newCreatureDisplayInfoOptionsId = await GetNextIdAsync<CreatureDisplayInfoOption>();
+            // Step 2: Prepare IDs of list entities
+            var nextNpcModelItemSlotDisplayInfo = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
+            var nextCreatureDisplayInfoOption = await GetNextIdAsync<CreatureDisplayInfoOption>();
 
-            if (dto.HotfixModsEntity.RecordId == 0 || !dto.IsUpdate)
-            {
-                dto.HotfixModsEntity.RecordId = newCreatureTemplateId;
-                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
-            }
-
-            if (dto.CreatureTemplate.Entry == 0 || !dto.IsUpdate)
-            {
-                dto.CreatureTemplate.Entry = (uint)newCreatureTemplateId;
-            }
-
-            if (dto.CreatureTemplateAddon != null && (dto.CreatureTemplateAddon.Entry == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureTemplateAddon.Entry = dto.CreatureTemplate.Entry;
-            }
-
-            if (dto.CreatureDisplayInfoExtra != null && (dto.CreatureDisplayInfoExtra.Id == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureDisplayInfoExtra.Id = newCreatureDisplayInfoExtraId;
-            }
-
-            if (dto.CreatureDisplayInfo != null && (dto.CreatureDisplayInfo.Id == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureDisplayInfo.Id = newCreatureDisplayInfoId;
-                dto.CreatureDisplayInfo.ExtendedDisplayInfoId = (int)dto.CreatureDisplayInfoExtra.Id;
-            }
-
-            if (dto.CreatureTemplateModel != null && (dto.CreatureTemplateModel.CreatureId == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureTemplateModel.CreatureId = dto.CreatureTemplate.Entry;
-                dto.CreatureTemplateModel.CreatureDisplayId = dto.CreatureDisplayInfo.Id;
-            }
-
-            if (dto.CreatureEquipTemplate != null && (dto.CreatureEquipTemplate.Id == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureEquipTemplate.CreatureId = dto.CreatureTemplate.Entry;
-            }
-
-            if (dto.CreatureModelInfo != null && (dto.CreatureModelInfo.DisplayId == 0 || !dto.IsUpdate))
-            {
-                dto.CreatureModelInfo.DisplayId = dto.CreatureDisplayInfo.Id;
-            }
-
-            dto.NpcModelItemSlotDisplayInfo.ForEach(s =>
-            {
-                if (s.Id == 0 || !dto.IsUpdate)
-                {
-                    s.Id = newNpcModelItemSlotDisplayInfoId;
-                    s.NpcModelId = (int)dto.CreatureDisplayInfoExtra.Id;
-
-                    newNpcModelItemSlotDisplayInfoId++;
-                }
-            });
-
-            dto.CreatureDisplayInfoOption.ForEach(s =>
-            {
-                if (s.Id == 0 || !dto.IsUpdate)
-                {
-                    s.Id = newCreatureDisplayInfoOptionsId;
-                    s.CreatureDisplayInfoExtraId =(int) newCreatureDisplayInfoExtraId;
-
-                    newCreatureDisplayInfoOptionsId++;
-                }
-            });
-
-
+            // Step 3: Populate entities
+            dto.HotfixModsEntity.Id = hotfixModsEntityId;
+            dto.HotfixModsEntity.RecordId = creatureTemplateId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
+
+            dto.CreatureTemplate.Entry = creatureTemplateId;
             dto.CreatureTemplate.VerifiedBuild = VerifiedBuild;
-            //dto.CreatureTemplateAddon.VerifiedBuild = VerifiedBuild; 
 
-            if (dto.CreatureTemplateModel != null)
-                dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
+            dto.CreatureTemplateModel.CreatureId = creatureTemplateModelId;
+            dto.CreatureTemplateModel.CreatureDisplayId = creatureDisplayInfoId;
+            dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
 
-            if (dto.CreatureDisplayInfo != null)
-                dto.CreatureDisplayInfo.VerifiedBuild = VerifiedBuild;
+            dto.CreatureDisplayInfo.Id = creatureDisplayInfoId;
+            dto.CreatureDisplayInfo.ExtendedDisplayInfoId = (int)creatureDisplayInfoExtraId;
+            dto.CreatureDisplayInfo.VerifiedBuild = VerifiedBuild;
 
-            if (dto.CreatureDisplayInfoExtra != null)
-                dto.CreatureDisplayInfoExtra.VerifiedBuild = VerifiedBuild;
+
+            dto.CreatureModelInfo.DisplayId = creatureModelInfoId;
+            dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
 
             if (dto.CreatureEquipTemplate != null)
+            {
+                dto.CreatureEquipTemplate.CreatureId = creatureEquipTemplateId;
                 dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
+            }
 
-            if (dto.CreatureModelInfo != null)
-                dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
+            if (dto.CreatureTemplateAddon!= null)
+            {
+                dto.CreatureTemplateAddon.Entry = creatureTemplateAddonId;
+                //dto.CreatureTempalteAddon.VerifiedBuild = VerifiedBuild; // property does not currently exist
+            }
 
-            dto.NpcModelItemSlotDisplayInfo.ForEach(s =>
+            if (dto.CreatureDisplayInfoExtra != null)
             {
-                s.VerifiedBuild = VerifiedBuild;
-            });
-            dto.CreatureDisplayInfoOption.ForEach(s =>
-            {
-                s.VerifiedBuild = VerifiedBuild;
-            });
+                dto.CreatureDisplayInfoExtra.Id = creatureDisplayInfoExtraId;
+                dto.CreatureDisplayInfoExtra.VerifiedBuild = VerifiedBuild;
+
+                if (dto.NpcModelItemSlotDisplayInfo?.Any() ?? false)
+                {
+                    dto.NpcModelItemSlotDisplayInfo.ForEach(item =>
+                    {
+                        item.NpcModelId = (int)creatureDisplayInfoExtraId;
+                        item.Id = nextNpcModelItemSlotDisplayInfo++;
+                        item.VerifiedBuild = VerifiedBuild;
+                    });
+                }
+
+                if (dto.CreatureDisplayInfoOption?.Any() ?? false)
+                {
+                    dto.CreatureDisplayInfoOption.ForEach(item =>
+                    {
+                        item.CreatureDisplayInfoExtraId = (int)creatureDisplayInfoExtraId;
+                        item.Id = nextCreatureDisplayInfoOption++;
+                        item.VerifiedBuild = VerifiedBuild;
+                    });
+                }
+            }
+
+
         }
     }
 }

@@ -140,7 +140,8 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync<T>(params T[] entities)
             where T : new()
         {
-            await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.Where(e => e != null).EntitiesToDbRows().ToArray());
+            if(entities.Any())
+                await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.Where(e => e != null).EntitiesToDbRows().ToArray());
         }
 
         protected async Task SaveAsync(string schemaName, string tableName, params DbRow[] dbRows)

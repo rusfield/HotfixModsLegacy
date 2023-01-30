@@ -36,6 +36,7 @@ namespace HotfixMods.Infrastructure.Services
             var result = new ItemDto()
             {
                 Item = item,
+                IsUpdate = true
             };
 
             result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, item.Id);
@@ -76,8 +77,6 @@ namespace HotfixMods.Infrastructure.Services
                 }
             }
 
-            result.IsUpdate = result.Item.VerifiedBuild == VerifiedBuild;
-
             callback.Invoke(LoadingHelper.Loading, "Loading successful", 100);
             return result;
         }
@@ -103,7 +102,7 @@ namespace HotfixMods.Infrastructure.Services
                     await DeleteAsync(dto.Item.Id);
                 }
 
-                callback.Invoke(LoadingHelper.Saving, "Preparing ID", progress());
+                callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
                 await SetIdAndVerifiedBuild(dto, itemXItemEffects, itemSearchName, itemDisplayInfoModelMatRes);
 
                 await SaveAsync(callback, progress, dto.HotfixModsEntity);
@@ -120,11 +119,8 @@ namespace HotfixMods.Infrastructure.Services
                         if (dto.ItemDisplayInfo != null)
                         {
                             await SaveAsync(callback, progress, dto.ItemDisplayInfo);
-                            if (dto.ItemDisplayInfoMaterialRes?.Any() ?? false)
-                                await SaveAsync(callback, progress, dto.ItemDisplayInfoMaterialRes);
-
-                            if (itemDisplayInfoModelMatRes.Any())
-                                await SaveAsync(callback, progress, itemDisplayInfoModelMatRes);
+                            await SaveAsync(callback, progress, dto.ItemDisplayInfoMaterialRes?.ToList() ?? new());
+                            await SaveAsync(callback, progress, itemDisplayInfoModelMatRes);
                         }
                     }
                 }
@@ -155,7 +151,7 @@ namespace HotfixMods.Infrastructure.Services
             var progress = LoadingHelper.GetLoaderFunc(11);
 
             var dto = await GetByIdAsync(id);
-            if(null == dto)
+            if (null == dto)
             {
                 callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
                 return;

@@ -37,7 +37,8 @@ namespace HotfixMods.Infrastructure.Services
             {
                 AnimKit = animKit,
                 SegmentGroups = new(),
-                HotfixModsEntity = hotfixModsEntity
+                HotfixModsEntity = hotfixModsEntity,
+                IsUpdate = true
             };
 
             var segments = await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
@@ -63,9 +64,6 @@ namespace HotfixMods.Infrastructure.Services
                     });
                 }
             }
-
-            result.IsUpdate = result.AnimKit.VerifiedBuild == VerifiedBuild;
-
             callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
             return result;
         }

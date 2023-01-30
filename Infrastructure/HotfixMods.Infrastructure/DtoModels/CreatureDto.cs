@@ -8,12 +8,13 @@ namespace HotfixMods.Infrastructure.DtoModels
         public CreatureDto() : base("Creature") { }
 
         public CreatureTemplate CreatureTemplate { get; set; } = new();
-        public CreatureTemplateAddon? CreatureTemplateAddon { get; set; }
-        public CreatureTemplateModel? CreatureTemplateModel { get; set; } = new();
-        public CreatureDisplayInfo? CreatureDisplayInfo { get; set; } = new();
+        public CreatureModelInfo CreatureModelInfo { get; set; } = new();
+        public CreatureTemplateModel CreatureTemplateModel { get; set; } = new();
+        public CreatureDisplayInfo CreatureDisplayInfo { get; set; } = new();
         public CreatureDisplayInfoExtra? CreatureDisplayInfoExtra { get; set; }
         public CreatureEquipTemplate? CreatureEquipTemplate { get; set; }
-        public CreatureModelInfo? CreatureModelInfo { get; set; } = new();
+        public CreatureTemplateAddon? CreatureTemplateAddon { get; set; }
+
         public List<CreatureDisplayInfoOption>? CreatureDisplayInfoOption { get; set; } 
         public List<NpcModelItemSlotDisplayInfo>? NpcModelItemSlotDisplayInfo { get; set; } 
 

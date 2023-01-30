@@ -2,7 +2,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureTemplate>
 
-<PagedDtoContent T="CreatureTemplate" >
+<PagedDtoContent T="CreatureTemplate">
     <PagedDtoContentPage>
         <MudItem xs="3">
             <InlineGroup>
@@ -146,6 +146,7 @@
             <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()" />
             <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()" />
             <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" />
+            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -175,7 +176,7 @@
             <Input_Element T="uint" @bind-Value="Value.VehicleId" ValueCompare="ValueCompare?.VehicleId" Label="@nameof(Value.VehicleId).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" />
             <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_Id" ValueCompare="ValueCompare?.Gossip_Menu_Id" Label="@nameof(Value.Gossip_Menu_Id).ToDisplayName()" />
-            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" />
+            <Input_Element T="string" @bind-Value="Value.StringId" ValueCompare="ValueCompare?.StringId" Label="@nameof(Value.StringId).ToDisplayName()" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

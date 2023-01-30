@@ -4,11 +4,13 @@
 
 <StandardDtoContent T="CreatureTemplateAddon" >
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.Bytes1" ValueCompare="ValueCompare?.Bytes1" Label="@nameof(Value.Bytes1).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.Bytes2" ValueCompare="ValueCompare?.Bytes2" Label="@nameof(Value.Bytes2).ToDisplayName()" />
         <Input_Element T="uint" @bind-Value="Value.Mount" ValueCompare="ValueCompare?.Mount" Label="@nameof(Value.Mount).ToDisplayName()" />
         <Input_Element T="uint" @bind-Value="Value.MountCreatureId" ValueCompare="ValueCompare?.MountCreatureId" Label="@nameof(Value.MountCreatureId).ToDisplayName()" />
         <Input_Element T="uint" @bind-Value="Value.Path_Id" ValueCompare="ValueCompare?.Path_Id" Label="@nameof(Value.Path_Id).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.SheatheState" ValueCompare="ValueCompare?.SheatheState" Label="@nameof(Value.SheatheState).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.VisFlags" ValueCompare="ValueCompare?.VisFlags" Label="@nameof(Value.VisFlags).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.VisibilityDistanceType" ValueCompare="ValueCompare?.VisibilityDistanceType" Label="@nameof(Value.VisibilityDistanceType).ToDisplayName()" />
+
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -22,9 +24,10 @@
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="Value.Emote" ValueCompare="ValueCompare?.Emote" Label="@nameof(Value.Emote).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.StandState" ValueCompare="ValueCompare?.StandState" Label="@nameof(Value.StandState).ToDisplayName()" />
         <Input_Element T="short" @bind-Value="Value.AiAnimKit" ValueCompare="ValueCompare?.AiAnimKit" Label="@nameof(Value.AiAnimKit).ToDisplayName()" />
         <Input_Element T="short" @bind-Value="Value.MovementAnimKit" ValueCompare="ValueCompare?.MovementAnimKit" Label="@nameof(Value.MovementAnimKit).ToDisplayName()" />
         <Input_Element T="short" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.VisibilityDistanceType" ValueCompare="ValueCompare?.VisibilityDistanceType" Label="@nameof(Value.VisibilityDistanceType).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.AnimTier" ValueCompare="ValueCompare?.AnimTier" Label="@nameof(Value.AnimTier).ToDisplayName()" />
     </MudItem>
 </StandardDtoContent>

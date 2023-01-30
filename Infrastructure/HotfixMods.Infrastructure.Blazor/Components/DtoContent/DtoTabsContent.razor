@@ -20,7 +20,25 @@
         </MudText>
     </MudItem>
     <MudItem xs="4">
-        <MudStack Row="true" Justify="Justify.FlexEnd">
+        <MudStack Row="true" Justify="Justify.SpaceBetween">
+            @if (PageTab.Dto.IsUpdate)
+            {
+                <MudStack Row="true" AlignItems="AlignItems.End" Justify="Justify.FlexStart">
+                    <MudIconButton Icon="@Icons.Material.Filled.Key" Size="Size.Small"/>
+                    <MudText Typo="Typo.subtitle2" Align="Align.Center">
+                        @PageTab.Dto.HotfixModsEntity.RecordId
+                    </MudText>
+                </MudStack>
+            }
+            else
+            {
+                <MudStack Row="true" AlignItems="AlignItems.End" Justify="Justify.FlexStart">
+                    <MudIconButton Icon="@Icons.Material.Filled.KeyOff" Disabled Size="Size.Small" />
+                    <MudText Typo="Typo.subtitle2" Align="Align.Center" Style="color:var(--mud-palette-action-disabled)">
+                        No ID yet
+                    </MudText>
+                </MudStack>
+            }
             <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
                 @if (saving)
                 {

@@ -1,9 +1,10 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfo>
 
-<PagedDtoContent T="CreatureDisplayInfo" >
+<PagedDtoContent T="CreatureDisplayInfo">
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" />
@@ -17,7 +18,7 @@
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" />
+                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="GetGenders" AllowUndefinedValues="true" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="Value.ModelId" ValueCompare="ValueCompare?.ModelId" Label="@nameof(Value.ModelId).ToDisplayName()" />
@@ -49,7 +50,7 @@
                     <Input_Element T="ushort" @bind-Value="Value.SoundId" ValueCompare="ValueCompare?.SoundId" Label="@nameof(Value.SoundId).ToDisplayName()" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.NPCSoundId" ValueCompare="ValueCompare?.NPCSoundId" Label="@nameof(Value.NPCSoundId).ToDisplayName()" />
+                    <Input_Element T="ushort" @bind-Value="Value.NpcSoundId" ValueCompare="ValueCompare?.NpcSoundId" Label="@nameof(Value.NpcSoundId).ToDisplayName()" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
@@ -62,3 +63,11 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
+
+@code {
+
+    async Task<Dictionary<sbyte, string>> GetGenders()
+    {
+        return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+}

@@ -319,11 +319,11 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(uint id)
         {
-            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), id), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild))
+            return await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.Id), id))
                 ??
                 new()
                 {
-                    RecordId = id,
+                    Id = id,
                     VerifiedBuild = VerifiedBuild
                 };
         }

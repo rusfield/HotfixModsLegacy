@@ -3,7 +3,7 @@
     // ChrRaces table
     public enum ChrRaceId
     {
-        DEFAULT = 0,
+
         HUMAN = 1,
         ORC = 2,
         DWARF = 3,

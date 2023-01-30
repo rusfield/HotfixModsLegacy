@@ -14,7 +14,7 @@ namespace HotfixMods.Core.Models.Db2
         public byte CreatureModelAlpha { get; set; } = 255;
         public byte BloodId { get; set; } = 0;
         public int ExtendedDisplayInfoId { get; set; } = 0;
-        public ushort NPCSoundId { get; set; } = 0;
+        public ushort NpcSoundId { get; set; } = 0;
         public ushort ParticleColorId { get; set; } = 0;
         public int PortraitCreatureDisplayInfoId { get; set; } = 0;
         public int PortraitTextureFileDataId { get; set; } = 0;

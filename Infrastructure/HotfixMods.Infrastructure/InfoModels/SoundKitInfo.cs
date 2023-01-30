@@ -20,6 +20,6 @@
         public string SoundMixGroupId { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";
-        public bool IsRequired { get; set; } = false;
+        public bool IsRequired { get; set; } = true;
     }
 }

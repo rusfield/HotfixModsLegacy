@@ -216,6 +216,15 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
+        protected async Task<bool> DeleteAsync<T>(Action<string, string, int> callback, Func<int> progress, List<T> entities)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {typeof(T).Name}", progress());
+            foreach (var entity in entities)
+                await DeleteAsync(entity);
+            return true;
+        }
+
         protected async Task<bool> DeleteAsync<T>(Action<string, string, int> callback, Func<int> progress, T entity)
             where T : new()
         {

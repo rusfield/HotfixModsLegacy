@@ -8,29 +8,25 @@ namespace HotfixMods.Infrastructure.Services
     {
         async Task SetIdAndVerifiedBuild(SoundKitDto dto)
         {
-            if (!dto.IsUpdate)
-            {
-                var newSoundKitId = await GetNextIdAsync<SoundKit>();
-                var newSoundKitEntryId = await GetNextIdAsync<SoundKitEntry>();
+            // Step 1: Init IDs of single entities
+            var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
+            var soundKitId = await GetIdByConditionsAsync<SoundKit>(dto.SoundKit.Id, dto.IsUpdate);
 
-                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.HotfixModsEntity.RecordId = newSoundKitId;
-                dto.SoundKit.Id = newSoundKitId;
+            // Step 2: Prepare IDs of list entities
+            var nextSoundKitEntryId = await GetNextIdAsync<SoundKitEntry>();
 
-                dto.EntryGroups.ForEach(s =>
-                {
-                    s.SoundKitEntry.SoundKitId = (uint)newSoundKitId;
-                    s.SoundKitEntry.Id = newSoundKitEntryId;
-
-                    newSoundKitEntryId++;
-                });
-            }
-
+            // Step 3: Populate entities
+            dto.HotfixModsEntity.Id = hotfixModsEntityId;
+            dto.HotfixModsEntity.RecordId = soundKitId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
-            dto.SoundKit.VerifiedBuild = VerifiedBuild;
-            dto.EntryGroups.ForEach(s =>
+
+            dto.SoundKit.Id = soundKitId;
+
+            dto.EntryGroups.ForEach(g =>
             {
-                s.SoundKitEntry.VerifiedBuild = VerifiedBuild;
+                g.SoundKitEntry.Id = nextSoundKitEntryId++;
+                g.SoundKitEntry.SoundKitId = soundKitId;
+                g.SoundKitEntry.VerifiedBuild = VerifiedBuild;
             });
         }
     }

@@ -57,12 +57,8 @@ namespace HotfixMods.Infrastructure.Services
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
             var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>(dto.CreatureTemplate.Entry, dto.IsUpdate);
-            var creatureEquipTemplateId = await GetIdByConditionsAsync<CreatureEquipTemplate>(dto.CreatureEquipTemplate?.CreatureId, dto.IsUpdate);
             var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>(dto.CreatureDisplayInfo.Id, dto.IsUpdate);
             var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>(dto.CreatureDisplayInfoExtra?.Id, dto.IsUpdate);
-            var creatureTemplateAddonId = await GetIdByConditionsAsync<CreatureTemplateAddon>(dto.CreatureTemplateAddon?.Entry, dto.IsUpdate);
-            var creatureTemplateModelId = await GetIdByConditionsAsync<CreatureTemplateModel>(dto.CreatureTemplateModel.CreatureId, dto.IsUpdate);
-            var creatureModelInfoId = await GetIdByConditionsAsync<CreatureModelInfo>(dto.CreatureModelInfo.DisplayId, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextNpcModelItemSlotDisplayInfo = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
@@ -76,7 +72,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.CreatureTemplate.Entry = creatureTemplateId;
             dto.CreatureTemplate.VerifiedBuild = VerifiedBuild;
 
-            dto.CreatureTemplateModel.CreatureId = creatureTemplateModelId;
+            dto.CreatureTemplateModel.CreatureId = creatureTemplateId;
             dto.CreatureTemplateModel.CreatureDisplayId = creatureDisplayInfoId;
             dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
 
@@ -85,18 +81,18 @@ namespace HotfixMods.Infrastructure.Services
             dto.CreatureDisplayInfo.VerifiedBuild = VerifiedBuild;
 
 
-            dto.CreatureModelInfo.DisplayId = creatureModelInfoId;
+            dto.CreatureModelInfo.DisplayId = creatureDisplayInfoId;
             dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
 
             if (dto.CreatureEquipTemplate != null)
             {
-                dto.CreatureEquipTemplate.CreatureId = creatureEquipTemplateId;
+                dto.CreatureEquipTemplate.CreatureId = creatureTemplateId;
                 dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
             }
 
             if (dto.CreatureTemplateAddon!= null)
             {
-                dto.CreatureTemplateAddon.Entry = creatureTemplateAddonId;
+                dto.CreatureTemplateAddon.Entry = creatureTemplateId;
                 //dto.CreatureTempalteAddon.VerifiedBuild = VerifiedBuild; // property does not currently exist
             }
 

@@ -21,6 +21,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.Id = hotfixModsEntityId;
             dto.HotfixModsEntity.RecordId = animKitId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
+
             dto.AnimKit.Id = animKitId;
             dto.AnimKit.VerifiedBuild = VerifiedBuild;
 

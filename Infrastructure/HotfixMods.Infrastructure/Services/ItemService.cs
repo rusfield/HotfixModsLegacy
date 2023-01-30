@@ -24,13 +24,12 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<ItemDto?> GetByIdAsync(uint id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var increaseProgress = LoadingHelper.GetLoaderFunc(9);
+            var progress = LoadingHelper.GetLoaderFunc(9);
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(Item)}", increaseProgress());
-            var item = await GetSingleAsync<Item>(new DbParameter(nameof(Item.Id), id));
+            var item = await GetSingleAsync<Item>(callback, progress, new DbParameter(nameof(Item.Id), id));
             if (null == item)
             {
-                callback.Invoke(LoadingHelper.Loading, "Not found", 100);
+                callback.Invoke(LoadingHelper.Loading, $"{nameof(Item)} not found", 100);
                 return null;
             }
 
@@ -39,19 +38,13 @@ namespace HotfixMods.Infrastructure.Services
                 Item = item,
             };
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(HotfixModsEntity)}", increaseProgress());
-            result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(item.Id);
+            result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, item.Id);
+            result.ItemSparse = await GetSingleAsync<ItemSparse>(callback, progress, new DbParameter(nameof(ItemSparse.Id), id));
+            result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(callback, progress, new DbParameter(nameof(ItemModifiedAppearance.ItemId), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemSparse)}", increaseProgress());
-            result.ItemSparse = await GetSingleAsync<ItemSparse>(new DbParameter(nameof(ItemSparse.Id), id));
+            var itemXItemEffect = await GetAsync<ItemXItemEffect>(callback, progress, new DbParameter(nameof(ItemXItemEffect.ItemId), id));
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemModifiedAppearance)}", increaseProgress());
-            result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemXItemEffect)}", increaseProgress());
-            var itemXItemEffect = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemId), id));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemEffect)}", increaseProgress());
+            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemEffect)}", progress());
             await itemXItemEffect.ForEachAsync(async i =>
             {
                 var itemEffect = await GetSingleAsync<ItemEffect>(new DbParameter(nameof(ItemEffect.Id), i.ItemEffectId));
@@ -66,27 +59,24 @@ namespace HotfixMods.Infrastructure.Services
 
             if (result.ItemModifiedAppearance != null)
             {
-                callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemAppearance)}", increaseProgress());
-                result.ItemAppearance = await GetSingleAsync<ItemAppearance>(new DbParameter(nameof(ItemAppearance.Id), result.ItemModifiedAppearance.ItemAppearanceId));
+                result.ItemAppearance = await GetSingleAsync<ItemAppearance>(callback, progress, new DbParameter(nameof(ItemAppearance.Id), result.ItemModifiedAppearance.ItemAppearanceId));
                 if (result.ItemAppearance != null)
                 {
-                    callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemDisplayInfo)}", increaseProgress());
-                    result.ItemDisplayInfo = await GetSingleAsync<ItemDisplayInfo>(new DbParameter(nameof(ItemDisplayInfo.Id), result.ItemAppearance.ItemDisplayInfoId));
+                    result.ItemDisplayInfo = await GetSingleAsync<ItemDisplayInfo>(callback, progress, new DbParameter(nameof(ItemDisplayInfo.Id), result.ItemAppearance.ItemDisplayInfoId));
                     if (result.ItemDisplayInfo != null)
                     {
-                        callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemDisplayInfoMaterialRes)}", increaseProgress());
-                        var itemDisplayInfoMaterialRes = await GetAsync<ItemDisplayInfoMaterialRes>(new DbParameter(nameof(ItemDisplayInfoMaterialRes.ItemDisplayInfoId), result.ItemDisplayInfo.Id));
+                        var itemDisplayInfoMaterialRes = await GetAsync<ItemDisplayInfoMaterialRes>(callback, progress, new DbParameter(nameof(ItemDisplayInfoMaterialRes.ItemDisplayInfoId), result.ItemDisplayInfo.Id));
                         result.ItemDisplayInfoMaterialRes = itemDisplayInfoMaterialRes.Count > 0 ? itemDisplayInfoMaterialRes : null;
 
                         // Load texture from new db2 if exist
-                        var itemDisplayInfoModelMatRes = await GetAsync<ItemDisplayInfoModelMatRes>(new DbParameter(nameof(ItemDisplayInfoModelMatRes.ItemDisplayInfoId), result.ItemDisplayInfo.Id));
+                        var itemDisplayInfoModelMatRes = await GetAsync<ItemDisplayInfoModelMatRes>(callback, progress, new DbParameter(nameof(ItemDisplayInfoModelMatRes.ItemDisplayInfoId), result.ItemDisplayInfo.Id));
                         result.ItemDisplayInfo.ModelMaterialResourcesID1 = itemDisplayInfoModelMatRes.Where(i => i.ModelIndex == 0).FirstOrDefault()?.MaterialResourcesId ?? result.ItemDisplayInfo.ModelMaterialResourcesID1;
                         result.ItemDisplayInfo.ModelMaterialResourcesID2 = itemDisplayInfoModelMatRes.Where(i => i.ModelIndex == 1).FirstOrDefault()?.MaterialResourcesId ?? result.ItemDisplayInfo.ModelMaterialResourcesID2;
                     }
                 }
             }
 
-            callback.Invoke(LoadingHelper.Loading, "Loading successful.", 100);
+            callback.Invoke(LoadingHelper.Loading, "Loading successful", 100);
             return result;
         }
 
@@ -157,27 +147,37 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
-        public async Task DeleteAsync(uint id)
+        public async Task DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(12);
+
             var dto = await GetByIdAsync(id);
+            if(null == dto)
+            {
+                callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
+                return;
+            }
             var itemSearchName = await GetSingleAsync<ItemSearchName>(new DbParameter(nameof(ItemSearchName.Id), dto.Item.Id));
             var itemXItemEffects = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemId), dto.Item.Id));
 
             if (dto.ItemDisplayInfo != null)
             {
                 var itemDisplayInfoModelMatRes = await GetAsync<ItemDisplayInfoModelMatRes>(new DbParameter(nameof(ItemDisplayInfoModelMatRes.ItemDisplayInfoId), dto.ItemDisplayInfo.Id));
-                await DeleteAsync(itemDisplayInfoModelMatRes);
+                await DeleteAsync(callback, progress, itemDisplayInfoModelMatRes);
             }
 
-            await DeleteAsync(itemSearchName);
-            await DeleteAsync(itemXItemEffects);
-            await DeleteAsync(dto.ItemDisplayInfoMaterialRes ?? new());
-            await DeleteAsync(dto.ItemDisplayInfo);
-            await DeleteAsync(dto.ItemAppearance);
-            await DeleteAsync(dto.ItemModifiedAppearance);
-            await DeleteAsync(dto.ItemSparse);
-            await DeleteAsync(dto.Item);
-            await DeleteAsync(dto.HotfixModsEntity);
+            await DeleteAsync(callback, progress, itemSearchName);
+            await DeleteAsync(callback, progress, itemXItemEffects);
+            await DeleteAsync(callback, progress, dto.ItemDisplayInfoMaterialRes ?? new());
+            await DeleteAsync(callback, progress, dto.ItemDisplayInfo);
+            await DeleteAsync(callback, progress, dto.ItemAppearance);
+            await DeleteAsync(callback, progress, dto.ItemModifiedAppearance);
+            await DeleteAsync(callback, progress, dto.ItemSparse);
+            await DeleteAsync(callback, progress, dto.Item);
+            await DeleteAsync(callback, progress, dto.HotfixModsEntity);
+
+            callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
         }
 
         public async Task<uint> GetNextIdAsync()

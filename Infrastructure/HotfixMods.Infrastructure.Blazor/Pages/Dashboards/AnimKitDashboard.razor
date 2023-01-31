@@ -1,0 +1,5 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject AnimKitService Service
+
+<DtoDashboard TDto="AnimKitDto" IdTitle="Anim Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

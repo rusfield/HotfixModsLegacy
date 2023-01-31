@@ -1,0 +1,5 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject GameobjectService Service
+
+<DtoDashboard TDto="GameobjectDto" IdTitle="Game Object ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

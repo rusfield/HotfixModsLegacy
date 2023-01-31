@@ -1,0 +1,5 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject SpellService Service
+
+<DtoDashboard TDto="SpellDto" IdTitle="Spell ID" AdditionalIdTitle="Spell Visual ID" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

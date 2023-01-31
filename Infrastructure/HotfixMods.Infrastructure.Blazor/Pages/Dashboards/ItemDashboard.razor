@@ -1,0 +1,5 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject ItemService Service
+
+<DtoDashboard TDto="ItemDto" IdTitle="Item ID" AdditionalIdTitle="Item Display Info ID" DeleteByIdAsync_Func="Service.DeleteAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

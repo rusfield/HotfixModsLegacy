@@ -3,6 +3,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Helpers;
@@ -19,6 +20,22 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
             return new();
+        }
+
+        public async Task<List<DashboardModel>> GetDashboardModelsAsync()
+        {
+            var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+            var results = new List<DashboardModel>();
+            foreach (var dto in dtos)
+            {
+                results.Add(new()
+                {
+                    Id = dto.RecordId,
+                    Name = dto.Name,
+                    AvatarUrl = null
+                });
+            }
+            return results;
         }
 
         public async Task<ItemDto?> GetByIdAsync(uint id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
@@ -145,7 +162,7 @@ namespace HotfixMods.Infrastructure.Services
             return true;
         }
 
-        public async Task DeleteAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -154,7 +171,7 @@ namespace HotfixMods.Infrastructure.Services
             if (null == dto)
             {
                 callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
-                return;
+                return false;
             }
             var itemSearchName = await GetSingleAsync<ItemSearchName>(new DbParameter(nameof(ItemSearchName.Id), dto.Item.Id));
             var itemXItemEffects = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemId), dto.Item.Id));
@@ -176,6 +193,7 @@ namespace HotfixMods.Infrastructure.Services
             await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
             callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
+            return true;
         }
 
         public async Task<uint> GetNextIdAsync()

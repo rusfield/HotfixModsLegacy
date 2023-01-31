@@ -53,8 +53,10 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearch_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -64,8 +66,11 @@
                 <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Game Objects", typeof(GameobjectDashboard))))">My Game Objects</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearch_Dialog>(new PageTab("Game Object", typeof(Gameobjects))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -75,8 +80,11 @@
                 <MudIconButton Icon="@Icons.Material.Outlined.Shield" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Items", typeof(ItemDashboard))))">My Items</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearch_Dialog>(new PageTab("Item", typeof(Items))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -86,8 +94,11 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AutoFixHigh" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spells", typeof(SpellDashboard))))">My Spells</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearch_Dialog>(new PageTab("Spell", typeof(Spells))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -97,8 +108,11 @@
                 <MudIconButton Icon="@Icons.Material.Filled.AutoAwesome" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spell Visual Kits", typeof(SpellVisualKitDashboard))))">My Spell Visual Kits</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellVisualKitSearch_Dialog>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -108,8 +122,11 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Group" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Anim Kits", typeof(AnimKitDashboard))))">My Anim Kits</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearch_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -119,11 +136,13 @@
                 <MudIconButton Icon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Sound Kits", typeof(SoundKitDashboard))))">My Sound Kits</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SoundKitSearch_Dialog>(new PageTab("Sound Kit", typeof(SoundKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
-
 
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
         <MudText Color="Color.Inherit" Typo="Typo.subtitle2" Style="min-width:120px">@hover</MudText>

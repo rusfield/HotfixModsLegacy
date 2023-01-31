@@ -1,7 +1,9 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Helpers;
 
@@ -16,6 +18,22 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
             return new();
+        }
+
+        public async Task<List<DashboardModel>> GetDashboardModelsAsync()
+        {
+            var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+            var results = new List<DashboardModel>();
+            foreach (var dto in dtos)
+            {
+                results.Add(new()
+                {
+                    Id = dto.RecordId,
+                    Name = dto.Name,
+                    AvatarUrl = null
+                });
+            }
+            return results;
         }
 
         public async Task<GameobjectDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)

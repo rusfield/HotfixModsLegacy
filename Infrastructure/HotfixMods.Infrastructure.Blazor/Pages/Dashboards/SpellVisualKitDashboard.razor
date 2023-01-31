@@ -1,0 +1,5 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+
+@inject SpellVisualKitService Service
+
+<DtoDashboard TDto="SpellVisualKitDto" IdTitle="Spell Visual Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />

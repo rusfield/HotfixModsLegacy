@@ -88,13 +88,11 @@
     string search;
     List<uint> idInAction = new();
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            items = await GetItemsAsync_Func();
-        }
-        await base.OnAfterRenderAsync(firstRender);
+        items = await GetItemsAsync_Func();
+        filteredItems = items;
+        await base.OnInitializedAsync();
     }
 
     async Task EditAsync_Click(uint id)

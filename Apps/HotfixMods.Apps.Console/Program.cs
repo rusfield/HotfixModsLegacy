@@ -24,17 +24,18 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-/*
+
 var hotfixTool = new HotfixTableTool();
-var db2Type = typeof(ItemDisplayInfoModelMatRes);
+var db2Type = typeof(SpellVisualEvent);
 hotfixTool.GenerateAll(db2Type);
 Console.ReadKey();
-*/
 
 
+/*
 var tcTool = new TrinityCoreDbTool();
 await tcTool.Db2HashEnumInClipboardToCSharp();
 Console.ReadKey();
+*/
 
 /*
 var mySqlClient = new MySqlClient("localhost", "3306", "root", "root");
@@ -45,7 +46,7 @@ Console.ReadKey();
 */
 
 
-
+/*
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47871";
 while (true)
@@ -63,7 +64,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 
 

@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<SpellDto, SpellEffect>
 
@@ -6,8 +7,8 @@
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.EffectIndex" ValueCompare="ValueCompare?.EffectIndex" Label="@nameof(Value.EffectIndex).ToDisplayName()" />
-            <Input_Element T="short" @bind-Value="Value.EffectAura" ValueCompare="ValueCompare?.EffectAura" Label="@nameof(Value.EffectAura).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" />
+            <Input_Element T="short" @bind-Value="Value.EffectAura" ValueCompare="ValueCompare?.EffectAura" Label="@nameof(Value.EffectAura).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
+            <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" GetOptionsAsync_Func="GetEffects" />
             <Input_Element T="decimal" @bind-Value="Value.EffectAmplitude" ValueCompare="ValueCompare?.EffectAmplitude" Label="@nameof(Value.EffectAmplitude).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectAttributes" ValueCompare="ValueCompare?.EffectAttributes" Label="@nameof(Value.EffectAttributes).ToDisplayName()" />
         </MudItem>
@@ -54,8 +55,8 @@
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask2" ValueCompare="ValueCompare?.EffectSpellClassMask2" Label="@nameof(Value.EffectSpellClassMask2).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask3" ValueCompare="ValueCompare?.EffectSpellClassMask3" Label="@nameof(Value.EffectSpellClassMask3).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask4" ValueCompare="ValueCompare?.EffectSpellClassMask4" Label="@nameof(Value.EffectSpellClassMask4).ToDisplayName()" />
-            <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" />
-            <Input_Element T="short" @bind-Value="Value.ImplicitTarget2" ValueCompare="ValueCompare?.ImplicitTarget2" Label="@nameof(Value.ImplicitTarget2).ToDisplayName()" />
+            <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
+            <Input_Element T="short" @bind-Value="Value.ImplicitTarget2" ValueCompare="ValueCompare?.ImplicitTarget2" Label="@nameof(Value.ImplicitTarget2).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -65,3 +66,21 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
+
+@code {
+
+    async Task<Dictionary<short, string>> GetEffectTypes()
+    {
+        return Enum.GetValues<SpellEffectEffectAura>().ToDictionary(key => (short)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<uint, string>> GetEffects()
+    {
+        return Enum.GetValues<SpellEffectEffect>().ToDictionary(key => (uint)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<short, string>> GetImplicitTargets()
+    {
+        return Enum.GetValues<SpellEffectImplicitTarget>().ToDictionary(key => (short)key, value => value.ToDisplayString());
+    }
+}

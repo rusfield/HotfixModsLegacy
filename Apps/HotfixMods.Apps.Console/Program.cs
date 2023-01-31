@@ -24,12 +24,12 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-
+/*
 var hotfixTool = new HotfixTableTool();
 var db2Type = typeof(SpellVisualEvent);
 hotfixTool.GenerateAll(db2Type);
 Console.ReadKey();
-
+*/
 
 /*
 var tcTool = new TrinityCoreDbTool();
@@ -81,7 +81,7 @@ Console.WriteLine("Done");
 
 
 
-/*
+
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -106,7 +106,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 /*

@@ -103,8 +103,9 @@ namespace HotfixMods.Tools.Dev.Business
 
         public async Task<string> EnumToCSharp(string wowToolsEnum)
         {
+            bool includeUnk = false;
             await TextCopy.ClipboardService.SetTextAsync("");
-            var enumRows = wowToolsEnum.Split("\r\n").Where(e => !e.StartsWith("//")).ToList();
+            var enumRows = wowToolsEnum.Replace("\"", "'").Split("\r\n").Where(e => !e.Replace("\t", "").Trim().StartsWith("//")).ToList();
 
             string enumName = enumRows[0].Split(" ")[1];
             var isArray = enumRows[0].StartsWith("let");
@@ -149,7 +150,7 @@ namespace HotfixMods.Tools.Dev.Business
                         name = name.Split("'")[1].Replace(" ", "_").ToUpper();
                         await WriteToConsoleAndClipboard($"{name} = {i},");
                     }
-                    else
+                    else if(includeUnk)
                     {
                         await WriteToConsoleAndClipboard($"UNK_{i} = {i},");
                     }

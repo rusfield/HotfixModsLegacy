@@ -1,9 +1,10 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<SpellDto, SpellPower>
 
 
-<StandardDtoContent T="SpellPower" >
+<StandardDtoContent T="SpellPower">
     <MudItem xs="3">
         <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" />
@@ -16,7 +17,7 @@
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" />
+                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" GetOptionsAsync_Func="GetPowerTypes" />
 
             </MiddleContent>
             <RightContent />
@@ -38,3 +39,12 @@
         <Input_Element T="decimal" @bind-Value="Value.OptionalCostPct" ValueCompare="ValueCompare?.OptionalCostPct" Label="@nameof(Value.OptionalCostPct).ToDisplayName()" />
     </MudItem>
 </StandardDtoContent>
+
+@code {
+
+    async Task<Dictionary<sbyte, string>> GetPowerTypes()
+    {
+        return Enum.GetValues<SpellPowerPowerType>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+
+}

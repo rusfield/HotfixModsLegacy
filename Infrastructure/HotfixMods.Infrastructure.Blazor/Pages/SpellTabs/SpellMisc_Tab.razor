@@ -2,7 +2,7 @@
 
 @inherits DtoContentBase<SpellDto, SpellMisc>
 
-<PagedDtoContent T="SpellMisc" >
+<PagedDtoContent T="SpellMisc">
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" />
@@ -70,3 +70,8 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
+
+@code {
+
+
+}

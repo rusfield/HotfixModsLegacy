@@ -1,6 +1,7 @@
 ﻿@typeparam T
 
 @using HotfixMods.Infrastructure.Blazor.Business
+@using System.Linq
 
 @if (null == options)
 {
@@ -8,7 +9,7 @@
 }
 else
 {
-    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true">
+    <MudSelect Variant="@Variant" T="T" Label="@Label" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
@@ -50,30 +51,59 @@ else
     public bool Disabled { get; set; } = false;
 
     Dictionary<T, string>? options;
+    List<T> selectedValues = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             options = await GetOptionsAsync_Func.Invoke();
+            selectedValues = GetFlagValues((long)Convert.ChangeType(Value, typeof(long)));
             this.StateHasChanged();
         }
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task SetValueAsync(T newValue)
+    async Task SetValuesAsync(IEnumerable<T> newValues)
     {
         SetError(false);
-        Value = newValue;
+        selectedValues = newValues.ToList();
+        var sum = selectedValues.Sum(x => Convert.ToInt64(x));
+        Value = (T)Convert.ChangeType(sum, typeof(T));
         await ValueChanged.InvokeAsync(Value);
     }
 
-    public void SetError(bool newError)
+    void SetError(bool newError)
     {
         if (Error != newError)
         {
             Error = newError;
             this.StateHasChanged();
         }
+    }
+
+    string SetSelectionText(IEnumerable<string> selection)
+    {
+        int count = selection.Count();
+        return count switch
+        {
+            0 => "None",
+            1 => selection.First().ToDisplayName(),
+            _ => $"{count} selected"
+        };
+    }
+
+    List<T> GetFlagValues(long flag)
+    {
+        List<T> result = new();
+        for (int i = 0; i < sizeof(long) * 8; i++)
+        {
+            long value = 1L << i;
+            if ((flag & value) == value)
+            {
+                result.Add((T)Convert.ChangeType(value, typeof(T)));
+            }
+        }
+        return result;
     }
 }

@@ -101,8 +101,8 @@ namespace HotfixMods.Apps.MauiBlazor
             {
                 return new SpellService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
                 {
-                    FromId = 10000,
-                    ToId = 20000,
+                    FromId = 5400000,
+                    ToId = 5500000,
                     VerifiedBuild = -5507
                 };
             });

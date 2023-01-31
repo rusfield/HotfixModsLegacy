@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [WorldSchema]
     public class CreatureTemplateModel
     {
+        [IndexField]
         public uint CreatureId { get; set; } = 0;
         public uint Idx { get; set; } = 0;
         public uint CreatureDisplayId { get; set; } = 0;

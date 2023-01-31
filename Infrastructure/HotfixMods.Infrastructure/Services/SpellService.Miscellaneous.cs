@@ -8,73 +8,82 @@ namespace HotfixMods.Infrastructure.Services
     {
         async Task SetIdAndVerifiedBuild(SpellDto dto)
         {
-            if (!dto.IsUpdate)
+            // Step 1: Init IDs of single entities
+            var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
+            var spellId = await GetIdByConditionsAsync<Spell>(dto.Spell.Id, dto.IsUpdate);
+            var spellMiscId = await GetIdByConditionsAsync<SpellMisc>(dto.SpellMisc.Id, dto.IsUpdate);
+
+            var spellCooldownsId = await GetIdByConditionsAsync<SpellCooldowns>(dto.SpellCooldowns?.Id, dto.IsUpdate);
+            var spellPowerId = await GetIdByConditionsAsync<SpellPower>(dto.SpellPower?.Id, dto.IsUpdate);
+            var spellAuraOptionsId = await GetIdByConditionsAsync<SpellAuraOptions>(dto.SpellAuraOptions?.Id, dto.IsUpdate);
+
+            // Step 2: Prepare IDs of list entities
+            var nextSpellEffectId = await GetNextIdAsync<SpellEffect>();
+            var nextSpellXSpellVisualId = await GetNextIdAsync<SpellXSpellVisual>();
+            var nextSpellVisualId = await GetNextIdAsync<SpellVisual>();
+            var nextSpellVisualEventId = await GetNextIdAsync<SpellVisualEvent>();
+
+            // Step 3: Populate entities
+            dto.HotfixModsEntity.Id = hotfixModsEntityId;
+            dto.HotfixModsEntity.RecordId = spellId;
+            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
+
+            dto.Spell.Id = spellId;
+            dto.Spell.VerifiedBuild = VerifiedBuild;
+
+            dto.SpellName.Id = spellId;
+            dto.SpellName.VerifiedBuild= VerifiedBuild;
+
+            dto.SpellMisc.Id = spellMiscId;
+            dto.SpellMisc.SpellId = (int)spellId;
+            dto.SpellMisc.VerifiedBuild = VerifiedBuild;
+
+
+            if(dto.SpellCooldowns != null)
             {
-                var newSpellId = await GetNextIdAsync<Spell>();
-                var newSpellEffectId = await GetNextIdAsync<SpellEffect>();
-                var newSpellVisualId = await GetNextIdAsync<SpellVisual>();
-                var newSpellXSpellVisualId = await GetNextIdAsync<SpellXSpellVisual>();
-                var newSpellVisualEventId = await GetNextIdAsync<SpellVisualEvent>();
-
-                dto.HotfixModsEntity.Id = await GetNextIdAsync<HotfixModsEntity>();
-                dto.HotfixModsEntity.RecordId = newSpellId;
-                dto.Spell.Id = newSpellId;
-
-                dto.SpellAuraOptions.Id = await GetNextIdAsync<SpellAuraOptions>();
-                dto.SpellAuraOptions.SpellId = (int)newSpellId;
-
-                dto.SpellCooldowns.Id = await GetNextIdAsync<SpellAuraOptions>();
-                dto.SpellCooldowns.SpellId = (int)newSpellId;
-
-                dto.SpellMisc.Id = await GetNextIdAsync<SpellMisc>();
-                dto.SpellMisc.SpellId = (int)newSpellId;
-
-                dto.SpellName.Id = newSpellId;
-
-                dto.SpellPower.Id = await GetNextIdAsync<SpellPower>();
-                dto.SpellPower.SpellId = (int)newSpellId;
-
-                dto.EffectGroups.ForEach(s =>
-                {
-                    s.SpellEffect.Id = newSpellEffectId;
-                    s.SpellEffect.SpellId = (int)newSpellId;
-
-                    newSpellEffectId++;
-                });
-
-                dto.VisualGroups.ForEach(v =>
-                {
-                    v.SpellXSpellVisual.Id = newSpellXSpellVisualId;
-                    v.SpellXSpellVisual.SpellId = (int)newSpellId;
-                    v.SpellXSpellVisual.SpellVisualId = newSpellVisualId;
-
-                    v.SpellVisual.Id = newSpellVisualId;
-
-                    v.SpellVisualEvent.Id = newSpellVisualEventId;
-                    v.SpellVisualEvent.SpellVisualId = (int)newSpellVisualId;
-
-                    newSpellXSpellVisualId++;
-                    newSpellVisualId++;
-                    newSpellVisualEventId++;
-                });
+                dto.SpellCooldowns.Id = spellCooldownsId;
+                dto.SpellCooldowns.SpellId = (int)spellId;
+                dto.SpellCooldowns.VerifiedBuild = VerifiedBuild;
             }
 
-            dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
-            dto.Spell.VerifiedBuild = VerifiedBuild;
-            dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
-            dto.SpellCooldowns.VerifiedBuild = VerifiedBuild;
-            dto.SpellMisc.VerifiedBuild = VerifiedBuild;
-            dto.SpellName.VerifiedBuild = VerifiedBuild;
-            dto.SpellPower.VerifiedBuild = VerifiedBuild;
+            if(dto.SpellPower!= null)
+            {
+                dto.SpellPower.Id = spellPowerId;
+                dto.SpellPower.SpellId= (int)spellId;
+                dto.SpellPower.VerifiedBuild= VerifiedBuild;
+            }
+
+            if(dto.SpellAuraOptions != null)
+            {
+                dto.SpellAuraOptions.Id = spellAuraOptionsId;
+                dto.SpellAuraOptions.SpellId = (int)spellId;
+                dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
+            }
+
             dto.EffectGroups.ForEach(e =>
             {
+                e.SpellEffect.Id = nextSpellEffectId++;
+                e.SpellEffect.SpellId = (int)spellId;
                 e.SpellEffect.VerifiedBuild = VerifiedBuild;
             });
+
             dto.VisualGroups.ForEach(v =>
             {
+                v.SpellXSpellVisual.Id = nextSpellXSpellVisualId;
+                v.SpellXSpellVisual.SpellId = (int)spellId;
+                v.SpellXSpellVisual.SpellVisualId = nextSpellVisualId;
                 v.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
+
+                v.SpellVisual.Id = nextSpellVisualId;
                 v.SpellVisual.VerifiedBuild = VerifiedBuild;
+
+                v.SpellVisualEvent.Id = nextSpellVisualEventId;
+                v.SpellVisualEvent.SpellVisualId = (int)nextSpellVisualId;
                 v.SpellVisualEvent.VerifiedBuild = VerifiedBuild;
+
+                nextSpellEffectId++;
+                nextSpellVisualEventId++;
+                nextSpellVisualId++;
             });
         }
     }

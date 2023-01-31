@@ -1,7 +1,6 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
-using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
@@ -24,10 +23,9 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<SpellDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var increaseProgress = LoadingHelper.GetLoaderFunc(9);
+            var progress = LoadingHelper.GetLoaderFunc(11);
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(Spell)}", increaseProgress());
-            var spell = await GetSingleAsync<Spell>(new DbParameter(nameof(Spell.Id), id));
+            var spell = await GetSingleAsync<Spell>(callback, progress, new DbParameter(nameof(Spell.Id), id));
 
             if (null == spell)
             {
@@ -35,43 +33,20 @@ namespace HotfixMods.Infrastructure.Services
                 return null;
             }
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(HotfixModsEntity)}", increaseProgress());
             var result = new SpellDto()
             {
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(id),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, id),
+                SpellMisc = await GetSingleAsync<SpellMisc>(callback, progress, new DbParameter(nameof(SpellMisc.SpellId), id)) ?? new(),
+                SpellName = await GetSingleAsync<SpellName>(callback, progress, new DbParameter(nameof(SpellName.Id), id)) ?? new(),
+                SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellId), id)),
+                SpellPower = await GetSingleAsync<SpellPower>(callback, progress, new DbParameter(nameof(SpellPower.SpellId), id)),
+                SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, new DbParameter(nameof(SpellCooldowns.SpellId), id)),
+
                 Spell = spell,
                 IsUpdate = true
             };
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellMisc)}", increaseProgress());
-            var spellMisc = await GetSingleAsync<SpellMisc>(new DbParameter(nameof(SpellMisc.SpellId), id));
-            if (null == spellMisc)
-            {
-                callback.Invoke(LoadingHelper.Loading, $"{nameof(SpellMisc)} not found. Initializing new.", increaseProgress());
-                spellMisc = new();
-            }
-            result.SpellMisc = spellMisc;
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellName)}", increaseProgress());
-            var spellName = await GetSingleAsync<SpellName>(new DbParameter(nameof(SpellName.Id), id));
-            if (null == spellName)
-            {
-                callback.Invoke(LoadingHelper.Loading, $"{nameof(SpellName)} not found. Initializing new.", increaseProgress());
-                spellName = new();
-            }
-            result.SpellName = spellName;
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellAuraOptions)}", increaseProgress());
-            result.SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(new DbParameter(nameof(SpellAuraOptions.SpellId), id));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellPower)}", increaseProgress());
-            result.SpellPower = await GetSingleAsync<SpellPower>(new DbParameter(nameof(SpellPower.SpellId), id));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellCooldowns)}", increaseProgress());
-            result.SpellCooldowns = await GetSingleAsync<SpellCooldowns>(new DbParameter(nameof(SpellCooldowns.SpellId), id));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellEffect)}", increaseProgress());
-            var spellEffects = await GetAsync<SpellEffect>(new DbParameter(nameof(SpellEffect.SpellId), id));
+            var spellEffects = await GetAsync<SpellEffect>(callback, progress, new DbParameter(nameof(SpellEffect.SpellId), id));
             spellEffects.ForEach(s =>
             {
                 result.EffectGroups.Add(new SpellDto.EffectGroup()
@@ -80,11 +55,9 @@ namespace HotfixMods.Infrastructure.Services
                 });
             });
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellXSpellVisual)}", increaseProgress());
-            var spellXSpellVisuals = await GetAsync<SpellXSpellVisual>(new DbParameter(nameof(SpellXSpellVisual.SpellId), id));
-            if(spellXSpellVisuals.Count > 0)
-                callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", increaseProgress());
+            var spellXSpellVisuals = await GetAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellId), id));
 
+            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
             await spellXSpellVisuals.ForEachAsync(async sxsv =>
             {
                 var spellVisualEvents = await GetAsync<SpellVisualEvent>(new DbParameter(nameof(SpellVisualEvent.SpellVisualId), sxsv.SpellVisualId));
@@ -112,20 +85,32 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(SpellDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(12);
 
+            callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+            if (dto.IsUpdate)
+            {
+                await DeleteAsync(dto.Spell.Id);
+            }
+
+            callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
             await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(dto.HotfixModsEntity);
-            await SaveAsync(dto.Spell);
-            await SaveAsync(dto.SpellAuraOptions);
-            await SaveAsync(dto.SpellCooldowns);
-            await SaveAsync(dto.SpellMisc);
-            await SaveAsync(dto.SpellName);
-            await SaveAsync(dto.SpellPower);
+            await SaveAsync(callback, progress, dto.HotfixModsEntity);
+            await SaveAsync(callback, progress, dto.Spell);
+            await SaveAsync(callback, progress, dto.SpellAuraOptions);
+            await SaveAsync(callback, progress, dto.SpellCooldowns);
+            await SaveAsync(callback, progress, dto.SpellMisc);
+            await SaveAsync(callback, progress, dto.SpellName);
+            await SaveAsync(callback, progress, dto.SpellPower);
+
+            callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellEffect)}", progress());
             await dto.EffectGroups.ForEachAsync(async e =>
             {
                 await SaveAsync(e.SpellEffect);
             });
+
+            callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellXSpellVisual)}, {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
             await dto.VisualGroups.ForEachAsync(async v =>
             {
                 await SaveAsync(v.SpellXSpellVisual);
@@ -133,7 +118,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(v.SpellVisualEvent);
             });
 
-
+            callback.Invoke(LoadingHelper.Saving, "Saving successful", 100);
             dto.IsUpdate = true;
             return true;
         }
@@ -141,31 +126,37 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(10);
 
             var dto = await GetByIdAsync(id);
             if (null == dto)
             {
+                callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
                 return false;
             }
 
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellXSpellVisual)}, {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
             await dto.VisualGroups.ForEachAsync(async v =>
             {
                 await DeleteAsync(v.SpellVisualEvent);
                 await DeleteAsync(v.SpellVisualEvent);
                 await DeleteAsync(v.SpellXSpellVisual);
             });
+
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellEffect)}", progress());
             await dto.EffectGroups.ForEachAsync(async e =>
             {
                 await DeleteAsync(e.SpellEffect);
             });
-            await DeleteAsync(dto.SpellPower);
-            await DeleteAsync(dto.SpellName);
-            await DeleteAsync(dto.SpellMisc);
-            await DeleteAsync(dto.SpellCooldowns);
-            await DeleteAsync(dto.SpellAuraOptions);
-            await DeleteAsync(dto.Spell);
-            await DeleteAsync(dto.HotfixModsEntity);
+            await DeleteAsync(callback, progress, dto.SpellPower);
+            await DeleteAsync(callback, progress, dto.SpellName);
+            await DeleteAsync(callback, progress, dto.SpellMisc);
+            await DeleteAsync(callback, progress, dto.SpellCooldowns);
+            await DeleteAsync(callback, progress, dto.SpellAuraOptions);
+            await DeleteAsync(callback, progress, dto.Spell);
+            await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
+            callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
             return true;
         }
     }

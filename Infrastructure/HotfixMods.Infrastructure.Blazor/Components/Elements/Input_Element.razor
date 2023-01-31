@@ -4,10 +4,14 @@
 @using HotfixMods.Infrastructure.Blazor.Components.Private
 
 <div class="custom-wrapper" style="width:100%;">
-    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Primary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
-        <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
+    <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Material.Filled.ArrowForward" Color="@Color.Primary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
+        <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Material.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
 
-            @if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
+            @if (MultiSelection && GetOptionsAsync_Func != null)
+            {
+                <MultiSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
+            }
+            else if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
             {
                 <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
             }
@@ -69,6 +73,9 @@
     public int Lines { get; set; } = 1; // For multiline text input
 
     [Parameter]
+    public bool MultiSelection { get; set; } = false;
+
+    [Parameter]
     public bool Disabled { get; set; } = false;
 
     bool error = false;
@@ -110,11 +117,11 @@
     string? GetAdornmentIcon()
     {
         if (OnIdAdornmentClick.HasDelegate)
-            return Icons.Filled.Refresh;
+            return Icons.Material.Filled.Refresh;
         else if (OnInfoAdornmentClick.HasDelegate)
             return Icons.Outlined.Info;
         else if (OnSearchAdornmentClick.HasDelegate)
-            return Icons.Filled.Search;
+            return Icons.Material.Filled.Search;
         else
             return null;
     }

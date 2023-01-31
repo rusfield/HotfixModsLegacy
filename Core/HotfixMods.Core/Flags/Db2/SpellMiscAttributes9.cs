@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotfixMods.Core.Flags
+namespace HotfixMods.Core.Flags.Db2
 {
     [Flags]
     public enum SpellMiscAttributes9 : long

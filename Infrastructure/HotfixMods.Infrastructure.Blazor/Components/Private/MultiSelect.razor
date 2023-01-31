@@ -1,0 +1,79 @@
+﻿@typeparam T
+
+@using HotfixMods.Infrastructure.Blazor.Business
+
+@if (null == options)
+{
+    <Placeholder_Element Visible="true" IsNested="true" />
+}
+else
+{
+    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true">
+        @foreach (var option in options)
+        {
+            <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
+        }
+    </MudSelect>
+}
+
+
+@code
+{
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public T? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T?> ValueChanged { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public Func<Task<Dictionary<T, string>>> GetOptionsAsync_Func { get; set; }
+
+    [Parameter]
+    public string? AdornmentIcon { get; set; }
+
+    [Parameter]
+    public EventCallback OnAdornmentClick { get; set; }
+
+    [Parameter]
+    public Adornment Adornment { get; set; }
+
+    [Parameter]
+    public bool Error { get; set; } = false;
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    Dictionary<T, string>? options;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            options = await GetOptionsAsync_Func.Invoke();
+            this.StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task SetValueAsync(T newValue)
+    {
+        SetError(false);
+        Value = newValue;
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    public void SetError(bool newError)
+    {
+        if (Error != newError)
+        {
+            Error = newError;
+            this.StateHasChanged();
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿namespace HotfixMods.Core.Flags
+﻿namespace HotfixMods.Core.Flags.Db2
 {
     [Flags]
     public enum SpellMiscAttributes0 : long

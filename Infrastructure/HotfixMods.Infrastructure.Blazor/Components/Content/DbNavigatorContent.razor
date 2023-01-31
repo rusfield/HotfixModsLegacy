@@ -29,10 +29,10 @@
     <MudPaper Height="@($"{contentHeight}px")" Class="mx-3 z-30 rounded-0" Style="@GetContentStyle()">
 
         <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px; left:calc(100%)")">
-            <MudIconButton Icon="@Icons.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+            <MudIconButton Icon="@Icons.Material.Filled.NavigateNext" Color="Color.Primary" Class="@("custom-slide-navigator")" />
         </div>
         <div style="@($"position:absolute; top:{(contentHeight / 2) - 60}px;left:-120px")">
-            <MudIconButton Icon="@Icons.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator")" />
+            <MudIconButton Icon="@Icons.Material.Filled.NavigateBefore" Color="Color.Primary" Class="@("custom-slide-navigator")" />
         </div>
 
         <MudCarousel TData="object" ShowBullets="false" AutoCycle="false" ShowArrows="false" Style="height:100%;width:100%" SelectedIndex="SelectedIndex" SelectedIndexChanged="SelectedIndexChanged">

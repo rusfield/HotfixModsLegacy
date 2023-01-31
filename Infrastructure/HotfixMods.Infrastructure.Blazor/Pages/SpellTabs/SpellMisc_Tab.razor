@@ -1,4 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Flags.Db2
+
 
 @inherits DtoContentBase<SpellDto, SpellMisc>
 
@@ -34,44 +36,66 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.Attributes1" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes2" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes3" ValueCompare="ValueCompare?.Attributes3" Label="@nameof(Value.Attributes3).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes4" ValueCompare="ValueCompare?.Attributes4" Label="@nameof(Value.Attributes4).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes5" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes6" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes1" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(0))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes2" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(1))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes3" ValueCompare="ValueCompare?.Attributes3" Label="@nameof(Value.Attributes3).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(2))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes4" ValueCompare="ValueCompare?.Attributes4" Label="@nameof(Value.Attributes4).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(3))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes5" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(4))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes6" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(5))" />
 
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="int" @bind-Value="Value.Attributes13" ValueCompare="ValueCompare?.Attributes13" Label="@nameof(Value.Attributes13).ToDisplayName()" />
+                    <Input_Element T="int" @bind-Value="Value.Attributes13" ValueCompare="ValueCompare?.Attributes13" Label="@nameof(Value.Attributes13).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(12))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="int" @bind-Value="Value.Attributes14" ValueCompare="ValueCompare?.Attributes14" Label="@nameof(Value.Attributes14).ToDisplayName()" />
+                    <Input_Element T="int" @bind-Value="Value.Attributes14" ValueCompare="ValueCompare?.Attributes14" Label="@nameof(Value.Attributes14).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(13))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
                 <LeftContent />
                 <MiddleContent>
-                    <Input_Element T="int" @bind-Value="Value.Attributes15" ValueCompare="ValueCompare?.Attributes15" Label="@nameof(Value.Attributes15).ToDisplayName()" />
+                    <Input_Element T="int" @bind-Value="Value.Attributes15" ValueCompare="ValueCompare?.Attributes15" Label="@nameof(Value.Attributes15).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(14))" />
                 </MiddleContent>
                 <RightContent />
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.Attributes7" ValueCompare="ValueCompare?.Attributes1" Label="@nameof(Value.Attributes1).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes8" ValueCompare="ValueCompare?.Attributes2" Label="@nameof(Value.Attributes2).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes9" ValueCompare="ValueCompare?.Attributes3" Label="@nameof(Value.Attributes3).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes10" ValueCompare="ValueCompare?.Attributes4" Label="@nameof(Value.Attributes4).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes11" ValueCompare="ValueCompare?.Attributes5" Label="@nameof(Value.Attributes5).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.Attributes12" ValueCompare="ValueCompare?.Attributes6" Label="@nameof(Value.Attributes6).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Attributes7" ValueCompare="ValueCompare?.Attributes7" Label="@nameof(Value.Attributes7).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(6))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes8" ValueCompare="ValueCompare?.Attributes8" Label="@nameof(Value.Attributes8).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(7))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes9" ValueCompare="ValueCompare?.Attributes9" Label="@nameof(Value.Attributes9).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(8))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes10" ValueCompare="ValueCompare?.Attributes10" Label="@nameof(Value.Attributes10).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(9))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes11" ValueCompare="ValueCompare?.Attributes11" Label="@nameof(Value.Attributes11).ToDisplayName()"MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(10))" />
+            <Input_Element T="int" @bind-Value="Value.Attributes12" ValueCompare="ValueCompare?.Attributes12" Label="@nameof(Value.Attributes12).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(11))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
 
 @code {
 
+    async Task<Dictionary<int, string>> GetAttributes(int index)
+    {
+        return index switch
+        {
+            0 => Enum.GetValues<SpellMiscAttributes0>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            1 => Enum.GetValues<SpellMiscAttributes1>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            2 => Enum.GetValues<SpellMiscAttributes2>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            3 => Enum.GetValues<SpellMiscAttributes3>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            4 => Enum.GetValues<SpellMiscAttributes4>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            5 => Enum.GetValues<SpellMiscAttributes5>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            6 => Enum.GetValues<SpellMiscAttributes6>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            7 => Enum.GetValues<SpellMiscAttributes7>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            8 => Enum.GetValues<SpellMiscAttributes8>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            9 => Enum.GetValues<SpellMiscAttributes9>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            10 => Enum.GetValues<SpellMiscAttributes10>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            11 => Enum.GetValues<SpellMiscAttributes11>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            12 => Enum.GetValues<SpellMiscAttributes12>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            13 => Enum.GetValues<SpellMiscAttributes13>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            14 => Enum.GetValues<SpellMiscAttributes14>().ToDictionary(key => (int)key, value => value.ToDisplayString()),
+            _ => new()
+        };
+    }
 
 }

@@ -1,7 +1,7 @@
-﻿namespace HotfixMods.Core.Flags
+﻿namespace HotfixMods.Core.Flags.Db2
 {
     [Flags]
-    public enum SpellAuraAttributes6 : long
+    public enum SpellMiscAttributes6 : long
     {
         DEFAULT = 0,
         NO_COOLDOWN_ON_TOOLTIP = 1,

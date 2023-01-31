@@ -8,7 +8,7 @@
                     @if (GetById_Func != null)
                     {
                         <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
-                        <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="(async () => await GetById_Func(_id))" />
+                        <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetById_Func(_id))" />
                     }
 
                     @ChildContent

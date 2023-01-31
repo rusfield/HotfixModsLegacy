@@ -10,7 +10,7 @@
     }
     else
     {
-        <MudNumericField @bind-Value="@id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" OnAdornmentClick="(async () => await GetAvailableOptionsAsync(id))" />
+        <MudNumericField @bind-Value="@id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetAvailableOptionsAsync(id))" />
     }
     @foreach (var option in options)
     {

@@ -2,7 +2,10 @@
 
 @inject CreatureService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog" GetById_Func="GetByIdAsync" GetNew_Action="GetNew" />
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+    <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
+    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByIdAsync)" />
+</DialogSearch>
 
 @code {
     [CascadingParameter]
@@ -17,16 +20,16 @@
     {
         if(firstRender && Id != null)
         {
-            await GetByIdAsync(Id);
+            await GetByIdAsync();
         }
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task GetByIdAsync(uint? id)
+    async Task GetByIdAsync()
     {
-        if (id != null)
+        if (Id != null)
         {
-            var data = await Service.GetByIdAsync((uint)id, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((uint)Id, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);
@@ -37,10 +40,4 @@
             }
         }
     }
-
-    void GetNew()
-    {
-        var data = Service.GetNew(dialogSearchRef!.SetLoaderProgress);
-        Dialog.Close(data);
-    } 
 }

@@ -10,11 +10,11 @@
     }
     else
     {
-        <MudNumericField @bind-Value="@id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetAvailableOptionsAsync(id))" />
+        <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetAvailableOptionsAsync)" />
     }
     @foreach (var option in options)
     {
-        <MudButton Variant="Variant.Outlined" OnClick="@(async () => await GetByIdAsync(id, option.Key))">@option.Value</MudButton>
+        <MudButton Variant="Variant.Outlined" OnClick="@(async () => await GetByIdAsync(Id, option.Key))">@option.Value</MudButton>
     }
 </DialogSearch>
 
@@ -22,12 +22,14 @@
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }
 
+    [Parameter]
+    public uint? Id { get; set; }
+
     DialogSearch? dialogSearchRef;
-    int? id;
     Dictionary<int, string> options = new();
     bool isLoading = false;
 
-    async Task GetByIdAsync(int? id, int orderIndex)
+    async Task GetByIdAsync(uint? id, int orderIndex)
     {
         if (id != null)
         {
@@ -43,27 +45,21 @@
         }
     }
 
-    async Task GetAvailableOptionsAsync(int? id)
+    async Task GetAvailableOptionsAsync()
     {
         isLoading = true;
-        if (id != null)
+        if (Id != null)
         {
-            var availableItemModifiedAppearances = await Service.GetAvailableItemModifiedAppearancesAsync((int)id);
+            var availableItemModifiedAppearances = await Service.GetAvailableItemModifiedAppearancesAsync((int)Id);
             if (availableItemModifiedAppearances.Count > 1)
             {
                 options = availableItemModifiedAppearances.ToDictionary(k => k.OrderIndex, v => Service.ItemAppearanceModifierIdToString(v.ItemAppearanceModifierId));
             }
             else
             {
-                await GetByIdAsync(id, 0);
+                await GetByIdAsync(Id, 0);
             }
         }
         isLoading = false;
-    }
-
-    void GetNew()
-    {
-        var data = Service.GetNew(dialogSearchRef!.SetLoaderProgress);
-        Dialog.Close(data);
     }
 }

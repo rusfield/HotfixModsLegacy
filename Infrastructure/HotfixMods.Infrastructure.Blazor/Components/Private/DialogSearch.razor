@@ -5,19 +5,7 @@
             @if (null == loaderRef || !loaderRef.IsLoading)
             {
                 <MudStack Style="max-height: 600px; overflow-y: scroll">
-                    @if (GetById_Func != null)
-                    {
-                        <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
-                        <MudNumericField @bind-Value="@_id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetById_Func(_id))" />
-                    }
-
                     @ChildContent
-
-                    @if (GetNew_Action != null)
-                    {
-                        <MudText Typo="Typo.h6" Align="Align.Center">Start from scratch:</MudText>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Primary" OnClick="(GetNew_Action)">New</MudButton>
-                    }
                 </MudStack>
             }
         </DialogContent>
@@ -32,12 +20,6 @@
 
     [Parameter]
     public MudDialogInstance MudDialogInstance { get; set; }
-
-    [Parameter]
-    public Func<uint?, Task>? GetById_Func { get; set; }
-
-    [Parameter]
-    public Action? GetNew_Action { get; set; }
 
     uint? _id;
     Loader? loaderRef;

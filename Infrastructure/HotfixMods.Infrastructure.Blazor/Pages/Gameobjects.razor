@@ -4,7 +4,7 @@
 @inject GameobjectService Service
 @inherits PageBase<GameobjectDto>
 
-<DtoTabsContent T="GameobjectDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearch_Dialog>())" />
+<DtoTabsContent T="GameobjectDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearchId_Dialog>())" />
 
 
 @code {

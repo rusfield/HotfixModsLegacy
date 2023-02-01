@@ -37,7 +37,11 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-
+        public async Task<CreatureDto?> GetByCharacterNameAsync(string characterName, Action<string, string, int>? callback = null)
+        {
+            // TODO
+            return null;
+        }
 
         public async Task<CreatureDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
@@ -68,12 +72,66 @@ namespace HotfixMods.Infrastructure.Services
             if (result.CreatureDisplayInfoExtra != null)
             {
                 result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId), result.CreatureDisplayInfoExtra.Id));
-            }
-            if (result.CreatureDisplayInfoExtra != null)
-            {
                 result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
             }
 
+            callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
+            return result;
+        }
+
+        public async Task<CreatureDto?> GetByCreatureDisplayInfoIdAsync(uint creatureDisplayInfoId, Action<string, string, int>? callback = null)
+        {
+            callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(11);
+
+            var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.Id), creatureDisplayInfoId));
+            if (creatureDisplayInfo == null)
+            {
+                callback.Invoke(LoadingHelper.Loading, $"{nameof(CreatureDisplayInfo)} not found", 100);
+                return null;
+            }
+
+            var result = new CreatureDto()
+            {
+                CreatureDisplayInfo = creatureDisplayInfo,
+                CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayId), creatureDisplayInfoId)) ?? new(),
+                IsUpdate = false
+            };
+
+            var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureDisplayId), creatureDisplayInfoId));
+            if (creatureTemplateModel != null)
+            {
+                var creatureTemplate = await GetSingleAsync<CreatureTemplate>(callback, progress, new DbParameter(nameof(CreatureTemplate.Entry), creatureTemplateModel.CreatureId));
+                result.CreatureTemplateModel = creatureTemplateModel;
+                result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, creatureTemplate?.Entry ?? 0);
+                if (creatureTemplate != null)
+                {
+                    result.CreatureTemplate = creatureTemplate;
+                    result.CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), creatureTemplate.Entry));
+                    result.CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureId), creatureTemplate.Entry));
+                    result.IsUpdate = true;
+                }
+                else
+                {
+                    result.CreatureTemplate = new();
+                }
+            }
+            else
+            {
+                result.CreatureTemplateModel = new();
+                result.CreatureTemplate = new();
+            }
+
+            result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.Id), result.CreatureDisplayInfo.ExtendedDisplayInfoId));
+
+            if (result.CreatureDisplayInfoExtra != null)
+            {
+                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId), result.CreatureDisplayInfoExtra.Id));
+                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
+            }
+
+
+            result.IsUpdate = true;
             callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
             return result;
         }
@@ -102,7 +160,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.CreatureDisplayInfo);
                 await SaveAsync(callback, progress, dto.CreatureModelInfo);
 
-                if(dto.CreatureDisplayInfoExtra!= null)
+                if (dto.CreatureDisplayInfoExtra!= null)
                 {
                     await SaveAsync(callback, progress, dto.CreatureDisplayInfoExtra);
                     await SaveAsync(callback, progress, dto.NpcModelItemSlotDisplayInfo?.ToList() ?? new());

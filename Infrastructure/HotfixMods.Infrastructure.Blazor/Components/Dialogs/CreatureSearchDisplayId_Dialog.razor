@@ -3,8 +3,8 @@
 @inject CreatureService Service
 
 <DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
-    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByIdAsync)" />
+    <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature Display ID:</MudText>
+    <MudNumericField @bind-Value="@CreatureDisplayInfoId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCreatureDisplayInfoIdAsync)" />
 </DialogSearch>
 
 @code {
@@ -12,24 +12,24 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? Id { get; set; }
+    public uint? CreatureDisplayInfoId { get; set; }
 
     DialogSearch? dialogSearchRef;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
-            await GetByIdAsync();
+            await GetByCreatureDisplayInfoIdAsync();
         }
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task GetByIdAsync()
+    async Task GetByCreatureDisplayInfoIdAsync()
     {
-        if (Id != null)
+        if (CreatureDisplayInfoId != null)
         {
-            var data = await Service.GetByIdAsync((uint)Id, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByCreatureDisplayInfoIdAsync((uint)CreatureDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);

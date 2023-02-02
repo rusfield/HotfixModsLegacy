@@ -1,0 +1,29 @@
+﻿<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())" Class="py-4">
+    <MudDialog>
+        <DialogContent>
+            <MudStack Style="max-height: 600px; overflow-y: scroll">
+                @foreach (var option in Options)
+                {
+                    <MudButton Class="my-2 py-2" Variant="Variant.Outlined" OnClick="@(() => Button_Click(option.Value))">@option.Key</MudButton>
+                }
+            </MudStack>
+        </DialogContent>
+
+    </MudDialog>
+</MudBadge>
+
+
+@code {
+    [CascadingParameter]
+    public MudDialogInstance MudDialogInstance { get; set; }
+
+    [Parameter]
+    public Dictionary<string, Action> Options { get; set; }
+
+    void Button_Click(Action optionToLaunch)
+    {
+        optionToLaunch.Invoke();
+        MudDialogInstance.Close();
+    }
+
+}

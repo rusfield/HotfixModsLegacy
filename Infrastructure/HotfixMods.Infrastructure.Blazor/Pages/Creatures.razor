@@ -6,4 +6,20 @@
 @inject IDialogService DialogService
 @inherits PageBase<CreatureDto>
 
-<DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureSearchId_Dialog>())" />
+<DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="ValueCompare_Click" />
+
+@code {
+
+    async Task ValueCompare_Click()
+    {
+        var options = new Dictionary<string, Action>();
+        options.Add("Search by Creature ID", (() => ValueCompareAsync<CreatureSearchId_Dialog>()));
+        options.Add("Search by Creature Display Info ID", (() => ValueCompareAsync<CreatureSearchCreatureDisplayInfoId_Dialog>()));
+        options.Add("Search by Character Name", (() => ValueCompareAsync<CreatureSearchCharacterName_Dialog>()));
+
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(CompareOptions_Dialog.Options), options);
+        await DialogService.Show<CompareOptions_Dialog>(null, parameters).Result;
+    }
+
+}

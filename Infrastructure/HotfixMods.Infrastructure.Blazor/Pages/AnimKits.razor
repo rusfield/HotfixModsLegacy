@@ -3,6 +3,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inject AnimKitService Service
+@inject IDialogService DialogService
 @inherits PageBase<AnimKitDto>
 
 @* IDEA FOR MIDDLE IMAGE DISPLAY
@@ -15,11 +16,6 @@
 
 @code {
 
-    // Temp
-    protected override void OnParametersSet()
-    {
-        if (PageTab.Dto == null)
-            PageTab.Dto = new AnimKitDto();
-        base.OnParametersSet();
-    }
+
+
 }

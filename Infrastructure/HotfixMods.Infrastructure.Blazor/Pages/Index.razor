@@ -55,7 +55,7 @@
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchId_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Creature ID</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchDisplayId_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Display ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCreatureDisplayInfoId_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Creature Display Info ID</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCharacterName_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Character Name</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>

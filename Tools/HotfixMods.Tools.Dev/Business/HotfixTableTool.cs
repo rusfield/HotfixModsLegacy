@@ -4,42 +4,58 @@ namespace HotfixMods.Tools.Dev.Business
 {
     public class HotfixTableTool
     {
-        public void GenerateAll(Type db2Type)
+        public void GenerateAll(params Type[] db2Types)
         {
+
+            var db2StoresH = new List<string>();
+            var db2StoresCpp1 = new List<string>();
+            var db2StoresCpp2 = new List<string>();
+            var db2StructureH = new List<string>();
+
+            foreach (var db2Type in db2Types)
+            {
+                db2StoresH.Add(GenerateDb2StoresH(db2Type));
+                db2StoresCpp1.Add(GenerateDb2StoresCpp1(db2Type));
+                db2StoresCpp2.Add(GenerateDb2StoresCpp2(db2Type));
+                db2StructureH.Add(GenerateDb2StructureH(db2Type));
+            }
+
             Console.WriteLine("* * * * * * * *");
             Console.WriteLine("* DB2Stores.h *");
             Console.WriteLine("* * * * * * * *");
-            Console.WriteLine(GenerateDb2StoresH(db2Type));
+            Console.WriteLine(string.Join("\r\n", db2StoresH));
             Console.WriteLine();
             Console.WriteLine();
 
             Console.WriteLine("* * * * * * * * * * * * *");
             Console.WriteLine("* DB2Stores.cpp (1 / 2) *");
             Console.WriteLine("* * * * * * * * * * * * *");
-            Console.WriteLine(GenerateDb2StoresCpp1(db2Type));
+            Console.WriteLine(string.Join("\r\n", db2StoresCpp1));
             Console.WriteLine();
             Console.WriteLine();
 
             Console.WriteLine("* * * * * * * * * * * * *");
             Console.WriteLine("* DB2Stores.cpp (2 / 2) *");
             Console.WriteLine("* * * * * * * * * * * * *");
-            Console.WriteLine(GenerateDb2StoresCpp2(db2Type));
+            Console.WriteLine(string.Join("\r\n", db2StoresCpp2));
             Console.WriteLine();
             Console.WriteLine();
 
             Console.WriteLine("* * * * * * * * * *");
             Console.WriteLine("* DB2Structure.h  *");
             Console.WriteLine("* * * * * * * * * *");
-            Console.WriteLine(GenerateDb2StructureH(db2Type));
+            Console.WriteLine(string.Join("\r\n", db2StructureH));
             Console.WriteLine();
             Console.WriteLine();
 
+            /*
             Console.WriteLine("* * * * * * * *");
             Console.WriteLine("* MySQL Query *");
             Console.WriteLine("* * * * * * * *");
             Console.WriteLine(GenerateMySqlQuery(db2Type));
             Console.WriteLine();
             Console.WriteLine();
+            */
         }
 
         public string GenerateDb2StoresH(Type db2Type)
@@ -88,7 +104,7 @@ namespace HotfixMods.Tools.Dev.Business
             string db2Name = db2Type.Name;
             string output = $"// {db2Name}.db2\r\n";
             string prepareStatement = $"PrepareStatement(HOTFIX_SEL_{GetUnderscoreBetweenUpperCase(db2Type.Name).ToUpper()}, \"SELECT ";
-            foreach(var propertyInfo in db2Type.GetProperties())
+            foreach (var propertyInfo in db2Type.GetProperties())
             {
                 prepareStatement += $"{GetMySqlFieldName(propertyInfo)}, ";
             }
@@ -104,7 +120,7 @@ namespace HotfixMods.Tools.Dev.Business
         public string GenerateMySqlQuery(Type db2Type)
         {
             string output = $"CREATE TABLE {GetUnderscoreBetweenUpperCase(db2Type.Name).ToLower()} (";
-            foreach(var propertyInfo in db2Type.GetProperties())
+            foreach (var propertyInfo in db2Type.GetProperties())
             {
                 output += $"{GetUnderscoreBetweenUpperCase(propertyInfo.Name).ToLower()} ";
                 if (IsParentIndexField(propertyInfo))

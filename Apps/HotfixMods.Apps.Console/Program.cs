@@ -24,12 +24,31 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-/*
+
 var hotfixTool = new HotfixTableTool();
-var db2Type = typeof(SpellVisualEvent);
-hotfixTool.GenerateAll(db2Type);
+var db2Types = new List<Type>
+{
+    typeof(SpellVisualKitEffect),
+    typeof(SpellProceduralEffect),
+    typeof(SpellVisualKitModelAttach),
+    typeof(CameraEffect),
+    typeof(SpellVisualAnim),
+    typeof(ShadowyEffect),
+    typeof(SpellEffectEmission),
+    typeof(OutlineEffect),
+    typeof(DissolveEffect),
+    typeof(EdgeGlowEffect),
+    typeof(BeamEffect),
+    typeof(ClientSceneEffect),
+    typeof(CloneEffect),
+    typeof(GradientEffect),
+    typeof(BarrageEffect),
+    typeof(RopeEffect),
+    typeof(SpellVisualScreenEffect)
+};
+hotfixTool.GenerateAll(db2Types.ToArray());
 Console.ReadKey();
-*/
+
 
 /*
 var tcTool = new TrinityCoreDbTool();
@@ -80,7 +99,7 @@ Console.WriteLine("Done");
 
 
 
-
+/*
 
 var wowToolsTool = new WowToolsTool();
 
@@ -106,7 +125,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 
 /*

@@ -39,6 +39,16 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<CreatureDto?> GetByCharacterNameAsync(string characterName, Action<string, string, int>? callback = null)
         {
+            callback = callback ?? DefaultProgressCallback;
+            var progress = LoadingHelper.GetLoaderFunc(11);
+
+            var character = await GetSingleAsync<Characters>(callback, progress, new DbParameter(nameof(Characters.Name), characterName)); // TODO: Check if Deleted chars must be excluded
+            if (character == null)
+            {
+                callback.Invoke(LoadingHelper.Loading, $"{nameof(Characters)} not found", 100);
+                return null;
+            }
+
             // TODO
             return null;
         }

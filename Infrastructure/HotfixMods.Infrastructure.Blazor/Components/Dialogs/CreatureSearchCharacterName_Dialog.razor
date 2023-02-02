@@ -4,7 +4,7 @@
 
 <DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
     <MudText Typo="Typo.h6" Align="Align.Center">Search by Character Name:</MudText>
-    <MudField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCharacterNameAsync)" />
+    <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCharacterNameAsync)" />
 </DialogSearch>
 
 @code {

@@ -66,8 +66,6 @@
     <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="PanelContentChanged">
         @foreach (var tab in tabs)
         {
-
-
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="RefreshPage" Value="RefreshPage">

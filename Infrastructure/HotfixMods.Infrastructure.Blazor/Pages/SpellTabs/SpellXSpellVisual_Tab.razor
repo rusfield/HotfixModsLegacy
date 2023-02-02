@@ -2,7 +2,7 @@
 
 @inherits DtoContentBase<SpellDto, SpellXSpellVisual>
 
-<InstancedDtoContentPage>
+<StandardDtoContent T="SpellXSpellVisual">
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.Probability" ValueCompare="ValueCompare?.Probability" Label="@nameof(Value.Probability).ToDisplayName()" />
         <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
@@ -26,4 +26,4 @@
         <Input_Element T="ushort" @bind-Value="Value.CasterUnitConditionId" ValueCompare="ValueCompare?.CasterUnitConditionId" Label="@nameof(Value.CasterUnitConditionId).ToDisplayName()" />
         <Input_Element T="uint" @bind-Value="Value.CasterPlayerConditionId" ValueCompare="ValueCompare?.CasterPlayerConditionId" Label="@nameof(Value.CasterPlayerConditionId).ToDisplayName()" />
     </MudItem>
-</InstancedDtoContentPage>
+</StandardDtoContent>

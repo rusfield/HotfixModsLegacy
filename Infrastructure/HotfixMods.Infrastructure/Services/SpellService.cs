@@ -41,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<SpellDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var progress = LoadingHelper.GetLoaderFunc(11);
+            var progress = LoadingHelper.GetLoaderFunc(12);
 
             var spell = await GetSingleAsync<Spell>(callback, progress, new DbParameter(nameof(Spell.Id), id));
 
@@ -59,10 +59,24 @@ namespace HotfixMods.Infrastructure.Services
                 SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellId), id)),
                 SpellPower = await GetSingleAsync<SpellPower>(callback, progress, new DbParameter(nameof(SpellPower.SpellId), id)),
                 SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, new DbParameter(nameof(SpellCooldowns.SpellId), id)),
+                SpellXSpellVisual = await GetSingleAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellId), id)),
 
                 Spell = spell,
                 IsUpdate = true
             };
+
+            if (result.SpellXSpellVisual != null)
+            {
+                result.SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, new DbParameter(nameof(SpellVisual.Id), result.SpellXSpellVisual.SpellVisualId));
+                var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, new DbParameter(nameof(SpellVisualEvent.SpellVisualId), result.SpellXSpellVisual.SpellVisualId));
+                spellVisualEvents.ForEach(s =>
+                {
+                    result.EventGroups.Add(new()
+                    {
+                        SpellVisualEvent = s
+                    });
+                });
+            }
 
             var spellEffects = await GetAsync<SpellEffect>(callback, progress, new DbParameter(nameof(SpellEffect.SpellId), id));
             spellEffects.ForEach(s =>
@@ -73,28 +87,6 @@ namespace HotfixMods.Infrastructure.Services
                 });
             });
 
-            var spellXSpellVisuals = await GetAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellId), id));
-
-            callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
-            await spellXSpellVisuals.ForEachAsync(async sxsv =>
-            {
-                var spellVisualEvents = await GetAsync<SpellVisualEvent>(new DbParameter(nameof(SpellVisualEvent.SpellVisualId), sxsv.SpellVisualId));
-                await spellVisualEvents.ForEachAsync(async sve =>
-                {
-                    var spellVisuals = await GetAsync<SpellVisual>(new DbParameter(nameof(SpellVisual.Id), sve.SpellVisualId));
-                    spellVisuals.ForEach(sv =>
-                    {
-                        var newSpellVisualEvent = JsonSerializer.Deserialize<SpellVisualEvent>(JsonSerializer.Serialize(sve))!;
-                        var newSpellXSpellVisual = JsonSerializer.Deserialize<SpellXSpellVisual>(JsonSerializer.Serialize(sve))!;
-                        result.VisualGroups.Add(new()
-                        {
-                            SpellVisual = sv,
-                            SpellVisualEvent = newSpellVisualEvent,
-                            SpellXSpellVisual = newSpellXSpellVisual
-                        });
-                    });
-                });
-            });
 
             callback.Invoke(LoadingHelper.Loading, $"Loading successful.", 100);
             return result;
@@ -121,6 +113,8 @@ namespace HotfixMods.Infrastructure.Services
             await SaveAsync(callback, progress, dto.SpellMisc);
             await SaveAsync(callback, progress, dto.SpellName);
             await SaveAsync(callback, progress, dto.SpellPower);
+            await SaveAsync(callback, progress, dto.SpellXSpellVisual);
+            await SaveAsync(callback, progress, dto.SpellVisual);
 
             callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellEffect)}", progress());
             await dto.EffectGroups.ForEachAsync(async e =>
@@ -128,11 +122,9 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(e.SpellEffect);
             });
 
-            callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellXSpellVisual)}, {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
-            await dto.VisualGroups.ForEachAsync(async v =>
+            callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellVisualEvent)}", progress());
+            await dto.EventGroups.ForEachAsync(async v =>
             {
-                await SaveAsync(v.SpellXSpellVisual);
-                await SaveAsync(v.SpellVisual);
                 await SaveAsync(v.SpellVisualEvent);
             });
 
@@ -154,11 +146,9 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellXSpellVisual)}, {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
-            await dto.VisualGroups.ForEachAsync(async v =>
+            await dto.EventGroups.ForEachAsync(async v =>
             {
                 await DeleteAsync(v.SpellVisualEvent);
-                await DeleteAsync(v.SpellVisualEvent);
-                await DeleteAsync(v.SpellXSpellVisual);
             });
 
             callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellEffect)}", progress());
@@ -166,6 +156,8 @@ namespace HotfixMods.Infrastructure.Services
             {
                 await DeleteAsync(e.SpellEffect);
             });
+            await DeleteAsync(callback, progress, dto.SpellVisual);
+            await DeleteAsync(callback, progress, dto.SpellXSpellVisual);
             await DeleteAsync(callback, progress, dto.SpellPower);
             await DeleteAsync(callback, progress, dto.SpellName);
             await DeleteAsync(callback, progress, dto.SpellMisc);

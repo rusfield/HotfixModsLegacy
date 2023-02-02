@@ -42,7 +42,8 @@ namespace HotfixMods.Infrastructure.Services
 
             foreach (var effectGroup in dto.EffectGroups)
             {
-                effectGroup.SpellVisualKitEffect.Id = nextSpellVisualKitEffectId;
+                effectGroup.SpellVisualKitEffect.Id = nextSpellVisualKitEffectId++;
+                effectGroup.SpellVisualKitEffect.ParentSpellVisualKitId = (int)spellVisualKitid;
                 effectGroup.SpellVisualScreenEffect.VerifiedBuild = VerifiedBuild;
 
                 if (Enum.IsDefined(typeof(SpellVisualEffectEffectType), effectGroup.SpellVisualKitEffect.EffectType))

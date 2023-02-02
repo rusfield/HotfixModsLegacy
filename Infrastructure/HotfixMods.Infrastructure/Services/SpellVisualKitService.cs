@@ -63,6 +63,7 @@ namespace HotfixMods.Infrastructure.Services
                 if(Enum.IsDefined(typeof(SpellVisualEffectEffectType), spellVisualKitEffect.EffectType))
                 {
                     var group = new SpellVisualKitDto.EffectGroup();
+                    group.SpellVisualKitEffect = spellVisualKitEffect;
                     var type = (SpellVisualEffectEffectType)spellVisualKitEffect.EffectType;
                     if (type == SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT)
                     {

@@ -18,7 +18,7 @@
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectDisabled" />
+                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
@@ -29,9 +29,6 @@
 @code {
     [Parameter]
     public EventCallback<int> EffectTypeChanged { get; set; }
-
-    [Parameter]
-    public bool EffectDisabled { get; set; } = true;
 
     async void OnEffectTypeChanged(int newEffectType)
     {

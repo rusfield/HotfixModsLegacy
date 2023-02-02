@@ -11,6 +11,7 @@
             <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" GetOptionsAsync_Func="GetEffects" />
             <Input_Element T="decimal" @bind-Value="Value.EffectAmplitude" ValueCompare="ValueCompare?.EffectAmplitude" Label="@nameof(Value.EffectAmplitude).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectAttributes" ValueCompare="ValueCompare?.EffectAttributes" Label="@nameof(Value.EffectAttributes).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -51,18 +52,23 @@
             <Input_Element T="int" @bind-Value="Value.EffectMiscValue2" ValueCompare="ValueCompare?.EffectMiscValue2" Label="@nameof(Value.EffectMiscValue2).ToDisplayName()" />
             <Input_Element T="uint" @bind-Value="Value.EffectRadiusIndex1" ValueCompare="ValueCompare?.EffectRadiusIndex1" Label="@nameof(Value.EffectRadiusIndex1).ToDisplayName()" />
             <Input_Element T="uint" @bind-Value="Value.EffectRadiusIndex2" ValueCompare="ValueCompare?.EffectRadiusIndex2" Label="@nameof(Value.EffectRadiusIndex2).ToDisplayName()" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget2" ValueCompare="ValueCompare?.ImplicitTarget2" Label="@nameof(Value.ImplicitTarget2).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask1" ValueCompare="ValueCompare?.EffectSpellClassMask1" Label="@nameof(Value.EffectSpellClassMask1).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask2" ValueCompare="ValueCompare?.EffectSpellClassMask2" Label="@nameof(Value.EffectSpellClassMask2).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask3" ValueCompare="ValueCompare?.EffectSpellClassMask3" Label="@nameof(Value.EffectSpellClassMask3).ToDisplayName()" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask4" ValueCompare="ValueCompare?.EffectSpellClassMask4" Label="@nameof(Value.EffectSpellClassMask4).ToDisplayName()" />
-            <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
-            <Input_Element T="short" @bind-Value="Value.ImplicitTarget2" ValueCompare="ValueCompare?.ImplicitTarget2" Label="@nameof(Value.ImplicitTarget2).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" />
-        </MudItem>
-        <MudItem xs="6">
-            <Placeholder_Element Amount="4" />
-        </MudItem>
-        <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

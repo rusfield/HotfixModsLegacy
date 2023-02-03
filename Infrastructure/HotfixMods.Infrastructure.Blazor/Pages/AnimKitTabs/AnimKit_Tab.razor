@@ -5,7 +5,7 @@
 
 <StandardDtoContent T="AnimKit" >
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="@(Value.OneShotDuration)" Label="@(nameof(Value.OneShotDuration).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.OneShotDuration" />
+        <Input_Element T="uint" @bind-Value="@(Value.OneShotDuration)" Label="@(nameof(Value.OneShotDuration).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.OneShotDuration" OnInfoAdornmentClick="@(OpenInfoDialog(info.OneShotDuration))" />
         <Input_Element T="ushort" @bind-Value="@(Value.OneShotStopAnimKitId)" Label="@(nameof(Value.OneShotStopAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.OneShotStopAnimKitId" OnInfoAdornmentClick="@(OpenInfoDialog(info.OneShotStopAnimKitId))" />
     </MudItem>
     <MudItem xs="9" />
@@ -13,9 +13,4 @@
 
 @code{
     AnimKitInfo info = new(); 
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-    }
 }

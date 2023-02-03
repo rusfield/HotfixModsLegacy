@@ -1,4 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.InfoModels
+
 
 @inherits DtoContentBase<SpellDto, SpellVisual>
 
@@ -54,3 +56,7 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
+
+@code {
+    SpellVisualInfo info = new();
+}

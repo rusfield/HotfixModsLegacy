@@ -24,7 +24,7 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-
+/*
 var hotfixTool = new HotfixTableTool();
 var db2Types = new List<Type>
 {
@@ -48,7 +48,7 @@ var db2Types = new List<Type>
 };
 hotfixTool.GenerateAll(db2Types.ToArray());
 Console.ReadKey();
-
+*/
 
 /*
 var tcTool = new TrinityCoreDbTool();
@@ -284,7 +284,7 @@ foreach (var model in models)
 
 
 
-/*
+
 // Generate InfoModel
 Console.WriteLine("Enter name of DTO ( ex. CreatureDto )");
 var input = Console.ReadLine();
@@ -331,4 +331,3 @@ else
 }
 Console.WriteLine("Done");
 Console.ReadKey();
-*/

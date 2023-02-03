@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SpellDto, Spell>
 
@@ -16,3 +17,7 @@
         <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" />
     </MudItem>
 </StandardDtoContent>
+
+@code {
+    SpellInfo info = new();
+}

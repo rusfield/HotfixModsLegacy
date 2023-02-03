@@ -30,6 +30,8 @@
     [Parameter]
     public EventCallback<int> EffectTypeChanged { get; set; }
 
+    SpellVisualKitEffectInfo info = new();
+
     async void OnEffectTypeChanged(int newEffectType)
     {
         Value.EffectType = newEffectType;

@@ -1,4 +1,5 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SoundKitDto, SoundKit>
 
@@ -51,3 +52,7 @@
         <Input_Element T="uint" @bind-Value="@(Value.SoundMixGroupId)" Label="@(nameof(Value.SoundMixGroupId).ToDisplayName())" ValueCompare="ValueCompare?.SoundMixGroupId" />
     </MudItem>
 </StandardDtoContent>
+
+@code {
+    SoundKitInfo info = new();
+}

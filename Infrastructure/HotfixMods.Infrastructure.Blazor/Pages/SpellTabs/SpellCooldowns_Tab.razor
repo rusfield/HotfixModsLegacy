@@ -6,29 +6,29 @@
 <StandardDtoContent T="SpellCooldowns">
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="int" @bind-Value="Value.AuraSpellId" ValueCompare="ValueCompare?.AuraSpellId" Label="@nameof(Value.AuraSpellId).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.AuraSpellId" ValueCompare="ValueCompare?.AuraSpellId" Label="@nameof(Value.AuraSpellId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AuraSpellId))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartRecoveryTime))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RecoveryTime))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
-            <LeftContent />
+            <LeftContent  />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CategoryRecoveryTime))" />
             </MiddleContent>
-            <RightContent />
+            <RightContent  />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyId))" />
     </MudItem>
 </StandardDtoContent>
 

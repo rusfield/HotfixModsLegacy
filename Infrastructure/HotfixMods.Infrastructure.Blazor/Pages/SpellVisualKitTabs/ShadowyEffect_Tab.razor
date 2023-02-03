@@ -5,38 +5,38 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.InnerStrength" ValueCompare="ValueCompare?.InnerStrength" Label="@nameof(Value.InnerStrength).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.OuterStrength" ValueCompare="ValueCompare?.OuterStrength" Label="@nameof(Value.OuterStrength).ToDisplayName()" />
-        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.InnerStrength" ValueCompare="ValueCompare?.InnerStrength" Label="@nameof(Value.InnerStrength).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InnerStrength))" />
+        <Input_Element T="decimal" @bind-Value="Value.OuterStrength" ValueCompare="ValueCompare?.OuterStrength" Label="@nameof(Value.OuterStrength).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OuterStrength))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialDelay))" />
     </MudItem>
     <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
+        <Placeholder_Element Amount="4"/>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.PrimaryColor" ValueCompare="ValueCompare?.PrimaryColor" Label="@nameof(Value.PrimaryColor).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.PrimaryColor" ValueCompare="ValueCompare?.PrimaryColor" Label="@nameof(Value.PrimaryColor).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PrimaryColor))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.SecondaryColor" ValueCompare="ValueCompare?.SecondaryColor" Label="@nameof(Value.SecondaryColor).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.SecondaryColor" ValueCompare="ValueCompare?.SecondaryColor" Label="@nameof(Value.SecondaryColor).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SecondaryColor))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeInTime" ValueCompare="ValueCompare?.FadeInTime" Label="@nameof(Value.FadeInTime).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeInTime" ValueCompare="ValueCompare?.FadeInTime" Label="@nameof(Value.FadeInTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeInTime))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Duration))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeOutTime" ValueCompare="ValueCompare?.FadeOutTime" Label="@nameof(Value.FadeOutTime).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeOutTime" ValueCompare="ValueCompare?.FadeOutTime" Label="@nameof(Value.FadeOutTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeOutTime))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.Value" ValueCompare="ValueCompare?.Value" Label="@nameof(Value.Value).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
-        <Input_Element T="sbyte" @bind-Value="Value.AttachPos" ValueCompare="ValueCompare?.AttachPos" Label="@nameof(Value.AttachPos).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CurveId))" />
+        <Input_Element T="decimal" @bind-Value="Value.Value" ValueCompare="ValueCompare?.Value" Label="@nameof(Value.Value).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Value))" />
+        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
+        <Input_Element T="sbyte" @bind-Value="Value.AttachPos" ValueCompare="ValueCompare?.AttachPos" Label="@nameof(Value.AttachPos).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachPos))" />
     </MudItem>
 </InstancedDtoContentPage>
 

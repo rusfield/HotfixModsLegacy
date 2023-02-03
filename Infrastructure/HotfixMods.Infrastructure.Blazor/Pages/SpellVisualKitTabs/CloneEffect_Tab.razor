@@ -5,19 +5,19 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.DurationMs" ValueCompare="ValueCompare?.DurationMs" Label="@nameof(Value.DurationMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.DelayMs" ValueCompare="ValueCompare?.DelayMs" Label="@nameof(Value.DelayMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.FadeInTimeMs" ValueCompare="ValueCompare?.FadeInTimeMs" Label="@nameof(Value.FadeInTimeMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.FadeOutTimeMs" ValueCompare="ValueCompare?.FadeOutTimeMs" Label="@nameof(Value.FadeOutTimeMs).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.DurationMs" ValueCompare="ValueCompare?.DurationMs" Label="@nameof(Value.DurationMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DurationMs))" />
+        <Input_Element T="int" @bind-Value="Value.DelayMs" ValueCompare="ValueCompare?.DelayMs" Label="@nameof(Value.DelayMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DelayMs))" />
+        <Input_Element T="int" @bind-Value="Value.FadeInTimeMs" ValueCompare="ValueCompare?.FadeInTimeMs" Label="@nameof(Value.FadeInTimeMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeInTimeMs))" />
+        <Input_Element T="int" @bind-Value="Value.FadeOutTimeMs" ValueCompare="ValueCompare?.FadeOutTimeMs" Label="@nameof(Value.FadeOutTimeMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeOutTimeMs))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.StartSpellVisualKitId" ValueCompare="ValueCompare?.StartSpellVisualKitId" Label="@nameof(Value.StartSpellVisualKitId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.OffsetMatrixId" ValueCompare="ValueCompare?.OffsetMatrixId" Label="@nameof(Value.OffsetMatrixId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitId" ValueCompare="ValueCompare?.StateSpellVisualKitId" Label="@nameof(Value.StateSpellVisualKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StateSpellVisualKitId))" />
+        <Input_Element T="int" @bind-Value="Value.StartSpellVisualKitId" ValueCompare="ValueCompare?.StartSpellVisualKitId" Label="@nameof(Value.StartSpellVisualKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartSpellVisualKitId))" />
+        <Input_Element T="int" @bind-Value="Value.OffsetMatrixId" ValueCompare="ValueCompare?.OffsetMatrixId" Label="@nameof(Value.OffsetMatrixId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetMatrixId))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
     </MudItem>
 </InstancedDtoContentPage>
 

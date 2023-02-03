@@ -5,32 +5,32 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowBlue" ValueCompare="ValueCompare?.GlowBlue" Label="@nameof(Value.GlowBlue).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowAlpha" ValueCompare="ValueCompare?.GlowAlpha" Label="@nameof(Value.GlowAlpha).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowMultiplier" ValueCompare="ValueCompare?.GlowMultiplier" Label="@nameof(Value.GlowMultiplier).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowRed))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowGreen))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowBlue" ValueCompare="ValueCompare?.GlowBlue" Label="@nameof(Value.GlowBlue).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowBlue))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowAlpha" ValueCompare="ValueCompare?.GlowAlpha" Label="@nameof(Value.GlowAlpha).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowAlpha))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowMultiplier" ValueCompare="ValueCompare?.GlowMultiplier" Label="@nameof(Value.GlowMultiplier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowMultiplier))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeIn" ValueCompare="ValueCompare?.FadeIn" Label="@nameof(Value.FadeIn).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeIn" ValueCompare="ValueCompare?.FadeIn" Label="@nameof(Value.FadeIn).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeIn))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Duration))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeOut" ValueCompare="ValueCompare?.FadeOut" Label="@nameof(Value.FadeOut).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeOut" ValueCompare="ValueCompare?.FadeOut" Label="@nameof(Value.FadeOut).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeOut))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
-        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CurveId))" />
+        <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FresnelCoefficient))" />
+        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialDelay))" />
+        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
     </MudItem>
 </InstancedDtoContentPage>
 

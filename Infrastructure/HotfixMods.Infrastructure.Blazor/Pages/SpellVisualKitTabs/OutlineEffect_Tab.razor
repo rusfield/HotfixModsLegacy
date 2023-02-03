@@ -5,26 +5,26 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorId" ValueCompare="ValueCompare?.PassiveHighlightColorId" Label="@nameof(Value.PassiveHighlightColorId).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.HighlightColorId" ValueCompare="ValueCompare?.HighlightColorId" Label="@nameof(Value.HighlightColorId).ToDisplayName()" />
+        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorId" ValueCompare="ValueCompare?.PassiveHighlightColorId" Label="@nameof(Value.PassiveHighlightColorId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PassiveHighlightColorId))" />
+        <Input_Element T="uint" @bind-Value="Value.HighlightColorId" ValueCompare="ValueCompare?.HighlightColorId" Label="@nameof(Value.HighlightColorId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HighlightColorId))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Range))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.UnitConditionId1" ValueCompare="ValueCompare?.UnitConditionId1" Label="@nameof(Value.UnitConditionId1).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.UnitConditionId2" ValueCompare="ValueCompare?.UnitConditionId2" Label="@nameof(Value.UnitConditionId2).ToDisplayName()" />
+        <Input_Element T="uint" @bind-Value="Value.UnitConditionId1" ValueCompare="ValueCompare?.UnitConditionId1" Label="@nameof(Value.UnitConditionId1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId1))" />
+        <Input_Element T="uint" @bind-Value="Value.UnitConditionId2" ValueCompare="ValueCompare?.UnitConditionId2" Label="@nameof(Value.UnitConditionId2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId2))" />
     </MudItem>
 </InstancedDtoContentPage>
 

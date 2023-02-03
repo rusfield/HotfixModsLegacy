@@ -7,52 +7,52 @@
 <PagedDtoContent T="SpellVisual">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset1" ValueCompare="ValueCompare?.MissileCastOffset1" Label="@nameof(Value.MissileCastOffset1).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset2" ValueCompare="ValueCompare?.MissileCastOffset2" Label="@nameof(Value.MissileCastOffset2).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset3" ValueCompare="ValueCompare?.MissileCastOffset3" Label="@nameof(Value.MissileCastOffset3).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.MissileCastPositionerId" ValueCompare="ValueCompare?.MissileCastPositionerId" Label="@nameof(Value.MissileCastPositionerId).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset1" ValueCompare="ValueCompare?.MissileCastOffset1" Label="@nameof(Value.MissileCastOffset1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileCastOffset1))" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset2" ValueCompare="ValueCompare?.MissileCastOffset2" Label="@nameof(Value.MissileCastOffset2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileCastOffset2))" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileCastOffset3" ValueCompare="ValueCompare?.MissileCastOffset3" Label="@nameof(Value.MissileCastOffset3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileCastOffset3))" />
+            <Input_Element T="uint" @bind-Value="Value.MissileCastPositionerId" ValueCompare="ValueCompare?.MissileCastPositionerId" Label="@nameof(Value.MissileCastPositionerId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileCastPositionerId))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.MissileAttachment" ValueCompare="ValueCompare?.MissileAttachment" Label="@nameof(Value.MissileAttachment).ToDisplayName()" />
+                    <Input_Element T="sbyte" @bind-Value="Value.MissileAttachment" ValueCompare="ValueCompare?.MissileAttachment" Label="@nameof(Value.MissileAttachment).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileAttachment))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.MissileDestinationAttachment" ValueCompare="ValueCompare?.MissileDestinationAttachment" Label="@nameof(Value.MissileDestinationAttachment).ToDisplayName()" />
+                    <Input_Element T="sbyte" @bind-Value="Value.MissileDestinationAttachment" ValueCompare="ValueCompare?.MissileDestinationAttachment" Label="@nameof(Value.MissileDestinationAttachment).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileDestinationAttachment))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset1" ValueCompare="ValueCompare?.MissileImpactOffset1" Label="@nameof(Value.MissileImpactOffset1).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset2" ValueCompare="ValueCompare?.MissileImpactOffset2" Label="@nameof(Value.MissileImpactOffset2).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset3" ValueCompare="ValueCompare?.MissileImpactOffset3" Label="@nameof(Value.MissileImpactOffset3).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.MissileImpactPositionerId" ValueCompare="ValueCompare?.MissileImpactPositionerId" Label="@nameof(Value.MissileImpactPositionerId).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset1" ValueCompare="ValueCompare?.MissileImpactOffset1" Label="@nameof(Value.MissileImpactOffset1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileImpactOffset1))" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset2" ValueCompare="ValueCompare?.MissileImpactOffset2" Label="@nameof(Value.MissileImpactOffset2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileImpactOffset2))" />
+            <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset3" ValueCompare="ValueCompare?.MissileImpactOffset3" Label="@nameof(Value.MissileImpactOffset3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileImpactOffset3))" />
+            <Input_Element T="uint" @bind-Value="Value.MissileImpactPositionerId" ValueCompare="ValueCompare?.MissileImpactPositionerId" Label="@nameof(Value.MissileImpactPositionerId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileImpactPositionerId))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.MissileTargetingKit" ValueCompare="ValueCompare?.MissileTargetingKit" Label="@nameof(Value.MissileTargetingKit).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.CasterSpellVisualId" ValueCompare="ValueCompare?.CasterSpellVisualId" Label="@nameof(Value.CasterSpellVisualId).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.HostileSpellVisualId" ValueCompare="ValueCompare?.HostileSpellVisualId" Label="@nameof(Value.HostileSpellVisualId).ToDisplayName()" />
-            <Input_Element T="ushort" @bind-Value="Value.SpellVisualMissileSetId" ValueCompare="ValueCompare?.SpellVisualMissileSetId" Label="@nameof(Value.SpellVisualMissileSetId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.MissileTargetingKit" ValueCompare="ValueCompare?.MissileTargetingKit" Label="@nameof(Value.MissileTargetingKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MissileTargetingKit))" />
+            <Input_Element T="uint" @bind-Value="Value.CasterSpellVisualId" ValueCompare="ValueCompare?.CasterSpellVisualId" Label="@nameof(Value.CasterSpellVisualId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CasterSpellVisualId))" />
+            <Input_Element T="uint" @bind-Value="Value.HostileSpellVisualId" ValueCompare="ValueCompare?.HostileSpellVisualId" Label="@nameof(Value.HostileSpellVisualId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HostileSpellVisualId))" />
+            <Input_Element T="ushort" @bind-Value="Value.SpellVisualMissileSetId" ValueCompare="ValueCompare?.SpellVisualMissileSetId" Label="@nameof(Value.SpellVisualMissileSetId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellVisualMissileSetId))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.DamageNumberDelay" ValueCompare="ValueCompare?.DamageNumberDelay" Label="@nameof(Value.DamageNumberDelay).ToDisplayName()" />
+                    <Input_Element T="ushort" @bind-Value="Value.DamageNumberDelay" ValueCompare="ValueCompare?.DamageNumberDelay" Label="@nameof(Value.DamageNumberDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DamageNumberDelay))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.AnimEventSoundId" ValueCompare="ValueCompare?.AnimEventSoundId" Label="@nameof(Value.AnimEventSoundId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.ReducedUnexpectedCameraMovementSpellVisualId" ValueCompare="ValueCompare?.ReducedUnexpectedCameraMovementSpellVisualId" Label="@nameof(Value.ReducedUnexpectedCameraMovementSpellVisualId).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.RaidSpellVisualMissileSetId" ValueCompare="ValueCompare?.RaidSpellVisualMissileSetId" Label="@nameof(Value.RaidSpellVisualMissileSetId).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.LowViolenceSpellVisualId" ValueCompare="ValueCompare?.LowViolenceSpellVisualId" Label="@nameof(Value.LowViolenceSpellVisualId).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.AnimEventSoundId" ValueCompare="ValueCompare?.AnimEventSoundId" Label="@nameof(Value.AnimEventSoundId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimEventSoundId))" />
+            <Input_Element T="int" @bind-Value="Value.ReducedUnexpectedCameraMovementSpellVisualId" ValueCompare="ValueCompare?.ReducedUnexpectedCameraMovementSpellVisualId" Label="@nameof(Value.ReducedUnexpectedCameraMovementSpellVisualId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ReducedUnexpectedCameraMovementSpellVisualId))" />
+            <Input_Element T="uint" @bind-Value="Value.RaidSpellVisualMissileSetId" ValueCompare="ValueCompare?.RaidSpellVisualMissileSetId" Label="@nameof(Value.RaidSpellVisualMissileSetId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RaidSpellVisualMissileSetId))" />
+            <Input_Element T="uint" @bind-Value="Value.LowViolenceSpellVisualId" ValueCompare="ValueCompare?.LowViolenceSpellVisualId" Label="@nameof(Value.LowViolenceSpellVisualId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LowViolenceSpellVisualId))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

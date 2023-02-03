@@ -4,23 +4,23 @@
 @inherits DtoContentBase<SpellVisualKitDto, SpellEffectEmission>
 
 <InstancedDtoContentPage>
-    <MudItem xs="3" />
+    <MudItem xs="3"  />
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.EmissionRate" ValueCompare="ValueCompare?.EmissionRate" Label="@nameof(Value.EmissionRate).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.EmissionRate" ValueCompare="ValueCompare?.EmissionRate" Label="@nameof(Value.EmissionRate).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EmissionRate))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" />
+                <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelScale))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="short" @bind-Value="Value.AreaModelId" ValueCompare="ValueCompare?.AreaModelId" Label="@nameof(Value.AreaModelId).ToDisplayName()" />
+                <Input_Element T="short" @bind-Value="Value.AreaModelId" ValueCompare="ValueCompare?.AreaModelId" Label="@nameof(Value.AreaModelId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AreaModelId))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+                <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

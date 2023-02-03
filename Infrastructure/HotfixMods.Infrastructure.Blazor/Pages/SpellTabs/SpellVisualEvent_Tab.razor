@@ -6,27 +6,27 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.StartEvent" ValueCompare="ValueCompare?.StartEvent" Label="@nameof(Value.StartEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes"  />
-        <Input_Element T="int" @bind-Value="Value.EndEvent" ValueCompare="ValueCompare?.EndEvent" Label="@nameof(Value.EndEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes"  />
-        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_008" ValueCompare="ValueCompare?.Field_10_0_0_44649_008" Label="@nameof(Value.Field_10_0_0_44649_008).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_009" ValueCompare="ValueCompare?.Field_10_0_0_44649_009" Label="@nameof(Value.Field_10_0_0_44649_009).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.StartEvent" ValueCompare="ValueCompare?.StartEvent" Label="@nameof(Value.StartEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartEvent))" />
+        <Input_Element T="int" @bind-Value="Value.EndEvent" ValueCompare="ValueCompare?.EndEvent" Label="@nameof(Value.EndEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndEvent))" />
+        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_008" ValueCompare="ValueCompare?.Field_10_0_0_44649_008" Label="@nameof(Value.Field_10_0_0_44649_008).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_10_0_0_44649_008))" />
+        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_009" ValueCompare="ValueCompare?.Field_10_0_0_44649_009" Label="@nameof(Value.Field_10_0_0_44649_009).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_10_0_0_44649_009))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.TargetType" ValueCompare="ValueCompare?.TargetType" Label="@nameof(Value.TargetType).ToDisplayName()" GetOptionsAsync_Func="GetTargetTypes"  />
+                <Input_Element T="int" @bind-Value="Value.TargetType" ValueCompare="ValueCompare?.TargetType" Label="@nameof(Value.TargetType).ToDisplayName()" GetOptionsAsync_Func="GetTargetTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.TargetType))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.SpellVisualKitId" ValueCompare="ValueCompare?.SpellVisualKitId" Label="@nameof(Value.SpellVisualKitId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.SpellVisualKitId" ValueCompare="ValueCompare?.SpellVisualKitId" Label="@nameof(Value.SpellVisualKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellVisualKitId))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.StartMinOffsetMs" ValueCompare="ValueCompare?.StartMinOffsetMs" Label="@nameof(Value.StartMinOffsetMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.StartMaxOffsetMs" ValueCompare="ValueCompare?.StartMaxOffsetMs" Label="@nameof(Value.StartMaxOffsetMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.EndMinOffsetMs" ValueCompare="ValueCompare?.EndMinOffsetMs" Label="@nameof(Value.EndMinOffsetMs).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.EndMaxOffsetMs" ValueCompare="ValueCompare?.EndMaxOffsetMs" Label="@nameof(Value.EndMaxOffsetMs).ToDisplayName()" />
+        <Input_Element T="int" @bind-Value="Value.StartMinOffsetMs" ValueCompare="ValueCompare?.StartMinOffsetMs" Label="@nameof(Value.StartMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartMinOffsetMs))" />
+        <Input_Element T="int" @bind-Value="Value.StartMaxOffsetMs" ValueCompare="ValueCompare?.StartMaxOffsetMs" Label="@nameof(Value.StartMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartMaxOffsetMs))" />
+        <Input_Element T="int" @bind-Value="Value.EndMinOffsetMs" ValueCompare="ValueCompare?.EndMinOffsetMs" Label="@nameof(Value.EndMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndMinOffsetMs))" />
+        <Input_Element T="int" @bind-Value="Value.EndMaxOffsetMs" ValueCompare="ValueCompare?.EndMaxOffsetMs" Label="@nameof(Value.EndMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndMaxOffsetMs))" />
     </MudItem>
 </InstancedDtoContentPage>
 

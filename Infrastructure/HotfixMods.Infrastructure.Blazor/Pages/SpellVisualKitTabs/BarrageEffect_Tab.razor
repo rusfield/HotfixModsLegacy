@@ -5,28 +5,28 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.ConeAngle" ValueCompare="ValueCompare?.ConeAngle" Label="@nameof(Value.ConeAngle).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.ConeAngle" ValueCompare="ValueCompare?.ConeAngle" Label="@nameof(Value.ConeAngle).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ConeAngle))" />
+        <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Range))" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.ModelCountMin" ValueCompare="ValueCompare?.ModelCountMin" Label="@nameof(Value.ModelCountMin).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.ModelCountMin" ValueCompare="ValueCompare?.ModelCountMin" Label="@nameof(Value.ModelCountMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelCountMin))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.ModelCountMax" ValueCompare="ValueCompare?.ModelCountMax" Label="@nameof(Value.ModelCountMax).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.ModelCountMax" ValueCompare="ValueCompare?.ModelCountMax" Label="@nameof(Value.ModelCountMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelCountMax))" />
             </RightContent>
         </InlineGroup>
-        <Input_Element T="sbyte" @bind-Value="Value.AttachmentPoint" ValueCompare="ValueCompare?.AttachmentPoint" Label="@nameof(Value.AttachmentPoint).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" />
+        <Input_Element T="sbyte" @bind-Value="Value.AttachmentPoint" ValueCompare="ValueCompare?.AttachmentPoint" Label="@nameof(Value.AttachmentPoint).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentPoint))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.Field_8_1_0_28616_001Min" ValueCompare="ValueCompare?.Field_8_1_0_28616_001Min" Label="@nameof(Value.Field_8_1_0_28616_001Min).ToDisplayName()" />
-        <Input_Element T="decimal" @bind-Value="Value.Field_8_1_0_28616_001Max" ValueCompare="ValueCompare?.Field_8_1_0_28616_001Max" Label="@nameof(Value.Field_8_1_0_28616_001Max).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_003Min" ValueCompare="ValueCompare?.Field_8_1_0_28440_003Min" Label="@nameof(Value.Field_8_1_0_28440_003Min).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_003Max" ValueCompare="ValueCompare?.Field_8_1_0_28440_003Max" Label="@nameof(Value.Field_8_1_0_28440_003Max).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_005" ValueCompare="ValueCompare?.Field_8_1_0_28440_005" Label="@nameof(Value.Field_8_1_0_28440_005).ToDisplayName()" />
+        <Input_Element T="decimal" @bind-Value="Value.Field_8_1_0_28616_001Min" ValueCompare="ValueCompare?.Field_8_1_0_28616_001Min" Label="@nameof(Value.Field_8_1_0_28616_001Min).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_8_1_0_28616_001Min))" />
+        <Input_Element T="decimal" @bind-Value="Value.Field_8_1_0_28616_001Max" ValueCompare="ValueCompare?.Field_8_1_0_28616_001Max" Label="@nameof(Value.Field_8_1_0_28616_001Max).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_8_1_0_28616_001Max))" />
+        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_003Min" ValueCompare="ValueCompare?.Field_8_1_0_28440_003Min" Label="@nameof(Value.Field_8_1_0_28440_003Min).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_8_1_0_28440_003Min))" />
+        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_003Max" ValueCompare="ValueCompare?.Field_8_1_0_28440_003Max" Label="@nameof(Value.Field_8_1_0_28440_003Max).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_8_1_0_28440_003Max))" />
+        <Input_Element T="int" @bind-Value="Value.Field_8_1_0_28440_005" ValueCompare="ValueCompare?.Field_8_1_0_28440_005" Label="@nameof(Value.Field_8_1_0_28440_005).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_8_1_0_28440_005))" />
     </MudItem>
 </InstancedDtoContentPage>
 

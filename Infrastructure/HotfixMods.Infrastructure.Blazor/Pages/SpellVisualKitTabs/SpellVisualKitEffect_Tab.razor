@@ -11,14 +11,14 @@
         <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" />
+                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectType))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" />
+                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Effect))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>

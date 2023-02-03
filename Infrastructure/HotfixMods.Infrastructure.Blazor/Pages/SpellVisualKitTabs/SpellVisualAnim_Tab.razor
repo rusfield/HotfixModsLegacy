@@ -10,16 +10,16 @@
         <InlineGroup Merged="false" LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="ushort" @bind-Value="Value.AnimKitId" ValueCompare="ValueCompare?.AnimKitId" Label="@nameof(Value.AnimKitId).ToDisplayName()" />
+                <Input_Element T="ushort" @bind-Value="Value.AnimKitId" ValueCompare="ValueCompare?.AnimKitId" Label="@nameof(Value.AnimKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitId))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.InitialAnimId" ValueCompare="ValueCompare?.InitialAnimId" Label="@nameof(Value.InitialAnimId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.InitialAnimId" ValueCompare="ValueCompare?.InitialAnimId" Label="@nameof(Value.InitialAnimId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialAnimId))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.LoopAnimId" ValueCompare="ValueCompare?.LoopAnimId" Label="@nameof(Value.LoopAnimId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.LoopAnimId" ValueCompare="ValueCompare?.LoopAnimId" Label="@nameof(Value.LoopAnimId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LoopAnimId))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

@@ -6,15 +6,15 @@
 <StandardDtoContent T="Spell" >
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" />
+        <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AuraDescription))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" />
+        <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Description))" />
     </MudItem>
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" />
+        <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NameSubtext))" />
     </MudItem>
 </StandardDtoContent>
 

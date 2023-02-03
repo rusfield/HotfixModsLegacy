@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.InfoModels
         public string EffectAuraPeriod = "TODO";
         public string EffectBonusCoefficient = "TODO";
         public string EffectChainAmplitude = "TODO";
-        public string EffectChaintargets = "TODO";
+        public string EffectChainTargets = "TODO";
         public string EffectItemType = "TODO";
         public string EffectMechanic = "TODO";
         public string EffectPointsPerResource = "TODO";

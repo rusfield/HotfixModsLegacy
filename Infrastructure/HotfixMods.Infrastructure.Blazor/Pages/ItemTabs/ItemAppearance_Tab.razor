@@ -10,19 +10,19 @@
         <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.DisplayType" ValueCompare="ValueCompare?.DisplayType" Label="@nameof(Value.DisplayType).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.DisplayType" ValueCompare="ValueCompare?.DisplayType" Label="@nameof(Value.DisplayType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayType))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.DefaultIconFileDataId" ValueCompare="ValueCompare?.DefaultIconFileDataId" Label="@nameof(Value.DefaultIconFileDataId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.DefaultIconFileDataId" ValueCompare="ValueCompare?.DefaultIconFileDataId" Label="@nameof(Value.DefaultIconFileDataId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DefaultIconFileDataId))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UiOrder))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionId" ValueCompare="ValueCompare?.TransmogPlayerConditionId" Label="@nameof(Value.TransmogPlayerConditionId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionId" ValueCompare="ValueCompare?.TransmogPlayerConditionId" Label="@nameof(Value.TransmogPlayerConditionId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TransmogPlayerConditionId))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

@@ -5,34 +5,34 @@
 
 <StandardDtoContent T="Item" >
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" />
+        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InventoryType))" />
+        <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SheatheType))" />
+        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemGroupSoundsId))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.ClassId" ValueCompare="ValueCompare?.ClassId" Label="@nameof(Value.ClassId).ToDisplayName()" />
+                <Input_Element T="byte" @bind-Value="Value.ClassId" ValueCompare="ValueCompare?.ClassId" Label="@nameof(Value.ClassId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClassId))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="byte" @bind-Value="Value.SubclassId" ValueCompare="ValueCompare?.SubclassId" Label="@nameof(Value.SubclassId).ToDisplayName()" />
+                <Input_Element T="byte" @bind-Value="Value.SubclassId" ValueCompare="ValueCompare?.SubclassId" Label="@nameof(Value.SubclassId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SubclassId))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.IconFileDataId" ValueCompare="ValueCompare?.IconFileDataId" Label="@nameof(Value.IconFileDataId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.IconFileDataId" ValueCompare="ValueCompare?.IconFileDataId" Label="@nameof(Value.IconFileDataId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconFileDataId))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassId" ValueCompare="ValueCompare?.SoundOverrideSubclassId" Label="@nameof(Value.SoundOverrideSubclassId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" />
-        <Input_Element T="int" @bind-Value="Value.CraftingQualityId" ValueCompare="ValueCompare?.CraftingQualityId" Label="@nameof(Value.CraftingQualityId).ToDisplayName()" />
+        <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassId" ValueCompare="ValueCompare?.SoundOverrideSubclassId" Label="@nameof(Value.SoundOverrideSubclassId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundOverrideSubclassId))" />
+        <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ContentTuningId))" />
+        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsId" ValueCompare="ValueCompare?.ItemGroupSoundsId" Label="@nameof(Value.ItemGroupSoundsId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemGroupSoundsId))" />
+        <Input_Element T="int" @bind-Value="Value.CraftingQualityId" ValueCompare="ValueCompare?.CraftingQualityId" Label="@nameof(Value.CraftingQualityId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CraftingQualityId))" />
     </MudItem>
 </StandardDtoContent>
 

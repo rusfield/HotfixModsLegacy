@@ -10,16 +10,16 @@
         <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.ItemAppearanceModifierId" ValueCompare="ValueCompare?.ItemAppearanceModifierId" Label="@nameof(Value.ItemAppearanceModifierId).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.ItemAppearanceModifierId" ValueCompare="ValueCompare?.ItemAppearanceModifierId" Label="@nameof(Value.ItemAppearanceModifierId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemAppearanceModifierId))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.TransmogSourceTypeEnum" ValueCompare="ValueCompare?.TransmogSourceTypeEnum" Label="@nameof(Value.TransmogSourceTypeEnum).ToDisplayName()" />
+                <Input_Element T="byte" @bind-Value="Value.TransmogSourceTypeEnum" ValueCompare="ValueCompare?.TransmogSourceTypeEnum" Label="@nameof(Value.TransmogSourceTypeEnum).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TransmogSourceTypeEnum))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" />
+                <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OrderIndex))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

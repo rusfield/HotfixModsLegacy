@@ -5,18 +5,18 @@
 
 <StandardDtoContent T="GameobjectTemplate" >
     <MudItem xs="3">
-        <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" />
-        <Input_Element T="decimal" @bind-Value="@(Value.Size)" Label="@(nameof(Value.Size).ToDisplayName())" ValueCompare="ValueCompare?.Size" />
-        <Input_Element T="string" @bind-Value="@(Value.IconName)" Label="@(nameof(Value.IconName).ToDisplayName())" ValueCompare="ValueCompare?.IconName" />
+        <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
+        <Input_Element T="decimal" @bind-Value="@(Value.Size)" Label="@(nameof(Value.Size).ToDisplayName())" ValueCompare="ValueCompare?.Size" OnInfoAdornmentClick="@(OpenInfoDialog(info.Size))" />
+        <Input_Element T="string" @bind-Value="@(Value.IconName)" Label="@(nameof(Value.IconName).ToDisplayName())" ValueCompare="ValueCompare?.IconName" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconName))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" />
-        <Input_Element T="string" Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption)" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" />
+        <Input_Element T="string" Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.Name))" />
+        <Input_Element T="string" Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption)" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.Name))" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="string" @bind-Value="@(Value.AIName)" Label="@(nameof(Value.AIName).ToDisplayName())" ValueCompare="ValueCompare?.AIName" />
-        <Input_Element T="string" @bind-Value="@(Value.ScriptName)" Label="@(nameof(Value.ScriptName).ToDisplayName())" ValueCompare="ValueCompare?.ScriptName" />
+        <Input_Element T="string" @bind-Value="@(Value.AIName)" Label="@(nameof(Value.AIName).ToDisplayName())" ValueCompare="ValueCompare?.AIName" OnInfoAdornmentClick="@(OpenInfoDialog(info.AIName))" />
+        <Input_Element T="string" @bind-Value="@(Value.ScriptName)" Label="@(nameof(Value.ScriptName).ToDisplayName())" ValueCompare="ValueCompare?.ScriptName" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScriptName))" />
     </MudItem>
 </StandardDtoContent>
 

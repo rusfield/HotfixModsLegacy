@@ -10,7 +10,7 @@
         public string CreatureModelAlpha { get; set; } = "TODO";
         public string BloodId { get; set; } = "TODO";
         public string ExtendedDisplayInfoId { get; set; } = "TODO";
-        public string NPCSoundId { get; set; } = "TODO";
+        public string NpcSoundId { get; set; } = "TODO";
         public string ParticleColorId { get; set; } = "TODO";
         public string PortraitCreatureDisplayInfoId { get; set; } = "TODO";
         public string PortraitTextureFileDataId { get; set; } = "TODO";

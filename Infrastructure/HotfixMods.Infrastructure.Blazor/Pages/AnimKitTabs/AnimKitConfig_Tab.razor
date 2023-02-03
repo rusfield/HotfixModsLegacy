@@ -4,12 +4,12 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" />
+        <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" OnInfoAdornmentClick="@(OpenInfoDialog(info.ConfigFlags))" />
     </MudItem>
     <MudItem xs="9" />
 </InstancedDtoContentPage>
 
 
 @code {
-    AnimKitConfig info = new();
+    AnimKitConfigInfo info = new();
 }

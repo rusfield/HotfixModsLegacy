@@ -2,14 +2,14 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureTemplateAddon>
 
-<StandardDtoContent T="CreatureTemplateAddon" >
+<StandardDtoContent T="CreatureTemplateAddon">
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.Mount" ValueCompare="ValueCompare?.Mount" Label="@nameof(Value.Mount).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.MountCreatureId" ValueCompare="ValueCompare?.MountCreatureId" Label="@nameof(Value.MountCreatureId).ToDisplayName()" />
-        <Input_Element T="uint" @bind-Value="Value.Path_Id" ValueCompare="ValueCompare?.Path_Id" Label="@nameof(Value.Path_Id).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.SheatheState" ValueCompare="ValueCompare?.SheatheState" Label="@nameof(Value.SheatheState).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.VisFlags" ValueCompare="ValueCompare?.VisFlags" Label="@nameof(Value.VisFlags).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.VisibilityDistanceType" ValueCompare="ValueCompare?.VisibilityDistanceType" Label="@nameof(Value.VisibilityDistanceType).ToDisplayName()" />
+        <Input_Element T="uint" @bind-Value="Value.Mount" ValueCompare="ValueCompare?.Mount" Label="@nameof(Value.Mount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Mount))" />
+        <Input_Element T="uint" @bind-Value="Value.MountCreatureId" ValueCompare="ValueCompare?.MountCreatureId" Label="@nameof(Value.MountCreatureId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MountCreatureId))" />
+        <Input_Element T="uint" @bind-Value="Value.Path_Id" ValueCompare="ValueCompare?.Path_Id" Label="@nameof(Value.Path_Id).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Path_Id))" />
+        <Input_Element T="byte" @bind-Value="Value.SheatheState" ValueCompare="ValueCompare?.SheatheState" Label="@nameof(Value.SheatheState).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SheatheState))" />
+        <Input_Element T="byte" @bind-Value="Value.VisFlags" ValueCompare="ValueCompare?.VisFlags" Label="@nameof(Value.VisFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.VisFlags))" />
+        <Input_Element T="byte" @bind-Value="Value.VisibilityDistanceType" ValueCompare="ValueCompare?.VisibilityDistanceType" Label="@nameof(Value.VisibilityDistanceType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.VisibilityDistanceType))" />
 
     </MudItem>
     <MudItem xs="6">
@@ -17,21 +17,21 @@
         <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="string" @bind-Value="Value.Auras" ValueCompare="ValueCompare?.Auras" Label="@nameof(Value.Auras).ToDisplayName()" />
+                <Input_Element T="string" @bind-Value="Value.Auras" ValueCompare="ValueCompare?.Auras" Label="@nameof(Value.Auras).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Auras))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.Emote" ValueCompare="ValueCompare?.Emote" Label="@nameof(Value.Emote).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.StandState" ValueCompare="ValueCompare?.StandState" Label="@nameof(Value.StandState).ToDisplayName()" />
-        <Input_Element T="short" @bind-Value="Value.AiAnimKit" ValueCompare="ValueCompare?.AiAnimKit" Label="@nameof(Value.AiAnimKit).ToDisplayName()" />
-        <Input_Element T="short" @bind-Value="Value.MovementAnimKit" ValueCompare="ValueCompare?.MovementAnimKit" Label="@nameof(Value.MovementAnimKit).ToDisplayName()" />
-        <Input_Element T="short" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" />
-        <Input_Element T="byte" @bind-Value="Value.AnimTier" ValueCompare="ValueCompare?.AnimTier" Label="@nameof(Value.AnimTier).ToDisplayName()" />
+        <Input_Element T="uint" @bind-Value="Value.Emote" ValueCompare="ValueCompare?.Emote" Label="@nameof(Value.Emote).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Emote))" />
+        <Input_Element T="byte" @bind-Value="Value.StandState" ValueCompare="ValueCompare?.StandState" Label="@nameof(Value.StandState).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StandState))" />
+        <Input_Element T="short" @bind-Value="Value.AiAnimKit" ValueCompare="ValueCompare?.AiAnimKit" Label="@nameof(Value.AiAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiAnimKit))" />
+        <Input_Element T="short" @bind-Value="Value.MovementAnimKit" ValueCompare="ValueCompare?.MovementAnimKit" Label="@nameof(Value.MovementAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementAnimKit))" />
+        <Input_Element T="short" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MeleeAnimKit))" />
+        <Input_Element T="byte" @bind-Value="Value.AnimTier" ValueCompare="ValueCompare?.AnimTier" Label="@nameof(Value.AnimTier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimTier))" />
     </MudItem>
 </StandardDtoContent>
 
-        @code {
+@code {
     CreatureTemplateAddonInfo info = new();
 }

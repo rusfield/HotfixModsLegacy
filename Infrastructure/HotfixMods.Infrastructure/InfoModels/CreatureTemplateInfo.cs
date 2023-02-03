@@ -66,6 +66,7 @@
         public string Spell_School_Immune_Mask { get; set; } = "TODO";
         public string Flags_Extra { get; set; } = "TODO";
         public string ScriptName { get; set; } = "TODO";
+        public string StringId { get; set; } = "TODO";
         public string VerifiedBuild { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";

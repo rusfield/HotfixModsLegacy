@@ -6,8 +6,10 @@
         public string Path_Id { get; set; } = "TODO";
         public string Mount { get; set; } = "TODO";
         public string MountCreatureId { get; set; } = "TODO";
-        public string Bytes1 { get; set; } = "TODO";
-        public string Bytes2 { get; set; } = "TODO";
+        public string SheatheState { get; set; } = "TODO";
+        public string VisFlags { get; set; } = "TODO";
+        public string StandState { get; set; } = "TODO";
+        public string AnimTier { get; set; } = "TODO";
         public string Emote { get; set; } = "TODO";
         public string AiAnimKit { get; set; } = "TODO";
         public string MovementAnimKit { get; set; } = "TODO";

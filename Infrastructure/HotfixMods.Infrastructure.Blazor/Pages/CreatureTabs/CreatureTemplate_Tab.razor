@@ -7,176 +7,176 @@
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="short" @bind-Value="Value.Minlevel" ValueCompare="ValueCompare?.Minlevel" Label="@nameof(Value.Minlevel).ToDisplayName()" />
+                    <Input_Element T="short" @bind-Value="Value.Minlevel" ValueCompare="ValueCompare?.Minlevel" Label="@nameof(Value.Minlevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Minlevel))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="short" @bind-Value="Value.Maxlevel" ValueCompare="ValueCompare?.Maxlevel" Label="@nameof(Value.Maxlevel).ToDisplayName()" />
+                    <Input_Element T="short" @bind-Value="Value.Maxlevel" ValueCompare="ValueCompare?.Maxlevel" Label="@nameof(Value.Maxlevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Maxlevel))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" />
+            <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
+            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" />
+            <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
+            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
+            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" />
+                    <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Name))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="string" @bind-Value="Value.FemaleName" ValueCompare="ValueCompare?.FemaleName" Label="@nameof(Value.FemaleName).ToDisplayName()" />
+                    <Input_Element T="string" @bind-Value="Value.FemaleName" ValueCompare="ValueCompare?.FemaleName" Label="@nameof(Value.FemaleName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FemaleName))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.Subname" ValueCompare="ValueCompare?.Subname" Label="@nameof(Value.Subname).ToDisplayName()" />
+                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.Subname" ValueCompare="ValueCompare?.Subname" Label="@nameof(Value.Subname).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Subname))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.TitleAlt" ValueCompare="ValueCompare?.TitleAlt" Label="@nameof(Value.TitleAlt).ToDisplayName()" />
+                    <Input_Element T="string" Variant="Variant.Text" @bind-Value="Value.TitleAlt" ValueCompare="ValueCompare?.TitleAlt" Label="@nameof(Value.TitleAlt).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TitleAlt))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.Speed_Walk" ValueCompare="ValueCompare?.Speed_Walk" Label="@nameof(Value.Speed_Walk).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.Speed_Run" ValueCompare="ValueCompare?.Speed_Run" Label="@nameof(Value.Speed_Run).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.MovementId" ValueCompare="ValueCompare?.MovementId" Label="@nameof(Value.MovementId).ToDisplayName()" />
-            <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" />
-            <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.Speed_Walk" ValueCompare="ValueCompare?.Speed_Walk" Label="@nameof(Value.Speed_Walk).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Walk))" />
+            <Input_Element T="decimal" @bind-Value="Value.Speed_Run" ValueCompare="ValueCompare?.Speed_Run" Label="@nameof(Value.Speed_Run).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Run))" />
+            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementType))" />
+            <Input_Element T="uint" @bind-Value="Value.MovementId" ValueCompare="ValueCompare?.MovementId" Label="@nameof(Value.MovementId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementId))" />
+            <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiName))" />
+            <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScriptName))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" />
-            <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" />
-            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DynamicFlags))" />
+            <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags_Extra))" />
+            <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NpcFlag))" />
+            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Spell_School_Immune_Mask))" />
+            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Mechanic_Immune_Mask))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags" ValueCompare="ValueCompare?.Unit_Flags" Label="@nameof(Value.Unit_Flags).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags" ValueCompare="ValueCompare?.Unit_Flags" Label="@nameof(Value.Unit_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags))" />
                 </LeftContent>
                 <MiddleContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags2" ValueCompare="ValueCompare?.Unit_Flags2" Label="@nameof(Value.Unit_Flags2).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags2" ValueCompare="ValueCompare?.Unit_Flags2" Label="@nameof(Value.Unit_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags2))" />
                 </MiddleContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags3))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Type_Flags" ValueCompare="ValueCompare?.Type_Flags" Label="@nameof(Value.Type_Flags).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Type_Flags" ValueCompare="ValueCompare?.Type_Flags" Label="@nameof(Value.Type_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type_Flags))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type_Flags2))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.VignetteId" ValueCompare="ValueCompare?.VignetteId" Label="@nameof(Value.VignetteId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.WidgetSetId" ValueCompare="ValueCompare?.WidgetSetId" Label="@nameof(Value.WidgetSetId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionId" ValueCompare="ValueCompare?.WidgetSetUnitConditionId" Label="@nameof(Value.WidgetSetUnitConditionId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.VignetteId" ValueCompare="ValueCompare?.VignetteId" Label="@nameof(Value.VignetteId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.VignetteId))" />
+            <Input_Element T="int" @bind-Value="Value.WidgetSetId" ValueCompare="ValueCompare?.WidgetSetId" Label="@nameof(Value.WidgetSetId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.WidgetSetId))" />
+            <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionId" ValueCompare="ValueCompare?.WidgetSetUnitConditionId" Label="@nameof(Value.WidgetSetUnitConditionId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.WidgetSetUnitConditionId))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.ExperienceModifier" ValueCompare="ValueCompare?.ExperienceModifier" Label="@nameof(Value.ExperienceModifier).ToDisplayName()" />
+            <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ArmorModifier))" />
+            <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DamageModifier))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExperienceModifier" ValueCompare="ValueCompare?.ExperienceModifier" Label="@nameof(Value.ExperienceModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ExperienceModifier))" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()" />
+                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.HealthModifier))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.HealthModifierExtra" ValueCompare="ValueCompare?.HealthModifierExtra" Label="Extra" />
+                    <Input_Element T="decimal" @bind-Value="Value.HealthModifierExtra" ValueCompare="ValueCompare?.HealthModifierExtra" Label="Extra" OnInfoAdornmentClick="@(OpenInfoDialog(info.HealthModifierExtra))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" />
+                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaModifier))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ManaModifierExtra" ValueCompare="ValueCompare?.ManaModifierExtra" Label="Extra" />
+                    <Input_Element T="decimal" @bind-Value="Value.ManaModifierExtra" ValueCompare="ValueCompare?.ManaModifierExtra" Label="Extra" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaModifierExtra))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.HealthScalingExpansion" ValueCompare="ValueCompare?.HealthScalingExpansion" Label="@nameof(Value.HealthScalingExpansion).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.HealthScalingExpansion" ValueCompare="ValueCompare?.HealthScalingExpansion" Label="@nameof(Value.HealthScalingExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HealthScalingExpansion))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@nameof(Value.Dmgschool).ToDisplayName()" />
+            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@nameof(Value.Dmgschool).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Dmgschool))" />
             <InlineGroup LeftContentWidth="60" RightContentWidth="40">
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.BaseAttackTime" ValueCompare="ValueCompare?.BaseAttackTime" Label="@nameof(Value.BaseAttackTime).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.BaseAttackTime" ValueCompare="ValueCompare?.BaseAttackTime" Label="@nameof(Value.BaseAttackTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseAttackTime))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.BaseVariance" ValueCompare="ValueCompare?.BaseVariance" Label="Variance" />
+                    <Input_Element T="decimal" @bind-Value="Value.BaseVariance" ValueCompare="ValueCompare?.BaseVariance" Label="Variance" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseVariance))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup LeftContentWidth="60" RightContentWidth="40">
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.RangeAttackTime" ValueCompare="ValueCompare?.RangeAttackTime" Label="@nameof(Value.RangeAttackTime).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.RangeAttackTime" ValueCompare="ValueCompare?.RangeAttackTime" Label="@nameof(Value.RangeAttackTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeAttackTime))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" />
+                    <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeVariance))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" />
+            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Trainer_Class))" />
+            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.MinGold" ValueCompare="ValueCompare?.MinGold" Label="@nameof(Value.MinGold).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.MinGold" ValueCompare="ValueCompare?.MinGold" Label="@nameof(Value.MinGold).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MinGold))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.MaxGold" ValueCompare="ValueCompare?.MaxGold" Label="@nameof(Value.MaxGold).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.MaxGold" ValueCompare="ValueCompare?.MaxGold" Label="@nameof(Value.MaxGold).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MaxGold))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="uint" @bind-Value="Value.LootId" ValueCompare="ValueCompare?.LootId" Label="@nameof(Value.LootId).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()" />
-            <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" />
-            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" />
+            <Input_Element T="uint" @bind-Value="Value.LootId" ValueCompare="ValueCompare?.LootId" Label="@nameof(Value.LootId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LootId))" />
+            <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.PickpocketLoot))" />
+            <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.SkinLoot))" />
+            <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Class))" />
+            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconName))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_1" ValueCompare="ValueCompare?.Difficulty_Entry_1" Label="@nameof(Value.Difficulty_Entry_1).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_1" ValueCompare="ValueCompare?.Difficulty_Entry_1" Label="@nameof(Value.Difficulty_Entry_1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Difficulty_Entry_1))" />
                 </LeftContent>
                 <MiddleContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_2" ValueCompare="ValueCompare?.Difficulty_Entry_2" Label="@nameof(Value.Difficulty_Entry_2).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_2" ValueCompare="ValueCompare?.Difficulty_Entry_2" Label="@nameof(Value.Difficulty_Entry_2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Difficulty_Entry_2))" />
                 </MiddleContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_3" ValueCompare="ValueCompare?.Difficulty_Entry_3" Label="@nameof(Value.Difficulty_Entry_3).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_3" ValueCompare="ValueCompare?.Difficulty_Entry_3" Label="@nameof(Value.Difficulty_Entry_3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Difficulty_Entry_3))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.KillCredit1" ValueCompare="ValueCompare?.KillCredit1" Label="@nameof(Value.KillCredit1).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.KillCredit1" ValueCompare="ValueCompare?.KillCredit1" Label="@nameof(Value.KillCredit1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.KillCredit1))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.KillCredit2" ValueCompare="ValueCompare?.KillCredit2" Label="@nameof(Value.KillCredit2).ToDisplayName()" />
+                    <Input_Element T="uint" @bind-Value="Value.KillCredit2" ValueCompare="ValueCompare?.KillCredit2" Label="@nameof(Value.KillCredit2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.KillCredit2))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.CreatureDifficultyId" ValueCompare="ValueCompare?.CreatureDifficultyId" Label="@nameof(Value.CreatureDifficultyId).ToDisplayName()" />
-            <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.VehicleId" ValueCompare="ValueCompare?.VehicleId" Label="@nameof(Value.VehicleId).ToDisplayName()" />
-            <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" />
-            <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_Id" ValueCompare="ValueCompare?.Gossip_Menu_Id" Label="@nameof(Value.Gossip_Menu_Id).ToDisplayName()" />
-            <Input_Element T="string" @bind-Value="Value.StringId" ValueCompare="ValueCompare?.StringId" Label="@nameof(Value.StringId).ToDisplayName()" />
+            <Input_Element T="int" @bind-Value="Value.CreatureDifficultyId" ValueCompare="ValueCompare?.CreatureDifficultyId" Label="@nameof(Value.CreatureDifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CreatureDifficultyId))" />
+            <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HoverHeight))" />
+            <Input_Element T="uint" @bind-Value="Value.VehicleId" ValueCompare="ValueCompare?.VehicleId" Label="@nameof(Value.VehicleId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.VehicleId))" />
+            <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredExpansion))" />
+            <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_Id" ValueCompare="ValueCompare?.Gossip_Menu_Id" Label="@nameof(Value.Gossip_Menu_Id).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Gossip_Menu_Id))" />
+            <Input_Element T="string" @bind-Value="Value.StringId" ValueCompare="ValueCompare?.StringId" Label="@nameof(Value.StringId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StringId))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

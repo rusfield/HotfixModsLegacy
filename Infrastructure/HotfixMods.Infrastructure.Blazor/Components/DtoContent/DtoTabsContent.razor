@@ -131,6 +131,9 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
+    [CascadingParameter(Name = "RefreshIndex")]
+    public Action RefreshIndex { get; set; }
+
     [Parameter]
     public Func<T, Action<string, string, int>, Task<bool>> SaveAsync_Func { get; set; }
 
@@ -430,5 +433,6 @@
         name = newName ?? "";
         PageTab.TabName = newName ?? "";
         PageTab.Dto.HotfixModsEntity.Name = newName;
+        RefreshIndex();
     }
 }

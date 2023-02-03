@@ -13,25 +13,27 @@
         </MudTooltip>
     </Header>
     <ChildContent>
-        @foreach (var (tab, index) in tabs.WithIndex())
-        {
-            <CascadingValue Name="PageTab" Value="tab">
-                <MudTabPanel ID="@tab.TabId">
-                    <ChildContent>
-                        <MudContainer MaxWidth="MaxWidth.Large" Class="my-10 pt-10">
-                            <DynamicComponent Type="tab.PageType" />
-                        </MudContainer>
-                    </ChildContent>
-                    <TabContent>
-                        <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                            <MudIcon Icon="@GetPageIcon(tab.PageType)" />
-                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText>
-                            <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
-                        </MudStack>
-                    </TabContent>
-                </MudTabPanel>
-            </CascadingValue>
-        }
+        <CascadingValue Name="RefreshIndex" Value="RefreshIndex">
+            @foreach (var (tab, index) in tabs.WithIndex())
+            {
+                <CascadingValue Name="PageTab" Value="tab">
+                    <MudTabPanel ID="@tab.TabId">
+                        <ChildContent>
+                            <MudContainer MaxWidth="MaxWidth.Large" Class="my-10 pt-10">
+                                <DynamicComponent Type="tab.PageType" />
+                            </MudContainer>
+                        </ChildContent>
+                        <TabContent>
+                            <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
+                                <MudIcon Icon="@GetPageIcon(tab.PageType)" />
+                                <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText>
+                                <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                            </MudStack>
+                        </TabContent>
+                    </MudTabPanel>
+                </CascadingValue>
+            }
+        </CascadingValue>
     </ChildContent>
 </MudTabs>
 
@@ -213,6 +215,11 @@
     void SetHover(string menuItem)
     {
         hover = menuItem;
+    }
+
+    void RefreshIndex()
+    {
+        this.StateHasChanged();
     }
 
     string GetPageIcon(Type pageType)

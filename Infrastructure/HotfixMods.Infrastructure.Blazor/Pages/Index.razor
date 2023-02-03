@@ -24,7 +24,9 @@
                     </ChildContent>
                     <TabContent>
                         <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText><MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                            <MudIcon Icon="@GetPageIcon(tab.PageType)" />
+                            <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText>
+                            <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
                         </MudStack>
                     </TabContent>
                 </MudTabPanel>
@@ -49,101 +51,101 @@
         @* Creatures *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Creatures"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.FaceRetouchingNatural" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(Creatures))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchId_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Creature ID</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCreatureDisplayInfoId_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Creature Display Info ID</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCharacterName_Dialog>(new PageTab("Creature", typeof(Creatures))))">Search by Character Name</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchId_Dialog>(new PageTab("", typeof(Creatures))))">Search by Creature ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCreatureDisplayInfoId_Dialog>(new PageTab("", typeof(Creatures))))">Search by Creature Display Info ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCharacterName_Dialog>(new PageTab("", typeof(Creatures))))">Search by Character Name</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("Creature", typeof(Creatures))))">New Creature</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("New Creature", typeof(Creatures))))">New Creature</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Gameobjects *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Game Objects"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.OutlinedFlag" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(Gameobjects))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Game Objects", typeof(GameobjectDashboard))))">My Game Objects</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearchId_Dialog>(new PageTab("Game Object", typeof(Gameobjects))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearchId_Dialog>(new PageTab("", typeof(Gameobjects))))">Search by ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("New Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Items *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Items"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Outlined.Shield" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(Items))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Items", typeof(ItemDashboard))))">My Items</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchId_Dialog>(new PageTab("Item", typeof(Items))))">Search by ID</MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchItemDisplayInfoId_Dialog>(new PageTab("Item", typeof(Items))))">Search by Item Display Info ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchId_Dialog>(new PageTab("", typeof(Items))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchItemDisplayInfoId_Dialog>(new PageTab("", typeof(Items))))">Search by Item Display Info ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("New Item", typeof(Items))))">New Item</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Spells *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Spells"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.AutoFixHigh" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(Spells))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spells", typeof(SpellDashboard))))">My Spells</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearchId_Dialog>(new PageTab("Spell", typeof(Spells))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearchId_Dialog>(new PageTab("", typeof(Spells))))">Search by ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("Spell", typeof(Spells))))">New Spell</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("New Spell", typeof(Spells))))">New Spell</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Spell Visual Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Spell Visual Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.AutoAwesome" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(SpellVisualKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spell Visual Kits", typeof(SpellVisualKitDashboard))))">My Spell Visual Kits</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellVisualKitSearchId_Dialog>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellVisualKitSearchId_Dialog>(new PageTab("", typeof(SpellVisualKits))))">Search by ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("New Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Anim Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Anim Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.Group" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(AnimKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Anim Kits", typeof(AnimKitDashboard))))">My Anim Kits</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearchId_Dialog>(new PageTab("Anim Kit", typeof(AnimKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearchId_Dialog>(new PageTab("", typeof(AnimKits))))">Search by ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("New Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
         @* Sound Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Sound Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@Icons.Material.Filled.VolumeUp" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@GetPageIcon(typeof(SoundKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Sound Kits", typeof(SoundKitDashboard))))">My Sound Kits</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => OpenDialog_Click<SoundKitSearchId_Dialog>(new PageTab("Sound Kit", typeof(SoundKits))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<SoundKitSearchId_Dialog>(new PageTab("", typeof(SoundKits))))">Search by ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
-                <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
+                <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("New Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
 
@@ -187,6 +189,7 @@
         where TDto : IDto
     {
         tab.Dto = (TDto)Activator.CreateInstance(typeof(TDto))!;
+        tab.Dto.HotfixModsEntity.Name = tab.TabName;
         LaunchTab(tab);
     }
 
@@ -210,6 +213,26 @@
     void SetHover(string menuItem)
     {
         hover = menuItem;
+    }
+
+    string GetPageIcon(Type pageType)
+    {
+        if (pageType == typeof(Creatures))
+            return Icons.Material.Filled.FaceRetouchingNatural;
+        else if (pageType == typeof(Gameobjects))
+            return Icons.Material.Filled.OutlinedFlag;
+        else if (pageType == typeof(Items))
+            return Icons.Material.Outlined.Shield;
+        else if (pageType == typeof(Spells))
+            return Icons.Material.Filled.AutoFixHigh;
+        else if (pageType == typeof(SpellVisualKits))
+            return Icons.Material.Filled.AutoAwesome;
+        else if (pageType == typeof(AnimKits))
+            return Icons.Material.Filled.Group;
+        else if (pageType == typeof(SoundKits))
+            return Icons.Material.Filled.VolumeUp;
+        else
+            return Icons.Material.Filled.QuestionMark;
     }
 
     async void OpenDialog_Click<TDialog>(PageTab pageTab)

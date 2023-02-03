@@ -9,22 +9,13 @@
 @inject IDialogService DialogService
 
 <MudGrid Class="mb-1 px-3">
-    <MudItem xs="4">
+    <MudItem xs="3">
         <MudStack Row="true" Justify="Justify.FlexStart">
             <MudButton Variant="@(PageTab.DtoCompare != null ? Variant.Filled : Variant.Outlined)" Color="Color.Info" OnClick="ValueCompare_Callback">Compare</MudButton>
-        </MudStack>
-    </MudItem>
-    <MudItem xs="4">
-        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
-            @PageTab.TabName
-        </MudText>
-    </MudItem>
-    <MudItem xs="4">
-        <MudStack Row="true" Justify="Justify.SpaceBetween">
             @if (PageTab.Dto.IsUpdate)
             {
                 <MudStack Row="true" AlignItems="AlignItems.End" Justify="Justify.FlexStart">
-                    <MudIconButton Icon="@Icons.Material.Filled.Key" Size="Size.Small"/>
+                    <MudIconButton Icon="@Icons.Material.Filled.Key" Size="Size.Small" />
                     <MudText Typo="Typo.subtitle2" Align="Align.Center">
                         @PageTab.Dto.HotfixModsEntity.RecordId
                     </MudText>
@@ -39,6 +30,13 @@
                     </MudText>
                 </MudStack>
             }
+        </MudStack>
+    </MudItem>
+    <MudItem xs="6">
+        <MudTextField T="string" Value="name" ValueChanged="NameChanged" Variant="Variant.Text" Style="font-size:2.5rem;position:absolute;top:-41px;width:100%;" Class="center-input" />
+    </MudItem>
+    <MudItem xs="3">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
             <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
                 @if (saving)
                 {
@@ -46,7 +44,17 @@
                 }
                 else
                 {
-                    @(PageTab.Dto.IsUpdate ? "Update" : "Save")
+                    @("Update")
+                }
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
+                @if (saving)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    @("Save new")
                 }
             </MudButton>
         </MudStack>
@@ -139,6 +147,7 @@
     IInfoModel? infoModel;
     Content? currentTab = null;
     Type? dtoValueType = null;
+    string name = "";
 
     protected override void OnInitialized()
     {
@@ -149,6 +158,8 @@
 
         InitTabsList(properties);
         currentTab = tabs.FirstOrDefault();
+        name = PageTab.Dto.HotfixModsEntity.Name;
+        PageTab.TabName = name;
         base.OnInitialized();
     }
 
@@ -412,5 +423,12 @@
             PageTab.Dto.SetDtoValueToNull(dtoValueType);
             currentTab.ValueIsNull = true;
         }
+    }
+
+    void NameChanged(string newName)
+    {
+        name = newName ?? "";
+        PageTab.TabName = newName ?? "";
+        PageTab.Dto.HotfixModsEntity.Name = newName;
     }
 }

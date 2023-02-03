@@ -17,7 +17,13 @@ namespace HotfixMods.Infrastructure.Services
         {
             callback = callback ?? DefaultProgressCallback;
             callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
-            return new();
+            return new()
+            {
+                HotfixModsEntity = new()
+                {
+                    Name = "New Sound Kit"
+                }
+            };
         }
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()

@@ -59,6 +59,10 @@
     font-size: 96px !important;
 }
 
+.center-input .mud-input-slot{
+    text-align:center !important;
+}
+
 .transition-instance {
     animation-duration: var(--custom-transition-time);
     animation-name: backInUp;

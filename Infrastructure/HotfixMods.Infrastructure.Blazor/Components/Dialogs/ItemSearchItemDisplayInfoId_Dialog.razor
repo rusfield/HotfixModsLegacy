@@ -1,0 +1,35 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+
+@inject ItemService Service
+
+<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+    <MudText Typo="Typo.h6" Align="Align.Center">Search by Item Display Info ID:</MudText>
+    <MudTextField @bind-Value="@ItemDisplayInfoId" Variant="Variant.Outlined" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="GetByItemDisplayInfoIdIdAsync" />
+</DialogSearch>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public uint? ItemDisplayInfoId { get; set; }
+
+    DialogSearch? dialogSearchRef;
+
+
+    async Task GetByItemDisplayInfoIdIdAsync()
+    {
+        if (ItemDisplayInfoId != null)
+        {
+            var data = await Service.GetByItemDisplayInfoId((uint)ItemDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
+            if (data != null)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef.CancelLoaderWithMessage("No DB2 record found.");
+            }
+        }
+    }
+}

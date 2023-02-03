@@ -85,6 +85,7 @@
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Items", typeof(ItemDashboard))))">My Items</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchId_Dialog>(new PageTab("Item", typeof(Items))))">Search by ID</MudMenuItem>
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchItemDisplayInfoId_Dialog>(new PageTab("Item", typeof(Items))))">Search by Item Display Info ID</MudMenuItem>
                 <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
                 <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("Item", typeof(Items))))">New Item</MudMenuItem>
             </ChildContent>

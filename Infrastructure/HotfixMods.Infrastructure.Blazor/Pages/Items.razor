@@ -2,6 +2,22 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inject ItemService Service
+@inject IDialogService DialogService
 @inherits PageBase<ItemDto>
 
-<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<ItemSearchId_Dialog>())"  />
+<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(ValueCompare_Click)" />
+
+@code {
+
+    async Task ValueCompare_Click()
+    {
+        var options = new Dictionary<string, Action>();
+        options.Add("Search by Item ID", (() => ValueCompareAsync<ItemSearchId_Dialog>()));
+        options.Add("Search by Item Display Info ID", (() => ValueCompareAsync<ItemSearchItemDisplayInfoId_Dialog>()));
+
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(CompareOptions_Dialog.Options), options);
+        await DialogService.Show<CompareOptions_Dialog>(null, parameters).Result;
+    }
+
+}

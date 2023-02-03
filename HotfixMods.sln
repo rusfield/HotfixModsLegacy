@@ -4,10 +4,6 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{B90DC3A8-FC37-4162-9714-7460BF71F606}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure", "HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj", "{5869520A-CC57-49FF-A428-808D9B27FB0C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Core", "HotfixMods.Core\HotfixMods.Core.csproj", "{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{18C44F9A-9533-48CE-9161-823B458141BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure", "Infrastructure\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj", "{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}"
@@ -44,14 +40,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5869520A-CC57-49FF-A428-808D9B27FB0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2E7D90C-DB58-4E22-97B4-DF67B8B37182}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC9DB9DC-839D-4BCC-B6B6-3685DBB8FE74}.Release|Any CPU.ActiveCfg = Release|Any CPU

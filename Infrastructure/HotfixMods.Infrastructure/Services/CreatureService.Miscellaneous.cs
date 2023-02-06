@@ -1,8 +1,10 @@
 ﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Enums.TrinityCore;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
+using System.Collections;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -25,10 +27,10 @@ namespace HotfixMods.Infrastructure.Services
             }
             else
             {
-                var options = await GetAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrRaceXChrModel.ChrModelId));
+                var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrRaceXChrModel.ChrModelId));
                 foreach (var option in options)
                 {
-                    var choices = await GetAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
+                    var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
                     result.Add(option, choices);
                 }
 
@@ -50,6 +52,155 @@ namespace HotfixMods.Infrastructure.Services
                 return filteredResult;
             }
             return result;
+        }
+
+        public Dictionary<ushort, string> GetModelIds()
+        {
+            var result = new Dictionary<ushort, string>();
+            result.Add(7661, "Human Male");
+            result.Add(7599, "Human Female");
+            result.Add(6838, "Orc Male");
+            result.Add(10882, "Orc Male (Upright)");
+            result.Add(7200, "Orc Female");
+            result.Add(5408, "Dwarf Male");
+            result.Add(7203, "Dwarf Female");
+            result.Add(7369, "Night Elf Male");
+            result.Add(7300, "Night Elf Female");
+            result.Add(7233, "Scourge Male");
+            result.Add(7578, "Scourge Female");
+            result.Add(7399, "Tauren Male");
+            result.Add(7576, "Tauren Female");
+            result.Add(6837, "Gnome Male");
+            result.Add(7130, "Gnome Female");
+            result.Add(7778, "Troll Male");
+            result.Add(7793, "Troll Female");
+            result.Add(831, "Goblin Male");
+            result.Add(832, "Goblin Female");
+            result.Add(8102, "Blood Elf Male");
+            result.Add(8103, "Blood Elf Female");
+            result.Add(7629, "Draenei Male");
+            result.Add(7692, "Draenei Female");
+            result.Add(3141, "Worgen Male");
+            result.Add(3142, "Worgen Female");
+            result.Add(10784, "Dark Iron Dwarf Male");
+            result.Add(10785, "Dark Iron Dwarf Female");
+            result.Add(10844, "Maghar Orc Male");
+            result.Add(10883, "Maghar Orc Male (Upright)");
+            result.Add(10845, "Maghar Orc Female");
+            result.Add(3967, "Pandaren Alliance/Horde/Neutral Male");
+            result.Add(3968, "Pandaren Alliance/Neutral Female");
+            result.Add(10531, "Kul Tiran Male");
+            result.Add(10532, "Kul Tiran Female");
+            result.Add(9930, "Nightborne Male");
+            result.Add(9931, "Nightborne Female");
+            result.Add(9934, "Void Elf Male");
+            result.Add(9935, "Void Elf Female");
+            result.Add(11488, "Mechagnome Male");
+            result.Add(11489, "Mechagnome Female");
+            result.Add(10786, "Vulpera Male");
+            result.Add(10787, "Vulpera Female");
+            result.Add(10394, "Zandalari Troll Male");
+            result.Add(10395, "Zandalari Troll Female");
+            result.Add(9936, "Lightforged Draenei Male");
+            result.Add(9937, "Lightforged Draenei Female");
+            result.Add(9932, "Highmountain Tauren Male");
+            result.Add(9933, "Highmountain Tauren Female");
+
+            return result;
+        }
+
+        sbyte CharacterInventorySlotToNpcModelItemSlot(byte inventorySlot)
+        {
+            if(Enum.IsDefined(typeof(CharacterInventorySlot), (int)inventorySlot))
+            {
+                return (CharacterInventorySlot)inventorySlot switch
+                {
+                    CharacterInventorySlot.FEET => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.FEET,
+                    CharacterInventorySlot.LEGS => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.LEGS,
+                    CharacterInventorySlot.WAIST => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.WAIST,
+                    CharacterInventorySlot.CHEST => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.CHEST,
+                    CharacterInventorySlot.SHIRT => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.SHIRT,
+                    CharacterInventorySlot.TABARD => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.TABARD,
+                    CharacterInventorySlot.SHOULDERS => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.SHOULDERS,
+                    CharacterInventorySlot.WRISTS => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.WRISTS,
+                    CharacterInventorySlot.HANDS => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.HANDS,
+                    CharacterInventorySlot.HEAD => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.HEAD,
+                    CharacterInventorySlot.BACK => (sbyte)NpcModelItemSlotDisplayInfoItemSlot.CAPE,
+                    _ => 0
+                };
+            }
+            return 0;
+        }
+
+        ushort GetModelIdByRaceAndGenders(sbyte race, sbyte gender, List<CreatureDisplayInfoOption> creatureDisplayInfoOption)
+        {
+             // These models are from CreatureModelData. The FileDataId points correctly to character/{race}/{gender}/{race}{gender}.m2.
+
+            // For orcs and mag'har orcs male
+            bool upright = true;
+            if (gender == (int)Gender.MALE && race == (int)ChrRaceId.ORC)
+            {
+                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceId == 439);
+            }
+            else if (gender == (int)Gender.MALE && race == (int)ChrRaceId.MAGHAR_ORC)
+            {
+                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceId == 3427);
+            }
+
+
+            return ((ChrRaceId)race, (Gender)gender) switch
+            {
+                (ChrRaceId.HUMAN, Gender.MALE) => 7661,
+                (ChrRaceId.HUMAN, Gender.FEMALE) => 7599,
+                (ChrRaceId.ORC, Gender.MALE) => (ushort)(upright ? 10882 : 6838),
+                (ChrRaceId.ORC, Gender.FEMALE) => 7200,
+                (ChrRaceId.DWARF, Gender.MALE) => 5408,
+                (ChrRaceId.DWARF, Gender.FEMALE) => 7203,
+                (ChrRaceId.NIGHT_ELF, Gender.MALE) => 7369,
+                (ChrRaceId.NIGHT_ELF, Gender.FEMALE) => 7300,
+                (ChrRaceId.SCOURGE, Gender.MALE) => 7233,
+                (ChrRaceId.SCOURGE, Gender.FEMALE) => 7578,
+                (ChrRaceId.TAUREN, Gender.MALE) => 7399,
+                (ChrRaceId.TAUREN, Gender.FEMALE) => 7576,
+                (ChrRaceId.GNOME, Gender.MALE) => 6837,
+                (ChrRaceId.GNOME, Gender.FEMALE) => 7130,
+                (ChrRaceId.TROLL, Gender.MALE) => 7778,
+                (ChrRaceId.TROLL, Gender.FEMALE) => 7793,
+                (ChrRaceId.GOBLIN, Gender.MALE) => 831,
+                (ChrRaceId.GOBLIN, Gender.FEMALE) => 832,
+                (ChrRaceId.BLOOD_ELF, Gender.MALE) => 8102,
+                (ChrRaceId.BLOOD_ELF, Gender.FEMALE) => 8103,
+                (ChrRaceId.DRAENEI, Gender.MALE) => 7629,
+                (ChrRaceId.DRAENEI, Gender.FEMALE) => 7692,
+                (ChrRaceId.WORGEN, Gender.MALE) => 3141,
+                (ChrRaceId.WORGEN, Gender.FEMALE) => 3142,
+                (ChrRaceId.DARK_IRON_DWARF, Gender.MALE) => 10784,
+                (ChrRaceId.DARK_IRON_DWARF, Gender.FEMALE) => 10785,
+                (ChrRaceId.MAGHAR_ORC, Gender.MALE) => (ushort)(upright ? 10883 : 10844), 
+                (ChrRaceId.MAGHAR_ORC, Gender.FEMALE) => 10845, 
+                (ChrRaceId.PANDAREN_ALLIANCE, Gender.MALE) => 3967,
+                (ChrRaceId.PANDAREN_ALLIANCE, Gender.FEMALE) => 3968,
+                (ChrRaceId.PANDAREN_HORDE, Gender.MALE) => 3967,
+                (ChrRaceId.PANDAREN_NEUTRAL, Gender.MALE) => 3967,
+                (ChrRaceId.PANDAREN_NEUTRAL, Gender.FEMALE) => 3968,
+                (ChrRaceId.KUL_TIRAN, Gender.MALE) => 10531,
+                (ChrRaceId.KUL_TIRAN, Gender.FEMALE) => 10532,
+                (ChrRaceId.NIGHTBORNE, Gender.MALE) => 9930,
+                (ChrRaceId.NIGHTBORNE, Gender.FEMALE) => 9931,
+                (ChrRaceId.VOID_ELF, Gender.MALE) => 9934,
+                (ChrRaceId.VOID_ELF, Gender.FEMALE) => 9935,
+                (ChrRaceId.MECHAGNOME, Gender.MALE) => 11488,
+                (ChrRaceId.MECHAGNOME, Gender.FEMALE) => 11489,
+                (ChrRaceId.VULPERA, Gender.MALE) => 10786,
+                (ChrRaceId.VULPERA, Gender.FEMALE) => 10787,
+                (ChrRaceId.ZANDALARI_TROLL, Gender.MALE) => 10394,
+                (ChrRaceId.ZANDALARI_TROLL, Gender.FEMALE) => 10395,
+                (ChrRaceId.LIGHTFORGED_DRAENEI, Gender.MALE) => 9936,
+                (ChrRaceId.LIGHTFORGED_DRAENEI, Gender.FEMALE) => 9937,
+                (ChrRaceId.HIGHMOUNTAIN_TAUREN, Gender.MALE) => 9932,
+                (ChrRaceId.HIGHMOUNTAIN_TAUREN, Gender.FEMALE) => 9933,
+                _ => 0
+            };
         }
 
         async Task SetIdAndVerifiedBuild(CreatureDto dto)
@@ -121,8 +272,14 @@ namespace HotfixMods.Infrastructure.Services
                     });
                 }
             }
-
-
+        }
+        bool IsWeaponSlot(int slot)
+        {
+            if (Enum.IsDefined(typeof(CharacterInventorySlot), slot))
+            {
+                return (CharacterInventorySlot)slot == CharacterInventorySlot.MAIN_HAND || (CharacterInventorySlot)slot == CharacterInventorySlot.OFF_HAND || (CharacterInventorySlot)slot == CharacterInventorySlot.RANGED;
+            }
+            return false;
         }
     }
 }

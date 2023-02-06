@@ -116,6 +116,23 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
+        protected async Task<List<T>> GetFromClientOnlyAsync<T>(params DbParameter[] parameters)
+            where T : new()
+        {
+            try
+            {
+                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                if (clientResults.Any())
+                    return clientResults.DbRowsToEntities<T>().ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return new();
+        }
+
         protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, List<T> entities)
             where T : new()
         {
@@ -140,7 +157,7 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync<T>(params T[] entities)
             where T : new()
         {
-            if(entities.Any())
+            if (entities.Any())
                 await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.Where(e => e != null).EntitiesToDbRows().ToArray());
         }
 
@@ -349,7 +366,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     Id = 0,
                     Name = "",
-                    RecordId= entityId,
+                    RecordId = entityId,
                     VerifiedBuild = VerifiedBuild
                 };
             }

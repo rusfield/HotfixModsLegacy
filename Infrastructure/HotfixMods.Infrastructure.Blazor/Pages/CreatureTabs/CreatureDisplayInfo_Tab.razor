@@ -3,6 +3,7 @@
 @using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfo>
+@inject CreatureService Service
 
 <PagedDtoContent T="CreatureDisplayInfo">
     <PagedDtoContentPage>
@@ -21,7 +22,7 @@
                     <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.Gender))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.ModelId" ValueCompare="ValueCompare?.ModelId" Label="@nameof(Value.ModelId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelId))" />
+                    <Input_Element T="ushort" @bind-Value="Value.ModelId" ValueCompare="ValueCompare?.ModelId" Label="@nameof(Value.ModelId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelId))" GetOptionsAsync_Func="GetModelIds" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
@@ -69,5 +70,10 @@
     async Task<Dictionary<sbyte, string>> GetGenders()
     {
         return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<ushort, string>> GetModelIds()
+    {
+        return Service.GetModelIds();
     }
 }

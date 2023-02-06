@@ -60,9 +60,16 @@ namespace HotfixMods.Infrastructure.Extensions
             T entity = new();
             foreach (var column in dbRow.Columns)
             {
-                var existingProperty = typeof(T).GetProperties().Where(p => p.Name.Equals(column.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-                if (existingProperty != null)
-                    existingProperty.SetValue(entity, column.Value);
+                try
+                {
+                    var existingProperty = typeof(T).GetProperties().Where(p => p.Name.Equals(column.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    if (existingProperty != null)
+                        existingProperty.SetValue(entity, column.Value);
+                }
+                catch(Exception e)
+                {
+                    throw new Exception($"Unable to convert DbRow to {typeof(T).Name} for column {column.Name}: {e.Message}");
+                }
             }
             return entity;
         }

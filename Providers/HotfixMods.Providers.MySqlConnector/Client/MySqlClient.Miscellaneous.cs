@@ -66,6 +66,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 "text" => typeof(string),
                 "varchar" => typeof(string),
                 "nvarchar" => typeof(string),
+                "tinytext" => typeof(string),
                 "mediumtext" => typeof(string), 
                 "longtext" => typeof(string),
                 "float" => typeof(decimal),

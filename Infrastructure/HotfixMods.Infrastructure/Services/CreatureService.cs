@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Interfaces;
+﻿using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
@@ -54,9 +55,163 @@ namespace HotfixMods.Infrastructure.Services
                 callback.Invoke(LoadingHelper.Loading, $"{nameof(Characters)} not found", 100);
                 return null;
             }
+            var result = new CreatureDto()
+            {
+                CreatureTemplate = new()
+                {
+                    Name = character.Name,
+                    Minlevel = character.Level,
+                    Maxlevel = character.Level,
+                },
+                HotfixModsEntity = new()
+                {
+                    Name = character.Name,
+                },
+                CreatureDisplayInfoOption = new(),
+                CreatureDisplayInfo = new()
+                {
+                    Gender = (sbyte)character.Gender,
+                    ModelId = 1
+                },
+                CreatureTemplateModel = new(),
+                CreatureEquipTemplate = new(),
+                CreatureDisplayInfoExtra = new()
+                {
+                    DisplayRaceId = (sbyte)character.Race,
+                    DisplaySexId = (sbyte)character.Gender,
+                    DisplayClassId = (sbyte)character.Class
+                },
+                CreatureModelInfo = new(),
+                NpcModelItemSlotDisplayInfo = new(),
 
-            // TODO
-            return null;
+                IsUpdate = false
+            };
+
+            var characterCustomization = await GetAsync<CharacterCustomizations>(callback, progress, new DbParameter(nameof(CharacterCustomizations.Guid), character.Guid));
+            foreach (var customization in characterCustomization)
+            {
+                result.CreatureDisplayInfoOption.Add(new()
+                {
+                    ChrCustomizationChoiceId = (int)customization.ChrCustomizationChoiceId,
+                    ChrCustomizationOptionId = (int)customization.ChrCustomizationOptionId,
+                });
+            }
+            result.CreatureDisplayInfo.ModelId = GetModelIdByRaceAndGenders(result.CreatureDisplayInfoExtra.DisplayRaceId, result.CreatureDisplayInfoExtra.DisplaySexId, result.CreatureDisplayInfoOption);
+
+            var characterItems = await GetAsync<ItemInstance>(callback, progress, new DbParameter(nameof(ItemInstance.Owner_Guid), character.Guid));
+            var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, new DbParameter(nameof(CharacterInventory.Guid), character.Guid));
+
+            foreach (var equippedItem in characterEquipMap.OrderBy(c => c.Slot))
+            {
+                if (!Enum.IsDefined(typeof(CharacterInventorySlot), (int)equippedItem.Slot))
+                    continue;
+
+                var item = characterItems.Where(i => i.Guid == equippedItem.Item).FirstOrDefault();
+                if (item == null)
+                    continue;
+
+                var itemAppearanceId = 0;
+                var itemAppearanceModifierId = 0;
+                var itemId = item.ItemEntry;
+                var itemVisual = 0;
+                var transmogItem = await GetSingleAsync<ItemInstanceTransmog>(new DbParameter(nameof(ItemInstanceTransmog.ItemGuid), equippedItem.Item));
+
+                // Try get ItemAppearanceId by transmog.
+                // Note: Dont mix up ItemModifiedAppearance.Id with ItemAppearanceModifierId.
+                if (transmogItem != null)
+                {
+                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.Id), transmogItem.ItemModifiedAppearanceAllSpecs));
+                    if (itemModifiedAppearance != null)
+                    {
+                        itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
+                        itemAppearanceModifierId = itemModifiedAppearance.ItemAppearanceModifierId;
+                        itemId = (uint)itemModifiedAppearance.ItemId;
+                    }
+                    if (transmogItem.SpellItemEnchantmentAllSpecs > 0 && IsWeaponSlot(equippedItem.Slot))
+                    {
+                        var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.Id), transmogItem.SpellItemEnchantmentAllSpecs));
+                        if (spellItemEnchantment != null)
+                            itemVisual = spellItemEnchantment.ItemVisual;
+                    }
+                }
+
+                // Get ItemAppearanceId the default way, either because transmog does not exist or transmog failed.
+                if (itemAppearanceId == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(item.BonusListIds))
+                    {
+                        var bonusListIds = item.BonusListIds.Trim().Split(' ').Select(int.Parse).ToList();
+                        if (bonusListIds != null && bonusListIds.Any())
+                        {
+                            var itemBonuses = await GetAsync<ItemBonus>(new DbParameter(nameof(ItemBonus.Type), 7));
+                            var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListId)).FirstOrDefault();
+                            if (itemBonus != null)
+                            {
+                                itemAppearanceModifierId = itemBonus.Value1; // TODO: Change to 0 after refactor
+                            }
+                        }
+                    }
+
+                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), item.ItemEntry), new DbParameter(nameof(ItemModifiedAppearance.ItemAppearanceModifierId), itemAppearanceModifierId));
+                    if (itemModifiedAppearance == null)
+                        continue;
+
+                    itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
+                }
+
+                if (itemVisual == 0 && IsWeaponSlot(equippedItem.Slot))
+                {
+                    foreach (var enchantment in item.Enchantments.Split(' '))
+                    {
+                        if (int.TryParse(enchantment.Trim(), out var enchantmentId))
+                        {
+                            if (enchantmentId > 0)
+                            {
+                                var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.Id), enchantmentId));
+                                if (spellItemEnchantment != null && spellItemEnchantment.ItemVisual > 0)
+                                {
+                                    itemVisual = spellItemEnchantment.ItemVisual;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var itemAppearance = await GetSingleAsync<ItemAppearance>(new DbParameter(nameof(ItemAppearance.Id), itemAppearanceId));
+                if (itemAppearance == null)
+                    continue;
+
+                if (equippedItem.Slot == (int)CharacterInventorySlot.MAIN_HAND)
+                {
+                    result.CreatureEquipTemplate.ItemId1 = itemId;
+                    result.CreatureEquipTemplate.AppearanceModId1 = (ushort)itemAppearanceModifierId;
+                    result.CreatureEquipTemplate.ItemVisual1 = (ushort)itemVisual;
+
+                }
+                else if (equippedItem.Slot == (int)CharacterInventorySlot.OFF_HAND)
+                {
+                    result.CreatureEquipTemplate.ItemId2 = itemId;
+                    result.CreatureEquipTemplate.AppearanceModId2 = (ushort)itemAppearanceModifierId;
+                    result.CreatureEquipTemplate.ItemVisual2 = (ushort)itemVisual;
+                }
+                else if (equippedItem.Slot == (int)CharacterInventorySlot.RANGED)
+                {
+                    result.CreatureEquipTemplate.ItemId3 = itemId;
+                    result.CreatureEquipTemplate.AppearanceModId3 = (ushort)itemAppearanceModifierId;
+                    result.CreatureEquipTemplate.ItemVisual3 = (ushort)itemVisual;
+                }
+                else
+                {
+                    result.NpcModelItemSlotDisplayInfo.Add(new()
+                    {
+                        ItemDisplayInfoId = itemAppearance.ItemDisplayInfoId,
+                        ItemSlot = CharacterInventorySlotToNpcModelItemSlot(equippedItem.Slot)
+                    });
+                }
+            }
+
+            return result;
         }
 
         public async Task<CreatureDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
@@ -176,7 +331,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.CreatureDisplayInfo);
                 await SaveAsync(callback, progress, dto.CreatureModelInfo);
 
-                if (dto.CreatureDisplayInfoExtra!= null)
+                if (dto.CreatureDisplayInfoExtra != null)
                 {
                     await SaveAsync(callback, progress, dto.CreatureDisplayInfoExtra);
                     await SaveAsync(callback, progress, dto.NpcModelItemSlotDisplayInfo?.ToList() ?? new());

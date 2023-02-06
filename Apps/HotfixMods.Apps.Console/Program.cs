@@ -14,9 +14,14 @@ using System.Reflection;
 using static DBDefsLib.Structs;
 
 
-var db2Client = new Db2Client("10.0.5.47871");
-var names = await db2Client.GetDefinitionAsync("", "Item");
+var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 
+
+var serverDef = await serverDefHelper.GetDefinitionAsync("characters", "character_customizations");
+
+
+var tctool = new TrinityCoreDbTool();
+await tctool.DbDefToCSharp(serverDef);
 Console.ReadKey();
 
 /*

@@ -103,18 +103,19 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     var fieldType = dbRowDefinition.ColumnDefinitions.ElementAt(i).Type;
 
                     object fieldValue;
+
                     if (reader.IsDBNull(i))
                     {
                         fieldValue = fieldType.ToString() switch
                         {
-                            "System.SByte" => 0,
-                            "System.Int16" => 0,
-                            "System.Int32" => 0,
-                            "System.Int64" => 0,
-                            "System.Byte" => 0,
-                            "System.UInt16" => 0,
-                            "System.UInt32" => 0,
-                            "System.UInt64" => 0,
+                            "System.SByte" => (sbyte)0,
+                            "System.Int16" => (short)0,
+                            "System.Int32" => (int)0,
+                            "System.Int64" => (long)0,
+                            "System.Byte" => (byte)0,
+                            "System.UInt16" => (ushort)0,
+                            "System.UInt32" => (uint)0,
+                            "System.UInt64" => (ulong)0,
                             "System.String" => "",
                             "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
                             _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")

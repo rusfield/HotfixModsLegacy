@@ -162,6 +162,9 @@
     </MudStack>
 </MudDrawer>
 
+@* Area to toggle menu *@
+<div style="position: fixed;bottom:0;width:100%;height:75px;" @onmouseover="MouseOverBottom" />
+
 @code {
     MudTabs? _mudTabsRef;
     bool _menuOpen = false;
@@ -266,5 +269,10 @@
             LaunchTab(pageTab);
             this.StateHasChanged();
         }
+    }
+
+    void MouseOverBottom()
+    {
+        _menuOpen = true;
     }
 }

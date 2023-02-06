@@ -3,6 +3,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.Dialogs
 @using HotfixMods.Infrastructure.Blazor.Handlers;
 @using HotfixMods.Infrastructure.Blazor.Pages.Dashboards
+@using HotfixMods.Infrastructure.Blazor.Pages.News
 
 @inject IDialogService DialogService
 
@@ -26,12 +27,16 @@
                         <TabContent>
                             <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
                                 <MudIcon Icon="@GetPageIcon(tab.PageType)" />
-                                <MudText Typo="Typo.subtitle2">@tab.TabName.ToUpper()</MudText>
+                                <MudText Typo="Typo.subtitle2">@FormatTabName(tab.TabName)</MudText>
                                 <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
                             </MudStack>
                         </TabContent>
                     </MudTabPanel>
                 </CascadingValue>
+            }
+            @if(tabs.Count == 0)
+            {
+                <News />
             }
         </CascadingValue>
     </ChildContent>
@@ -240,6 +245,14 @@
             return Icons.Material.Filled.VolumeUp;
         else
             return Icons.Material.Filled.QuestionMark;
+    }
+
+    string FormatTabName(string tabName)
+    {
+        tabName = tabName.ToUpper();
+        if (tabName.Length > 10)
+            tabName = tabName.Substring(0, 8) + "...";
+        return tabName;
     }
 
     async void OpenDialog_Click<TDialog>(PageTab pageTab)

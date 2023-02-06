@@ -1,0 +1,27 @@
+﻿<MudStack Class="ma-4">
+    <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="0">
+        @if (IsGitHubAccount)
+        {
+            <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
+                @("github.com/")
+            </MudText>
+        }
+        <MudText Typo="Typo.h6" Color="Color.Primary">
+            @Title
+        </MudText>
+    </MudStack>
+    <MudText Align="Align.Center" Style="font-size:0.8rem">
+        @Description
+    </MudText>
+</MudStack>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public bool IsGitHubAccount { get; set; }
+}

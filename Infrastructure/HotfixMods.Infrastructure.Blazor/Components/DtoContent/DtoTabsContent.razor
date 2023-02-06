@@ -37,8 +37,8 @@
     </MudItem>
     <MudItem xs="3">
         <MudStack Row="true" Justify="Justify.FlexEnd">
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
-                @if (saving)
+            <MudButton Disabled="@(!PageTab.Dto.IsUpdate || saving)" Variant="Variant.Filled" Color="Color.Success" OnClick="@(async () => await SaveAsync_Click(true))">
+                @if (updating)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
                 }
@@ -47,7 +47,7 @@
                     @("Update")
                 }
             </MudButton>
-            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="SaveAsync_Click">
+            <MudButton Disabled="updating" Variant="Variant.Filled" Color="Color.Success" OnClick="(async () => await SaveAsync_Click(false))">
                 @if (saving)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
@@ -147,6 +147,7 @@
     InstanceData? currentInstanceData;
     int currentPage = 1;
     bool saving = false;
+    bool updating = false;
     IInfoModel? infoModel;
     Content? currentTab = null;
     Type? dtoValueType = null;
@@ -333,11 +334,15 @@
         return null;
     }
 
-    async Task SaveAsync_Click()
+    async Task SaveAsync_Click(bool isUpdate)
     {
+        PageTab.Dto.IsUpdate = isUpdate;
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        saving = true;
+        if (isUpdate)
+            updating = true;
+        else
+            saving = true;
 
         List<string> logs = new();
         var result = await SaveAsync_Func((T)PageTab.Dto, (string title, string subtitle, int progress) =>
@@ -355,6 +360,7 @@
         }
 
         saving = false;
+        updating = false;
         if (result)
         {
             Snackbar.Add($"Saved successfully.", Severity.Info, config => { config.Icon = Icons.Material.Filled.Check; });

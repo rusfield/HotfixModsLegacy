@@ -28,7 +28,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public decimal Speed_Walk { get; set; } = 1;
         public decimal Speed_Run { get; set; } = 1.14286M;
         public decimal Scale { get; set; } = 1;
-        public byte Rank { get; set; } = 1;
+        public byte Rank { get; set; } = 0;
         public sbyte Dmgschool { get; set; } = 0;
         public uint BaseAttackTime { get; set; } = 2000;
         public uint RangeAttackTime { get; set; } = 2000;

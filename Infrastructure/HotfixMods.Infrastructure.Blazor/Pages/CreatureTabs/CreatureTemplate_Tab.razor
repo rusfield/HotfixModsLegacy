@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Enums.TrinityCore
 @inherits DtoContentBase<CreatureDto, CreatureTemplate>
 
 <PagedDtoContent T="CreatureTemplate">
@@ -14,10 +15,10 @@
                 </RightContent>
             </InlineGroup>
             <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
-            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" />
+            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" GetOptionsAsync_Func="GetRanks" />
             <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
-            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
-            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" />
+            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="GetTypes" />
+            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" GetOptionsAsync_Func="GetTrueFalse" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -41,9 +42,9 @@
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.Speed_Walk" ValueCompare="ValueCompare?.Speed_Walk" Label="@nameof(Value.Speed_Walk).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Walk))" />
             <Input_Element T="decimal" @bind-Value="Value.Speed_Run" ValueCompare="ValueCompare?.Speed_Run" Label="@nameof(Value.Speed_Run).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Run))" />
-            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementType))" />
+            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementType))" GetOptionsAsync_Func="GetMovementTypes" />
             <Input_Element T="uint" @bind-Value="Value.MovementId" ValueCompare="ValueCompare?.MovementId" Label="@nameof(Value.MovementId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementId))" />
-            <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiName))" />
+            <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiName))" GetOptionsAsync_Func="GetAiNames" />
             <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScriptName))" />
         </MudItem>
     </PagedDtoContentPage>
@@ -110,7 +111,7 @@
             <Placeholder_Element Amount="4" />
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@nameof(Value.Dmgschool).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Dmgschool))" />
+            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@("Damage School")" OnInfoAdornmentClick="@(OpenInfoDialog(info.Dmgschool))" GetOptionsAsync_Func="GetDmgschools" />
             <InlineGroup LeftContentWidth="60" RightContentWidth="40">
                 <LeftContent>
                     <Input_Element T="uint" @bind-Value="Value.BaseAttackTime" ValueCompare="ValueCompare?.BaseAttackTime" Label="@nameof(Value.BaseAttackTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseAttackTime))" />
@@ -127,9 +128,9 @@
                     <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeVariance))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" />
+            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" GetOptionsAsync_Func="GetFamilies" />
             <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Trainer_Class))" />
-            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" />
+            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" GetOptionsAsync_Func="GetTrueFalse" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
@@ -145,8 +146,8 @@
             <Input_Element T="uint" @bind-Value="Value.LootId" ValueCompare="ValueCompare?.LootId" Label="@nameof(Value.LootId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LootId))" />
             <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.PickpocketLoot))" />
             <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.SkinLoot))" />
-            <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Class))" />
-            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconName))" />
+            <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Class))" GetOptionsAsync_Func="GetUnitClasses" />
+            <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconName))" GetOptionsAsync_Func="GetIconNames" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -174,7 +175,7 @@
             <Input_Element T="int" @bind-Value="Value.CreatureDifficultyId" ValueCompare="ValueCompare?.CreatureDifficultyId" Label="@nameof(Value.CreatureDifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CreatureDifficultyId))" />
             <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HoverHeight))" />
             <Input_Element T="uint" @bind-Value="Value.VehicleId" ValueCompare="ValueCompare?.VehicleId" Label="@nameof(Value.VehicleId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.VehicleId))" />
-            <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredExpansion))" />
+            <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredExpansion))" GetOptionsAsync_Func="GetRequiredExpansions" />
             <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_Id" ValueCompare="ValueCompare?.Gossip_Menu_Id" Label="@nameof(Value.Gossip_Menu_Id).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Gossip_Menu_Id))" />
             <Input_Element T="string" @bind-Value="Value.StringId" ValueCompare="ValueCompare?.StringId" Label="@nameof(Value.StringId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StringId))" />
         </MudItem>
@@ -183,4 +184,57 @@
 
 @code {
     CreatureTemplateInfo info = new();
+
+    async Task<Dictionary<string, string>> GetAiNames()
+    {
+        return Enum.GetValues<CreatureTemplateAiName>().ToDictionary(key => key.ToString(), value => value.ToString());
+    }
+
+    async Task<Dictionary<sbyte, string>> GetDmgschools()
+    {
+        return Enum.GetValues<CreatureTemplateDmgschool>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<int, string>> GetFamilies()
+    {
+        return Enum.GetValues<CreatureTemplateFamily>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<string, string>> GetIconNames()
+    {
+        return Enum.GetValues<CreatureTemplateIconName>().ToDictionary(key => key.ToString(), value => value.ToString());
+    }
+
+    async Task<Dictionary<byte, string>> GetMovementTypes()
+    {
+        return Enum.GetValues<CreatureTemplateMovementType>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetRanks()
+    {
+        return Enum.GetValues<CreatureTemplateRank>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetTypes()
+    {
+        return Enum.GetValues<CreatureTemplateType>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetUnitClasses()
+    {
+        return Enum.GetValues<CreatureTemplateUnitClass>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<int, string>> GetRequiredExpansions()
+    {
+        return Enum.GetValues<CreatureTemplateRequiredExpansion>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetTrueFalse()
+    {
+        return new Dictionary<byte, string>() { 
+            { 0, "False" }, 
+            { 1, "True" } 
+        };
+    }
 }

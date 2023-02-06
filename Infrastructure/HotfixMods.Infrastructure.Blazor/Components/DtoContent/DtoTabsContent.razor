@@ -33,7 +33,7 @@
         </MudStack>
     </MudItem>
     <MudItem xs="6">
-        <MudTextField T="string" Value="name" ValueChanged="NameChanged" Variant="Variant.Text" Style="font-size:2.5rem;position:absolute;top:-41px;width:100%;" Class="center-input" />
+        <MudTextField T="string" Value="name" ValueChanged="NameChanged" Variant="Variant.Text" Style="font-size:2.5rem;position:absolute;top:-41px;width:100%;" Class="center-input" Placeholder="@(typeof(T).Name.Replace("Dto", "").ToDisplayName() + "...")" />
     </MudItem>
     <MudItem xs="3">
         <MudStack Row="true" Justify="Justify.FlexEnd">

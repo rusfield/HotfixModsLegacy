@@ -86,7 +86,8 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
-            return await GetAllDefinitionsAsync();
+            return await GetAllDefinitionsFromPathAsync();
+            //return await GetAllDefinitionsFromUrlAsync();
         }
 
         public async Task<IEnumerable<string>> GetAvailableBuildsForDefinitionAsync(string db2Name)

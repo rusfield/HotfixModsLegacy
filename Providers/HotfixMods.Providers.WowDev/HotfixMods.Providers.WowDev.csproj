@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -8,11 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="WoWDBDefs\Achievement.dbd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="WoWDBDefs\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
   </ItemGroup>
-
 </Project>

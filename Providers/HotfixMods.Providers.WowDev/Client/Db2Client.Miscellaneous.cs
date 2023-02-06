@@ -2,6 +2,7 @@
 using HotfixMods.Providers.Db2.WoWDev.Providers;
 using HotfixMods.Core.Models;
 using System.Text.Json;
+using System.Reflection;
 
 namespace HotfixMods.Providers.WowDev.Client
 {
@@ -20,7 +21,8 @@ namespace HotfixMods.Providers.WowDev.Client
 
         async Task<Structs.DBDefinition> GetDbDefinitionByDb2Name(string db2Name)
         {
-            var stream = await GetDb2StreamByDb2Name(db2Name);
+            //var stream = await GetDb2StreamFromUrlByDb2Name(db2Name);
+            var stream = await GetDb2StreamFromPathByDb2Name(db2Name);
             return await GetDbDefinitionByDb2Stream(stream);
         }
 
@@ -52,11 +54,11 @@ namespace HotfixMods.Providers.WowDev.Client
             return (databaseDefinitions, versionToUse.Value);
         }
 
-        async Task<Stream> GetDb2StreamByDb2Name(string db2Name)
+        async Task<Stream> GetDb2StreamFromUrlByDb2Name(string db2Name)
         {
             // GitHub is case-sensitive. Get the DB2 name correct before attempting to query with it.
             // TODO: Check if the API supports a parameter or something to make it case insensitive.
-            var definitions = await GetAllDefinitionsAsync();
+            var definitions = await GetAllDefinitionsFromUrlAsync();
             var definition = definitions.Where(d => d.Equals(db2Name.Trim(), StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             if (null == definition)
                 throw new Exception($"No DB2 with name {db2Name} found.");
@@ -68,6 +70,17 @@ namespace HotfixMods.Providers.WowDev.Client
                 return await data.Content.ReadAsStreamAsync();
             }
             throw new Exception($"Unable to load definition columns from URL {url}.");
+        }
+
+        async Task<Stream> GetDb2StreamFromPathByDb2Name(string db2Name)
+        {
+            var definitions = await GetAllDefinitionsFromPathAsync();
+            var definition = definitions.Where(d => d.Equals(db2Name.Trim(), StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            if (null == definition)
+                throw new Exception($"No DB2 with name {db2Name} found.");
+
+            var assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetManifestResourceStream($"HotfixMods.Providers.WowDev.WoWDBDefs.{db2Name}.dbd");
         }
 
         Type FieldDefinitionToType(Structs.Definition field, Structs.ColumnDefinition column)
@@ -98,7 +111,8 @@ namespace HotfixMods.Providers.WowDev.Client
         async Task<IEnumerable<DbRow>> ReadDb2FileAsync(string location, string db2Name, string build, DbParameter[] parameters, bool firstOnly)
         {
             var results = new List<DbRow>();
-            var streamForStructs = await GetDb2StreamByDb2Name(db2Name);
+            //var streamForStructs = await GetDb2StreamFromUrlByDb2Name(db2Name);
+            var streamForStructs = await GetDb2StreamFromPathByDb2Name(db2Name);
             var streamForProvider = new MemoryStream();
 
             // Need to make 2 because the DBCD closes the one it uses.
@@ -231,7 +245,7 @@ namespace HotfixMods.Providers.WowDev.Client
             return true;
         }
 
-        async Task<IEnumerable<string>> GetAllDefinitionsAsync()
+        async Task<IEnumerable<string>> GetAllDefinitionsFromUrlAsync()
         {
             var data = await _httpClient.GetAsync(defUrl);
             if (data.IsSuccessStatusCode)
@@ -247,6 +261,21 @@ namespace HotfixMods.Providers.WowDev.Client
                 return results;
             }
             throw new Exception($"Unable to load definitions from URL {defUrl}");
+        }
+
+        async Task<IEnumerable<string>> GetAllDefinitionsFromPathAsync()
+        {
+            var results = new List<string>();
+            var assembly = Assembly.GetExecutingAssembly();
+            string[] resources = assembly.GetManifestResourceNames();
+            string folder = $"{assembly.GetName().Name}.WoWDBDefs.";
+            string[] filesInFolder = Array.FindAll(resources, item => item.StartsWith(folder));
+
+            foreach(var file in filesInFolder)
+            {
+                results.Add(file.Replace(folder, "").Replace(".dbd", ""));
+            }
+            return results;
         }
 
         async Task<IEnumerable<string>> GetBuildsAsync(string db2Name)

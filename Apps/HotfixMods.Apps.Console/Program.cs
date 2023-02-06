@@ -13,6 +13,12 @@ using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using static DBDefsLib.Structs;
 
+
+var db2Client = new Db2Client("10.0.5.47871");
+var names = await db2Client.GetDefinitionAsync("", "Item");
+
+Console.ReadKey();
+
 /*
 int totalInvokes = 4;
 int current = 1;

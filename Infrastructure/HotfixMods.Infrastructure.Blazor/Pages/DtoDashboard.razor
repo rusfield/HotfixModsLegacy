@@ -4,14 +4,14 @@
 
 @typeparam TDto where TDto : IDto
 
-<MudGrid Class="mb-1 px-3">
+<MudGrid Class="mb-1 px-3" Style="height:36.5px">
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexStart">
-            <MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Style="height:36.5px" Value="search" Immediate="true" ValueChanged="Filter" />
+            <MudTextField T="string" Placeholder="Filter" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Variant="Variant.Outlined" Style="height:36.5px;position:absolite;top:-6px;" Value="search" Immediate="true" ValueChanged="Filter" />
         </MudStack>
     </MudItem>
     <MudItem xs="4">
-        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%;font-size:2.5rem;position:relative;top:-13px;">
             @PageTab.TabName
         </MudText>
     </MudItem>

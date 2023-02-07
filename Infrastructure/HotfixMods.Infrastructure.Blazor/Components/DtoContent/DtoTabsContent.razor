@@ -157,12 +157,9 @@
     {
         var properties = typeof(T).GetProperties();
 
-        // Hardcode in the shared HotfixMods entity tab
-        tabs.Add(new Content(nameof(HotfixModsEntity), typeof(HotfixModsEntity_Tab<T>), typeof(HotfixModsEntity), null, PageTab.Dto, GetInstanceData(null)));
-
         InitTabsList(properties);
         currentTab = tabs.FirstOrDefault();
-        name = PageTab.Dto.HotfixModsEntity.Name;
+        name = PageTab.Dto.HotfixModsEntity.Name ?? "";
         PageTab.TabName = name;
         base.OnInitialized();
     }

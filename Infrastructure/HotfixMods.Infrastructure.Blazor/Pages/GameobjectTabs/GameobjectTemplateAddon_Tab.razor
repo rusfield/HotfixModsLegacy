@@ -1,12 +1,13 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Flags.TrinityCore
 
 @inherits DtoContentBase<GameobjectDto, GameobjectTemplateAddon>
 
 <StandardDtoContent T="GameobjectTemplateAddon" >
     <MudItem xs="3">
         <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
-        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
         <Input_Element T="uint" @bind-Value="@(Value.WorldEffectId)" Label="@(nameof(Value.WorldEffectId).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectId" OnInfoAdornmentClick="@(OpenInfoDialog(info.WorldEffectId))" />
         <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitId)" Label="@(nameof(Value.AiAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitId" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiAnimKitId))" />
     </MudItem>
@@ -22,4 +23,9 @@
 
 @code {
     GameobjectTemplateAddonInfo info = new();
+
+    async Task<Dictionary<uint, string>> GetFlags()
+    {
+        return Enum.GetValues<GameObjectTemplateAddonFlags>().ToDictionary(key => (uint)key, value => value.ToDisplayString());
+    }
 }

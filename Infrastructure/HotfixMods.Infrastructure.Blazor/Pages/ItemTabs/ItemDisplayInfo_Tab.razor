@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Core.Flags.Db2
 
 @inherits DtoContentBase<ItemDto, ItemDisplayInfo>
 
@@ -24,7 +25,7 @@
             <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
                 <RightContent />
                 <MiddleContent>
-                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
                 </MiddleContent>
                 <LeftContent />
             </InlineGroup>
@@ -91,4 +92,9 @@
 
 @code {
     ItemDisplayInfoInfo info = new();
+
+    async Task<Dictionary<int, string>> GetFlags()
+    {
+        return Enum.GetValues<ItemDisplayInfoFlags>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+    }
 }

@@ -60,30 +60,6 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             return default;
         }
 
-        protected EventCallback OpenLookupDialog(string db2Name, int id)
-        {
-            return new EventCallbackFactory().Create(this, async () => await LookupDialogEventCallback(db2Name, id));
-        }
-
-        async Task LookupDialogEventCallback(string db2Name, int id)
-        {
-            /*
-           var parameters = new DialogParameters();
-           parameters.Add(nameof(GenericHotfixSearch_Dialog.Db2Name), db2Name);
-           parameters.Add(nameof(GenericHotfixSearch_Dialog.Id), id);
-           var data = await DialogService.Show<GenericHotfixSearch_Dialog>(null, parameters).Result;
-
-           if (!data.Cancelled)
-           {
-
-               GlobalHandler.LaunchTab?.Invoke(new PageTab<IDto>(db2Name, typeof(GenericHotfixes))
-               {
-                   //Dto = (DbRow)data.Data
-               });
-           }
-               */
-        }
-
         void SetValue()
         {
             if (InstanceData == null)

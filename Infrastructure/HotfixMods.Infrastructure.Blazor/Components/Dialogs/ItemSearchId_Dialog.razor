@@ -53,7 +53,7 @@
             var availableItemModifiedAppearances = await Service.GetAvailableItemModifiedAppearancesAsync((int)Id);
             if (availableItemModifiedAppearances.Count > 1)
             {
-                options = availableItemModifiedAppearances.ToDictionary(k => k.OrderIndex, v => Service.ItemAppearanceModifierIdToString(v.ItemAppearanceModifierId));
+                options = availableItemModifiedAppearances.ToDictionary(k => k.OrderIndex, v => Service.ItemAppearanceModifierIdToString(v.ItemAppearanceModifierID));
             }
             else
             {

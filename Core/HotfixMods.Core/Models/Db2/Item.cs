@@ -6,18 +6,18 @@ namespace HotfixMods.Core.Models.Db2
     public class Item
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
-        public byte ClassId { get; set; } = 0;
-        public byte SubclassId { get; set; } = 0;
+        public uint ID { get; set; } = 0;
+        public byte ClassID { get; set; } = 0;
+        public byte SubclassID { get; set; } = 0;
         public byte Material { get; set; } = 0;
         public sbyte InventoryType { get; set; } = 0;
         public byte SheatheType { get; set; } = 0;
-        public sbyte SoundOverrideSubclassId { get; set; } = 0;
-        public int IconFileDataId { get; set; } = 0;
-        public byte ItemGroupSoundsId { get; set; } = 0;
-        public int ContentTuningId { get; set; } = 0;
-        public int ModifiedCraftingReagentItemId { get; set; } = 0;
-        public int CraftingQualityId { get; set; } = 0;
+        public sbyte SoundOverrideSubclassID { get; set; } = 0;
+        public int IconFileDataID { get; set; } = 0;
+        public byte ItemGroupSoundsID { get; set; } = 0;
+        public int ContentTuningID { get; set; } = 0;
+        public int ModifiedCraftingReagentItemID { get; set; } = 0;
+        public int CraftingQualityID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

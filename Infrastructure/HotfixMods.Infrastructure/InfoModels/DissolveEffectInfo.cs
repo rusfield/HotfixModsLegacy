@@ -8,12 +8,12 @@
         public string FadeInTime { get; set; } = "TODO";
         public string FadeOutTime { get; set; } = "TODO";
         public string Duration { get; set; } = "TODO";
-        public string AttachId { get; set; } = "TODO";
+        public string AttachID { get; set; } = "TODO";
         public string ProjectionType { get; set; } = "TODO";
-        public string TextureBlendSetId { get; set; } = "TODO";
+        public string TextureBlendSetID { get; set; } = "TODO";
         public string Scale { get; set; } = "TODO";
         public string Flags { get; set; } = "TODO";
-        public string CurveId { get; set; } = "TODO";
+        public string CurveID { get; set; } = "TODO";
         public string Priority { get; set; } = "TODO";
         public string FresnelIntensity { get; set; } = "TODO";
         public string Field_9_1_5_40496_014 { get; set; } = "TODO";

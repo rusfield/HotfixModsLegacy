@@ -26,7 +26,7 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.CurveId" ValueCompare="ValueCompare?.CurveId" Label="@nameof(Value.CurveId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CurveId))" />
+        <Input_Element T="int" @bind-Value="Value.CurveID" ValueCompare="ValueCompare?.CurveID" Label="@nameof(Value.CurveID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CurveID))" />
         <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FresnelCoefficient))" />
         <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialDelay))" />
         <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />

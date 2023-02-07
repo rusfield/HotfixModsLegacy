@@ -11,6 +11,6 @@ namespace HotfixMods.Core.Models
 
         [IndexField]
         public int Guid { get; set; }
-        public uint Id { get; set; }
+        public uint ID { get; set; }
     }
 }

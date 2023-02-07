@@ -2,7 +2,7 @@
 {
     public class ItemDisplayInfoModelMatResInfo : IInfoModel
     {
-        public string MaterialResourceId { get; set; } = "TODO";
+        public string MaterialResourceID { get; set; } = "TODO";
         public string TextureType { get; set; } = "TODO";
         public string ModelIndex { get; set; } = "TODO";
 

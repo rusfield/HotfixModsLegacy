@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class EdgeGlowEffect
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public decimal Duration { get; set; } = 0;
         public decimal FadeIn { get; set; } = 0;
         public decimal FadeOut { get; set; } = 0;
@@ -18,7 +18,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal GlowMultiplier { get; set; } = 1;
         public sbyte Flags { get; set; } = 0;
         public decimal InitialDelay { get; set; } = 0;
-        public int CurveId { get; set; } = 0;
+        public int CurveID { get; set; } = 0;
         public uint Priority { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

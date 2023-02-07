@@ -36,7 +36,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 results.Add(new()
                 {
-                    Id = dto.RecordId,
+                    ID = dto.RecordID,
                     Name = dto.Name,
                     AvatarUrl = null
                 });
@@ -49,14 +49,14 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(5);
 
-            var animKit = await GetSingleAsync<AnimKit>(callback, progress, new DbParameter(nameof(AnimKit.Id), id));
+            var animKit = await GetSingleAsync<AnimKit>(callback, progress, new DbParameter(nameof(AnimKit.ID), id));
             if (null == animKit)
             {
                 callback.Invoke(LoadingHelper.Loading, $"{nameof(AnimKit)} not found", 100);
                 return null;
             }
 
-            var hotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, animKit.Id);
+            var hotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, animKit.ID);
             var result = new AnimKitDto()
             {
                 AnimKit = animKit,
@@ -65,12 +65,12 @@ namespace HotfixMods.Infrastructure.Services
                 IsUpdate = true
             };
 
-            var segments = await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitId), id));
+            var segments = await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id));
             callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(AnimKitConfig)} and {nameof(AnimKitConfigBoneSet)}", progress());
             foreach (var segment in segments)
             {
-                var animKitConfig = await GetSingleAsync<AnimKitConfig>(new DbParameter(nameof(AnimKitConfig.Id), segment.AnimKitConfigId)) ?? new();
-                var animKitConfigBoneSets = await GetAsync<AnimKitConfigBoneSet>(new DbParameter(nameof(AnimKitConfigBoneSet.ParentAnimKitConfigId), animKitConfig.Id));
+                var animKitConfig = await GetSingleAsync<AnimKitConfig>(new DbParameter(nameof(AnimKitConfig.ID), segment.AnimKitConfigID)) ?? new();
+                var animKitConfigBoneSets = await GetAsync<AnimKitConfigBoneSet>(new DbParameter(nameof(AnimKitConfigBoneSet.ParentAnimKitConfigID), animKitConfig.ID));
                 if (animKitConfigBoneSets.Count == 0)
                     animKitConfigBoneSets.Add(new());
 

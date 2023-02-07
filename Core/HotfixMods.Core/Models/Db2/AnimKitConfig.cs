@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKitConfig
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public uint ConfigFlags { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

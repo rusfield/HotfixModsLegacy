@@ -4,7 +4,7 @@
     {
         public string EmissionRate { get; set; } = "TODO";
         public string ModelScale { get; set; } = "TODO";
-        public string AreaModelId { get; set; } = "TODO";
+        public string AreaModelID { get; set; } = "TODO";
         public string Flags { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";

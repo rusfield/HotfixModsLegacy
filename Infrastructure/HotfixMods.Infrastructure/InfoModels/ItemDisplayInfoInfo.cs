@@ -4,13 +4,13 @@
     {
         public string Field_3_4_1_46917_000 { get; set; } = "TODO";
         public string ItemVisual { get; set; } = "TODO";
-        public string ParticleColorId { get; set; } = "TODO";
-        public string ItemRangedDisplayInfoId { get; set; } = "TODO";
-        public string OverrideSwooshSoundKitId { get; set; } = "TODO";
-        public string SheatheTransformMatrixId { get; set; } = "TODO";
-        public string StateSpellVisualKitId { get; set; } = "TODO";
-        public string SheathedSpellVisualKitId { get; set; } = "TODO";
-        public string UnsheathedSpellVisualKitId { get; set; } = "TODO";
+        public string ParticleColorID { get; set; } = "TODO";
+        public string ItemRangedDisplayInfoID { get; set; } = "TODO";
+        public string OverrideSwooshSoundKitID { get; set; } = "TODO";
+        public string SheatheTransformMatrixID { get; set; } = "TODO";
+        public string StateSpellVisualKitID { get; set; } = "TODO";
+        public string SheathedSpellVisualKitID { get; set; } = "TODO";
+        public string UnsheathedSpellVisualKitID { get; set; } = "TODO";
         public string Flags { get; set; } = "TODO";
         public string ModelResourcesID1 { get; set; } = "TODO";
         public string ModelResourcesID2 { get; set; } = "TODO";

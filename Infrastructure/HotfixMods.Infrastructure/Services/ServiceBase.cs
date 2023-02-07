@@ -180,7 +180,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 var dbParameters = new DbParameter[3];
-                dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIdColumnName, dbRow.GetIdValue());
+                dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIDColumnName, dbRow.GetIdValue());
                 dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.VALID);
                 dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, (uint)tableHash);
 
@@ -201,7 +201,7 @@ namespace HotfixMods.Infrastructure.Services
                         Value = Activator.CreateInstance(definition.Type)!
                     };
 
-                    if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIdColumnName, StringComparison.CurrentCultureIgnoreCase))
+                    if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIDColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = dbRow.GetIdValue();
                     else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableStatusColumnName, StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (byte)HotfixStatuses.VALID;
@@ -270,7 +270,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 foreach (var entity in entities)
                 {
-                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordId), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
+                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
 
                     var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
                     if (hotfixData != null)
@@ -359,14 +359,14 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(uint entityId)
         {
-            var entity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordId), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
+            var entity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
             {
                 entity = new()
                 {
-                    Id = 0,
+                    ID = 0,
                     Name = "",
-                    RecordId = entityId,
+                    RecordID = entityId,
                     VerifiedBuild = VerifiedBuild
                 };
             }
@@ -375,7 +375,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<uint> GetNextHotfixModsEntityIdAsync()
         {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), uint.MinValue, uint.MaxValue, nameof(HotfixModsEntity.Id));
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), uint.MinValue, uint.MaxValue, nameof(HotfixModsEntity.ID));
         }
     }
 }

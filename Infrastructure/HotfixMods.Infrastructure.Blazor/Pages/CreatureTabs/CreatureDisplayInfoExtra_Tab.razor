@@ -6,17 +6,17 @@
 
 <StandardDtoContent T="CreatureDisplayInfoExtra">
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceId" ValueCompare="ValueCompare?.DisplayRaceId" Label="@nameof(Value.DisplayRaceId).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayRaceId))" />
-        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassId" ValueCompare="ValueCompare?.DisplayClassId" Label="@nameof(Value.DisplayClassId).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayClassId))" />
-        <Input_Element T="sbyte" @bind-Value="Value.DisplaySexId" ValueCompare="ValueCompare?.DisplaySexId" Label="@nameof(Value.DisplaySexId).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplaySexId))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceID" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayRaceID))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayClassID))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplaySexID" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplaySexID))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
-        <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesId" ValueCompare="ValueCompare?.HDBakeMaterialResourcesId" Label="HD Bake Material Resources ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.HDBakeMaterialResourcesId))" />
-        <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesId" ValueCompare="ValueCompare?.BakeMaterialResourcesId" Label="@nameof(Value.BakeMaterialResourcesId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BakeMaterialResourcesId))" />
+        <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesID" ValueCompare="ValueCompare?.HDBakeMaterialResourcesID" Label="HD Bake Material Resources ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.HDBakeMaterialResourcesID))" />
+        <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesID" ValueCompare="ValueCompare?.BakeMaterialResourcesID" Label="@nameof(Value.BakeMaterialResourcesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BakeMaterialResourcesID))" />
     </MudItem>
 </StandardDtoContent>
 

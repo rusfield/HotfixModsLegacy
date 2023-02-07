@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     public class CreatureModelInfo
     {
         [IndexField]
-        public uint DisplayId { get; set; } = 0;
+        public uint DisplayID { get; set; } = 0;
         public decimal BoundingRadius { get; set; } = 0;
         public decimal CombatReach { get; set; } = 0;
         public uint DisplayId_Other_Gender { get; set; } = 0;

@@ -6,12 +6,12 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemAppearance
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public int DisplayType { get; set; } = 0;
-        public int ItemDisplayInfoId { get; set; } = 0;
-        public int DefaultIconFileDataId { get; set; } = 0;
+        public int ItemDisplayInfoID { get; set; } = 0;
+        public int DefaultIconFileDataID { get; set; } = 0;
         public int UiOrder { get; set; } = 0;
-        public int TransmogPlayerConditionId { get; set; } = 0;
+        public int TransmogPlayerConditionID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

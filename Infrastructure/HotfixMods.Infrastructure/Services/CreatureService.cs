@@ -36,7 +36,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 results.Add(new()
                 {
-                    Id = dto.RecordId,
+                    ID = dto.RecordID,
                     Name = dto.Name,
                     AvatarUrl = null
                 });
@@ -71,15 +71,15 @@ namespace HotfixMods.Infrastructure.Services
                 CreatureDisplayInfo = new()
                 {
                     Gender = (sbyte)character.Gender,
-                    ModelId = 1
+                    ModelID = 1
                 },
                 CreatureTemplateModel = new(),
                 CreatureEquipTemplate = new(),
                 CreatureDisplayInfoExtra = new()
                 {
-                    DisplayRaceId = (sbyte)character.Race,
-                    DisplaySexId = (sbyte)character.Gender,
-                    DisplayClassId = (sbyte)character.Class
+                    DisplayRaceID = (sbyte)character.Race,
+                    DisplaySexID = (sbyte)character.Gender,
+                    DisplayClassID = (sbyte)character.Class
                 },
                 CreatureModelInfo = new(),
                 NpcModelItemSlotDisplayInfo = new(),
@@ -92,11 +92,11 @@ namespace HotfixMods.Infrastructure.Services
             {
                 result.CreatureDisplayInfoOption.Add(new()
                 {
-                    ChrCustomizationChoiceId = (int)customization.ChrCustomizationChoiceId,
-                    ChrCustomizationOptionId = (int)customization.ChrCustomizationOptionId,
+                    ChrCustomizationChoiceID = (int)customization.ChrCustomizationChoiceID,
+                    ChrCustomizationOptionID = (int)customization.ChrCustomizationOptionID,
                 });
             }
-            result.CreatureDisplayInfo.ModelId = GetModelIdByRaceAndGenders(result.CreatureDisplayInfoExtra.DisplayRaceId, result.CreatureDisplayInfoExtra.DisplaySexId, result.CreatureDisplayInfoOption);
+            result.CreatureDisplayInfo.ModelID = GetModelIdByRaceAndGenders(result.CreatureDisplayInfoExtra.DisplayRaceID, result.CreatureDisplayInfoExtra.DisplaySexID, result.CreatureDisplayInfoOption);
 
             var characterItems = await GetAsync<ItemInstance>(callback, progress, new DbParameter(nameof(ItemInstance.Owner_Guid), character.Guid));
             var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, new DbParameter(nameof(CharacterInventory.Guid), character.Guid));
@@ -120,16 +120,16 @@ namespace HotfixMods.Infrastructure.Services
                 // Note: Dont mix up ItemModifiedAppearance.Id with ItemAppearanceModifierId.
                 if (transmogItem != null)
                 {
-                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.Id), transmogItem.ItemModifiedAppearanceAllSpecs));
+                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ID), transmogItem.ItemModifiedAppearanceAllSpecs));
                     if (itemModifiedAppearance != null)
                     {
-                        itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
-                        itemAppearanceModifierId = itemModifiedAppearance.ItemAppearanceModifierId;
-                        itemId = (uint)itemModifiedAppearance.ItemId;
+                        itemAppearanceId = itemModifiedAppearance.ItemAppearanceID;
+                        itemAppearanceModifierId = itemModifiedAppearance.ItemAppearanceModifierID;
+                        itemId = (uint)itemModifiedAppearance.ItemID;
                     }
                     if (transmogItem.SpellItemEnchantmentAllSpecs > 0 && IsWeaponSlot(equippedItem.Slot))
                     {
-                        var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.Id), transmogItem.SpellItemEnchantmentAllSpecs));
+                        var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.ID), transmogItem.SpellItemEnchantmentAllSpecs));
                         if (spellItemEnchantment != null)
                             itemVisual = spellItemEnchantment.ItemVisual;
                     }
@@ -144,19 +144,19 @@ namespace HotfixMods.Infrastructure.Services
                         if (bonusListIds != null && bonusListIds.Any())
                         {
                             var itemBonuses = await GetAsync<ItemBonus>(new DbParameter(nameof(ItemBonus.Type), 7));
-                            var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListId)).FirstOrDefault();
+                            var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListID)).FirstOrDefault();
                             if (itemBonus != null)
                             {
-                                itemAppearanceModifierId = itemBonus.Value1; // TODO: Change to 0 after refactor
+                                itemAppearanceModifierId = itemBonus.Value0; // TODO: Change to 0 after refactor
                             }
                         }
                     }
 
-                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemId), item.ItemEntry), new DbParameter(nameof(ItemModifiedAppearance.ItemAppearanceModifierId), itemAppearanceModifierId));
+                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemID), item.ItemEntry), new DbParameter(nameof(ItemModifiedAppearance.ItemAppearanceModifierID), itemAppearanceModifierId));
                     if (itemModifiedAppearance == null)
                         continue;
 
-                    itemAppearanceId = itemModifiedAppearance.ItemAppearanceId;
+                    itemAppearanceId = itemModifiedAppearance.ItemAppearanceID;
                 }
 
                 if (itemVisual == 0 && IsWeaponSlot(equippedItem.Slot))
@@ -167,7 +167,7 @@ namespace HotfixMods.Infrastructure.Services
                         {
                             if (enchantmentId > 0)
                             {
-                                var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.Id), enchantmentId));
+                                var spellItemEnchantment = await GetSingleAsync<SpellItemEnchantment>(new DbParameter(nameof(SpellItemEnchantment.ID), enchantmentId));
                                 if (spellItemEnchantment != null && spellItemEnchantment.ItemVisual > 0)
                                 {
                                     itemVisual = spellItemEnchantment.ItemVisual;
@@ -178,7 +178,7 @@ namespace HotfixMods.Infrastructure.Services
                     }
                 }
 
-                var itemAppearance = await GetSingleAsync<ItemAppearance>(new DbParameter(nameof(ItemAppearance.Id), itemAppearanceId));
+                var itemAppearance = await GetSingleAsync<ItemAppearance>(new DbParameter(nameof(ItemAppearance.ID), itemAppearanceId));
                 if (itemAppearance == null)
                     continue;
 
@@ -205,7 +205,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     result.NpcModelItemSlotDisplayInfo.Add(new()
                     {
-                        ItemDisplayInfoId = itemAppearance.ItemDisplayInfoId,
+                        ItemDisplayInfoID = itemAppearance.ItemDisplayInfoID,
                         ItemSlot = CharacterInventorySlotToNpcModelItemSlot(equippedItem.Slot)
                     });
                 }
@@ -229,21 +229,21 @@ namespace HotfixMods.Infrastructure.Services
             var result = new CreatureDto()
             {
                 HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, id),
-                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureId), id)) ?? new(),
+                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), id)) ?? new(),
                 CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), id)),
-                CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureId), id)),
+                CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), id)),
                 CreatureTemplate = creatureTemplate,
                 IsUpdate = true
             };
 
-            result.CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayId), (int)result.CreatureTemplateModel.CreatureDisplayId)) ?? new();
-            result.CreatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.Id), (int)result.CreatureTemplateModel.CreatureDisplayId)) ?? new();
-            result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.Id), result.CreatureDisplayInfo.ExtendedDisplayInfoId));
+            result.CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
+            result.CreatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.ID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
+            result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
 
             if (result.CreatureDisplayInfoExtra != null)
             {
-                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId), result.CreatureDisplayInfoExtra.Id));
-                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
+                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
+                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
             }
 
             callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
@@ -255,7 +255,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
 
-            var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.Id), creatureDisplayInfoId));
+            var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.ID), creatureDisplayInfoId));
             if (creatureDisplayInfo == null)
             {
                 callback.Invoke(LoadingHelper.Loading, $"{nameof(CreatureDisplayInfo)} not found", 100);
@@ -265,21 +265,21 @@ namespace HotfixMods.Infrastructure.Services
             var result = new CreatureDto()
             {
                 CreatureDisplayInfo = creatureDisplayInfo,
-                CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayId), creatureDisplayInfoId)) ?? new(),
+                CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayID), creatureDisplayInfoId)) ?? new(),
                 IsUpdate = false
             };
 
-            var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureDisplayId), creatureDisplayInfoId));
+            var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureDisplayID), creatureDisplayInfoId));
             if (creatureTemplateModel != null)
             {
-                var creatureTemplate = await GetSingleAsync<CreatureTemplate>(callback, progress, new DbParameter(nameof(CreatureTemplate.Entry), creatureTemplateModel.CreatureId));
+                var creatureTemplate = await GetSingleAsync<CreatureTemplate>(callback, progress, new DbParameter(nameof(CreatureTemplate.Entry), creatureTemplateModel.CreatureID));
                 result.CreatureTemplateModel = creatureTemplateModel;
                 result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, creatureTemplate?.Entry ?? 0);
                 if (creatureTemplate != null)
                 {
                     result.CreatureTemplate = creatureTemplate;
                     result.CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), creatureTemplate.Entry));
-                    result.CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureId), creatureTemplate.Entry));
+                    result.CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), creatureTemplate.Entry));
                     result.IsUpdate = true;
                 }
                 else
@@ -293,12 +293,12 @@ namespace HotfixMods.Infrastructure.Services
                 result.CreatureTemplate = new();
             }
 
-            result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.Id), result.CreatureDisplayInfo.ExtendedDisplayInfoId));
+            result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
 
             if (result.CreatureDisplayInfoExtra != null)
             {
-                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraId), result.CreatureDisplayInfoExtra.Id));
-                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelId), result.CreatureDisplayInfoExtra.Id));
+                result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
+                result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
             }
 
 

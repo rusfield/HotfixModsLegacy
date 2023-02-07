@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class BarrageEffect
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public int Flags { get; set; } = 0;
         public decimal Field_8_1_0_28616_001Max { get; set; } = 0;
         public decimal Field_8_1_0_28616_001Min { get; set; } = 0;
@@ -16,7 +16,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ModelCountMax { get; set; } = 0;
         public int ModelCountMin { get; set; } = 0;
         public sbyte AttachmentPoint { get; set; } = -1;
-        public int SpellVisualEffectNameId { get; set; } = 0;
+        public int SpellVisualEffectNameID { get; set; } = 0;
         public decimal ConeAngle { get; set; } = 0;
         public decimal Range { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;

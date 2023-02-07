@@ -4,9 +4,9 @@
     {
         public string AllowableRace { get; set; } = "TODO";
         public string Display { get; set; } = "TODO";
-        public string OverallQualityId { get; set; } = "TODO";
-        public string ExpansionId { get; set; } = "TODO";
-        public string MinFactionId { get; set; } = "TODO";
+        public string OverallQualityID { get; set; } = "TODO";
+        public string ExpansionID { get; set; } = "TODO";
+        public string MinFactionID { get; set; } = "TODO";
         public string MinReputation { get; set; } = "TODO";
         public string AllowableClass { get; set; } = "TODO";
         public string RequiredLevel { get; set; } = "TODO";

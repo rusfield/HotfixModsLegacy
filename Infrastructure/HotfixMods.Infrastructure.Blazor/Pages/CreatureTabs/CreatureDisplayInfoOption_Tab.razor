@@ -21,7 +21,7 @@
                     {
                         var customization = customizations.ElementAt(jVal);
                         var bindValue = GetCreatureDisplayInfoOption(customization);
-                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceID" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.ID))" />
                     }
                 }
             </MudItem>
@@ -43,7 +43,7 @@
                                 {
                                     var customization = customizations.ElementAt(jVal - 1);
                                     var bindValue = GetCreatureDisplayInfoOption(customization);
-                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceID" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.ID))" />
                                 }
                             </LeftContent>
                             <RightContent>
@@ -55,7 +55,7 @@
                                 {
                                     var customization = customizations.ElementAt(jVal);
                                     var bindValue = GetCreatureDisplayInfoOption(customization);
-                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
+                                    <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceID" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.ID))" />
                                 }
                             </RightContent>
 
@@ -76,7 +76,7 @@
                     {
                         var customization = customizations.ElementAt(jVal);
                         var bindValue = GetCreatureDisplayInfoOption(customization);
-                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceId" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.Id))" />
+                        <Input_Element T="int" @bind-Value="bindValue.ChrCustomizationChoiceID" Label="@(customization.Key.Name)" GetOptionsAsync_Func="@(async () => await GetCustomizationChoices((int)customization.Key.ID))" />
                     }
                 }
             </MudItem>
@@ -113,24 +113,24 @@
 
     async Task<Dictionary<int, string>> GetCustomizationChoices(int chrCustomizationOptionId)
     {
-        if (customizations.Any(k => k.Key.Id == chrCustomizationOptionId))
+        if (customizations.Any(k => k.Key.ID == chrCustomizationOptionId))
         {
-            return customizations.First(c => c.Key.Id == chrCustomizationOptionId).Value.ToDictionary(c => (int)c.Id, c => string.IsNullOrWhiteSpace(c.Name) ? c.Id.ToString() : $"{c.Name} ({c.Id})");
+            return customizations.First(c => c.Key.ID == chrCustomizationOptionId).Value.ToDictionary(c => (int)c.ID, c => string.IsNullOrWhiteSpace(c.Name) ? c.ID.ToString() : $"{c.Name} ({c.ID})");
         }
         return new();
     }
 
     CreatureDisplayInfoOption GetCreatureDisplayInfoOption(KeyValuePair<ChrCustomizationOption, List<ChrCustomizationChoice>> customization)
     {
-        if (!values.Any(v => v.ChrCustomizationOptionId == customization.Key.Id))
+        if (!values.Any(v => v.ChrCustomizationOptionID == customization.Key.ID))
         {
             values.Add(new()
                 {
-                    ChrCustomizationOptionId = (int)customization.Key.Id,
-                    ChrCustomizationChoiceId = (int)customization.Value.First().Id
+                    ChrCustomizationOptionID = (int)customization.Key.ID,
+                    ChrCustomizationChoiceID = (int)customization.Value.First().ID
                 });
         }
-        return values.Where(v => v.ChrCustomizationOptionId == customization.Key.Id).First();
+        return values.Where(v => v.ChrCustomizationOptionID == customization.Key.ID).First();
     }
 
     async Task SetValues()
@@ -139,7 +139,7 @@
         var creatureDisplayInfoExtra = ((CreatureDto?)PageTab?.Dto)?.CreatureDisplayInfoExtra;
         if (creatureDisplayInfoExtra != null)
         {
-            customizations = await Service.GetCustomizationOptions(creatureDisplayInfoExtra.DisplayRaceId, creatureDisplayInfoExtra.DisplaySexId);
+            customizations = await Service.GetCustomizationOptions(creatureDisplayInfoExtra.DisplayRaceID, creatureDisplayInfoExtra.DisplaySexID);
         }
         else
         {

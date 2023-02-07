@@ -6,11 +6,11 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfoGeosetData
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public byte GeosetIndex { get; set; }
         public byte GeosetValue { get; set; }
         [ParentIndexField]
-        public int CreatureDisplayInfoId { get; set; }
+        public int CreatureDisplayInfoID { get; set; }
         public int VerifiedBuild { get; set; } = -1;
     }
 }

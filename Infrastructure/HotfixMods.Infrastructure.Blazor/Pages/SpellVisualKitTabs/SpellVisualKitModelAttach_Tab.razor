@@ -7,6 +7,14 @@
     <MudItem xs="3">
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
+                <Input_Element T="decimal" @bind-Value="Value.Offset0" ValueCompare="ValueCompare?.Offset0" Label="@nameof(Value.Offset0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset0))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation0" ValueCompare="ValueCompare?.OffsetVariation0" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation0))" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="60" RightContentWidth="40">
+            <LeftContent>
                 <Input_Element T="decimal" @bind-Value="Value.Offset1" ValueCompare="ValueCompare?.Offset1" Label="@nameof(Value.Offset1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset1))" />
             </LeftContent>
             <RightContent>
@@ -21,34 +29,26 @@
                 <Input_Element T="decimal" @bind-Value="Value.OffsetVariation2" ValueCompare="ValueCompare?.OffsetVariation2" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation2))" />
             </RightContent>
         </InlineGroup>
-        <InlineGroup LeftContentWidth="60" RightContentWidth="40">
-            <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Offset3" ValueCompare="ValueCompare?.Offset3" Label="@nameof(Value.Offset3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset3))" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation3" ValueCompare="ValueCompare?.OffsetVariation3" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation3))" />
-            </RightContent>
-        </InlineGroup>
         <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
-        <Input_Element T="int" @bind-Value="Value.AttachmentId" ValueCompare="ValueCompare?.AttachmentId" Label="@nameof(Value.AttachmentId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentId))" />
-        <Input_Element T="int" @bind-Value="Value.PositionerId" ValueCompare="ValueCompare?.PositionerId" Label="@nameof(Value.PositionerId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PositionerId))" />
+        <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentID))" />
+        <Input_Element T="int" @bind-Value="Value.PositionerID" ValueCompare="ValueCompare?.PositionerID" Label="@nameof(Value.PositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PositionerID))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartAnimId" ValueCompare="ValueCompare?.StartAnimId" Label="@nameof(Value.StartAnimId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartAnimId))" />
+                <Input_Element T="int" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartAnimID))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.AnimId" ValueCompare="ValueCompare?.AnimId" Label="@nameof(Value.AnimId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimId))" />
+                <Input_Element T="int" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimID))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.EndAnimId" ValueCompare="ValueCompare?.EndAnimId" Label="@nameof(Value.EndAnimId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndAnimId))" />
+                <Input_Element T="int" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndAnimID))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.AnimKitId" ValueCompare="ValueCompare?.AnimKitId" Label="@nameof(Value.AnimKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitId))" />
+                <Input_Element T="int" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitID))" />
             </LeftContent>
             <RightContent>
                 <Input_Element T="decimal" @bind-Value="Value.StartDelay" ValueCompare="ValueCompare?.StartDelay" Label="@nameof(Value.StartDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartDelay))" />
@@ -88,7 +88,7 @@
                 <Input_Element T="decimal" @bind-Value="Value.RollVariation" ValueCompare="ValueCompare?.RollVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.RollVariation))" />
             </RightContent>
         </InlineGroup>
-        <Input_Element T="int" @bind-Value="Value.LowDefModelAttachId" ValueCompare="ValueCompare?.LowDefModelAttachId" Label="@nameof(Value.LowDefModelAttachId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LowDefModelAttachId))" />
+        <Input_Element T="int" @bind-Value="Value.LowDefModelAttachID" ValueCompare="ValueCompare?.LowDefModelAttachID" Label="@nameof(Value.LowDefModelAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LowDefModelAttachID))" />
         <Input_Element T="decimal" @bind-Value="Value.Field_9_0_1_33978_021" ValueCompare="ValueCompare?.Field_9_0_1_33978_021" Label="@nameof(Value.Field_9_0_1_33978_021).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_9_0_1_33978_021))" />
     </MudItem>
 </InstancedDtoContentPage>

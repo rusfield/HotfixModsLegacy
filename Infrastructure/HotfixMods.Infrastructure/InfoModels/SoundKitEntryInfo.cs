@@ -2,8 +2,8 @@
 {
     public class SoundKitEntryInfo : IInfoModel
     {
-        public string SoundKitId { get; set; } = "TODO";
-        public string FileDataId { get; set; } = "TODO";
+        public string SoundKitID { get; set; } = "TODO";
+        public string FileDataID { get; set; } = "TODO";
         public string Frequency { get; set; } = "TODO";
         public string Volume { get; set; } = "TODO";
 

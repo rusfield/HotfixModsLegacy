@@ -2,6 +2,7 @@
 {
     public class SpellMiscInfo : IInfoModel
     {
+        public string Attributes0 { get; set; } = "TODO";
         public string Attributes1 { get; set; } = "TODO";
         public string Attributes2 { get; set; } = "TODO";
         public string Attributes3 { get; set; } = "TODO";
@@ -16,8 +17,7 @@
         public string Attributes12 { get; set; } = "TODO";
         public string Attributes13 { get; set; } = "TODO";
         public string Attributes14 { get; set; } = "TODO";
-        public string Attributes15 { get; set; } = "TODO";
-        public string DifficultyId { get; set; } = "TODO";
+        public string DifficultyID { get; set; } = "TODO";
         public string CastingTimeIndex { get; set; } = "TODO";
         public string DurationIndex { get; set; } = "TODO";
         public string RangeIndex { get; set; } = "TODO";
@@ -25,13 +25,13 @@
         public string Speed { get; set; } = "TODO";
         public string LaunchDelay { get; set; } = "TODO";
         public string MinDuration { get; set; } = "TODO";
-        public string SpellIconFileDataId { get; set; } = "TODO";
-        public string ActiveIconFileDataId { get; set; } = "TODO";
-        public string ContentTuningId { get; set; } = "TODO";
-        public string ShowFutureSpellPlayerConditionId { get; set; } = "TODO";
+        public string SpellIconFileDataID { get; set; } = "TODO";
+        public string ActiveIconFileDataID { get; set; } = "TODO";
+        public string ContentTuningID { get; set; } = "TODO";
+        public string ShowFutureSpellPlayerConditionID { get; set; } = "TODO";
         public string SpellVisualScript { get; set; } = "TODO";
         public string ActiveSpellVisualScript { get; set; } = "TODO";
-        public string SpellId { get; set; } = "TODO";
+        public string SpellID { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";
         public bool IsRequired { get; set; } = true;

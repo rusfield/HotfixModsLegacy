@@ -13,16 +13,16 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SpellId" ValueCompare="ValueCompare?.SpellId" Label="@nameof(Value.SpellId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellId))" />
+                <Input_Element T="int" @bind-Value="Value.SpellID" ValueCompare="ValueCompare?.SpellID" Label="@nameof(Value.SpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellID))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="ushort" @bind-Value="Value.SpellCategoryId" ValueCompare="ValueCompare?.SpellCategoryId" Label="@nameof(Value.SpellCategoryId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellCategoryId))" />
+                <Input_Element T="ushort" @bind-Value="Value.SpellCategoryID" ValueCompare="ValueCompare?.SpellCategoryID" Label="@nameof(Value.SpellCategoryID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellCategoryID))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="Value.CategoryCoolDownMSec" ValueCompare="ValueCompare?.CategoryCoolDownMSec" Label="@nameof(Value.CategoryCoolDownMSec).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CategoryCoolDownMSec))" />
-        <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationId" ValueCompare="ValueCompare?.ChrSpecializationId" Label="@nameof(Value.ChrSpecializationId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ChrSpecializationId))" />
+        <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationID" ValueCompare="ValueCompare?.ChrSpecializationID" Label="@nameof(Value.ChrSpecializationID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ChrSpecializationID))" />
         <Input_Element T="byte" @bind-Value="Value.LegacySlotIndex" ValueCompare="ValueCompare?.LegacySlotIndex" Label="@nameof(Value.LegacySlotIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LegacySlotIndex))" />
     </MudItem>
 </InstancedDtoContentPage>

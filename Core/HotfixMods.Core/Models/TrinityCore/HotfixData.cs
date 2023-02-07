@@ -7,10 +7,10 @@ namespace HotfixMods.Core.Models.TrinityCore
     [HotfixesSchema]
     public class HotfixData
     {
-        public uint Id { get; set; }
-        public uint UniqueId { get; set; }
+        public uint ID { get; set; }
+        public uint UniqueID { get; set; }
         public uint TableHash { get; set; }
-        public int RecordId { get; set; }
+        public int RecordID { get; set; }
         public byte Status { get; set; }
         public int VerifiedBuild { get; set; }
     }

@@ -6,10 +6,10 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemXItemEffect
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
-        public int ItemEffectId { get; set; } = 0;
+        public uint ID { get; set; } = 0;
+        public int ItemEffectID { get; set; } = 0;
         [ParentIndexField]
-        public int ItemId { get; set; } = 0;
+        public int ItemID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

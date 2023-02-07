@@ -4,7 +4,7 @@
     {
         public string Entry { get; set; } = "TODO";
         public string Type { get; set; } = "TODO";
-        public string DisplayId { get; set; } = "TODO";
+        public string DisplayID { get; set; } = "TODO";
         public string Name { get; set; } = "TODO";
         public string IconName { get; set; } = "TODO";
         public string CastBarCaption { get; set; } = "TODO";
@@ -45,7 +45,7 @@
         public string Data32 { get; set; } = "TODO";
         public string Data33 { get; set; } = "TODO";
         public string Data34 { get; set; } = "TODO";
-        public string ContentTuningId { get; set; } = "TODO";
+        public string ContentTuningID { get; set; } = "TODO";
         public string AIName { get; set; } = "TODO";
         public string ScriptName { get; set; } = "TODO";
 

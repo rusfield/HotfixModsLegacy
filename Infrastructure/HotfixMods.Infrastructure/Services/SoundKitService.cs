@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 results.Add(new()
                 {
-                    Id = dto.RecordId,
+                    ID = dto.RecordID,
                     Name = dto.Name,
                     AvatarUrl = null
                 });
@@ -47,7 +47,7 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
 
-            var soundKit = await GetSingleAsync<SoundKit>(callback, progress, new DbParameter(nameof(SoundKit.Id), id));
+            var soundKit = await GetSingleAsync<SoundKit>(callback, progress, new DbParameter(nameof(SoundKit.ID), id));
             if (null == soundKit)
             {
                 callback.Invoke(LoadingHelper.Loading, $"{nameof(SoundKit)} not found", 100);
@@ -58,11 +58,11 @@ namespace HotfixMods.Infrastructure.Services
             {
                 SoundKit = soundKit,
                 EntryGroups = new(),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, soundKit.Id),
+                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, soundKit.ID),
                 IsUpdate = true
             };
 
-            var soundKitEntries = await GetAsync<SoundKitEntry>(callback, progress, new DbParameter(nameof(SoundKitEntry.SoundKitId), id));
+            var soundKitEntries = await GetAsync<SoundKitEntry>(callback, progress, new DbParameter(nameof(SoundKitEntry.SoundKitID), id));
             foreach (var soundKitEntry in soundKitEntries)
             {
                 result.EntryGroups.Add(new()
@@ -85,7 +85,7 @@ namespace HotfixMods.Infrastructure.Services
             callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
             if (dto.IsUpdate)
             {
-                await DeleteAsync(dto.SoundKit.Id);
+                await DeleteAsync(dto.SoundKit.ID);
             }
 
             await SaveAsync(callback, progress, dto.HotfixModsEntity);

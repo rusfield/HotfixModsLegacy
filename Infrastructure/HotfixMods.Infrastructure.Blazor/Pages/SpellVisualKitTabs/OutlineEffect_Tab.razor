@@ -5,8 +5,8 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorId" ValueCompare="ValueCompare?.PassiveHighlightColorId" Label="@nameof(Value.PassiveHighlightColorId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PassiveHighlightColorId))" />
-        <Input_Element T="uint" @bind-Value="Value.HighlightColorId" ValueCompare="ValueCompare?.HighlightColorId" Label="@nameof(Value.HighlightColorId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HighlightColorId))" />
+        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorID" ValueCompare="ValueCompare?.PassiveHighlightColorID" Label="@nameof(Value.PassiveHighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PassiveHighlightColorID))" />
+        <Input_Element T="uint" @bind-Value="Value.HighlightColorID" ValueCompare="ValueCompare?.HighlightColorID" Label="@nameof(Value.HighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HighlightColorID))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -23,8 +23,8 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
+        <Input_Element T="uint" @bind-Value="Value.UnitConditionId0" ValueCompare="ValueCompare?.UnitConditionId0" Label="@nameof(Value.UnitConditionId0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId0))" />
         <Input_Element T="uint" @bind-Value="Value.UnitConditionId1" ValueCompare="ValueCompare?.UnitConditionId1" Label="@nameof(Value.UnitConditionId1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId1))" />
-        <Input_Element T="uint" @bind-Value="Value.UnitConditionId2" ValueCompare="ValueCompare?.UnitConditionId2" Label="@nameof(Value.UnitConditionId2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId2))" />
     </MudItem>
 </InstancedDtoContentPage>
 

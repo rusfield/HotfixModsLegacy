@@ -52,14 +52,45 @@ namespace HotfixMods.Providers.WowDev.Client
             foreach (var fieldDefinition in versionDefinition.definitions)
             {
                 var columnDefinition = databaseDefinitions.columnDefinitions[fieldDefinition.name];
-                var name = fieldDefinition.name.Replace("_lang", "");
+                var definitionName = fieldDefinition.name.Replace("_lang", "");
+
+                // Remove underscore and set uppercase
+                // Assuming name does not start with underscore or contains two underscores after one another
+                // Exception is for properties named Field_{patch}
+                string name = "";
+                if (definitionName.StartsWith("Field"))
+                {
+                    name = definitionName;
+                }
+                else
+                {
+                    bool isUnderscore = false;
+
+                    foreach (var c in definitionName)
+                    {
+                        if (isUnderscore)
+                        {
+                            // previous was underscore
+                            name += char.ToUpper(c);
+                            isUnderscore = false;
+                        }
+                        else
+                        {
+                            isUnderscore = c == '_';
+                            if (!isUnderscore)
+                                name += c;
+                        }
+                    }
+                }
+
+
                 var type = FieldDefinitionToType(fieldDefinition, columnDefinition);
 
                 if (fieldDefinition.arrLength != 0)
                 {
                     for (int i = 0; i<fieldDefinition.arrLength; i++)
                     {
-                        var arrayColName = $"{name}{i+1}";
+                        var arrayColName = $"{name}{i}";
                         dbRowDefinition.ColumnDefinitions.Add(new()
                         {
                             Name = arrayColName,

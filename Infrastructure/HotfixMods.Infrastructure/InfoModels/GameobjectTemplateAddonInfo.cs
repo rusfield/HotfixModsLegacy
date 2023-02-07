@@ -12,8 +12,8 @@
         public string Artkit2 { get; set; } = "TODO";
         public string Artkit3 { get; set; } = "TODO";
         public string Artkit4 { get; set; } = "TODO";
-        public string WorldEffectId { get; set; } = "TODO";
-        public string AiAnimKitId { get; set; } = "TODO";
+        public string WorldEffectID { get; set; } = "TODO";
+        public string AiAnimKitID { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";
         public bool IsRequired { get; set; } = false;

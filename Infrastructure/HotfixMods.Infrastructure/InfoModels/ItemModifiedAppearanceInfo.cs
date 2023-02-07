@@ -2,9 +2,9 @@
 {
     public class ItemModifiedAppearanceInfo : IInfoModel
     {
-        public string ItemId { get; set; } = "TODO";
-        public string ItemAppearanceModifierId { get; set; } = "TODO";
-        public string ItemAppearanceId { get; set; } = "TODO";
+        public string ItemID { get; set; } = "TODO";
+        public string ItemAppearanceModifierID { get; set; } = "TODO";
+        public string ItemAppearanceID { get; set; } = "TODO";
         public string OrderIndex { get; set; } = "TODO";
         public string TransmogSourceTypeEnum { get; set; } = "TODO";
 

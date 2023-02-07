@@ -13,7 +13,7 @@ using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using static DBDefsLib.Structs;
 
-
+/*
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 
 
@@ -23,6 +23,7 @@ var serverDef = await serverDefHelper.GetDefinitionAsync("characters", "characte
 var tctool = new TrinityCoreDbTool();
 await tctool.DbDefToCSharp(serverDef);
 Console.ReadKey();
+*/
 
 /*
 int totalInvokes = 4;
@@ -231,7 +232,7 @@ foreach (var model in serverModels)
 }
 */
 
-/*
+
 // Compare property names to definition names
 string build = "10.0.5.47660";
 var defHelper = new Db2Client(build);
@@ -291,9 +292,9 @@ foreach (var model in models)
         Console.WriteLine(e.Message);
     }
 }
-*/
 
 
+/*
 
 
 // Generate InfoModel
@@ -342,3 +343,4 @@ else
 }
 Console.WriteLine("Done");
 Console.ReadKey();
+*/

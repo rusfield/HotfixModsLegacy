@@ -15,28 +15,28 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrRaceId, int gender, bool includeDruidForms = false)
         {
             var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-            var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesId), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
+            var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesID), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
             if (null == chrRaceXChrModel)
             {
                 // No customizations for this combination, or possibly old/missing data from ChrRaceXChrModel.
                 return result;
             }
-            else if (customizationCache.ContainsKey(chrRaceXChrModel.ChrModelId))
+            else if (customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID))
             {
-                result = customizationCache[chrRaceXChrModel.ChrModelId];
+                result = customizationCache[chrRaceXChrModel.ChrModelID];
             }
             else
             {
-                var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelId), chrRaceXChrModel.ChrModelId));
+                var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
                 foreach (var option in options)
                 {
-                    var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionId), option.Id));
+                    var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
                     result.Add(option, choices);
                 }
 
                 // In case it has been added elsewhere in the meantime
-                if (!customizationCache.ContainsKey(chrRaceXChrModel.ChrModelId) && result.Count > 0)
-                    customizationCache.Add(chrRaceXChrModel.ChrModelId, result);
+                if (!customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID) && result.Count > 0)
+                    customizationCache.Add(chrRaceXChrModel.ChrModelID, result);
             }
 
             if (!includeDruidForms)
@@ -140,11 +140,11 @@ namespace HotfixMods.Infrastructure.Services
             bool upright = true;
             if (gender == (int)Gender.MALE && race == (int)ChrRaceId.ORC)
             {
-                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceId == 439);
+                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceID == 439);
             }
             else if (gender == (int)Gender.MALE && race == (int)ChrRaceId.MAGHAR_ORC)
             {
-                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceId == 3427);
+                upright = creatureDisplayInfoOption.Any(c => c.ChrCustomizationChoiceID == 3427);
             }
 
 
@@ -206,38 +206,38 @@ namespace HotfixMods.Infrastructure.Services
         async Task SetIdAndVerifiedBuild(CreatureDto dto)
         {
             // Step 1: Init IDs of single entities
-            var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.Id, dto.IsUpdate);
+            var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
             var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>(dto.CreatureTemplate.Entry, dto.IsUpdate);
-            var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>(dto.CreatureDisplayInfo.Id, dto.IsUpdate);
-            var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>(dto.CreatureDisplayInfoExtra?.Id, dto.IsUpdate);
+            var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>(dto.CreatureDisplayInfo.ID, dto.IsUpdate);
+            var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>(dto.CreatureDisplayInfoExtra?.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextNpcModelItemSlotDisplayInfo = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
             var nextCreatureDisplayInfoOption = await GetNextIdAsync<CreatureDisplayInfoOption>();
 
             // Step 3: Populate entities
-            dto.HotfixModsEntity.Id = hotfixModsEntityId;
-            dto.HotfixModsEntity.RecordId = creatureTemplateId;
+            dto.HotfixModsEntity.ID = hotfixModsEntityId;
+            dto.HotfixModsEntity.RecordID = creatureTemplateId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
             dto.CreatureTemplate.Entry = creatureTemplateId;
             dto.CreatureTemplate.VerifiedBuild = VerifiedBuild;
 
-            dto.CreatureTemplateModel.CreatureId = creatureTemplateId;
-            dto.CreatureTemplateModel.CreatureDisplayId = creatureDisplayInfoId;
+            dto.CreatureTemplateModel.CreatureID = creatureTemplateId;
+            dto.CreatureTemplateModel.CreatureDisplayID = creatureDisplayInfoId;
             dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
 
-            dto.CreatureDisplayInfo.Id = creatureDisplayInfoId;
-            dto.CreatureDisplayInfo.ExtendedDisplayInfoId = (int)creatureDisplayInfoExtraId;
+            dto.CreatureDisplayInfo.ID = creatureDisplayInfoId;
+            dto.CreatureDisplayInfo.ExtendedDisplayInfoID = (int)creatureDisplayInfoExtraId;
             dto.CreatureDisplayInfo.VerifiedBuild = VerifiedBuild;
 
 
-            dto.CreatureModelInfo.DisplayId = creatureDisplayInfoId;
+            dto.CreatureModelInfo.DisplayID = creatureDisplayInfoId;
             dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
 
             if (dto.CreatureEquipTemplate != null)
             {
-                dto.CreatureEquipTemplate.CreatureId = creatureTemplateId;
+                dto.CreatureEquipTemplate.CreatureID = creatureTemplateId;
                 dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
             }
 
@@ -249,15 +249,15 @@ namespace HotfixMods.Infrastructure.Services
 
             if (dto.CreatureDisplayInfoExtra != null)
             {
-                dto.CreatureDisplayInfoExtra.Id = creatureDisplayInfoExtraId;
+                dto.CreatureDisplayInfoExtra.ID = creatureDisplayInfoExtraId;
                 dto.CreatureDisplayInfoExtra.VerifiedBuild = VerifiedBuild;
 
                 if (dto.NpcModelItemSlotDisplayInfo?.Any() ?? false)
                 {
                     dto.NpcModelItemSlotDisplayInfo.ForEach(item =>
                     {
-                        item.NpcModelId = (int)creatureDisplayInfoExtraId;
-                        item.Id = nextNpcModelItemSlotDisplayInfo++;
+                        item.NpcModelID = (int)creatureDisplayInfoExtraId;
+                        item.ID = nextNpcModelItemSlotDisplayInfo++;
                         item.VerifiedBuild = VerifiedBuild;
                     });
                 }
@@ -266,8 +266,8 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     dto.CreatureDisplayInfoOption.ForEach(item =>
                     {
-                        item.CreatureDisplayInfoExtraId = (int)creatureDisplayInfoExtraId;
-                        item.Id = nextCreatureDisplayInfoOption++;
+                        item.CreatureDisplayInfoExtraID = (int)creatureDisplayInfoExtraId;
+                        item.ID = nextCreatureDisplayInfoOption++;
                         item.VerifiedBuild = VerifiedBuild;
                     });
                 }

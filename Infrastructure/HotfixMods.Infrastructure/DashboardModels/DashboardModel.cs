@@ -2,8 +2,8 @@
 {
     public class DashboardModel
     {
-        public uint Id { get; set; }
-        public uint? AdditionalId { get; set; } // For example ItemDisplayInfo or CreatureDisplayInfo
+        public uint ID { get; set; }
+        public uint? AdditionalID { get; set; } // For example ItemDisplayInfo or CreatureDisplayInfo
         public string? Name { get; set; }
         public string? AvatarUrl { get; set; }
         public string? Comment { get; set; }

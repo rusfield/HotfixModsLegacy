@@ -6,9 +6,9 @@
 <InstancedDtoContentPage>
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
-        <Input_Element T="int" @bind-Value="Value.GenericId" ValueCompare="ValueCompare?.GenericId" Label="@nameof(Value.GenericId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GenericId))" />
-        <Input_Element T="int" @bind-Value="Value.ModelFileDataId" ValueCompare="ValueCompare?.ModelFileDataId" Label="@nameof(Value.ModelFileDataId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelFileDataId))" />
-        <Input_Element T="int" @bind-Value="Value.TextureFileDataId" ValueCompare="ValueCompare?.TextureFileDataId" Label="@nameof(Value.TextureFileDataId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureFileDataId))" />
+        <Input_Element T="int" @bind-Value="Value.GenericID" ValueCompare="ValueCompare?.GenericID" Label="@nameof(Value.GenericID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GenericID))" />
+        <Input_Element T="int" @bind-Value="Value.ModelFileDataID" ValueCompare="ValueCompare?.ModelFileDataID" Label="@nameof(Value.ModelFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelFileDataID))" />
+        <Input_Element T="int" @bind-Value="Value.TextureFileDataID" ValueCompare="ValueCompare?.TextureFileDataID" Label="@nameof(Value.TextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureFileDataID))" />
         <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
     </MudItem>
     <MudItem xs="6">
@@ -35,8 +35,8 @@
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="decimal" @bind-Value="Value.BaseMissileSpeed" ValueCompare="ValueCompare?.BaseMissileSpeed" Label="@nameof(Value.BaseMissileSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseMissileSpeed))" />
-        <Input_Element T="uint" @bind-Value="Value.RibbonQualityId" ValueCompare="ValueCompare?.RibbonQualityId" Label="@nameof(Value.RibbonQualityId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RibbonQualityId))" />
-        <Input_Element T="int" @bind-Value="Value.DissolveEffectId" ValueCompare="ValueCompare?.DissolveEffectId" Label="@nameof(Value.DissolveEffectId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DissolveEffectId))" />
+        <Input_Element T="uint" @bind-Value="Value.RibbonQualityID" ValueCompare="ValueCompare?.RibbonQualityID" Label="@nameof(Value.RibbonQualityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RibbonQualityID))" />
+        <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DissolveEffectID))" />
         <Input_Element T="int" @bind-Value="Value.ModelPosition" ValueCompare="ValueCompare?.ModelPosition" Label="@nameof(Value.ModelPosition).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelPosition))" />
         <Input_Element T="sbyte" @bind-Value="Value.Field_9_1_0_38549_014" ValueCompare="ValueCompare?.Field_9_1_0_38549_014" Label="@nameof(Value.Field_9_1_0_38549_014).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_9_1_0_38549_014))" />
     </MudItem>

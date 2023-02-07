@@ -11,7 +11,7 @@
         public string ModelCountMax { get; set; } = "TODO";
         public string ModelCountMin { get; set; } = "TODO";
         public string AttachmentPoint { get; set; } = "TODO";
-        public string SpellVisualEffectNameId { get; set; } = "TODO";
+        public string SpellVisualEffectNameID { get; set; } = "TODO";
         public string ConeAngle { get; set; } = "TODO";
         public string Range { get; set; } = "TODO";
 

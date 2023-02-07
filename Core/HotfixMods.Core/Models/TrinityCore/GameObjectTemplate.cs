@@ -8,7 +8,7 @@ namespace HotfixMods.Core.Models
         [IndexField]
         public uint Entry { get; set; } = 0;
         public byte Type { get; set; } = 0;
-        public uint DisplayId { get; set; } = 0;
+        public uint DisplayID { get; set; } = 0;
         public string Name { get; set; } = "";
         public string IconName { get; set; } = "";
         public string CastBarCaption { get; set; } = "";
@@ -49,7 +49,7 @@ namespace HotfixMods.Core.Models
         public int Data32 { get; set; } = 0;
         public int Data33 { get; set; } = 0;
         public int Data34 { get; set; } = 0;
-        public int ContentTuningId { get; set; } = 0;
+        public int ContentTuningID { get; set; } = 0;
         public string AIName { get; set; } = "";
         public string ScriptName { get; set; } = "";
         public int VerifiedBuild { get; set; } = -1;

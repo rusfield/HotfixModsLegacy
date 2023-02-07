@@ -38,20 +38,20 @@
     <RowTemplate>
         <MudTd DataLabel="Avatar" Style="text-align:left">@context.AvatarUrl</MudTd>
         <MudTd DataLabel="Name" Style="text-align: center">@context.Name</MudTd>
-        <MudTd DataLabel="@IdTitle" Style="text-align: center">@context.Id</MudTd>
+        <MudTd DataLabel="@IdTitle" Style="text-align: center">@context.ID</MudTd>
         @if (!string.IsNullOrWhiteSpace(AdditionalIdTitle))
         {
-            <MudTd Style="text-align: center" DataLabel="@AdditionalIdTitle">@context.AdditionalId</MudTd>
+            <MudTd Style="text-align: center" DataLabel="@AdditionalIdTitle">@context.AdditionalID</MudTd>
         }
         <MudTd DataLabel="Action" Style="text-align:right">
-            @if (idInAction.Contains(context.Id))
+            @if (idInAction.Contains(context.ID))
             {
                 <MudProgressCircular Color="Color.Default" Indeterminate="true" />
             }
             else
             {
-                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(async () => await EditAsync_Click(context.Id))" />
-                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(async () => await DeleteAsync_Click(context.Id))" />
+                <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" OnClick="@(async () => await EditAsync_Click(context.ID))" />
+                <MudIconButton Color="Color.Error" Icon="@Icons.Material.Filled.Delete" OnClick="@(async () => await DeleteAsync_Click(context.ID))" />
             }
         </MudTd>
     </RowTemplate>
@@ -116,15 +116,15 @@
         idInAction.Add(id);
         await Task.Delay(500);
         Snackbar.Add("Entity deleted.", Severity.Info);
-        items.RemoveAll(i => i.Id == id);
-        filteredItems.RemoveAll(i => i.Id == id);
+        items.RemoveAll(i => i.ID == id);
+        filteredItems.RemoveAll(i => i.ID == id);
         idInAction.Remove(id);
     }
 
     void Filter(string filter)
     {
         search = filter;
-        filteredItems = items.Where(i => (i.Name != null && i.Name.Contains(filter)) || i.Id.ToString().Contains(filter)).ToList();
+        filteredItems = items.Where(i => (i.Name != null && i.Name.Contains(filter)) || i.ID.ToString().Contains(filter)).ToList();
     }
 
 }

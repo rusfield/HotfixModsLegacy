@@ -2,8 +2,8 @@
 {
     public class SpellVisualScreenEffectInfo : IInfoModel
     {
-        public string ScreenEffectId { get; set; } = "TODO";
-        public string ScreenEffectTypeId { get; set; } = "TODO";
+        public string ScreenEffectID { get; set; } = "TODO";
+        public string ScreenEffectTypeID { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";
         public bool IsRequired { get; set; } = false;

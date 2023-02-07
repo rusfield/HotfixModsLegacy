@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ShadowyEffect
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public int PrimaryColor { get; set; } = 0;
         public int SecondaryColor { get; set; } = 0;
         public decimal Duration { get; set; } = 0;
@@ -18,7 +18,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal InnerStrength { get; set; } = 1;
         public decimal OuterStrength { get; set; } = 1;
         public decimal InitialDelay { get; set; } = 0;
-        public int CurveId { get; set; } = 0;
+        public int CurveID { get; set; } = 0;
         public uint Priority { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

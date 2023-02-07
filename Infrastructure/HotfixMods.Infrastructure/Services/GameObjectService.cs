@@ -34,7 +34,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 results.Add(new()
                 {
-                    Id = dto.RecordId,
+                    ID = dto.RecordID,
                     Name = dto.Name,
                     AvatarUrl = null
                 });
@@ -57,7 +57,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 GameobjectTemplate = gameobjectTemplate,
                 GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
-                GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayId), gameobjectTemplate.DisplayId)) ?? new(),
+                GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
                 HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, gameobjectTemplate.Entry),
                 IsUpdate = true
             };
@@ -102,7 +102,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             // Delete gameobjects placed around
-            var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.Id), id));
+            var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.ID), id));
             await DeleteAsync(callback, progress, existingGameobjects);
 
             await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);

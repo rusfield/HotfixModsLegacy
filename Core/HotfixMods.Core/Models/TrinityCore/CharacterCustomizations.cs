@@ -6,8 +6,8 @@ namespace HotfixMods.Core.Models.TrinityCore
     public class CharacterCustomizations
     {
         public ulong Guid { get; set; }
-        public uint ChrCustomizationOptionId { get; set; }
-        public uint ChrCustomizationChoiceId { get; set; }
+        public uint ChrCustomizationOptionID { get; set; }
+        public uint ChrCustomizationChoiceID { get; set; }
     }
 
 }

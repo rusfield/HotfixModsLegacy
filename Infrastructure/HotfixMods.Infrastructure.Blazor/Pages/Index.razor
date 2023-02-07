@@ -18,7 +18,7 @@
             @foreach (var (tab, index) in tabs.WithIndex())
             {
                 <CascadingValue Name="PageTab" Value="tab">
-                    <MudTabPanel ID="@tab.TabId">
+                    <MudTabPanel ID="@tab.TabID">
                         <ChildContent>
                             <MudContainer MaxWidth="MaxWidth.Large" Class="my-10 pt-10">
                                 <DynamicComponent Type="tab.PageType" />
@@ -28,7 +28,7 @@
                             <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
                                 <MudIcon Icon="@GetPageIcon(tab.PageType)" />
                                 <MudText Typo="Typo.subtitle2">@FormatTabName(tab.TabName)</MudText>
-                                <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabId))" />
+                                <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabID))" />
                             </MudStack>
                         </TabContent>
                     </MudTabPanel>
@@ -210,7 +210,7 @@
 
     void CloseTab_Click(Guid tabId)
     {
-        tabs.RemoveAll(t => t.TabId == tabId);
+        tabs.RemoveAll(t => t.TabID == tabId);
     }
 
     void LaunchTab(PageTab tab)

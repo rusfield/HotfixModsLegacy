@@ -2,8 +2,8 @@
 {
     public class CreatureEquipTemplateInfo : IInfoModel
     {
-        public string CreatureId { get; set; } = "TODO";
-        public string Id { get; set; } = "TODO";
+        public string CreatureID { get; set; } = "TODO";
+        public string ID { get; set; } = "TODO";
         public string ItemId1 { get; set; } = "TODO";
         public string AppearanceModId1 { get; set; } = "TODO";
         public string ItemVisual1 { get; set; } = "TODO";

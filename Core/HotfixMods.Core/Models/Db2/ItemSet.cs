@@ -5,11 +5,12 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSet
     {
-        public uint Id { get; set; }
+        public uint ID { get; set; }
         public string Name { get; set; }
         public uint SetFlags { get; set; }
         public uint RequiredSkill { get; set; }
         public ushort RequiredSkillRank { get; set; }
+        public uint ItemID0 { get; set; }
         public uint ItemID1 { get; set; }
         public uint ItemID2 { get; set; }
         public uint ItemID3 { get; set; }
@@ -26,7 +27,6 @@ namespace HotfixMods.Core.Models.Db2
         public uint ItemID14 { get; set; }
         public uint ItemID15 { get; set; }
         public uint ItemID16 { get; set; }
-        public uint ItemID17 { get; set; }
         public int VerifiedBuild { get; set; }
     }
 

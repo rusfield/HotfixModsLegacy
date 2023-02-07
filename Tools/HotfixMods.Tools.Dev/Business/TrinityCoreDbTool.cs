@@ -62,8 +62,6 @@ namespace HotfixMods.Tools.Dev.Business
             var result = "";
             foreach (var nameSplit in nameSplits)
                 result += nameSplit[0].ToString().ToUpper() + nameSplit.Substring(1);
-            if(result.EndsWith("ID", StringComparison.InvariantCulture))
-                result = result.Substring(0, result.Length - 2) + "Id";
             return result;
         }
 
@@ -73,8 +71,6 @@ namespace HotfixMods.Tools.Dev.Business
             var result = "";
             foreach (var nameSplit in nameSplits)
                 result += "_" + nameSplit[0].ToString().ToUpper() + nameSplit.Substring(1);
-            if (result.EndsWith("ID", StringComparison.InvariantCulture))
-                result = result.Substring(0, result.Length - 2) + "Id";
             return result.Substring(1);
         }
 

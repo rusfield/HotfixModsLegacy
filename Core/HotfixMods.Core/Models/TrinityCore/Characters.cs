@@ -25,7 +25,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public decimal Position_Y { get; set; }
         public decimal Position_Z { get; set; }
         public ushort Map { get; set; }
-        public uint Instance_Id { get; set; }
+        public uint Instance_ID { get; set; }
         public byte DungeonDifficulty { get; set; }
         public byte RaidDifficulty { get; set; }
         public byte LegacyRaidDifficulty { get; set; }
@@ -71,7 +71,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint Power7 { get; set; }
         public uint Latency { get; set; }
         public byte ActiveTalentGroup { get; set; }
-        public uint LootSpecId { get; set; }
+        public uint LootSpecID { get; set; }
         public string ExploredZones { get; set; }
         public string EquipmentCache { get; set; }
         public string KnownTitles { get; set; }

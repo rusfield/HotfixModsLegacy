@@ -143,7 +143,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
                         for (int j = 0; j<fieldDef.arrLength; j++)
                         {
-                            var arrayColName = $"{name}{j + 1}";
+                            var arrayColName = $"{name}{j}";
                             var value = values?.GetValue(j);
 
                             if (value!.GetType() == typeof(float))

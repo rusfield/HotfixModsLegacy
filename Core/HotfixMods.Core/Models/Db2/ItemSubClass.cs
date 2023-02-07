@@ -7,9 +7,9 @@ namespace HotfixMods.Core.Models.Db2
     {
         public string DisplayName { get; set; }
         public string VerboseName { get; set; }
-        public uint Id { get; set; }
-        public sbyte ClassId { get; set; }
-        public sbyte SubClassId { get; set; }
+        public uint ID { get; set; }
+        public sbyte ClassID { get; set; }
+        public sbyte SubClassID { get; set; }
         public byte AuctionHouseSortOrder { get; set; }
         public sbyte PrerequisiteProficiency { get; set; }
         public int Flags { get; set; }

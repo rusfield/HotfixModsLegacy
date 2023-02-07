@@ -9,7 +9,7 @@ namespace HotfixMods.Infrastructure.Config
         public string HotfixModsSchema { get; set; } = "hotfixmods";
         public string Location { get; set; } = @"C:\hotfixMods";
         public string HotfixDataTableName { get; set; } = "hotfix_data";
-        public string HotfixDataRecordIdColumnName { get; set; } = "RecordId";
+        public string HotfixDataRecordIDColumnName { get; set; } = "RecordID";
         public string HotfixDataTableHashColumnName { get; set; } = "TableHash";
         public string HotfixDataTableStatusColumnName { get; set; } = "Status";
         public uint HotfixDataTableFromId { get; set; } = 15000000;

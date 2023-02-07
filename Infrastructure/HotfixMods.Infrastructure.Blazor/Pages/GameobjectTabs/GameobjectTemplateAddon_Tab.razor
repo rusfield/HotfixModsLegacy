@@ -8,8 +8,8 @@
     <MudItem xs="3">
         <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
         <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
-        <Input_Element T="uint" @bind-Value="@(Value.WorldEffectId)" Label="@(nameof(Value.WorldEffectId).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectId" OnInfoAdornmentClick="@(OpenInfoDialog(info.WorldEffectId))" />
-        <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitId)" Label="@(nameof(Value.AiAnimKitId).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitId" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiAnimKitId))" />
+        <Input_Element T="uint" @bind-Value="@(Value.WorldEffectID)" Label="@(nameof(Value.WorldEffectID).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectID" OnInfoAdornmentClick="@(OpenInfoDialog(info.WorldEffectID))" />
+        <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitID)" Label="@(nameof(Value.AiAnimKitID).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitID" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiAnimKitID))" />
     </MudItem>
     <MudItem xs="6" />
     <MudItem xs="3">

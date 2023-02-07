@@ -12,7 +12,7 @@
             <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" GetOptionsAsync_Func="GetEffects" OnInfoAdornmentClick="@(OpenInfoDialog(info.Effect))" />
             <Input_Element T="decimal" @bind-Value="Value.EffectAmplitude" ValueCompare="ValueCompare?.EffectAmplitude" Label="@nameof(Value.EffectAmplitude).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectAmplitude))" />
             <Input_Element T="int" @bind-Value="Value.EffectAttributes" ValueCompare="ValueCompare?.EffectAttributes" Label="@nameof(Value.EffectAttributes).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectAttributes))" />
-            <Input_Element T="int" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyId))" />
+            <Input_Element T="int" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyID))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -29,7 +29,7 @@
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.EffectPointsPerResource" ValueCompare="ValueCompare?.EffectPointsPerResource" Label="@nameof(Value.EffectPointsPerResource).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectPointsPerResource))" />
-            <Input_Element T="decimal" @bind-Value="Value.EffectPos_facing" ValueCompare="ValueCompare?.EffectPos_facing" Label="@nameof(Value.EffectPos_facing).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectPos_facing))" />
+            <Input_Element T="decimal" @bind-Value="Value.EffectPosFacing" ValueCompare="ValueCompare?.EffectPosFacing" Label="@nameof(Value.EffectPosFacing).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectPosFacing))" />
             <Input_Element T="decimal" @bind-Value="Value.EffectRealPointsPerLevel" ValueCompare="ValueCompare?.EffectRealPointsPerLevel" Label="@nameof(Value.EffectRealPointsPerLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectRealPointsPerLevel))" />
             <Input_Element T="int" @bind-Value="Value.EffectTriggerSpell" ValueCompare="ValueCompare?.EffectTriggerSpell" Label="@nameof(Value.EffectTriggerSpell).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectTriggerSpell))" />
             <Input_Element T="decimal" @bind-Value="Value.BonusCoefficientFromAP" ValueCompare="ValueCompare?.BonusCoefficientFromAP" Label="@nameof(Value.BonusCoefficientFromAP).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BonusCoefficientFromAP))" />
@@ -49,27 +49,27 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.EffectMiscValue0" ValueCompare="ValueCompare?.EffectMiscValue0" Label="@nameof(Value.EffectMiscValue0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectMiscValue0))" />
             <Input_Element T="int" @bind-Value="Value.EffectMiscValue1" ValueCompare="ValueCompare?.EffectMiscValue1" Label="@nameof(Value.EffectMiscValue1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectMiscValue1))" />
-            <Input_Element T="int" @bind-Value="Value.EffectMiscValue2" ValueCompare="ValueCompare?.EffectMiscValue2" Label="@nameof(Value.EffectMiscValue2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectMiscValue2))" />
+            <Input_Element T="uint" @bind-Value="Value.EffectRadiusIndex0" ValueCompare="ValueCompare?.EffectRadiusIndex0" Label="@nameof(Value.EffectRadiusIndex0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectRadiusIndex0))" />
             <Input_Element T="uint" @bind-Value="Value.EffectRadiusIndex1" ValueCompare="ValueCompare?.EffectRadiusIndex1" Label="@nameof(Value.EffectRadiusIndex1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectRadiusIndex1))" />
-            <Input_Element T="uint" @bind-Value="Value.EffectRadiusIndex2" ValueCompare="ValueCompare?.EffectRadiusIndex2" Label="@nameof(Value.EffectRadiusIndex2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectRadiusIndex2))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" OnInfoAdornmentClick="@(OpenInfoDialog(info.ImplicitTarget1))" />
+                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget0" ValueCompare="ValueCompare?.ImplicitTarget0" Label="@nameof(Value.ImplicitTarget0).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" OnInfoAdornmentClick="@(OpenInfoDialog(info.ImplicitTarget0))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget2" ValueCompare="ValueCompare?.ImplicitTarget2" Label="@nameof(Value.ImplicitTarget2).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" OnInfoAdornmentClick="@(OpenInfoDialog(info.ImplicitTarget2))" />
+                    <Input_Element T="short" @bind-Value="Value.ImplicitTarget1" ValueCompare="ValueCompare?.ImplicitTarget1" Label="@nameof(Value.ImplicitTarget1).ToDisplayName()" GetOptionsAsync_Func="GetImplicitTargets" OnInfoAdornmentClick="@(OpenInfoDialog(info.ImplicitTarget1))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask0" ValueCompare="ValueCompare?.EffectSpellClassMask0" Label="@nameof(Value.EffectSpellClassMask0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectSpellClassMask0))" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask1" ValueCompare="ValueCompare?.EffectSpellClassMask1" Label="@nameof(Value.EffectSpellClassMask1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectSpellClassMask1))" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask2" ValueCompare="ValueCompare?.EffectSpellClassMask2" Label="@nameof(Value.EffectSpellClassMask2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectSpellClassMask2))" />
             <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask3" ValueCompare="ValueCompare?.EffectSpellClassMask3" Label="@nameof(Value.EffectSpellClassMask3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectSpellClassMask3))" />
-            <Input_Element T="int" @bind-Value="Value.EffectSpellClassMask4" ValueCompare="ValueCompare?.EffectSpellClassMask4" Label="@nameof(Value.EffectSpellClassMask4).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectSpellClassMask4))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

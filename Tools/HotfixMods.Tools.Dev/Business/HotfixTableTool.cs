@@ -240,10 +240,6 @@ namespace HotfixMods.Tools.Dev.Business
         string GetMySqlFieldName(PropertyInfo propertyInfo)
         {
             string name = propertyInfo.Name;
-            if (name.EndsWith("id", StringComparison.OrdinalIgnoreCase))
-            {
-                name = name.Substring(0, name.Length - 2) + "ID";
-            }
             return name;
         }
 

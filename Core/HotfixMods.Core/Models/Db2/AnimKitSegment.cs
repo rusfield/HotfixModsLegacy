@@ -6,13 +6,13 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKitSegment
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         [ParentIndexField]
-        public ushort ParentAnimKitId { get; set; } = 0;
+        public ushort ParentAnimKitID { get; set; } = 0;
         public byte OrderIndex { get; set; } = 0;
-        public ushort AnimId { get; set; } = 0;
+        public ushort AnimID { get; set; } = 0;
         public uint AnimStartTime { get; set; } = 0;
-        public ushort AnimKitConfigId { get; set; } = 1;
+        public ushort AnimKitConfigID { get; set; } = 1;
         public byte StartCondition { get; set; } = 0;
         public byte StartConditionParam { get; set; } = 0;
         public uint StartConditionDelay { get; set; } = 0;

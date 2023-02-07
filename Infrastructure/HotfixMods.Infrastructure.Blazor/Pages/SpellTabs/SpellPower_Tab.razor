@@ -11,7 +11,7 @@
         <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaCost))" />
         <Input_Element T="int" @bind-Value="Value.ManaCostPerLevel" ValueCompare="ValueCompare?.ManaCostPerLevel" Label="@nameof(Value.ManaCostPerLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaCostPerLevel))" />
         <Input_Element T="int" @bind-Value="Value.ManaPerSecond" ValueCompare="ValueCompare?.ManaPerSecond" Label="@nameof(Value.ManaPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaPerSecond))" />
-        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellId" ValueCompare="ValueCompare?.RequiredAuraSpellId" Label="@nameof(Value.RequiredAuraSpellId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredAuraSpellId))" />
+        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellID" ValueCompare="ValueCompare?.RequiredAuraSpellID" Label="@nameof(Value.RequiredAuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredAuraSpellID))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -25,10 +25,10 @@
         </InlineGroup>
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.AltPowerBarId" ValueCompare="ValueCompare?.AltPowerBarId" Label="@nameof(Value.AltPowerBarId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AltPowerBarId))" />
+                <Input_Element T="int" @bind-Value="Value.AltPowerBarID" ValueCompare="ValueCompare?.AltPowerBarID" Label="@nameof(Value.AltPowerBarID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AltPowerBarID))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="uint" @bind-Value="Value.PowerDisplayId" ValueCompare="ValueCompare?.PowerDisplayId" Label="@nameof(Value.PowerDisplayId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerDisplayId))" />
+                <Input_Element T="uint" @bind-Value="Value.PowerDisplayID" ValueCompare="ValueCompare?.PowerDisplayID" Label="@nameof(Value.PowerDisplayID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerDisplayID))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

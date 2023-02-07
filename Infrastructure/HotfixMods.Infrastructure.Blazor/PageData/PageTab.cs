@@ -8,13 +8,13 @@ namespace HotfixMods.Infrastructure.Blazor.PageData
         {
             TabName = tabName;
             PageType = pageType;
-            TabId = Guid.NewGuid();
+            TabID = Guid.NewGuid();
         }
 
         public string TabName { get; set; }
         public IDto Dto { get; set; }
         public IDto DtoCompare { get; set; }
         public Type PageType { get; set; }
-        public Guid TabId { get; set; }
+        public Guid TabID { get; set; }
     }
 }

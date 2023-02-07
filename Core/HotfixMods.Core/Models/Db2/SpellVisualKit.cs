@@ -6,13 +6,13 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualKit
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public sbyte ClutterLevel { get; set; } = 0;
-        public int FallbackSpellVisualKitId { get; set; } = 0;
+        public int FallbackSpellVisualKitID { get; set; } = 0;
         public ushort DelayMin { get; set; } = 0;
         public ushort DelayMax { get; set; } = 0;
+        public int Flags0 { get; set; } = 0;
         public int Flags1 { get; set; } = 0;
-        public int Flags2 { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

@@ -7,9 +7,9 @@
         public string Charges { get; set; } = "TODO";
         public string CoolDownMSec { get; set; } = "TODO";
         public string CategoryCoolDownMSec { get; set; } = "TODO";
-        public string SpellCategoryId { get; set; } = "TODO";
-        public string SpellId { get; set; } = "TODO";
-        public string ChrSpecializationId { get; set; } = "TODO";
+        public string SpellCategoryID { get; set; } = "TODO";
+        public string SpellID { get; set; } = "TODO";
+        public string ChrSpecializationID { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";
         public bool IsRequired { get; set; } = false;

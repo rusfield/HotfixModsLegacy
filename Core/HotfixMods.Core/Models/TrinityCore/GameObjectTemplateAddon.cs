@@ -17,8 +17,8 @@ namespace HotfixMods.Core.Models
         public int Artkit2 { get; set; } = 0;
         public int Artkit3 { get; set; } = 0;
         public int Artkit4 { get; set; } = 0;
-        public uint WorldEffectId { get; set; } = 0;
-        public uint AiAnimKitId { get; set; } = 0;
+        public uint WorldEffectID { get; set; } = 0;
+        public uint AiAnimKitID { get; set; } = 0;
 
         //public int VerifiedBuild { get; set; } // Currently not implemented in TC 
     }

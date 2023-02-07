@@ -5,11 +5,11 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSetSpell
     {
-        public uint Id { get; set; }
-        public ushort ChrSpecId { get; set; }
-        public uint SpellId { get; set; }
+        public uint ID { get; set; }
+        public ushort ChrSpecID { get; set; }
+        public uint SpellID { get; set; }
         public byte Threshold { get; set; }
-        public int ItemSetId { get; set; }
+        public int ItemSetID { get; set; }
         public int VerifiedBuild { get; set; }
     }
 

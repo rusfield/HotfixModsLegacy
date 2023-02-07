@@ -3,9 +3,9 @@
     public class CreatureTemplateAddonInfo : IInfoModel
     {
         public string Entry { get; set; } = "TODO";
-        public string Path_Id { get; set; } = "TODO";
+        public string Path_ID { get; set; } = "TODO";
         public string Mount { get; set; } = "TODO";
-        public string MountCreatureId { get; set; } = "TODO";
+        public string MountCreatureID { get; set; } = "TODO";
         public string SheatheState { get; set; } = "TODO";
         public string VisFlags { get; set; } = "TODO";
         public string StandState { get; set; } = "TODO";

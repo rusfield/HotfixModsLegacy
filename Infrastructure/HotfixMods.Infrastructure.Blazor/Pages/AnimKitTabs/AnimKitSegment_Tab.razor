@@ -7,7 +7,7 @@
     <MudItem xs="3">
         <Input_Element T="byte" Value="@((byte)GroupIndex)" Label="@(nameof(Value.OrderIndex).ToDisplayName())" AllowUndefinedValues="false" OnInfoAdornmentClick="@(OpenInfoDialog(info.OrderIndex))" Disabled="true" />
         <Input_Element T="sbyte" @bind-Value="@(Value.LoopToSegmentIndex)" Label="@(nameof(Value.LoopToSegmentIndex).ToDisplayName())" ValueCompare="ValueCompare?.LoopToSegmentIndex" OnInfoAdornmentClick="@(OpenInfoDialog(info.LoopToSegmentIndex))" />
-        <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigId)" Label="@(nameof(Value.AnimKitConfigId).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigId" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitConfigId))" />
+        <Input_Element T="ushort" @bind-Value="@(Value.AnimKitConfigID)" Label="@(nameof(Value.AnimKitConfigID).ToDisplayName())" ValueCompare="ValueCompare?.AnimKitConfigID" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitConfigID))" />
         <Input_Element T="ushort" @bind-Value="@(Value.SegmentFlags)" Label="@(nameof(Value.SegmentFlags).ToDisplayName())" ValueCompare="ValueCompare?.SegmentFlags" OnInfoAdornmentClick="@(OpenInfoDialog(info.SegmentFlags))" />
         <Input_Element T="int" @bind-Value="@(Value.OverrideConfigFlags)" Label="@(nameof(Value.OverrideConfigFlags).ToDisplayName())" ValueCompare="ValueCompare?.OverrideConfigFlags" OnInfoAdornmentClick="@(OpenInfoDialog(info.OverrideConfigFlags))" />
         <Input_Element T="decimal" @bind-Value="@(Value.Field_9_0_1_34278_018)" Label="@(nameof(Value.Field_9_0_1_34278_018).ToDisplayName())" ValueCompare="ValueCompare?.Field_9_0_1_34278_018" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_9_0_1_34278_018))" />
@@ -38,7 +38,7 @@
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.AnimId)" Label="@(nameof(Value.AnimId).ToDisplayName())" ValueCompare="ValueCompare?.AnimId" GetOptionsAsync_Func="GetAnimations" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimId))" />
+        <Input_Element T="ushort" @bind-Value="@(Value.AnimID)" Label="@(nameof(Value.AnimID).ToDisplayName())" ValueCompare="ValueCompare?.AnimID" GetOptionsAsync_Func="GetAnimations" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimID))" />
         <Input_Element T="uint" @bind-Value="@(Value.AnimStartTime)" Label="@(nameof(Value.AnimStartTime).ToDisplayName(null, " (frames)"))" ValueCompare="ValueCompare?.AnimStartTime" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimStartTime))" />
         <Input_Element T="decimal" @bind-Value="@(Value.Speed)" Label="@(nameof(Value.Speed).ToDisplayName())" ValueCompare="ValueCompare?.Speed" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed))" />
         <Input_Element T="byte" @bind-Value="@(Value.ForcedVariation)" Label="@(nameof(Value.ForcedVariation).ToDisplayName())" ValueCompare="ValueCompare?.ForcedVariation" OnInfoAdornmentClick="@(OpenInfoDialog(info.ForcedVariation))" />

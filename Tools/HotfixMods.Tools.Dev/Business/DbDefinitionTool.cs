@@ -25,7 +25,7 @@ namespace HotfixMods.Tools.Dev.Business
                 else if (def.Name == "ID")
                     end = " = 1;";
 
-                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name.Replace("ID", "Id", StringComparison.InvariantCulture)} " + "{ get; set; }" + $"{end}");
+                await WriteToConsoleAndClipboard($"public {GetPropertyName(def.Type.Name.ToString())} {def.Name} " + "{ get; set; }" + $"{end}");
             }
             await WriteToConsoleAndClipboard("}");
             return (await TextCopy.ClipboardService.GetTextAsync())!;

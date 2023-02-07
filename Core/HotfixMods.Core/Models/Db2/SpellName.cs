@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellName
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         [LocalizedString]
         public string Name { get; set; } = "";
         public int VerifiedBuild { get; set; } = -1;

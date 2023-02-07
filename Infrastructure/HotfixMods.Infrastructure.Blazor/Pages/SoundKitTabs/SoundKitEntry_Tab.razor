@@ -6,7 +6,7 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.FileDataId)" Label="@(nameof(Value.FileDataId).ToDisplayName())" ValueCompare="ValueCompare?.FileDataId" OnInfoAdornmentClick="@(OpenInfoDialog(info.FileDataId))" />
+        <Input_Element T="int" @bind-Value="@(Value.FileDataID)" Label="@(nameof(Value.FileDataID).ToDisplayName())" ValueCompare="ValueCompare?.FileDataID" OnInfoAdornmentClick="@(OpenInfoDialog(info.FileDataID))" />
         <Input_Element T="byte" @bind-Value="@(Value.Frequency)" Label="@(nameof(Value.Frequency).ToDisplayName())" ValueCompare="ValueCompare?.Frequency" OnInfoAdornmentClick="@(OpenInfoDialog(info.Frequency))" />
         <Input_Element T="decimal" @bind-Value="@(Value.Volume)" Label="@(nameof(Value.Volume).ToDisplayName())" ValueCompare="ValueCompare?.Volume" OnInfoAdornmentClick="@(OpenInfoDialog(info.Volume))" />
     </MudItem>

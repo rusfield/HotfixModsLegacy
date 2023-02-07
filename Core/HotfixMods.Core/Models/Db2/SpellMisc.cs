@@ -6,7 +6,8 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellMisc
     {
         [IndexField]
-        public uint Id { get; set; } = 0;
+        public uint ID { get; set; } = 0;
+        public int Attributes0 { get; set; } = 0;
         public int Attributes1 { get; set; } = 0;
         public int Attributes2 { get; set; } = 0;
         public int Attributes3 { get; set; } = 0;
@@ -21,8 +22,7 @@ namespace HotfixMods.Core.Models.Db2
         public int Attributes12 { get; set; } = 0;
         public int Attributes13 { get; set; } = 0;
         public int Attributes14 { get; set; } = 0;
-        public int Attributes15 { get; set; } = 0;
-        public byte DifficultyId { get; set; } = 0;
+        public byte DifficultyID { get; set; } = 0;
         public ushort CastingTimeIndex { get; set; } = 0;
         public ushort DurationIndex { get; set; } = 0;
         public ushort RangeIndex { get; set; } = 0;
@@ -30,14 +30,14 @@ namespace HotfixMods.Core.Models.Db2
         public decimal Speed { get; set; } = 0;
         public decimal LaunchDelay { get; set; } = 0;
         public decimal MinDuration { get; set; } = 0;
-        public int SpellIconFileDataId { get; set; } = 0;
-        public int ActiveIconFileDataId { get; set; } = 0;
-        public int ContentTuningId { get; set; } = 0;
-        public int ShowFutureSpellPlayerConditionId { get; set; } = 0;
+        public int SpellIconFileDataID { get; set; } = 0;
+        public int ActiveIconFileDataID { get; set; } = 0;
+        public int ContentTuningID { get; set; } = 0;
+        public int ShowFutureSpellPlayerConditionID { get; set; } = 0;
         public int SpellVisualScript { get; set; } = 0;
         public int ActiveSpellVisualScript { get; set; } = 0;
         [ParentIndexField]
-        public int SpellId { get; set; } = 0;
+        public int SpellID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

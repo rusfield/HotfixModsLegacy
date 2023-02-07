@@ -13,7 +13,7 @@
         public string GlowMultiplier { get; set; } = "TODO";
         public string Flags { get; set; } = "TODO";
         public string InitialDelay { get; set; } = "TODO";
-        public string CurveId { get; set; } = "TODO";
+        public string CurveID { get; set; } = "TODO";
         public string Priority { get; set; } = "TODO";
 
         public string ModelInfo { get; set; } = "TODO";

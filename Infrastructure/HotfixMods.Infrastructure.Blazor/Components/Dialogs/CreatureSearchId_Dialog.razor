@@ -4,7 +4,23 @@
 
 <DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
     <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
-    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByIdAsync)" />
+        @if (isLoading)
+    {
+        <Placeholder_Element Amount="1" Visible="true" />
+    }
+    else
+    {
+        <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetAvailableOptionsAsync)" />
+    }
+    @if (options.Count > 0)
+    {
+        <MudSelect T="uint" ValueChanged="@(async (value) => await GetByIdAsync(value))">
+            @foreach (var option in options)
+            {
+                <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+            }
+        </MudSelect>
+    }
 </DialogSearch>
 
 @code {
@@ -14,22 +30,27 @@
     [Parameter]
     public uint? Id { get; set; }
 
-    DialogSearch? dialogSearchRef;
+    [Parameter]
+    public uint? Idx { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    DialogSearch? dialogSearchRef;
+    Dictionary<uint, string> options = new();
+    bool isLoading = false;
+
+    protected override async Task OnInitializedAsync()
     {
-        if(firstRender)
+        if(Id != null)
         {
-            await GetByIdAsync();
+            await GetByIdAsync(Idx ?? 0);
         }
-        await base.OnAfterRenderAsync(firstRender);
+        await base.OnInitializedAsync();
     }
 
-    async Task GetByIdAsync()
+    async Task GetByIdAsync(uint idx)
     {
         if (Id != null)
         {
-            var data = await Service.GetByIdAsync((uint)Id, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((uint)Id, idx, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);
@@ -40,4 +61,23 @@
             }
         }
     }
+
+    async Task GetAvailableOptionsAsync()
+    {
+        isLoading = true;
+        if (Id != null)
+        {
+            var availableOptions = await Service.GetAvailableDisplayOptions((uint)Id);
+            if (availableOptions.Count > 1)
+            {
+                options = availableOptions;
+            }
+            else
+            {
+                await GetByIdAsync(0);
+            }
+        }
+        isLoading = false;
+    }
+    
 }

@@ -34,7 +34,7 @@
                     </MudTabPanel>
                 </CascadingValue>
             }
-            @if(tabs.Count == 0)
+            @if (tabs.Count == 0)
             {
                 <News />
             }
@@ -62,11 +62,11 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchId_Dialog>(new PageTab("", typeof(Creatures))))">Search by Creature ID</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCreatureDisplayInfoId_Dialog>(new PageTab("", typeof(Creatures))))">Search by Creature Display Info ID</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureSearchCharacterName_Dialog>(new PageTab("", typeof(Creatures))))">Search by Character Name</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<CreatureDto>(new PageTab("New Creature", typeof(Creatures))))">New Creature</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -78,9 +78,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Game Objects", typeof(GameobjectDashboard))))">My Game Objects</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<GameobjectSearchId_Dialog>(new PageTab("", typeof(Gameobjects))))">Search by ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<GameobjectDto>(new PageTab("New Game Object", typeof(Gameobjects))))">New Game Object</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -92,10 +92,10 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Items", typeof(ItemDashboard))))">My Items</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchId_Dialog>(new PageTab("", typeof(Items))))">Search by ID</MudMenuItem>
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<ItemSearchItemDisplayInfoId_Dialog>(new PageTab("", typeof(Items))))">Search by Item Display Info ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<ItemDto>(new PageTab("New Item", typeof(Items))))">New Item</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -107,9 +107,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spells", typeof(SpellDashboard))))">My Spells</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellSearchId_Dialog>(new PageTab("", typeof(Spells))))">Search by ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<SpellDto>(new PageTab("New Spell", typeof(Spells))))">New Spell</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -121,9 +121,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spell Visual Kits", typeof(SpellVisualKitDashboard))))">My Spell Visual Kits</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SpellVisualKitSearchId_Dialog>(new PageTab("", typeof(SpellVisualKits))))">Search by ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<SpellVisualKitDto>(new PageTab("New Spell Visual Kit", typeof(SpellVisualKits))))">New Spell Visual Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -135,9 +135,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Anim Kits", typeof(AnimKitDashboard))))">My Anim Kits</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<AnimKitSearchId_Dialog>(new PageTab("", typeof(AnimKits))))">Search by ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<AnimKitDto>(new PageTab("New Anim Kit", typeof(AnimKits))))">New Anim Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>
@@ -149,9 +149,9 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Sound Kits", typeof(SoundKitDashboard))))">My Sound Kits</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => OpenDialog_Click<SoundKitSearchId_Dialog>(new PageTab("", typeof(SoundKits))))">Search by ID</MudMenuItem>
-                <MudMenuItem Disabled="true"><MudPaper Style="height:1px; width:100%;background-color:var(--mud-palette-action-disabled)" /></MudMenuItem>
+                <MudDivider />
                 <MudMenuItem OnClick="@(() => NewDto_Click<SoundKitDto>(new PageTab("New Sound Kit", typeof(SoundKits))))">New Sound Kit</MudMenuItem>
             </ChildContent>
         </MudMenu>

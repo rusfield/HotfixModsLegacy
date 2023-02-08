@@ -12,10 +12,16 @@
     {
         <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetAvailableOptionsAsync)" />
     }
-    @foreach (var option in options)
+    @if (options.Count > 0)
     {
-        <MudButton Variant="Variant.Outlined" OnClick="@(async () => await GetByIdAsync(Id, option.Key))">@option.Value</MudButton>
+        <MudSelect T="int" ValueChanged="@(async (value) => await GetByIdAsync((int) value))">
+            @foreach (var option in options)
+            {
+                <MudSelectItem Value="@option.Key">@option.Value</MudSelectItem>
+            }
+        </MudSelect>
     }
+
 </DialogSearch>
 
 @code {
@@ -25,15 +31,27 @@
     [Parameter]
     public uint? Id { get; set; }
 
+    [Parameter]
+    public int? OrderIndex { get; set; }
+
     DialogSearch? dialogSearchRef;
     Dictionary<int, string> options = new();
     bool isLoading = false;
 
-    async Task GetByIdAsync(uint? id, int orderIndex)
+    protected override async Task OnInitializedAsync()
     {
-        if (id != null)
+        if(Id != null)
         {
-            var data = await Service.GetByIdAsync((uint)id, orderIndex, dialogSearchRef!.SetLoaderProgress);
+            await GetByIdAsync(OrderIndex ?? 0);
+        }
+        await base.OnInitializedAsync();
+    }
+
+    async Task GetByIdAsync(int orderIndex)
+    {
+        if (Id != null)
+        {
+            var data = await Service.GetByIdAsync((uint)Id, orderIndex, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);
@@ -57,7 +75,7 @@
             }
             else
             {
-                await GetByIdAsync(Id, 0);
+                await GetByIdAsync(0);
             }
         }
         isLoading = false;

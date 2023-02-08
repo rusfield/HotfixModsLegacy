@@ -2,9 +2,9 @@
 {
     public class SpellVisualKitModelAttachInfo : IInfoModel
     {
-        public string Offset0 { get; set; } = "TODO";
-        public string Offset1 { get; set; } = "TODO";
-        public string Offset2 { get; set; } = "TODO";
+        public string Offset0 { get; set; } = "The position of the attachment relative to the user.\r\nA positive value will move the attachment forward and a negative value will move the attachment backward.\r\nValue 0.5 will be quite noticable.";
+        public string Offset1 { get; set; } = "The position of the attachment relative to the user.\r\nA positive value will move the attachment to the right and a negative value will move the attachment to the left.\r\nValue 0.5 will be quite noticable.";
+        public string Offset2 { get; set; } = "The position of the attachment relative to the user.\r\nA positive value will move the attachment up and a negative value will move the attachment down.\r\nValue 0.5 will be quite noticable.";
         public string OffsetVariation0 { get; set; } = "TODO";
         public string OffsetVariation1 { get; set; } = "TODO";
         public string OffsetVariation2 { get; set; } = "TODO";

@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
@@ -19,14 +20,16 @@ namespace HotfixMods.Infrastructure.Services
         IClientDbDefinitionProvider _clientDbDefinitionProvider;
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
+        IExceptionHandler _exceptionHandler;
         protected AppConfig _appConfig;
 
-        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig)
+        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
             _clientDbDefinitionProvider = clientDbDefinitionProvider;
             _serverDbProvider = serverDbProvider;
             _clientDbProvider = clientDbProvider;
+            _exceptionHandler = exceptionHandler;
             _appConfig = appConfig;
         }
 
@@ -376,6 +379,11 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<uint> GetNextHotfixModsEntityIdAsync()
         {
             return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), uint.MinValue, uint.MaxValue, nameof(HotfixModsEntity.ID));
+        }
+
+        protected void HandleException(Exception exception)
+        {
+            _exceptionHandler.Handle(exception);
         }
     }
 }

@@ -7,13 +7,14 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class SpellVisualKitService : ServiceBase
     {
-        public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig)
+        public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, exceptionHandler, appConfig)
         {
             FromId = appConfig.SpellVisualKitSettings.FromId;
             ToId = appConfig.SpellVisualKitSettings.ToId;

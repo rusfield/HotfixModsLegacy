@@ -1,5 +1,4 @@
-﻿using HotfixMods.Core.Enums.Db2;
-using HotfixMods.Core.Enums.TrinityCore;
+﻿using HotfixMods.Core.Enums.TrinityCore;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
@@ -7,14 +6,14 @@ using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DashboardModels;
 using HotfixMods.Infrastructure.DtoModels;
-using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class CreatureService : ServiceBase
     {
-        public CreatureService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) 
+        public CreatureService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, exceptionHandler, appConfig) 
         {
             FromId = appConfig.CreatureSettings.FromId;
             ToId = appConfig.CreatureSettings.ToId;
@@ -38,6 +37,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
+            HandleException(new Exception("Test"));
             var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
             var results = new List<DashboardModel>();
             foreach (var dto in dtos)

@@ -5,8 +5,10 @@
 @using HotfixMods.Infrastructure.Blazor.Pages.Dashboards
 @using HotfixMods.Infrastructure.Blazor.Pages.News
 @using HotfixMods.Infrastructure.Blazor.Components.Finder
+@using HotfixMods.Infrastructure.Handlers
 
 @inject IDialogService DialogService
+@inject IExceptionHandler ExceptionHandler
 
 <CustomFinder />
 
@@ -176,6 +178,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ExceptionHandler.RegisterCallback(DisplayException);
         TabHandler.LaunchTab = LaunchTab;
         await base.OnInitializedAsync();
     }
@@ -266,6 +269,17 @@
             LaunchTab(pageTab);
             this.StateHasChanged();
         }
+    }
+
+    async void DisplayException(Exception exception)
+    {
+        var exceptionMessage = $"An error has occured.\n";
+        exceptionMessage += exception.Message;
+
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Message_Dialog.Text), exceptionMessage);
+        parameters.Add(nameof(Message_Dialog.Icon), Icons.Material.Filled.ErrorOutline);
+        await DialogService.Show<Message_Dialog>(null, parameters).Result;
     }
 
     void MouseOverTop()

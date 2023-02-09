@@ -1,12 +1,13 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Handlers;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public class GenericHotfixService : ServiceBase
     {
-        public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) 
+        public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, exceptionHandler, appConfig) 
         {
             FromId = appConfig.GenericHotfixSettings.FromId;
             ToId = appConfig.GenericHotfixSettings.ToId;

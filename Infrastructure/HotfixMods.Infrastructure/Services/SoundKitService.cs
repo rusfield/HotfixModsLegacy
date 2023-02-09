@@ -12,7 +12,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class SoundKitService : ServiceBase
     {
-        public SoundKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public SoundKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig)
+        {
+            FromId = appConfig.SoundKitSettings.FromId;
+            ToId = appConfig.SoundKitSettings.ToId;
+            VerifiedBuild = appConfig.SoundKitSettings.VerifiedBuild;
+        }
         public SoundKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
@@ -103,7 +108,7 @@ namespace HotfixMods.Infrastructure.Services
             var progress = LoadingHelper.GetLoaderFunc(4);
 
             var dto = await GetByIdAsync(id);
-            if(null == dto)
+            if (null == dto)
             {
                 callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
                 return false;

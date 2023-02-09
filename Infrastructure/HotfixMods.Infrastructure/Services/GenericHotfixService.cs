@@ -6,7 +6,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public class GenericHotfixService : ServiceBase
     {
-        public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) 
+        {
+            FromId = appConfig.GenericHotfixSettings.FromId;
+            ToId = appConfig.GenericHotfixSettings.ToId;
+            VerifiedBuild = appConfig.GenericHotfixSettings.VerifiedBuild;
+        }
 
         public async Task<IEnumerable<DbRow>> GetAsync(string db2Name)
         {

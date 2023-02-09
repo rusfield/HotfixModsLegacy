@@ -13,7 +13,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService : ServiceBase
     {
-        public ItemService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public ItemService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) 
+        {
+            FromId = appConfig.ItemSettings.FromId;
+            ToId = appConfig.ItemSettings.ToId;
+            VerifiedBuild = appConfig.ItemSettings.VerifiedBuild;
+        }
 
         public ItemDto GetNew(Action<string, string, int>? callback = null)
         {

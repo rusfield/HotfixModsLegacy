@@ -13,7 +13,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class SpellVisualKitService : ServiceBase
     {
-        public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public SpellVisualKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig)
+        {
+            FromId = appConfig.SpellVisualKitSettings.FromId;
+            ToId = appConfig.SpellVisualKitSettings.ToId;
+            VerifiedBuild = appConfig.SpellVisualKitSettings.VerifiedBuild;
+        }
         public SpellVisualKitDto GetNew(Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
@@ -66,7 +71,7 @@ namespace HotfixMods.Infrastructure.Services
             callback.Invoke(LoadingHelper.Loading, "Loading effects", progress());
             await spellVisualKitEffects.ForEachAsync(async spellVisualKitEffect =>
             {
-                if(Enum.IsDefined(typeof(SpellVisualEffectEffectType), spellVisualKitEffect.EffectType))
+                if (Enum.IsDefined(typeof(SpellVisualEffectEffectType), spellVisualKitEffect.EffectType))
                 {
                     var group = new SpellVisualKitDto.EffectGroup();
                     group.SpellVisualKitEffect = spellVisualKitEffect;
@@ -78,7 +83,7 @@ namespace HotfixMods.Infrastructure.Services
                     else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH)
                     {
                         group.SpellVisualKitModelAttach = await GetSingleAsync<SpellVisualKitModelAttach>(new DbParameter(nameof(SpellVisualKitModelAttach.ID), spellVisualKitEffect.Effect)) ?? new();
-                        if(group.SpellVisualKitModelAttach != null)
+                        if (group.SpellVisualKitModelAttach != null)
                             group.SpellVisualEffectName = await GetSingleAsync<SpellVisualEffectName>(new DbParameter(nameof(SpellVisualEffectName.ID), group.SpellVisualKitModelAttach.SpellVisualEffectNameID)) ?? new();
                     }
                     else if (type == SpellVisualEffectEffectType.CAMERA_EFFECT)
@@ -151,7 +156,7 @@ namespace HotfixMods.Infrastructure.Services
                     {
                         group.SpellVisualScreenEffect = await GetSingleAsync<SpellVisualScreenEffect>(new DbParameter(nameof(SpellVisualScreenEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                     }
-                    
+
                     result.EffectGroups.Add(group);
                 }
             });

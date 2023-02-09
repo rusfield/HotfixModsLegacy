@@ -13,7 +13,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService : ServiceBase
     {
-        public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) 
+        {
+            FromId = appConfig.AnimKitSettings.FromId;
+            ToId = appConfig.AnimKitSettings.ToId;
+            VerifiedBuild = appConfig.AnimKitSettings.VerifiedBuild;
+        }
 
         public AnimKitDto GetNew(Action<string, string, int>? callback = null)
         {

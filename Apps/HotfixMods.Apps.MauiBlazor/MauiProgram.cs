@@ -1,5 +1,8 @@
 ﻿using HotfixMods.Apps.MauiBlazor.Config;
+using HotfixMods.Core.Interfaces;
+using HotfixMods.Infrastructure.Blazor.Handlers;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.Handlers;
 //using HotfixMods.Infrastructure.Razor.Handlers;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.Providers.MySqlConnector.Client;
@@ -34,88 +37,46 @@ namespace HotfixMods.Apps.MauiBlazor
                 config.SnackbarConfiguration.HideTransitionDuration = 500;
             });
 
-            var appConfig = config.Get<AppConfig>();
-            var mySqlClient = new MySqlClient("127.0.0.1", "3306", "root", "root");
-            var db2Client = new Db2Client(appConfig.BuildInfo, appConfig.GitHubAccessToken);
-            //GlobalHandler.Config = appConfig;
+            builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
+            builder.Services.AddSingleton<AppConfig>();
 
-            builder.Services.AddSingleton(config =>
+            builder.Services.AddSingleton<IClientDbProvider, Db2Client>(provider =>
             {
-                return new GenericHotfixService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 1,
-                    VerifiedBuild = -5501
-                };
+                return new Db2Client(config.GetValue<string>(nameof(AppConfig.BuildInfo)));
+            });
+            builder.Services.AddSingleton<IClientDbDefinitionProvider, Db2Client>(provider =>
+            {
+                return new Db2Client(config.GetValue<string>(nameof(AppConfig.BuildInfo)));
+            });
+            builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
+            {
+                var mySql = config.GetSection(nameof(AppConfig.MySql)).Value;
+                return new MySqlClient(
+                    config.GetValue<string>(nameof(AppConfig.MySql.Server)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Port)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Username)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Password))
+                    );
+            });
+            builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClient>(provider =>
+            {
+                var mySql = config.GetSection(nameof(AppConfig.MySql)).Value;
+                return new MySqlClient(
+                    config.GetValue<string>(nameof(AppConfig.MySql.Server)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Port)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Username)),
+                    config.GetValue<string>(nameof(AppConfig.MySql.Password))
+                    );
             });
 
-            builder.Services.AddSingleton(config =>
-            {
-                return new AnimKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 10000,
-                    VerifiedBuild = -5502
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new GameobjectService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 10000,
-                    ToId = 20000,
-                    VerifiedBuild = -5503
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new SoundKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 10000,
-                    ToId = 20000,
-                    VerifiedBuild = -5504
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new ItemService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 2000000,
-                    ToId = 2100000,
-                    VerifiedBuild = -5505
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new CreatureService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 3200000,
-                    ToId = 3300000,
-                    VerifiedBuild = -5506
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new SpellService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 5400000,
-                    ToId = 5500000,
-                    VerifiedBuild = -5507
-                };
-            });
-
-            builder.Services.AddSingleton(config =>
-            {
-                return new SpellVisualKitService(mySqlClient, db2Client, mySqlClient, db2Client, appConfig)
-                {
-                    FromId = 900000,
-                    ToId = 910000,
-                    VerifiedBuild = -5508
-                };
-            });
+            builder.Services.AddSingleton<GenericHotfixService>();
+            builder.Services.AddSingleton<AnimKitService>();
+            builder.Services.AddSingleton<GameobjectService>();
+            builder.Services.AddSingleton<SoundKitService>();
+            builder.Services.AddSingleton<ItemService>();
+            builder.Services.AddSingleton<CreatureService>();
+            builder.Services.AddSingleton<SpellService>();
+            builder.Services.AddSingleton<SpellVisualKitService>();
 
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Services.AddLogging(configure =>

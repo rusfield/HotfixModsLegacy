@@ -13,7 +13,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class SpellService : ServiceBase
     {
-        public SpellService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public SpellService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig)
+        {
+            FromId = appConfig.SpellSettings.FromId;
+            ToId = appConfig.SpellSettings.ToId;
+            VerifiedBuild = appConfig.SpellSettings.VerifiedBuild;
+        }
 
         public SpellDto GetNew(Action<string, string, int>? callback = null)
         {

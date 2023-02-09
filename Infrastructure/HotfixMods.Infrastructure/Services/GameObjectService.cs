@@ -11,7 +11,12 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class GameobjectService : ServiceBase
     {
-        public GameobjectService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig) { }
+        public GameobjectService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, appConfig)
+        {
+            FromId = appConfig.GameobjectSettings.FromId;
+            ToId = appConfig.GameobjectSettings.ToId;
+            VerifiedBuild = appConfig.GameobjectSettings.VerifiedBuild;
+        }
 
         public GameobjectDto GetNew(Action<string, string, int>? callback = null)
         {

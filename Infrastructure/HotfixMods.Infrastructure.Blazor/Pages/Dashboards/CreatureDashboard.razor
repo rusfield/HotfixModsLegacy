@@ -4,14 +4,14 @@
 @inject CreatureService Service
 @inject IDialogService DialogService
 
-<DtoDashboard TDto="CreatureDto" IdTitle="Creature ID" AdditionalIdTitle="Creature Display ID" GetByIdAsync_Func="GetByIdAsync" DeleteByIdAsync_Func="DeleteByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="CreatureDto" IdTitle="Creature ID" AdditionalIdTitle="Creature Display ID" GetByIdAsync_Func="GetByIdAsync" DeleteByIdAsync_Func="DeleteByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Creatures)" />
 
 @code
 {
     async Task<CreatureDto?> GetByIdAsync(uint id)
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(CreatureSearchId_Dialog.Idx), 0);
+        parameters.Add(nameof(CreatureSearchId_Dialog.Idx), (uint)0);
         parameters.Add(nameof(CreatureSearchId_Dialog.Id), id);
         var result = await DialogService.Show<CreatureSearchId_Dialog>(null, parameters).Result;
         return (CreatureDto)result.Data;

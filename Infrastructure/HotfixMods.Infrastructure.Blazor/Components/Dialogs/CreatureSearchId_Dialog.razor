@@ -37,13 +37,13 @@
     Dictionary<uint, string> options = new();
     bool isLoading = false;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(Id != null)
         {
             await GetByIdAsync(Idx ?? 0, true);
         }
-        await base.OnInitializedAsync();
+        await base.OnAfterRenderAsync(firstRender);
     }
 
     async Task GetByIdAsync(uint idx, bool closeOnFail = false)

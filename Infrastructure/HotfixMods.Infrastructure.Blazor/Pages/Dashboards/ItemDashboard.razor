@@ -4,7 +4,7 @@
 @inject ItemService Service
 @inject IDialogService DialogService
 
-<DtoDashboard TDto="ItemDto" IdTitle="Item ID" AdditionalIdTitle="Item Display Info ID" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="ItemDto" IdTitle="Item ID" AdditionalIdTitle="Item Display Info ID" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Items)" />
 
 @code
 {

@@ -50,12 +50,12 @@ namespace HotfixMods.Apps.MauiBlazor
             });
             builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
             {
-                var mySql = config.GetSection(nameof(AppConfig.MySql)).Value;
+                var mySqlSection = config.GetSection(nameof(AppConfig.MySql));
                 return new MySqlClient(
-                    config.GetValue<string>(nameof(AppConfig.MySql.Server)),
-                    config.GetValue<string>(nameof(AppConfig.MySql.Port)),
-                    config.GetValue<string>(nameof(AppConfig.MySql.Username)),
-                    config.GetValue<string>(nameof(AppConfig.MySql.Password))
+                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Server)),
+                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Port)),
+                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Username)),
+                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Password))
                     );
             });
             builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClient>(provider =>

@@ -101,13 +101,14 @@
         var dto = await GetByIdAsync_Func(id);
         if (dto != null && TabHandler.LaunchTab != null)
         {
-            TabHandler.LaunchTab(new PageTab(dto.HotfixModsEntity.Name, LaunchType));
+            var pageTab = new PageTab(dto.HotfixModsEntity.Name, LaunchType);
+            pageTab.Dto = dto;
+            TabHandler.LaunchTab(pageTab);
         }
         else
         {
             Snackbar.Add("Entity not found.", Severity.Error);
         }
-        await Task.Delay(500);
         idInAction.Remove(id);
     }
 

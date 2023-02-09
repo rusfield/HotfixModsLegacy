@@ -4,7 +4,7 @@
 @inject SpellService Service
 @inject IDialogService DialogService
 
-<DtoDashboard TDto="SpellDto" IdTitle="Spell ID" AdditionalIdTitle="Spell Visual ID" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="SpellDto" IdTitle="Spell ID" AdditionalIdTitle="Spell Visual ID" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Spells)" />
 
 @code
 {

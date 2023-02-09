@@ -4,7 +4,7 @@
 @inject SoundKitService Service
 @inject IDialogService DialogService
 
-<DtoDashboard TDto="SoundKitDto" IdTitle="Sound Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="SoundKitDto" IdTitle="Sound Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(SoundKits)" />
 
 @code
 {

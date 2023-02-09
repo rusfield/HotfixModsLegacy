@@ -11,11 +11,6 @@
 <CustomFinder />
 
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true" Style="z-index:101">
-    <Header>
-        <MudTooltip Text="New">
-            <MudIconButton Icon="@Icons.Material.Filled.AddCircleOutline" Style="color:var(--mud-palette-text-primary)" OnClick="NewTab_Click" />
-        </MudTooltip>
-    </Header>
     <ChildContent>
         <CascadingValue Name="RefreshIndex" Value="RefreshIndex">
             @foreach (var (tab, index) in tabs.WithIndex())
@@ -165,8 +160,12 @@
     </MudStack>
 </MudDrawer>
 
-@* Area to toggle menu *@
-<div style="position: fixed;bottom:0;width:100%;height:30px;" @onmouseover="MouseOverBottom" />
+@* Area to toggle menu on *@
+<div style="@($"position: fixed;bottom:0;width:100%; height:50px;")" @onmouseover="MouseOverBottom" />
+
+@* Area to toggle menu off *@
+<div style="@($"position: fixed;top:0;width:100%; height:70%; z-index:calc(var(--mud-zindex-appbar) + 2);display:{(_menuOpen ? "block" : "none")}")" @onmouseover="MouseOverTop" />
+
 
 @code {
     MudTabs? _mudTabsRef;
@@ -191,11 +190,6 @@
         if (!_menuOpen)
             hover = "";
         base.OnAfterRender(firstRender);
-    }
-
-    void NewTab_Click()
-    {
-        _menuOpen = true;
     }
 
     void NewDto_Click<TDto>(PageTab tab)
@@ -272,6 +266,11 @@
             LaunchTab(pageTab);
             this.StateHasChanged();
         }
+    }
+
+    void MouseOverTop()
+    {
+        _menuOpen = false;
     }
 
     void MouseOverBottom()

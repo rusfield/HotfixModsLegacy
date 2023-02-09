@@ -42,7 +42,7 @@
                 else if (word.Length == 1)
                     result += $"{word.ToString().ToUpper()} ";
             }
-            return result.Trim();
+            return result.Replace("I D", "ID").Trim();
         }
     }
 }

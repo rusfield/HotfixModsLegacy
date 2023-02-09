@@ -2,23 +2,45 @@
 
 @inject IJSRuntime JSRuntime
 
-
-<MudTextField T="string" Value="value" ValueChanged="ValueChanged" />
+<div style="position:absolute; top:16px; right:16px; z-index:10000" class="@(visible ? "" : "invisible")">
+    <MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => visible = false)" Visible="visible" >
+        <MudPaper Width="320px" Elevation="6">
+            <MudTextField T="string" @ref="mudTextFieldRef" Value="value" ValueChanged="ValueChanged" Class="pa-3" Variant="Variant.Outlined" Placeholder="Find..." Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" Immediate="true" />
+        </MudPaper>
+    </MudBadge>
+</div>
 
 @code {
 
-    string? value;
+    static string? value;
+    static bool visible = false;
+    static CustomFinder? instance;
+    static MudTextField<string>? mudTextFieldRef;
+
     protected override async Task OnInitializedAsync()
     {
-        await JSRuntime.InvokeAsync<object>("attachKeyboardEvent");
+        instance = this;
+        await JSRuntime.InvokeAsync<object>("attachFinder");
 
         await base.OnInitializedAsync();
     }
 
     [JSInvokable]
-    public static void RunCSharpMethod()
+    public static void OpenFinder()
     {
-        // your C# code here
+        visible = true;
+        instance?.StateHasChanged();
+        mudTextFieldRef?.FocusAsync();
+    }
+
+    [JSInvokable]
+    public static void CloseFinder()
+    {
+        visible = false;
+        mudTextFieldRef?.BlurAsync();
+        instance?.ValueChanged("");
+        instance?.StateHasChanged();
+        value = "";
     }
 
     async void ValueChanged(string input)

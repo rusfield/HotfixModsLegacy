@@ -72,10 +72,10 @@
     public string? AdditionalIdTitle { get; set; }
 
     [Parameter]
-    public Func<uint, Action<string, string, int>, Task<TDto>> GetByIdAsync_Func { get; set; }
+    public Func<uint, Task<TDto>> GetByIdAsync_Func { get; set; }
 
     [Parameter]
-    public Func<uint, Action<string, string, int>, Task<bool>> DeleteByIdAsync_Func { get; set; }
+    public Func<uint, Task<bool>> DeleteByIdAsync_Func { get; set; }
 
     [Parameter]
     public Func<Task<List<DashboardModel>>> GetItemsAsync_Func { get; set; }
@@ -98,8 +98,8 @@
     async Task EditAsync_Click(uint id)
     {
         idInAction.Add(id);
-        var dto = await GetByIdAsync_Func(id, null);
-        if (dto != null)
+        var dto = await GetByIdAsync_Func(id);
+        if (dto != null && TabHandler.LaunchTab != null)
         {
             TabHandler.LaunchTab(new PageTab(dto.HotfixModsEntity.Name, LaunchType));
         }
@@ -115,6 +115,7 @@
     {
         idInAction.Add(id);
         await Task.Delay(500);
+        await DeleteByIdAsync_Func.Invoke(id);
         Snackbar.Add("Entity deleted.", Severity.Info);
         items.RemoveAll(i => i.ID == id);
         filteredItems.RemoveAll(i => i.ID == id);

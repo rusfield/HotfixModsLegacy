@@ -1,5 +1,23 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
 
 @inject GameobjectService Service
+@inject IDialogService DialogService
 
-<DtoDashboard TDto="GameobjectDto" IdTitle="Game Object ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="GameobjectDto" IdTitle="Game Object ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+
+@code
+{
+    async Task<GameobjectDto?> GetByIdAsync(uint id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(GameobjectSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<GameobjectSearchId_Dialog>(null, parameters).Result;
+        return (GameobjectDto)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(uint id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

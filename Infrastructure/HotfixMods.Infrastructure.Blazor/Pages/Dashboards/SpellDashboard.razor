@@ -1,5 +1,23 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
 
 @inject SpellService Service
+@inject IDialogService DialogService
 
-<DtoDashboard TDto="SpellDto" IdTitle="Spell ID" AdditionalIdTitle="Spell Visual ID" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="SpellDto" IdTitle="Spell ID" AdditionalIdTitle="Spell Visual ID" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+
+@code
+{
+    async Task<SpellDto?> GetByIdAsync(uint id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(SpellSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<SpellSearchId_Dialog>(null, parameters).Result;
+        return (SpellDto)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(uint id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

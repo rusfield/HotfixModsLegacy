@@ -1,5 +1,23 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
 
 @inject AnimKitService Service
+@inject IDialogService DialogService
 
-<DtoDashboard TDto="AnimKitDto" IdTitle="Anim Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="Service.DeleteAsync" GetByIdAsync_Func="Service.GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+<DtoDashboard TDto="AnimKitDto" IdTitle="Anim Kit ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" />
+
+@code 
+{
+    async Task<AnimKitDto?> GetByIdAsync(uint id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(AnimKitSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<AnimKitSearchId_Dialog>(null, parameters).Result;
+        return (AnimKitDto)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(uint id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

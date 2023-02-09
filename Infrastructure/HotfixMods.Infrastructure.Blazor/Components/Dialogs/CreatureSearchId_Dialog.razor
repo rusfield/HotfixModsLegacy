@@ -41,17 +41,17 @@
     {
         if(Id != null)
         {
-            await GetByIdAsync(Idx ?? 0);
+            await GetByIdAsync(Idx ?? 0, true);
         }
         await base.OnInitializedAsync();
     }
 
-    async Task GetByIdAsync(uint idx)
+    async Task GetByIdAsync(uint idx, bool closeOnFail = false)
     {
         if (Id != null)
         {
             var data = await Service.GetByIdAsync((uint)Id, idx, dialogSearchRef!.SetLoaderProgress);
-            if (data != null)
+            if (data != null || closeOnFail)
             {
                 Dialog.Close(data);
             }

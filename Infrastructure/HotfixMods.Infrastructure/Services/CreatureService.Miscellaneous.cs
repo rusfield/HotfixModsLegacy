@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 using System.Collections;
 
 namespace HotfixMods.Infrastructure.Services
@@ -11,6 +12,33 @@ namespace HotfixMods.Infrastructure.Services
     public partial class CreatureService
     {
         Dictionary<int, Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> customizationCache = new();
+
+        public async Task<Dictionary<uint, string>> GetAvailableDisplayOptions(uint creatureId)
+        {
+            var result = new Dictionary<uint, string>();
+            var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
+            foreach (var model in creatureTemplateModels)
+            {
+                string name = model.Idx.ToString();
+                var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
+                if (creatureDisplayInfo != null)
+                {
+                    var creatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(new DbParameter(nameof(CreatureDisplayInfoExtra.ID), creatureDisplayInfo.ExtendedDisplayInfoID));
+                    if (creatureDisplayInfoExtra != null && Enum.IsDefined(typeof(Gender), (int)creatureDisplayInfoExtra.DisplaySexID) && Enum.IsDefined(typeof(ChrRaceId), (int)creatureDisplayInfoExtra.DisplayRaceID))
+                    {
+                        var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
+                        var race = (ChrRaceId)(int)creatureDisplayInfoExtra.DisplayRaceID;
+                        name += $" - {race.ToDisplayString()} {gender.ToDisplayString()}";
+                    }
+                }
+                else
+                {
+                    name += $" - {model.CreatureDisplayID}";
+                }
+                result.Add(model.Idx, name);
+            }
+            return result;
+        }
 
         public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrRaceId, int gender, bool includeDruidForms = false)
         {

@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Enums.TrinityCore;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Enums.TrinityCore;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
@@ -27,6 +28,8 @@ namespace HotfixMods.Infrastructure.Services
                 }
             };
         }
+
+
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
@@ -214,7 +217,7 @@ namespace HotfixMods.Infrastructure.Services
             return result;
         }
 
-        public async Task<CreatureDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<CreatureDto?> GetByIdAsync(uint id, uint idx = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -229,15 +232,27 @@ namespace HotfixMods.Infrastructure.Services
             var result = new CreatureDto()
             {
                 HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, id),
-                CreatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), id)) ?? new(),
                 CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), id)),
                 CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), id)),
                 CreatureTemplate = creatureTemplate,
                 IsUpdate = true
             };
 
-            result.CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
-            result.CreatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.ID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
+            var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), id), new DbParameter(nameof(CreatureTemplateModel.Idx), idx));
+            if(creatureTemplateModel != null)
+            {
+                result.CreatureTemplateModel = creatureTemplateModel;
+                result.CreatureModelInfo = await GetSingleAsync<CreatureModelInfo>(callback, progress, new DbParameter(nameof(CreatureModelInfo.DisplayID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
+                result.CreatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(callback, progress, new DbParameter(nameof(CreatureDisplayInfo.ID), (int)result.CreatureTemplateModel.CreatureDisplayID)) ?? new();
+            }
+            else
+            {
+                result.CreatureTemplateModel = new();
+                result.CreatureModelInfo = new();
+                result.CreatureDisplayInfo = new();
+            }
+
+
             result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
 
             if (result.CreatureDisplayInfoExtra != null)

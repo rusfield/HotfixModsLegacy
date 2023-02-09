@@ -116,9 +116,7 @@ namespace HotfixMods.Infrastructure.Services
 
             dto.EffectGroups.ForEach(eg =>
             {
-                if (eg.ItemEffect.ID == 0 || !dto.IsUpdate)
-                    eg.ItemEffect.ID = nextItemEffectId++;
-
+                eg.ItemEffect.ID = nextItemEffectId++;
                 eg.ItemEffect.VerifiedBuild = VerifiedBuild;
             });
 

@@ -29,6 +29,7 @@
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="js/mark.min.js"></script>
 
     <!-- Custom scripts -->
     <script>
@@ -37,6 +38,31 @@
                 navigator.clipboard.writeText(text);
             }
         };
+
+        window.onkeydown = function (event) {
+            if (event.ctrlKey && event.keyCode == 70) {
+                event.preventDefault();
+            }
+        }
+
+        function attachKeyboardEvent() {
+            document.addEventListener("keydown", function (event) {
+                if (event.ctrlKey && event.key === "f") {
+                    DotNet.invokeMethodAsync("HotfixMods.Infrastructure.Blazor", "RunCSharpMethod");
+                }
+            });
+        }
+
+        function highlightText(text) {
+            var inputText = document.getElementById("app");
+            var innerHTML = inputText.innerHTML;
+            var index = innerHTML.indexOf(text);
+            if (index >= 0) {
+                innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + text.length) + "</span>" + innerHTML.substring(index + text.length);
+                inputText.innerHTML = innerHTML;
+            }
+        }
+
     </script>
 
 </body>

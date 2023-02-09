@@ -4,8 +4,11 @@
 @using HotfixMods.Infrastructure.Blazor.Handlers;
 @using HotfixMods.Infrastructure.Blazor.Pages.Dashboards
 @using HotfixMods.Infrastructure.Blazor.Pages.News
+@using HotfixMods.Infrastructure.Blazor.Components.Finder
 
 @inject IDialogService DialogService
+
+<CustomFinder />
 
 <MudTabs @ref="_mudTabsRef" Elevation="2" Centered="true" Color="Color.Dark" KeepPanelsAlive="true" Style="z-index:101">
     <Header>
@@ -34,7 +37,7 @@
                     </MudTabPanel>
                 </CascadingValue>
             }
-            @if(tabs.Count == 0)
+            @if (tabs.Count == 0)
             {
                 <News />
             }
@@ -172,10 +175,10 @@
     bool tabAdded = false;
     string hover = "";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         TabHandler.LaunchTab = LaunchTab;
-        base.OnInitialized();
+        await base.OnInitializedAsync();
     }
 
     protected override void OnAfterRender(bool firstRender)

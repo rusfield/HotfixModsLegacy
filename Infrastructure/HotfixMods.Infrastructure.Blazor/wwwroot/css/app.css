@@ -118,3 +118,7 @@
 .adornment-clickable > * svg {
     color: var(--mud-palette-text-primary) !important;
 }
+
+.highlight {
+    background-color: yellow;
+}

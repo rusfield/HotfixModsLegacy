@@ -1,0 +1,29 @@
+﻿@using Microsoft.JSInterop;
+
+@inject IJSRuntime JSRuntime
+
+
+<MudTextField T="string" Value="value" ValueChanged="ValueChanged" />
+
+@code {
+
+    string? value;
+    protected override async Task OnInitializedAsync()
+    {
+        await JSRuntime.InvokeAsync<object>("attachKeyboardEvent");
+
+        await base.OnInitializedAsync();
+    }
+
+    [JSInvokable]
+    public static void RunCSharpMethod()
+    {
+        // your C# code here
+    }
+
+    async void ValueChanged(string input)
+    {
+        value = input;
+        await JSRuntime.InvokeVoidAsync("highlightText", input ?? "");
+    }
+}

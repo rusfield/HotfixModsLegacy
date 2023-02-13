@@ -19,21 +19,10 @@ namespace HotfixMods.Infrastructure.Services
             VerifiedBuild = appConfig.GameobjectSettings.VerifiedBuild;
         }
 
-        public GameobjectDto GetNew(Action<string, string, int>? callback = null)
-        {
-            callback = callback ?? DefaultProgressCallback;
-            callback.Invoke(LoadingHelper.Loading, "Returning new template", 100);
-            return new()
-            {
-                HotfixModsEntity = new()
-                {
-                    Name = "New Game Object"
-                }
-            };
-        }
-
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
+            try
+            {
             var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
             var results = new List<DashboardModel>();
             foreach (var dto in dtos)
@@ -46,6 +35,12 @@ namespace HotfixMods.Infrastructure.Services
                 });
             }
             return results;
+            }
+            catch(Exception ex)
+            {
+                HandleException(ex);
+            }
+            return new();
         }
 
         public async Task<GameobjectDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
@@ -53,23 +48,32 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(5);
 
-            var gameobjectTemplate = await GetSingleAsync<GameobjectTemplate>(callback, progress, new DbParameter(nameof(GameobjectTemplate.Entry), id));
-            if (null == gameobjectTemplate)
+            try
             {
-                callback.Invoke(LoadingHelper.Loading, $"{nameof(GameobjectTemplate)} not found", 100);
-                return null;
-            }
-            var result = new GameobjectDto()
-            {
-                GameobjectTemplate = gameobjectTemplate,
-                GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
-                GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
-                HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, gameobjectTemplate.Entry),
-                IsUpdate = true
-            };
+                var gameobjectTemplate = await GetSingleAsync<GameobjectTemplate>(callback, progress, new DbParameter(nameof(GameobjectTemplate.Entry), id));
+                if (null == gameobjectTemplate)
+                {
+                    callback.Invoke(LoadingHelper.Loading, $"{nameof(GameobjectTemplate)} not found", 100);
+                    return null;
+                }
+                var result = new GameobjectDto()
+                {
+                    GameobjectTemplate = gameobjectTemplate,
+                    GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
+                    GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, gameobjectTemplate.Entry),
+                    IsUpdate = true
+                };
 
-            callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
-            return result;
+                callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+            }
+            return null;
         }
 
         public async Task<bool> SaveAsync(GameobjectDto dto, Action<string, string, int>? callback = null)
@@ -77,22 +81,32 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(1);
 
-            callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
-            if (dto.IsUpdate)
+            try
             {
-                await DeleteAsync(dto.GameobjectTemplate.Entry);
+
+                callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+                if (dto.IsUpdate)
+                {
+                    await DeleteAsync(dto.GameobjectTemplate.Entry);
+                }
+
+                await SetIdAndVerifiedBuild(dto);
+
+                await SaveAsync(callback, progress, dto.GameobjectTemplate);
+                await SaveAsync(callback, progress, dto.GameobjectTemplateAddon);
+                await SaveAsync(callback, progress, dto.GameobjectDisplayInfo);
+                await SaveAsync(callback, progress, dto.HotfixModsEntity);
+
+                callback.Invoke(LoadingHelper.Saving, $"Saving successful", 100);
+                dto.IsUpdate = true;
+                return true;
             }
-
-            await SetIdAndVerifiedBuild(dto);
-
-            await SaveAsync(callback, progress, dto.GameobjectTemplate);
-            await SaveAsync(callback, progress, dto.GameobjectTemplateAddon);
-            await SaveAsync(callback, progress, dto.GameobjectDisplayInfo);
-            await SaveAsync(callback, progress, dto.HotfixModsEntity);
-
-            callback.Invoke(LoadingHelper.Saving, $"Saving successful", 100);
-            dto.IsUpdate = true;
-            return true;
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+            }
+            return false;
         }
 
         public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
@@ -100,24 +114,33 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultProgressCallback;
             var progress = LoadingHelper.GetLoaderFunc(6);
 
-            var dto = await GetByIdAsync(id);
-            if (dto == null) 
+            try
             {
-                callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
-                return false; 
+                var dto = await GetByIdAsync(id);
+                if (dto == null)
+                {
+                    callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
+                    return false;
+                }
+
+                // Delete gameobjects placed around
+                var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.ID), id));
+                await DeleteAsync(callback, progress, existingGameobjects);
+
+                await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);
+                await DeleteAsync(callback, progress, dto.GameobjectTemplateAddon);
+                await DeleteAsync(callback, progress, dto.GameobjectTemplate);
+                await DeleteAsync(callback, progress, dto.HotfixModsEntity);
+
+                callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
+                return true;
             }
-
-            // Delete gameobjects placed around
-            var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.ID), id));
-            await DeleteAsync(callback, progress, existingGameobjects);
-
-            await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);
-            await DeleteAsync(callback, progress, dto.GameobjectTemplateAddon);
-            await DeleteAsync(callback, progress, dto.GameobjectTemplate);
-            await DeleteAsync(callback, progress, dto.HotfixModsEntity);
-
-            callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);
-            return true;
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+            }
+            return false;
         }
     }
 }

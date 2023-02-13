@@ -365,9 +365,6 @@
         else
         {
             Snackbar.Add($"Saving failed.", Severity.Error, config => { config.Icon = Icons.Material.Filled.Error; });
-            var parameters = new DialogParameters();
-            parameters.Add(nameof(Message_Dialog.Text), string.Join('\n', logs));
-            DialogService.Show<Message_Dialog>(null, parameters);
         }
     }
 

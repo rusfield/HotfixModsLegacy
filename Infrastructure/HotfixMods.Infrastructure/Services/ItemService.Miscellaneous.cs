@@ -9,7 +9,15 @@ namespace HotfixMods.Infrastructure.Services
     {
         public async Task<List<ItemModifiedAppearance>> GetAvailableItemModifiedAppearancesAsync(int itemId)
         {
-            return await GetAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
+            try
+            {
+                return await GetAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+            return new();
         }
 
         public string ItemAppearanceModifierIdToString(int itemAppearanceModifierId)

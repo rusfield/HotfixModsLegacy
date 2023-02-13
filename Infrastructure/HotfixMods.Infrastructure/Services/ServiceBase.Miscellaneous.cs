@@ -1,6 +1,5 @@
 ﻿using HotfixMods.Core.Attributes;
 using HotfixMods.Core.Enums;
-using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.Extensions;
 using System.Reflection;

@@ -15,71 +15,87 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<uint, string>> GetAvailableDisplayOptions(uint creatureId)
         {
-            var result = new Dictionary<uint, string>();
-            var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
-            foreach (var model in creatureTemplateModels)
+            try
             {
-                string name = model.Idx.ToString();
-                var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
-                if (creatureDisplayInfo != null)
+                var result = new Dictionary<uint, string>();
+                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
+                foreach (var model in creatureTemplateModels)
                 {
-                    var creatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(new DbParameter(nameof(CreatureDisplayInfoExtra.ID), creatureDisplayInfo.ExtendedDisplayInfoID));
-                    if (creatureDisplayInfoExtra != null && Enum.IsDefined(typeof(Gender), (int)creatureDisplayInfoExtra.DisplaySexID) && Enum.IsDefined(typeof(ChrRaceId), (int)creatureDisplayInfoExtra.DisplayRaceID))
+                    string name = model.Idx.ToString();
+                    var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
+                    if (creatureDisplayInfo != null)
                     {
-                        var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
-                        var race = (ChrRaceId)(int)creatureDisplayInfoExtra.DisplayRaceID;
-                        name += $" - {race.ToDisplayString()} {gender.ToDisplayString()}";
+                        var creatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(new DbParameter(nameof(CreatureDisplayInfoExtra.ID), creatureDisplayInfo.ExtendedDisplayInfoID));
+                        if (creatureDisplayInfoExtra != null && Enum.IsDefined(typeof(Gender), (int)creatureDisplayInfoExtra.DisplaySexID) && Enum.IsDefined(typeof(ChrRaceId), (int)creatureDisplayInfoExtra.DisplayRaceID))
+                        {
+                            var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
+                            var race = (ChrRaceId)(int)creatureDisplayInfoExtra.DisplayRaceID;
+                            name += $" - {race.ToDisplayString()} {gender.ToDisplayString()}";
+                        }
                     }
+                    else
+                    {
+                        name += $" - {model.CreatureDisplayID}";
+                    }
+                    result.Add(model.Idx, name);
                 }
-                else
-                {
-                    name += $" - {model.CreatureDisplayID}";
-                }
-                result.Add(model.Idx, name);
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+            return new();
         }
 
         public async Task<Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>> GetCustomizationOptions(int chrRaceId, int gender, bool includeDruidForms = false)
         {
-            var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-            var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesID), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
-            if (null == chrRaceXChrModel)
+            try
             {
-                // No customizations for this combination, or possibly old/missing data from ChrRaceXChrModel.
+                var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
+                var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesID), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
+                if (null == chrRaceXChrModel)
+                {
+                    // No customizations for this combination, or possibly old/missing data from ChrRaceXChrModel.
+                    return result;
+                }
+                else if (customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID))
+                {
+                    result = customizationCache[chrRaceXChrModel.ChrModelID];
+                }
+                else
+                {
+                    var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
+                    foreach (var option in options)
+                    {
+                        var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
+                        result.Add(option, choices);
+                    }
+
+                    // In case it has been added elsewhere in the meantime
+                    if (!customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID) && result.Count > 0)
+                        customizationCache.Add(chrRaceXChrModel.ChrModelID, result);
+                }
+
+                if (!includeDruidForms)
+                {
+                    var filteredResult = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
+                    foreach (var option in result)
+                    {
+                        // Currently, only druid forms are named like "Moonkin Form", etc.
+                        // Edit this condition if it should affect new customizations at some point.
+                        if (!option.Key.Name.ToLower().EndsWith(" form"))
+                            filteredResult.Add(option.Key, option.Value);
+                    }
+                    return filteredResult;
+                }
                 return result;
             }
-            else if (customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID))
+            catch (Exception ex)
             {
-                result = customizationCache[chrRaceXChrModel.ChrModelID];
+                HandleException(ex);
             }
-            else
-            {
-                var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
-                foreach (var option in options)
-                {
-                    var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
-                    result.Add(option, choices);
-                }
-
-                // In case it has been added elsewhere in the meantime
-                if (!customizationCache.ContainsKey(chrRaceXChrModel.ChrModelID) && result.Count > 0)
-                    customizationCache.Add(chrRaceXChrModel.ChrModelID, result);
-            }
-
-            if (!includeDruidForms)
-            {
-                var filteredResult = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-                foreach (var option in result)
-                {
-                    // Currently, only druid forms are named like "Moonkin Form", etc.
-                    // Edit this condition if it should affect new customizations at some point.
-                    if (!option.Key.Name.ToLower().EndsWith(" form"))
-                        filteredResult.Add(option.Key, option.Value);
-                }
-                return filteredResult;
-            }
-            return result;
+            return new();
         }
 
         public Dictionary<ushort, string> GetModelIds()
@@ -115,8 +131,8 @@ namespace HotfixMods.Infrastructure.Services
             result.Add(10844, "Maghar Orc Male");
             result.Add(10883, "Maghar Orc Male (Upright)");
             result.Add(10845, "Maghar Orc Female");
-            result.Add(3967, "Pandaren Alliance/Horde/Neutral Male");
-            result.Add(3968, "Pandaren Alliance/Neutral Female");
+            result.Add(3967, "Pandaren Male");
+            result.Add(3968, "Pandaren Female");
             result.Add(10531, "Kul Tiran Male");
             result.Add(10532, "Kul Tiran Female");
             result.Add(9930, "Nightborne Male");
@@ -139,7 +155,7 @@ namespace HotfixMods.Infrastructure.Services
 
         sbyte CharacterInventorySlotToNpcModelItemSlot(byte inventorySlot)
         {
-            if(Enum.IsDefined(typeof(CharacterInventorySlot), (int)inventorySlot))
+            if (Enum.IsDefined(typeof(CharacterInventorySlot), (int)inventorySlot))
             {
                 return (CharacterInventorySlot)inventorySlot switch
                 {
@@ -162,7 +178,7 @@ namespace HotfixMods.Infrastructure.Services
 
         ushort GetModelIdByRaceAndGenders(sbyte race, sbyte gender, List<CreatureDisplayInfoOption> creatureDisplayInfoOption)
         {
-             // These models are from CreatureModelData. The FileDataId points correctly to character/{race}/{gender}/{race}{gender}.m2.
+            // These models are from CreatureModelData. The FileDataId points correctly to character/{race}/{gender}/{race}{gender}.m2.
 
             // For orcs and mag'har orcs male
             bool upright = true;
@@ -204,8 +220,8 @@ namespace HotfixMods.Infrastructure.Services
                 (ChrRaceId.WORGEN, Gender.FEMALE) => 3142,
                 (ChrRaceId.DARK_IRON_DWARF, Gender.MALE) => 10784,
                 (ChrRaceId.DARK_IRON_DWARF, Gender.FEMALE) => 10785,
-                (ChrRaceId.MAGHAR_ORC, Gender.MALE) => (ushort)(upright ? 10883 : 10844), 
-                (ChrRaceId.MAGHAR_ORC, Gender.FEMALE) => 10845, 
+                (ChrRaceId.MAGHAR_ORC, Gender.MALE) => (ushort)(upright ? 10883 : 10844),
+                (ChrRaceId.MAGHAR_ORC, Gender.FEMALE) => 10845,
                 (ChrRaceId.PANDAREN_ALLIANCE, Gender.MALE) => 3967,
                 (ChrRaceId.PANDAREN_ALLIANCE, Gender.FEMALE) => 3968,
                 (ChrRaceId.PANDAREN_HORDE, Gender.MALE) => 3967,

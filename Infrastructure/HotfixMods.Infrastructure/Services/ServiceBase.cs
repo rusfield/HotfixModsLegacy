@@ -43,6 +43,9 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
         where T : new()
         {
+            string serverEx = "";
+            string clientEx = "";
+
             try
             {
                 var serverResult = await _serverDbProvider.GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
@@ -51,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             catch (Exception ex)
             {
-
+                serverEx = ex.Message;
             }
             try
             {
@@ -61,8 +64,14 @@ namespace HotfixMods.Infrastructure.Services
             }
             catch (Exception ex)
             {
-
+                clientEx = ex.Message;
             }
+
+            if (!string.IsNullOrWhiteSpace(serverEx) && !string.IsNullOrWhiteSpace(clientEx))
+            {
+                throw new Exception($"Failed to get data from both server and client.\nServer error: {serverEx}\nClient error: {clientEx}");
+            }
+
             return default;
         }
 
@@ -95,6 +104,8 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
         where T : new()
         {
+            string serverEx = "";
+            string clientEx = "";
             try
             {
                 var serverResults = await _serverDbProvider.GetAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), GetDbRowDefinitionOfEntity<T>(), parameters);
@@ -103,7 +114,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             catch (Exception ex)
             {
-
+                serverEx = ex.Message;
             }
             try
             {
@@ -113,9 +124,13 @@ namespace HotfixMods.Infrastructure.Services
             }
             catch (Exception ex)
             {
-
+                clientEx = ex.Message;
             }
 
+            if(!string.IsNullOrWhiteSpace(serverEx) && !string.IsNullOrWhiteSpace(clientEx))
+            {
+                throw new Exception($"Failed to get data from both server and client.\nServer error: {serverEx}\nClient error: {clientEx}");
+            }
             return new();
         }
 
@@ -130,7 +145,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             catch (Exception ex)
             {
-
+                throw;
             }
 
             return new();

@@ -2,7 +2,7 @@
 {
     public class ItemSparseInfo : IInfoModel
     {
-        public string AllowableRace { get; set; } = "TODO";
+        public string AllowableRace { get; set; } = "The race combination that can equip this item.\nThere seems to be some special reserved values for All, Any Horde Race and Any Alliance Race. Combining these options with others may not work.";
         public string Description { get; set; } = "TODO";
         public string Display3 { get; set; } = "TODO";
         public string Display2 { get; set; } = "TODO";

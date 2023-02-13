@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public uint ID { get; set; } = 0;
-        public long AllowableRace { get; set; } = 0;
+        public long AllowableRace { get; set; } = -1;
         [LocalizedString]
         public string Description { get; set; } = "";
         [LocalizedString]

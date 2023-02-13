@@ -29,6 +29,9 @@ namespace HotfixMods.Infrastructure.Extensions
             if(output.EndsWith("Id", StringComparison.InvariantCulture))
                 output = output.Substring(0, output.Length - 2) + "ID";
 
+            if (output.EndsWith("I D", StringComparison.InvariantCulture))
+                output = output.Substring(0, output.Length - 3) + "ID";
+
             return $"{appendBefore ?? ""}{output}{appendAfter ?? ""}";
         }
 

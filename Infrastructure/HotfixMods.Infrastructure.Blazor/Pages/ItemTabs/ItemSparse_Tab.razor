@@ -1,6 +1,7 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Flags.Db2
+@using HotfixMods.Core.Enums.Db2
 @using System.Linq
 
 @inherits DtoContentBase<ItemDto, ItemSparse>
@@ -8,10 +9,10 @@
 <PagedDtoContent T="ItemSparse">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(info.InventoryType))" />
+            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(info.InventoryType))" GetOptionsAsync_Func="GetInventoryTypes" />
             <Input_Element T="ushort" @bind-Value="@(Value.ItemLevel)" Label="@(nameof(Value.ItemLevel).ToDisplayName())" ValueCompare="ValueCompare?.ItemLevel" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemLevel))" />
             <Input_Element T="sbyte" @bind-Value="@(Value.RequiredLevel)" Label="@(nameof(Value.RequiredLevel).ToDisplayName())" ValueCompare="ValueCompare?.RequiredLevel" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredLevel))" />
-            <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityID)" Label="@(nameof(Value.OverallQualityID).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityID" OnInfoAdornmentClick="@(OpenInfoDialog(info.OverallQualityID))" />
+            <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityID)" Label="@(nameof(Value.OverallQualityID).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityID" OnInfoAdornmentClick="@(OpenInfoDialog(info.OverallQualityID))" GetOptionsAsync_Func="GetOverallQualityIds" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -25,7 +26,7 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="@(Value.Bonding)" Label="@(nameof(Value.Bonding).ToDisplayName())" ValueCompare="ValueCompare?.Bonding" OnInfoAdornmentClick="@(OpenInfoDialog(info.Bonding))" />
+            <Input_Element T="byte" @bind-Value="@(Value.Bonding)" Label="@(nameof(Value.Bonding).ToDisplayName())" ValueCompare="ValueCompare?.Bonding" OnInfoAdornmentClick="@(OpenInfoDialog(info.Bonding))"  GetOptionsAsync_Func="GetBondings"/>
             <Input_Element T="ushort" @bind-Value="@(Value.ItemSet)" Label="@(nameof(Value.ItemSet).ToDisplayName())" ValueCompare="ValueCompare?.ItemSet" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemSet))" />
             <Input_Element T="ushort" @bind-Value="@(Value.ItemNameDescriptionID)" Label="@(nameof(Value.ItemNameDescriptionID).ToDisplayName())" ValueCompare="ValueCompare?.ItemNameDescriptionID" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemNameDescriptionID))" />
             <Input_Element T="byte" @bind-Value="@(Value.Material)" Label="@(nameof(Value.Material).ToDisplayName())" ValueCompare="ValueCompare?.Material" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" />
@@ -334,5 +335,20 @@
         });
 
         return resultList.ToDictionary(pair => pair.Key, pair => pair.Value);
+    }
+
+    async Task<Dictionary<sbyte, string>> GetInventoryTypes()
+    {
+        return Enum.GetValues<ItemInventoryType>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<sbyte, string>> GetOverallQualityIds()
+    {
+        return Enum.GetValues<ItemSparseOverallQualityId>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+    }
+
+    async Task<Dictionary<byte, string>> GetBondings()
+    {
+        return Enum.GetValues<ItemSparseBonding>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
     }
 }

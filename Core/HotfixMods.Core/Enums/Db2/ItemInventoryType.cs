@@ -1,6 +1,6 @@
 ﻿namespace HotfixMods.Core.Enums.Db2
 {
-    public enum InventoryTypeEnum
+    public enum ItemInventoryType
     {
         NON_EQUIPPABLE = 0,
         HEAD = 1,
@@ -32,6 +32,4 @@
         QUIVER = 27,
         RELIC = 28,
     }
-
-
 }

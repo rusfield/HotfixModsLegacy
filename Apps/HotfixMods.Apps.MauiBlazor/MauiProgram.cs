@@ -9,6 +9,7 @@ using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls;
 using MudBlazor.Services;
 
 namespace HotfixMods.Apps.MauiBlazor
@@ -38,7 +39,12 @@ namespace HotfixMods.Apps.MauiBlazor
             });
 
             builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
-            builder.Services.AddSingleton<AppConfig>();
+            builder.Services.AddSingleton<AppConfig>(provider =>
+            {
+                var appConfig = new AppConfig();
+                config.Bind(appConfig);
+                return appConfig;
+            });
 
             builder.Services.AddSingleton<IClientDbProvider, Db2Client>(provider =>
             {

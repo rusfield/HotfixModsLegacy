@@ -77,7 +77,7 @@ Console.ReadKey();
 */
 
 
-/*
+
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47871";
 while (true)
@@ -95,7 +95,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 
@@ -234,6 +234,7 @@ foreach (var model in serverModels)
 
 
 // Compare property names to definition names
+/*
 string build = "10.0.5.47660";
 var defHelper = new Db2Client(build);
 var assembly = Assembly.Load("HotfixMods.Core");
@@ -292,7 +293,7 @@ foreach (var model in models)
         Console.WriteLine(e.Message);
     }
 }
-
+*/
 
 /*
 

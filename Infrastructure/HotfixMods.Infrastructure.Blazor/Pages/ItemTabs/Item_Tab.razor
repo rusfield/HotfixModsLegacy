@@ -1,6 +1,8 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
+@inject ItemService Service
+
 @inherits DtoContentBase<ItemDto, Item>
 
 <StandardDtoContent T="Item" >
@@ -14,10 +16,10 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClassID))" />
+                <Input_Element T="byte" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClassID))" GetOptionsAsync_Func="GetItemClasses" @bind-Value:after="(() => subClassIdRef?.Refresh())" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="byte" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SubclassID))" />
+                <Input_Element T="byte" @ref="subClassIdRef" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SubclassID))" GetOptionsAsync_Func="GetItemSubClasses" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
@@ -27,7 +29,7 @@
             </MiddleContent>
             <RightContent />
         </InlineGroup>
-    </MudItem>
+    </MudItem>  
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassID" ValueCompare="ValueCompare?.SoundOverrideSubclassID" Label="@nameof(Value.SoundOverrideSubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundOverrideSubclassID))" />
         <Input_Element T="int" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ContentTuningID))" />
@@ -38,4 +40,18 @@
 
 @code {
     ItemInfo info = new();
+
+    Input_Element<byte>? subClassIdRef;
+
+    async Task<Dictionary<byte, string>> GetItemClasses()
+    {
+        var options = await Service.GetItemClassOptions();
+        return options.ToDictionary(s => (byte)s.ClassID, s => s.ClassName);
+    }
+
+    async Task<Dictionary<byte, string>> GetItemSubClasses()
+    {
+        var options = await Service.GetItemSubClassOptions((sbyte)Value.ClassID);
+        return options.ToDictionary(s => (byte)s.SubClassID, s => s.DisplayName);
+    }
 }

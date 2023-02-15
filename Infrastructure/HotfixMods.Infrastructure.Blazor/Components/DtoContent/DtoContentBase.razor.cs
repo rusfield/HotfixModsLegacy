@@ -4,6 +4,7 @@ using HotfixMods.Infrastructure.Blazor.PageData;
 using HotfixMods.Infrastructure.DtoModels;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using System.ComponentModel;
 
 namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 {

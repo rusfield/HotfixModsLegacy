@@ -19,6 +19,9 @@ else
 
 @code
 {
+    [CascadingParameter(Name = "RefreshElement")]
+    public bool RefreshElement { get; set; }
+
     [Parameter]
     public string? Label { get; set; }
 

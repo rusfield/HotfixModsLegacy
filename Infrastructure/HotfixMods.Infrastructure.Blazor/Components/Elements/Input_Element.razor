@@ -6,30 +6,31 @@
 <div class="custom-wrapper" style="width:100%;">
     <MudBadge Origin="Origin.CenterRight" Overlap="true" Icon="@Icons.Material.Filled.ArrowForward" Color="@Color.Primary" Visible="OnValueLookupClick.HasDelegate" OnClick="@(OnValueLookupClick)" Style="width:100%">
         <MudBadge Origin="Origin.CenterLeft" Overlap="true" Icon="@Icons.Material.Filled.ArrowForward" Color="@Color.Info" OnClick="@(() => SetValueAsync(ValueCompare!))" Visible="@(GetCompareBadgeVisibility())" Style="width:100%" Class="pt-4">
-
-            @if (MultiSelection && GetOptionsAsync_Func != null)
-            {
-                <MultiSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
-            }
-            else if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
-            {
-                <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
-            }
-            else if (null == GetOptionsAsync_Func)
-            {
-                if (typeof(T) == typeof(string))
+            <CascadingValue Name="RefreshElement" Value="refreshElement">
+                @if (MultiSelection && GetOptionsAsync_Func != null)
                 {
-                    <MudTextField T="T" Lines="@Lines" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" />
+                    <MultiSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
+                }
+                else if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
+                {
+                    <SingleSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
+                }
+                else if (null == GetOptionsAsync_Func)
+                {
+                    if (typeof(T) == typeof(string))
+                    {
+                        <MudTextField T="T" Lines="@Lines" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HelperText="(string)" HelperTextOnFocus="true" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" />
+                    }
+                    else
+                    {
+                        <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" />
+                    }
                 }
                 else
                 {
-                    <MudNumericField T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="@Variant" HideSpinButtons="true" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" Adornment="GetAdornment()" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Error="error" OnKeyDown="(() => SetError(false))" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" />
+                    <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" GetOptionsAsync_Func="GetOptionsAsync_Func" />
                 }
-            }
-            else
-            {
-                <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" GetOptionsAsync_Func="GetOptionsAsync_Func" />
-            }
+            </CascadingValue>
         </MudBadge>
     </MudBadge>
 </div>
@@ -79,9 +80,11 @@
     public bool Disabled { get; set; } = false;
 
     bool error = false;
+    bool refreshElement = false;
+
     public void SetError(bool newError)
     {
-        if(error != newError)
+        if (error != newError)
         {
             error = newError;
             this.StateHasChanged();
@@ -157,5 +160,15 @@
         error = false;
         Value = newValue;
         await ValueChanged.InvokeAsync(Value);
+    }
+}
+
+@functions
+{
+
+    public void Refresh()
+    {
+        this.StateHasChanged();
+        refreshElement = !refreshElement;
     }
 }

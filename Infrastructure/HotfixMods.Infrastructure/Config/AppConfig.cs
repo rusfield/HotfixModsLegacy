@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Config
         public string BuildInfo { get; set; } = "10.0.5.47871";
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
         public ServiceSettings GenericHotfixSettings { get; set; } = new(0, 0, -5501);
-        public ServiceSettings AnimKitSettings { get; set; } = new(0, 0, -5502);
+        public ServiceSettings AnimKitSettings { get; set; } = new(60000, 63000, -5502);
         public ServiceSettings GameobjectSettings { get; set; } = new(0, 0, -5503);
         public ServiceSettings SoundKitSettings { get; set; } = new(0, 0, -5504);
         public ServiceSettings ItemSettings { get; set; } = new(2000000, 2100000, -5505);

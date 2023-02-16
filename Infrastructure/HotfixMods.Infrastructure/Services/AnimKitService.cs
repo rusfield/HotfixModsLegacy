@@ -106,10 +106,16 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(AnimKitDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultProgressCallback;
-            var progress = LoadingHelper.GetLoaderFunc(7);
+            var progress = LoadingHelper.GetLoaderFunc(8);
 
             try
             {
+                callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+                if (dto.IsUpdate)
+                {
+                    await DeleteAsync(dto.AnimKit.ID);
+                }
+
                 callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
                 await SetIdAndVerifiedBuild(dto);
 

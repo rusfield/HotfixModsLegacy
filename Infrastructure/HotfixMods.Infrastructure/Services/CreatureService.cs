@@ -67,6 +67,7 @@ namespace HotfixMods.Infrastructure.Services
                         Name = character.Name,
                         Minlevel = character.Level,
                         Maxlevel = character.Level,
+                        Type = (byte)CreatureTemplateType.HUMANOID
                     },
                     HotfixModsEntity = new()
                     {

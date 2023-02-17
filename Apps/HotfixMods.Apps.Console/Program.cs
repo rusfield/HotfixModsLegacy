@@ -36,7 +36,7 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-
+/*
 var hotfixTool = new HotfixTableTool();
 var db2Types = new List<Type>
 {
@@ -44,7 +44,7 @@ var db2Types = new List<Type>
 };
 hotfixTool.GenerateAll(db2Types.ToArray());
 Console.ReadKey();
-
+*/
 
 /*
 var tcTool = new TrinityCoreDbTool();
@@ -95,7 +95,7 @@ Console.WriteLine("Done");
 
 
 
-/*
+
 
 var wowToolsTool = new WowToolsTool();
 
@@ -121,7 +121,6 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
 
 
 /*

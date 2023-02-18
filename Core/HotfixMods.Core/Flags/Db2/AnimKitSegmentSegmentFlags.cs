@@ -5,7 +5,7 @@
     {
         UNK_0 = 0,
         UNK_1 = 1,
-        UNK_2 = 2,
+        ENABLE_VARIATIONS = 2,
         UNK_4 = 4,
         UNK_8 = 8,
         UNK_16 = 16,

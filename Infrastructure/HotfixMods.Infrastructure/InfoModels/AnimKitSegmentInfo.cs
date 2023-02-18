@@ -14,7 +14,7 @@
         public string EndConditionDelay { get; set; } = "Condition 0: ??\nCondition 1: ??\nCondition 2: ??\nCondition 3: Amount of time?/frames? the segment lasts. This is including Blend In and excluding Blend Out.\nCondition 4: ??\nCondition 5: ??";
         public string Speed { get; set; } = "The speed at which the animation will play is multiplied by this value.\n\n1 is regular speed.\n2 is double speed.\n0.5 is half speed.\n0 is for standing still.\n-1 is for playing the animation backwards.";
         public string SegmentFlags { get; set; } = "TODO";
-        public string ForcedVariation { get; set; } = "Some animations have multiple variations, for example dance animations or attack animations. At 0, a random variation will be played. Anything higher will force it to a specific variation.\nUse a tool like WoW Model Viewer to see available variations for an animation.\nNote that this may vary by creatures or player characters.";
+        public string ForcedVariation { get; set; } = "Some animations have multiple variations, for example dance animations or attack animations. At 0, a random variation will be played. Anything higher will force it to a specific variation.\nUse a tool like WoW Model Viewer to see available variations for an animation.\nNote that this may vary by creatures or player characters.\n\nFor this value to work, enable it in the flags.";
         public string OverrideConfigFlags { get; set; } = "TODO";
         public string LoopToSegmentIndex { get; set; } = "TODO";
         public string BlendInTimeMs { get; set; } = "TODO";

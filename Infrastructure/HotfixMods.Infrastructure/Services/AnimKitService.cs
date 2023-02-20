@@ -77,19 +77,12 @@ namespace HotfixMods.Infrastructure.Services
                     if (animKitConfigBoneSets.Count == 0)
                         animKitConfigBoneSets.Add(new());
 
-                    foreach (var animKitConfigBoneSet in animKitConfigBoneSets)
+                    result.SegmentGroups.Add(new()
                     {
-                        // Make new copies and references 
-                        var newAnimKitSegment = JsonSerializer.Deserialize<AnimKitSegment>(JsonSerializer.Serialize(segment))!;
-                        var newAnimKitConfig = JsonSerializer.Deserialize<AnimKitConfig>(JsonSerializer.Serialize(animKitConfig))!;
-
-                        result.SegmentGroups.Add(new()
-                        {
-                            AnimKitSegment = newAnimKitSegment,
-                            AnimKitConfig = newAnimKitConfig,
-                            AnimKitConfigBoneSet = animKitConfigBoneSet
-                        });
-                    }
+                        AnimKitSegment = segment,
+                        AnimKitConfig = animKitConfig,
+                        AnimKitConfigBoneSet = animKitConfigBoneSets
+                    });
                 }
                 callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
                 return result;
@@ -123,7 +116,9 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.AnimKit);
                 await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitSegment).ToList());
                 await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitConfig).ToList());
-                await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitConfigBoneSet).ToList());
+
+                var boneSets = dto.SegmentGroups.SelectMany(s => s.AnimKitConfigBoneSet).ToList();
+                await SaveAsync(callback, progress, boneSets.Where(b => b.AnimKitBoneSetID != byte.MaxValue).ToList());
 
                 dto.IsUpdate = true;
                 callback.Invoke(LoadingHelper.Saving, $"Saving successful", 100);

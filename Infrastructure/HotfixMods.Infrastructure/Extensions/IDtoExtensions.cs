@@ -62,6 +62,21 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
+        public static List<TValue>? GetDtoGroupListValue<TValue>(this IDto dto, Type groupType, int groupIndex)
+            where TValue : class, new()
+        {
+            var groupProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
+            var getMethod = groupProperty?.PropertyType.GetMethod("get_Item");
+            var group = groupProperty?.GetValue(dto);
+            var count = (int?)group?.GetType()?.GetProperty("Count")?.GetValue(group);
+            if (count != null && count > 0 && groupIndex < count)
+            {
+                var groupValue = getMethod?.Invoke(group, new object[] { groupIndex });
+                return (List<TValue>?)groupValue?.GetType()?.GetProperty(typeof(TValue).Name)?.GetValue(groupValue);
+            }
+            return null;
+        }
+
         public static IList GetDtoGroup(this IDto dto, Type groupType)
         {
             var properties = dto.GetType().GetProperties();

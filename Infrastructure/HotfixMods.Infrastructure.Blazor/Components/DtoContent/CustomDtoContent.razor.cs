@@ -9,5 +9,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         [Parameter]
         public RenderFragment ChildContent { get; set; }
+
+        [Parameter]
+        public bool InstancedContent { get; set; } = false;
     }
 }

@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         {
             public AnimKitSegment AnimKitSegment { get; set; } = new();
             public AnimKitConfig AnimKitConfig { get; set; } = new();
-            public AnimKitConfigBoneSet AnimKitConfigBoneSet { get; set; } = new();
+            public List<AnimKitConfigBoneSet> AnimKitConfigBoneSet { get; set; } = new();
         }
     }
 }

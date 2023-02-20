@@ -32,16 +32,20 @@ namespace HotfixMods.Infrastructure.Services
                 s.AnimKitSegment.ID = nextAnimKitSegmentId;
                 s.AnimKitSegment.AnimKitConfigID = (ushort)nextAnimKitConfigId;
                 s.AnimKitConfig.ID = nextAnimKitConfigId;
-                s.AnimKitConfigBoneSet.ID = nextAnimKitConfigBoneSetId;
-                s.AnimKitConfigBoneSet.ParentAnimKitConfigID = (int)nextAnimKitConfigId;
+
 
                 s.AnimKitSegment.VerifiedBuild = VerifiedBuild;
                 s.AnimKitConfig.VerifiedBuild = VerifiedBuild;
-                s.AnimKitConfigBoneSet.VerifiedBuild = VerifiedBuild;
+
+                foreach(var boneSet in s.AnimKitConfigBoneSet)
+                {
+                    boneSet.ID = nextAnimKitConfigBoneSetId++;
+                    boneSet.ParentAnimKitConfigID = (int)nextAnimKitConfigId;
+                    boneSet.VerifiedBuild = VerifiedBuild;
+                }
 
                 nextAnimKitSegmentId++;
                 nextAnimKitConfigId++;
-                nextAnimKitConfigBoneSetId++;
             });
 
         }

@@ -1,4 +1,5 @@
-﻿<MudGrid Class="px-6 mt-7">
+﻿@if (InstancedContent)
+{
     @if (ValueIsNull)
     {
         <DtoContentNoValue />
@@ -7,4 +8,17 @@
     {
         @ChildContent
     }
-</MudGrid>
+}
+else
+{
+    <MudGrid Class="px-6 mt-7">
+        @if (ValueIsNull)
+        {
+            <DtoContentNoValue />
+        }
+        else
+        {
+            @ChildContent
+        }
+    </MudGrid>
+}

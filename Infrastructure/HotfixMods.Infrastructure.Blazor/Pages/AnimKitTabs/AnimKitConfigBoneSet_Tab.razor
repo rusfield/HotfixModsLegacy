@@ -8,7 +8,7 @@
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet1.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet1.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet1))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet1.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -16,7 +16,7 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet2.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet2.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet2))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet2.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -24,7 +24,7 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet3.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet3.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet3))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet3.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -32,7 +32,7 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet4.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet4.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet4))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet4.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -43,15 +43,15 @@
                 <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet5.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet5.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet5))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet5.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet5.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet6.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet6.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet6))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet6.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -59,7 +59,7 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet7.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet7.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet7))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet7.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -67,7 +67,7 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet8.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" Value="@(animKitConfigBoneSet8.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet8))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet8.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
@@ -156,6 +156,21 @@
         }
     }
 
+    void ValueChanged(byte newValue, AnimKitConfigBoneSet animKitConfigBoneSet)
+    {
+        animKitConfigBoneSet.AnimKitBoneSetID = newValue;
+        var valueList = PageTab.Dto.GetDtoGroupListValue<AnimKitConfigBoneSet>(InstanceData.GroupType, GroupIndex);
+
+        if(newValue == byte.MaxValue)
+        {
+            valueList.Remove(animKitConfigBoneSet);
+        }
+        else if (!valueList.Contains(animKitConfigBoneSet))
+        {
+            valueList.Add(animKitConfigBoneSet);
+        }
+    }
+
     AnimKitConfigBoneSet SetAndGetValue(int index)
     {
         var valueList = PageTab.Dto.GetDtoGroupListValue<AnimKitConfigBoneSet>(InstanceData.GroupType, GroupIndex);
@@ -166,7 +181,6 @@
                 {
                     AnimKitBoneSetID = byte.MaxValue
                 };
-            valueList.Add(value);
         }
         return value;
     }

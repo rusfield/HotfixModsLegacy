@@ -116,9 +116,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.AnimKit);
                 await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitSegment).ToList());
                 await SaveAsync(callback, progress, dto.SegmentGroups.Select(s => s.AnimKitConfig).ToList());
-
-                var boneSets = dto.SegmentGroups.SelectMany(s => s.AnimKitConfigBoneSet).ToList();
-                await SaveAsync(callback, progress, boneSets.Where(b => b.AnimKitBoneSetID != byte.MaxValue).ToList());
+                await SaveAsync(callback, progress, dto.SegmentGroups.SelectMany(s => s.AnimKitConfigBoneSet).ToList());
 
                 dto.IsUpdate = true;
                 callback.Invoke(LoadingHelper.Saving, $"Saving successful", 100);

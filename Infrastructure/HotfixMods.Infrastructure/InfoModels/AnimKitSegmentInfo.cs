@@ -6,8 +6,8 @@
         public string AnimID { get; set; } = "The ID of animation to play for this segment.\nNote that the animation will only work if the creature that plays it supports this animation, and will play nothing or a fallback animation if not.\nUse a tool like WoW Model Viewer to see what animations are available to a creature or a player character.";
         public string AnimStartTime { get; set; } = "The frame to start play the animation from.\nUse a tool like WoW Model Viewer to play an animation and find the specific frame you want to start play from, if not from the beginning (which is 0).";
         public string AnimKitConfigID { get; set; } = "Maps to the AnimKitConfig record to use for this segment. AnimKitConfig and it's referencing tables holds values such as which bodyparts will play the given animation and with what priority.";
-        public string StartCondition { get; set; } = "Condition value for ";
-        public string StartConditionParam { get; set; } = "TODO";
+        public string StartCondition { get; set; } = "Condition 0: ??\nCondition 1: ??\n Condition 2: Used to chain segments. The very first segment in the cina should have Start Condition 0. Then start chaining the following segments using Condition Param as index.";
+        public string StartConditionParam { get; set; } = "Condition 0: ??\nCondition 1: ??\n Condition 2: Index of segment in the chain.";
         public string StartConditionDelay { get; set; } = "TODO";
         public string EndCondition { get; set; } = "TODO";
         public string EndConditionParam { get; set; } = "Condition 0: ??\nCondition 1:??\nCondition 2: ??\nCondition 3: Not used.\nCondition 4: ??\nCondition 5: ??";

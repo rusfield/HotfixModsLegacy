@@ -25,13 +25,14 @@ namespace HotfixMods.Infrastructure.Services
             dto.AnimKit.ID = animKitId;
             dto.AnimKit.VerifiedBuild = VerifiedBuild;
 
-
+            byte orderIndex = 0;
             dto.SegmentGroups.ForEach(s =>
             {
                 s.AnimKitSegment.ParentAnimKitID = (ushort)animKitId;
                 s.AnimKitSegment.ID = nextAnimKitSegmentId;
                 s.AnimKitSegment.AnimKitConfigID = (ushort)nextAnimKitConfigId;
                 s.AnimKitConfig.ID = nextAnimKitConfigId;
+                s.AnimKitSegment.OrderIndex = orderIndex;
 
 
                 s.AnimKitSegment.VerifiedBuild = VerifiedBuild;
@@ -46,6 +47,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 nextAnimKitSegmentId++;
                 nextAnimKitConfigId++;
+                orderIndex++;
             });
 
         }

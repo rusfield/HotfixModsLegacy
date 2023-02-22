@@ -9,7 +9,6 @@ using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.Maui.Controls;
 using MudBlazor.Services;
 
 namespace HotfixMods.Apps.MauiBlazor
@@ -19,7 +18,7 @@ namespace HotfixMods.Apps.MauiBlazor
         public static MauiApp CreateMauiApp()
         {
 
-            var config = ConfigBuilder.Build();
+            var appConfig = ConfigHandler.GetAppConfig();
 
             var builder = MauiApp.CreateBuilder();
             builder
@@ -39,39 +38,35 @@ namespace HotfixMods.Apps.MauiBlazor
             });
 
             builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
-            builder.Services.AddSingleton<AppConfig>(provider =>
+            builder.Services.AddSingleton(provider =>
             {
-                var appConfig = new AppConfig();
-                config.Bind(appConfig);
                 return appConfig;
             });
 
             builder.Services.AddSingleton<IClientDbProvider, Db2Client>(provider =>
             {
-                return new Db2Client(config.GetValue<string>(nameof(AppConfig.BuildInfo)));
+                return new Db2Client(appConfig.BuildInfo);
             });
             builder.Services.AddSingleton<IClientDbDefinitionProvider, Db2Client>(provider =>
             {
-                return new Db2Client(config.GetValue<string>(nameof(AppConfig.BuildInfo)));
+                return new Db2Client(appConfig.BuildInfo);
             });
             builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
             {
-                var mySqlSection = config.GetSection(nameof(AppConfig.MySql));
                 return new MySqlClient(
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Server)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Port)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Username)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Password))
+                    appConfig.MySql.Server,
+                    appConfig.MySql.Port,
+                    appConfig.MySql.Username,
+                    appConfig.MySql.Password
                     );
             });
             builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClient>(provider =>
             {
-                var mySqlSection = config.GetSection(nameof(AppConfig.MySql));
                 return new MySqlClient(
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Server)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Port)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Username)),
-                    mySqlSection.GetValue<string>(nameof(AppConfig.MySql.Password))
+                    appConfig.MySql.Server,
+                    appConfig.MySql.Port,
+                    appConfig.MySql.Username,
+                    appConfig.MySql.Password
                     );
             });
 

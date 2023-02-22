@@ -58,7 +58,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             try
             {
-                var clientResult = await _clientDbProvider.GetSingleAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                var clientResult = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
                 if (clientResult != null)
                     return clientResult.DbRowToEntity<T?>();
             }
@@ -85,9 +85,9 @@ namespace HotfixMods.Infrastructure.Services
 
             if (null == result)
             {
-                var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Location, tableName);
+                var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, tableName);
                 if (clientDbDefinition != null)
-                    result = await _clientDbProvider.GetSingleAsync(_appConfig.Location, tableName, clientDbDefinition, parameters);
+                    result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, tableName, clientDbDefinition, parameters);
             }
 
             return result;
@@ -118,7 +118,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             try
             {
-                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
                 if (clientResults.Any())
                     return clientResults.DbRowsToEntities<T>().ToList();
             }
@@ -139,7 +139,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Location, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
+                var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, typeof(T).Name, GetDbRowDefinitionOfEntity<T>(), parameters);
                 if (clientResults.Any())
                     return clientResults.DbRowsToEntities<T>().ToList();
             }

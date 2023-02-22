@@ -1,4 +1,6 @@
 ﻿
+using System.Text.Json.Serialization;
+
 namespace HotfixMods.Infrastructure.Config
 {
     public class AppConfig
@@ -8,7 +10,7 @@ namespace HotfixMods.Infrastructure.Config
         public string CharactersSchema { get; set; } = "characters";
         public string WorldSchema { get; set; } = "world";
         public string HotfixModsSchema { get; set; } = "hotfixmods";
-        public string Location { get; set; } = @"C:\hotfixMods";
+        public string Db2Path { get; set; } = @"C:\hotfixMods";
         public string HotfixDataTableName { get; set; } = "hotfix_data";
         public string HotfixDataRecordIDColumnName { get; set; } = "RecordID";
         public string HotfixDataTableHashColumnName { get; set; } = "TableHash";
@@ -54,5 +56,12 @@ namespace HotfixMods.Infrastructure.Config
             public uint ToId { get; set; }
             public int VerifiedBuild { get; set; }
         }
+
+        // Set by whatever App/Frontend is handling the loading.
+        [JsonIgnore]
+        public Action? Save { get; set; }
+        // Path to file if exist
+        [JsonIgnore]
+        public string? ConfigFilePath { get; set; }
     }
 }

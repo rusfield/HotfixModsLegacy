@@ -1,0 +1,42 @@
+﻿@using HotfixMods.Infrastructure.Config;
+@using System.Diagnostics
+
+@inject AppConfig Config
+
+<MudContainer>
+    <MudPaper Height="744px" Class="mt-10 pa-2">
+        <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+            Settings
+        </MudText>
+        <MudDivider  />
+        <div class="py-5" />
+        <MudText>
+            MySql
+        </MudText>
+        <MudStack Row="true" Class="py-2">
+            <MudTextField @bind-Value="Config.MySql.Server" Variant="Variant.Outlined" Label="Server" />
+            <MudTextField @bind-Value="Config.MySql.Port" Variant="Variant.Outlined" Label="Port" />
+            <MudTextField @bind-Value="Config.MySql.Username" Variant="Variant.Outlined" Label="Username" />
+            <MudTextField @bind-Value="Config.MySql.Password" Variant="Variant.Outlined" Label="Password" />
+        </MudStack>
+        <MudStack Row="true" Class="py-2">
+            <MudTextField @bind-Value="Config.CharactersSchema" Variant="Variant.Outlined" Label="Characters Schema" />
+            <MudTextField @bind-Value="Config.WorldSchema" Variant="Variant.Outlined" Label="World Schema" />
+            <MudTextField @bind-Value="Config.HotfixesSchema" Variant="Variant.Outlined" Label="Hotfixes Schema" />
+        </MudStack>
+        <div class="py-5" />
+        <MudText>
+            DB2
+        </MudText>
+        <MudStack Row="true" Class="py-2">
+            <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
+        </MudStack>
+                
+      <MudButton Color="Color.Success" OnClick="@(() => Config.Save())">Save</MudButton>
+      <MudButton Color="Color.Info" OnClick="@(() => Process.Start("explorer.exe", Config.ConfigFilePath))">View JSON</MudButton>
+    </MudPaper>
+</MudContainer>
+
+@code {
+
+}

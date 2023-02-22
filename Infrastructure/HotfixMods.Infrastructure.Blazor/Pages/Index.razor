@@ -51,7 +51,7 @@
             <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
         </div>
         <div onmouseover="@(() => SetHover("Settings"))">
-            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" />
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))"/>
         </div>
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
 

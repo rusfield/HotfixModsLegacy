@@ -11,7 +11,16 @@ using HotfixMods.Providers.WowDev.Client;
 using HotfixMods.Tools.Dev.Business;
 using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
+
+
+
+
+var reader = new TrinityCoreCodeTool();
+reader.GetFields("SoulbindConduitRank");
+reader.GetInstanceParameters("SoulbindConduitRank");
+Console.ReadKey();
 
 /*
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");

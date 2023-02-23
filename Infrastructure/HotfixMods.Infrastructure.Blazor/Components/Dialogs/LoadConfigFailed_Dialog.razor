@@ -1,0 +1,58 @@
+﻿@using HotfixMods.Infrastructure.Config;
+@using System.Diagnostics;
+
+@inject ISnackbar Snackbar
+@inject AppConfig Config
+
+<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())" Class="py-4">
+    <MudDialog>
+        <DialogContent>
+            <MudStack Justify="Justify.Center" Spacing="5">
+                <MudText Align="Align.Center">
+                    <MudIcon Style="font-size: 4rem !important" Icon="@Icons.Material.Filled.ErrorOutline" />
+                </MudText>
+                <MudText Align="Align.Center">
+                    There was a problem loading the configuration file. Default settings are loaded instead.
+                </MudText>
+                <MudText Align="Align.Center">
+                    Please repair the content, or delete the file and restart the app to make a new one.
+                </MudText>
+                <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewFile_Click">
+                    @if (viewLoad)
+                    {
+                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    }
+                    else
+                    {
+                        @("View File")
+                    }
+
+                </MudButton>
+            </MudStack>
+        </DialogContent>
+    </MudDialog>
+</MudBadge>
+
+
+@code {
+    [CascadingParameter]
+    public MudDialogInstance MudDialogInstance { get; set; }
+
+    bool viewLoad = false;
+
+    async Task ViewFile_Click()
+    {
+        viewLoad = true;
+        if (Config != null && !string.IsNullOrWhiteSpace(Config.ConfigFilePath))
+        {
+            Process.Start("explorer.exe", Config.ConfigFilePath);
+        }
+        else
+        {
+            Snackbar.Add("Unable to find configuration file.", Severity.Error);
+        }
+        await Task.Delay(500);
+        viewLoad = false;
+    }
+
+}

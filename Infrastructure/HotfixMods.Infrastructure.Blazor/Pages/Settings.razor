@@ -14,14 +14,14 @@
     </MudItem>
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexEnd">
-            <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewJson_Click">
+            <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewFile_Click">
                 @if (viewLoad)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
                 }
                 else
                 {
-                    @("View JSON")
+                    @("View File")
                 }
 
             </MudButton>
@@ -95,7 +95,7 @@
         saveLoad = false;
     }
 
-    async Task ViewJson_Click()
+    async Task ViewFile_Click()
     {
         viewLoad = true;
         if (Config != null && !string.IsNullOrWhiteSpace(Config.ConfigFilePath))

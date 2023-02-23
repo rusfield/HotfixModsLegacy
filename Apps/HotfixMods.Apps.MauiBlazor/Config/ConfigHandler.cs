@@ -16,8 +16,18 @@ namespace HotfixMods.Apps.MauiBlazor.Config
                 File.WriteAllText(ConfigPath, JsonSerializer.Serialize(defaultAppConfig, serializer));
             }
 
-            var appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath));
-            appConfig.Save = () => Save(appConfig);
+            var appConfig = new AppConfig();
+
+            try
+            {
+                appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath));
+                appConfig.Save = () => Save(appConfig);
+            }
+            catch(Exception ex)
+            {
+                appConfig.LoadedCorrectly = false;
+            }
+
             appConfig.ConfigFilePath = ConfigPath.Replace("/config.json", "");
             return appConfig;
         }

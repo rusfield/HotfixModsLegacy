@@ -63,5 +63,7 @@ namespace HotfixMods.Infrastructure.Config
         // Path to file if exist
         [JsonIgnore]
         public string? ConfigFilePath { get; set; }
+        [JsonIgnore]
+        public bool LoadedCorrectly { get; set; } = true;
     }
 }

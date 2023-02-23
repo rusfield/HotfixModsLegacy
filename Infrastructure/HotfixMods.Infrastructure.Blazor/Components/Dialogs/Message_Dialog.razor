@@ -6,15 +6,17 @@
 <MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Class="py-4">
     <MudDialog>
         <DialogContent>
-            <MudText Align="Align.Center">
-                <MudIcon Size="Size.Large" Icon="@Icon" />
-            </MudText>
-            @foreach (var paragraph in Text.Split("\n"))
-            {
+            <MudStack Justify="Justify.Center" Spacing="5">
                 <MudText Align="Align.Center">
-                    @paragraph
+                    <MudIcon Style="font-size: 4rem !important" Icon="@Icon" />
                 </MudText>
-            }
+                @foreach (var paragraph in Text.Split("\n"))
+                {
+                    <MudText Align="Align.Center">
+                        @paragraph
+                    </MudText>
+                }
+            </MudStack>
         </DialogContent>
     </MudDialog>
 </MudBadge>

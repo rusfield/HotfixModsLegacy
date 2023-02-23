@@ -2,7 +2,7 @@
 
 @inject ItemService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
     <MudText Typo="Typo.h6" Align="Align.Center">Search by Item Display Info ID:</MudText>
     <MudTextField @bind-Value="@ItemDisplayInfoId" Variant="Variant.Outlined" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="GetByItemDisplayInfoIdIdAsync" />
 </DialogSearch>

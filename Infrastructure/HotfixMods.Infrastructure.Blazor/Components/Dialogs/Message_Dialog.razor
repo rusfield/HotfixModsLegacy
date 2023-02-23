@@ -1,9 +1,10 @@
 ﻿@using Microsoft.JSInterop;
 @using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.Blazor.Components.Private
 
 @inject ISnackbar Snackbar
 
-<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Class="py-4">
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />    
     <MudDialog>
         <DialogContent>
             <MudStack Justify="Justify.Center" Spacing="5">
@@ -19,7 +20,7 @@
             </MudStack>
         </DialogContent>
     </MudDialog>
-</MudBadge>
+
 @code {
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }

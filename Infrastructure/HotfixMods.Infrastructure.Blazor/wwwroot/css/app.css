@@ -122,3 +122,10 @@
 .highlight {
     background-color: yellow;
 }
+
+.mud-dialog {
+    padding-bottom: 25px;
+
+    /* Revert a MudBlazor brekaing change */
+    overflow-y: visible !important;
+}

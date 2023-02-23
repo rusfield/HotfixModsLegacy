@@ -2,7 +2,7 @@
 
 @inject SoundKitService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
     <MudText Typo="Typo.h6" Align="Align.Center">Search by ID:</MudText>
     <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByIdAsync)" />
 </DialogSearch>

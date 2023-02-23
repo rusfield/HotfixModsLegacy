@@ -1,19 +1,20 @@
 ﻿@using Microsoft.JSInterop;
 @using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.Blazor.Components.Private
 
 @inject IJSRuntime JSRuntime
 @inject ISnackbar Snackbar
 
-<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => Dialog.Cancel())" Class="py-4">
-    <MudDialog>
-        <DialogContent>
-            <MudStack>
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="CopyToClipboardAsync_Click">Copy Id</MudButton>
-                <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshAsync_Click" Disabled="@(!IsUpdate)">Refresh Id</MudButton>
-            </MudStack>
-        </DialogContent>
-    </MudDialog>
-</MudBadge>
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />
+<MudDialog>
+    <DialogContent>
+        <MudStack>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="CopyToClipboardAsync_Click">Copy Id</MudButton>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="RefreshAsync_Click" Disabled="@(!IsUpdate)">Refresh Id</MudButton>
+        </MudStack>
+    </DialogContent>
+</MudDialog>
+
 @code {
     [CascadingParameter]
     MudDialogInstance Dialog { get; set; }
@@ -35,7 +36,7 @@
     {
         var newId = await GetNextIdAsync_Func();
 
-        if(-1 == newId)
+        if (-1 == newId)
         {
             Snackbar.Add($"TODO - No ID", Severity.Info, config => { config.Icon = Icons.Material.Filled.Warning; });
         }

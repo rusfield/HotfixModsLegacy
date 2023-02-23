@@ -1,17 +1,18 @@
-﻿<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())" Class="py-4">
-    <MudDialog>
-        <DialogContent>
-            <Loader @ref="loaderRef" StateHasChanged_EventCallback="this.StateHasChanged" />
-            @if (null == loaderRef || !loaderRef.IsLoading)
-            {
-                <MudStack Style="max-height: 600px; overflow-y: scroll">
-                    @ChildContent
-                </MudStack>
-            }
-        </DialogContent>
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
 
-    </MudDialog>
-</MudBadge>
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />
+<MudDialog>
+    <DialogContent>
+        <Loader @ref="loaderRef" StateHasChanged_EventCallback="this.StateHasChanged" />
+        @if (null == loaderRef || !loaderRef.IsLoading)
+        {
+            <MudStack Style="max-height: 600px; overflow-y: scroll">
+                @ChildContent
+            </MudStack>
+        }
+    </DialogContent>
+
+</MudDialog>
 
 
 @code {
@@ -19,7 +20,7 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public MudDialogInstance MudDialogInstance { get; set; }
+    public MudDialogInstance Dialog { get; set; }
 
     uint? _id;
     Loader? loaderRef;

@@ -2,7 +2,7 @@
 
 @inject CreatureService Service
 
-<DialogSearch @ref="dialogSearchRef" MudDialogInstance="Dialog">
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
     <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature Display ID:</MudText>
     <MudNumericField @bind-Value="@CreatureDisplayInfoId" Variant="Variant.Outlined" HideSpinButtons="true" Label="Creature Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCreatureDisplayInfoIdAsync)" />
 </DialogSearch>

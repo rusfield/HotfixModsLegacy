@@ -1,0 +1,7 @@
+﻿
+<MudIconButton Icon="@Icons.Material.Filled.Close" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-circle" OnClick="Close_Click" Style="z-index:calc(var(--mud-zindex-dialog) + 2);position: absolute; top:-10px; right:-10px;" Size="Size.Small" />
+
+@code {
+    [Parameter]
+    public EventCallback Close_Click { get; set; }
+}

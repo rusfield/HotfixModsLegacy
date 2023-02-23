@@ -1,42 +1,44 @@
 ﻿@using HotfixMods.Infrastructure.Config;
 @using System.Diagnostics;
+@using HotfixMods.Infrastructure.Blazor.Components.Private
 
 @inject ISnackbar Snackbar
 @inject AppConfig Config
 
-<MudBadge Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Overlap="true" OnClick="(() => MudDialogInstance.Cancel())" Class="py-4">
-    <MudDialog>
-        <DialogContent>
-            <MudStack Justify="Justify.Center" Spacing="5">
-                <MudText Align="Align.Center">
-                    <MudIcon Style="font-size: 4rem !important" Icon="@Icons.Material.Filled.ErrorOutline" />
-                </MudText>
-                <MudText Align="Align.Center">
-                    There was a problem loading the configuration file. Default settings are loaded instead.
-                </MudText>
-                <MudText Align="Align.Center">
-                    Please repair the content, or delete the file and restart the app to make a new one.
-                </MudText>
-                <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewFile_Click">
-                    @if (viewLoad)
-                    {
-                        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                    }
-                    else
-                    {
-                        @("View File")
-                    }
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />
+<MudDialog>
+    <DialogContent>
+        <MudStack Justify="Justify.Center" Spacing="5">
+            <MudText Align="Align.Center">
+                <MudIcon Style="font-size: 4rem !important" Icon="@Icons.Material.Filled.ErrorOutline" />
+            </MudText>
+            <MudText Align="Align.Center">
+                There was a problem loading the configuration file. Default settings are loaded instead.
+            </MudText>
+            <MudText Align="Align.Center">
+                Please repair the content, or delete the file and restart the app to make a new one.
+            </MudText>
+            <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewFile_Click">
+                @if (viewLoad)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    @("View File")
+                }
 
-                </MudButton>
-            </MudStack>
-        </DialogContent>
-    </MudDialog>
-</MudBadge>
+            </MudButton>
+        </MudStack>
+
+    </DialogContent>
+</MudDialog>
+
 
 
 @code {
     [CascadingParameter]
-    public MudDialogInstance MudDialogInstance { get; set; }
+    public MudDialogInstance Dialog { get; set; }
 
     bool viewLoad = false;
 

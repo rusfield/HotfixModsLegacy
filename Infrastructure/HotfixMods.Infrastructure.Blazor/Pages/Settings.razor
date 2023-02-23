@@ -2,41 +2,111 @@
 @using System.Diagnostics
 
 @inject AppConfig Config
+@inject ISnackbar Snackbar
 
-<MudContainer>
-    <MudPaper Height="744px" Class="mt-10 pa-2">
-        <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+
+<MudGrid Class="mb-1 px-3" Style="height:36.5px">
+    <MudItem xs="4" />
+    <MudItem xs="4">
+        <MudText Typo="Typo.h4" Align="Align.Center" Style="width:100%;font-size:2.5rem;position:relative;top:-13px;">
             Settings
         </MudText>
-        <MudDivider  />
-        <div class="py-5" />
-        <MudText>
-            MySql
-        </MudText>
-        <MudStack Row="true" Class="py-2">
-            <MudTextField @bind-Value="Config.MySql.Server" Variant="Variant.Outlined" Label="Server" />
-            <MudTextField @bind-Value="Config.MySql.Port" Variant="Variant.Outlined" Label="Port" />
-            <MudTextField @bind-Value="Config.MySql.Username" Variant="Variant.Outlined" Label="Username" />
-            <MudTextField @bind-Value="Config.MySql.Password" Variant="Variant.Outlined" Label="Password" />
+    </MudItem>
+    <MudItem xs="4">
+        <MudStack Row="true" Justify="Justify.FlexEnd">
+            <MudButton Disabled="viewLoad" Variant="Variant.Filled" Color="Color.Info" OnClick="ViewJson_Click">
+                @if (viewLoad)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                }
+                else
+                {
+                    @("View JSON")
+                }
+
+            </MudButton>
+            <MudButton Disabled="saveLoad" Variant="Variant.Filled" Color="Color.Success" OnClick="Save_Click">
+                @if (saveLoad)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+
+                }
+                else
+                {
+                    @("Save")
+                }
+            </MudButton>
         </MudStack>
-        <MudStack Row="true" Class="py-2">
-            <MudTextField @bind-Value="Config.CharactersSchema" Variant="Variant.Outlined" Label="Characters Schema" />
-            <MudTextField @bind-Value="Config.WorldSchema" Variant="Variant.Outlined" Label="World Schema" />
-            <MudTextField @bind-Value="Config.HotfixesSchema" Variant="Variant.Outlined" Label="Hotfixes Schema" />
-        </MudStack>
-        <div class="py-5" />
-        <MudText>
-            DB2
-        </MudText>
-        <MudStack Row="true" Class="py-2">
-            <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
-        </MudStack>
-                
-      <MudButton Color="Color.Success" OnClick="@(() => Config.Save())">Save</MudButton>
-      <MudButton Color="Color.Info" OnClick="@(() => Process.Start("explorer.exe", Config.ConfigFilePath))">View JSON</MudButton>
-    </MudPaper>
-</MudContainer>
+    </MudItem>
+</MudGrid>
+
+
+<MudPaper Height="684px" Class="mx-3 px-6">
+    <MudGrid>
+        <MudItem xs="5">
+            <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+                MySql
+            </MudText>
+            <MudDivider />
+            <MudStack Row="true" Class="py-2">
+                <MudTextField @bind-Value="Config.MySql.Server" Variant="Variant.Outlined" Label="Server" />
+                <MudTextField @bind-Value="Config.MySql.Port" Variant="Variant.Outlined" Label="Port" />
+                <MudTextField @bind-Value="Config.MySql.Username" Variant="Variant.Outlined" Label="Username" />
+                <MudTextField @bind-Value="Config.MySql.Password" Variant="Variant.Outlined" Label="Password" />
+            </MudStack>
+            <MudStack Row="true" Class="py-2">
+                <MudTextField @bind-Value="Config.CharactersSchema" Variant="Variant.Outlined" Label="Characters Schema" />
+                <MudTextField @bind-Value="Config.WorldSchema" Variant="Variant.Outlined" Label="World Schema" />
+                <MudTextField @bind-Value="Config.HotfixesSchema" Variant="Variant.Outlined" Label="Hotfixes Schema" />
+            </MudStack>
+        </MudItem>
+        <MudItem xs="2" />
+        <MudItem xs="5">
+            <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+                DB2
+            </MudText>
+            <MudDivider />
+            <MudStack Row="true" Class="py-2">
+                <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
+
 
 @code {
+    bool viewLoad = false;
+    bool saveLoad = false;
 
+
+    async Task Save_Click()
+    {
+        saveLoad = true;
+        await Task.Delay(500);
+        if (Config != null && Config.Save != null)
+        {
+            Config.Save();
+            Snackbar.Add("Configuration saved.", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Unable to save configuration.", Severity.Error);
+        }
+        saveLoad = false;
+    }
+
+    async Task ViewJson_Click()
+    {
+        viewLoad = true;
+        if (Config != null && !string.IsNullOrWhiteSpace(Config.ConfigFilePath))
+        {
+            Process.Start("explorer.exe", Config.ConfigFilePath);
+        }
+        else
+        {
+            Snackbar.Add("Unable to find configuration file.", Severity.Error);
+        }
+        await Task.Delay(500);
+        viewLoad = false;
+    }
 }

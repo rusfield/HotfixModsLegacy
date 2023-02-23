@@ -40,7 +40,14 @@
         };
 
         window.onkeydown = function (event) {
+
+            // Disable CTRL + F (default find)
             if (event.ctrlKey && event.keyCode == 70) {
+                event.preventDefault();
+            }
+
+            // Disable F5 (refresh)
+            else if (event.keyCode == 116) {
                 event.preventDefault();
             }
         }
@@ -56,7 +63,7 @@
                     DotNet.invokeMethodAsync("HotfixMods.Infrastructure.Blazor", "CloseFinder");
                 }
             });
-        }
+        };
 
         function highlightText(text) {
             var context = document.querySelector("#app");
@@ -64,7 +71,7 @@
             instance.unmark();
             instance.mark(text, {
                 "separateWordSearch": false
-                });
+            });
         }
 
     </script>

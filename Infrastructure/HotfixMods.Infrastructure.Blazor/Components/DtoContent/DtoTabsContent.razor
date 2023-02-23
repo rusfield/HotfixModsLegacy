@@ -225,25 +225,35 @@
 
     void PanelTabChanged(int newIndex)
     {
-        var tab = tabs[newIndex];
         mudCarouselRef?.MoveTo(newIndex);
     }
 
     void PanelContentChanged(int newIndex)
     {
-        var tab = tabs[newIndex];
-        currentInstanceData = GetInstanceData(tab.GroupType);
-        currentPage = currentInstanceData?.CurrentInstance ?? 1;
-
-        infoModel = TryGetInfoModel(tab.DtoPropertyType);
-        dtoValueType = tab.DtoPropertyType;
-        var dtoValue = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
-        if (dtoValue == null && tab.DtoPropertyType.IsGenericType)
+        if(newIndex > 0 && newIndex < tabs.Count)
         {
-            dtoValue = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
+            var tab = tabs[newIndex];
+            currentInstanceData = GetInstanceData(tab.GroupType);
+            currentPage = currentInstanceData?.CurrentInstance ?? 1;
+
+            infoModel = TryGetInfoModel(tab.DtoPropertyType);
+            dtoValueType = tab.DtoPropertyType;
+            var dtoValue = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
+            if (dtoValue == null && tab.DtoPropertyType.IsGenericType)
+            {
+                dtoValue = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
+            }
+            tab.ValueIsNull = dtoValue == null && (currentInstanceData == null || currentInstanceData.InstanceCount <= 0);
+            currentTab = tab;
         }
-        tab.ValueIsNull = dtoValue == null && (currentInstanceData == null || currentInstanceData.InstanceCount <= 0);
-        currentTab = tab;
+        else
+        {
+            currentInstanceData = null;
+            currentTab = null;
+            currentPage = 1;
+            infoModel = null;
+            dtoValueType = null;
+        }
     }
 
     void NavigateInstance()

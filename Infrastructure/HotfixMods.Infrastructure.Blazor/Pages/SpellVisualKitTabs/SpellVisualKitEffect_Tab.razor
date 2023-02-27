@@ -42,8 +42,10 @@
     {
         var effectIsDefined = Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType);
         var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.UNIT_SOUND_TYPE);
+        var effectIsSoundKitType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.SOUND_KIT);
 
-        return effectIsDefined && !effectIsUnitSoundType;
+
+        return effectIsDefined && !effectIsUnitSoundType && !effectIsSoundKitType;
     }
 
     async Task<Dictionary<int, string>> GetEffectTypes()

@@ -21,8 +21,8 @@ namespace HotfixMods.Infrastructure.Config
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
         public ServiceSettings GenericHotfixSettings { get; set; } = new(0, 0, -5501);
         public ServiceSettings AnimKitSettings { get; set; } = new(60000, 63000, -5502);
-        public ServiceSettings GameobjectSettings { get; set; } = new(0, 0, -5503);
-        public ServiceSettings SoundKitSettings { get; set; } = new(0, 0, -5504);
+        public ServiceSettings GameobjectSettings { get; set; } = new(400000, 500000, -5503);
+        public ServiceSettings SoundKitSettings { get; set; } = new(1100000, 1200000, -5504);
         public ServiceSettings ItemSettings { get; set; } = new(2000000, 2100000, -5505);
         public ServiceSettings CreatureSettings { get; set; } = new(3200000, 3300000, -5506);
         public ServiceSettings SpellSettings { get; set; } = new(5400000, 5500000, -5507);

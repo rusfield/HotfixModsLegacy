@@ -96,6 +96,7 @@ namespace HotfixMods.Infrastructure.Services
                     });
                 });
 
+                result.HotfixModsEntity.Name = result.SpellName?.Name ?? "Unknown";
 
                 callback.Invoke(LoadingHelper.Loading, $"Loading successful.", 100);
                 return result;

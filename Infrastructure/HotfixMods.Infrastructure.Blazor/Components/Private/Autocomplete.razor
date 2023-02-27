@@ -8,7 +8,7 @@
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" CoerceValue="true" Strict="true">
+    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" CoerceValue="true" Strict="false">
         <NoItemsTemplate>
             <MudList Clickable="true">
                 <MudListItem>

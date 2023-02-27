@@ -5,6 +5,7 @@ using DBDefsLib;
 using HotfixMods.Core.Attributes;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
@@ -14,6 +15,9 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
 
+
+
+var result = GetExternalClassesWithHotfixesSchema(typeof(AnimKitDto));
 
 
 
@@ -104,7 +108,7 @@ Console.WriteLine("Done");
 
 
 
-
+/*
 
 var wowToolsTool = new WowToolsTool();
 
@@ -130,7 +134,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 /*
 // Compare client (master) and server definition
@@ -337,3 +341,38 @@ else
 Console.WriteLine("Done");
 Console.ReadKey();
 */
+
+List<Type> GetExternalClassesWithHotfixesSchema(Type type)
+{
+    var externalClasses = new List<Type>();
+
+    foreach (var property in type.GetProperties())
+    {
+        var propertyType = property.PropertyType;
+
+        if (propertyType == typeof(List<>))
+        {
+            propertyType = propertyType.GetGenericArguments()[0];
+        }
+
+        if (!propertyType.IsPrimitive && propertyType.Namespace != "System")
+        {
+            if (propertyType.GetCustomAttribute<HotfixesSchemaAttribute>() != null)
+            {
+                externalClasses.Add(propertyType);
+            }
+
+            externalClasses.AddRange(GetExternalClassesWithHotfixesSchema(propertyType));
+        }
+    }
+
+    foreach (var innerType in type.GetNestedTypes())
+    {
+        if (innerType.IsClass && innerType.IsNestedPublic)
+        {
+            externalClasses.AddRange(GetExternalClassesWithHotfixesSchema(innerType));
+        }
+    }
+
+    return externalClasses.Distinct().ToList();
+}

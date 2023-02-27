@@ -369,6 +369,11 @@ namespace HotfixMods.Infrastructure.Services
             return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
 
+        protected async Task<bool> TableExists(string schemaName, string tableName)
+        {
+            return await _serverDbProvider.TableExistsAsync(schemaName, tableName);
+        }
+
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(Action<string, string, int> callback, Func<int> progress, uint entityId)
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());

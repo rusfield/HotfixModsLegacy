@@ -8,7 +8,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static TValue? GetDtoValue<TValue>(this IDto dto)
             where TValue : class, new()
         {
-            var dtoProperty = dto.GetType().GetProperty(typeof(TValue).Name);
+            var dtoProperty = dto?.GetType().GetProperty(typeof(TValue).Name);
             if (dtoProperty != null)
             {
                 return (TValue?)dtoProperty?.GetValue(dto);

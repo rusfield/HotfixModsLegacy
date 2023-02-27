@@ -16,11 +16,12 @@ using static DBDefsLib.Structs;
 
 
 
-
+/*
 var reader = new TrinityCoreCodeTool();
 reader.GetFields("SoulbindConduitRank");
 reader.GetInstanceParameters("SoulbindConduitRank");
 Console.ReadKey();
+*/
 
 /*
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
@@ -45,15 +46,15 @@ Console.WriteLine(exp());
 Console.ReadKey();
 */
 
-/*
+
 var hotfixTool = new HotfixTableTool();
 var db2Types = new List<Type>
 {
-    typeof(AnimKitSegment)
+    typeof(SoundKitEntry)
 };
 hotfixTool.GenerateAll(db2Types.ToArray());
 Console.ReadKey();
-*/
+
 
 /*
 var tcTool = new TrinityCoreDbTool();
@@ -105,7 +106,7 @@ Console.WriteLine("Done");
 
 
 
-
+/*
 var wowToolsTool = new WowToolsTool();
 
 while (true)
@@ -130,7 +131,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 /*
 // Compare client (master) and server definition

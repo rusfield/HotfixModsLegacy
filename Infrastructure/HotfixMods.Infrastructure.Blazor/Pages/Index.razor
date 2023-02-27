@@ -53,7 +53,7 @@
             <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
         </div>
         <div onmouseover="@(() => SetHover("Settings"))">
-            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))"/>
+            <MudIconButton Icon="@GetPageIcon(typeof(Settings))" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))" />
         </div>
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
 
@@ -188,7 +188,7 @@
     protected override void OnAfterRender(bool firstRender)
     {
         // Check if Config was loaded correctly
-        if(!AppConfig.LoadedCorrectly)
+        if (!AppConfig.LoadedCorrectly)
         {
             DialogService.Show<LoadConfigFailed_Dialog>();
             // Reset for this session
@@ -257,6 +257,8 @@
             return Icons.Material.Filled.Group;
         else if (pageType == typeof(SoundKits))
             return Icons.Material.Filled.VolumeUp;
+        else if (pageType == typeof(Settings))
+            return Icons.Material.Filled.Settings;
         else
             return Icons.Material.Filled.FormatListBulleted; // Dashboards and fallback
     }

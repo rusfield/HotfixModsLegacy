@@ -36,7 +36,7 @@ namespace HotfixMods.Infrastructure.Services
                         AvatarUrl = null
                     });
                 }
-                return results;
+                return results.OrderByDescending(d => d.ID).ToList();
             }
             catch (Exception ex)
             {

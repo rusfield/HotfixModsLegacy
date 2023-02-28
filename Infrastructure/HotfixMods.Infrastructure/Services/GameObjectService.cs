@@ -23,20 +23,20 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-            var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
-            var results = new List<DashboardModel>();
-            foreach (var dto in dtos)
-            {
-                results.Add(new()
+                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var results = new List<DashboardModel>();
+                foreach (var dto in dtos)
                 {
-                    ID = dto.RecordID,
-                    Name = dto.Name,
-                    AvatarUrl = null
-                });
+                    results.Add(new()
+                    {
+                        ID = dto.RecordID,
+                        Name = dto.Name,
+                        AvatarUrl = null
+                    });
+                }
+                return results.OrderByDescending(d => d.ID).ToList();
             }
-            return results;
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 HandleException(ex);
             }

@@ -14,18 +14,18 @@
 
 <MudLayout>
     <MudMainContent Class="custom-app-bar">
-            <ErrorBoundary>
-                <ChildContent>
-                    @Body
-                </ChildContent>
-                <ErrorContent>
-                    <ExceptionContent />
-                </ErrorContent>
-            </ErrorBoundary>
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                <ExceptionContent />
+            </ErrorContent>
+        </ErrorBoundary>
     </MudMainContent>
 </MudLayout>
 
-@code 
+@code
 {
     private MudTheme _theme = new();
 }

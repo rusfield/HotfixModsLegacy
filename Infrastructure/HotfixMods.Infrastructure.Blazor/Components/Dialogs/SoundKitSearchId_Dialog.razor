@@ -17,12 +17,21 @@
 
     DialogSearch? dialogSearchRef;
 
-    async Task GetByIdAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Id != null)
+        {
+            await GetByIdAsync(true);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GetByIdAsync(bool closeOnFail = false)
     {
         if (Id != null)
         {
             var data = await Service.GetByIdAsync((uint)Id, dialogSearchRef!.SetLoaderProgress);
-            if (data != null)
+            if (data != null || closeOnFail)
             {
                 Dialog.Close(data);
             }

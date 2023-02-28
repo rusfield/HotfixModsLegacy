@@ -1,10 +1,11 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
 
 @inject ItemService Service
 
-<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search by Item Display Info ID:</MudText>
-    <MudTextField @bind-Value="@ItemDisplayInfoId" Variant="Variant.Outlined" Label="Item Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="GetByItemDisplayInfoIdIdAsync" />
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Items))">
+    <MudTextField @bind-Value="@ItemDisplayInfoId" Variant="Variant.Outlined" Label="Search by Display Info ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="GetByItemDisplayInfoIdIdAsync" />
 </DialogSearch>
 
 @code {

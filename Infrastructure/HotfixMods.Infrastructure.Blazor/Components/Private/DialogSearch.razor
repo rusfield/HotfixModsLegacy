@@ -6,7 +6,10 @@
         <Loader @ref="loaderRef" StateHasChanged_EventCallback="this.StateHasChanged" />
         @if (null == loaderRef || !loaderRef.IsLoading)
         {
-            <MudStack Style="max-height: 600px; overflow-y: scroll">
+            <MudStack Style="max-height: 600px; overflow-y: scroll" Justify="Justify.Center">
+                <MudText Align="Align.Center">
+                    <MudIcon Class="custom-dialog-icon" Icon="@Icon" />
+                </MudText>
                 @ChildContent
             </MudStack>
         }
@@ -21,6 +24,9 @@
 
     [Parameter]
     public MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
 
     uint? _id;
     Loader? loaderRef;

@@ -230,7 +230,7 @@
 
     void PanelContentChanged(int newIndex)
     {
-        if(newIndex > 0 && newIndex < tabs.Count)
+        if(newIndex >= 0 && newIndex < tabs.Count)
         {
             var tab = tabs[newIndex];
             currentInstanceData = GetInstanceData(tab.GroupType);

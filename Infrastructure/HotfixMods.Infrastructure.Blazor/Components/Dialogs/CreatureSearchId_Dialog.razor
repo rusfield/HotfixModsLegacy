@@ -1,16 +1,17 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
 
 @inject CreatureService Service
 
-<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search by Creature ID:</MudText>
-        @if (isLoading)
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Creatures))">
+    @if (isLoading)
     {
         <Placeholder_Element Amount="1" Visible="true" />
     }
     else
     {
-        <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetAvailableOptionsAsync)" />
+        <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetAvailableOptionsAsync)" />
     }
     @if (options.Count > 0)
     {
@@ -39,7 +40,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(Id != null)
+        if (Id != null)
         {
             await GetByIdAsync(Idx ?? 0, true);
         }
@@ -79,5 +80,5 @@
         }
         isLoading = false;
     }
-    
+
 }

@@ -1,10 +1,11 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
 
 @inject CreatureService Service
 
-<DialogSearch @ref="dialogSearchRef" Dialog="Dialog">
-    <MudText Typo="Typo.h6" Align="Align.Center">Search by Character Name:</MudText>
-    <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCharacterNameAsync)" />
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" ¨Icon="@IconHandler.GetPageIcon(typeof(Creatures))">
+    <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Search by Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCharacterNameAsync)" />
 </DialogSearch>
 
 @code {

@@ -28,7 +28,7 @@
                         </ChildContent>
                         <TabContent>
                             <MudStack Row="true" Justify="Justify.SpaceBetween" Style="width:100%;">
-                                <MudIcon Icon="@GetPageIcon(tab.PageType)" />
+                                <MudIcon Icon="@IconHandler.GetPageIcon(tab.PageType)" />
                                 <MudText Typo="Typo.subtitle2">@FormatTabName(tab.TabName)</MudText>
                                 <MudIcon Icon="@Icons.Material.Filled.Close" Color="Color.Dark" onclick="@(() => CloseTab_Click(tab.TabID))" />
                             </MudStack>
@@ -53,14 +53,14 @@
             <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
         </div>
         <div onmouseover="@(() => SetHover("Settings"))">
-            <MudIconButton Icon="@GetPageIcon(typeof(Settings))" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))" />
+            <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Settings))" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))" />
         </div>
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
 
         @* Creatures *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Creatures"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(Creatures))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Creatures))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creatures", typeof(CreatureDashboard))))">My Creatures</MudMenuItem>
@@ -76,7 +76,7 @@
         @* Gameobjects *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Game Objects"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(Gameobjects))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Gameobjects))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Game Objects", typeof(GameobjectDashboard))))">My Game Objects</MudMenuItem>
@@ -90,7 +90,7 @@
         @* Items *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Items"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(Items))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Items))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Items", typeof(ItemDashboard))))">My Items</MudMenuItem>
@@ -105,7 +105,7 @@
         @* Spells *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Spells"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(Spells))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Spells))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spells", typeof(SpellDashboard))))">My Spells</MudMenuItem>
@@ -119,7 +119,7 @@
         @* Spell Visual Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Spell Visual Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(SpellVisualKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(SpellVisualKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Spell Visual Kits", typeof(SpellVisualKitDashboard))))">My Spell Visual Kits</MudMenuItem>
@@ -133,7 +133,7 @@
         @* Anim Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Anim Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(AnimKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(AnimKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Anim Kits", typeof(AnimKitDashboard))))">My Anim Kits</MudMenuItem>
@@ -147,7 +147,7 @@
         @* Sound Kits *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Sound Kits"))">
             <ActivatorContent>
-                <MudIconButton Icon="@GetPageIcon(typeof(SoundKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(SoundKits))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Sound Kits", typeof(SoundKitDashboard))))">My Sound Kits</MudMenuItem>
@@ -239,28 +239,6 @@
     void RefreshIndex()
     {
         this.StateHasChanged();
-    }
-
-    string GetPageIcon(Type pageType)
-    {
-        if (pageType == typeof(Creatures))
-            return Icons.Material.Filled.FaceRetouchingNatural;
-        else if (pageType == typeof(Gameobjects))
-            return Icons.Material.Filled.OutlinedFlag;
-        else if (pageType == typeof(Items))
-            return Icons.Material.Outlined.Shield;
-        else if (pageType == typeof(Spells))
-            return Icons.Material.Filled.AutoFixHigh;
-        else if (pageType == typeof(SpellVisualKits))
-            return Icons.Material.Filled.AutoAwesome;
-        else if (pageType == typeof(AnimKits))
-            return Icons.Material.Filled.Group;
-        else if (pageType == typeof(SoundKits))
-            return Icons.Material.Filled.VolumeUp;
-        else if (pageType == typeof(Settings))
-            return Icons.Material.Filled.Settings;
-        else
-            return Icons.Material.Filled.FormatListBulleted; // Dashboards and fallback
     }
 
     string FormatTabName(string tabName)

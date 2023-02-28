@@ -129,3 +129,7 @@
     /* Revert a MudBlazor brekaing change */
     overflow-y: visible !important;
 }
+
+.custom-dialog-icon {
+    font-size: 4rem !important
+}

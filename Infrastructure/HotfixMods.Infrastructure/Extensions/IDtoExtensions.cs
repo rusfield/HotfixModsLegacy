@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Extensions
 
         public static object GetDtoValue(this IDto dto, Type valueType)
         {
-            var dtoProperty = dto.GetType().GetProperty(valueType.Name);
+            var dtoProperty = dto?.GetType().GetProperty(valueType.Name);
             if (dtoProperty != null)
             {
                 return dtoProperty?.GetValue(dto);
@@ -29,7 +29,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static List<TValue>? GetDtoListValue<TValue>(this IDto dto)
             where TValue : class, new()
         {
-            var listProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == typeof(TValue)).FirstOrDefault();
+            var listProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == typeof(TValue)).FirstOrDefault();
             if(listProperty != null)
             {
                 return (List<TValue>)listProperty.GetValue(dto);
@@ -39,7 +39,7 @@ namespace HotfixMods.Infrastructure.Extensions
 
         public static object? GetDtoListValue(this IDto dto, Type type)
         {
-            var listProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == type).FirstOrDefault();
+            var listProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == type).FirstOrDefault();
             if (listProperty != null)
             {
                 return listProperty.GetValue(dto);
@@ -50,7 +50,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static TValue? GetDtoGroupValue<TValue>(this IDto dto, Type groupType, int groupIndex)
             where TValue : class, new()
         {
-            var groupProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
+            var groupProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
             var getMethod = groupProperty?.PropertyType.GetMethod("get_Item");
             var group = groupProperty?.GetValue(dto);
             var count = (int?)group?.GetType()?.GetProperty("Count")?.GetValue(group);
@@ -65,7 +65,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static List<TValue>? GetDtoGroupListValue<TValue>(this IDto dto, Type groupType, int groupIndex)
             where TValue : class, new()
         {
-            var groupProperty = dto.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
+            var groupProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
             var getMethod = groupProperty?.PropertyType.GetMethod("get_Item");
             var group = groupProperty?.GetValue(dto);
             var count = (int?)group?.GetType()?.GetProperty("Count")?.GetValue(group);

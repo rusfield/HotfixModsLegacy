@@ -110,105 +110,109 @@ namespace HotfixMods.Providers.WowDev.Client
 
         async Task<IEnumerable<DbRow>> ReadDb2FileAsync(string location, string db2Name, string build, DbParameter[] parameters, bool firstOnly)
         {
-            var results = new List<DbRow>();
-            //var streamForStructs = await GetDb2StreamFromUrlByDb2Name(db2Name);
-            var streamForStructs = await GetDb2StreamFromPathByDb2Name(db2Name);
-            var streamForProvider = new MemoryStream();
-
-            // Need to make 2 because the DBCD closes the one it uses.
-            streamForStructs.CopyTo(streamForProvider);
-            streamForStructs.Position = 0;
-            streamForProvider.Position = 0;
-
-            var (dbDef, versionDef) = await GetDbDefinitionAndVersionDefinitionsByDb2Stream(streamForStructs, build);
-            var dbcProvider = new DbcProvider(location);
-            var dbdProvider = new DbDefProvider(streamForProvider);
-            var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
-            var db2Results = dbcd.Load($"{db2Name}", build);
-
-            foreach (var db2Result in db2Results.Values)
+            return await Task.Run(async () =>
             {
-                var rowResult = new DbRow(db2Name);
+                var results = new List<DbRow>();
+                //var streamForStructs = await GetDb2StreamFromUrlByDb2Name(db2Name);
+                var streamForStructs = await GetDb2StreamFromPathByDb2Name(db2Name);
+                var streamForProvider = new MemoryStream();
 
-                for (int i = 0; i<versionDef.definitions.Length; i++)
+                // Need to make 2 because the DBCD closes the one it uses.
+                streamForStructs.CopyTo(streamForProvider);
+                streamForStructs.Position = 0;
+                streamForProvider.Position = 0;
+
+                var (dbDef, versionDef) = await GetDbDefinitionAndVersionDefinitionsByDb2Stream(streamForStructs, build);
+                var dbcProvider = new DbcProvider(location);
+                var dbdProvider = new DbDefProvider(streamForProvider);
+                var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
+                var db2Results = dbcd.Load($"{db2Name}", build);
+
+                foreach (var db2Result in db2Results.Values)
                 {
-                    var fieldDef = versionDef.definitions[i];
-                    var columnDefinition = dbDef.columnDefinitions[fieldDef.name];
-                    var name = fieldDef.name;
-                    var type = FieldDefinitionToType(fieldDef, columnDefinition);
+                    var rowResult = new DbRow(db2Name);
 
-                    if (fieldDef.arrLength != 0)
+                    for (int i = 0; i < versionDef.definitions.Length; i++)
                     {
-                        var values = db2Result.Field<object>(name) as Array;
+                        var fieldDef = versionDef.definitions[i];
+                        var columnDefinition = dbDef.columnDefinitions[fieldDef.name];
+                        var name = fieldDef.name;
+                        var type = FieldDefinitionToType(fieldDef, columnDefinition);
 
-                        for (int j = 0; j<fieldDef.arrLength; j++)
+                        if (fieldDef.arrLength != 0)
                         {
-                            var arrayColName = $"{name}{j}";
-                            var value = values?.GetValue(j);
+                            var values = db2Result.Field<object>(name) as Array;
+
+                            for (int j = 0; j < fieldDef.arrLength; j++)
+                            {
+                                var arrayColName = $"{name}{j}";
+                                var value = values?.GetValue(j);
+
+                                if (value!.GetType() == typeof(float))
+                                    value = Convert.ToDecimal((float)value);
+                                else if (fieldDef.isID)
+                                    value = uint.Parse(value.ToString());
+
+                                rowResult.Columns.Add(new()
+                                {
+                                    Name = arrayColName,
+                                    Type = type,
+                                    Value = value
+                                });
+                            }
+                        }
+                        else
+                        {
+                            var value = db2Result.Field<object>(name);
 
                             if (value!.GetType() == typeof(float))
                                 value = Convert.ToDecimal((float)value);
                             else if (fieldDef.isID)
                                 value = uint.Parse(value.ToString());
 
+                            name = name.Replace("_lang", "");
                             rowResult.Columns.Add(new()
                             {
-                                Name = arrayColName,
+                                Name = name,
                                 Type = type,
-                                Value =  value
+                                Value = value
                             });
                         }
                     }
-                    else
-                    {
-                        var value = db2Result.Field<object>(name);
 
-                        if (value!.GetType() == typeof(float))
-                            value = Convert.ToDecimal((float)value);
-                        else if (fieldDef.isID)
-                            value = uint.Parse(value.ToString());
-
-                        name = name.Replace("_lang", "");
+                    if (!rowResult.Columns.Any(c => c.Name == "VerifiedBuild"))
                         rowResult.Columns.Add(new()
                         {
-                            Name = name,
-                            Type = type,
-                            Value = value
+                            Name = "VerifiedBuild",
+                            Type = typeof(int),
+                            Value = 0
                         });
+
+                    if (MeetsDbParameterRequirements(parameters, rowResult))
+                    {
+                        results.Add(rowResult);
+                        if (firstOnly)
+                        {
+                            return results;
+                        }
                     }
                 }
 
-                if (!rowResult.Columns.Any(c => c.Name == "VerifiedBuild"))
-                    rowResult.Columns.Add(new()
-                    {
-                        Name = "VerifiedBuild",
-                        Type = typeof(int),
-                        Value = 0
-                    });
+                return results;
 
-                if(MeetsDbParameterRequirements(parameters, rowResult))
-                {
-                    results.Add(rowResult);
-                    if (firstOnly)
-                    {
-                        return results;
-                    }
-                }
-            }
-
-            return results;
+            });
         }
 
         // This will check DbParameters as dbParameter1 AND dbParameter2. OR is not supported yet.
         bool MeetsDbParameterRequirements(DbParameter[] dbParameters, DbRow dbRow)
         {
-            foreach(var dbParameter in dbParameters)
+            foreach (var dbParameter in dbParameters)
             {
                 var column = dbRow.Columns.Where(c => c.Name.Equals(dbParameter.Property, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                 if (null == column)
                     return false;
 
-                if(decimal.TryParse(column.Value.ToString(), out var numericValue))
+                if (decimal.TryParse(column.Value.ToString(), out var numericValue))
                 {
                     var numericParameter = decimal.Parse(dbParameter.Value.ToString());
 
@@ -265,17 +269,22 @@ namespace HotfixMods.Providers.WowDev.Client
 
         async Task<IEnumerable<string>> GetAllDefinitionsFromPathAsync()
         {
-            var results = new List<string>();
-            var assembly = Assembly.GetExecutingAssembly();
-            string[] resources = assembly.GetManifestResourceNames();
-            string folder = $"{assembly.GetName().Name}.WoWDBDefs.";
-            string[] filesInFolder = Array.FindAll(resources, item => item.StartsWith(folder));
-
-            foreach(var file in filesInFolder)
+            return await Task.Run(async () =>
             {
-                results.Add(file.Replace(folder, "").Replace(".dbd", ""));
-            }
-            return results;
+
+
+                var results = new List<string>();
+                var assembly = Assembly.GetExecutingAssembly();
+                string[] resources = assembly.GetManifestResourceNames();
+                string folder = $"{assembly.GetName().Name}.WoWDBDefs.";
+                string[] filesInFolder = Array.FindAll(resources, item => item.StartsWith(folder));
+
+                foreach (var file in filesInFolder)
+                {
+                    results.Add(file.Replace(folder, "").Replace(".dbd", ""));
+                }
+                return results;
+            });
         }
 
         async Task<IEnumerable<string>> GetBuildsAsync(string db2Name)

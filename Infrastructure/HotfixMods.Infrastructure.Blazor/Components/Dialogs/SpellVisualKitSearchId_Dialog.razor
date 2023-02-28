@@ -5,7 +5,7 @@
 @inject SpellVisualKitService Service
 
 <DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(SpellVisualKits))">
-    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByIdAsync)" />
+    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetByIdAsync())" />
 </DialogSearch>
 
 @code {

@@ -91,22 +91,40 @@
     [CascadingParameter(Name = "ValueIsNull")]
     public bool ValueIsNull { get; set; }
 
+    // Used to refresh options
+    [CascadingParameter(Name = "RefreshIndex")]
+    public Action RefreshIndex { get; set; }
+
+
     Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> customizations = new();
+    Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>> loadedCustomizations = new();
+
     int amountOfCustomizationPages = 1;
     bool loading = true;
     List<CreatureDisplayInfoOption> values;
     CreatureDisplayInfoOptionInfo info = new();
 
+    sbyte currentCustomizationRace = -1;
+    sbyte currentCustomizationGender = -1;
+
     protected override void OnParametersSet()
     {
+        var creatureDisplayInfoExtra = ((CreatureDto?)PageTab?.Dto)?.CreatureDisplayInfoExtra;
+        if (creatureDisplayInfoExtra != null && (creatureDisplayInfoExtra.DisplayRaceID != currentCustomizationRace || creatureDisplayInfoExtra.DisplaySexID != currentCustomizationGender))
+        {
+            loading = true;
+            amountOfCustomizationPages = 1;
+            loadedCustomizations = customizations;
+            customizations = new();
+        }
+
         values = PageTab.Dto.GetDtoListValue<CreatureDisplayInfoOption>();
         base.OnParametersSet();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-            await SetValues();
+        await SetValues();
         await base.OnAfterRenderAsync(firstRender);
     }
 
@@ -135,18 +153,38 @@
 
     async Task SetValues()
     {
-        loading = true;
         var creatureDisplayInfoExtra = ((CreatureDto?)PageTab?.Dto)?.CreatureDisplayInfoExtra;
-        if (creatureDisplayInfoExtra != null)
+        bool valuesChanged = false;
+
+        if (creatureDisplayInfoExtra != null && (creatureDisplayInfoExtra.DisplayRaceID != currentCustomizationRace || creatureDisplayInfoExtra.DisplaySexID != currentCustomizationGender))
         {
+            loading = true;
             customizations = await Service.GetCustomizationOptions(creatureDisplayInfoExtra.DisplayRaceID, creatureDisplayInfoExtra.DisplaySexID);
+            currentCustomizationRace = creatureDisplayInfoExtra.DisplayRaceID;
+            currentCustomizationGender = creatureDisplayInfoExtra.DisplaySexID;
+
+            valuesChanged = true;
         }
-        else
+        else if(creatureDisplayInfoExtra == null)
         {
+            currentCustomizationRace = -1;
+            currentCustomizationGender = -1;
             customizations = new();
+
+            valuesChanged = true;
         }
-        amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 16.0), 1); // Minimum 1 page
-        loading = false;
-        this.StateHasChanged();
+        else if(loadedCustomizations.Count > customizations.Count)
+        {
+            customizations = loadedCustomizations;
+
+            valuesChanged = true;
+        }
+
+        if (valuesChanged)
+        {
+            amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 16.0), 1); // Minimum 1 page
+            loading = false;
+            this.StateHasChanged();
+        }
     }
 }

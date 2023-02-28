@@ -6,9 +6,9 @@
 
 <StandardDtoContent T="CreatureDisplayInfoExtra">
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceID" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayRaceID))" />
+        <Input_Element T="sbyte" Value="Value.DisplayRaceID" ValueChanged="DisplayRaceIdChanged" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayRaceID))" />
         <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayClassID))" />
-        <Input_Element T="sbyte" @bind-Value="Value.DisplaySexID" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplaySexID))" />
+        <Input_Element T="sbyte" Value="Value.DisplaySexID" ValueChanged="DisplaySexIdChanged" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplaySexID))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -21,7 +21,23 @@
 </StandardDtoContent>
 
 @code {
+    // Used to refresh Display Info Options
+    [CascadingParameter(Name = "RefreshIndex")]
+    public Action RefreshIndex { get; set; }
+
     CreatureDisplayInfoExtraInfo info = new();
+
+    void DisplayRaceIdChanged(sbyte id)
+    {
+        Value.DisplayRaceID = id;
+        RefreshIndex();
+    }
+
+    void DisplaySexIdChanged(sbyte id)
+    {
+        Value.DisplaySexID = id;
+        RefreshIndex();
+    }
 
     async Task<Dictionary<sbyte, string>> GetGenders()
     {

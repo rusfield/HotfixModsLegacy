@@ -70,7 +70,7 @@ namespace HotfixMods.Apps.MauiBlazor
                     );
             });
 
-            builder.Services.AddSingleton<GenericHotfixService>();
+            builder.Services.AddSingleton<HotfixService>();
             builder.Services.AddSingleton<AnimKitService>();
             builder.Services.AddSingleton<GameobjectService>();
             builder.Services.AddSingleton<SoundKitService>();

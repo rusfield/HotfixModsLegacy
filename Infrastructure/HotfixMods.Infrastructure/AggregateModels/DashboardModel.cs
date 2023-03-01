@@ -1,4 +1,4 @@
-﻿namespace HotfixMods.Infrastructure.DashboardModels
+﻿namespace HotfixMods.Infrastructure.AggregateModels
 {
     public class DashboardModel
     {

@@ -405,5 +405,15 @@ namespace HotfixMods.Infrastructure.Services
         {
             _exceptionHandler.Handle(exception);
         }
+
+        protected async Task<DbRowDefinition> GetDefinitionFromClientAsync(string db2Name)
+        {
+            return await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+        }
+
+        protected async Task<DbRowDefinition> GetDefinitionFromServerAsync(string schemaName, string tableName)
+        {
+            return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+        }
     }
 }

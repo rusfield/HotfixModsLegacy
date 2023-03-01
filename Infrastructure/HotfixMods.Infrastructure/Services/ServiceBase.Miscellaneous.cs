@@ -13,28 +13,38 @@ namespace HotfixMods.Infrastructure.Services
             Console.WriteLine($"{progress} %: {title} => {subtitle}");
         }
 
-        string GetSchemaNameOfEntity<T>()
+        protected string GetSchemaNameOfEntity<T>()
             where T : new()
         {
-            if (typeof(T).GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
-                return _appConfig.HotfixesSchema;
-
-            if (typeof(T).GetCustomAttribute(typeof(WorldSchemaAttribute)) != null)
-                return _appConfig.WorldSchema;
-
-            if (typeof(T).GetCustomAttribute(typeof(HotfixModsSchemaAttribute)) != null)
-                return _appConfig.HotfixModsSchema;
-
-            if (typeof(T).GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
-                return _appConfig.CharactersSchema;
-
-            throw new Exception($"{typeof(T)} is missing Schema Attribute");
+            return GetSchemaNameOfType(typeof(T));
         }
 
-        string GetTableNameOfEntity<T>()
+        protected string GetSchemaNameOfType(Type type)
+        {
+            if (type.GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
+                return _appConfig.HotfixesSchema;
+
+            if (type.GetCustomAttribute(typeof(WorldSchemaAttribute)) != null)
+                return _appConfig.WorldSchema;
+
+            if (type.GetCustomAttribute(typeof(HotfixModsSchemaAttribute)) != null)
+                return _appConfig.HotfixModsSchema;
+
+            if (type.GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
+                return _appConfig.CharactersSchema;
+
+            throw new Exception($"{type.Name} is missing Schema Attribute");
+        }
+
+        protected string GetTableNameOfEntity<T>()
             where T : new()
         {
             return Activator.CreateInstance<T>().ToTableName();
+        }
+
+        protected string GetTableNameOfType(Type type)
+        {
+            return Activator.CreateInstance(type).ToTableName();
         }
 
         TableHashes GetTableHashOfEntity<T>()

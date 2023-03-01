@@ -5,9 +5,9 @@ using HotfixMods.Infrastructure.Handlers;
 
 namespace HotfixMods.Infrastructure.Services
 {
-    public partial class GenericHotfixService : ServiceBase
+    public partial class HotfixService : ServiceBase
     {
-        public GenericHotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, exceptionHandler, appConfig) 
+        public HotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, exceptionHandler, appConfig) 
         {
             FromId = appConfig.GenericHotfixSettings.FromId;
             ToId = appConfig.GenericHotfixSettings.ToId;

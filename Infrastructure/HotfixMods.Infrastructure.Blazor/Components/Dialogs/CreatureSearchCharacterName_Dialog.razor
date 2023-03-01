@@ -4,7 +4,7 @@
 
 @inject CreatureService Service
 
-<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" ¨Icon="@IconHandler.GetPageIcon(typeof(Creatures))">
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Creatures))">
     <MudTextField @bind-Value="@CharacterName" Variant="Variant.Outlined" Label="Search by Character Name" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(GetByCharacterNameAsync)" />
 </DialogSearch>
 

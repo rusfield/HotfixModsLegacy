@@ -7,6 +7,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.Finder
 @using HotfixMods.Infrastructure.Config;
 @using HotfixMods.Infrastructure.Handlers
+@using System.Diagnostics;
 
 @inject IDialogService DialogService
 @inject IExceptionHandler ExceptionHandler
@@ -182,17 +183,22 @@
     {
         ExceptionHandler.RegisterCallback(DisplayException);
         TabHandler.LaunchTab = LaunchTab;
+
         await base.OnInitializedAsync();
     }
 
     protected override void OnAfterRender(bool firstRender)
     {
         // Check if Config was loaded correctly
-        if (!AppConfig.LoadedCorrectly)
+        if (firstRender && !AppConfig.LoadedCorrectly)
         {
             DialogService.Show<LoadConfigFailed_Dialog>();
-            // Reset for this session
-            AppConfig.LoadedCorrectly = true;
+        }
+
+        // Check if MySql is running
+        if (firstRender && !AppConfig.FirstLoad && Process.GetProcessesByName("mysqld").Length == 0)
+        {
+            DialogService.Show<MySqlConnectFailed_Dialog>();
         }
 
         if (tabAdded)

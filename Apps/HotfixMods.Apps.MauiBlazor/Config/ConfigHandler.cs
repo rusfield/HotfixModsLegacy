@@ -8,18 +8,20 @@ namespace HotfixMods.Apps.MauiBlazor.Config
     {
         public static AppConfig GetAppConfig()
         {
-            if (!File.Exists(ConfigPath))
-            {
-                var defaultAppConfig = new AppConfig();
-                var serializer = new JsonSerializerOptions();
-                serializer.WriteIndented = true;
-                File.WriteAllText(ConfigPath, JsonSerializer.Serialize(defaultAppConfig, serializer));
-            }
+
 
             var appConfig = new AppConfig();
 
             try
             {
+                if (!File.Exists(ConfigPath))
+                {
+                    var serializer = new JsonSerializerOptions();
+                    serializer.WriteIndented = true;
+                    File.WriteAllText(ConfigPath, JsonSerializer.Serialize(appConfig, serializer));
+                    appConfig.FirstLoad = true;
+                }
+
                 appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath));
             }
             catch(Exception ex)

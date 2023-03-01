@@ -1,0 +1,41 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Handlers;
+@using HotfixMods.Infrastructure.Config;
+@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Pages
+
+@inject ISnackbar Snackbar
+@inject AppConfig Config
+
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />
+<MudDialog>
+    <DialogContent>
+        <MudStack Justify="Justify.Center" Spacing="5">
+            <MudText Align="Align.Center">
+                <MudIcon Class="custom-dialog-icon" Icon="@Icons.Material.Filled.ErrorOutline" />
+            </MudText>
+            <MudText Align="Align.Center">
+                Unable to connect to MySQL. Please make sure the Service is running and that the settings are correct.
+            </MudText>
+            <MudText Align="Align.Center">
+                You may still explore the software, however anything related to the MySQL database will not work.
+            </MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OpenSettings_Click">
+                Open Settings
+            </MudButton>
+        </MudStack>
+
+    </DialogContent>
+</MudDialog>
+
+
+
+@code {
+    [CascadingParameter]
+    public MudDialogInstance Dialog { get; set; }
+
+    void OpenSettings_Click()
+    {
+        TabHandler.LaunchTab(new PageTab("Settings", typeof(Settings)));
+        Dialog.Close();
+    }
+}

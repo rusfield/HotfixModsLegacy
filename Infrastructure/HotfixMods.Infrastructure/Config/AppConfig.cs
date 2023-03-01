@@ -65,5 +65,7 @@ namespace HotfixMods.Infrastructure.Config
         public string? ConfigFilePath { get; set; }
         [JsonIgnore]
         public bool LoadedCorrectly { get; set; } = true;
+        [JsonIgnore]
+        public bool FirstLoad { get; set; } = false;
     }
 }

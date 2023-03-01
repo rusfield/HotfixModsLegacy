@@ -2,8 +2,7 @@
 {
     public class HealthModel
     {
-        public Type DtoType { get; set; }
-        public Type DtoPropertyType { get; set; }
+        public Type Type { get; set; }
         public HealthErrorStatus Status { get; set; }
         public string Description { get; set; }
 

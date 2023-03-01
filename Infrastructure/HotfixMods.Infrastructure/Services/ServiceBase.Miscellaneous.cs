@@ -13,13 +13,13 @@ namespace HotfixMods.Infrastructure.Services
             Console.WriteLine($"{progress} %: {title} => {subtitle}");
         }
 
-        protected string GetSchemaNameOfEntity<T>()
+        protected string? GetSchemaNameOfEntity<T>(bool errorOnNotFound = true)
             where T : new()
         {
-            return GetSchemaNameOfType(typeof(T));
+            return GetSchemaNameOfType(typeof(T), errorOnNotFound);
         }
 
-        protected string GetSchemaNameOfType(Type type)
+        protected string? GetSchemaNameOfType(Type type, bool errorOnNotFound = true)
         {
             if (type.GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
                 return _appConfig.HotfixesSchema;
@@ -33,7 +33,10 @@ namespace HotfixMods.Infrastructure.Services
             if (type.GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
                 return _appConfig.CharactersSchema;
 
-            throw new Exception($"{type.Name} is missing Schema Attribute");
+            if (errorOnNotFound)
+                throw new Exception($"{type.Name} is missing Schema Attribute");
+            else
+                return null;
         }
 
         protected string GetTableNameOfEntity<T>()

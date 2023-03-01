@@ -39,8 +39,16 @@ namespace HotfixMods.Infrastructure.Extensions
             if (null == entity)
                 return null;
 
-            var dbRowDefinition = new DbRowDefinition(typeof(T).Name);
-            foreach (var property in typeof(T).GetProperties())
+            return TypeToDbRowDefinition(typeof(T));
+        }
+
+        public static DbRowDefinition? TypeToDbRowDefinition(this Type? type)
+        {
+            if (null == type)
+                return null;
+
+            var dbRowDefinition = new DbRowDefinition(type.Name);
+            foreach (var property in type.GetProperties())
             {
                 dbRowDefinition.ColumnDefinitions.Add(new()
                 {

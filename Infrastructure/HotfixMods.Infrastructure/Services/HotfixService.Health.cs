@@ -1,7 +1,10 @@
 ﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.AggregateModels;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 using System.Reflection;
 
 namespace HotfixMods.Infrastructure.Services
@@ -12,103 +15,135 @@ namespace HotfixMods.Infrastructure.Services
         const string countMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Count mismatch.";
         const string typeMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Field {2}";
 
-        public async Task<HealthModel?> CheckSingleDtoHealthAsync(Type dtoType)
+        public async Task<HealthModel?> CheckSingleModelHealthAsync(Type type)
         {
-            var dtoPropertyTypes = GetDtoClassProperties(dtoType);
-            foreach (var type in dtoPropertyTypes)
+            // TODO: Special logic
+            if(type == typeof(HotfixData))
             {
-                if (type == typeof(HotfixModsEntity))
-                    continue;
+                return null;
+            }
+            else if (type == typeof(HotfixModsEntity))
+            {
+                return null;
+            }
 
-                var tableName = GetTableNameOfType(type);
-                var schemaName = GetSchemaNameOfType(type);
-                var properties = type.GetProperties();
-                if (await TableExists(schemaName, tableName))
+            var tableName = GetTableNameOfType(type);
+            var schemaName = GetSchemaNameOfType(type, false);
+            var properties = type.GetProperties();
+
+            DbRowDefinition serverDefinition = new(type.Name);
+            DbRowDefinition clientDefinition = new(type.Name);
+
+            if (null == schemaName)
+            {
+                // These are for Client Only DB2s.
+                // HotfixMods will serve as server
+
+                serverDefinition = type.TypeToDbRowDefinition() ?? serverDefinition;
+                clientDefinition = await GetDefinitionFromClientAsync(type.Name);
+            }
+            else if (await TableExists(schemaName, tableName))
+            {
+                if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
+                    // Normal 
+
+                    serverDefinition = await GetDefinitionFromServerAsync(_appConfig.HotfixesSchema, tableName);
+                    clientDefinition = await GetDefinitionFromClientAsync(type.Name);
+                }
+                else if (nameof(CharactersSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
+                {
+                    // HotfixMods will serve as client
+
+                    serverDefinition = await GetDefinitionFromServerAsync(_appConfig.CharactersSchema, tableName);
+                    clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                }
+                else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
+                {
+                    // HotfixMods will serve as client
+
+                    serverDefinition = await GetDefinitionFromServerAsync(_appConfig.WorldSchema, tableName);
+                    clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                }
+                else
+                {
+                    throw new Exception($"Unexpected schema name/attribute {schemaName}.");
+                }
+
+                if (serverDefinition.ColumnDefinitions.Count == clientDefinition.ColumnDefinitions.Count && clientDefinition.ColumnDefinitions.Count == properties.Count())
+                {
+                    for (int i = 0; i < properties.Count(); i++)
                     {
-                        var serverDefinition = await GetDefinitionFromServerAsync(schemaName, tableName);
-                        var clientDefinition = await GetDefinitionFromClientAsync(type.Name);
-
-
-                        if (serverDefinition.ColumnDefinitions.Count == clientDefinition.ColumnDefinitions.Count && clientDefinition.ColumnDefinitions.Count == properties.Count())
+                        var serverType = serverDefinition.ColumnDefinitions[i].Type;
+                        var clientType = clientDefinition.ColumnDefinitions[i].Type;
+                        if (IsParentIndexField(properties[i]))
                         {
-                            for (int i = 0; i < properties.Count(); i++)
-                            {
-                                var serverType = serverDefinition.ColumnDefinitions[i].Type;
-                                var clientType = clientDefinition.ColumnDefinitions[i].Type;
-                                if (IsParentIndexField(properties[i]))
-                                {
-                                    if (GetUnsignedType(serverType) == GetUnsignedType(clientType))
-                                        continue;
-                                }
-                                else
-                                {
-                                    if (serverType == clientType)
-                                        continue;
-                                }
-                                return new()
-                                {
-                                    DtoType = dtoType,
-                                    DtoPropertyType = type,
-                                    Status = HealthModel.HealthErrorStatus.MISMATCH,
-                                    Description = string.Format(typeMismatchStatus, type.Name, tableName, properties[i].Name)
-                                };
-                            }
+                            if (GetUnsignedType(serverType) == GetUnsignedType(clientType))
+                                continue;
                         }
                         else
                         {
-                            return new()
-                            {
-                                DtoType = dtoType,
-                                DtoPropertyType = type,
-                                Status = HealthModel.HealthErrorStatus.MISMATCH,
-                                Description = string.Format(countMismatchStatus, type.Name, tableName)
-                            };
+                            if (serverType == clientType)
+                                continue;
                         }
-                    }
-                    else if (nameof(CharactersSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
-                    {
-                        
-                    }
-                    else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
-                    {
-
-                    }
-                    else
-                    {
-                        throw new Exception($"{type.Name} is missing Schema attribute.");
+                        return new()
+                        {
+                            Type = type,
+                            Status = HealthModel.HealthErrorStatus.MISMATCH,
+                            Description = string.Format(typeMismatchStatus, type.Name, tableName, properties[i].Name)
+                        };
                     }
                 }
                 else
                 {
                     return new()
                     {
-                        DtoType = dtoType,
-                        DtoPropertyType = type,
-                        Status = HealthModel.HealthErrorStatus.MISSING,
-                        Description = string.Format(missingStatus, tableName, schemaName)
+                        Type = type,
+                        Status = HealthModel.HealthErrorStatus.MISMATCH,
+                        Description = string.Format(countMismatchStatus, type.Name, tableName)
                     };
                 }
             }
-
+            else
+            {
+                return new()
+                {
+                    Type = type,
+                    Status = HealthModel.HealthErrorStatus.MISSING,
+                    Description = string.Format(missingStatus, tableName, schemaName)
+                };
+            }
             return null;
         }
 
 
 
 
-        public async Task<List<HealthModel>> CheckDtoHealthAsync()
+        public async Task<List<HealthModel>> CheckModelHealthAsync()
         {
             var result = new List<HealthModel>();
-            var dtoTypes = GetDtoTypes();
-            foreach (var dtoType in dtoTypes)
+            var types = GetAllModels();
+            foreach (var type in types)
             {
-                var health = await CheckSingleDtoHealthAsync(dtoType);
-                if (health != null)
-                    result.Add(health);
+                var healthModel = await CheckSingleModelHealthAsync(type);
+                if (healthModel != null)
+                    result.Add(healthModel);
             }
             return result;
+        }
+
+        List<Type> GetAllModels()
+        {
+            var assembly = Assembly.Load("HotfixMods.Core");
+            var types = new List<Type>();
+            foreach (Type type in assembly.ManifestModule.GetTypes())
+            {
+                if (type.Namespace == "HotfixMods.Core.Models.Db2" || type.Namespace == "HotfixMods.Core.Models.TrinityCore")
+                {
+                    types.Add(type);
+                }
+            }
+            return types;
         }
 
         List<Type> GetDtoTypes()

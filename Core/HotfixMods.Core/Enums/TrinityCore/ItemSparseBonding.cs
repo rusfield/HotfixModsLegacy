@@ -1,4 +1,4 @@
-﻿namespace HotfixMods.Core.Models.Db2
+﻿namespace HotfixMods.Core.Enums.TrinityCore
 {
     public enum ItemSparseBonding
     {

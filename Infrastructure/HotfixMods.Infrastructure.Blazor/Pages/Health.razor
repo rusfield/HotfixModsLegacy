@@ -3,7 +3,7 @@
 
 @inject AppConfig Config
 @inject ISnackbar Snackbar
-
+@inject HotfixService Service
 
 <MudGrid Class="mb-1 px-3" Style="height:36.5px">
     <MudItem xs="4" />
@@ -52,5 +52,6 @@
     async Task RunHealthCheckAsync_Click()
     {
         healthProgress = true;
+        await Service.CheckDtoHealthAsync();
     }
 }

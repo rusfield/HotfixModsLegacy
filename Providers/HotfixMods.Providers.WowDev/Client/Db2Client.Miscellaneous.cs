@@ -80,7 +80,15 @@ namespace HotfixMods.Providers.WowDev.Client
                 throw new Exception($"No DB2 with name {db2Name} found.");
 
             var assembly = Assembly.GetExecutingAssembly();
-            return assembly.GetManifestResourceStream($"HotfixMods.Providers.WowDev.WoWDBDefs.{db2Name}.dbd");
+            var resourceNames = assembly.GetManifestResourceNames();
+            foreach (var resourceName in resourceNames)
+            {
+                if (string.Equals(resourceName, $"HotfixMods.Providers.WowDev.WoWDBDefs.{db2Name}.dbd", StringComparison.OrdinalIgnoreCase))
+                {
+                    return assembly.GetManifestResourceStream(resourceName);
+                }
+            }
+            throw new Exception($"No DB2 with name {db2Name} found.");
         }
 
         Type FieldDefinitionToType(Structs.Definition field, Structs.ColumnDefinition column)

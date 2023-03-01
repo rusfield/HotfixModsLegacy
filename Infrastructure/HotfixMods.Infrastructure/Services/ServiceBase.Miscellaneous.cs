@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected string GetTableNameOfType(Type type)
         {
-            return Activator.CreateInstance(type).ToTableName();
+            return type.Name.ToTableName();
         }
 
         TableHashes GetTableHashOfEntity<T>()

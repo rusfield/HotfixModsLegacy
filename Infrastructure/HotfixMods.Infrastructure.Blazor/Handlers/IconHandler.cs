@@ -28,6 +28,8 @@ namespace HotfixMods.Infrastructure.Blazor.Handlers
                 return Icons.Material.Filled.VolumeUp;
             else if (pageType == typeof(Settings))
                 return Icons.Material.Filled.Settings;
+            else if (pageType == typeof(Health))
+                return Icons.Material.Filled.MonitorHeart;
             else
                 return Icons.Material.Filled.FormatListBulleted; // Dashboards and fallback
         }

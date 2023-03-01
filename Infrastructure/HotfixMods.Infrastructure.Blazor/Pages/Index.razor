@@ -50,8 +50,8 @@
         <MudText Typo="Typo.h6" Align="Align.Center" Style="width:100%">Hotfix Mods</MudText>
     </MudDrawerHeader>
     <MudStack Row="true" AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="2" Style="width:100%;">
-        <div onmouseover="@(() => SetHover("TODO"))">
-            <MudIconButton Icon="@Icons.Material.Filled.MonitorHeart" Color="Color.Inherit" Size="Size.Small" />
+        <div onmouseover="@(() => SetHover("Health"))">
+            <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Health))" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Health", typeof(Health))))" />
         </div>
         <div onmouseover="@(() => SetHover("Settings"))">
             <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Settings))" Color="Color.Inherit" Size="Size.Small" OnClick="@(() => LaunchTab(new PageTab("Settings", typeof(Settings))))" />

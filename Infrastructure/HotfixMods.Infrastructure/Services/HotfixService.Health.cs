@@ -1,12 +1,8 @@
 ﻿using HotfixMods.Core.Attributes;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.AggregateModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using HotfixMods.Infrastructure.DtoModels;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -15,10 +11,88 @@ namespace HotfixMods.Infrastructure.Services
         const string missingStatus = "{0} is missing in {1}.";
         const string countMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Count mismatch.";
         const string typeMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Field {2}";
-        public async Task<bool> CheckDto<TDto>()
-        {
 
-            return false;
+        public async Task<HealthModel?> CheckSingleDtoHealthAsync(Type dtoType)
+        {
+            var dtoPropertyTypes = GetDtoClassProperties(dtoType);
+            foreach (var type in dtoPropertyTypes)
+            {
+                if (type == typeof(HotfixModsEntity))
+                    continue;
+
+                var tableName = GetTableNameOfType(type);
+                var schemaName = GetSchemaNameOfType(type);
+                var properties = type.GetProperties();
+                if (await TableExists(schemaName, tableName))
+                {
+                    if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        var serverDefinition = await GetDefinitionFromServerAsync(schemaName, tableName);
+                        var clientDefinition = await GetDefinitionFromClientAsync(type.Name);
+
+
+                        if (serverDefinition.ColumnDefinitions.Count == clientDefinition.ColumnDefinitions.Count && clientDefinition.ColumnDefinitions.Count == properties.Count())
+                        {
+                            for (int i = 0; i < properties.Count(); i++)
+                            {
+                                var serverType = serverDefinition.ColumnDefinitions[i].Type;
+                                var clientType = clientDefinition.ColumnDefinitions[i].Type;
+                                if (IsParentIndexField(properties[i]))
+                                {
+                                    if (GetUnsignedType(serverType) == GetUnsignedType(clientType))
+                                        continue;
+                                }
+                                else
+                                {
+                                    if (serverType == clientType)
+                                        continue;
+                                }
+                                return new()
+                                {
+                                    DtoType = dtoType,
+                                    DtoPropertyType = type,
+                                    Status = HealthModel.HealthErrorStatus.MISMATCH,
+                                    Description = string.Format(typeMismatchStatus, type.Name, tableName, properties[i].Name)
+                                };
+                            }
+                        }
+                        else
+                        {
+                            return new()
+                            {
+                                DtoType = dtoType,
+                                DtoPropertyType = type,
+                                Status = HealthModel.HealthErrorStatus.MISMATCH,
+                                Description = string.Format(countMismatchStatus, type.Name, tableName)
+                            };
+                        }
+                    }
+                    else if (nameof(CharactersSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        
+                    }
+                    else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
+                    {
+
+                    }
+                    else
+                    {
+                        throw new Exception($"{type.Name} is missing Schema attribute.");
+                    }
+                }
+                else
+                {
+                    return new()
+                    {
+                        DtoType = dtoType,
+                        DtoPropertyType = type,
+                        Status = HealthModel.HealthErrorStatus.MISSING,
+                        Description = string.Format(missingStatus, tableName, schemaName)
+                    };
+                }
+            }
+
+            return null;
         }
 
 
@@ -30,80 +104,9 @@ namespace HotfixMods.Infrastructure.Services
             var dtoTypes = GetDtoTypes();
             foreach (var dtoType in dtoTypes)
             {
-                var dtoPropertyTypes = GetDtoClassProperties(dtoType);
-                foreach (var type in dtoPropertyTypes)
-                {
-                    if (type == typeof(HotfixModsEntity))
-                        continue;
-
-                    var tableName = GetTableNameOfType(type);
-                    var schemaName = GetSchemaNameOfType(type);
-                    var properties = type.GetProperties();
-                    if (await TableExists(schemaName, tableName))
-                    {
-                        if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            var serverDefinition = await GetDefinitionFromServerAsync(schemaName, tableName);
-                            var clientDefinition = await GetDefinitionFromClientAsync(type.Name);
-
-
-                            if(serverDefinition.ColumnDefinitions.Count == clientDefinition.ColumnDefinitions.Count && clientDefinition.ColumnDefinitions.Count == properties.Count())
-                            {
-                                for(int i = 0; i < properties.Count(); i++)
-                                {
-                                    var serverType = serverDefinition.ColumnDefinitions[i].Type;
-                                    var clientType = clientDefinition.ColumnDefinitions[i].Type;
-                                    if (IsParentIndexField(properties[i]))
-                                    {
-                                        if (GetUnsignedType(serverType) == GetUnsignedType(clientType))
-                                            continue;
-                                    }
-                                    else
-                                    {
-                                        if (serverType == clientType)
-                                            continue;
-                                    }
-                                    result.Add(new()
-                                    {
-                                        Type = type,
-                                        Status = HealthModel.HealthStatus.MISMATCH,
-                                        Description = string.Format(typeMismatchStatus, type.Name,  tableName, properties[i].Name)
-                                    });
-                                }
-                            }
-                            else
-                            {
-                                result.Add(new()
-                                {
-                                    Type = type,
-                                    Status = HealthModel.HealthStatus.MISMATCH,
-                                    Description = string.Format(countMismatchStatus, type.Name, tableName)
-                                });
-                            }
-                        }
-                        else if (nameof(CharactersSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
-                        {
-
-                        }
-                        else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.CurrentCultureIgnoreCase))
-                        {
-
-                        }
-                        else
-                        {
-                            throw new Exception($"{type.Name} is missing Schema attribute.");
-                        }
-                    }
-                    else
-                    {
-                        result.Add(new()
-                        {
-                            Type = type,
-                            Status = HealthModel.HealthStatus.MISSING,
-                            Description = string.Format(missingStatus, tableName, schemaName)
-                        });
-                    }
-                }
+                var health = await CheckSingleDtoHealthAsync(dtoType);
+                if (health != null)
+                    result.Add(health);
             }
             return result;
         }
@@ -111,10 +114,10 @@ namespace HotfixMods.Infrastructure.Services
         List<Type> GetDtoTypes()
         {
             var assembly = Assembly.Load("HotfixMods.Infrastructure");
-            List<Type> types = new List<Type>();
+            var types = new List<Type>();
             foreach (Type type in assembly.ManifestModule.GetTypes())
             {
-                if (type.Namespace == "HotfixMods.Infrastructure.DtoModels")
+                if (type.Namespace == "HotfixMods.Infrastructure.DtoModels" && type.GetInterface(nameof(IDto)) != null)
                 {
                     types.Add(type);
                 }

@@ -62,7 +62,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 var result = new SpellDto()
                 {
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, id),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, id),
                     SpellMisc = await GetSingleAsync<SpellMisc>(callback, progress, new DbParameter(nameof(SpellMisc.SpellID), id)) ?? new(),
                     SpellName = await GetSingleAsync<SpellName>(callback, progress, new DbParameter(nameof(SpellName.ID), id)) ?? new(),
                     SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellID), id)),

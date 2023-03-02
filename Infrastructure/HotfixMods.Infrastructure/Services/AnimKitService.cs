@@ -59,7 +59,7 @@ namespace HotfixMods.Infrastructure.Services
                     return null;
                 }
 
-                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, animKit.ID);
+                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, animKit.ID);
                 var result = new AnimKitDto()
                 {
                     AnimKit = animKit,

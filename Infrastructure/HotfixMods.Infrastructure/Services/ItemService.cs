@@ -139,7 +139,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = true
                 };
 
-                result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, item.ID);
+                result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, item.ID);
                 result.ItemSparse = await GetSingleAsync<ItemSparse>(callback, progress, new DbParameter(nameof(ItemSparse.ID), id));
                 result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(callback, progress, new DbParameter(nameof(ItemModifiedAppearance.ItemID), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
 

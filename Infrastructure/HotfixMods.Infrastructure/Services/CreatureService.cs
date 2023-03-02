@@ -243,7 +243,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 var result = new CreatureDto()
                 {
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, id),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, id),
                     CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), id)),
                     CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), id)),
                     CreatureTemplate = creatureTemplate,
@@ -311,7 +311,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     var creatureTemplate = await GetSingleAsync<CreatureTemplate>(callback, progress, new DbParameter(nameof(CreatureTemplate.Entry), creatureTemplateModel.CreatureID));
                     result.CreatureTemplateModel = creatureTemplateModel;
-                    result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, creatureTemplate?.Entry ?? 0);
+                    result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, creatureTemplate?.Entry ?? 0);
                     if (creatureTemplate != null)
                     {
                         result.CreatureTemplate = creatureTemplate;

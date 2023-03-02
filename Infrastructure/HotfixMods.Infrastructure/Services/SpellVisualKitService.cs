@@ -62,7 +62,7 @@ namespace HotfixMods.Infrastructure.Services
                 var result = new SpellVisualKitDto()
                 {
                     SpellVisualKit = spellVisualKit,
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(spellVisualKit.ID),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(spellVisualKit.ID),
                 };
 
                 var spellVisualKitEffects = await GetAsync<SpellVisualKitEffect>(callback, progress, new DbParameter(nameof(SpellVisualKitEffect.ParentSpellVisualKitID), id));

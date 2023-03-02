@@ -220,34 +220,27 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             }
         }
 
-        public async Task<bool> SchemaExistsAsync(string schemaName)
-        {
-            try
-            {
-                using var mySqlConnection = new MySqlConnection(_connectionString);
-                await mySqlConnection.OpenAsync();
-                using var cmd = new MySqlCommand($"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{schemaName}';", mySqlConnection);
-                var reader = await cmd.ExecuteReaderAsync();
-                bool exists = false;
-                while (reader.Read())
-                {
-                    int count = reader.GetInt32(0);
-                    exists = count > 0;
-                }
-                await mySqlConnection.CloseAsync();
-                return exists;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
             using var mySqlConnection = new MySqlConnection(_connectionString);
             await mySqlConnection.OpenAsync();
             using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}' AND table_name = '{tableName}';", mySqlConnection);
+            var reader = await cmd.ExecuteReaderAsync();
+            bool exists = false;
+            while (reader.Read())
+            {
+                int count = reader.GetInt32(0);
+                exists = count > 0;
+            }
+            await mySqlConnection.CloseAsync();
+            return exists;
+        }
+
+        public async Task<bool> SchemaExistsAsync(string schemaName)
+        {
+            using var mySqlConnection = new MySqlConnection(_connectionString);
+            await mySqlConnection.OpenAsync();
+            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = '{schemaName}';", mySqlConnection);
             var reader = await cmd.ExecuteReaderAsync();
             bool exists = false;
             while (reader.Read())

@@ -364,23 +364,28 @@ namespace HotfixMods.Infrastructure.Services
             return (await _clientDbDefinitionProvider.GetDefinitionNamesAsync()).ToList();
         }
 
-        protected async Task<bool> Db2Exists(string clientDbLocation, string serverSchemaName, string db2Name)
+        protected async Task<bool> Db2ExistsAsync(string clientDbLocation, string serverSchemaName, string db2Name)
         {
             return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
 
-        protected async Task<bool> TableExists(string schemaName, string tableName)
+        protected async Task<bool> TableExistsAsync(string schemaName, string tableName)
         {
             return await _serverDbProvider.TableExistsAsync(schemaName, tableName);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(Action<string, string, int> callback, Func<int> progress, uint entityId)
+        protected async Task<bool> SchemaExistsAsync(string schemaName)
         {
-            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());
-            return await GetExistingOrNewHotfixModsEntity(entityId);
+            return await _serverDbProvider.SchemaExistsAsync(schemaName);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntity(uint entityId)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(Action<string, string, int> callback, Func<int> progress, uint entityId)
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());
+            return await GetExistingOrNewHotfixModsEntityAsync(entityId);
+        }
+
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(uint entityId)
         {
             var entity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)

@@ -61,7 +61,7 @@ namespace HotfixMods.Infrastructure.Services
                     GameobjectTemplate = gameobjectTemplate,
                     GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
                     GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, gameobjectTemplate.Entry),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, gameobjectTemplate.Entry),
                     IsUpdate = true
                 };
 

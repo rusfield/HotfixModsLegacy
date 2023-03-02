@@ -14,6 +14,54 @@ namespace HotfixMods.Infrastructure.Services
         const string missingStatus = "{0} is missing in {1}.";
         const string countMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Count mismatch.";
         const string typeMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Field {2}";
+        const string schemaErrorStatus = "Unable to find any {0} schema named {1}.";
+
+        public async Task<List<HealthModel>> CheckServerAsync()
+        {
+            var results = new List<HealthModel>();
+            try
+            {
+                if(!await SchemaExistsAsync(_appConfig.CharactersSchema))
+                {
+                    results.Add(new()
+                    {
+                        Type = null,
+                        Status = HealthModel.HealthErrorStatus.ERROR,
+                        Description = string.Format(schemaErrorStatus, "Characters", _appConfig.CharactersSchema)
+                    });
+                }
+
+                if (!await SchemaExistsAsync(_appConfig.HotfixesSchema))
+                {
+                    results.Add(new()
+                    {
+                        Type = null,
+                        Status = HealthModel.HealthErrorStatus.ERROR,
+                        Description = string.Format(schemaErrorStatus, "Hotfixes", _appConfig.HotfixesSchema)
+                    });
+                }
+
+                if (!await SchemaExistsAsync(_appConfig.WorldSchema))
+                {
+                    results.Add(new()
+                    {
+                        Type = null,
+                        Status = HealthModel.HealthErrorStatus.ERROR,
+                        Description = string.Format(schemaErrorStatus, "WorldSchema", _appConfig.WorldSchema)
+                    });
+                }
+            }
+            catch(Exception ex)
+            {
+                results.Add(new()
+                {
+                    Type = null,
+                    Status = HealthModel.HealthErrorStatus.ERROR,
+                    Description = "There is a problem connecting to MySQL. Please make sure the service is running and verify in Settings that the connection info is correct."
+                });
+            }
+            return results;
+        }
 
         public async Task<HealthModel?> CheckSingleModelHealthAsync(Type type)
         {
@@ -42,7 +90,7 @@ namespace HotfixMods.Infrastructure.Services
                 serverDefinition = type.TypeToDbRowDefinition() ?? serverDefinition;
                 clientDefinition = await GetDefinitionFromClientAsync(type.Name);
             }
-            else if (await TableExists(schemaName, tableName))
+            else if (await TableExistsAsync(schemaName, tableName))
             {
                 if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
                 {

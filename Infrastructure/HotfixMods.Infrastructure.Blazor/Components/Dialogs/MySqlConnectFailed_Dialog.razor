@@ -14,13 +14,16 @@
                 <MudIcon Class="custom-dialog-icon" Icon="@Icons.Material.Filled.ErrorOutline" />
             </MudText>
             <MudText Align="Align.Center">
-                Unable to connect to MySQL. Please make sure the Service is running and that the settings are correct.
+                There was a problem connecting to the MySQL and verifying the schemas. Please make sure the Service is running and that the settings are correct.
             </MudText>
             <MudText Align="Align.Center">
-                You may still explore the software, however anything related to the MySQL database will not work.
+                You may still explore the app, however anything related to the MySQL database will not work.
             </MudText>
             <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OpenSettings_Click">
                 Open Settings
+            </MudButton>
+            <MudButton Variant="Variant.Filled" Color="Color.Info" OnClick="OpenHealth_Click">
+                Open Health
             </MudButton>
         </MudStack>
 
@@ -35,7 +38,13 @@
 
     void OpenSettings_Click()
     {
-        TabHandler.LaunchTab(new PageTab("Settings", typeof(Settings)));
+        TabHandler.LaunchTab(new PageTab(nameof(Settings), typeof(Settings)));
+        Dialog.Close();
+    }
+
+    void OpenHealth_Click()
+    {
+        TabHandler.LaunchTab(new PageTab(nameof(Health), typeof(Health)));
         Dialog.Close();
     }
 }

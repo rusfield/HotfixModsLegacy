@@ -14,14 +14,14 @@
     </MudItem>
     <MudItem xs="4">
         <MudStack Row="true" Justify="Justify.FlexEnd">
-            <MudButton Disabled="healthProgress" Variant="Variant.Filled" Color="Color.Success" OnClick="RunHealthCheckAsync_Click">
+            <MudButton Disabled="healthProgress" Variant="Variant.Filled" Color="Color.Success" OnClick="RunHealthCheckAsync">
                 @if (healthProgress)
                 {
                     <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
                 }
                 else
                 {
-                    @("Health Check")
+                    @("Restart")
                 }
             </MudButton>
         </MudStack>
@@ -32,26 +32,60 @@
 <MudPaper Height="684px" Class="pt-4 mx-3 px-6">
     <MudGrid>
         <MudItem xs="6">
+            <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+                Problems
+            </MudText>
+            <MudDivider Class="mr-3" />
         </MudItem>
         <MudItem xs="6">
             <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
-                DB2
+                Description
             </MudText>
-            <MudDivider />
-            <MudStack Row="true" Class="py-2">
-                <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
-            </MudStack>
+            <MudDivider Class="ml-3" />
         </MudItem>
+        @foreach (var healthModel in healthModels)
+        {
+            <MudItem xs="6">
+                <p>@healthModel.Status</p>
+            </MudItem>
+            <MudItem xs="6">
+                <p>@healthModel.Description</p>
+            </MudItem>
+        }
     </MudGrid>
 </MudPaper>
 
 
 @code {
-    bool healthProgress = false;
+    bool healthProgress = true;
+    List<HealthModel> healthModels = new();
 
-    async Task RunHealthCheckAsync_Click()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RunHealthCheckAsync();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task RunHealthCheckAsync()
     {
         healthProgress = true;
-        await Service.CheckModelHealthAsync();
+        healthModels = new();
+        var serverHealth = await Service.CheckServerAsync();
+        if (serverHealth.Any())
+        {
+            healthModels.AddRange(serverHealth);
+            await Task.Delay(500);
+        }
+        else
+        {
+            var modelHealth = await Service.CheckModelHealthAsync();
+            healthModels.AddRange(modelHealth);
+        }
+
+        healthProgress = false;
+        this.StateHasChanged();
     }
 }

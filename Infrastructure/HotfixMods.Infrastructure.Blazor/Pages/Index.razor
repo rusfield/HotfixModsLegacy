@@ -11,6 +11,7 @@
 
 @inject IDialogService DialogService
 @inject IExceptionHandler ExceptionHandler
+@inject HotfixService Service
 @inject AppConfig AppConfig
 
 <CustomFinder />
@@ -187,7 +188,7 @@
         await base.OnInitializedAsync();
     }
 
-    protected override void OnAfterRender(bool firstRender)
+    protected override async void OnAfterRender(bool firstRender)
     {
         // Check if Config was loaded correctly
         if (firstRender && !AppConfig.LoadedCorrectly)
@@ -196,9 +197,11 @@
         }
 
         // Check if MySql is running
-        if (firstRender && !AppConfig.FirstLoad && Process.GetProcessesByName("mysqld").Length == 0)
+        if (firstRender && !AppConfig.FirstLoad)
         {
-            DialogService.Show<MySqlConnectFailed_Dialog>();
+            var checkHealth = await Service.CheckServerAsync();
+            if(checkHealth.Any())
+                DialogService.Show<MySqlConnectFailed_Dialog>();
         }
 
         if (tabAdded)

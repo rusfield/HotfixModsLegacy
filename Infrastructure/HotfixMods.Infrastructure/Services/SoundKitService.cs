@@ -62,7 +62,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     SoundKit = soundKit,
                     EntryGroups = new(),
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntity(callback, progress, soundKit.ID),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, soundKit.ID),
                     IsUpdate = true
                 };
 

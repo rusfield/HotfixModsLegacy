@@ -16,7 +16,7 @@ using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
 
 
-
+/*
 var result = GetExternalClassesWithHotfixesSchema(typeof(AnimKitDto));
 
 
@@ -25,7 +25,7 @@ var reader = new TrinityCoreCodeTool();
 reader.GetFields("SoulbindConduitRank");
 reader.GetInstanceParameters("SoulbindConduitRank");
 Console.ReadKey();
-
+*/
 /*
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 
@@ -74,7 +74,7 @@ Console.ReadKey();
 */
 
 
-/*
+
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47871";
 while (true)
@@ -92,7 +92,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 
 

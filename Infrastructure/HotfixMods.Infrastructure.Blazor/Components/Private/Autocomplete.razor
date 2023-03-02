@@ -131,13 +131,21 @@ else
 
         if (string.IsNullOrEmpty(value))
         {
-            return options.Select(o => o.Value);
+            return options.Select(o => o.Value).Distinct(); // Read reason for .Distinct() below
         }
 
 
         var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
         if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
-            filteredOptions.Add(value);
+        {
+            // MudAutocomplete does not support search results with the same display value.
+            // To counter this, consider naming the display string differently.
+            if (!filteredOptions.Any(s => s == value))
+                filteredOptions.Add(value);
+            else
+                Console.WriteLine($"Option {value} is not added to list, because this value already exists.");
+        }
+
         return filteredOptions;
     }
 

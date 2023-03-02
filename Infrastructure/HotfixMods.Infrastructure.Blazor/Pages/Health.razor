@@ -1,8 +1,10 @@
-﻿@using HotfixMods.Infrastructure.Config;
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Config;
 @using System.Diagnostics
 
 @inject AppConfig Config
 @inject ISnackbar Snackbar
+@inject IDialogService DialogService
 @inject HotfixService Service
 
 <MudGrid Class="mb-1 px-3" Style="height:36.5px">
@@ -46,10 +48,23 @@
         @foreach (var healthModel in healthModels)
         {
             <MudItem xs="6">
-                <p>@healthModel.Status</p>
+                <MudText>
+                    @GetProblemText(healthModel)
+                </MudText>
             </MudItem>
-            <MudItem xs="6">
-                <p>@healthModel.Description</p>
+            <MudItem xs="5">
+                <MudText>
+                    @healthModel.Description
+                </MudText>
+            </MudItem>
+            <MudItem xs="1">
+                @{
+                    var dialogAction = GetInfoDialog(healthModel);
+                    if (dialogAction != null)
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Color="Color.Info" OnClick="dialogAction" />
+                    }
+                }
             </MudItem>
         }
     </MudGrid>
@@ -87,5 +102,19 @@
 
         healthProgress = false;
         this.StateHasChanged();
+    }
+
+    string GetProblemText(HealthModel healthModel)
+    {
+        return healthModel.Status.ToDisplayString();
+    }
+
+    Action? GetInfoDialog(HealthModel healthModel)
+    {
+
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(Message_Dialog.Text), "Test");
+        return (() => DialogService.Show<Message_Dialog>(null, parameters));
+
     }
 }

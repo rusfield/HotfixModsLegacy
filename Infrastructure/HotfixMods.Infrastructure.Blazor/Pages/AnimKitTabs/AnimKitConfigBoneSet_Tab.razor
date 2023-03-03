@@ -179,7 +179,7 @@
         {
             value = new()
                 {
-                    AnimKitBoneSetID = byte.MaxValue
+                    AnimKitBoneSetID = index == 0 ? (byte)0 : byte.MaxValue
                 };
         }
         return value;

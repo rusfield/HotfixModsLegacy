@@ -1,6 +1,9 @@
 ﻿@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.TrinityCore
+
+@inject CreatureService Service
+
 @inherits DtoContentBase<CreatureDto, CreatureTemplate>
 
 <PagedDtoContent T="CreatureTemplate">
@@ -14,7 +17,7 @@
                     <Input_Element T="short" @bind-Value="Value.Maxlevel" ValueCompare="ValueCompare?.Maxlevel" Label="@nameof(Value.Maxlevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Maxlevel))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
+            <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" GetOptionsAsync_Func="(async () => await Service.GetFactionOptionsAsync())" />
             <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" GetOptionsAsync_Func="GetRanks" />
             <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
             <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="GetTypes" />

@@ -1,6 +1,7 @@
 ﻿@typeparam T
 
 @using HotfixMods.Infrastructure.Blazor.Business
+@using System.ComponentModel;
 
 @if (null == options)
 {
@@ -138,15 +139,22 @@ else
         var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
         if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
         {
-            // MudAutocomplete does not support search results with the same display value.
-            // To counter this, consider naming the display string differently.
-            if (!filteredOptions.Any(s => s == value))
+            // Add value to list to support options that are not loaded.
+            try
+            {
+                var converter = TypeDescriptor.GetConverter(typeof(T));
+                var convertedValue = converter.ConvertFromInvariantString(value);
                 filteredOptions.Add(value);
-            else
-                Console.WriteLine($"Option {value} is not added to list, because this value already exists.");
+            }
+            catch
+            {
+                /* Value is not supported */
+            }
         }
 
-        return filteredOptions;
+        // MudAutocomplete does not support search results with the same display value.
+        // To counter this, consider naming the display string differently.
+        return filteredOptions.Distinct();
     }
 
     string? ShowValue()

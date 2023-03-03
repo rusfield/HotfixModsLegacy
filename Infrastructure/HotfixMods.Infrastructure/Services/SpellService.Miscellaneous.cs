@@ -73,8 +73,10 @@ namespace HotfixMods.Infrastructure.Services
                 dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
             }
 
+            int index = 0;
             dto.EffectGroups.ForEach(e =>
             {
+                e.SpellEffect.EffectIndex = index++;
                 e.SpellEffect.ID = nextSpellEffectId++;
                 e.SpellEffect.SpellID = (int)spellId;
                 e.SpellEffect.VerifiedBuild = VerifiedBuild;

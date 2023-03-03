@@ -88,7 +88,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 var spellEffects = await GetAsync<SpellEffect>(callback, progress, new DbParameter(nameof(SpellEffect.SpellID), id));
-                spellEffects.ForEach(s =>
+                spellEffects.OrderBy(s => s.EffectIndex).ToList().ForEach(s =>
                 {
                     result.EffectGroups.Add(new SpellDto.EffectGroup()
                     {

@@ -7,7 +7,7 @@
 <PagedDtoContent T="SpellEffect">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.EffectIndex" ValueCompare="ValueCompare?.EffectIndex" Label="@nameof(Value.EffectIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectIndex))" />
+            <Input_Element T="int" Value="GroupIndex" ValueCompare="ValueCompare?.EffectIndex" Label="@nameof(Value.EffectIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectIndex))" Disabled="true" />
             <Input_Element T="short" @bind-Value="Value.EffectAura" ValueCompare="ValueCompare?.EffectAura" Label="@nameof(Value.EffectAura).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectAura))" />
             <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" GetOptionsAsync_Func="GetEffects" OnInfoAdornmentClick="@(OpenInfoDialog(info.Effect))" />
             <Input_Element T="decimal" @bind-Value="Value.EffectAmplitude" ValueCompare="ValueCompare?.EffectAmplitude" Label="@nameof(Value.EffectAmplitude).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectAmplitude))" />

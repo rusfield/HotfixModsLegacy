@@ -25,6 +25,9 @@ else
     [CascadingParameter(Name = "RefreshElement")]
     public bool RefreshElement { get; set; }
 
+    [CascadingParameter (Name="CurrentPageIndex")]
+    public int CurrentPageIndex { get; set; } // Used to close menu when index is changed.
+
     [Parameter]
     public string? Label { get; set; }
 
@@ -59,6 +62,17 @@ else
     MudAutocomplete<string>? mudAutocompleteRef;
     Dictionary<T, string>? options;
     bool refreshElement = false;
+    int previousPageIndex = 0;
+
+    protected override void OnParametersSet()
+    {
+        if(previousPageIndex != CurrentPageIndex && mudAutocompleteRef != null && mudAutocompleteRef.IsOpen)
+        {
+            mudAutocompleteRef.ToggleMenu();
+        }
+        previousPageIndex = CurrentPageIndex;
+        base.OnParametersSet();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

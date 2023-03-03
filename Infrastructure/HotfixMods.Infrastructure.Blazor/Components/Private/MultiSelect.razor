@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudSelect Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
@@ -22,6 +22,9 @@ else
 {
     [CascadingParameter(Name = "RefreshElement")]
     public bool RefreshElement { get; set; }
+
+    [CascadingParameter(Name = "CurrentPageIndex")]
+    public int CurrentPageIndex { get; set; } // Used to close menu when page index is changed, for paged tabs.
 
     [Parameter]
     public string? Label { get; set; }
@@ -53,8 +56,20 @@ else
     [Parameter]
     public bool Disabled { get; set; } = false;
 
+    MudSelect<T>? mudSelectRef;
     Dictionary<T, string>? options;
     List<T> selectedValues = new();
+    int previousPageIndex = 0;
+
+    protected override void OnParametersSet()
+    {
+        if (previousPageIndex != CurrentPageIndex && mudSelectRef != null)
+        {
+            mudSelectRef.CloseMenu(false);
+        }
+        previousPageIndex = CurrentPageIndex;
+        base.OnParametersSet();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

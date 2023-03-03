@@ -8,7 +8,7 @@
 }
 else
 {
-    <MudSelect Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable">
         @foreach (var option in options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
@@ -21,6 +21,9 @@ else
 {
     [CascadingParameter(Name = "RefreshElement")]
     public bool RefreshElement { get; set; }
+
+    [CascadingParameter(Name = "CurrentPageIndex")]
+    public int CurrentPageIndex { get; set; } // Used to close menu when page index is changed, for paged tabs.
 
     [Parameter]
     public string? Label { get; set; }
@@ -53,6 +56,18 @@ else
     public bool Disabled { get; set; } = false;
 
     Dictionary<T, string>? options;
+    int previousPageIndex = 0;
+    MudSelect<T>? mudSelectRef;
+
+    protected override void OnParametersSet()
+    {
+        if (previousPageIndex != CurrentPageIndex && mudSelectRef != null)
+        {
+            mudSelectRef.CloseMenu(false);
+        }
+        previousPageIndex = CurrentPageIndex;
+        base.OnParametersSet();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

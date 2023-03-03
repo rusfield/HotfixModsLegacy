@@ -25,7 +25,9 @@
             }
             else
             {
-                @ChildContent
+                <CascadingValue Name="CurrentPageIndex" Value="mudCarouselRef?.SelectedIndex ?? 0">
+                    @ChildContent
+                </CascadingValue>
             }
         </CascadingValue>
     </MudCarousel>

@@ -76,21 +76,19 @@
         {
             <MudCarouselItem Transition="Transition.Custom" CustomTransitionEnter="transition-tab" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
-                    <CascadingValue Name="RefreshPage" Value="RefreshPage">
-                        <CascadingValue Name="ValueIsNull" Value="tab.ValueIsNull">
-                            @if (null == tab.Instance)
-                            {
-                                <DynamicComponent Type="tab.ComponentType" />
-                            }
-                            else
-                            {
-                                <CascadingValue Name="InstanceData" Value="tab.Instance">
-                                    <InstancedDtoContent>
-                                        <DynamicComponent Type="tab.ComponentType" />
-                                    </InstancedDtoContent>
-                                </CascadingValue>
-                            }
-                        </CascadingValue>
+                    <CascadingValue Name="ValueIsNull" Value="tab.ValueIsNull">
+                        @if (null == tab.Instance)
+                        {
+                            <DynamicComponent Type="tab.ComponentType" />
+                        }
+                        else
+                        {
+                            <CascadingValue Name="InstanceData" Value="tab.Instance">
+                                <InstancedDtoContent>
+                                    <DynamicComponent Type="tab.ComponentType" />
+                                </InstancedDtoContent>
+                            </CascadingValue>
+                        }
                     </CascadingValue>
                 </div>
             </MudCarouselItem>
@@ -230,7 +228,7 @@
 
     void PanelContentChanged(int newIndex)
     {
-        if(newIndex >= 0 && newIndex < tabs.Count)
+        if (newIndex >= 0 && newIndex < tabs.Count)
         {
             var tab = tabs[newIndex];
             currentInstanceData = GetInstanceData(tab.GroupType);

@@ -1,6 +1,7 @@
 ﻿* {
     --mud-palette-action-default: var(--mud-palette-text-primary);
     --custom-transition-time: 0.4s;
+    --mud-palette-drawer-background: #242428;
 }
 
 .custom-app-bar {

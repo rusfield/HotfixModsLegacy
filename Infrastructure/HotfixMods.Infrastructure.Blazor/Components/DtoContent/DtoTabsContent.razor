@@ -113,6 +113,7 @@
             }
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
+            <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
         </MudStack>
         <MudPagination @ref="mudPaginationRef" @bind-Selected="currentPage" Size="Size.Medium" Count="currentInstanceData?.InstanceCount ?? 0" Color="Color.Info" Class="@(currentInstanceData == null || currentInstanceData.InstanceCount <= 0 ? "invisible" : "")" @bind-Selected:after="NavigateInstance" />
         <MudStack Row="true" Spacing="0" Class="@(currentInstanceData == null ? "invisible" : "")">

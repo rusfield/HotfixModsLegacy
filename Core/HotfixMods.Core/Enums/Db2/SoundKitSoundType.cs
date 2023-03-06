@@ -1,6 +1,6 @@
-﻿namespace HotfixMods.Core.Models.Db2
+﻿namespace HotfixMods.Core.Enums.Db2
 {
-    public enum SoundkitSoundType
+    public enum SoundKitSoundType
     {
         NONE = 0,
         SPELLS = 1,

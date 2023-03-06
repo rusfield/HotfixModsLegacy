@@ -168,10 +168,12 @@
 
 @* Area to toggle menu on *@
 <div style="@($"position:fixed; bottom:0; width:20%; left:40%; height:80px; overflow:hidden;")" @onmouseover="MouseOverBottom">
-    <MudStack AlignItems="AlignItems.Center">
-        <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Circle" Height="300px" Width="300px" />
-    </MudStack>
+    <MudText Typo="Typo.h6" Style="position:absolute;width:100%;text-align:center;top:45%">
+        <MudIcon Icon="@Icons.Material.Filled.KeyboardDoubleArrowUp" Size="Size.Large" Style="color:var(--mud-palette-drawer-text)" />
+    </MudText>
+    <MudSkeleton Animation="Animation.False" SkeletonType="SkeletonType.Circle" Height="200px" Width="200px" Style="display:block; margin:0 auto; background-color:var(--mud-palette-drawer-background); margin-top:25px;" />
 </div>
+<div style="@("position:fixed; bottom:0; width:100%; height:15px; background-color:var(--mud-palette-drawer-background);pointer-events:none;")" />
 
 @* Area to toggle menu off *@
 <div style="@($"position:fixed; top:0; width:100%; height:75%; z-index:calc(var(--mud-zindex-appbar) + 2); display:{(_menuOpen ? "block" : "none")}")" @onmouseover="MouseOverTop" />

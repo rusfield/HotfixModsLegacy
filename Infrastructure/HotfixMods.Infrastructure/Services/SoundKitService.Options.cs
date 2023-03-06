@@ -1,5 +1,5 @@
-﻿using HotfixMods.Core.Flags.Db2;
-using HotfixMods.Core.Models.Db2;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Flags.Db2;
 using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
@@ -13,7 +13,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetSoundTypeOptionsAsync()
         {
-            return Enum.GetValues<SoundkitSoundType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+            return Enum.GetValues<SoundKitSoundType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
         }
     }
 }

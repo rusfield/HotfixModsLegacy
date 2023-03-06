@@ -173,6 +173,10 @@ namespace HotfixMods.Infrastructure.Services
             var types = GetAllModels();
             foreach (var type in types)
             {
+                // Devs will check Client Only models before releases.
+                if (Attribute.IsDefined(type, typeof(ClientOnlyAttribute)))
+                    continue;
+
                 var healthModel = await CheckSingleModelHealthAsync(type);
                 if (healthModel != null)
                     result.Add(healthModel);

@@ -1,0 +1,35 @@
+﻿namespace HotfixMods.Core.Models.Db2
+{
+    public enum SoundkitSoundType
+    {
+        NONE = 0,
+        SPELLS = 1,
+        UI = 2,
+        FOOTSTEPS = 3,
+        COMBAT_IMPACTS = 4,
+        COMBAT_SWINGS = 6,
+        ITEM_USE_SOUNDS = 9,
+        MONSTER_SOUNDS = 10,
+        VOCALUISOUNDS = 12,
+        POINT_SOUND_EMITTERS = 13,
+        DOODAD_SOUNDS = 14,
+        DEATH_THUD_SOUNDS = 16,
+        NPC_SOUNDS = 17,
+        FOLEY_SOUNDS_NOT_EDITABLE = 19,
+        FOOTSTEPSSPLASHES = 20,
+        CHARACTERSPLASHSOUNDS = 21,
+        WATERVOLUME_SOUNDS = 22,
+        TRADESKILL_SOUNDS = 23,
+        TERRAIN_EMITTER_SOUNDS = 24,
+        GAME_OBJECT_SOUNDS = 25,
+        SPELLFIZZLES = 26,
+        CREATURELOOPS = 27,
+        ZONE_MUSIC_FILES = 28,
+        CHARACTER_MACRO_LINES = 29,
+        CINEMATIC_MUSIC = 30,
+        CINEMATIC_VOICE = 31,
+        ZONE_AMBIENCE = 50,
+        SOUND_EMITTERS = 52,
+        VEHICLE_STATES = 53,
+    }
+}

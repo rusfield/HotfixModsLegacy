@@ -74,7 +74,7 @@ Console.ReadKey();
 */
 
 
-
+/*
 var dt = new DbDefinitionTool();
 string build = "10.0.5.47871";
 while (true)
@@ -92,7 +92,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-
+*/
 
 
 
@@ -108,7 +108,7 @@ Console.WriteLine("Done");
 
 
 
-/*
+
 
 var wowToolsTool = new WowToolsTool();
 
@@ -134,7 +134,7 @@ while (true)
     Console.ReadKey();
     Console.Clear();
 }
-*/
+
 
 /*
 // Compare client (master) and server definition

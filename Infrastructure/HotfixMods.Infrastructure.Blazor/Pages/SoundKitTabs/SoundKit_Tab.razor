@@ -1,13 +1,15 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Infrastructure.InfoModels
 
+@inject SoundKitService Service
+
 @inherits DtoContentBase<SoundKitDto, SoundKit>
 
 <StandardDtoContent T="SoundKit">
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@(nameof(Value.SoundType).ToDisplayName())" ValueCompare="ValueCompare?.SoundType" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundType))" />
+        <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@(nameof(Value.SoundType).ToDisplayName())" ValueCompare="ValueCompare?.SoundType" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundType))" GetOptionsAsync_Func="(Service.GetSoundTypeOptionsAsync)" />
         <Input_Element T="sbyte" @bind-Value="@(Value.DialogType)" Label="@(nameof(Value.DialogType).ToDisplayName())" ValueCompare="ValueCompare?.DialogType" OnInfoAdornmentClick="@(OpenInfoDialog(info.DialogType))" />
-        <Input_Element T="int" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="int" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" MultiSelection="true" GetOptionsAsync_Func="(Service.GetFlagOptionsAsync)" />
         <Input_Element T="decimal" @bind-Value="@(Value.MinDistance)" Label="@(nameof(Value.MinDistance).ToDisplayName())" ValueCompare="ValueCompare?.MinDistance" OnInfoAdornmentClick="@(OpenInfoDialog(info.MinDistance))" />
         <Input_Element T="decimal" @bind-Value="@(Value.DistanceCutoff)" Label="@(nameof(Value.DistanceCutoff).ToDisplayName())" ValueCompare="ValueCompare?.DistanceCutoff" OnInfoAdornmentClick="@(OpenInfoDialog(info.DistanceCutoff))" />
     </MudItem>

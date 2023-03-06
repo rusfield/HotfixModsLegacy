@@ -2,75 +2,76 @@
 @using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
+@inject AnimKitService Service
 
 <InstancedDtoContentPage>
     <CustomDtoContent InstancedContent="true">
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet1.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet1))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet1.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet1.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet1.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet1))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitPriorityID" GetOptionsAsync_Func="(Service.GetAnimKitPriorityOptionsAsync)" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet2.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet2))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet2.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet2.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet2.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet2))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet2Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet3.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet3))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet3.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet3.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet3.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet3))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet3Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet4.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet4))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet4.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet4.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet4.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet4))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet4Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="6" />
-                <MudItem xs="3">
+        <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet5.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet5))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet5.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet5.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet5.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet5))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet5Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet6.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet6))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet6.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet6.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet6.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet6))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet6Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet7.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet7))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet7.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet7.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet7.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet7))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet7Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="byte" Value="@(animKitConfigBoneSet8.AnimKitBoneSetID)" ValueChanged="@((byte newValue) => ValueChanged(newValue, animKitConfigBoneSet8))" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="GetAnimKitBoneSets" />
+                    <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet8.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(animKitConfigBoneSet8.AnimKitPriorityID)" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetAnimKitPriorities" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet8.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet8))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet8Compare?.AnimKitPriorityID" GetOptionsAsync_Func="GetPriorityOptionsWithDisabledAsync" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
@@ -89,6 +90,7 @@
 
     [CascadingParameter(Name = "ValueIsNull")]
     public bool ValueIsNull { get; set; }
+
 
     bool valuesExists = false;
     AnimKitConfigBoneSetInfo info = new();
@@ -156,12 +158,12 @@
         }
     }
 
-    void ValueChanged(byte newValue, AnimKitConfigBoneSet animKitConfigBoneSet)
+    void PriorityChanged(ushort newValue, AnimKitConfigBoneSet animKitConfigBoneSet)
     {
-        animKitConfigBoneSet.AnimKitBoneSetID = newValue;
+        animKitConfigBoneSet.AnimKitPriorityID = newValue;
         var valueList = PageTab.Dto.GetDtoGroupListValue<AnimKitConfigBoneSet>(InstanceData.GroupType, GroupIndex);
 
-        if(newValue == byte.MaxValue)
+        if (newValue == 0 && valueList[0] != animKitConfigBoneSet)
         {
             valueList.Remove(animKitConfigBoneSet);
         }
@@ -177,26 +179,24 @@
         var value = valueList.ElementAtOrDefault(index);
         if (null == value)
         {
-            value = new()
-                {
-                    AnimKitBoneSetID = index == 0 ? (byte)0 : byte.MaxValue
-                };
+            value = new();
+            if (index == 0)
+            {
+                value.AnimKitPriorityID = 1;
+                valueList.Add(value);
+            }
         }
         return value;
     }
 
-    async Task<Dictionary<byte, string>> GetAnimKitBoneSets()
+    async Task<Dictionary<ushort, string>> GetPriorityOptionsWithDisabledAsync()
     {
-        var values = Enum.GetValues<AnimKitBoneSetId>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
-        values.Add(byte.MaxValue, "None");
-        return values;
-    }
+        var options = new Dictionary<ushort, string>();
+        options.Add(0, "Disabled");
+        var clientOptions = await Service.GetAnimKitPriorityOptionsAsync();
+        foreach (var clientOption in clientOptions)
+            options.Add(clientOption.Key, clientOption.Value);
 
-    async Task<Dictionary<ushort, string>> GetAnimKitPriorities()
-    {
-        return Enum.GetValues<AnimKitPriorityId>()
-        .ToDictionary(key => (ushort)key, value => value.ToDisplayString().Split()[1] + " " + value.ToDisplayString().Split()[0])
-        .OrderBy(b => int.Parse(b.Value.Split(" ")[0]))
-        .ToDictionary(x => x.Key, x => x.Value);
+        return options;
     }
 }

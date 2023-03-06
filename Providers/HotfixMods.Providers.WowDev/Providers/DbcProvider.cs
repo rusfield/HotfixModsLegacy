@@ -19,7 +19,7 @@ namespace HotfixMods.Providers.Db2.WoWDev.Providers
         {
             if (File.Exists($"{_db2Path}\\{tableName}.db2"))
             {
-                return File.Open($"{_db2Path}\\{tableName}.db2", FileMode.Open);
+                return File.Open($"{_db2Path}\\{tableName}.db2", FileMode.Open, FileAccess.Read, FileShare.Read);
             }
             else
             {

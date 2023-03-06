@@ -167,7 +167,11 @@
 </MudDrawer>
 
 @* Area to toggle menu on *@
-<div style="@($"position:fixed; bottom:0; width:20%; left:40%; height:80px;")" @onmouseover="MouseOverBottom" />
+<div style="@($"position:fixed; bottom:0; width:20%; left:40%; height:80px; overflow:hidden;")" @onmouseover="MouseOverBottom">
+    <MudStack AlignItems="AlignItems.Center">
+        <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Circle" Height="300px" Width="300px" />
+    </MudStack>
+</div>
 
 @* Area to toggle menu off *@
 <div style="@($"position:fixed; top:0; width:100%; height:75%; z-index:calc(var(--mud-zindex-appbar) + 2); display:{(_menuOpen ? "block" : "none")}")" @onmouseover="MouseOverTop" />

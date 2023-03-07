@@ -8,12 +8,18 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
+using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
 using HotfixMods.Tools.Dev.Business;
 using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
+
+
+var testClient = new TrinityCoreClient();
+var testResult = testClient.GetFieldTypes("CreatureDisplayInfo");
+Console.Read();
 
 
 /*

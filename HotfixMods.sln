@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.MauiBlazor"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Blazor", "Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj", "{466B979A-529F-477C-9BC3-B9B03EB67A3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.TrinityCore", "Providers\HotfixMods.Providers.TrinityCore\HotfixMods.Providers.TrinityCore.csproj", "{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{466B979A-529F-477C-9BC3-B9B03EB67A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{466B979A-529F-477C-9BC3-B9B03EB67A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{466B979A-529F-477C-9BC3-B9B03EB67A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{2E2B2A5D-F5FD-4B78-B7B1-BE089584075D} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{616687E2-19C1-44ED-B245-121BFA49D413} = {B90DC3A8-FC37-4162-9714-7460BF71F606}
 		{466B979A-529F-477C-9BC3-B9B03EB67A3E} = {18C44F9A-9533-48CE-9161-823B458141BB}
+		{67BC2B32-BDA6-4FC7-B04A-8DA2E7B97A1E} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

@@ -23,7 +23,7 @@
                 }
                 else
                 {
-                    @("Restart")
+                    @("Diagnose")
                 }
             </MudButton>
         </MudStack>
@@ -113,8 +113,8 @@
     {
 
         var parameters = new DialogParameters();
-        parameters.Add(nameof(Message_Dialog.Text), "Test");
-        return (() => DialogService.Show<Message_Dialog>(null, parameters));
+        parameters.Add(nameof(ImplementHotfix_Dialog.Db2s), new List<string>() { "CreatureDisplayInfo" });
+        return (() => DialogService.Show<ImplementHotfix_Dialog>(null, parameters));
 
     }
 }

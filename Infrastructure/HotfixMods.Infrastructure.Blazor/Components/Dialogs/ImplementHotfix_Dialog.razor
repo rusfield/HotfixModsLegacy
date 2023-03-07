@@ -1,0 +1,47 @@
+﻿@using Microsoft.JSInterop;
+@using HotfixMods.Infrastructure.Services
+@using HotfixMods.Infrastructure.Blazor.Components.Private
+
+
+<DialogCloseButton Close_Click="@(() => Dialog.Close())" />
+<MudDialog>
+    <DialogContent>
+        <MudStack Justify="Justify.Center" Spacing="5">
+
+            <MudText Style="height: 40px;text-align:center;">
+                @Db2s.First();
+            </MudText>
+            <MudPaper Style="background-color:var(--mud-palette-dark); height:500px;overflow-y:auto">
+                <code>
+                @for(int i = 0; i < 20; i++)
+                {
+                    @("Hello");
+                }
+                </code>
+            </MudPaper>
+
+            <MudStack>
+                <MudDivider />
+                <MudStack Row="true">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;">
+                        Previous
+                    </MudButton>
+                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;">
+                        Next
+                    </MudButton>
+                </MudStack>
+            </MudStack>
+        </MudStack>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public List<string> Db2s { get; set; }
+
+
+    int stepIndex = 0;
+}

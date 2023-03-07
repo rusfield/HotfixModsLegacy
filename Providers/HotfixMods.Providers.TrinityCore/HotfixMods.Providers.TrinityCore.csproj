@@ -14,4 +14,8 @@
     <EmbeddedResource Include="Db2Metadata\DB2Metadata.h" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Db2Metadata\DB2Metadata.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Db2Metadata\DB2Metadata.h" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -8,18 +8,32 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.MySqlConnector.Client;
-using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
 using HotfixMods.Tools.Dev.Business;
+using HotfixMods.Tools.HotfixInitializer.Tool;
 using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
 
 
-var testClient = new TrinityCoreClient();
-var testResult = testClient.GetFieldTypes("CreatureDisplayInfo");
-Console.Read();
+var tool = new HotfixInitializerTool();
+var client = new Db2Client("10.0.5.47871");
+
+while (true)
+{
+    Console.WriteLine("Enter DB2 name:");
+    var db2 = Console.ReadLine();
+    var def = await client.GetDefinitionAsync("C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS", db2);
+
+    var result = await tool.GenerateDb2StructureH(def, db2);
+    Console.WriteLine(result);
+
+    Console.ReadKey();
+    Console.Clear();
+}
+
+
 
 
 /*
@@ -91,7 +105,7 @@ while (true)
     {
         await dt.DefinitionToCSharp(line, build);
     }
-    catch(Exception e)
+    catch (Exception e)
     {
         Console.WriteLine(e.Message);
     }

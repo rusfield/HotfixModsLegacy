@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\Providers\HotfixMods.Providers.TrinityCore\HotfixMods.Providers.TrinityCore.csproj" />
     <ProjectReference Include="..\..\Tools\HotfixMods.Tools.Dev\HotfixMods.Tools.Dev.csproj" />
+    <ProjectReference Include="..\..\Tools\HotfixMods.Tools.HotfixInitializer\HotfixMods.Tools.HotfixInitializer.csproj" />
     <ProjectReference Include="..\..\Tools\HotfixMods.Tools.Initializer\HotfixMods.Tools.Initializer.csproj" />
   </ItemGroup>
 

@@ -7,7 +7,7 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
 {
     public partial class HotfixInitializerTool
     {
-        async Task<List<(Type, bool)>> GetFieldTypes(string db2Name)
+        List<(Type, bool)> GetFieldTypes(string db2Name)
         {
             var results = new List<(Type, bool)>();
 
@@ -18,7 +18,7 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
                 var content = "";
                 while (reader.Peek() != -1)
                 {
-                    var line = await reader.ReadLineAsync();
+                    var line = reader.ReadLine();
                     if (line == null)
                         break;
                     else

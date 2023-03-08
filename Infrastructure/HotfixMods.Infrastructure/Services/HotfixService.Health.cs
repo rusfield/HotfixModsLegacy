@@ -16,6 +16,11 @@ namespace HotfixMods.Infrastructure.Services
         const string typeMismatchStatus = "DB2 fields for {0} do not match MySQL fields for {1}. Field {2}";
         const string schemaErrorStatus = "Unable to find any {0} schema named {1}.";
 
+        public async Task<DbRowDefinition> GetDefinitionAsync(string db2Name)
+        {
+            return await GetDefinitionFromClientAsync(db2Name);
+        }
+
         public async Task<List<HealthModel>> CheckServerAsync()
         {
             var results = new List<HealthModel>();

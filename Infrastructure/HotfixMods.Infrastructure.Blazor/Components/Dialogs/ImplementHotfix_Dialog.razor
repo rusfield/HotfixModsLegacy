@@ -1,32 +1,103 @@
 ﻿@using Microsoft.JSInterop;
 @using HotfixMods.Infrastructure.Services
 @using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Tools.HotfixInitializer.Tool;
 
+@inject HotfixService Service
 
 <DialogCloseButton Close_Click="@(() => Dialog.Close())" />
 <MudDialog>
     <DialogContent>
         <MudStack Justify="Justify.Center" Spacing="5">
 
-            <MudText Style="height: 40px;text-align:center;">
-                @Db2s.First();
-            </MudText>
-            <MudPaper Style="background-color:var(--mud-palette-dark); height:500px;overflow-y:auto">
-                <code>
-                @for(int i = 0; i < 20; i++)
+            <MudText Style="height: 60px;" class="center-mud-text" Typo="Typo.h6">
+                @if (currentPage == 0)
                 {
-                    @("Hello");
+                    @("Implement Hotfix")
                 }
-                </code>
-            </MudPaper>
+                else if (currentPage == 1)
+                {
+                    @("Add the following code to DB2Structure.h")
+                }
+                else if (currentPage == 2)
+                {
+                    @("Add the following code to DB2Stores.h")
+                }
+                else if (currentPage == 3)
+                {
+                    @("Add the following code to the top part of DB2Stores.cpp")
 
+                }
+                else if (currentPage == 4)
+                {
+                    @("Add the following code to the bottom part of DB2Stores.cpp")
+                }
+                else if (currentPage == 5)
+                {
+                    @("External Tool")
+                }
+            </MudText>
+            @if (currentPage > 0 && currentPage < 5)
+            {
+                <MudPaper Style="background-color:var(--mud-palette-dark); height:500px;overflow-y:auto">
+                    <pre class="ma-2">
+                        @if (currentPage == 1)
+                        {
+                            foreach (var content in db2StructureH)
+                            {
+                                @content
+                            }
+                        }
+                        else if (currentPage == 2)
+                        {
+                            foreach (var content in db2StoresH)
+                            {
+                                @content
+                            }
+                        }
+                        else if (currentPage == 3)
+                        {
+                            foreach (var content in db2StoresCpp1)
+                            {
+                                @content
+                            }
+                        }
+                        else if (currentPage == 4)
+                        {
+                            foreach (var content in db2StoresCpp2)
+                            {
+                                @content
+                            }
+                        }
+                    </pre>
+                </MudPaper>
+            }
+            else
+            {
+                <div style="height:500px">
+                    @if (currentPage == 0)
+                    {
+                        <MudText Class="center-mud-text" Style="height:100%;">
+                            This guide will assist in implement the following DB2s as hotfixes: 
+                            @string.Join(", ", Db2s)
+                        </MudText>
+                    }
+                    else if (currentPage == 5)
+                    {
+                        <MudText Class="center-mud-text" Style="height:100%;">
+                            Use an external tool for the remaining files. 
+                            <a href="https://github.com/Shauren/WowClientDB2MySQLTableGenerator">Download it here.</a>
+                        </MudText>
+                    }
+                </div>
+            }
             <MudStack>
                 <MudDivider />
                 <MudStack Row="true">
-                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;" Disabled="currentPage <= 0" OnClick="(() => currentPage--)">
                         Previous
                     </MudButton>
-                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;">
+                    <MudButton Variant="Variant.Outlined" Color="Color.Info" Style="width:50%;" Disabled="currentPage >= 5" OnClick="(() => currentPage++)">
                         Next
                     </MudButton>
                 </MudStack>
@@ -42,6 +113,24 @@
     [Parameter]
     public List<string> Db2s { get; set; }
 
+    List<string> db2StructureH = new();
+    List<string> db2StoresH = new();
+    List<string> db2StoresCpp1 = new();
+    List<string> db2StoresCpp2 = new();
 
-    int stepIndex = 0;
+    int currentPage = 0;
+
+    protected async override Task OnInitializedAsync()
+    {
+        var tool = new HotfixInitializerTool();
+        foreach (var db2 in Db2s)
+        {
+            var definition = await Service.GetDefinitionAsync(db2);
+            db2StructureH.Add(tool.GenerateDb2StructureH(definition, db2));
+            db2StoresH.Add(tool.GenerateDb2StoresH(db2));
+            db2StoresCpp1.Add(tool.GenerateDb2StoresCpp1(db2));
+            db2StoresCpp2.Add(tool.GenerateDb2StoresCpp2(db2));
+        }
+        await base.OnInitializedAsync();
+    }
 }

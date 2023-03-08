@@ -134,3 +134,10 @@
 .custom-dialog-icon {
     font-size: 4rem !important
 }
+
+.center-mud-text {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

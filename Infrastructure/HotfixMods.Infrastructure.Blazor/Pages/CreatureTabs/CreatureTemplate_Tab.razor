@@ -20,7 +20,7 @@
             <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" GetOptionsAsync_Func="(async () => await Service.GetFactionOptionsAsync())" />
             <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" GetOptionsAsync_Func="GetRanks" />
             <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
-            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="GetTypes" />
+            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="Service.GetCreatureTypeOptionsAsync" />
             <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" GetOptionsAsync_Func="GetTrueFalse" />
         </MudItem>
         <MudItem xs="6">
@@ -216,11 +216,6 @@
     async Task<Dictionary<byte, string>> GetRanks()
     {
         return Enum.GetValues<CreatureTemplateRank>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<byte, string>> GetTypes()
-    {
-        return Enum.GetValues<CreatureTemplateType>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
     }
 
     async Task<Dictionary<byte, string>> GetUnitClasses()

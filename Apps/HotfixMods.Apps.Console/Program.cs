@@ -17,25 +17,6 @@ using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
 
 
-var tool = new HotfixInitializerTool();
-var client = new Db2Client("10.0.5.47871");
-
-while (true)
-{
-    Console.WriteLine("Enter DB2 name:");
-    var db2 = Console.ReadLine();
-    var def = await client.GetDefinitionAsync("C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS", db2);
-
-    var result = await tool.GenerateDb2StructureH(def, db2);
-    Console.WriteLine(result);
-
-    Console.ReadKey();
-    Console.Clear();
-}
-
-
-
-
 /*
 var result = GetExternalClassesWithHotfixesSchema(typeof(AnimKitDto));
 

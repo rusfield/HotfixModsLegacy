@@ -41,7 +41,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint DynamicFlags { get; set; } = 0;
         public int Family { get; set; } = 0;
         public byte Trainer_Class { get; set; } = 0;
-        public byte Type { get; set; } = 0;
+        public byte Type { get; set; } = 10; // "Not Specified"
         public uint Type_Flags { get; set; } = 0;
         public uint Type_Flags2 { get; set; } = 0;
         public uint LootID { get; set; } = 0;

@@ -151,6 +151,26 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
+        protected async Task<List<DbRow>> GetFromClientOnlyAsync(string db2Name, params DbParameter[] parameters)
+        {
+            try
+            {
+                var definitions = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+                if(definitions != null)
+                {
+                    var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definitions, parameters);
+                    if (clientResults.Any())
+                        return clientResults.ToList();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return new();
+        }
+
         protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, List<T> entities)
             where T : new()
         {

@@ -116,7 +116,7 @@ namespace HotfixMods.Infrastructure.Services
                 if(includeClientIfServerResult || !results.Any())
                 {
                     var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definition, parameters);
-                    results.AddRange(clientResults);
+                    results.AddRange(clientResults.Where(c => !results.Any(r => c.GetIdValue() == r.GetIdValue())));
                 }
             }
             catch (Exception ex)

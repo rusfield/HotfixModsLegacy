@@ -9,7 +9,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetAnimKitPriorityOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var options = await GetFromClientOnlyAsync<AnimKitPriority>();
+            var options = await GetAsync<AnimKitPriority>(true);
             foreach(var option in options.OrderByDescending(o => o.Priority))
             {
                 results.Add((ushort)option.ID, option.Priority.ToString());
@@ -20,7 +20,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<byte, string>> GetBoneSetOptionsAsync()
         {
             var results = new Dictionary<byte, string>();
-            var options = await GetFromClientOnlyAsync<AnimKitBoneSet>();
+            var options = await GetAsync<AnimKitBoneSet>(true);
             foreach(var option in options)
             {
                 results.Add((byte)option.ID, option.Name);

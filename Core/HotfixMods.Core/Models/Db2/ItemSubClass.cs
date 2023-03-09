@@ -2,7 +2,7 @@
 
 namespace HotfixMods.Core.Models.Db2
 {
-    [HotfixesSchema]
+    [HotfixesSchema] // Client 
     public class ItemSubClass
     {
         public string DisplayName { get; set; } = "";

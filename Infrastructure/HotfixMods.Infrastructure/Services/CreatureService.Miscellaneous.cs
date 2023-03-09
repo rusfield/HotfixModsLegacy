@@ -65,10 +65,10 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 else
                 {
-                    var options = await GetFromClientOnlyAsync<ChrCustomizationOption>(new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
+                    var options = await GetAsync<ChrCustomizationOption>(true, new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
                     foreach (var option in options)
                     {
-                        var choices = await GetFromClientOnlyAsync<ChrCustomizationChoice>(new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
+                        var choices = await GetAsync<ChrCustomizationChoice>(true, new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
                         result.Add(option, choices);
                     }
 

@@ -8,12 +8,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<List<ItemClass>> GetItemClassOptions()
         {
-            return await GetFromClientOnlyAsync<ItemClass>();
+            return await GetAsync<ItemClass>(true);
         }
 
         public async Task<List<ItemSubClass>> GetItemSubClassOptions(sbyte classId)
         {
-            return await GetFromClientOnlyAsync<ItemSubClass>(new DbParameter(nameof(ItemSubClass.ClassID), classId));
+            return await GetAsync<ItemSubClass>(true, new DbParameter(nameof(ItemSubClass.ClassID), classId));
         }
     }
 }

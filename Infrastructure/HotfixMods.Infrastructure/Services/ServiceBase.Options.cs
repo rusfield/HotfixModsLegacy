@@ -2,12 +2,12 @@
 {
     public partial class ServiceBase
     {
-        protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey, TClientKey>(string db2Name, string valueColumnName)
+        protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
             where TOptionKey : notnull
             where TClientKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            var creatureTypes = await GetFromClientOnlyAsync(db2Name);
+            var creatureTypes = await GetAsync(schemaName, db2Name, true);
             foreach (var creatureType in creatureTypes)
             {
                 var key = ((TClientKey?)creatureType.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value)?.ToString();
@@ -18,7 +18,6 @@
                     var optionKey = (TOptionKey)Convert.ChangeType(key, typeof(TOptionKey));
                     results.Add(optionKey, value);
                 }
-
             }
             return results;
         }

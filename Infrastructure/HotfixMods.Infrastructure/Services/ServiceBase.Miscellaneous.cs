@@ -15,6 +15,11 @@ namespace HotfixMods.Infrastructure.Services
             Console.WriteLine($"{progress} %: {title} => {subtitle}");
         }
 
+        protected int DefaultProgress()
+        {
+            return -1;
+        }
+
         protected string? GetSchemaNameOfEntity<T>(bool errorOnNotFound = true)
             where T : new()
         {
@@ -175,6 +180,28 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<DbRowDefinition> GetDefinitionFromServerAsync(string schemaName, string tableName)
         {
             return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+        }
+
+        protected async Task<uint> GetIdByConditionsAsync<T>(uint? currentId, bool isUpdate)
+            where T : new()
+        {
+            // Entity is null, and this ID will not be used.
+            if (null == currentId)
+                return 0;
+
+            // Entity is new, or entity should be saved as new
+            // Also check if entity is HotfixModsEntity, which does not use the FromId/ToId rules
+            if ((uint)currentId == 0 || !isUpdate)
+            {
+                if (typeof(T) == typeof(HotfixModsEntity))
+                    return await GetNextHotfixModsEntityIdAsync();
+                else
+                    return await GetNextIdAsync<T>();
+            }
+
+
+            // Entity is being updated
+            return (uint)currentId;
         }
     }
 }

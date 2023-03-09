@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -77,7 +77,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (result.SpellXSpellVisual != null)
                 {
                     result.SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, new DbParameter(nameof(SpellVisual.ID), result.SpellXSpellVisual.SpellVisualID));
-                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), result.SpellXSpellVisual.SpellVisualID));
+                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, false, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), result.SpellXSpellVisual.SpellVisualID));
                     spellVisualEvents.ForEach(s =>
                     {
                         result.EventGroups.Add(new()
@@ -87,7 +87,7 @@ namespace HotfixMods.Infrastructure.Services
                     });
                 }
 
-                var spellEffects = await GetAsync<SpellEffect>(callback, progress, new DbParameter(nameof(SpellEffect.SpellID), id));
+                var spellEffects = await GetAsync<SpellEffect>(callback, progress, false, new DbParameter(nameof(SpellEffect.SpellID), id));
                 spellEffects.OrderBy(s => s.EffectIndex).ToList().ForEach(s =>
                 {
                     result.EffectGroups.Add(new SpellDto.EffectGroup()

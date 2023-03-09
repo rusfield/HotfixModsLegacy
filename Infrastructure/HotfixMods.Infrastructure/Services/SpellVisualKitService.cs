@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -65,7 +65,7 @@ namespace HotfixMods.Infrastructure.Services
                     HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(spellVisualKit.ID),
                 };
 
-                var spellVisualKitEffects = await GetAsync<SpellVisualKitEffect>(callback, progress, new DbParameter(nameof(SpellVisualKitEffect.ParentSpellVisualKitID), id));
+                var spellVisualKitEffects = await GetAsync<SpellVisualKitEffect>(callback, progress, false, new DbParameter(nameof(SpellVisualKitEffect.ParentSpellVisualKitID), id));
 
                 callback.Invoke(LoadingHelper.Loading, "Loading effects", progress());
                 await spellVisualKitEffects.ForEachAsync(async spellVisualKitEffect =>

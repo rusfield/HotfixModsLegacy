@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
 
-                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -93,7 +93,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = false
                 };
 
-                var characterCustomization = await GetAsync<CharacterCustomizations>(callback, progress, new DbParameter(nameof(CharacterCustomizations.Guid), character.Guid));
+                var characterCustomization = await GetAsync<CharacterCustomizations>(callback, progress, false, new DbParameter(nameof(CharacterCustomizations.Guid), character.Guid));
                 foreach (var customization in characterCustomization)
                 {
                     result.CreatureDisplayInfoOption.Add(new()
@@ -104,8 +104,8 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 result.CreatureDisplayInfo.ModelID = GetModelIdByRaceAndGenders(result.CreatureDisplayInfoExtra.DisplayRaceID, result.CreatureDisplayInfoExtra.DisplaySexID, result.CreatureDisplayInfoOption);
 
-                var characterItems = await GetAsync<ItemInstance>(callback, progress, new DbParameter(nameof(ItemInstance.Owner_Guid), character.Guid));
-                var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, new DbParameter(nameof(CharacterInventory.Guid), character.Guid));
+                var characterItems = await GetAsync<ItemInstance>(callback, progress, false, new DbParameter(nameof(ItemInstance.Owner_Guid), character.Guid));
+                var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, false, new DbParameter(nameof(CharacterInventory.Guid), character.Guid));
 
                 foreach (var equippedItem in characterEquipMap.OrderBy(c => c.Slot))
                 {
@@ -149,7 +149,7 @@ namespace HotfixMods.Infrastructure.Services
                             var bonusListIds = item.BonusListIds.Trim().Split(' ').Select(int.Parse).ToList();
                             if (bonusListIds != null && bonusListIds.Any())
                             {
-                                var itemBonuses = await GetAsync<ItemBonus>(new DbParameter(nameof(ItemBonus.Type), 7));
+                                var itemBonuses = await GetAsync<ItemBonus>(false, new DbParameter(nameof(ItemBonus.Type), 7));
                                 var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListID)).FirstOrDefault();
                                 if (itemBonus != null)
                                 {
@@ -269,8 +269,8 @@ namespace HotfixMods.Infrastructure.Services
 
                 if (result.CreatureDisplayInfoExtra != null)
                 {
-                    result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
-                    result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
+                    result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, false, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
+                    result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, false, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
                 }
 
                 callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
@@ -334,8 +334,8 @@ namespace HotfixMods.Infrastructure.Services
 
                 if (result.CreatureDisplayInfoExtra != null)
                 {
-                    result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
-                    result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
+                    result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, false, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
+                    result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, false, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
                 }
 
                 result.IsUpdate = true;

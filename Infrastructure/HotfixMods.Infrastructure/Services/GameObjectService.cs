@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -124,7 +124,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 // Delete gameobjects placed around
-                var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.ID), id));
+                var existingGameobjects = await GetAsync<Gameobject>(false, new DbParameter(nameof(Gameobject.ID), id));
                 await DeleteAsync(callback, progress, existingGameobjects);
 
                 await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);

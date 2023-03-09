@@ -34,32 +34,33 @@ namespace HotfixMods.Infrastructure.Services
         }
 
         #region GET (single)
-        protected async Task<T?> GetSingleAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
+        protected async Task<T?> GetSingleAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, params DbParameter[] parameters)
         where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
-            return await GetSingleAsync<T>(parameters);
+            return await GetSingleAsync<T>(serverOnly, parameters);
         }
 
-        protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
+        protected async Task<T?> GetSingleAsync<T>(bool serverOnly, params DbParameter[] parameters)
         where T : new()
         {
-            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), parameters);
+            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, parameters);
             return result.DbRowToEntity<T>();
         }
 
-        protected async Task<DbRow?> GetSingleAsync(string schemaName, string tableName, params DbParameter[] parameters)
+        protected async Task<DbRow?> GetSingleAsync(string schemaName, string db2Name, bool serverOnly, params DbParameter[] parameters)
         {
             DbRow? result = null;
+            string tableName = db2Name.ToTableName();
             var serverDbDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, tableName);
             if (serverDbDefinition != null)
                 result = await _serverDbProvider.GetSingleAsync(schemaName, tableName, serverDbDefinition, parameters);
 
-            if (null == result)
+            if (null == result && !serverOnly)
             {
-                var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, tableName);
+                var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
                 if (clientDbDefinition != null)
-                    result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, tableName, clientDbDefinition, parameters);
+                    result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, db2Name, clientDbDefinition, parameters);
             }
 
             return result;
@@ -69,34 +70,35 @@ namespace HotfixMods.Infrastructure.Services
 
 
         #region GET (many)
-        protected async Task<List<T>> GetAsync<T>(bool includeClientIfServerResult, params DbParameter[] parameters)
+        protected async Task<List<T>> GetAsync<T>(bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
             where T : new()
         {
-            return await GetAsync<T>(DefaultProgressCallback, DefaultProgress, includeClientIfServerResult, parameters);
+            return await GetAsync<T>(DefaultProgressCallback, DefaultProgress, serverOnly, includeClientIfServerResult, parameters);
         }
 
-        protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, bool includeClientIfServerResult, params DbParameter[] parameters)
+        protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
             where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
-            var result = await GetAsync(GetTableNameOfEntity<T>(), GetTableNameOfEntity<T>(), includeClientIfServerResult, parameters);
+            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, includeClientIfServerResult, parameters);
             return result.DbRowsToEntities<T>().ToList();
         }
 
-        protected async Task<List<DbRow>> GetAsync(string schemaName, string db2Name, bool includeClientIfServerResult, params DbParameter[] parameters)
+        protected async Task<List<DbRow>> GetAsync(string schemaName, string db2Name, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
         {
             string serverEx = "";
             string clientEx = "";
+            string tableName = db2Name.ToTableName();
             var results = new List<DbRow>();
 
             DbRowDefinition? definition;
-            if (schemaName == _appConfig.HotfixesSchema)
+            if (schemaName == _appConfig.HotfixesSchema && !db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase) && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase))
             {
                 definition = await GetDefinitionFromClientAsync(db2Name);
             }
             else
             {
-                definition = await GetDefinitionFromServerAsync(schemaName, db2Name);
+                definition = await GetDefinitionFromServerAsync(schemaName, tableName);
             }
 
             if (definition == null)
@@ -104,7 +106,7 @@ namespace HotfixMods.Infrastructure.Services
 
             try
             {
-                var serverResults = await _serverDbProvider.GetAsync(schemaName, db2Name, definition, parameters);
+                var serverResults = await _serverDbProvider.GetAsync(schemaName, tableName, definition, parameters);
                 results.AddRange(serverResults);
             }
             catch (Exception ex)
@@ -113,7 +115,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             try
             {
-                if(includeClientIfServerResult || !results.Any())
+                if(!serverOnly && (includeClientIfServerResult || !results.Any()))
                 {
                     var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definition, parameters);
                     results.AddRange(clientResults.Where(c => !results.Any(r => c.GetIdValue() == r.GetIdValue())));
@@ -157,11 +159,12 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             if (entities.Any())
-                await SaveAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), entities.Where(e => e != null).EntitiesToDbRows().ToArray());
+                await SaveAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, entities.Where(e => e != null).EntitiesToDbRows().ToArray());
         }
 
-        protected async Task SaveAsync(string schemaName, string tableName, params DbRow[] dbRows)
+        protected async Task SaveAsync(string schemaName, string db2Name, params DbRow[] dbRows)
         {
+            var tableName = db2Name.ToTableName();
             var hotfixDataTableDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName);
             if (null == hotfixDataTableDefinition)
             {
@@ -273,13 +276,13 @@ namespace HotfixMods.Infrastructure.Services
             var schemaName = GetSchemaNameOfEntity<T>();
             if (schemaName == _appConfig.HotfixesSchema)
             {
-                var entities = await GetAsync<T>(false, parameters);
+                var entities = await GetAsync<T>(false, true, parameters);
 
                 foreach (var entity in entities)
                 {
                     var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
 
-                    var hotfixData = await GetSingleAsync<HotfixData>(dbParameters);
+                    var hotfixData = await GetSingleAsync<HotfixData>(true, dbParameters);
                     if (hotfixData != null)
                     {
                         hotfixData.Status = (byte)HotfixStatuses.RECORD_REMOVED;

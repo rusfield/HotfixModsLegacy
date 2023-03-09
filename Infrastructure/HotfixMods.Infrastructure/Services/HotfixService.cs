@@ -20,7 +20,7 @@ namespace HotfixMods.Infrastructure.Services
         }
         public async Task<DbRow?> GetByIdAsync(string db2Name, int id)
         {
-            return await GetSingleAsync(_appConfig.HotfixesSchema, db2Name, new DbParameter("id", id));
+            return await GetSingleAsync(_appConfig.HotfixesSchema, db2Name, false, new DbParameter("id", id));
         }
 
         public async Task<uint> GetNextIdAsync(string db2Name)

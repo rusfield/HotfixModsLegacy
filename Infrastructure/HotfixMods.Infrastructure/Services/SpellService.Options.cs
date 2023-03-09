@@ -11,7 +11,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetCastingTimeIndexOptions()
         {
             var results = new Dictionary<ushort, string>();
-            var spellCastTimes = await GetAsync<SpellCastTimes>(true);
+            var spellCastTimes = await GetAsync<SpellCastTimes>(false, true);
             foreach(var spellCastTime in spellCastTimes)
             {
                 string value = $"{spellCastTime.Base} ms";
@@ -26,7 +26,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetDurationIndexOptions()
         {
             var results = new Dictionary<ushort, string>();
-            var spellDurations = await GetAsync<SpellDuration>(true);
+            var spellDurations = await GetAsync<SpellDuration>(false, true);
             foreach(var spellDuration in spellDurations)
             {
                 string value = $"{spellDuration.Duration} ms";
@@ -41,7 +41,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetRangeIndexOptions()
         {
             var results = new Dictionary<ushort, string>();
-            var spellRanges = await GetAsync<SpellRange>(true);
+            var spellRanges = await GetAsync<SpellRange>(false, true);
             foreach(var spellRange in spellRanges)
             {
                 string value = $"{spellRange.RangeMin0} to {spellRange.RangeMax0} yards";

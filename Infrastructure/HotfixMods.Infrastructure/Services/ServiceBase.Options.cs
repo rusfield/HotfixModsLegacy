@@ -13,7 +13,7 @@
             where TClientKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            var creatureTypes = await GetAsync(schemaName, db2Name, true);
+            var creatureTypes = await GetAsync(schemaName, db2Name, false, true);
             foreach (var creatureType in creatureTypes)
             {
                 var key = ((TClientKey?)creatureType.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value)?.ToString();

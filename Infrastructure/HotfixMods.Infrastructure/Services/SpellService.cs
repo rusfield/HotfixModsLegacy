@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -52,7 +52,7 @@ namespace HotfixMods.Infrastructure.Services
 
             try
             {
-                var spell = await GetSingleAsync<Spell>(callback, progress, new DbParameter(nameof(Spell.ID), id));
+                var spell = await GetSingleAsync<Spell>(callback, progress, false, new DbParameter(nameof(Spell.ID), id));
 
                 if (null == spell)
                 {
@@ -63,12 +63,12 @@ namespace HotfixMods.Infrastructure.Services
                 var result = new SpellDto()
                 {
                     HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, id),
-                    SpellMisc = await GetSingleAsync<SpellMisc>(callback, progress, new DbParameter(nameof(SpellMisc.SpellID), id)) ?? new(),
-                    SpellName = await GetSingleAsync<SpellName>(callback, progress, new DbParameter(nameof(SpellName.ID), id)) ?? new(),
-                    SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellID), id)),
-                    SpellPower = await GetSingleAsync<SpellPower>(callback, progress, new DbParameter(nameof(SpellPower.SpellID), id)),
-                    SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, new DbParameter(nameof(SpellCooldowns.SpellID), id)),
-                    SpellXSpellVisual = await GetSingleAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellID), id)),
+                    SpellMisc = await GetSingleAsync<SpellMisc>(callback, progress, false, new DbParameter(nameof(SpellMisc.SpellID), id)) ?? new(),
+                    SpellName = await GetSingleAsync<SpellName>(callback, progress, false, new DbParameter(nameof(SpellName.ID), id)) ?? new(),
+                    SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, false, new DbParameter(nameof(SpellAuraOptions.SpellID), id)),
+                    SpellPower = await GetSingleAsync<SpellPower>(callback, progress, false, new DbParameter(nameof(SpellPower.SpellID), id)),
+                    SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, false, new DbParameter(nameof(SpellCooldowns.SpellID), id)),
+                    SpellXSpellVisual = await GetSingleAsync<SpellXSpellVisual>(callback, progress, false, new DbParameter(nameof(SpellXSpellVisual.SpellID), id)),
 
                     Spell = spell,
                     IsUpdate = true
@@ -76,8 +76,8 @@ namespace HotfixMods.Infrastructure.Services
 
                 if (result.SpellXSpellVisual != null)
                 {
-                    result.SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, new DbParameter(nameof(SpellVisual.ID), result.SpellXSpellVisual.SpellVisualID));
-                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, false, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), result.SpellXSpellVisual.SpellVisualID));
+                    result.SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, false, new DbParameter(nameof(SpellVisual.ID), result.SpellXSpellVisual.SpellVisualID));
+                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, false, false, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), result.SpellXSpellVisual.SpellVisualID));
                     spellVisualEvents.ForEach(s =>
                     {
                         result.EventGroups.Add(new()
@@ -87,7 +87,7 @@ namespace HotfixMods.Infrastructure.Services
                     });
                 }
 
-                var spellEffects = await GetAsync<SpellEffect>(callback, progress, false, new DbParameter(nameof(SpellEffect.SpellID), id));
+                var spellEffects = await GetAsync<SpellEffect>(callback, progress, false, false, new DbParameter(nameof(SpellEffect.SpellID), id));
                 spellEffects.OrderBy(s => s.EffectIndex).ToList().ForEach(s =>
                 {
                     result.EffectGroups.Add(new SpellDto.EffectGroup()

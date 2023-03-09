@@ -18,14 +18,14 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var result = new Dictionary<uint, string>();
-                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(false, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
+                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(false, false, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
                 foreach (var model in creatureTemplateModels)
                 {
                     string name = model.Idx.ToString();
-                    var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
+                    var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(false, new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
                     if (creatureDisplayInfo != null)
                     {
-                        var creatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(new DbParameter(nameof(CreatureDisplayInfoExtra.ID), creatureDisplayInfo.ExtendedDisplayInfoID));
+                        var creatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(false, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), creatureDisplayInfo.ExtendedDisplayInfoID));
                         if (creatureDisplayInfoExtra != null && Enum.IsDefined(typeof(Gender), (int)creatureDisplayInfoExtra.DisplaySexID) && Enum.IsDefined(typeof(ChrRaceId), (int)creatureDisplayInfoExtra.DisplayRaceID))
                         {
                             var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
@@ -53,7 +53,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var result = new Dictionary<ChrCustomizationOption, List<ChrCustomizationChoice>>();
-                var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(new DbParameter(nameof(ChrRaceXChrModel.ChrRacesID), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
+                var chrRaceXChrModel = await GetSingleAsync<ChrRaceXChrModel>(false, new DbParameter(nameof(ChrRaceXChrModel.ChrRacesID), chrRaceId), new DbParameter(nameof(ChrRaceXChrModel.Sex), gender));
                 if (null == chrRaceXChrModel)
                 {
                     // No customizations for this combination, or possibly old/missing data from ChrRaceXChrModel.
@@ -65,10 +65,10 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 else
                 {
-                    var options = await GetAsync<ChrCustomizationOption>(true, new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
+                    var options = await GetAsync<ChrCustomizationOption>(false, true, new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
                     foreach (var option in options)
                     {
-                        var choices = await GetAsync<ChrCustomizationChoice>(true, new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
+                        var choices = await GetAsync<ChrCustomizationChoice>(false, true, new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
                         result.Add(option, choices);
                     }
 

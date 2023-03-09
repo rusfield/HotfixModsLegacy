@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(false, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -50,7 +50,7 @@ namespace HotfixMods.Infrastructure.Services
 
             try
             {
-                var gameobjectTemplate = await GetSingleAsync<GameobjectTemplate>(callback, progress, new DbParameter(nameof(GameobjectTemplate.Entry), id));
+                var gameobjectTemplate = await GetSingleAsync<GameobjectTemplate>(callback, progress, false, new DbParameter(nameof(GameobjectTemplate.Entry), id));
                 if (null == gameobjectTemplate)
                 {
                     callback.Invoke(LoadingHelper.Loading, $"{nameof(GameobjectTemplate)} not found", 100);
@@ -59,8 +59,8 @@ namespace HotfixMods.Infrastructure.Services
                 var result = new GameobjectDto()
                 {
                     GameobjectTemplate = gameobjectTemplate,
-                    GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
-                    GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
+                    GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, false, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
+                    GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, false, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
                     HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, gameobjectTemplate.Entry),
                     IsUpdate = true
                 };
@@ -124,7 +124,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 // Delete gameobjects placed around
-                var existingGameobjects = await GetAsync<Gameobject>(false, new DbParameter(nameof(Gameobject.ID), id));
+                var existingGameobjects = await GetAsync<Gameobject>(false, false, new DbParameter(nameof(Gameobject.ID), id));
                 await DeleteAsync(callback, progress, existingGameobjects);
 
                 await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);

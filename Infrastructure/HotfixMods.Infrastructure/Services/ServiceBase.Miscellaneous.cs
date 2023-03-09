@@ -97,9 +97,9 @@ namespace HotfixMods.Infrastructure.Services
             return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId, GetIdPropertyNameOfEntity<T>());
         }
 
-        protected async Task<uint> GetNextIdAsync(string tableName)
+        protected async Task<uint> GetNextIdAsync(string db2Name)
         {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, tableName, FromId, ToId, "id");
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, db2Name.ToTableName(), FromId, ToId, "id");
         }
 
         async Task<uint> GetNextIdAsync(string schemaName, string tableName, uint fromId, uint toId, string idPropertyName)
@@ -148,7 +148,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(uint entityId)
         {
-            var entity = await GetSingleAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
+            var entity = await GetSingleAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
             {
                 entity = new()

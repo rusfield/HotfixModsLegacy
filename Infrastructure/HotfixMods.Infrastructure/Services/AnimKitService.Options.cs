@@ -1,31 +1,21 @@
 ﻿using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Extensions;
+using System.Collections.Immutable;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService
     {
-        public async Task<Dictionary<ushort, string>> GetAnimKitPriorityOptionsAsync()
+        public async Task<Dictionary<ushort, string>> GetPriorityOptionsAsync()
         {
-            var results = new Dictionary<ushort, string>();
-            var options = await GetAsync<AnimKitPriority>(true);
-            foreach(var option in options.OrderByDescending(o => o.Priority))
-            {
-                results.Add((ushort)option.ID, option.Priority.ToString());
-            }
-            return results;
+            var options = await GetOptionsAsync<ushort>("AnimKitPriority", "Priority");
+            return options.SortByValue<ushort>(false);
         }
 
         public async Task<Dictionary<byte, string>> GetBoneSetOptionsAsync()
         {
-            var results = new Dictionary<byte, string>();
-            var options = await GetAsync<AnimKitBoneSet>(true);
-            foreach(var option in options)
-            {
-                results.Add((byte)option.ID, option.Name);
-            }
-            return results;
+            return await GetOptionsAsync<byte>("AnimKitBoneSet", "Name");
         }
     }
 }

@@ -12,7 +12,7 @@
                     <Input_Element T="byte" @bind-Value="@(animKitConfigBoneSet1.AnimKitBoneSetID)" Label="@("Bone Set ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitBoneSetID" GetOptionsAsync_Func="Service.GetBoneSetOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet1.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet1))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitPriorityID" GetOptionsAsync_Func="(Service.GetAnimKitPriorityOptionsAsync)" />
+                    <Input_Element T="ushort" Value="@(animKitConfigBoneSet1.AnimKitPriorityID)" ValueChanged="((ushort newValue) => PriorityChanged(newValue, animKitConfigBoneSet1))" Label="@("Priority ID")" ValueCompare="animKitConfigBoneSet1Compare?.AnimKitPriorityID" GetOptionsAsync_Func="(Service.GetPriorityOptionsAsync)" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
@@ -193,7 +193,7 @@
     {
         var options = new Dictionary<ushort, string>();
         options.Add(0, "Disabled");
-        var clientOptions = await Service.GetAnimKitPriorityOptionsAsync();
+        var clientOptions = await Service.GetPriorityOptionsAsync();
         foreach (var clientOption in clientOptions)
             options.Add(clientOption.Key, clientOption.Value);
 

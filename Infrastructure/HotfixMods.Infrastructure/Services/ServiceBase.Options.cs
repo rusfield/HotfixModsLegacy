@@ -2,6 +2,12 @@
 {
     public partial class ServiceBase
     {
+        protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey>(string db2Name, string valueColumnName)
+            where TOptionKey : notnull
+        {
+            return await GetOptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
+        }
+
         protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
             where TOptionKey : notnull
             where TClientKey : notnull

@@ -97,7 +97,7 @@ namespace HotfixMods.Infrastructure.Extensions
         public static int GetIdValue(this DbRow dbRow)
         {
             var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
-            if (int.TryParse(idColumn?.Value?.ToString(), out int id) && id > 0)
+            if (int.TryParse(idColumn?.Value?.ToString(), out int id) && id >= 0)
             {
                 return id;
             }

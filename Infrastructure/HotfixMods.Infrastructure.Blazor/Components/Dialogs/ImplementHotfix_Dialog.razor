@@ -1,9 +1,11 @@
-﻿@using Microsoft.JSInterop;
+﻿@using HotfixMods.Infrastructure.Config;
+@using Microsoft.JSInterop;
 @using HotfixMods.Infrastructure.Services
 @using HotfixMods.Infrastructure.Blazor.Components.Private
 @using HotfixMods.Tools.HotfixInitializer.Tool;
 
 @inject HotfixService Service
+@inject AppConfig AppConfig
 
 <DialogCloseButton Close_Click="@(() => Dialog.Close())" />
 <MudDialog>
@@ -126,7 +128,7 @@
         foreach (var db2 in Db2s)
         {
             var definition = await Service.GetDefinitionAsync(db2);
-            db2StructureH.Add(tool.GenerateDb2StructureH(definition, db2));
+            db2StructureH.Add(tool.GenerateDb2StructureH(AppConfig.TrinityCorePath, definition, db2));
             db2StoresH.Add(tool.GenerateDb2StoresH(db2));
             db2StoresCpp1.Add(tool.GenerateDb2StoresCpp1(db2));
             db2StoresCpp2.Add(tool.GenerateDb2StoresCpp2(db2));

@@ -19,10 +19,10 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
             return $"LOAD_DB2(s{db2Name}Store);\r\n";
         }
 
-        public string GenerateDb2StructureH(DbRowDefinition definition, string db2Name)
+        public string GenerateDb2StructureH(string trinityCorePath, DbRowDefinition definition, string db2Name)
         {
             var result = "";
-            var fields = GetFieldTypes(db2Name);
+            var fields = GetFieldTypes(trinityCorePath, db2Name);
             if (fields.Count != definition.ColumnDefinitions.Where(d => d.Name != "VerifiedBuild").Count())
             {
                 throw new Exception($"Unable to generate Db2Structure. Fields and Definitions are not the same length.");

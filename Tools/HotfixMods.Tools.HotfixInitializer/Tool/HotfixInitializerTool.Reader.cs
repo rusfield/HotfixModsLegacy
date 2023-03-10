@@ -7,11 +7,11 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
 {
     public partial class HotfixInitializerTool
     {
-        List<(Type, bool)> GetFieldTypes(string db2Name)
+        List<(Type, bool)> GetFieldTypes(string trinityCorePath, string db2Name)
         {
             var results = new List<(Type, bool)>();
 
-            using (var reader = new StreamReader(GetDb2MetadataStream()))
+            using (var reader = new StreamReader(GetDb2MetadataStream(trinityCorePath)))
             {
                 bool match = false;
                 bool lastBreak = false;
@@ -115,18 +115,14 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
             throw new Exception($"Unable to read DB2Metadata.h for {db2Name}.");
         }
 
-        Stream GetDb2MetadataStream()
+        Stream GetDb2MetadataStream(string trinityCorePath)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceNames = assembly.GetManifestResourceNames();
-            foreach (var resourceName in resourceNames)
+            string path = Path.Combine(trinityCorePath, "src", "server", "game", "DataStores", "DB2Metadata.h");
+            if(File.Exists(path))
             {
-                if (string.Equals(resourceName, $"HotfixMods.Tools.HotfixInitializer.Db2Metadata.DB2Metadata.h", StringComparison.OrdinalIgnoreCase))
-                {
-                    return assembly.GetManifestResourceStream(resourceName);
-                }
+                return File.OpenRead(path);
             }
-            throw new Exception($"DB2MEtadata.h not found.");
+            throw new Exception($"DB2MEtadata.h not found in path {path}.");
         }
 
         string GetDb2StructType(Type type, bool isTrue)

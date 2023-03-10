@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(false, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -47,12 +47,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<SpellVisualKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
 
             try
             {
-                var spellVisualKit = await GetSingleAsync<SpellVisualKit>(callback, progress, false, new DbParameter(nameof(SpellVisualKit.ID), id));
+                var spellVisualKit = await  GetSingleAsync<SpellVisualKit>(callback, progress, new DbParameter(nameof(SpellVisualKit.ID), id));
                 if (null == spellVisualKit)
                 {
                     callback.Invoke(LoadingHelper.Loading, $"{nameof(SpellVisualKit)} not found", 100);
@@ -65,7 +65,7 @@ namespace HotfixMods.Infrastructure.Services
                     HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(spellVisualKit.ID),
                 };
 
-                var spellVisualKitEffects = await GetAsync<SpellVisualKitEffect>(callback, progress, false, false, new DbParameter(nameof(SpellVisualKitEffect.ParentSpellVisualKitID), id));
+                var spellVisualKitEffects = await GetAsync<SpellVisualKitEffect>(callback, progress, new DbParameter(nameof(SpellVisualKitEffect.ParentSpellVisualKitID), id));
 
                 callback.Invoke(LoadingHelper.Loading, "Loading effects", progress());
                 await spellVisualKitEffects.ForEachAsync(async spellVisualKitEffect =>
@@ -77,21 +77,21 @@ namespace HotfixMods.Infrastructure.Services
                         var type = (SpellVisualEffectEffectType)spellVisualKitEffect.EffectType;
                         if (type == SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT)
                         {
-                            group.SpellProceduralEffect = await GetSingleAsync<SpellProceduralEffect>(false, new DbParameter(nameof(SpellProceduralEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.SpellProceduralEffect = await GetSingleAsync<SpellProceduralEffect>(new DbParameter(nameof(SpellProceduralEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH)
                         {
-                            group.SpellVisualKitModelAttach = await GetSingleAsync<SpellVisualKitModelAttach>(false, new DbParameter(nameof(SpellVisualKitModelAttach.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.SpellVisualKitModelAttach = await GetSingleAsync<SpellVisualKitModelAttach>(new DbParameter(nameof(SpellVisualKitModelAttach.ID), spellVisualKitEffect.Effect)) ?? new();
                             if (group.SpellVisualKitModelAttach != null)
-                                group.SpellVisualEffectName = await GetSingleAsync<SpellVisualEffectName>(false, new DbParameter(nameof(SpellVisualEffectName.ID), group.SpellVisualKitModelAttach.SpellVisualEffectNameID)) ?? new();
+                                group.SpellVisualEffectName = await GetSingleAsync<SpellVisualEffectName>(new DbParameter(nameof(SpellVisualEffectName.ID), group.SpellVisualKitModelAttach.SpellVisualEffectNameID)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.CAMERA_EFFECT)
                         {
-                            group.CameraEffect = await GetSingleAsync<CameraEffect>(false, new DbParameter(nameof(CameraEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.CameraEffect = await GetSingleAsync<CameraEffect>(new DbParameter(nameof(CameraEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.CAMERA_EFFECT_2)
                         {
-                            group.CameraEffect = await GetSingleAsync<CameraEffect>(false, new DbParameter(nameof(CameraEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.CameraEffect = await GetSingleAsync<CameraEffect>(new DbParameter(nameof(CameraEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.SOUND_KIT)
                         {
@@ -99,19 +99,19 @@ namespace HotfixMods.Infrastructure.Services
                         }
                         else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_ANIM)
                         {
-                            group.SpellVisualAnim = await GetSingleAsync<SpellVisualAnim>(false, new DbParameter(nameof(SpellVisualAnim.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.SpellVisualAnim = await GetSingleAsync<SpellVisualAnim>(new DbParameter(nameof(SpellVisualAnim.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.SHADOWY_EFFECT)
                         {
-                            group.ShadowyEffect = await GetSingleAsync<ShadowyEffect>(false, new DbParameter(nameof(ShadowyEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.ShadowyEffect = await GetSingleAsync<ShadowyEffect>(new DbParameter(nameof(ShadowyEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.SPELL_EFFECT_EMISSION)
                         {
-                            group.SpellEffectEmission = await GetSingleAsync<SpellEffectEmission>(false, new DbParameter(nameof(SpellEffectEmission.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.SpellEffectEmission = await GetSingleAsync<SpellEffectEmission>(new DbParameter(nameof(SpellEffectEmission.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.OUTLINE_EFFECT)
                         {
-                            group.OutlineEffect = await GetSingleAsync<OutlineEffect>(false, new DbParameter(nameof(OutlineEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.OutlineEffect = await GetSingleAsync<OutlineEffect>(new DbParameter(nameof(OutlineEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.UNIT_SOUND_TYPE)
                         {
@@ -119,41 +119,41 @@ namespace HotfixMods.Infrastructure.Services
                         }
                         else if (type == SpellVisualEffectEffectType.DISSOLVE_EFFECT)
                         {
-                            group.DissolveEffect = await GetSingleAsync<DissolveEffect>(false, new DbParameter(nameof(DissolveEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.DissolveEffect = await GetSingleAsync<DissolveEffect>(new DbParameter(nameof(DissolveEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.EDGE_GLOW_EFFECT)
                         {
-                            group.EdgeGlowEffect = await GetSingleAsync<EdgeGlowEffect>(false, new DbParameter(nameof(EdgeGlowEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.EdgeGlowEffect = await GetSingleAsync<EdgeGlowEffect>(new DbParameter(nameof(EdgeGlowEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.BEAM_EFFECT)
                         {
-                            group.BeamEffect = await GetSingleAsync<BeamEffect>(false, new DbParameter(nameof(BeamEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.BeamEffect = await GetSingleAsync<BeamEffect>(new DbParameter(nameof(BeamEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.CLIENT_SCENE_EFFECT)
                         {
-                            group.ClientSceneEffect = await GetSingleAsync<ClientSceneEffect>(false, new DbParameter(nameof(ClientSceneEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.ClientSceneEffect = await GetSingleAsync<ClientSceneEffect>(new DbParameter(nameof(ClientSceneEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.CLONE_EFFECT)
                         {
-                            group.CloneEffect = await GetSingleAsync<CloneEffect>(false, new DbParameter(nameof(CloneEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.CloneEffect = await GetSingleAsync<CloneEffect>(new DbParameter(nameof(CloneEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.GRADIENT_EFFECT)
                         {
-                            group.GradientEffect = await GetSingleAsync<GradientEffect>(false, new DbParameter(nameof(GradientEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.GradientEffect = await GetSingleAsync<GradientEffect>(new DbParameter(nameof(GradientEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.BARRAGE_EFFECT)
                         {
-                            group.BarrageEffect = await GetSingleAsync<BarrageEffect>(false, new DbParameter(nameof(BarrageEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.BarrageEffect = await GetSingleAsync<BarrageEffect>(new DbParameter(nameof(BarrageEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                             if (group.BarrageEffect != null)
-                                group.SpellVisualEffectName = await GetSingleAsync<SpellVisualEffectName>(false, new DbParameter(nameof(SpellVisualEffectName.ID), group.BarrageEffect.SpellVisualEffectNameID)) ?? new();
+                                group.SpellVisualEffectName = await GetSingleAsync<SpellVisualEffectName>(new DbParameter(nameof(SpellVisualEffectName.ID), group.BarrageEffect.SpellVisualEffectNameID)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.ROPE_EFFECT)
                         {
-                            group.RopeEffect = await GetSingleAsync<RopeEffect>(false, new DbParameter(nameof(RopeEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.RopeEffect = await GetSingleAsync<RopeEffect>(new DbParameter(nameof(RopeEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
                         else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_SCREEN_EFFECT)
                         {
-                            group.SpellVisualScreenEffect = await GetSingleAsync<SpellVisualScreenEffect>(false, new DbParameter(nameof(SpellVisualScreenEffect.ID), spellVisualKitEffect.Effect)) ?? new();
+                            group.SpellVisualScreenEffect = await GetSingleAsync<SpellVisualScreenEffect>(new DbParameter(nameof(SpellVisualScreenEffect.ID), spellVisualKitEffect.Effect)) ?? new();
                         }
 
                         result.EffectGroups.Add(group);
@@ -176,7 +176,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<bool> SaveAsync(SpellVisualKitDto dto, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(6);
 
             try
@@ -296,7 +296,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
 
             try

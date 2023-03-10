@@ -10,7 +10,7 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ServiceBase
     {
-        protected void DefaultProgressCallback(string title, string subtitle, int progress)
+        protected void DefaultCallback(string title, string subtitle, int progress)
         {
             Console.WriteLine($"{progress} %: {title} => {subtitle}");
         }
@@ -148,7 +148,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(uint entityId)
         {
-            var entity = await GetSingleAsync<HotfixModsEntity>(false, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
+            var entity = await GetSingleAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
             {
                 entity = new()

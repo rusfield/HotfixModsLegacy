@@ -11,7 +11,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                return await GetAsync<ItemModifiedAppearance>(false, false, new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
+                return await GetAsync<ItemModifiedAppearance>(new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
             }
             catch (Exception ex)
             {

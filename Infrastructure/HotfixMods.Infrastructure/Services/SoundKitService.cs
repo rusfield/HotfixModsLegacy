@@ -24,7 +24,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(false, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -46,12 +46,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<SoundKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
 
             try
             {
-                var soundKit = await GetSingleAsync<SoundKit>(callback, progress, false, new DbParameter(nameof(SoundKit.ID), id));
+                var soundKit = await    GetSingleAsync<SoundKit>(callback, progress, new DbParameter(nameof(SoundKit.ID), id));
                 if (null == soundKit)
                 {
                     callback.Invoke(LoadingHelper.Loading, $"{nameof(SoundKit)} not found", 100);
@@ -66,7 +66,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = true
                 };
 
-                var soundKitEntries = await GetAsync<SoundKitEntry>(callback, progress, false, false, new DbParameter(nameof(SoundKitEntry.SoundKitID), id));
+                var soundKitEntries = await GetAsync<SoundKitEntry>(callback, progress, new DbParameter(nameof(SoundKitEntry.SoundKitID), id));
                 foreach (var soundKitEntry in soundKitEntries)
                 {
                     result.EntryGroups.Add(new()
@@ -88,7 +88,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<bool> SaveAsync(SoundKitDto dto, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(5);
 
             try
@@ -119,7 +119,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
         {
-            callback = callback ?? DefaultProgressCallback;
+            callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
 
             try

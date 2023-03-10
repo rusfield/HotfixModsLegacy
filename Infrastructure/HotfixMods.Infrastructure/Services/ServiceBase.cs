@@ -38,13 +38,22 @@ namespace HotfixMods.Infrastructure.Services
         where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
-            return await GetSingleAsync<T>(serverOnly, parameters);
+            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>()!, typeof(T).Name, serverOnly, parameters);
+            return result.DbRowToEntity<T>();
         }
 
-        protected async Task<T?> GetSingleAsync<T>(bool serverOnly, params DbParameter[] parameters)
+        protected async Task<T?> GetSingleAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>()!, typeof(T).Name, false, parameters);
+            return result.DbRowToEntity<T>();
+        }
+
+        protected async Task<T?> GetSingleAsync<T>(params DbParameter[] parameters)
         where T : new()
         {
-            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, parameters);
+            var result = await GetSingleAsync(GetSchemaNameOfEntity<T>()!, typeof(T).Name, false, parameters);
             return result.DbRowToEntity<T>();
         }
 
@@ -70,17 +79,26 @@ namespace HotfixMods.Infrastructure.Services
 
 
         #region GET (many)
-        protected async Task<List<T>> GetAsync<T>(bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
-            where T : new()
-        {
-            return await GetAsync<T>(DefaultProgressCallback, DefaultProgress, serverOnly, includeClientIfServerResult, parameters);
-        }
-
         protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
             where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
             var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, includeClientIfServerResult, parameters);
+            return result.DbRowsToEntities<T>().ToList();
+        }
+
+        protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
+            where T : new()
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, parameters);
+            return result.DbRowsToEntities<T>().ToList();
+        }
+
+        protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
+            where T : new()
+        {
+            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, parameters);
             return result.DbRowsToEntities<T>().ToList();
         }
 
@@ -276,13 +294,13 @@ namespace HotfixMods.Infrastructure.Services
             var schemaName = GetSchemaNameOfEntity<T>();
             if (schemaName == _appConfig.HotfixesSchema)
             {
-                var entities = await GetAsync<T>(false, true, parameters);
+                var entities = await GetAsync<T>(parameters);
 
                 foreach (var entity in entities)
                 {
                     var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
 
-                    var hotfixData = await GetSingleAsync<HotfixData>(true, dbParameters);
+                    var hotfixData = await GetSingleAsync<HotfixData>(DefaultCallback, DefaultProgress, true, dbParameters);
                     if (hotfixData != null)
                     {
                         hotfixData.Status = (byte)HotfixStatuses.RECORD_REMOVED;

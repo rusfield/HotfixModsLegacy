@@ -51,6 +51,10 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
                         var fieldLines = fieldValues.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
                         (var indexField, var parentIndexField) = GetInstanceParameters(content, db2Name);
 
+                        // If IndexField is -1, it means its not listed in DB2Metadata, and the default index position is 0.
+                        // Add it manually as uint.
+                        results.Add((typeof(uint), false));
+
                         for (int i = 0; i < fieldLines.Length; i++)
                         {
                             var line = fieldLines[i];

@@ -9,9 +9,9 @@
 <PagedDtoContent T="SpellMisc">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CastingTimeIndex))" GetOptionsAsync_Func="(Service.GetCastingTimeIndexOptions)" />
-            <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DurationIndex))" GetOptionsAsync_Func="(Service.GetDurationIndexOptions)" />
-            <Input_Element T="ushort" @bind-Value="Value.RangeIndex" ValueCompare="ValueCompare?.RangeIndex" Label="@nameof(Value.RangeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeIndex))" GetOptionsAsync_Func="(Service.GetRangeIndexOptions)" />
+            <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CastingTimeIndex))" GetOptionsAsync_Func="(Service.GetCastingTimeIndexOptionsAsync)" />
+            <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DurationIndex))" GetOptionsAsync_Func="(Service.GetDurationIndexOptionsAsync)" />
+            <Input_Element T="ushort" @bind-Value="Value.RangeIndex" ValueCompare="ValueCompare?.RangeIndex" Label="@nameof(Value.RangeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeIndex))" GetOptionsAsync_Func="(Service.GetRangeIndexOptionsAsync)" />
             <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SchoolMask))" GetOptionsAsync_Func="(Service.GetSchoolMaskOptions)" MultiSelection="true" />
             <Input_Element T="decimal" @bind-Value="Value.Speed" ValueCompare="ValueCompare?.Speed" Label="@nameof(Value.Speed).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed))" />
             <Input_Element T="decimal" @bind-Value="Value.LaunchDelay" ValueCompare="ValueCompare?.LaunchDelay" Label="@nameof(Value.LaunchDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LaunchDelay))" />

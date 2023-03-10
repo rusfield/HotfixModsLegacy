@@ -8,47 +8,58 @@ namespace HotfixMods.Infrastructure.Services
     public partial class SpellService
     {
         #region SpellMisc
-        public async Task<Dictionary<ushort, string>> GetCastingTimeIndexOptions()
+        public async Task<Dictionary<ushort, string>> GetCastingTimeIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellCastTimes = await GetAsync<SpellCastTimes>(DefaultCallback, DefaultProgress, false, true);
+            var spellCastTimes = await GetAsync(_appConfig.HotfixesSchema, "SpellCastTimes", false, true);
             foreach(var spellCastTime in spellCastTimes)
             {
-                string value = $"{spellCastTime.Base} ms";
-                if (spellCastTime.Base != spellCastTime.Minimum)
-                    value += $" (min {spellCastTime.Minimum} ms)";
+                var spellCastTimeBase = spellCastTime.GetValueByNameAs<int>("Base");
+                var spellCastTimeMinimum = spellCastTime.GetValueByNameAs<int>("Minimum");
 
-                results.Add((ushort)spellCastTime.ID, value);
+                var value = $"{spellCastTimeBase} ms";
+                if (spellCastTimeBase != spellCastTimeMinimum)
+                    value += $" (min {spellCastTimeMinimum} ms)";
+
+                results.Add((ushort)spellCastTime.GetIdValue(), value);
             }
             return results;
         }
 
-        public async Task<Dictionary<ushort, string>> GetDurationIndexOptions()
+        public async Task<Dictionary<ushort, string>> GetDurationIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellDurations = await GetAsync<SpellDuration>(DefaultCallback, DefaultProgress, false, true);
-            foreach(var spellDuration in spellDurations)
+            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellDuration", false, true);
+            foreach (var spellDuration in spellDurations)
             {
-                string value = $"{spellDuration.Duration} ms";
-                if (spellDuration.Duration != spellDuration.MaxDuration)
-                    value += $" (max {spellDuration.MaxDuration} ms)";
+                var duration = spellDuration.GetValueByNameAs<int>("Duration");
+                var maxDuration = spellDuration.GetValueByNameAs<int>("MaxDuration");
 
-                results.Add((ushort)spellDuration.ID,  value);
+                var value = $"{duration} ms";
+                if (duration != maxDuration)
+                    value += $" (min {maxDuration} ms)";
+
+                results.Add((ushort)spellDuration.GetIdValue(), value);
             }
             return results;
         }
 
-        public async Task<Dictionary<ushort, string>> GetRangeIndexOptions()
+        public async Task<Dictionary<ushort, string>> GetRangeIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellRanges = await GetAsync<SpellRange>(DefaultCallback, DefaultProgress, false, true);
-            foreach(var spellRange in spellRanges)
+            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellRange", false, true);
+            foreach (var spellDuration in spellDurations)
             {
-                string value = $"{spellRange.RangeMin0} to {spellRange.RangeMax0} yards";
-                if (spellRange.RangeMin0 != spellRange.RangeMin1 || spellRange.RangeMax0 != spellRange.RangeMax1)
-                    value = $"{spellRange.RangeMin0}/{spellRange.RangeMin1} to {spellRange.RangeMax0}/{spellRange.RangeMax1} yards";
+                var rangeMin0 = spellDuration.GetValueByNameAs<decimal>("RangeMin0");
+                var rangeMin1 = spellDuration.GetValueByNameAs<decimal>("RangeMin1");
+                var rangeMax0 = spellDuration.GetValueByNameAs<decimal>("RangeMax0");
+                var rangeMax1 = spellDuration.GetValueByNameAs<decimal>("RangeMax1");
 
-                results.Add((ushort)spellRange.ID, value);
+                string value = $"{rangeMin0} to {rangeMax0} yards";
+                if(rangeMin0 != rangeMin1 || rangeMax0 != rangeMax1)
+                    value = $"{rangeMin0}/{rangeMin1} to {rangeMax0}/{rangeMax1} yards";
+
+                results.Add((ushort)spellDuration.GetIdValue(), value);
             }
             return results;
         }

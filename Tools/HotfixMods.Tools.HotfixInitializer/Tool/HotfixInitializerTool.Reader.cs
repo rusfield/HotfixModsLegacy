@@ -173,28 +173,18 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
         // Method that takes name and fileContent parameters and returns the struct part
         public string ExtractStruct(string name, string fileContent)
         {
-            // Create a regex pattern that matches a struct declaration with curly braces and any content inside them
-            // The pattern uses a named group "struct" to capture the whole struct part
-            // The pattern also uses a backreference "\k<name>" to match the same name parameter as before 
             string pattern = @"struct\s+(?<name>" + name + @")\s*Meta\s*\{(?<struct>.*?)\};";
 
-            // Create a regex object with the pattern
             Regex regex = new Regex(pattern);
-
-            // Apply the regex to the file content and get the first match
             Match match = regex.Match(fileContent);
 
-            // If there is a match,
             if (match.Success)
             {
-                // Return the captured group "struct" with some formatting 
                 return "struct " + name + "Meta\n{\n" + match.Groups["struct"].Value + "\n};";
 
             }
-
             else
             {
-                // Otherwise return an empty string or an error message 
                 return "";
 
             }

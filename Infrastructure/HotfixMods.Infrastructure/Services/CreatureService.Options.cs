@@ -13,5 +13,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetOptionsAsync<byte, uint>(_appConfig.HotfixesSchema, "CreatureType", "Name");
         }
+
+        
     }
 }

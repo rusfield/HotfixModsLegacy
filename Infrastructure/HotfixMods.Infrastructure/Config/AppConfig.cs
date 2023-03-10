@@ -9,7 +9,8 @@ namespace HotfixMods.Infrastructure.Config
         public string HotfixesSchema { get; set; } = "hotfixes";
         public string CharactersSchema { get; set; } = "characters";
         public string WorldSchema { get; set; } = "world";
-        public string Db2Path { get; set; } = @"C:\hotfixMods";
+        public string Db2Path { get; set; } = @"\";
+        public string TrinityCorePath { get; set; } = @"\";
         public string HotfixDataTableName { get; set; } = "hotfix_data";
         public string HotfixDataRecordIDColumnName { get; set; } = "RecordID";
         public string HotfixDataTableHashColumnName { get; set; } = "TableHash";

@@ -27,5 +27,11 @@
             }
             return results;
         }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetEnumOptionsAsync<TOptionKey>(Type modelType, string propertyName)
+            where TOptionKey : notnull
+        {
+            return await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+        }
     }
 }

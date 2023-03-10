@@ -6,6 +6,7 @@ using HotfixMods.Infrastructure.Handlers;
 //using HotfixMods.Infrastructure.Razor.Handlers;
 using HotfixMods.Infrastructure.Services;
 using HotfixMods.Providers.MySqlConnector.Client;
+using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -68,6 +69,10 @@ namespace HotfixMods.Apps.MauiBlazor
                     appConfig.MySql.Username,
                     appConfig.MySql.Password
                     );
+            });
+            builder.Services.AddSingleton<IServerEnumProvider, TrinityCoreClient>(provider =>
+            {
+                return new TrinityCoreClient(appConfig.TrinityCorePath);
             });
 
             builder.Services.AddSingleton<HotfixService>();

@@ -20,15 +20,17 @@ namespace HotfixMods.Infrastructure.Services
         IClientDbDefinitionProvider _clientDbDefinitionProvider;
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
+        IServerEnumProvider _serverEnumProvider;
         IExceptionHandler _exceptionHandler;
         protected AppConfig _appConfig;
 
-        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
+        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
             _clientDbDefinitionProvider = clientDbDefinitionProvider;
             _serverDbProvider = serverDbProvider;
             _clientDbProvider = clientDbProvider;
+            _serverEnumProvider = serverEnumProvider;
             _exceptionHandler = exceptionHandler;
             _appConfig = appConfig;
         }

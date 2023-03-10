@@ -16,7 +16,7 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClassID))" GetOptionsAsync_Func="GetItemClasses" @bind-Value:after="(() => subClassIdRef?.Refresh())" />
+                <Input_Element T="byte" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClassID))" GetOptionsAsync_Func="Service.GetItemClassOptionsAsync" @bind-Value:after="(() => subClassIdRef?.Refresh())" />
             </LeftContent>
             <RightContent>
                 <Input_Element T="byte" @ref="subClassIdRef" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SubclassID))" GetOptionsAsync_Func="GetItemSubClasses" />
@@ -43,15 +43,8 @@
 
     Input_Element<byte>? subClassIdRef;
 
-    async Task<Dictionary<byte, string>> GetItemClasses()
-    {
-        var options = await Service.GetItemClassOptions();
-        return options.ToDictionary(s => (byte)s.ClassID, s => s.ClassName);
-    }
-
     async Task<Dictionary<byte, string>> GetItemSubClasses()
     {
-        var options = await Service.GetItemSubClassOptions((sbyte)Value.ClassID);
-        return options.ToDictionary(s => (byte)s.SubClassID, s => s.DisplayName);
+        return await Service.GetItemSubClassOptionsAsync((sbyte)Value.ClassID);
     }
 }

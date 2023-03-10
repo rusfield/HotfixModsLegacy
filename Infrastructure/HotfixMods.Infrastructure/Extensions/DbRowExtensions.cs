@@ -27,6 +27,16 @@ namespace HotfixMods.Infrastructure.Extensions
             return dbRow;
         }
 
+        public static T GetValueByNameAs<T>(this DbRow dbRow, string columnName)
+        {
+            var column = dbRow.Columns.FirstOrDefault(c => c.Name.Equals(columnName, StringComparison.InvariantCultureIgnoreCase));
+            if(column != null)
+            {
+                return (T)Convert.ChangeType(column.Value, typeof(T));
+            }
+            throw new Exception($"Unable to get {columnName} from DbRow {dbRow.Db2Name}.");
+        }
+
         public static IEnumerable<DbRow> EntitiesToDbRows<T>(this IEnumerable<T> entities)
             where T : new()
         {

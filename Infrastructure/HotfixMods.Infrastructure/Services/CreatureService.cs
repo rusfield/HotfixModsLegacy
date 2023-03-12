@@ -250,7 +250,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = true
                 };
 
-                var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), id));
+                var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(callback, progress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), id), new DbParameter(nameof(CreatureTemplateModel.Idx), idx));
                 if (creatureTemplateModel != null)
                 {
                     result.CreatureTemplateModel = creatureTemplateModel;

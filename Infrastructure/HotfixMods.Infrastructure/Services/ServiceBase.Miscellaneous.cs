@@ -148,7 +148,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(uint entityId)
         {
-            var entity = await GetSingleAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
+            var entity = await GetSingleAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
             {
                 entity = new()

@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.SpellName.VerifiedBuild= VerifiedBuild;
 
             dto.SpellMisc.ID = spellMiscId;
-            dto.SpellMisc.SpellID = (int)spellId;
+            dto.SpellMisc.SpellID = spellId;
             dto.SpellMisc.VerifiedBuild = VerifiedBuild;
 
             if(dto.SpellXSpellVisual != null)

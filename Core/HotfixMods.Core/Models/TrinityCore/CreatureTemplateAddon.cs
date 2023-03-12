@@ -14,6 +14,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public byte AnimTier { get; set; } = 0;
         public byte VisFlags { get; set; } = 0;
         public byte SheatheState { get; set; } = 0;
+        public byte PvPFlags { get; set; } = 0;
         public uint Emote { get; set; } = 0;
         public short AiAnimKit { get; set; } = 0;
         public short MovementAnimKit { get; set; } = 0;

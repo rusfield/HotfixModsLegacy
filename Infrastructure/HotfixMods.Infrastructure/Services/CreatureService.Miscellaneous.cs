@@ -18,7 +18,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var result = new Dictionary<uint, string>();
-                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
+                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
                 foreach (var model in creatureTemplateModels)
                 {
                     string name = model.Idx.ToString();

@@ -7,6 +7,8 @@
 using DBDefsLib;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
+using static DBDefsLib.Structs;
+using System.Reflection.Metadata;
 
 namespace HotfixMods.Providers.WowDev.Client
 {
@@ -94,7 +96,12 @@ namespace HotfixMods.Providers.WowDev.Client
                         dbRowDefinition.ColumnDefinitions.Add(new()
                         {
                             Name = arrayColName,
-                            Type = type
+                            Type = type,
+                            IsIndex = fieldDefinition.isID,
+                            IsParentIndex = fieldDefinition.isRelation,
+                            ReferenceDb2 = columnDefinition.foreignTable,
+                            ReferenceDb2Field = columnDefinition.foreignColumn,
+                            IsLocalized = columnDefinition.type == "locstring"
                         });
                     }
                 }
@@ -103,14 +110,24 @@ namespace HotfixMods.Providers.WowDev.Client
                     dbRowDefinition.ColumnDefinitions.Add(new()
                     {
                         Name = name,
-                        Type = type
+                        Type = type,
+                        IsIndex = fieldDefinition.isID,
+                        IsParentIndex = fieldDefinition.isRelation,
+                        ReferenceDb2 = columnDefinition.foreignTable,
+                        ReferenceDb2Field = columnDefinition.foreignColumn,
+                        IsLocalized = columnDefinition.type == "locstring"
                     });
                 }
             }
             dbRowDefinition.ColumnDefinitions.Add(new()
             {
                 Name = "VerifiedBuild",
-                Type = typeof(int)
+                Type = typeof(int),
+                IsIndex = false,
+                IsParentIndex = false,
+                ReferenceDb2 = null,
+                ReferenceDb2Field = null,
+                IsLocalized = false
             });
             return dbRowDefinition;
         }

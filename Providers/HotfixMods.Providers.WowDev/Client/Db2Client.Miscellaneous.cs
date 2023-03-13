@@ -158,14 +158,17 @@ namespace HotfixMods.Providers.WowDev.Client
 
                                 if (value!.GetType() == typeof(float))
                                     value = Convert.ToDecimal((float)value);
-                                else if (fieldDef.isID)
-                                    value = uint.Parse(value.ToString());
 
                                 rowResult.Columns.Add(new()
                                 {
                                     Name = arrayColName,
                                     Type = type,
-                                    Value = value
+                                    Value = value,
+                                    IsIndex = fieldDef.isID,
+                                    IsParentIndex = fieldDef.isRelation,
+                                    ReferenceDb2 = columnDefinition.foreignTable,
+                                    ReferenceDb2Field = columnDefinition.foreignColumn,
+                                    IsLocalized = columnDefinition.type == "locstring"
                                 });
                             }
                         }
@@ -175,15 +178,22 @@ namespace HotfixMods.Providers.WowDev.Client
 
                             if (value!.GetType() == typeof(float))
                                 value = Convert.ToDecimal((float)value);
+                            /*
                             else if (fieldDef.isID)
                                 value = uint.Parse(value.ToString());
+                            */
 
                             name = name.Replace("_lang", "");
                             rowResult.Columns.Add(new()
                             {
                                 Name = name,
                                 Type = type,
-                                Value = value
+                                Value = value,
+                                IsIndex = fieldDef.isID,
+                                IsParentIndex = fieldDef.isRelation,
+                                ReferenceDb2 = columnDefinition.foreignTable,
+                                ReferenceDb2Field = columnDefinition.foreignColumn,
+                                IsLocalized = columnDefinition.type == "locstring"
                             });
                         }
                     }
@@ -193,7 +203,12 @@ namespace HotfixMods.Providers.WowDev.Client
                         {
                             Name = "VerifiedBuild",
                             Type = typeof(int),
-                            Value = 0
+                            Value = 0,
+                            IsIndex = false,
+                            IsLocalized = false,
+                            IsParentIndex = false,
+                            ReferenceDb2 = null,
+                            ReferenceDb2Field = null
                         });
 
                     if (MeetsDbParameterRequirements(parameters, rowResult))

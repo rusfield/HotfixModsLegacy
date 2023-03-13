@@ -1,9 +1,7 @@
 ﻿namespace HotfixMods.Core.Models
 {
-    public class DbColumn
+    public class DbColumn : DbColumnDefinition
     {
-        public string Name { get; set; }
-        public Type Type { get; set; }
         public object Value { get; set; }
     }
 }

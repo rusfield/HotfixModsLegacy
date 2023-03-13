@@ -178,8 +178,15 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 dbRowDefinition.ColumnDefinitions.Add(new()
                 {
                     Name = reader.GetString(0),
-                    Type = MySqlDataTypeToCSharpType(reader.GetString(1))
-                });
+                    Type = MySqlDataTypeToCSharpType(reader.GetString(1)),
+                    IsIndex = reader.GetString(3) == "PRI",
+
+                    // TODO?
+                    IsLocalized = false,
+                    IsParentIndex = false,
+                    ReferenceDb2 = null,
+                    ReferenceDb2Field = null
+            });
             }
             await mySqlConnection.CloseAsync();
             return dbRowDefinition;

@@ -43,6 +43,7 @@ namespace HotfixMods.Infrastructure.Extensions
             return entities.Where(e => e != null).Select(e => e.EntityToDbRow()!);
         }
 
+        [Obsolete]
         public static DbRowDefinition? EntityToDbRowDefinition<T>(this T? entity)
             where T : new()
         {
@@ -52,6 +53,7 @@ namespace HotfixMods.Infrastructure.Extensions
             return TypeToDbRowDefinition(typeof(T));
         }
 
+        [Obsolete]
         public static DbRowDefinition? TypeToDbRowDefinition(this Type? type)
         {
             if (null == type)

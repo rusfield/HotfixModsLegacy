@@ -45,7 +45,7 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
-        public async Task<SpellDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<SpellDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(12);
@@ -159,7 +159,7 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(10);

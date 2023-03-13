@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class CreatureDisplayInfo
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public ushort ModelID { get; set; } = 0;
         public ushort SoundID { get; set; } = 0;
         public sbyte SizeClass { get; set; } = 0;

@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema] // Client only?
     public class ItemBonus
     {
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public int Value0 { get; set; }
         public int Value1 { get; set; }
         public int Value2 { get; set; }

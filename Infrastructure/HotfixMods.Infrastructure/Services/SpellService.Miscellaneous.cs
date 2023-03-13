@@ -42,7 +42,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 dto.SpellXSpellVisual.ID = spellXSpellVisualId;
                 dto.SpellXSpellVisual.SpellID = (int)spellId;
-                dto.SpellXSpellVisual.SpellVisualID = spellVisualId;
+                dto.SpellXSpellVisual.SpellVisualID = (uint)spellVisualId;
                 dto.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
 
                 if (dto.SpellVisual != null)

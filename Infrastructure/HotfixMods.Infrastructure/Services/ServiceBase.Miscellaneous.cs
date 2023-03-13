@@ -85,18 +85,18 @@ namespace HotfixMods.Infrastructure.Services
             throw new Exception($"{typeof(T)} does not contain any {idPropertyName} properties");
         }
 
-        protected async Task<uint> GetNextIdAsync<T>()
+        protected async Task<int> GetNextIdAsync<T>()
             where T : new()
         {
             return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId, GetIdPropertyNameOfEntity<T>());
         }
 
-        protected async Task<uint> GetNextIdAsync(string db2Name)
+        protected async Task<int> GetNextIdAsync(string db2Name)
         {
             return await GetNextIdAsync(_appConfig.HotfixesSchema, db2Name.ToTableName(), FromId, ToId, "id");
         }
 
-        async Task<uint> GetNextIdAsync(string schemaName, string tableName, uint fromId, uint toId, string idPropertyName)
+        async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId, int toId, string idPropertyName)
         {
             var highestId = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
 
@@ -134,13 +134,13 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbProvider.SchemaExistsAsync(schemaName);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(Action<string, string, int> callback, Func<int> progress, uint entityId)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(Action<string, string, int> callback, Func<int> progress, int entityId)
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());
             return await GetExistingOrNewHotfixModsEntityAsync(entityId);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(uint entityId)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(int entityId)
         {
             var entity = await GetSingleAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
@@ -156,9 +156,9 @@ namespace HotfixMods.Infrastructure.Services
             return entity;
         }
 
-        protected async Task<uint> GetNextHotfixModsEntityIdAsync()
+        protected async Task<int> GetNextHotfixModsEntityIdAsync()
         {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), uint.MinValue, uint.MaxValue, nameof(HotfixModsEntity.ID));
+            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), 0, int.MaxValue, nameof(HotfixModsEntity.ID));
         }
 
         protected void HandleException(Exception exception)
@@ -176,7 +176,7 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
         }
 
-        protected async Task<uint> GetIdByConditionsAsync<T>(uint? currentId, bool isUpdate)
+        protected async Task<int> GetIdByConditionsAsync<T>(int? currentId, bool isUpdate)
             where T : new()
         {
             // Entity is null, and this ID will not be used.
@@ -185,7 +185,7 @@ namespace HotfixMods.Infrastructure.Services
 
             // Entity is new, or entity should be saved as new
             // Also check if entity is HotfixModsEntity, which does not use the FromId/ToId rules
-            if ((uint)currentId == 0 || !isUpdate)
+            if ((int)currentId == 0 || !isUpdate)
             {
                 if (typeof(T) == typeof(HotfixModsEntity))
                     return await GetNextHotfixModsEntityIdAsync();
@@ -195,7 +195,7 @@ namespace HotfixMods.Infrastructure.Services
 
 
             // Entity is being updated
-            return (uint)currentId;
+            return (int)currentId;
         }
     }
 }

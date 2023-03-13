@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKit
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public uint OneShotDuration { get; set; } = 0;
         public ushort OneShotStopAnimKitID { get; set; } = 0;
         public ushort LowDefAnimKitID { get; set; } = 0;

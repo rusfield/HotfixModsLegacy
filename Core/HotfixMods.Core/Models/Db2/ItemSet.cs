@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSet
     {
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public uint SetFlags { get; set; }
         public uint RequiredSkill { get; set; }

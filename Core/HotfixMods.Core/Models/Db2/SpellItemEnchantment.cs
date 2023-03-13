@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellItemEnchantment
     {
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public string HordeName { get; set; }
         public int Duration { get; set; }

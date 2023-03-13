@@ -99,15 +99,14 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 var dbRow = new DbRow(tableName);
                 for (int i = 0; i < dbRowDefinition.ColumnDefinitions.Count(); i++)
                 {
-                    var fieldName = dbRowDefinition.ColumnDefinitions.ElementAt(i).Name;
-                    var serverFieldType = dbRowDefinition.ColumnDefinitions.ElementAt(i).GetServerType();
-                    var propertyType = dbRowDefinition.ColumnDefinitions.ElementAt(i).Type;
+                    var column = dbRowDefinition.ColumnDefinitions.ElementAt(i);
+                    var fieldName = column.Name;
 
                     object propertyValue;
 
                     if (reader.IsDBNull(i))
                     {
-                        propertyValue = serverFieldType.ToString() switch
+                        propertyValue = column.GetServerType().ToString() switch
                         {
                             "System.SByte" => (sbyte)0,
                             "System.Int16" => (short)0,
@@ -124,7 +123,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     }
                     else
                     {
-                        propertyValue = serverFieldType.ToString() switch
+                        propertyValue = column.GetServerType().ToString() switch
                         {
                             "System.SByte" => reader.GetSByte(i),
                             "System.Int16" => reader.GetInt16(i),
@@ -140,22 +139,22 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                         };
                     }
 
-                    if(serverFieldType != propertyType)
+                    if(column.GetServerType() != column.Type)
                     {
-                        propertyValue = Convert.ChangeType(propertyValue, propertyType);
+                        propertyValue = Convert.ChangeType(propertyValue, column.Type);
                     }
 
                     dbRow.Columns.Add(new()
                     {
                         Name = fieldName,
-                        Type = propertyType,
+                        Type = column.Type,
                         Value = propertyValue,
 
                         // TODO?
-                        IsLocalized = false,
-                        IsParentIndex = false,
-                        ReferenceDb2 = null,
-                        ReferenceDb2Field = null
+                        IsLocalized = column.IsLocalized,
+                        IsParentIndex = column.IsParentIndex,
+                        ReferenceDb2 = column.ReferenceDb2,
+                        ReferenceDb2Field = column.ReferenceDb2Field
                     });
 
                 }
@@ -271,7 +270,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             return exists;
         }
 
-        public async Task<uint> GetHighestIdAsync(string schemaName, string tableName, uint minId, uint maxId, string idPropertyName = "id")
+        public async Task<int> GetHighestIdAsync(string schemaName, string tableName, int minId, int maxId, string idPropertyName = "id")
         {
             if (!await TableExistsAsync(schemaName, tableName))
             {
@@ -285,7 +284,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             while (reader.Read())
             {
                 if (!reader.IsDBNull(0))
-                    highestId = reader.GetUInt32(0);
+                    highestId = reader.GetInt32(0);
                 break;
             }
             await mySqlConnection.CloseAsync();

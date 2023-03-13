@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ChrRaceXChrModel
     {
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public int ChrRacesID { get; set; }
         public int ChrModelID { get; set; }
         public int Sex { get; set; }

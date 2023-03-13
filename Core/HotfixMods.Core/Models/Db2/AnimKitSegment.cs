@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKitSegment
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         [ParentIndexField]
         public ushort ParentAnimKitID { get; set; } = 0;
         public byte OrderIndex { get; set; } = 0;

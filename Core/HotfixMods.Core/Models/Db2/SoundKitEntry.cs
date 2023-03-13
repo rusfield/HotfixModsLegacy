@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SoundKitEntry
     {
         [IndexField]
-        public uint ID { get; set; }
+        public int ID { get; set; }
         [ParentIndexField]
         public uint SoundKitID { get; set; }
         public int FileDataID { get; set; }

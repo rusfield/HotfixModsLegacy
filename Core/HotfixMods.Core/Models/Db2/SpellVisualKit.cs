@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualKit
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public sbyte ClutterLevel { get; set; } = 0;
         public int FallbackSpellVisualKitID { get; set; } = 0;
         public ushort DelayMin { get; set; } = 0;

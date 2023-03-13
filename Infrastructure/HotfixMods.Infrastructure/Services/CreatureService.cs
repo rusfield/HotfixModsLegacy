@@ -31,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     results.Add(new()
                     {
-                        ID = dto.RecordID,
+                        ID = (int)dto.RecordID,
                         Name = dto.Name,
                         AvatarUrl = null
                     });
@@ -227,7 +227,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<CreatureDto?> GetByIdAsync(uint id, uint idx = 0, Action<string, string, int>? callback = null)
+        public async Task<CreatureDto?> GetByIdAsync(int id, uint idx = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -285,7 +285,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<CreatureDto?> GetByCreatureDisplayInfoIdAsync(uint creatureDisplayInfoId, Action<string, string, int>? callback = null)
+        public async Task<CreatureDto?> GetByCreatureDisplayInfoIdAsync(int creatureDisplayInfoId, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -311,7 +311,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     var creatureTemplate = await GetSingleAsync<CreatureTemplate>(callback, progress, new DbParameter(nameof(CreatureTemplate.Entry), creatureTemplateModel.CreatureID));
                     result.CreatureTemplateModel = creatureTemplateModel;
-                    result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, creatureTemplate?.Entry ?? 0);
+                    result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (int?)creatureTemplate?.Entry ?? 0);
                     if (creatureTemplate != null)
                     {
                         result.CreatureTemplate = creatureTemplate;
@@ -393,7 +393,7 @@ namespace HotfixMods.Infrastructure.Services
             }
         }
 
-        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(10);

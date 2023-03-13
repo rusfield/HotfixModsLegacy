@@ -29,7 +29,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     results.Add(new()
                     {
-                        ID = dto.RecordID,
+                        ID = (int)dto.RecordID,
                         Name = dto.Name,
                         AvatarUrl = null
                     });
@@ -61,7 +61,7 @@ namespace HotfixMods.Infrastructure.Services
                     GameobjectTemplate = gameobjectTemplate,
                     GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
                     GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectTemplate.DisplayID), gameobjectTemplate.DisplayID)) ?? new(),
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, gameobjectTemplate.Entry),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (int)gameobjectTemplate.Entry),
                     IsUpdate = true
                 };
 

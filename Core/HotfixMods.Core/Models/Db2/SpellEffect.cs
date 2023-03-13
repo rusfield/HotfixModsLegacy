@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellEffect
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public short EffectAura { get; set; } = 0;
         public int DifficultyID { get; set; } = 0;
         public int EffectIndex { get; set; } = 0;

@@ -12,6 +12,6 @@ namespace HotfixMods.Core.Interfaces
         Task CreateTableIfNotExistsAsync(string schemaName, string tableName, DbRowDefinition dbRowDefinition);
         Task<bool> TableExistsAsync(string schemaName, string tableName);
         Task<bool> SchemaExistsAsync(string schemaName);
-        Task<uint> GetHighestIdAsync(string schema, string tableName, uint minId, uint maxId, string idPropertyName = "id");
+        Task<int> GetHighestIdAsync(string schema, string tableName, int minId, int maxId, string idPropertyName = "id");
     }
 }

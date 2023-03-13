@@ -11,7 +11,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
-            var gameobjectTemplateId = await GetIdByConditionsAsync<GameobjectTemplate>(dto.GameobjectTemplate.Entry, dto.IsUpdate);
+            var gameobjectTemplateId = await GetIdByConditionsAsync<GameobjectTemplate>((int)dto.GameobjectTemplate.Entry, dto.IsUpdate);
             var gameobjectDisplayInfoId = await GetIdByConditionsAsync<GameobjectDisplayInfo>(dto.GameobjectDisplayInfo.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
@@ -22,16 +22,16 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.RecordID = gameobjectTemplateId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
-            dto.GameobjectTemplate.Entry = gameobjectTemplateId;
+            dto.GameobjectTemplate.Entry = (uint)gameobjectTemplateId;
             dto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
-            dto.GameobjectTemplate.DisplayID = gameobjectDisplayInfoId;
+            dto.GameobjectTemplate.DisplayID = (uint)gameobjectDisplayInfoId;
 
             dto.GameobjectDisplayInfo.ID = gameobjectDisplayInfoId;
             dto.GameobjectDisplayInfo.VerifiedBuild = VerifiedBuild;
 
             if(dto.GameobjectTemplateAddon != null)
             {
-                dto.GameobjectTemplateAddon.Entry= gameobjectTemplateId;
+                dto.GameobjectTemplateAddon.Entry= (uint)gameobjectTemplateId;
                 //dto.GameobjectTemplateAddon.VerifiedBuild = VerifiedBuild;
             }
         }

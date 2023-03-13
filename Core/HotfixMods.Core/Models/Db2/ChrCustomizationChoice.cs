@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ChrCustomizationChoice
     {
         public string Name { get; set; } = "";
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public int ChrCustomizationOptionID { get; set; } = 0;
         public int ChrCustomizationReqID { get; set; } = 0;
         public int ChrCustomizationVisReqID { get; set; } = 0;

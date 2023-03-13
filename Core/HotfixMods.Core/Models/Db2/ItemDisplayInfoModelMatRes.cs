@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemDisplayInfoModelMatRes
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public int MaterialResourcesID { get; set; }
         public int TextureType { get; set; }
         public int ModelIndex { get; set; }

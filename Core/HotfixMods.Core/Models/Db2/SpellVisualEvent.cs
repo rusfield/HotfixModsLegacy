@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualEvent
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public int StartEvent { get; set; } = 0;
         public int EndEvent { get; set; } = 0;
         public int StartMinOffsetMs { get; set; } = 0;

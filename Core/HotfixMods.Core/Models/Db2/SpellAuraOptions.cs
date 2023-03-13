@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellAuraOptions
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public byte DifficultyID { get; set; } = 0;
         public ushort CumulativeAura { get; set; } = 0;
         public int ProcCategoryRecovery { get; set; } = 0;

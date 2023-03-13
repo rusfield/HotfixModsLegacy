@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.EntryGroups.ForEach(g =>
             {
                 g.SoundKitEntry.ID = nextSoundKitEntryId++;
-                g.SoundKitEntry.SoundKitID = soundKitId;
+                g.SoundKitEntry.SoundKitID = (uint)soundKitId;
                 g.SoundKitEntry.VerifiedBuild = VerifiedBuild;
             });
         }

@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemSetSpell
     {
-        public uint ID { get; set; }
+        public int ID { get; set; }
         public ushort ChrSpecID { get; set; }
         public uint SpellID { get; set; }
         public byte Threshold { get; set; }

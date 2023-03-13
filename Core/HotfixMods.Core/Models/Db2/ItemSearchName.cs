@@ -8,7 +8,7 @@ namespace HotfixMods.Core.Models.Db2
     public class ItemSearchName
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public long AllowableRace { get; set; } = 0;
         [LocalizedString]
         public string Display { get; set; } = "";

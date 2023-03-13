@@ -14,8 +14,8 @@ namespace HotfixMods.Infrastructure.Services
     public partial class ServiceBase
     {
         public int VerifiedBuild { get; set; }
-        public uint FromId { get; set; }
-        public uint ToId { get; set; }
+        public int FromId { get; set; }
+        public int ToId { get; set; }
 
 
         IServerDbDefinitionProvider _serverDbDefinitionProvider;

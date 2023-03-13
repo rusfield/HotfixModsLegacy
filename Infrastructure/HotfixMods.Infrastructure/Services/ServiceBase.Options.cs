@@ -13,11 +13,11 @@
             where TClientKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            var creatureTypes = await GetAsync(schemaName, db2Name, false, true);
-            foreach (var creatureType in creatureTypes)
+            var options = await GetAsync(schemaName, db2Name, false, true);
+            foreach (var option in options)
             {
-                var key = ((TClientKey?)creatureType.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value)?.ToString();
-                var value = creatureType.Columns.Where(c => c.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
+                var key = option.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value?.ToString();
+                var value = option.Columns.Where(c => c.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
 
                 if (key != null && value != null)
                 {

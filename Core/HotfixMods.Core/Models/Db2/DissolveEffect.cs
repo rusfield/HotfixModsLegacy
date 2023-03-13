@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class DissolveEffect
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public decimal Ramp { get; set; } = 0;
         public decimal StartValue { get; set; } = 0;
         public decimal EndValue { get; set; } = 0;

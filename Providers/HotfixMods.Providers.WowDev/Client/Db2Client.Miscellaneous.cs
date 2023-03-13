@@ -101,7 +101,7 @@ namespace HotfixMods.Providers.WowDev.Client
                         {
                             8 => field.isSigned ? typeof(sbyte) : typeof(byte),
                             16 => field.isSigned ? typeof(short) : typeof(ushort),
-                            32 => field.isSigned && !field.isID ? typeof(int) : typeof(uint),
+                            32 => field.isSigned ? typeof(int) : typeof(uint),
                             64 => field.isSigned ? typeof(long) : typeof(ulong),
                             _ => throw new Exception(@"Invalid int size {field.size}")
                         };

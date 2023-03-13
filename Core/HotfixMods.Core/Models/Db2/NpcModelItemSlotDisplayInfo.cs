@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class NpcModelItemSlotDisplayInfo
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public int ItemDisplayInfoID { get; set; } = 0;
         public sbyte ItemSlot { get; set; } = 0;
         [ParentIndexField]

@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class Item
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public byte ClassID { get; set; } = 0;
         public byte SubclassID { get; set; } = 0;
         public byte Material { get; set; } = 0;

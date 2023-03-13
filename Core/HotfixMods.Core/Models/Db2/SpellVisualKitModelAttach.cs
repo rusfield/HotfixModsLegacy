@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class SpellVisualKitModelAttach
     {
         [IndexField]
-        public uint ID { get; set; } = 0;
+        public int ID { get; set; } = 0;
         public decimal Offset0 { get; set; } = 0;
         public decimal Offset1 { get; set; } = 0;
         public decimal Offset2 { get; set; } = 0;

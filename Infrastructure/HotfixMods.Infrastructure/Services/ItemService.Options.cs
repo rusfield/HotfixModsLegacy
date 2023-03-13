@@ -39,5 +39,16 @@ namespace HotfixMods.Infrastructure.Services
             }
             return results;
         }
+
+        public async Task<Dictionary<byte, string>> GetItemMaterialOptionsAsync()
+        {
+            var results = new Dictionary<byte, string>();
+            var materials = await GetAsync(_appConfig.HotfixesSchema, "Material", false, true);
+            foreach (var material in materials)
+            {
+                results.Add(material.GetValueByNameAs<byte>("ID"), material.GetValueByNameAs<string>("ID"));
+            }
+            return results;
+        }
     }
 }

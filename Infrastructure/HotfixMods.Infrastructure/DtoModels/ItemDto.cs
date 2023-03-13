@@ -7,11 +7,11 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemDto(): base(nameof(Item)) { }
 
         public Item Item { get; set; } = new();
-        public ItemAppearance? ItemAppearance { get; set; }
-        public ItemDisplayInfo? ItemDisplayInfo { get; set; }
-        public ItemModifiedAppearance? ItemModifiedAppearance { get; set; }
         //public ItemSearchName? ItemSearchName { get; set; } // Will be populated automatically
         public ItemSparse? ItemSparse { get; set; }
+        public ItemModifiedAppearance? ItemModifiedAppearance { get; set; }
+        public ItemAppearance? ItemAppearance { get; set; }
+        public ItemDisplayInfo? ItemDisplayInfo { get; set; }
         public List<ItemDisplayInfoMaterialRes>? ItemDisplayInfoMaterialRes { get; set; }
         public List<EffectGroup> EffectGroups { get; set; } = new();
 

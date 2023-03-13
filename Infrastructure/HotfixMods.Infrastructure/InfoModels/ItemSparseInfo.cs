@@ -79,7 +79,7 @@
         public string SocketType1 { get; set; } = "TODO";
         public string SocketType2 { get; set; } = "TODO";
         public string SheatheType { get; set; } = "TODO";
-        public string Material { get; set; } = "TODO";
+        public string Material { get; set; } = "Set this value in Item tab.";
         public string PageMaterialID { get; set; } = "TODO";
         public string Bonding { get; set; } = "TODO";
         public string DamageType { get; set; } = "TODO";

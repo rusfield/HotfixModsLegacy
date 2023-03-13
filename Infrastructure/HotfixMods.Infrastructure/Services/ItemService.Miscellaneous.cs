@@ -52,6 +52,9 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.RecordID = itemId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
+            if(dto.ItemSparse != null)
+                dto.ItemSparse.Material = dto.Item.Material;
+
             dto.Item.ID = itemId;
             dto.Item.VerifiedBuild = VerifiedBuild;
 

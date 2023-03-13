@@ -30,7 +30,7 @@
             <Input_Element T="byte" @bind-Value="@(Value.Bonding)" Label="@(nameof(Value.Bonding).ToDisplayName())" ValueCompare="ValueCompare?.Bonding" OnInfoAdornmentClick="@(OpenInfoDialog(info.Bonding))"  GetOptionsAsync_Func="GetBondings"/>
             <Input_Element T="ushort" @bind-Value="@(Value.ItemSet)" Label="@(nameof(Value.ItemSet).ToDisplayName())" ValueCompare="ValueCompare?.ItemSet" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemSet))" />
             <Input_Element T="ushort" @bind-Value="@(Value.ItemNameDescriptionID)" Label="@(nameof(Value.ItemNameDescriptionID).ToDisplayName())" ValueCompare="ValueCompare?.ItemNameDescriptionID" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemNameDescriptionID))" />
-            <Input_Element T="byte" @bind-Value="@(Value.Material)" Label="@(nameof(Value.Material).ToDisplayName())" ValueCompare="ValueCompare?.Material" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" />
+            <Input_Element T="byte" @bind-Value="@(Value.Material)" Label="@(nameof(Value.Material).ToDisplayName())" ValueCompare="ValueCompare?.Material" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" Disabled="true" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>

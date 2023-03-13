@@ -9,7 +9,7 @@
     <MudItem xs="3">
         <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InventoryType))" />
         <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SheatheType))" />
-        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" />
+        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Material))" GetOptionsAsync_Func="Service.GetItemMaterialOptionsAsync" />
         <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsID" ValueCompare="ValueCompare?.ItemGroupSoundsID" Label="@nameof(Value.ItemGroupSoundsID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemGroupSoundsID))" />
     </MudItem>
     <MudItem xs="6">

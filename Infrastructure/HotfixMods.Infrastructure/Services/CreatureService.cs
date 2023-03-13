@@ -25,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
 
-                var dtos = await GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -360,7 +360,7 @@ namespace HotfixMods.Infrastructure.Services
                 callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
                 if (dto.IsUpdate)
                 {
-                    await DeleteAsync(dto.CreatureTemplate.Entry);
+                    await DeleteAsync((int)dto.CreatureTemplate.Entry);
                 }
 
                 callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());

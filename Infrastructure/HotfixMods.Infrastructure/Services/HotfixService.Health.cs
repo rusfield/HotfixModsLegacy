@@ -6,6 +6,7 @@ using HotfixMods.Infrastructure.AggregateModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -93,26 +94,28 @@ namespace HotfixMods.Infrastructure.Services
             }
             else if (await TableExistsAsync(schemaName, tableName))
             {
-                if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
+                if (_appConfig.HotfixesSchema.Equals(schemaName, StringComparison.OrdinalIgnoreCase))
                 {
                     // Normal 
 
                     serverDefinition = await GetDefinitionFromServerAsync(_appConfig.HotfixesSchema, tableName);
                     clientDefinition = await GetDefinitionFromClientAsync(type.Name);
                 }
-                else if (nameof(CharactersSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
+                else if (_appConfig.CharactersSchema.Equals(schemaName, StringComparison.OrdinalIgnoreCase))
                 {
                     // HotfixMods will serve as client
 
                     serverDefinition = await GetDefinitionFromServerAsync(_appConfig.CharactersSchema, tableName);
                     //clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                    return null; // TODO
                 }
-                else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
+                else if (_appConfig.WorldSchema.Equals(schemaName, StringComparison.OrdinalIgnoreCase))
                 {
                     // HotfixMods will serve as client
 
                     serverDefinition = await GetDefinitionFromServerAsync(_appConfig.WorldSchema, tableName);
                     //clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                    return null; // TODO
                 }
                 else
                 {
@@ -124,7 +127,7 @@ namespace HotfixMods.Infrastructure.Services
                     for (int i = 0; i < properties.Count(); i++)
                     {
                         var serverType = serverDefinition.ColumnDefinitions[i].Type;
-                        var clientType = clientDefinition.ColumnDefinitions[i].Type;
+                        var clientType = clientDefinition.ColumnDefinitions[i].GetServerType();
                         if (IsParentIndexField(properties[i]))
                         {
                             if (GetUnsignedType(serverType) == GetUnsignedType(clientType))

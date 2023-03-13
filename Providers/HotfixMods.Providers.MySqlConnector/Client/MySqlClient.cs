@@ -139,7 +139,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                         };
                     }
 
-                    if(column.GetServerType() != column.Type)
+                    if (column.GetServerType() != column.Type)
                     {
                         propertyValue = Convert.ChangeType(propertyValue, column.Type);
                     }
@@ -156,7 +156,6 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                         ReferenceDb2 = column.ReferenceDb2,
                         ReferenceDb2Field = column.ReferenceDb2Field
                     });
-
                 }
                 results.Add(dbRow);
             }
@@ -186,18 +185,19 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             using var reader = await command.ExecuteReaderAsync();
             while (reader.Read())
             {
+                var colName = reader.GetString(0);
                 dbRowDefinition.ColumnDefinitions.Add(new()
                 {
-                    Name = reader.GetString(0),
+                    Name = colName,
                     Type = MySqlDataTypeToCSharpType(reader.GetString(1)),
-                    IsIndex = reader.GetString(3) == "PRI",
+                    IsIndex = reader.GetString(3).Equals("PRI", StringComparison.InvariantCultureIgnoreCase) && !colName.Equals("VerifiedBuild", StringComparison.InvariantCultureIgnoreCase),
 
                     // TODO?
                     IsLocalized = false,
                     IsParentIndex = false,
                     ReferenceDb2 = null,
                     ReferenceDb2Field = null
-            });
+                });
             }
             await mySqlConnection.CloseAsync();
             return dbRowDefinition;

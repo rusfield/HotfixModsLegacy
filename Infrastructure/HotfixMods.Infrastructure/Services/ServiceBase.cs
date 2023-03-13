@@ -67,7 +67,13 @@ namespace HotfixMods.Infrastructure.Services
             DbRowDefinition? definition;
             string tableName = db2Name.ToTableName();
 
-            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
+            // TODO: Check if serverOnly parameter is needed anymore now that HotfixData and Entity is hardcoded here.
+            var useClientDefinition = !serverOnly
+                && _appConfig.HotfixesSchema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase);
+
+            if (useClientDefinition)
                 definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
             else
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
@@ -120,7 +126,13 @@ namespace HotfixMods.Infrastructure.Services
             string tableName = db2Name.ToTableName();
             var results = new List<DbRow>();
 
-            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
+            // TODO: Check if serverOnly parameter is needed anymore now that HotfixData and Entity is hardcoded here.
+            var useClientDefinition = !serverOnly
+                && _appConfig.HotfixesSchema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase);
+
+            if (useClientDefinition)
                 definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
             else
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
@@ -189,18 +201,10 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync(string schemaName, string db2Name, params DbRow[] dbRows)
         {
             var tableName = db2Name.ToTableName();
-            DbRowDefinition? definition;
-
-            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
-                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
-            else
-                definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
-
-            if (null == definition)
-                throw new Exception($"Unable to get definition for {db2Name}.");
+            var hotfixDataDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName());
 
             var hotfixDbRows = new List<DbRow>();
-            var newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");
+            var newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName(), _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");
 
             foreach (var dbRow in dbRows)
             {
@@ -210,19 +214,19 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 var dbParameters = new DbParameter[3];
-                dbParameters[0] = new DbParameter(_appConfig.HotfixDataRecordIDColumnName, dbRow.GetIdValue());
-                dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.VALID);
-                dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, (uint)tableHash);
+                dbParameters[0] = new DbParameter(nameof(HotfixData.RecordID), dbRow.GetIdValue());
+                dbParameters[1] = new DbParameter(nameof(HotfixData.Status), (byte)HotfixStatuses.VALID);
+                dbParameters[2] = new DbParameter(nameof(HotfixData.TableHash), (uint)tableHash);
 
-                var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, definition, dbParameters);
+                var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName(), hotfixDataDefinition, dbParameters);
                 if (existingHotfix != null)
                 {
-                    existingHotfix.SetColumnValue(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.INVALID);
+                    existingHotfix.SetColumnValue(nameof(HotfixData.Status), (byte)HotfixStatuses.INVALID);
                     hotfixDbRows.Add(existingHotfix);
                 }
 
                 var hotfixDbRow = new DbRow(tableName);
-                foreach (var def in definition.ColumnDefinitions)
+                foreach (var def in hotfixDataDefinition.ColumnDefinitions)
                 {
                     var dbColumn = new DbColumn()
                     {
@@ -233,14 +237,14 @@ namespace HotfixMods.Infrastructure.Services
                         IsLocalized = def.IsLocalized,
                         IsParentIndex = def.IsParentIndex,
                         ReferenceDb2 = def.ReferenceDb2,
-                        ReferenceDb2Field = def.ReferenceDb2Field 
+                        ReferenceDb2Field = def.ReferenceDb2Field
                     };
 
-                    if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIDColumnName, StringComparison.CurrentCultureIgnoreCase))
+                    if (dbColumn.Name.Equals(nameof(HotfixData.RecordID), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = dbRow.GetIdValue();
-                    else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableStatusColumnName, StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Name.Equals(nameof(HotfixData.Status), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (byte)HotfixStatuses.VALID;
-                    else if (dbColumn.Name.Equals(_appConfig.HotfixDataTableHashColumnName, StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Name.Equals(nameof(HotfixData.TableHash), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (uint)tableHash;
                     else if (dbColumn.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = newHotfixDataId;
@@ -257,7 +261,7 @@ namespace HotfixMods.Infrastructure.Services
                 await _serverDbProvider.AddOrUpdateAsync(schemaName, tableName, dbRows);
 
             if (hotfixDbRows.Count > 0)
-                await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDbRows.ToArray());
+                await _serverDbProvider.AddOrUpdateAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName(), hotfixDbRows.ToArray());
         }
 
         #endregion

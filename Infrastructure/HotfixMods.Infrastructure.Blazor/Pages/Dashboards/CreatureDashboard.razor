@@ -11,7 +11,7 @@
     async Task<CreatureDto?> GetByIdAsync(int id)
     {
         var parameters = new DialogParameters();
-        parameters.Add(nameof(CreatureSearchId_Dialog.Idx), (uint)0);
+        parameters.Add(nameof(CreatureSearchId_Dialog.Idx), 0);
         parameters.Add(nameof(CreatureSearchId_Dialog.Id), id);
         var result = await DialogService.Show<CreatureSearchId_Dialog>(null, parameters).Result;
         return (CreatureDto)result.Data;

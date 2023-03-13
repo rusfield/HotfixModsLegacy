@@ -177,11 +177,9 @@ namespace HotfixMods.Providers.WowDev.Client
                             var value = db2Result.Field<object>(name);
 
                             if (value!.GetType() == typeof(float))
+                            {
                                 value = Convert.ToDecimal((float)value);
-                            /*
-                            else if (fieldDef.isID)
-                                value = uint.Parse(value.ToString());
-                            */
+                            }
 
                             name = name.Replace("_lang", "");
                             rowResult.Columns.Add(new()

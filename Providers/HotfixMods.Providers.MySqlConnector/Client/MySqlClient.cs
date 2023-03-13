@@ -100,13 +100,14 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 for (int i = 0; i < dbRowDefinition.ColumnDefinitions.Count(); i++)
                 {
                     var fieldName = dbRowDefinition.ColumnDefinitions.ElementAt(i).Name;
-                    var fieldType = dbRowDefinition.ColumnDefinitions.ElementAt(i).Type;
+                    var serverFieldType = dbRowDefinition.ColumnDefinitions.ElementAt(i).GetServerType();
+                    var propertyType = dbRowDefinition.ColumnDefinitions.ElementAt(i).Type;
 
-                    object fieldValue;
+                    object propertyValue;
 
                     if (reader.IsDBNull(i))
                     {
-                        fieldValue = fieldType.ToString() switch
+                        propertyValue = serverFieldType.ToString() switch
                         {
                             "System.SByte" => (sbyte)0,
                             "System.Int16" => (short)0,
@@ -123,7 +124,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     }
                     else
                     {
-                        fieldValue = fieldType.ToString() switch
+                        propertyValue = serverFieldType.ToString() switch
                         {
                             "System.SByte" => reader.GetSByte(i),
                             "System.Int16" => reader.GetInt16(i),
@@ -138,13 +139,24 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                             _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
                         };
                     }
+
+                    if(serverFieldType != propertyType)
+                    {
+                        propertyValue = Convert.ChangeType(propertyValue, propertyType);
+                    }
+
                     dbRow.Columns.Add(new()
                     {
                         Name = fieldName,
-                        Type = fieldType,
-                        Value = fieldValue
-                    });
+                        Type = propertyType,
+                        Value = propertyValue,
 
+                        // TODO?
+                        IsLocalized = false,
+                        IsParentIndex = false,
+                        ReferenceDb2 = null,
+                        ReferenceDb2Field = null
+                    });
 
                 }
                 results.Add(dbRow);

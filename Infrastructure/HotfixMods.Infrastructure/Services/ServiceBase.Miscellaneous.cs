@@ -60,12 +60,6 @@ namespace HotfixMods.Infrastructure.Services
             return Enum.Parse<TableHashes>(GetTableNameOfEntity<T>(), true);
         }
 
-        DbRowDefinition GetDbRowDefinitionOfEntity<T>()
-            where T : new()
-        {
-            return Activator.CreateInstance<T>().EntityToDbRowDefinition()!;
-        }
-
         string GetIdPropertyNameOfEntity<T>()
             where T : new()
         {

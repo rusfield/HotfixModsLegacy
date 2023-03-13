@@ -89,11 +89,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (null == schemaName)
             {
-                // These are for Client Only DB2s.
-                // HotfixMods will serve as server
-
-                serverDefinition = type.TypeToDbRowDefinition() ?? serverDefinition;
-                clientDefinition = await GetDefinitionFromClientAsync(type.Name);
+                throw new Exception($"Unable to verify health of {type.Name}. Schema missing.");
             }
             else if (await TableExistsAsync(schemaName, tableName))
             {
@@ -109,14 +105,14 @@ namespace HotfixMods.Infrastructure.Services
                     // HotfixMods will serve as client
 
                     serverDefinition = await GetDefinitionFromServerAsync(_appConfig.CharactersSchema, tableName);
-                    clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                    //clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
                 }
                 else if (nameof(WorldSchemaAttribute).StartsWith(schemaName, StringComparison.OrdinalIgnoreCase))
                 {
                     // HotfixMods will serve as client
 
                     serverDefinition = await GetDefinitionFromServerAsync(_appConfig.WorldSchema, tableName);
-                    clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
+                    //clientDefinition = type.TypeToDbRowDefinition() ?? clientDefinition;
                 }
                 else
                 {

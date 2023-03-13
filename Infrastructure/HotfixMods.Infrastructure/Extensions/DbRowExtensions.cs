@@ -43,34 +43,6 @@ namespace HotfixMods.Infrastructure.Extensions
             return entities.Where(e => e != null).Select(e => e.EntityToDbRow()!);
         }
 
-        [Obsolete]
-        public static DbRowDefinition? EntityToDbRowDefinition<T>(this T? entity)
-            where T : new()
-        {
-            if (null == entity)
-                return null;
-
-            return TypeToDbRowDefinition(typeof(T));
-        }
-
-        [Obsolete]
-        public static DbRowDefinition? TypeToDbRowDefinition(this Type? type)
-        {
-            if (null == type)
-                return null;
-
-            var dbRowDefinition = new DbRowDefinition(type.Name);
-            foreach (var property in type.GetProperties())
-            {
-                dbRowDefinition.ColumnDefinitions.Add(new()
-                {
-                    Name = property.Name,
-                    Type = property.PropertyType
-                });
-            }
-            return dbRowDefinition;
-        }
-
         public static T? DbRowToEntity<T>(this DbRow? dbRow)
             where T : new()
         {

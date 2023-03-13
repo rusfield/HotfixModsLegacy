@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Enums;
+﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Enums;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
@@ -6,6 +7,7 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
+using static DBDefsLib.Structs;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -61,17 +63,23 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<DbRow?> GetSingleAsync(string schemaName, string db2Name, bool serverOnly, params DbParameter[] parameters)
         {
-            DbRow? result = null;
+            DbRow? result;
+            DbRowDefinition? definition;
             string tableName = db2Name.ToTableName();
-            var serverDbDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
-            if (serverDbDefinition != null)
-                result = await _serverDbProvider.GetSingleAsync(schemaName, tableName, serverDbDefinition, parameters);
+
+            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+            else
+                definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+
+            if (null == definition)
+                throw new Exception($"Unable to get definition for {db2Name}.");
+
+            result = await _serverDbProvider.GetSingleAsync(schemaName, tableName, definition, parameters);
 
             if (null == result && !serverOnly)
             {
-                var clientDbDefinition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
-                if (clientDbDefinition != null)
-                    result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, db2Name, clientDbDefinition, parameters);
+                result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, db2Name, definition, parameters);
             }
 
             return result;
@@ -106,23 +114,19 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<List<DbRow>> GetAsync(string schemaName, string db2Name, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
         {
+            DbRowDefinition? definition;
             string serverEx = "";
             string clientEx = "";
             string tableName = db2Name.ToTableName();
             var results = new List<DbRow>();
 
-            DbRowDefinition? definition;
-            if (schemaName == _appConfig.HotfixesSchema && !db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase) && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase))
-            {
-                definition = await GetDefinitionFromClientAsync(db2Name);
-            }
+            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
             else
-            {
-                definition = await GetDefinitionFromServerAsync(schemaName, tableName);
-            }
+                definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
 
-            if (definition == null)
-                return results;
+            if (null == definition)
+                throw new Exception($"Unable to get definition for {db2Name}.");
 
             try
             {
@@ -135,7 +139,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             try
             {
-                if(!serverOnly && (includeClientIfServerResult || !results.Any()))
+                if (!serverOnly && (includeClientIfServerResult || !results.Any()))
                 {
                     var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definition, parameters);
                     results.AddRange(clientResults.Where(c => !results.Any(r => c.GetIdValue() == r.GetIdValue())));
@@ -185,11 +189,15 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync(string schemaName, string db2Name, params DbRow[] dbRows)
         {
             var tableName = db2Name.ToTableName();
-            var hotfixDataTableDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName);
-            if (null == hotfixDataTableDefinition)
-            {
-                throw new Exception("Unable to load Hotfix Data table.");
-            }
+            DbRowDefinition? definition;
+
+            if (nameof(HotfixesSchemaAttribute).StartsWith(schemaName, StringComparison.InvariantCultureIgnoreCase))
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+            else
+                definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+
+            if (null == definition)
+                throw new Exception($"Unable to get definition for {db2Name}.");
 
             var hotfixDbRows = new List<DbRow>();
             var newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");
@@ -206,7 +214,7 @@ namespace HotfixMods.Infrastructure.Services
                 dbParameters[1] = new DbParameter(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.VALID);
                 dbParameters[2] = new DbParameter(_appConfig.HotfixDataTableHashColumnName, (uint)tableHash);
 
-                var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, hotfixDataTableDefinition, dbParameters);
+                var existingHotfix = await _serverDbProvider.GetSingleAsync(_appConfig.HotfixesSchema, _appConfig.HotfixDataTableName, definition, dbParameters);
                 if (existingHotfix != null)
                 {
                     existingHotfix.SetColumnValue(_appConfig.HotfixDataTableStatusColumnName, (byte)HotfixStatuses.INVALID);
@@ -214,13 +222,18 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 var hotfixDbRow = new DbRow(tableName);
-                foreach (var definition in hotfixDataTableDefinition.ColumnDefinitions)
+                foreach (var def in definition.ColumnDefinitions)
                 {
                     var dbColumn = new DbColumn()
                     {
-                        Name = definition.Name,
-                        Type = definition.Type,
-                        Value = Activator.CreateInstance(definition.Type)!
+                        Name = def.Name,
+                        Type = def.Type,
+                        Value = Activator.CreateInstance(def.Type)!,
+                        IsIndex = def.IsIndex,
+                        IsLocalized = def.IsLocalized,
+                        IsParentIndex = def.IsParentIndex,
+                        ReferenceDb2 = def.ReferenceDb2,
+                        ReferenceDb2Field = def.ReferenceDb2Field 
                     };
 
                     if (dbColumn.Name.Equals(_appConfig.HotfixDataRecordIDColumnName, StringComparison.CurrentCultureIgnoreCase))

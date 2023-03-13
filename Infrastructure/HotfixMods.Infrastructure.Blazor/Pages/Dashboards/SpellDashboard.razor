@@ -8,7 +8,7 @@
 
 @code
 {
-    async Task<SpellDto?> GetByIdAsync(uint id)
+    async Task<SpellDto?> GetByIdAsync(int id)
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(SpellSearchId_Dialog.Id), id);
@@ -16,7 +16,7 @@
         return (SpellDto)result.Data;
     }
 
-    async Task<bool> DeleteByIdAsync(uint id)
+    async Task<bool> DeleteByIdAsync(int id)
     {
         return await Service.DeleteAsync(id);
     }

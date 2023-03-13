@@ -227,7 +227,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<CreatureDto?> GetByIdAsync(int id, uint idx = 0, Action<string, string, int>? callback = null)
+        public async Task<CreatureDto?> GetByIdAsync(int id, int idx = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);

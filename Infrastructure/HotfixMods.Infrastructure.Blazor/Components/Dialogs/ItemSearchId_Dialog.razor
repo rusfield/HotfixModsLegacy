@@ -31,7 +31,7 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? Id { get; set; }
+    public int? Id { get; set; }
 
     [Parameter]
     public int? OrderIndex { get; set; }
@@ -53,7 +53,7 @@
     {
         if (Id != null)
         {
-            var data = await Service.GetByIdAsync((uint)Id, orderIndex, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((int)Id, orderIndex, dialogSearchRef!.SetLoaderProgress);
             if (data != null || closeOnFail)
             {
                 Dialog.Close(data);

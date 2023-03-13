@@ -8,7 +8,7 @@
 
 @code 
 {
-    async Task<AnimKitDto?> GetByIdAsync(uint id)
+    async Task<AnimKitDto?> GetByIdAsync(int id)
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(AnimKitSearchId_Dialog.Id), id);
@@ -16,7 +16,7 @@
         return (AnimKitDto)result.Data;
     }
 
-    async Task<bool> DeleteByIdAsync(uint id)
+    async Task<bool> DeleteByIdAsync(int id)
     {
         return await Service.DeleteAsync(id);
     }

@@ -44,7 +44,7 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
-        public async Task<SoundKitDto?> GetByIdAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<SoundKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
@@ -117,7 +117,7 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);

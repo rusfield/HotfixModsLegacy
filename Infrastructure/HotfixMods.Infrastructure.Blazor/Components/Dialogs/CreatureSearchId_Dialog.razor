@@ -18,7 +18,7 @@
         for(int i = 0; i < options.Count; i++)
         {
             int index = i;
-            <MudButton OnClick="@(async () => await GetByIdAsync(options.ElementAt(index).Key))">
+            <MudButton OnClick="@(async () => await GetByIdAsync((int)options.ElementAt(index).Key))">
                 @options.ElementAt(index).Value
             </MudButton>
         }
@@ -30,10 +30,10 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? Id { get; set; }
+    public int? Id { get; set; }
 
     [Parameter]
-    public uint? Idx { get; set; }
+    public int? Idx { get; set; }
 
     DialogSearch? dialogSearchRef;
     Dictionary<uint, string> options = new();
@@ -48,11 +48,11 @@
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task GetByIdAsync(uint idx, bool closeOnFail = false)
+    async Task GetByIdAsync(int idx, bool closeOnFail = false)
     {
         if (Id != null)
         {
-            var data = await Service.GetByIdAsync((uint)Id, idx, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((int)Id, idx, dialogSearchRef!.SetLoaderProgress);
             if (data != null || closeOnFail)
             {
                 Dialog.Close(data);

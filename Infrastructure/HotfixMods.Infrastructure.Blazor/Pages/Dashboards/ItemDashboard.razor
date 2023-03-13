@@ -8,7 +8,7 @@
 
 @code
 {
-    async Task<ItemDto?> GetByIdAsync(uint id)
+    async Task<ItemDto?> GetByIdAsync(int id)
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(ItemSearchId_Dialog.Id), id);
@@ -16,7 +16,7 @@
         return (ItemDto)result.Data;
     }
 
-    async Task<bool> DeleteByIdAsync(uint id)
+    async Task<bool> DeleteByIdAsync(int id)
     {
         return await Service.DeleteAsync(id);
     }

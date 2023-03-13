@@ -45,7 +45,7 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
-        public async Task<ItemDto?> GetByItemDisplayInfoId(uint itemDisplayInfoId, Action<string, string, int>? callback = null)
+        public async Task<ItemDto?> GetByItemDisplayInfoId(int itemDisplayInfoId, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(9);
@@ -119,7 +119,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<ItemDto?> GetByIdAsync(uint id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
+        public async Task<ItemDto?> GetByIdAsync(int id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -253,7 +253,7 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(uint id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);

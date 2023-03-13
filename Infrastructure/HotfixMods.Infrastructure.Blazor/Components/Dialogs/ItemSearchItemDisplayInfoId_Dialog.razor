@@ -13,7 +13,7 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? ItemDisplayInfoId { get; set; }
+    public int? ItemDisplayInfoId { get; set; }
 
     DialogSearch? dialogSearchRef;
 
@@ -22,7 +22,7 @@
     {
         if (ItemDisplayInfoId != null)
         {
-            var data = await Service.GetByItemDisplayInfoId((uint)ItemDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByItemDisplayInfoId((int)ItemDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);

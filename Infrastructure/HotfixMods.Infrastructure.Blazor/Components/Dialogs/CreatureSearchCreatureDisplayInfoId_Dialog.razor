@@ -13,7 +13,7 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? CreatureDisplayInfoId { get; set; }
+    public int? CreatureDisplayInfoId { get; set; }
 
     DialogSearch? dialogSearchRef;
 
@@ -30,7 +30,7 @@
     {
         if (CreatureDisplayInfoId != null)
         {
-            var data = await Service.GetByCreatureDisplayInfoIdAsync((uint)CreatureDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByCreatureDisplayInfoIdAsync((int)CreatureDisplayInfoId, dialogSearchRef!.SetLoaderProgress);
             if (data != null)
             {
                 Dialog.Close(data);

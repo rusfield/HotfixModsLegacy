@@ -1,4 +1,6 @@
-﻿namespace HotfixMods.Infrastructure.Services
+﻿using HotfixMods.Infrastructure.Extensions;
+
+namespace HotfixMods.Infrastructure.Services
 {
     public partial class ServiceBase
     {
@@ -19,8 +21,14 @@
                 var key = option.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value?.ToString();
                 var value = option.Columns.Where(c => c.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
 
-                if (key != null && value != null)
+                if (key != null)
                 {
+                    if (string.IsNullOrWhiteSpace(value))
+                        value = key;
+                    else
+                        value = $"{key} - {value}";
+
+
                     var optionKey = (TOptionKey)Convert.ChangeType(key, typeof(TOptionKey));
                     results.Add(optionKey, value);
                 }
@@ -31,7 +39,13 @@
         protected async Task<Dictionary<TOptionKey, string>> GetEnumOptionsAsync<TOptionKey>(Type modelType, string propertyName)
             where TOptionKey : notnull
         {
-            return await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+            var results = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+            for(int i = 0; i < results.Count; i++)
+            {
+                var item = results.ElementAt(i);
+                results[item.Key] = $"{item.Key} - {item.Value}";
+            }
+            return results;
         }
     }
 }

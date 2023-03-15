@@ -24,9 +24,20 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        public async Task<Dictionary<byte, string>> GetCreatureTypeOptionsAsync()
+        public async Task<Dictionary<byte, string>> GetTypeOptionsAsync()
         {
             return await GetOptionsAsync<byte, uint>(_appConfig.HotfixesSchema, "CreatureType", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetFamilyOptionsAsync()
+        {
+            var options = await GetOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "CreatureFamily", "Name");
+            if(!options.ContainsKey(0))
+            {
+                options[0] = "0 - None";
+                options = options.SortByKey();
+            }
+            return options;
         }
 
         public async Task<Dictionary<byte, string>> GetRankOptionsAsync()
@@ -44,6 +55,22 @@ namespace HotfixMods.Infrastructure.Services
                     results.Remove(key);
             }
             return results;
+        }
+
+        public async Task<Dictionary<byte, string>> GetRacialLeaderOptionsAsync()
+        {
+            return new Dictionary<byte, string>() {
+                { 0, "0 - False" },
+                { 1, "1 - True" }
+            };
+        }
+
+        public async Task<Dictionary<byte, string>> GetRegenHealthOptionsAsync()
+        {
+            return new Dictionary<byte, string>() {
+                { 0, "0 - False" },
+                { 1, "1 - True" }
+            };
         }
     }
 }

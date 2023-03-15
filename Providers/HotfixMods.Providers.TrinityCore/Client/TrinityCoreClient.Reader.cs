@@ -17,6 +17,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 return (Dictionary<TKey, string>)_cache[(filePath, enumName)];
 
             var results = new Dictionary<TKey, string>();
+            /*
+            var defaultKey = default(TKey);
+            if (defaultKey != null)
+                results[defaultKey] = "NONE";
+            */
             var fullPath = Path.Combine(TrinityCorePath, filePath);
             if (File.Exists(fullPath))
             {
@@ -53,7 +58,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                     }
                                 }
 
-                                results.Add((TKey)Convert.ChangeType(enumNumber, typeof(TKey)), UnderscoreToCase(enumString));
+                                var key = (TKey)Convert.ChangeType(enumNumber, typeof(TKey));
+                                results[key] = UnderscoreToCase(enumString);
                             }
                         }
 

@@ -20,8 +20,8 @@
             <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" GetOptionsAsync_Func="(async () => await Service.GetFactionOptionsAsync())" />
             <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Rank))" GetOptionsAsync_Func="Service.GetRankOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
-            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="Service.GetCreatureTypeOptionsAsync" />
-            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" GetOptionsAsync_Func="GetTrueFalse" />
+            <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" GetOptionsAsync_Func="Service.GetTypeOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RacialLeader))" GetOptionsAsync_Func="Service.GetRacialLeaderOptionsAsync" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -131,9 +131,9 @@
                     <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" OnInfoAdornmentClick="@(OpenInfoDialog(info.RangeVariance))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" GetOptionsAsync_Func="GetFamilies" />
+            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" GetOptionsAsync_Func="Service.GetFamilyOptionsAsync" />
             <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Trainer_Class))" />
-            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" GetOptionsAsync_Func="GetTrueFalse" />
+            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" GetOptionsAsync_Func="Service.GetRegenHealthOptionsAsync" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
@@ -198,11 +198,6 @@
         return Enum.GetValues<CreatureTemplateDmgschool>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
     }
 
-    async Task<Dictionary<int, string>> GetFamilies()
-    {
-        return Enum.GetValues<CreatureTemplateFamily>().ToDictionary(key => (int)key, value => value.ToDisplayString());
-    }
-
     async Task<Dictionary<string, string>> GetIconNames()
     {
         return Enum.GetValues<CreatureTemplateIconName>().ToDictionary(key => key.ToString(), value => value.ToString());
@@ -216,13 +211,5 @@
     async Task<Dictionary<int, string>> GetRequiredExpansions()
     {
         return Enum.GetValues<CreatureTemplateRequiredExpansion>().ToDictionary(key => (int)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<byte, string>> GetTrueFalse()
-    {
-        return new Dictionary<byte, string>() { 
-            { 0, "False" }, 
-            { 1, "True" } 
-        };
     }
 }

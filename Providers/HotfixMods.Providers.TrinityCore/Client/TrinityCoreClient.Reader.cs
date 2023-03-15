@@ -47,6 +47,10 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                     {
                                         enumString = enumString.Substring(valueRemove.Length);
                                     }
+                                    if(enumString.EndsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase) )
+                                    {
+                                        enumString = enumString.Substring(0, enumString.Length - valueRemove.Length);
+                                    }
                                 }
 
                                 results.Add((TKey)Convert.ChangeType(enumNumber, typeof(TKey)), UnderscoreToCase(enumString));

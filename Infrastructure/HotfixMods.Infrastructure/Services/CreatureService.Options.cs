@@ -12,7 +12,7 @@ namespace HotfixMods.Infrastructure.Services
             var factions = (await GetAsync(_appConfig.HotfixesSchema, "Faction", false, true)).ToDictionary(k => k.GetIdValue(), v => v.GetValueByNameAs<string>("Name"));
             var factionTemplates = await GetAsync(_appConfig.HotfixesSchema, "FactionTemplate", false, true);
 
-            foreach(var factionTemplate in factionTemplates)
+            foreach (var factionTemplate in factionTemplates)
             {
                 var id = factionTemplate.GetIdValue();
                 string displayName = id.ToString();
@@ -32,6 +32,18 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<byte, string>> GetRankOptionsAsync()
         {
             return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Rank));
+        }
+
+        public async Task<Dictionary<byte, string>> GetMovementTypeOptionsAsync()
+        {
+            var results = await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.MovementType));
+            foreach (var key in results.Keys)
+            {
+                // Value 3 is MAX_DB_MOTION_TYPE. The next values should not be set in DB directly.
+                if (key >= 3)
+                    results.Remove(key);
+            }
+            return results;
         }
     }
 }

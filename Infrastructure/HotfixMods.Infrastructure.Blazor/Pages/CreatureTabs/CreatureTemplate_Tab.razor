@@ -45,7 +45,7 @@
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.Speed_Walk" ValueCompare="ValueCompare?.Speed_Walk" Label="@nameof(Value.Speed_Walk).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Walk))" />
             <Input_Element T="decimal" @bind-Value="Value.Speed_Run" ValueCompare="ValueCompare?.Speed_Run" Label="@nameof(Value.Speed_Run).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Speed_Run))" />
-            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementType))" GetOptionsAsync_Func="GetMovementTypes" />
+            <Input_Element T="byte" @bind-Value="Value.MovementType" ValueCompare="ValueCompare?.MovementType" Label="@nameof(Value.MovementType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementType))" GetOptionsAsync_Func="Service.GetMovementTypeOptionsAsync" />
             <Input_Element T="uint" @bind-Value="Value.MovementID" ValueCompare="ValueCompare?.MovementID" Label="@nameof(Value.MovementID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MovementID))" />
             <Input_Element T="string" @bind-Value="Value.AiName" ValueCompare="ValueCompare?.AiName" Label="AI Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiName))" GetOptionsAsync_Func="GetAiNames" />
             <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScriptName))" />
@@ -206,16 +206,6 @@
     async Task<Dictionary<string, string>> GetIconNames()
     {
         return Enum.GetValues<CreatureTemplateIconName>().ToDictionary(key => key.ToString(), value => value.ToString());
-    }
-
-    async Task<Dictionary<byte, string>> GetMovementTypes()
-    {
-        return Enum.GetValues<CreatureTemplateMovementType>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<byte, string>> GetRanks()
-    {
-        return Enum.GetValues<CreatureTemplateRank>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
     }
 
     async Task<Dictionary<byte, string>> GetUnitClasses()

@@ -132,7 +132,7 @@
                 </RightContent>
             </InlineGroup>
             <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Family))" GetOptionsAsync_Func="Service.GetFamilyOptionsAsync" />
-            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Trainer_Class))" />
+            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Trainer_Class))" GetOptionsAsync_Func="Service.GetTrainerClassOptionsAsync" />
             <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RegenHealth))" GetOptionsAsync_Func="Service.GetRegenHealthOptionsAsync" />
         </MudItem>
     </PagedDtoContentPage>

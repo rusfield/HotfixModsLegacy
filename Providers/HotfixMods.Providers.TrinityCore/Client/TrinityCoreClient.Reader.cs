@@ -63,8 +63,10 @@ namespace HotfixMods.Providers.TrinityCore.Client
                             }
                         }
 
-                        var compareLine = $"enum {enumName}";
-                        if (line.Split(':')[0].Trim().Equals(compareLine, StringComparison.InvariantCultureIgnoreCase))
+                        var compareEnumLine = $"enum {enumName}";
+                        var compareEnumClassLine = $"enum class {enumName}";
+                        var lineCompare = line.Split(':')[0].Trim();
+                        if (lineCompare.Equals(compareEnumLine, StringComparison.InvariantCultureIgnoreCase) || lineCompare.Equals(compareEnumClassLine, StringComparison.InvariantCultureIgnoreCase))
                             enumFound = true;
                     }
                 }

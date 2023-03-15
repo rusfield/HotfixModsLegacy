@@ -10,9 +10,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
     public partial class TrinityCoreClient
     {
         string creatureData_path = Path.Combine("src", "server", "game", "Entities", "Creature", "CreatureData.h");
+        string trainer_path = Path.Combine("src", "server", "game", "Entities", "Creature", "Trainer.h");
         string item_path = Path.Combine("src", "server", "game", "Entities", "Item", "Item.h");
         string sharedDefines_path = Path.Combine("src", "server", "game", "Miscellaneous", "SharedDefines.h");
         string movement_path = Path.Combine("src", "server", "game", "Movement", "MovementDefines.h");
+
 
         bool Equal(string input1, string input2)
         {

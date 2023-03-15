@@ -25,7 +25,7 @@ else
     [CascadingParameter(Name = "RefreshElement")]
     public bool RefreshElement { get; set; }
 
-    [CascadingParameter (Name="CurrentPageIndex")]
+    [CascadingParameter(Name = "CurrentPageIndex")]
     public int CurrentPageIndex { get; set; } // Used to close menu when index is changed.
 
     [Parameter]
@@ -66,7 +66,7 @@ else
 
     protected override void OnParametersSet()
     {
-        if(previousPageIndex != CurrentPageIndex && mudAutocompleteRef != null && mudAutocompleteRef.IsOpen)
+        if (previousPageIndex != CurrentPageIndex && mudAutocompleteRef != null && mudAutocompleteRef.IsOpen)
         {
             mudAutocompleteRef.ToggleMenu();
         }
@@ -143,32 +143,37 @@ else
     async Task<IEnumerable<string>> Search(string value)
     {
         SetError(false);
-
-        if (string.IsNullOrEmpty(value))
+        var results = new List<string>();
+        await Task.Run(() =>
         {
-            return options.Select(o => o.Value).Distinct(); // Read reason for .Distinct() below
-        }
-
-
-        var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
-        if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
-        {
-            // Add value to list to support options that are not loaded.
-            try
+            if (string.IsNullOrEmpty(value))
             {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                var convertedValue = converter.ConvertFromInvariantString(value);
-                filteredOptions.Add(value);
+                results = options.Select(o => o.Value).Distinct().ToList(); // Read reason for .Distinct() below
             }
-            catch
+            else
             {
-                /* Value is not supported */
-            }
-        }
+                var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
+                if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    // Add value to list to support options that are not loaded.
+                    try
+                    {
+                        var converter = TypeDescriptor.GetConverter(typeof(T));
+                        var convertedValue = converter.ConvertFromInvariantString(value);
+                        filteredOptions.Add(value);
+                    }
+                    catch
+                    {
+                        /* Value is not supported */
+                    }
+                }
 
-        // MudAutocomplete does not support search results with the same display value.
-        // To counter this, consider naming the display string differently.
-        return filteredOptions.Distinct();
+                // MudAutocomplete does not support search results with the same display value.
+                // To counter this, consider naming the display string differently.
+                results = filteredOptions.Distinct().ToList();
+            }
+        });
+        return results;
     }
 
     string? ShowValue()

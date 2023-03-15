@@ -19,14 +19,14 @@ namespace HotfixMods.Providers.TrinityCore.Client
         {
             if (typeof(CreatureTemplate) == modelType)
             {
-                if (Equal(nameof(CreatureTemplate.Rank), propertyName))
+                return propertyName switch
                 {
-                    return await GetEnumAsync<TKey>(sharedDefines_path, "CreatureEliteType", "CREATURE_ELITE_", "CREATURE_");
-                }
-                else if(Equal(nameof(CreatureTemplate.MovementType), propertyName))
-                {
-                    return await GetEnumAsync<TKey>(movement_path, "MovementGeneratorType", "_MOTION_TYPE");
-                }
+                    nameof(CreatureTemplate.Rank) => await GetEnumAsync<TKey>(sharedDefines_path, "CreatureEliteType", "CREATURE_ELITE_", "CREATURE_"),
+                    nameof(CreatureTemplate.MovementType) => await GetEnumAsync<TKey>(movement_path, "MovementGeneratorType", "_MOTION_TYPE"),
+                    nameof(CreatureTemplate.Trainer_Class) => await GetEnumAsync<TKey>(trainer_path, "Type"),
+                    _ => new()
+                };
+
             }
 
             return new();

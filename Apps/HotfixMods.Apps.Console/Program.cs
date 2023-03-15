@@ -16,6 +16,11 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using static DBDefsLib.Structs;
 
+
+var value = GetTValue<uint>("0x00000001");
+
+Console.ReadKey();
+
 /*
 var tool = new Db2ImportTool();
 await tool.Db2FileToDb2MySql("10.0.5.47871", @"D:\TrinityCore\Dragonflight\dbc\enUS", "ChrCustomizationReqChoice", "hotfixes", "chr_customization_req_choice", "127.0.0.1", "3306", "root", "root");
@@ -391,4 +396,13 @@ List<Type> GetExternalClassesWithHotfixesSchema(Type type)
     }
 
     return externalClasses.Distinct().ToList();
+}
+
+//var input = "0x00000001";
+//var type = typeof(uint);
+
+T GetTValue<T>(string input)
+{
+    var result = (T)Convert.ChangeType(input, typeof(T));
+    return result;
 }

@@ -58,6 +58,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                     }
                                 }
 
+                                enumNumber = ConvertIfHex<TKey>(enumNumber);
+
                                 var key = (TKey)Convert.ChangeType(enumNumber, typeof(TKey));
                                 results[key] = UnderscoreToCase(enumString);
                             }

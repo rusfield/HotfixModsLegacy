@@ -34,5 +34,26 @@ namespace HotfixMods.Providers.TrinityCore.Client
             }
             return result;
         }
+
+        string ConvertIfHex<T>(string input)
+        {
+            if (input.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase))
+            {
+                string type = typeof(T).ToString();
+                input = type switch
+                {
+                    "System.SByte" => Convert.ToSByte(input, 16).ToString(),
+                    "System.Int16" => Convert.ToInt16(input, 16).ToString(),
+                    "System.Int32" => Convert.ToInt32(input, 16).ToString(),
+                    "System.Int64" => Convert.ToInt64(input, 16).ToString(),
+                    "System.Byte" => Convert.ToByte(input, 16).ToString(),
+                    "System.UInt16" => Convert.ToUInt16(input, 16).ToString(),
+                    "System.UInt32" => Convert.ToUInt32(input, 16).ToString(),
+                    "System.UInt64" => Convert.ToUInt64(input, 16).ToString(),
+                    _ => throw new Exception($"{input} does not have convertion for type {type}.")
+                };
+            }
+            return input;
+        }
     }
 }

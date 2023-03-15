@@ -82,5 +82,10 @@ namespace HotfixMods.Infrastructure.Services
                 { 1, "1 - True" }
             };
         }
+
+        public async Task<Dictionary<uint, string>> GetTypeFlagsOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags));
+        }
     }
 }

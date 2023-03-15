@@ -116,11 +116,18 @@
     {
         idInAction.Add(id);
         await Task.Delay(500);
-        await DeleteByIdAsync_Func.Invoke(id);
-        Snackbar.Add("Entity deleted.", Severity.Info);
-        items.RemoveAll(i => i.ID == id);
-        filteredItems.RemoveAll(i => i.ID == id);
-        idInAction.Remove(id);
+        var deleteOk = await DeleteByIdAsync_Func.Invoke(id);
+        if (deleteOk)
+        {
+            Snackbar.Add("Entity deleted.", Severity.Info);
+            items.RemoveAll(i => i.ID == id);
+            filteredItems.RemoveAll(i => i.ID == id);
+            idInAction.Remove(id);
+        }
+        else
+        {
+            Snackbar.Add("Failed to delete entity.", Severity.Error);
+        }
     }
 
     void Filter(string filter)

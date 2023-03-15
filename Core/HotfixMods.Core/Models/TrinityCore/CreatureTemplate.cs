@@ -23,7 +23,7 @@ namespace HotfixMods.Core.Models.TrinityCore
         public int HealthScalingExpansion { get; set; } = 0;
         public int RequiredExpansion { get; set; } = 0;
         public int VignetteID { get; set; } = 0;
-        public ushort Faction { get; set; } = 0;
+        public ushort Faction { get; set; } = 7; // Creature
         public ulong NpcFlag { get; set; } = 0;
         public decimal Speed_Walk { get; set; } = 1;
         public decimal Speed_Run { get; set; } = 1.14286M;

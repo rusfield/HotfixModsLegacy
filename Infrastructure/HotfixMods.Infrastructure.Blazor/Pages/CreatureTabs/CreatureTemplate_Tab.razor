@@ -77,7 +77,7 @@
                     <Input_Element T="uint" @bind-Value="Value.Type_Flags" ValueCompare="ValueCompare?.Type_Flags" Label="@nameof(Value.Type_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type_Flags))" GetOptionsAsync_Func="Service.GetTypeFlagsOptionsAsync" MultiSelection="true" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type_Flags2))" />
+                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type_Flags2))" GetOptionsAsync_Func="Service.GetTypeFlags2OptionsAsync" MultiSelection="true" />
                 </RightContent>
             </InlineGroup>
         </MudItem>

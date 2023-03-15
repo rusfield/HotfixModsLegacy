@@ -25,6 +25,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.MovementType) => await GetEnumAsync<TKey>(movement_path, "MovementGeneratorType", "_MOTION_TYPE"),
                     nameof(CreatureTemplate.Trainer_Class) => await GetEnumAsync<TKey>(trainer_path, "Type"),
                     nameof(CreatureTemplate.Type_Flags) => await GetEnumAsync<TKey>(sharedDefines_path, "CreatureTypeFlags", "CREATURE_TYPE_FLAG_"),
+                    nameof(CreatureTemplate.Type_Flags2) => await GetEnumAsync<TKey>(sharedDefines_path, "CreatureTypeFlags2", "CREATURE_TYPE_FLAG_2_"),
                     _ => new()
                 };
 

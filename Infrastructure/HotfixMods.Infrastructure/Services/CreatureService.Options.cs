@@ -96,6 +96,14 @@ namespace HotfixMods.Infrastructure.Services
             return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags2));
         }
 
+        public async Task<Dictionary<uint, string>> GetDynamicFlagsOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.DynamicFlags));
+        }
 
+        public async Task<Dictionary<ulong, string>> GetNpcFlagOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<ulong>(typeof(CreatureTemplate), nameof(CreatureTemplate.NpcFlag));
+        }
     }
 }

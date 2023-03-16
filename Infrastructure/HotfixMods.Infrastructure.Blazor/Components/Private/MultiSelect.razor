@@ -75,8 +75,7 @@ else
     {
         if (firstRender)
         {
-            options = await GetOptionsAsync_Func.Invoke();
-            selectedValues = GetFlagValues((long)Convert.ChangeType(Value, typeof(long)));
+            await InitOptions();
             this.StateHasChanged();
         }
         await base.OnAfterRenderAsync(firstRender);
@@ -103,7 +102,7 @@ else
     string SetSelectionText(IEnumerable<string> selection)
     {
         int count = selection.Count();
-        
+
         return count switch
         {
             0 => "None",
@@ -124,5 +123,27 @@ else
             }
         }
         return result;
+    }
+
+    async Task InitOptions()
+    {
+        options = await GetOptionsAsync_Func.Invoke();
+
+        if (typeof(T).IsPrimitive && typeof(T).IsValueType)
+        {
+            var maxValueObject = typeof(T).GetField("MaxValue").GetValue(null);
+            ulong flagValue = 1;
+            var maxValue = (ulong)Convert.ChangeType(maxValueObject, typeof(ulong));
+            do
+            {
+                var key = (T)Convert.ChangeType(flagValue.ToString(), typeof(T));
+                if (!options.ContainsKey(key))
+                    options.Add(key, $"{key} - (Undefined)");
+                flagValue *= 2;
+            }
+            while (flagValue < (maxValue / 2)); 
+        }
+
+        selectedValues = GetFlagValues((long)Convert.ChangeType(Value, typeof(long)));
     }
 }

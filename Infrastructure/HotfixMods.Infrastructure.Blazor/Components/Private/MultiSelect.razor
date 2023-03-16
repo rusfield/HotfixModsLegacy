@@ -103,11 +103,12 @@ else
     string SetSelectionText(IEnumerable<string> selection)
     {
         int count = selection.Count();
+        
         return count switch
         {
             0 => "None",
             1 => selection.First().ToDisplayName(),
-            _ => $"{count} selected"
+            _ => $"{Value?.ToString()} - {count} selected"
         };
     }
 

@@ -56,7 +56,7 @@
             <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DynamicFlags))" />
             <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags_Extra))" />
             <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NpcFlag))" />
-            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Spell_School_Immune_Mask))" />
+            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Spell_School_Immune_Mask))" GetOptionsAsync_Func="Service.GetSpellSchoolImmuneMaskOptionsAsync" MultiSelection="true" />
             <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Mechanic_Immune_Mask))" />
         </MudItem>
         <MudItem xs="6">
@@ -114,7 +114,7 @@
             <Placeholder_Element Amount="4" />
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@("Damage School")" OnInfoAdornmentClick="@(OpenInfoDialog(info.Dmgschool))" GetOptionsAsync_Func="GetDmgschools" />
+            <Input_Element T="sbyte" @bind-Value="Value.Dmgschool" ValueCompare="ValueCompare?.Dmgschool" Label="@("Damage School")" OnInfoAdornmentClick="@(OpenInfoDialog(info.Dmgschool))" GetOptionsAsync_Func="Service.GetDmgschoolOptionsAsync" />
             <InlineGroup LeftContentWidth="60" RightContentWidth="40">
                 <LeftContent>
                     <Input_Element T="uint" @bind-Value="Value.BaseAttackTime" ValueCompare="ValueCompare?.BaseAttackTime" Label="@nameof(Value.BaseAttackTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseAttackTime))" />
@@ -191,11 +191,6 @@
     async Task<Dictionary<string, string>> GetAiNames()
     {
         return Enum.GetValues<CreatureTemplateAiName>().ToDictionary(key => key.ToString(), value => value.ToString());
-    }
-
-    async Task<Dictionary<sbyte, string>> GetDmgschools()
-    {
-        return Enum.GetValues<CreatureTemplateDmgschool>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
     }
 
     async Task<Dictionary<string, string>> GetIconNames()

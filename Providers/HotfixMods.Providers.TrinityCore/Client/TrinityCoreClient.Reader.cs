@@ -33,7 +33,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     {
                         if (enumFound)
                         {
-                            if (line.Contains("}"))
+                            if (line.Contains("}") || line.Trim().StartsWith("MAX_"))
                             {
                                 break;
                             }
@@ -42,11 +42,16 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                 // Remove comments
                                 line = line.Split("//")[0];
 
-                                // enumStringValueRemove is the beginning of the enum in TrinityCore (the naming convention). No need to dispaly the same over and over.
                                 var enumString = line.Split('=')[0].Trim();
                                 var enumNumber = line.Split('=')[1].Replace(",", "").Trim();
 
-                                foreach(var valueRemove in enumStringValueRemoves)
+                                // Check if value is valid
+                                if (!ValueIsValid(enumNumber))
+                                    continue;
+
+
+                                // enumStringValueRemove is the beginning or end of the enum in TrinityCore (the naming convention). No need to dispaly the same over and over.
+                                foreach (var valueRemove in enumStringValueRemoves)
                                 {
                                     if(enumString.StartsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase))
                                     {
@@ -58,7 +63,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                     }
                                 }
 
+                                // Check and fix if enumNumber is hex
                                 enumNumber = ConvertIfHex<TKey>(enumNumber);
+
+                                // Check and fix if enumNumber uses shifting
+                                enumNumber = ConvertIfShifting<TKey>(results, enumNumber);
 
                                 var key = (TKey)Convert.ChangeType(enumNumber, typeof(TKey));
                                 results[key] = UnderscoreToCase(enumString);

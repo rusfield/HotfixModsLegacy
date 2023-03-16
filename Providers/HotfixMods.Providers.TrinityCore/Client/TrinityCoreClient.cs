@@ -26,6 +26,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Trainer_Class) => await GetEnumAsync<TKey>(trainer_path, "Type"),
                     nameof(CreatureTemplate.Type_Flags) => await GetEnumAsync<TKey>(sharedDefines_path, "CreatureTypeFlags", "CREATURE_TYPE_FLAG_"),
                     nameof(CreatureTemplate.Type_Flags2) => await GetEnumAsync<TKey>(sharedDefines_path, "CreatureTypeFlags2", "CREATURE_TYPE_FLAG_2_"),
+                    nameof(CreatureTemplate.Dmgschool) => await GetEnumAsync<TKey>(sharedDefines_path, "SpellSchools", "SPELL_SCHOOL_"),
+                    nameof(CreatureTemplate.Spell_School_Immune_Mask) => await GetEnumAsync<TKey>(sharedDefines_path, "SpellSchoolMask", "SPELL_SCHOOL_MASK_"),
                     _ => new()
                 };
 

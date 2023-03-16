@@ -57,14 +57,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<byte, string>> GetMovementTypeOptionsAsync()
         {
-            var results = await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.MovementType));
-            foreach (var key in results.Keys)
-            {
-                // Value 3 is MAX_DB_MOTION_TYPE. The next values should not be set in DB directly.
-                if (key >= 3)
-                    results.Remove(key);
-            }
-            return results;
+            return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.MovementType));
         }
 
         public async Task<Dictionary<byte, string>> GetRacialLeaderOptionsAsync()
@@ -83,6 +76,16 @@ namespace HotfixMods.Infrastructure.Services
             };
         }
 
+        public async Task<Dictionary<sbyte, string>> GetDmgschoolOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<sbyte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Dmgschool));
+        }
+
+        public async Task<Dictionary<uint, string>> GetSpellSchoolImmuneMaskOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Spell_School_Immune_Mask));
+        }
+
         public async Task<Dictionary<uint, string>> GetTypeFlagsOptionsAsync()
         {
             return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags));
@@ -92,5 +95,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags2));
         }
+
+
     }
 }

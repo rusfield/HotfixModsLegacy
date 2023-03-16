@@ -35,6 +35,17 @@ namespace HotfixMods.Providers.TrinityCore.Client
             return result;
         }
 
+        bool ValueIsValid(string input)
+        {
+            if (input.Contains("|"))
+            {
+                // Value is most likely an aggregated flag value that contains of other flag values.
+                // Ex: SPELL_SCHOOL_MASK_SPELL = (SPELL_SCHOOL_MASK_FIRE | SPELL_SCHOOL_MASK_NATURE | SPELL_SCHOOL_MASK_FROST | SPELL_SCHOOL_MASK_SHADOW | SPELL_SCHOOL_MASK_ARCANE)
+                return false;
+            }
+            return true;
+        }
+
         string ConvertIfHex<T>(string input)
         {
             if (input.StartsWith("0x", StringComparison.InvariantCultureIgnoreCase))
@@ -52,6 +63,21 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     "System.UInt64" => Convert.ToUInt64(input, 16).ToString(),
                     _ => throw new Exception($"{input} does not have convertion for type {type}.")
                 };
+            }
+            return input;
+        }
+
+        string ConvertIfShifting<T>(Dictionary<T, string> data, string input)
+        {
+            if (input.Contains("<<") && data.Any())
+            {
+                // Currently hardcoded for this format: "(1 << ENUM_NAME_OF_PREVIOUS_VALUE)"
+
+                var previousValue = Convert.ToUInt64(data.Last().Key.ToString());
+                if (previousValue == 0)
+                    input = "1";
+                else
+                    input = (previousValue * 2).ToString();
             }
             return input;
         }

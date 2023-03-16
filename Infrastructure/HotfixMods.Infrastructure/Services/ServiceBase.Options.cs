@@ -39,10 +39,14 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<Dictionary<TOptionKey, string>> GetEnumOptionsAsync<TOptionKey>(Type modelType, string propertyName)
             where TOptionKey : notnull
         {
-            var results = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
-            for(int i = 0; i < results.Count; i++)
+            var enumValues = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+            var results = new Dictionary<TOptionKey, string>();
+            if (!enumValues.ContainsKey(default(TOptionKey)))
+                results.Add(default(TOptionKey), $"0 - None");
+
+            for(int i = 0; i < enumValues.Count; i++)
             {
-                var item = results.ElementAt(i);
+                var item = enumValues.ElementAt(i);
                 results[item.Key] = $"{item.Key} - {item.Value}";
             }
             return results;

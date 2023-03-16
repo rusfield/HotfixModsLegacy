@@ -54,22 +54,22 @@
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DynamicFlags))" GetOptionsAsync_Func="Service.GetDynamicFlagsOptionsAsync" MultiSelection="true" />
-            <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags_Extra))" />
+            <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags_Extra))" GetOptionsAsync_Func="Service.GetFlagsExtraOptionsAsync" MultiSelection="true" />
             <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NpcFlag))" GetOptionsAsync_Func="Service.GetNpcFlagOptionsAsync" MultiSelection="true" />
             <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Spell_School_Immune_Mask))" GetOptionsAsync_Func="Service.GetSpellSchoolImmuneMaskOptionsAsync" MultiSelection="true" />
-            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Mechanic_Immune_Mask))" />
+            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Mechanic_Immune_Mask))" GetOptionsAsync_Func="Service.GetMechanicImmuneMaskOptionsAsync" MultiSelection="true" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags" ValueCompare="ValueCompare?.Unit_Flags" Label="@nameof(Value.Unit_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags))" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags" ValueCompare="ValueCompare?.Unit_Flags" Label="@nameof(Value.Unit_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags))" GetOptionsAsync_Func="Service.GetUnitFlagsOptionsAsync" MultiSelection="true" />
                 </LeftContent>
                 <MiddleContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags2" ValueCompare="ValueCompare?.Unit_Flags2" Label="@nameof(Value.Unit_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags2))" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags2" ValueCompare="ValueCompare?.Unit_Flags2" Label="@nameof(Value.Unit_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags2))" GetOptionsAsync_Func="Service.GetUnitFlags2OptionsAsync" MultiSelection="true"  />
                 </MiddleContent>
                 <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags3))" />
+                    <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Unit_Flags3))" GetOptionsAsync_Func="Service.GetUnitFlags3OptionsAsync" MultiSelection="true" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>

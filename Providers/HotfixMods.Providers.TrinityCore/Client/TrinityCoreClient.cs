@@ -30,6 +30,12 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Spell_School_Immune_Mask) => await GetEnumAsync<TKey>(sharedDefines_path, "SpellSchoolMask", "SPELL_SCHOOL_MASK_"),
                     nameof(CreatureTemplate.DynamicFlags) => await GetEnumAsync<TKey>(sharedDefines_path, "UnitDynFlags", "UNIT_DYNFLAG_"),
                     nameof(CreatureTemplate.NpcFlag) => await GetEnumAsync<TKey>(unitDefines_path, "NPCFlags", "UNIT_NPC_FLAG_"),
+                    nameof(CreatureTemplate.Flags_Extra) => await GetEnumAsync<TKey>(creatureData_path, "CreatureFlagsExtra", "CREATURE_FLAG_EXTRA_"),
+                    nameof(CreatureTemplate.Unit_Flags) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags", "UNIT_FLAG_"),
+                    nameof(CreatureTemplate.Unit_Flags2) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags2", "UNIT_FLAG2_"),
+                    nameof(CreatureTemplate.Unit_Flags3) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags3", "UNIT_FLAG3_"),
+
+
                     _ => new()
                 };
 

@@ -44,6 +44,12 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 // Ex: SPELL_SCHOOL_MASK_SPELL = (SPELL_SCHOOL_MASK_FIRE | SPELL_SCHOOL_MASK_NATURE | SPELL_SCHOOL_MASK_FROST | SPELL_SCHOOL_MASK_SHADOW | SPELL_SCHOOL_MASK_ARCANE)
                 return false;
             }
+            else if(input.Contains("&"))
+            {
+                // Same as above.
+                // Ex: (0xFFFFFFFF & ~UNIT_FLAG2_DISALLOWED) 
+                return false;
+            }
             return true;
         }
 

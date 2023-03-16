@@ -29,6 +29,38 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
+        public async Task<Dictionary<ulong, string>> GetMechanicImmuneMaskOptionsAsync()
+        {
+            var mechanics = await GetAsync(_appConfig.HotfixesSchema, "SpellMechanic", false, true);
+            var results = new Dictionary<ulong, string>();
+            ulong keyIndex = 1;
+            foreach(var mechanic in mechanics)
+            {
+                results.Add(keyIndex *= 2, mechanic.GetValueByNameAs<string>("StateName"));
+            }
+            return results;
+        }
+
+        public async Task<Dictionary<uint, string>> GetFlagsExtraOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Flags_Extra));
+        }
+
+        public async Task<Dictionary<uint, string>> GetUnitFlagsOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Unit_Flags));
+        }
+
+        public async Task<Dictionary<uint, string>> GetUnitFlags2OptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Unit_Flags2));
+        }
+
+        public async Task<Dictionary<uint, string>> GetUnitFlags3OptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Unit_Flags3));
+        }
+
         public async Task<Dictionary<byte, string>> GetTypeOptionsAsync()
         {
             return await GetOptionsAsync<byte, uint>(_appConfig.HotfixesSchema, "CreatureType", "Name");

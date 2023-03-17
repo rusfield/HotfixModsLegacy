@@ -14,7 +14,8 @@
     </MudGrid>
 }
 
-<div class="px-6">
+@* The remaining px-2 is in PagedDtoContentPage *@
+<div class="px-4">
     <MudCarousel @ref="mudCarouselRef" Style="height:640px" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigatePage">
         <CascadingValue Name="Transition" Value="Transition">
             @if (ValueIsNull)

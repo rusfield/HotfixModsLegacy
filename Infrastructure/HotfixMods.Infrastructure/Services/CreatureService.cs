@@ -273,6 +273,11 @@ namespace HotfixMods.Infrastructure.Services
                     result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
                 }
 
+                if(string.IsNullOrWhiteSpace(result.HotfixModsEntity.Name))
+                {
+                    result.HotfixModsEntity.Name = string.IsNullOrWhiteSpace(result.CreatureTemplate.Name) ? "New Creature" : result.CreatureTemplate.Name;
+                }
+
                 callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
                 return result;
 
@@ -336,6 +341,11 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     result.CreatureDisplayInfoOption = await GetAsync<CreatureDisplayInfoOption>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoOption.CreatureDisplayInfoExtraID), result.CreatureDisplayInfoExtra.ID));
                     result.NpcModelItemSlotDisplayInfo = await GetAsync<NpcModelItemSlotDisplayInfo>(callback, progress, new DbParameter(nameof(NpcModelItemSlotDisplayInfo.NpcModelID), result.CreatureDisplayInfoExtra.ID));
+                }
+
+                if (string.IsNullOrWhiteSpace(result.HotfixModsEntity.Name))
+                {
+                    result.HotfixModsEntity.Name = string.IsNullOrWhiteSpace(result.CreatureTemplate.Name) ? "New Creature" : result.CreatureTemplate.Name;
                 }
 
                 result.IsUpdate = true;

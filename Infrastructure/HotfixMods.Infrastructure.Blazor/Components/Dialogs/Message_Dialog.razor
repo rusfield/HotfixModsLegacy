@@ -11,7 +11,7 @@
                 <MudText Align="Align.Center">
                     <MudIcon Class="custom-dialog-icon" Icon="@Icon" />
                 </MudText>
-                @foreach (var paragraph in Text.Split("\n"))
+                @foreach (var paragraph in Text.Split("$"))
                 {
                     <MudText Align="Align.Center">
                         @paragraph

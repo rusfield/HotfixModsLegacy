@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Attributes;
+using HotfixMods.Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace HotfixMods.Infrastructure.Helpers
         public string? TryGetDescription(Type? type)
         {
             var descriptionAttribute = (Db2DescriptionAttribute?)type?.GetCustomAttribute(typeof(Db2DescriptionAttribute));
-            return descriptionAttribute?.Value;
+            return descriptionAttribute?.Value ?? type?.Name.ToDisplayName() ?? null;
         }
     }
 }

@@ -33,10 +33,12 @@ namespace HotfixMods.Infrastructure.Services
         {
             var mechanics = await GetAsync(_appConfig.HotfixesSchema, "SpellMechanic", false, true);
             var results = new Dictionary<ulong, string>();
+            results.Add(0, "0 - None");
             ulong keyIndex = 1;
             foreach(var mechanic in mechanics)
             {
-                results.Add(keyIndex *= 2, mechanic.GetValueByNameAs<string>("StateName"));
+                results[keyIndex] = $"{keyIndex} - {mechanic.GetValueByNameAs<string>("StateName").ToDisplayString()}";
+                keyIndex *= 2;
             }
             return results;
         }
@@ -137,5 +139,28 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetEnumOptionsAsync<ulong>(typeof(CreatureTemplate), nameof(CreatureTemplate.NpcFlag));
         }
+
+        public async Task<Dictionary<int, string>> GetRequiredExpansionOptionsAsync()
+        {
+            var expansions = await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.RequiredExpansion));
+            // Only actual expansion IDs are valid.
+            foreach(var key in expansions.Keys)
+            {
+                if (key < 0)
+                    expansions.Remove(key);
+            }
+            return expansions;
+        }
+
+        public async Task<Dictionary<int, string>> GetHealthScalingExpansionOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.HealthScalingExpansion));
+        }
+
+        public async Task<Dictionary<byte, string>> GetUnitClassOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Unit_Class));
+        }
+
     }
 }

@@ -34,7 +34,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Unit_Flags) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags", "UNIT_FLAG_"),
                     nameof(CreatureTemplate.Unit_Flags2) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags2", "UNIT_FLAG2_"),
                     nameof(CreatureTemplate.Unit_Flags3) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags3", "UNIT_FLAG3_"),
-
+                    nameof(CreatureTemplate.Unit_Class) => await GetEnumAsync<TKey>(sharedDefines_path, "Classes", "CLASS_"),
+                    nameof(CreatureTemplate.HealthScalingExpansion) or nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_"),
 
                     _ => new()
                 };

@@ -5,6 +5,8 @@ using HotfixMods.Infrastructure.DtoModels;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.ComponentModel;
+using System.Reflection;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 {
@@ -26,6 +28,8 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
         public TValue? Value { get; set; }
         public TValue? ValueCompare { get; set; }
+
+        DescriptionHelper descriptionHelper = new();
 
         protected override void OnParametersSet()
         {
@@ -50,9 +54,11 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             base.OnAfterRender(firstRender);
         }
 
-        protected EventCallback OpenInfoDialog(string infoText)
+        protected EventCallback OpenInfoDialog(string propertyName)
         {
-            if(!string.IsNullOrWhiteSpace(infoText) && infoText != "TODO")
+            var propertyInfo = typeof(TValue).GetProperty(propertyName);
+            var infoText = descriptionHelper.TryGetDescription(propertyInfo);
+            if (!string.IsNullOrWhiteSpace(infoText))
             {
                 var parameters = new DialogParameters();
                 parameters.Add(nameof(Message_Dialog.Text), infoText);

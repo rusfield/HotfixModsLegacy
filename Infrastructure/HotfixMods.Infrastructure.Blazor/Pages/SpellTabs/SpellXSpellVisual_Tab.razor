@@ -1,34 +1,29 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SpellDto, SpellXSpellVisual>
 
 <StandardDtoContent T="SpellXSpellVisual">
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.Probability" ValueCompare="ValueCompare?.Probability" Label="@nameof(Value.Probability).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Probability))" />
-        <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
-        <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags2))" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyID))" />
+        <Input_Element T="decimal" @bind-Value="Value.Probability" ValueCompare="ValueCompare?.Probability" Label="@nameof(Value.Probability).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Probability)))" />
+        <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Priority)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Flags2)))" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.DifficultyID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SpellIconFileID" ValueCompare="ValueCompare?.SpellIconFileID" Label="@nameof(Value.SpellIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellIconFileID))" />
+                <Input_Element T="int" @bind-Value="Value.SpellIconFileID" ValueCompare="ValueCompare?.SpellIconFileID" Label="@nameof(Value.SpellIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.SpellIconFileID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.ActiveIconFileID" ValueCompare="ValueCompare?.ActiveIconFileID" Label="@nameof(Value.ActiveIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ActiveIconFileID))" />
+                <Input_Element T="int" @bind-Value="Value.ActiveIconFileID" ValueCompare="ValueCompare?.ActiveIconFileID" Label="@nameof(Value.ActiveIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.ActiveIconFileID)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.ViewerUnitConditionID" ValueCompare="ValueCompare?.ViewerUnitConditionID" Label="@nameof(Value.ViewerUnitConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ViewerUnitConditionID))" />
-        <Input_Element T="uint" @bind-Value="Value.ViewerPlayerConditionID" ValueCompare="ValueCompare?.ViewerPlayerConditionID" Label="@nameof(Value.ViewerPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ViewerPlayerConditionID))" />
-        <Input_Element T="ushort" @bind-Value="Value.CasterUnitConditionID" ValueCompare="ValueCompare?.CasterUnitConditionID" Label="@nameof(Value.CasterUnitConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CasterUnitConditionID))" />
-        <Input_Element T="uint" @bind-Value="Value.CasterPlayerConditionID" ValueCompare="ValueCompare?.CasterPlayerConditionID" Label="@nameof(Value.CasterPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CasterPlayerConditionID))" />
+        <Input_Element T="ushort" @bind-Value="Value.ViewerUnitConditionID" ValueCompare="ValueCompare?.ViewerUnitConditionID" Label="@nameof(Value.ViewerUnitConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.ViewerUnitConditionID)))" />
+        <Input_Element T="uint" @bind-Value="Value.ViewerPlayerConditionID" ValueCompare="ValueCompare?.ViewerPlayerConditionID" Label="@nameof(Value.ViewerPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.ViewerPlayerConditionID)))" />
+        <Input_Element T="ushort" @bind-Value="Value.CasterUnitConditionID" ValueCompare="ValueCompare?.CasterUnitConditionID" Label="@nameof(Value.CasterUnitConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.CasterUnitConditionID)))" />
+        <Input_Element T="uint" @bind-Value="Value.CasterPlayerConditionID" ValueCompare="ValueCompare?.CasterPlayerConditionID" Label="@nameof(Value.CasterPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.CasterPlayerConditionID)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    SpellXSpellVisualInfo info = new();
-}

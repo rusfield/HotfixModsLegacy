@@ -1,28 +1,26 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Flags.TrinityCore
 
 @inherits DtoContentBase<GameobjectDto, GameobjectTemplateAddon>
 
 <StandardDtoContent T="GameobjectTemplateAddon" >
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(info.Faction))" />
-        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
-        <Input_Element T="uint" @bind-Value="@(Value.WorldEffectID)" Label="@(nameof(Value.WorldEffectID).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectID" OnInfoAdornmentClick="@(OpenInfoDialog(info.WorldEffectID))" />
-        <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitID)" Label="@(nameof(Value.AiAnimKitID).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitID" OnInfoAdornmentClick="@(OpenInfoDialog(info.AiAnimKitID))" />
+        <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Faction)))" />
+        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Flags)))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
+        <Input_Element T="uint" @bind-Value="@(Value.WorldEffectID)" Label="@(nameof(Value.WorldEffectID).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.WorldEffectID)))" />
+        <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitID)" Label="@(nameof(Value.AiAnimKitID).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.AiAnimKitID)))" />
     </MudItem>
     <MudItem xs="6" />
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.Artkit0)" Label="@(nameof(Value.Artkit0).ToDisplayName())" ValueCompare="ValueCompare?.Artkit0" OnInfoAdornmentClick="@(OpenInfoDialog(info.Artkit0))" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit1)" Label="@(nameof(Value.Artkit1).ToDisplayName())" ValueCompare="ValueCompare?.Artkit1" OnInfoAdornmentClick="@(OpenInfoDialog(info.Artkit1))" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit2)" Label="@(nameof(Value.Artkit2).ToDisplayName())" ValueCompare="ValueCompare?.Artkit2" OnInfoAdornmentClick="@(OpenInfoDialog(info.Artkit2))" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit3)" Label="@(nameof(Value.Artkit3).ToDisplayName())" ValueCompare="ValueCompare?.Artkit3" OnInfoAdornmentClick="@(OpenInfoDialog(info.Artkit3))" />
-        <Input_Element T="int" @bind-Value="@(Value.Artkit4)" Label="@(nameof(Value.Artkit4).ToDisplayName())" ValueCompare="ValueCompare?.Artkit4" OnInfoAdornmentClick="@(OpenInfoDialog(info.Artkit4))" />
+        <Input_Element T="int" @bind-Value="@(Value.Artkit0)" Label="@(nameof(Value.Artkit0).ToDisplayName())" ValueCompare="ValueCompare?.Artkit0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit0)))" />
+        <Input_Element T="int" @bind-Value="@(Value.Artkit1)" Label="@(nameof(Value.Artkit1).ToDisplayName())" ValueCompare="ValueCompare?.Artkit1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit1)))" />
+        <Input_Element T="int" @bind-Value="@(Value.Artkit2)" Label="@(nameof(Value.Artkit2).ToDisplayName())" ValueCompare="ValueCompare?.Artkit2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit2)))" />
+        <Input_Element T="int" @bind-Value="@(Value.Artkit3)" Label="@(nameof(Value.Artkit3).ToDisplayName())" ValueCompare="ValueCompare?.Artkit3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit3)))" />
+        <Input_Element T="int" @bind-Value="@(Value.Artkit4)" Label="@(nameof(Value.Artkit4).ToDisplayName())" ValueCompare="ValueCompare?.Artkit4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit4)))" />
     </MudItem>
 </StandardDtoContent>
 
 @code {
-    GameobjectTemplateAddonInfo info = new();
 
     async Task<Dictionary<uint, string>> GetFlags()
     {

@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<ItemDto, ItemModifiedAppearance>
 
@@ -10,22 +9,18 @@
         <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.ItemAppearanceModifierID" ValueCompare="ValueCompare?.ItemAppearanceModifierID" Label="@nameof(Value.ItemAppearanceModifierID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemAppearanceModifierID))" />
+                <Input_Element T="int" @bind-Value="Value.ItemAppearanceModifierID" ValueCompare="ValueCompare?.ItemAppearanceModifierID" Label="@nameof(Value.ItemAppearanceModifierID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemModifiedAppearance.ItemAppearanceModifierID)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.TransmogSourceTypeEnum" ValueCompare="ValueCompare?.TransmogSourceTypeEnum" Label="@nameof(Value.TransmogSourceTypeEnum).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TransmogSourceTypeEnum))" />
+                <Input_Element T="byte" @bind-Value="Value.TransmogSourceTypeEnum" ValueCompare="ValueCompare?.TransmogSourceTypeEnum" Label="@nameof(Value.TransmogSourceTypeEnum).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemModifiedAppearance.TransmogSourceTypeEnum)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OrderIndex))" />
+                <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemModifiedAppearance.OrderIndex)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
 </StandardDtoContent>
-
-@code {
-    ItemModifiedAppearanceInfo info = new();
-}

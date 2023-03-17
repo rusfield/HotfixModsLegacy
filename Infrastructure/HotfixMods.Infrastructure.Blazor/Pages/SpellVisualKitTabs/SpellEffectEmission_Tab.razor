@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellEffectEmission>
 
@@ -9,24 +8,20 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.EmissionRate" ValueCompare="ValueCompare?.EmissionRate" Label="@nameof(Value.EmissionRate).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EmissionRate))" />
+                <Input_Element T="decimal" @bind-Value="Value.EmissionRate" ValueCompare="ValueCompare?.EmissionRate" Label="@nameof(Value.EmissionRate).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffectEmission.EmissionRate)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelScale))" />
+                <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffectEmission.ModelScale)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="short" @bind-Value="Value.AreaModelID" ValueCompare="ValueCompare?.AreaModelID" Label="@nameof(Value.AreaModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AreaModelID))" />
+                <Input_Element T="short" @bind-Value="Value.AreaModelID" ValueCompare="ValueCompare?.AreaModelID" Label="@nameof(Value.AreaModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffectEmission.AreaModelID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+                <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffectEmission.Flags)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
 </InstancedDtoContentPage>
-
-@code {
-    SpellEffectEmissionInfo info = new();
-}

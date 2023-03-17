@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKitModelAttach>
 
@@ -7,92 +6,88 @@
     <MudItem xs="3">
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Offset0" ValueCompare="ValueCompare?.Offset0" Label="@nameof(Value.Offset0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset0))" />
+                <Input_Element T="decimal" @bind-Value="Value.Offset0" ValueCompare="ValueCompare?.Offset0" Label="@nameof(Value.Offset0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Offset0)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation0" ValueCompare="ValueCompare?.OffsetVariation0" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation0))" />
+                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation0" ValueCompare="ValueCompare?.OffsetVariation0" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.OffsetVariation0)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Offset1" ValueCompare="ValueCompare?.Offset1" Label="@nameof(Value.Offset1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset1))" />
+                <Input_Element T="decimal" @bind-Value="Value.Offset1" ValueCompare="ValueCompare?.Offset1" Label="@nameof(Value.Offset1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Offset1)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation1" ValueCompare="ValueCompare?.OffsetVariation1" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation1))" />
+                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation1" ValueCompare="ValueCompare?.OffsetVariation1" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.OffsetVariation1)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Offset2" ValueCompare="ValueCompare?.Offset2" Label="@nameof(Value.Offset2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Offset2))" />
+                <Input_Element T="decimal" @bind-Value="Value.Offset2" ValueCompare="ValueCompare?.Offset2" Label="@nameof(Value.Offset2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Offset2)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation2" ValueCompare="ValueCompare?.OffsetVariation2" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.OffsetVariation2))" />
+                <Input_Element T="decimal" @bind-Value="Value.OffsetVariation2" ValueCompare="ValueCompare?.OffsetVariation2" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.OffsetVariation2)))" />
             </RightContent>
         </InlineGroup>
-        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
-        <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentID))" />
-        <Input_Element T="int" @bind-Value="Value.PositionerID" ValueCompare="ValueCompare?.PositionerID" Label="@nameof(Value.PositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PositionerID))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Flags)))" />
+        <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AttachmentID)))" />
+        <Input_Element T="int" @bind-Value="Value.PositionerID" ValueCompare="ValueCompare?.PositionerID" Label="@nameof(Value.PositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.PositionerID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartAnimID))" />
+                <Input_Element T="int" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartAnimID)))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimID))" />
+                <Input_Element T="int" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimID)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndAnimID))" />
+                <Input_Element T="int" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.EndAnimID)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitID))" />
+                <Input_Element T="int" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimKitID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.StartDelay" ValueCompare="ValueCompare?.StartDelay" Label="@nameof(Value.StartDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartDelay))" />
+                <Input_Element T="decimal" @bind-Value="Value.StartDelay" ValueCompare="ValueCompare?.StartDelay" Label="@nameof(Value.StartDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartDelay)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
+                <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Scale)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.ScaleVariation" ValueCompare="ValueCompare?.ScaleVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScaleVariation))" />
+                <Input_Element T="decimal" @bind-Value="Value.ScaleVariation" ValueCompare="ValueCompare?.ScaleVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.ScaleVariation)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Yaw" ValueCompare="ValueCompare?.Yaw" Label="@nameof(Value.Yaw).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Yaw))" />
+                <Input_Element T="decimal" @bind-Value="Value.Yaw" ValueCompare="ValueCompare?.Yaw" Label="@nameof(Value.Yaw).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Yaw)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.YawVariation" ValueCompare="ValueCompare?.YawVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.YawVariation))" />
+                <Input_Element T="decimal" @bind-Value="Value.YawVariation" ValueCompare="ValueCompare?.YawVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.YawVariation)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Pitch" ValueCompare="ValueCompare?.Pitch" Label="@nameof(Value.Pitch).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Pitch))" />
+                <Input_Element T="decimal" @bind-Value="Value.Pitch" ValueCompare="ValueCompare?.Pitch" Label="@nameof(Value.Pitch).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Pitch)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.PitchVariation" ValueCompare="ValueCompare?.PitchVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.PitchVariation))" />
+                <Input_Element T="decimal" @bind-Value="Value.PitchVariation" ValueCompare="ValueCompare?.PitchVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.PitchVariation)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="60" RightContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Roll" ValueCompare="ValueCompare?.Roll" Label="@nameof(Value.Roll).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Roll))" />
+                <Input_Element T="decimal" @bind-Value="Value.Roll" ValueCompare="ValueCompare?.Roll" Label="@nameof(Value.Roll).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Roll)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.RollVariation" ValueCompare="ValueCompare?.RollVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(info.RollVariation))" />
+                <Input_Element T="decimal" @bind-Value="Value.RollVariation" ValueCompare="ValueCompare?.RollVariation" Label="Variation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.RollVariation)))" />
             </RightContent>
         </InlineGroup>
-        <Input_Element T="int" @bind-Value="Value.LowDefModelAttachID" ValueCompare="ValueCompare?.LowDefModelAttachID" Label="@nameof(Value.LowDefModelAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LowDefModelAttachID))" />
-        <Input_Element T="decimal" @bind-Value="Value.Field_9_0_1_33978_021" ValueCompare="ValueCompare?.Field_9_0_1_33978_021" Label="@nameof(Value.Field_9_0_1_33978_021).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_9_0_1_33978_021))" />
+        <Input_Element T="int" @bind-Value="Value.LowDefModelAttachID" ValueCompare="ValueCompare?.LowDefModelAttachID" Label="@nameof(Value.LowDefModelAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.LowDefModelAttachID)))" />
+        <Input_Element T="decimal" @bind-Value="Value.Field_9_0_1_33978_021" ValueCompare="ValueCompare?.Field_9_0_1_33978_021" Label="@nameof(Value.Field_9_0_1_33978_021).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Field_9_0_1_33978_021)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    SpellVisualKitModelAttachInfo info = new();
-}

@@ -7,8 +7,11 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
+        [Db2Description("The position of the attachment relative to the user.$A positive value will move the attachment forward and a negative value will move the attachment backward.$Value 0.5 will be quite noticable.")]
         public decimal Offset0 { get; set; } = 0;
+        [Db2Description("The position of the attachment relative to the user.$A positive value will move the attachment to the right and a negative value will move the attachment to the left.$Value 0.5 will be quite noticable.")]
         public decimal Offset1 { get; set; } = 0;
+        [Db2Description("The position of the attachment relative to the user.$A positive value will move the attachment up and a negative value will move the attachment down.$Value 0.5 will be quite noticable.")]
         public decimal Offset2 { get; set; } = 0;
         public decimal OffsetVariation0 { get; set; } = 0;
         public decimal OffsetVariation1 { get; set; } = 0;

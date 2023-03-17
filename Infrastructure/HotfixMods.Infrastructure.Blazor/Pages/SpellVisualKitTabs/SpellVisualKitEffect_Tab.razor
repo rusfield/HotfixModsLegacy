@@ -1,5 +1,4 @@
 ﻿@using HotfixMods.Core.Enums.Db2;
-@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKitEffect>
@@ -11,14 +10,14 @@
         <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectType))" />
+                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitEffect.EffectType)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Effect))" />
+                <Input_Element T="int" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" Disabled="EffectIsDisabled()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitEffect.Effect)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
@@ -29,8 +28,6 @@
 @code {
     [Parameter]
     public EventCallback<int> EffectTypeChanged { get; set; }
-
-    SpellVisualKitEffectInfo info = new();
 
     async void OnEffectTypeChanged(int newEffectType)
     {

@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Flags.Db2
 
 @inherits DtoContentBase<ItemDto, ItemDisplayInfo>
@@ -7,92 +6,90 @@
 <PagedDtoContent T="ItemDisplayInfo" >
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemVisual))" />
-            <Input_Element T="int" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ParticleColorID))" />
-            <Input_Element T="uint" @bind-Value="Value.ItemRangedDisplayInfoID" ValueCompare="ValueCompare?.ItemRangedDisplayInfoID" Label="@nameof(Value.ItemRangedDisplayInfoID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemRangedDisplayInfoID))" />
-            <Input_Element T="uint" @bind-Value="Value.OverrideSwooshSoundKitID" ValueCompare="ValueCompare?.OverrideSwooshSoundKitID" Label="@nameof(Value.OverrideSwooshSoundKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OverrideSwooshSoundKitID))" />
+            <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ItemVisual)))" />
+            <Input_Element T="int" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ParticleColorID)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemRangedDisplayInfoID" ValueCompare="ValueCompare?.ItemRangedDisplayInfoID" Label="@nameof(Value.ItemRangedDisplayInfoID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ItemRangedDisplayInfoID)))" />
+            <Input_Element T="uint" @bind-Value="Value.OverrideSwooshSoundKitID" ValueCompare="ValueCompare?.OverrideSwooshSoundKitID" Label="@nameof(Value.OverrideSwooshSoundKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.OverrideSwooshSoundKitID)))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="int" @bind-Value="Value.HelmetGeosetVis0" ValueCompare="ValueCompare?.HelmetGeosetVis0" Label="@nameof(Value.HelmetGeosetVis0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HelmetGeosetVis1))" />
+                    <Input_Element T="int" @bind-Value="Value.HelmetGeosetVis0" ValueCompare="ValueCompare?.HelmetGeosetVis0" Label="@nameof(Value.HelmetGeosetVis0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.HelmetGeosetVis0)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="int" @bind-Value="Value.HelmetGeosetVis1" ValueCompare="ValueCompare?.HelmetGeosetVis1" Label="@nameof(Value.HelmetGeosetVis1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HelmetGeosetVis2))" />
+                    <Input_Element T="int" @bind-Value="Value.HelmetGeosetVis1" ValueCompare="ValueCompare?.HelmetGeosetVis1" Label="@nameof(Value.HelmetGeosetVis1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.HelmetGeosetVis1)))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
                 <RightContent />
                 <MiddleContent>
-                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
+                    <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.Flags)))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
                 </MiddleContent>
                 <LeftContent />
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.SheatheTransformMatrixID" ValueCompare="ValueCompare?.SheatheTransformMatrixID" Label="@nameof(Value.SheatheTransformMatrixID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.SheatheTransformMatrixID))" />
-            <Input_Element T="int" @bind-Value="Value.SheathedSpellVisualKitID" ValueCompare="ValueCompare?.SheathedSpellVisualKitID" Label="@nameof(Value.SheathedSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.SheathedSpellVisualKitID))" />
-            <Input_Element T="uint" @bind-Value="Value.UnsheathedSpellVisualKitID" ValueCompare="ValueCompare?.UnsheathedSpellVisualKitID" Label="@nameof(Value.UnsheathedSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.UnsheathedSpellVisualKitID))" />
-            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitID" ValueCompare="ValueCompare?.StateSpellVisualKitID" Label="@nameof(Value.StateSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.StateSpellVisualKitID))" />
+            <Input_Element T="int" @bind-Value="Value.SheatheTransformMatrixID" ValueCompare="ValueCompare?.SheatheTransformMatrixID" Label="@nameof(Value.SheatheTransformMatrixID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.SheatheTransformMatrixID)))" />
+            <Input_Element T="int" @bind-Value="Value.SheathedSpellVisualKitID" ValueCompare="ValueCompare?.SheathedSpellVisualKitID" Label="@nameof(Value.SheathedSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.SheathedSpellVisualKitID)))" />
+            <Input_Element T="uint" @bind-Value="Value.UnsheathedSpellVisualKitID" ValueCompare="ValueCompare?.UnsheathedSpellVisualKitID" Label="@nameof(Value.UnsheathedSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.UnsheathedSpellVisualKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitID" ValueCompare="ValueCompare?.StateSpellVisualKitID" Label="@nameof(Value.StateSpellVisualKitID).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.StateSpellVisualKitID)))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup0" ValueCompare="ValueCompare?.GeosetGroup0" Label="@nameof(Value.GeosetGroup0).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup1))" />
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup1" ValueCompare="ValueCompare?.GeosetGroup1" Label="@nameof(Value.GeosetGroup1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup2))" />
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup2" ValueCompare="ValueCompare?.GeosetGroup2" Label="@nameof(Value.GeosetGroup2).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup3))" />
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup3" ValueCompare="ValueCompare?.GeosetGroup3" Label="@nameof(Value.GeosetGroup3).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup4))" />
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup4" ValueCompare="ValueCompare?.GeosetGroup4" Label="@nameof(Value.GeosetGroup4).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup5))" />
-            <Input_Element T="int" @bind-Value="Value.GeosetGroup5" ValueCompare="ValueCompare?.GeosetGroup5" Label="@nameof(Value.GeosetGroup5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GeosetGroup6))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup0" ValueCompare="ValueCompare?.GeosetGroup0" Label="@nameof(Value.GeosetGroup0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup0)))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup1" ValueCompare="ValueCompare?.GeosetGroup1" Label="@nameof(Value.GeosetGroup1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup1)))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup2" ValueCompare="ValueCompare?.GeosetGroup2" Label="@nameof(Value.GeosetGroup2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup2)))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup3" ValueCompare="ValueCompare?.GeosetGroup3" Label="@nameof(Value.GeosetGroup3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup3)))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup4" ValueCompare="ValueCompare?.GeosetGroup4" Label="@nameof(Value.GeosetGroup4).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup4)))" />
+            <Input_Element T="int" @bind-Value="Value.GeosetGroup5" ValueCompare="ValueCompare?.GeosetGroup5" Label="@nameof(Value.GeosetGroup5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.GeosetGroup5)))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="int" @bind-Value="Value.ModelType0" ValueCompare="ValueCompare?.ModelType0" Label="Model Type 1"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelType1))" />
+                    <Input_Element T="int" @bind-Value="Value.ModelType0" ValueCompare="ValueCompare?.ModelType0" Label="Model Type 0"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelType0)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="int" @bind-Value="Value.ModelType1" ValueCompare="ValueCompare?.ModelType1" Label="Model Type 2"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelType2))" />
+                    <Input_Element T="int" @bind-Value="Value.ModelType1" ValueCompare="ValueCompare?.ModelType1" Label="Model Type 1"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelType1)))" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup DefaultPadding="false" Merged="false">
                 <LeftContent>
                     <InlineGroup>
                         <LeftContent>
-                            <Input_Element T="uint" @bind-Value="Value.ModelResourcesID0" ValueCompare="ValueCompare?.ModelResourcesID0" Label="Resource 1"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelResourcesID1))" />
+                            <Input_Element T="uint" @bind-Value="Value.ModelResourcesID0" ValueCompare="ValueCompare?.ModelResourcesID0" Label="Resource 0"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelResourcesID0)))" />
                         </LeftContent>
                         <RightContent>
-                            <Input_Element T="int" @bind-Value="Value.ModelMaterialResourcesID0" ValueCompare="ValueCompare?.ModelMaterialResourcesID0" Label="Material 1"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelMaterialResourcesID1))" />
+                            <Input_Element T="int" @bind-Value="Value.ModelMaterialResourcesID0" ValueCompare="ValueCompare?.ModelMaterialResourcesID0" Label="Material 0"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelMaterialResourcesID0)))" />
                         </RightContent>
                     </InlineGroup>
                 </LeftContent>
                 <RightContent>
                     <InlineGroup>
                         <LeftContent>
-                            <Input_Element T="uint" @bind-Value="Value.ModelResourcesID1" ValueCompare="ValueCompare?.ModelResourcesID1" Label="Resource 2"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelResourcesID2))" />
+                            <Input_Element T="uint" @bind-Value="Value.ModelResourcesID1" ValueCompare="ValueCompare?.ModelResourcesID1" Label="Resource 1"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelResourcesID1)))" />
                         </LeftContent>
                         <RightContent>
-                            <Input_Element T="int" @bind-Value="Value.ModelMaterialResourcesID1" ValueCompare="ValueCompare?.ModelMaterialResourcesID1" Label="Material 2"  OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelMaterialResourcesID2))" />
+                            <Input_Element T="int" @bind-Value="Value.ModelMaterialResourcesID1" ValueCompare="ValueCompare?.ModelMaterialResourcesID1" Label="Material 1"  OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ModelMaterialResourcesID1)))" />
                         </RightContent>
                     </InlineGroup>
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup0" ValueCompare="ValueCompare?.AttachmentGeosetGroup0" Label="@nameof(Value.AttachmentGeosetGroup0).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup1))" />
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup1" ValueCompare="ValueCompare?.AttachmentGeosetGroup1" Label="@nameof(Value.AttachmentGeosetGroup1).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup2))" />
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup2" ValueCompare="ValueCompare?.AttachmentGeosetGroup2" Label="@nameof(Value.AttachmentGeosetGroup2).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup3))" />
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup3" ValueCompare="ValueCompare?.AttachmentGeosetGroup3" Label="@nameof(Value.AttachmentGeosetGroup3).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup4))" />
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup4" ValueCompare="ValueCompare?.AttachmentGeosetGroup4" Label="@nameof(Value.AttachmentGeosetGroup4).ToDisplayName()"  OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup5))" />
-            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup5" ValueCompare="ValueCompare?.AttachmentGeosetGroup5" Label="@nameof(Value.AttachmentGeosetGroup5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AttachmentGeosetGroup6))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup0" ValueCompare="ValueCompare?.AttachmentGeosetGroup0" Label="@nameof(Value.AttachmentGeosetGroup0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup0)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup1" ValueCompare="ValueCompare?.AttachmentGeosetGroup1" Label="@nameof(Value.AttachmentGeosetGroup1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup1)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup2" ValueCompare="ValueCompare?.AttachmentGeosetGroup2" Label="@nameof(Value.AttachmentGeosetGroup2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup2)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup3" ValueCompare="ValueCompare?.AttachmentGeosetGroup3" Label="@nameof(Value.AttachmentGeosetGroup3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup3)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup4" ValueCompare="ValueCompare?.AttachmentGeosetGroup4" Label="@nameof(Value.AttachmentGeosetGroup4).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup4)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentGeosetGroup5" ValueCompare="ValueCompare?.AttachmentGeosetGroup5" Label="@nameof(Value.AttachmentGeosetGroup5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.AttachmentGeosetGroup5)))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
 
 @code {
-    ItemDisplayInfoInfo info = new();
-
     async Task<Dictionary<int, string>> GetFlags()
     {
         return Enum.GetValues<ItemDisplayInfoFlags>().ToDictionary(key => (int)key, value => value.ToDisplayString());

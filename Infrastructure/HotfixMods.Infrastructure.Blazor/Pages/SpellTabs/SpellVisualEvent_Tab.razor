@@ -1,38 +1,35 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<SpellDto, SpellVisualEvent>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.StartEvent" ValueCompare="ValueCompare?.StartEvent" Label="@nameof(Value.StartEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartEvent))" />
-        <Input_Element T="int" @bind-Value="Value.EndEvent" ValueCompare="ValueCompare?.EndEvent" Label="@nameof(Value.EndEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndEvent))" />
-        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_008" ValueCompare="ValueCompare?.Field_10_0_0_44649_008" Label="@nameof(Value.Field_10_0_0_44649_008).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_10_0_0_44649_008))" />
-        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_009" ValueCompare="ValueCompare?.Field_10_0_0_44649_009" Label="@nameof(Value.Field_10_0_0_44649_009).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_10_0_0_44649_009))" />
+        <Input_Element T="int" @bind-Value="Value.StartEvent" ValueCompare="ValueCompare?.StartEvent" Label="@nameof(Value.StartEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.StartEvent)))" />
+        <Input_Element T="int" @bind-Value="Value.EndEvent" ValueCompare="ValueCompare?.EndEvent" Label="@nameof(Value.EndEvent).ToDisplayName()" GetOptionsAsync_Func="GetEventTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.EndEvent)))" />
+        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_008" ValueCompare="ValueCompare?.Field_10_0_0_44649_008" Label="@nameof(Value.Field_10_0_0_44649_008).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.Field_10_0_0_44649_008)))" />
+        <Input_Element T="int" @bind-Value="Value.Field_10_0_0_44649_009" ValueCompare="ValueCompare?.Field_10_0_0_44649_009" Label="@nameof(Value.Field_10_0_0_44649_009).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.Field_10_0_0_44649_009)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.TargetType" ValueCompare="ValueCompare?.TargetType" Label="@nameof(Value.TargetType).ToDisplayName()" GetOptionsAsync_Func="GetTargetTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.TargetType))" />
+                <Input_Element T="int" @bind-Value="Value.TargetType" ValueCompare="ValueCompare?.TargetType" Label="@nameof(Value.TargetType).ToDisplayName()" GetOptionsAsync_Func="GetTargetTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.TargetType)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.SpellVisualKitID" ValueCompare="ValueCompare?.SpellVisualKitID" Label="@nameof(Value.SpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellVisualKitID))" />
+                <Input_Element T="int" @bind-Value="Value.SpellVisualKitID" ValueCompare="ValueCompare?.SpellVisualKitID" Label="@nameof(Value.SpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.SpellVisualKitID)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.StartMinOffsetMs" ValueCompare="ValueCompare?.StartMinOffsetMs" Label="@nameof(Value.StartMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartMinOffsetMs))" />
-        <Input_Element T="int" @bind-Value="Value.StartMaxOffsetMs" ValueCompare="ValueCompare?.StartMaxOffsetMs" Label="@nameof(Value.StartMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartMaxOffsetMs))" />
-        <Input_Element T="int" @bind-Value="Value.EndMinOffsetMs" ValueCompare="ValueCompare?.EndMinOffsetMs" Label="@nameof(Value.EndMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndMinOffsetMs))" />
-        <Input_Element T="int" @bind-Value="Value.EndMaxOffsetMs" ValueCompare="ValueCompare?.EndMaxOffsetMs" Label="@nameof(Value.EndMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EndMaxOffsetMs))" />
+        <Input_Element T="int" @bind-Value="Value.StartMinOffsetMs" ValueCompare="ValueCompare?.StartMinOffsetMs" Label="@nameof(Value.StartMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.StartMinOffsetMs)))" />
+        <Input_Element T="int" @bind-Value="Value.StartMaxOffsetMs" ValueCompare="ValueCompare?.StartMaxOffsetMs" Label="@nameof(Value.StartMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.StartMaxOffsetMs)))" />
+        <Input_Element T="int" @bind-Value="Value.EndMinOffsetMs" ValueCompare="ValueCompare?.EndMinOffsetMs" Label="@nameof(Value.EndMinOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.EndMinOffsetMs)))" />
+        <Input_Element T="int" @bind-Value="Value.EndMaxOffsetMs" ValueCompare="ValueCompare?.EndMaxOffsetMs" Label="@nameof(Value.EndMaxOffsetMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEvent.EndMaxOffsetMs)))" />
     </MudItem>
 </InstancedDtoContentPage>
 
 @code {
-    SpellVisualEventInfo info = new();
-
     async Task<Dictionary<int, string>> GetEventTypes()
     {
         return Enum.GetValues<SpellVisualEventEventType>().ToDictionary(key => (int)key, value => value.ToDisplayString());

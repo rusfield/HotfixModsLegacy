@@ -1,5 +1,4 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 
 @inject SoundKitService Service
 
@@ -7,54 +6,50 @@
 
 <StandardDtoContent T="SoundKit">
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@(nameof(Value.SoundType).ToDisplayName())" ValueCompare="ValueCompare?.SoundType" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundType))" GetOptionsAsync_Func="(Service.GetSoundTypeOptionsAsync)" />
-        <Input_Element T="sbyte" @bind-Value="@(Value.DialogType)" Label="@(nameof(Value.DialogType).ToDisplayName())" ValueCompare="ValueCompare?.DialogType" OnInfoAdornmentClick="@(OpenInfoDialog(info.DialogType))" />
-        <Input_Element T="int" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" MultiSelection="true" GetOptionsAsync_Func="(Service.GetFlagOptionsAsync)" />
-        <Input_Element T="decimal" @bind-Value="@(Value.MinDistance)" Label="@(nameof(Value.MinDistance).ToDisplayName())" ValueCompare="ValueCompare?.MinDistance" OnInfoAdornmentClick="@(OpenInfoDialog(info.MinDistance))" />
-        <Input_Element T="decimal" @bind-Value="@(Value.DistanceCutoff)" Label="@(nameof(Value.DistanceCutoff).ToDisplayName())" ValueCompare="ValueCompare?.DistanceCutoff" OnInfoAdornmentClick="@(OpenInfoDialog(info.DistanceCutoff))" />
+        <Input_Element T="int" @bind-Value="@(Value.SoundType)" Label="@nameof(Value.SoundType).ToDisplayName()" ValueCompare="ValueCompare?.SoundType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.SoundType)))" GetOptionsAsync_Func="(Service.GetSoundTypeOptionsAsync)" />
+        <Input_Element T="sbyte" @bind-Value="@(Value.DialogType)" Label="@nameof(Value.DialogType).ToDisplayName()" ValueCompare="ValueCompare?.DialogType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.DialogType)))" />
+        <Input_Element T="int" @bind-Value="@(Value.Flags)" Label="@nameof(Value.Flags).ToDisplayName()" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.Flags)))" MultiSelection="true" GetOptionsAsync_Func="(Service.GetFlagOptionsAsync)" />
+        <Input_Element T="decimal" @bind-Value="@(Value.MinDistance)" Label="@(nameof(Value.MinDistance).ToDisplayName())" ValueCompare="ValueCompare?.MinDistance" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.MinDistance)))" />
+        <Input_Element T="decimal" @bind-Value="@(Value.DistanceCutoff)" Label="@(nameof(Value.DistanceCutoff).ToDisplayName())" ValueCompare="ValueCompare?.DistanceCutoff" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.DistanceCutoff)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="@(Value.VolumeFloat)" Label="@(nameof(Value.VolumeFloat).ToDisplayName())" ValueCompare="ValueCompare?.VolumeFloat" OnInfoAdornmentClick="@(OpenInfoDialog(info.VolumeFloat))" />
+                <Input_Element T="decimal" @bind-Value="@(Value.VolumeFloat)" Label="@(nameof(Value.VolumeFloat).ToDisplayName())" ValueCompare="ValueCompare?.VolumeFloat" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.VolumeFloat)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="@(Value.PitchAdjust)" Label="@(nameof(Value.PitchAdjust).ToDisplayName())" ValueCompare="ValueCompare?.PitchAdjust" OnInfoAdornmentClick="@(OpenInfoDialog(info.PitchAdjust))" />
+                <Input_Element T="decimal" @bind-Value="@(Value.PitchAdjust)" Label="@(nameof(Value.PitchAdjust).ToDisplayName())" ValueCompare="ValueCompare?.PitchAdjust" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.PitchAdjust)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false" DefaultPadding="false">
             <LeftContent>
                 <InlineGroup Merged="false">
                     <LeftContent>
-                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.VolumeVariationPlus" OnInfoAdornmentClick="@(OpenInfoDialog(info.VolumeVariationPlus))" />
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.VolumeVariationPlus" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.VolumeVariationPlus)))" />
                     </LeftContent>
                     <RightContent>
-                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.VolumeVariationMinus" OnInfoAdornmentClick="@(OpenInfoDialog(info.VolumeVariationMinus))" />
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.VolumeVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.VolumeVariationMinus" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.VolumeVariationMinus)))" />
                     </RightContent>
                 </InlineGroup>
             </LeftContent>
             <RightContent>
                 <InlineGroup Merged="false">
                     <LeftContent>
-                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.PitchVariationPlus" OnInfoAdornmentClick="@(OpenInfoDialog(info.PitchVariationPlus))" />
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationPlus)" Label="Variation Plus" ValueCompare="ValueCompare?.PitchVariationPlus" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.PitchVariationPlus)))" />
                     </LeftContent>
                     <RightContent>
-                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.PitchVariationMinus" OnInfoAdornmentClick="@(OpenInfoDialog(info.PitchVariationMinus))" />
+                        <Input_Element T="decimal" Variant="Variant.Text" @bind-Value="@(Value.PitchVariationMinus)" Label="Variation Minus" ValueCompare="ValueCompare?.PitchVariationMinus" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.PitchVariationMinus)))" />
                     </RightContent>
                 </InlineGroup>
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="byte" @bind-Value="@(Value.MaxInstances)" Label="@(nameof(Value.MaxInstances).ToDisplayName())" ValueCompare="ValueCompare?.MaxInstances" OnInfoAdornmentClick="@(OpenInfoDialog(info.MaxInstances))" />
-        <Input_Element T="byte" @bind-Value="@(Value.EAXDef)" Label="EAX Def" ValueCompare="ValueCompare?.EAXDef" OnInfoAdornmentClick="@(OpenInfoDialog(info.EAXDef))" />
-        <Input_Element T="uint" @bind-Value="@(Value.SoundKitAdvancedID)" Label="@(nameof(Value.SoundKitAdvancedID).ToDisplayName())" ValueCompare="ValueCompare?.SoundKitAdvancedID" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundKitAdvancedID))" />
-        <Input_Element T="ushort" @bind-Value="@(Value.BusOverwriteID)" Label="@(nameof(Value.BusOverwriteID).ToDisplayName())" ValueCompare="ValueCompare?.BusOverwriteID" OnInfoAdornmentClick="@(OpenInfoDialog(info.BusOverwriteID))" />
-        <Input_Element T="uint" @bind-Value="@(Value.SoundMixGroupID)" Label="@(nameof(Value.SoundMixGroupID).ToDisplayName())" ValueCompare="ValueCompare?.SoundMixGroupID" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundMixGroupID))" />
+        <Input_Element T="byte" @bind-Value="@(Value.MaxInstances)" Label="@nameof(Value.MaxInstances).ToDisplayName()" ValueCompare="ValueCompare?.MaxInstances" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.MaxInstances)))" />
+        <Input_Element T="byte" @bind-Value="@(Value.EAXDef)" Label="EAX Def" ValueCompare="ValueCompare?.EAXDef" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.EAXDef)))" />
+        <Input_Element T="uint" @bind-Value="@(Value.SoundKitAdvancedID)" Label="@nameof(Value.SoundKitAdvancedID).ToDisplayName()" ValueCompare="ValueCompare?.SoundKitAdvancedID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.SoundKitAdvancedID)))" />
+        <Input_Element T="ushort" @bind-Value="@(Value.BusOverwriteID)" Label="@nameof(Value.BusOverwriteID).ToDisplayName()" ValueCompare="ValueCompare?.BusOverwriteID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.BusOverwriteID)))" />
+        <Input_Element T="uint" @bind-Value="@(Value.SoundMixGroupID)" Label="@nameof(Value.SoundMixGroupID).ToDisplayName()" ValueCompare="ValueCompare?.SoundMixGroupID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKit.SoundMixGroupID)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    SoundKitInfo info = new();
-}

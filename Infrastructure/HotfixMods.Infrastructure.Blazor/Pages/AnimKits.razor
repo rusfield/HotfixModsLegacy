@@ -11,11 +11,12 @@
 
 *@
 
-<DtoTabsContent T="AnimKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<AnimKitSearchId_Dialog>())" />
+<DtoTabsContent T="AnimKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<AnimKitSearchId_Dialog>())" RequiredTypes="required" />
 
 
 @code {
-
-
-
+    List<Type> required = new()
+    {
+        typeof(AnimKit)        
+    };
 }

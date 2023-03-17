@@ -4,16 +4,12 @@
 @inject SpellVisualKitService Service
 @inherits PageBase<SpellVisualKitDto>
 
-<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearchId_Dialog>())" />
+<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearchId_Dialog>())" RequiredTypes="required" />
 
 
 @code {
-
-    // Temp
-    protected override void OnParametersSet()
+    List<Type> required = new()
     {
-        if (null == PageTab.Dto)
-            PageTab.Dto = new SpellVisualKitDto();
-        base.OnParametersSet();
-    }
+        typeof(SpellVisualKit)
+    };
 }

@@ -7,6 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
+        [Db2Description("The ID found in CreatureModelData.db2 which holds information about the model this creature uses. If the creature is a character model or another type of model that uses customizations, this field should point towards a CreatureModelData ID that uses the same model as the selection in CreatureDisplayInfoExtra. Some customizations also affects the model, for example Orc Male and the Hunched/Upright back option.$The easiest way to populate this field correctly is to find the ID of a similar creature and load the values from there as a starting point.")]
         public ushort ModelID { get; set; } = 0;
         public ushort SoundID { get; set; } = 0;
         public sbyte SizeClass { get; set; } = 0;

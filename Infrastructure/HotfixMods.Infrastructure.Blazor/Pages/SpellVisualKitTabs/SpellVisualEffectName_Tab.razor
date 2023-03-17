@@ -1,47 +1,42 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualEffectName>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
-        <Input_Element T="int" @bind-Value="Value.GenericID" ValueCompare="ValueCompare?.GenericID" Label="@nameof(Value.GenericID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GenericID))" />
-        <Input_Element T="int" @bind-Value="Value.ModelFileDataID" ValueCompare="ValueCompare?.ModelFileDataID" Label="@nameof(Value.ModelFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelFileDataID))" />
-        <Input_Element T="int" @bind-Value="Value.TextureFileDataID" ValueCompare="ValueCompare?.TextureFileDataID" Label="@nameof(Value.TextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureFileDataID))" />
-        <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="uint" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Type)))" />
+        <Input_Element T="int" @bind-Value="Value.GenericID" ValueCompare="ValueCompare?.GenericID" Label="@nameof(Value.GenericID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.GenericID)))" />
+        <Input_Element T="int" @bind-Value="Value.ModelFileDataID" ValueCompare="ValueCompare?.ModelFileDataID" Label="@nameof(Value.ModelFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.ModelFileDataID)))" />
+        <Input_Element T="int" @bind-Value="Value.TextureFileDataID" ValueCompare="ValueCompare?.TextureFileDataID" Label="@nameof(Value.TextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.TextureFileDataID)))" />
+        <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Flags)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.Alpha" ValueCompare="ValueCompare?.Alpha" Label="@nameof(Value.Alpha).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Alpha))" />
+                <Input_Element T="decimal" @bind-Value="Value.Alpha" ValueCompare="ValueCompare?.Alpha" Label="@nameof(Value.Alpha).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Alpha)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.EffectRadius" ValueCompare="ValueCompare?.EffectRadius" Label="@nameof(Value.EffectRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.EffectRadius))" />
+                <Input_Element T="decimal" @bind-Value="Value.EffectRadius" ValueCompare="ValueCompare?.EffectRadius" Label="@nameof(Value.EffectRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.EffectRadius)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="30" RightContentWidth="30" MiddleContentWidth="40">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.MinAllowedScale" ValueCompare="ValueCompare?.MinAllowedScale" Label="@nameof(Value.MinAllowedScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MinAllowedScale))" />
+                <Input_Element T="decimal" @bind-Value="Value.MinAllowedScale" ValueCompare="ValueCompare?.MinAllowedScale" Label="@nameof(Value.MinAllowedScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.MinAllowedScale)))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Scale))" />
+                <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Scale)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.MaxAllowedScale" ValueCompare="ValueCompare?.MaxAllowedScale" Label="@nameof(Value.MaxAllowedScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MaxAllowedScale))" />
+                <Input_Element T="decimal" @bind-Value="Value.MaxAllowedScale" ValueCompare="ValueCompare?.MaxAllowedScale" Label="@nameof(Value.MaxAllowedScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.MaxAllowedScale)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.BaseMissileSpeed" ValueCompare="ValueCompare?.BaseMissileSpeed" Label="@nameof(Value.BaseMissileSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BaseMissileSpeed))" />
-        <Input_Element T="uint" @bind-Value="Value.RibbonQualityID" ValueCompare="ValueCompare?.RibbonQualityID" Label="@nameof(Value.RibbonQualityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RibbonQualityID))" />
-        <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DissolveEffectID))" />
-        <Input_Element T="int" @bind-Value="Value.ModelPosition" ValueCompare="ValueCompare?.ModelPosition" Label="@nameof(Value.ModelPosition).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelPosition))" />
-        <Input_Element T="sbyte" @bind-Value="Value.Field_9_1_0_38549_014" ValueCompare="ValueCompare?.Field_9_1_0_38549_014" Label="@nameof(Value.Field_9_1_0_38549_014).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Field_9_1_0_38549_014))" />
+        <Input_Element T="decimal" @bind-Value="Value.BaseMissileSpeed" ValueCompare="ValueCompare?.BaseMissileSpeed" Label="@nameof(Value.BaseMissileSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.BaseMissileSpeed)))" />
+        <Input_Element T="uint" @bind-Value="Value.RibbonQualityID" ValueCompare="ValueCompare?.RibbonQualityID" Label="@nameof(Value.RibbonQualityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.RibbonQualityID)))" />
+        <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.DissolveEffectID)))" />
+        <Input_Element T="int" @bind-Value="Value.ModelPosition" ValueCompare="ValueCompare?.ModelPosition" Label="@nameof(Value.ModelPosition).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.ModelPosition)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Field_9_1_0_38549_014" ValueCompare="ValueCompare?.Field_9_1_0_38549_014" Label="@nameof(Value.Field_9_1_0_38549_014).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Field_9_1_0_38549_014)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    SpellVisualEffectNameInfo info = new();
-}

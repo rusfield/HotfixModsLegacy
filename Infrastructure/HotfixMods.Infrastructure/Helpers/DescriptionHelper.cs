@@ -21,5 +21,11 @@ namespace HotfixMods.Infrastructure.Helpers
             var descriptionAttribute = (Db2DescriptionAttribute?)prop?.GetCustomAttribute(typeof(Db2DescriptionAttribute));
             return descriptionAttribute?.Value;
         }
+
+        public string? TryGetDescription(Type? type)
+        {
+            var descriptionAttribute = (Db2DescriptionAttribute?)type?.GetCustomAttribute(typeof(Db2DescriptionAttribute));
+            return descriptionAttribute?.Value;
+        }
     }
 }

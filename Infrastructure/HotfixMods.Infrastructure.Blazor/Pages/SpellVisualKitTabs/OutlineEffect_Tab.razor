@@ -1,33 +1,28 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, OutlineEffect>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorID" ValueCompare="ValueCompare?.PassiveHighlightColorID" Label="@nameof(Value.PassiveHighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PassiveHighlightColorID))" />
-        <Input_Element T="uint" @bind-Value="Value.HighlightColorID" ValueCompare="ValueCompare?.HighlightColorID" Label="@nameof(Value.HighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.HighlightColorID))" />
+        <Input_Element T="uint" @bind-Value="Value.PassiveHighlightColorID" ValueCompare="ValueCompare?.PassiveHighlightColorID" Label="@nameof(Value.PassiveHighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.PassiveHighlightColorID)))" />
+        <Input_Element T="uint" @bind-Value="Value.HighlightColorID" ValueCompare="ValueCompare?.HighlightColorID" Label="@nameof(Value.HighlightColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.HighlightColorID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
+                <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.Priority)))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+                <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.Flags)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Range))" />
+                <Input_Element T="decimal" @bind-Value="Value.Range" ValueCompare="ValueCompare?.Range" Label="@nameof(Value.Range).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.Range)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.UnitConditionId0" ValueCompare="ValueCompare?.UnitConditionId0" Label="@nameof(Value.UnitConditionId0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId0))" />
-        <Input_Element T="uint" @bind-Value="Value.UnitConditionId1" ValueCompare="ValueCompare?.UnitConditionId1" Label="@nameof(Value.UnitConditionId1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnitConditionId1))" />
+        <Input_Element T="uint" @bind-Value="Value.UnitConditionId0" ValueCompare="ValueCompare?.UnitConditionId0" Label="@nameof(Value.UnitConditionId0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.UnitConditionId0)))" />
+        <Input_Element T="uint" @bind-Value="Value.UnitConditionId1" ValueCompare="ValueCompare?.UnitConditionId1" Label="@nameof(Value.UnitConditionId1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(OutlineEffect.UnitConditionId1)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    OutlineEffectInfo info = new();
-}

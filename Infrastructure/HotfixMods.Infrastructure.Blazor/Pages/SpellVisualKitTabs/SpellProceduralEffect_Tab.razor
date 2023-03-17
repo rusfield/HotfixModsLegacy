@@ -1,23 +1,18 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellProceduralEffect>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellProceduralEffect.Type)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.Value0" ValueCompare="ValueCompare?.Value0" Label="@nameof(Value.Value0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Value0))" />
-        <Input_Element T="decimal" @bind-Value="Value.Value1" ValueCompare="ValueCompare?.Value1" Label="@nameof(Value.Value1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Value1))" />
-        <Input_Element T="decimal" @bind-Value="Value.Value2" ValueCompare="ValueCompare?.Value2" Label="@nameof(Value.Value2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Value2))" />
-        <Input_Element T="decimal" @bind-Value="Value.Value3" ValueCompare="ValueCompare?.Value3" Label="@nameof(Value.Value3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Value3))" />
+        <Input_Element T="decimal" @bind-Value="Value.Value0" ValueCompare="ValueCompare?.Value0" Label="@nameof(Value.Value0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellProceduralEffect.Value0)))" />
+        <Input_Element T="decimal" @bind-Value="Value.Value1" ValueCompare="ValueCompare?.Value1" Label="@nameof(Value.Value1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellProceduralEffect.Value1)))" />
+        <Input_Element T="decimal" @bind-Value="Value.Value2" ValueCompare="ValueCompare?.Value2" Label="@nameof(Value.Value2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellProceduralEffect.Value2)))" />
+        <Input_Element T="decimal" @bind-Value="Value.Value3" ValueCompare="ValueCompare?.Value3" Label="@nameof(Value.Value3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellProceduralEffect.Value3)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    SpellProceduralEffectInfo info = new();
-}

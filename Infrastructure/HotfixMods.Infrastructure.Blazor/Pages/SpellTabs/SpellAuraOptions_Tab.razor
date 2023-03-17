@@ -1,24 +1,19 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SpellDto, SpellAuraOptions>
 
 <StandardDtoContent T="SpellAuraOptions" >
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.CumulativeAura" ValueCompare="ValueCompare?.CumulativeAura" Label="@nameof(Value.CumulativeAura).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CumulativeAura))" />
-        <Input_Element T="int" @bind-Value="Value.ProcCategoryRecovery" ValueCompare="ValueCompare?.ProcCategoryRecovery" Label="@nameof(Value.ProcCategoryRecovery).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ProcCategoryRecovery))" />
-        <Input_Element T="byte" @bind-Value="Value.ProcChance" ValueCompare="ValueCompare?.ProcChance" Label="@nameof(Value.ProcChance).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ProcChance))" />
-        <Input_Element T="int" @bind-Value="Value.ProcCharges" ValueCompare="ValueCompare?.ProcCharges" Label="@nameof(Value.ProcCharges).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ProcCharges))" />
+        <Input_Element T="ushort" @bind-Value="Value.CumulativeAura" ValueCompare="ValueCompare?.CumulativeAura" Label="@nameof(Value.CumulativeAura).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.CumulativeAura)))" />
+        <Input_Element T="int" @bind-Value="Value.ProcCategoryRecovery" ValueCompare="ValueCompare?.ProcCategoryRecovery" Label="@nameof(Value.ProcCategoryRecovery).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcCategoryRecovery)))" />
+        <Input_Element T="byte" @bind-Value="Value.ProcChance" ValueCompare="ValueCompare?.ProcChance" Label="@nameof(Value.ProcChance).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcChance)))" />
+        <Input_Element T="int" @bind-Value="Value.ProcCharges" ValueCompare="ValueCompare?.ProcCharges" Label="@nameof(Value.ProcCharges).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcCharges)))" />
     </MudItem>
     <MudItem xs="6" />
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteID" ValueCompare="ValueCompare?.SpellProcsPerMinuteID" Label="@nameof(Value.SpellProcsPerMinuteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SpellProcsPerMinuteID))" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyID))" />
-        <Input_Element T="int" @bind-Value="Value.ProcTypeMask0" ValueCompare="ValueCompare?.ProcTypeMask0" Label="@nameof(Value.ProcTypeMask0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ProcTypeMask0))" />
-        <Input_Element T="int" @bind-Value="Value.ProcTypeMask1" ValueCompare="ValueCompare?.ProcTypeMask1" Label="@nameof(Value.ProcTypeMask1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ProcTypeMask1))" />
+        <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteID" ValueCompare="ValueCompare?.SpellProcsPerMinuteID" Label="@nameof(Value.SpellProcsPerMinuteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.SpellProcsPerMinuteID)))" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.DifficultyID)))" />
+        <Input_Element T="int" @bind-Value="Value.ProcTypeMask0" ValueCompare="ValueCompare?.ProcTypeMask0" Label="@nameof(Value.ProcTypeMask0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcTypeMask0)))" />
+        <Input_Element T="int" @bind-Value="Value.ProcTypeMask1" ValueCompare="ValueCompare?.ProcTypeMask1" Label="@nameof(Value.ProcTypeMask1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcTypeMask1)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    SpellAuraOptionsInfo info = new();
-}

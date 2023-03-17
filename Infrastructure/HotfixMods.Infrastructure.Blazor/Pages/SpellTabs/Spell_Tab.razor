@@ -1,23 +1,18 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SpellDto, Spell>
 
 <StandardDtoContent T="Spell" >
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AuraDescription))" />
+        <Input_Element T="string" @bind-Value="Value.AuraDescription" ValueCompare="ValueCompare?.AuraDescription" Label="@nameof(Value.AuraDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Spell.AuraDescription)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Description))" />
+        <Input_Element T="string" Lines="2" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Spell.Description)))" />
     </MudItem>
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NameSubtext))" />
+        <Input_Element T="string" @bind-Value="Value.NameSubtext" ValueCompare="ValueCompare?.NameSubtext" Label="@nameof(Value.NameSubtext).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Spell.NameSubtext)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    SpellInfo info = new();
-}

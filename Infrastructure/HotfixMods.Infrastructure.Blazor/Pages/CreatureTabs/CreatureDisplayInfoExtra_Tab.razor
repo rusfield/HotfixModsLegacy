@@ -1,5 +1,4 @@
 ﻿@using HotfixMods.Core.Enums.TrinityCore;
-@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
@@ -7,17 +6,17 @@
 
 <StandardDtoContent T="CreatureDisplayInfoExtra">
     <MudItem xs="3">
-        <Input_Element T="sbyte" Value="Value.DisplayRaceID" ValueChanged="DisplayRaceIdChanged" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayRaceID))" />
-        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayClassID))" />
-        <Input_Element T="sbyte" Value="Value.DisplaySexID" ValueChanged="DisplaySexIdChanged" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplaySexID))" />
+        <Input_Element T="sbyte" Value="Value.DisplayRaceID" ValueChanged="DisplayRaceIdChanged" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayRaceID)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayClassID)))" />
+        <Input_Element T="sbyte" Value="Value.DisplaySexID" ValueChanged="DisplaySexIdChanged" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplaySexID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
-        <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesID" ValueCompare="ValueCompare?.HDBakeMaterialResourcesID" Label="HD Bake Material Resources ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.HDBakeMaterialResourcesID))" />
-        <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesID" ValueCompare="ValueCompare?.BakeMaterialResourcesID" Label="@nameof(Value.BakeMaterialResourcesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BakeMaterialResourcesID))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.Flags)))" />
+        <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesID" ValueCompare="ValueCompare?.HDBakeMaterialResourcesID" Label="HD Bake Material Resources ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.HDBakeMaterialResourcesID)))" />
+        <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesID" ValueCompare="ValueCompare?.BakeMaterialResourcesID" Label="@nameof(Value.BakeMaterialResourcesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.BakeMaterialResourcesID)))" />
     </MudItem>
 </StandardDtoContent>
 
@@ -25,8 +24,6 @@
     // Used to refresh Display Info Options
     [CascadingParameter(Name = "RefreshIndex")]
     public Action RefreshIndex { get; set; }
-
-    CreatureDisplayInfoExtraInfo info = new();
 
     void DisplayRaceIdChanged(sbyte id)
     {

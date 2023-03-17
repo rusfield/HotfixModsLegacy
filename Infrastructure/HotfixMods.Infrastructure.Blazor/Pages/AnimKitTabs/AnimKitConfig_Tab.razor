@@ -1,19 +1,17 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Flags.Db2
 
 @inherits DtoContentBase<AnimKitDto, AnimKitConfig>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" OnInfoAdornmentClick="@(OpenInfoDialog(info.ConfigFlags))" GetOptionsAsync_Func="GetConfigFlags" MultiSelection="true" />
+        <Input_Element T="uint" @bind-Value="@(Value.ConfigFlags)" Label="@(nameof(Value.ConfigFlags).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.ConfigFlags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitConfig.ConfigFlags)))" GetOptionsAsync_Func="GetConfigFlags" MultiSelection="true" />
     </MudItem>
     <MudItem xs="9" />
 </InstancedDtoContentPage>
 
 
 @code {
-    AnimKitConfigInfo info = new();
 
     async Task<Dictionary<uint, string>> GetConfigFlags()
     {

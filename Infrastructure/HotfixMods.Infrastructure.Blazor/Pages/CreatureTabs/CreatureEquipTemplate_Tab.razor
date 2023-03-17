@@ -1,30 +1,29 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureEquipTemplate>
 
 <StandardDtoContent T="CreatureEquipTemplate">
     <MudItem xs="3">
         <Placeholder_Element Amount="2" />
-        <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemId1))" />
+        <Input_Element T="uint" @bind-Value="Value.ItemId1" ValueCompare="ValueCompare?.ItemId1" Label="Main Hand Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemId1)))" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId1" ValueCompare="ValueCompare?.AppearanceModId1" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(info.AppearanceModId1))" />
+                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId1" ValueCompare="ValueCompare?.AppearanceModId1" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.AppearanceModId1)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual1" ValueCompare="ValueCompare?.ItemVisual1" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemVisual1))" />
+                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual1" ValueCompare="ValueCompare?.ItemVisual1" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemVisual1)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="6" />
     <MudItem xs="3">
         <Placeholder_Element Amount="2" />
-        <Input_Element T="uint" @bind-Value="Value.ItemId2" ValueCompare="ValueCompare?.ItemId2" Label="Off Hand Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemId2))" />
+        <Input_Element T="uint" @bind-Value="Value.ItemId2" ValueCompare="ValueCompare?.ItemId2" Label="Off Hand Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemId2)))" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId2" ValueCompare="ValueCompare?.AppearanceModId2" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(info.AppearanceModId2))" />
+                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId2" ValueCompare="ValueCompare?.AppearanceModId2" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.AppearanceModId2)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual2" ValueCompare="ValueCompare?.ItemVisual2" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemVisual2))" />
+                <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual2" ValueCompare="ValueCompare?.ItemVisual2" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemVisual2)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
@@ -33,7 +32,7 @@
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="uint" @bind-Value="Value.ItemId3" ValueCompare="ValueCompare?.ItemId3" Label="Ranged Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemId3))" />
+                <Input_Element T="uint" @bind-Value="Value.ItemId3" ValueCompare="ValueCompare?.ItemId3" Label="Ranged Item ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemId3)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
@@ -42,10 +41,10 @@
             <MiddleContent>
                 <InlineGroup Merged="false">
                     <LeftContent>
-                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId3" ValueCompare="ValueCompare?.AppearanceModId3" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(info.AppearanceModId3))" />
+                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.AppearanceModId3" ValueCompare="ValueCompare?.AppearanceModId3" Label="Appearance Mod" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.AppearanceModId3)))" />
                     </LeftContent>
                     <RightContent>
-                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual3" ValueCompare="ValueCompare?.ItemVisual3" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(info.ItemVisual3))" />
+                        <Input_Element T="ushort" Variant="Variant.Text" @bind-Value="Value.ItemVisual3" ValueCompare="ValueCompare?.ItemVisual3" Label="Visual" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureEquipTemplate.ItemVisual3)))" />
                     </RightContent>
                 </InlineGroup>
             </MiddleContent>
@@ -54,7 +53,3 @@
     </MudItem>
     <MudItem xs="3" />
 </StandardDtoContent>
-
-@code {
-    CreatureEquipTemplateInfo info = new();
-}

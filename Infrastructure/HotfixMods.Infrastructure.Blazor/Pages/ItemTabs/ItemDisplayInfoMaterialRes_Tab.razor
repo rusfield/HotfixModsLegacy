@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
 <CustomDtoContent>
@@ -40,7 +39,6 @@
     [CascadingParameter(Name = "ValueIsNull")]
     public bool ValueIsNull { get; set; }
 
-    ItemDisplayInfoMaterialResInfo info = new();
 
     ItemDisplayInfoMaterialRes armUpper;
     ItemDisplayInfoMaterialRes armLower;

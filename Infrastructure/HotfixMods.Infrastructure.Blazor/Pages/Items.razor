@@ -5,9 +5,13 @@
 @inject IDialogService DialogService
 @inherits PageBase<ItemDto>
 
-<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(ValueCompare_Click)" />
+<DtoTabsContent T="ItemDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(ValueCompare_Click)" RequiredTypes="required" />
 
 @code {
+    List<Type> required = new()
+    {
+        typeof(Item)
+    };
 
     async Task ValueCompare_Click()
     {

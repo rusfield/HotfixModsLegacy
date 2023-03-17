@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualAnim>
 
@@ -10,22 +9,18 @@
         <InlineGroup Merged="false" LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="ushort" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimKitID))" />
+                <Input_Element T="ushort" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.AnimKitID)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialAnimID))" />
+                <Input_Element T="int" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.InitialAnimID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.LoopAnimID))" />
+                <Input_Element T="int" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.LoopAnimID)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />
 </InstancedDtoContentPage>
-
-@code {
-    SpellVisualAnimInfo info = new();
-}

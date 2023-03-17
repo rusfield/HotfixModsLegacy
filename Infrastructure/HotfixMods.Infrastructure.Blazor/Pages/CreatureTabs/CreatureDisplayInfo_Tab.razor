@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfo>
@@ -8,65 +7,63 @@
 <PagedDtoContent T="CreatureDisplayInfo">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CreatureModelScale))" />
-            <Input_Element T="byte" @bind-Value="Value.CreatureModelAlpha" ValueCompare="ValueCompare?.CreatureModelAlpha" Label="@nameof(Value.CreatureModelAlpha).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(info.CreatureModelAlpha))" />
-            <Input_Element T="int" @bind-Value="Value.PortraitCreatureDisplayInfoID" ValueCompare="ValueCompare?.PortraitCreatureDisplayInfoID" Label="@nameof(Value.PortraitCreatureDisplayInfoID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PortraitCreatureDisplayInfoID))" />
-            <Input_Element T="int" @bind-Value="Value.PortraitTextureFileDataID" ValueCompare="ValueCompare?.PortraitTextureFileDataID" Label="@nameof(Value.PortraitTextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PortraitTextureFileDataID))" />
-            <Input_Element T="sbyte" @bind-Value="Value.SizeClass" ValueCompare="ValueCompare?.SizeClass" Label="@nameof(Value.SizeClass).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SizeClass))" />
-            <Input_Element T="sbyte" @bind-Value="Value.UnarmedWeaponType" ValueCompare="ValueCompare?.UnarmedWeaponType" Label="@nameof(Value.UnarmedWeaponType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.UnarmedWeaponType))" />
+            <Input_Element T="decimal" @bind-Value="Value.CreatureModelScale" ValueCompare="ValueCompare?.CreatureModelScale" Label="@nameof(Value.CreatureModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.CreatureModelScale)))" />
+            <Input_Element T="byte" @bind-Value="Value.CreatureModelAlpha" ValueCompare="ValueCompare?.CreatureModelAlpha" Label="@nameof(Value.CreatureModelAlpha).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.CreatureModelAlpha)))" />
+            <Input_Element T="int" @bind-Value="Value.PortraitCreatureDisplayInfoID" ValueCompare="ValueCompare?.PortraitCreatureDisplayInfoID" Label="@nameof(Value.PortraitCreatureDisplayInfoID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.PortraitCreatureDisplayInfoID)))" />
+            <Input_Element T="int" @bind-Value="Value.PortraitTextureFileDataID" ValueCompare="ValueCompare?.PortraitTextureFileDataID" Label="@nameof(Value.PortraitTextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.PortraitTextureFileDataID)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.SizeClass" ValueCompare="ValueCompare?.SizeClass" Label="@nameof(Value.SizeClass).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.SizeClass)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.UnarmedWeaponType" ValueCompare="ValueCompare?.UnarmedWeaponType" Label="@nameof(Value.UnarmedWeaponType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.UnarmedWeaponType)))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(info.Gender))" />
+                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Gender)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.ModelID" ValueCompare="ValueCompare?.ModelID" Label="@nameof(Value.ModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ModelID))" GetOptionsAsync_Func="GetModelIds" />
+                    <Input_Element T="ushort" @bind-Value="Value.ModelID" ValueCompare="ValueCompare?.ModelID" Label="@nameof(Value.ModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ModelID)))" GetOptionsAsync_Func="GetModelIds" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
-            <Input_Element T="byte" @bind-Value="Value.BloodID" ValueCompare="ValueCompare?.BloodID" Label="@nameof(Value.BloodID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BloodID))" />
-            <Input_Element T="ushort" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ParticleColorID))" />
-            <Input_Element T="ushort" @bind-Value="Value.ObjectEffectPackageID" ValueCompare="ValueCompare?.ObjectEffectPackageID" Label="@nameof(Value.ObjectEffectPackageID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ObjectEffectPackageID))" />
-            <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DissolveEffectID))" />
-            <Input_Element T="int" @bind-Value="Value.DissolveOutEffectID" ValueCompare="ValueCompare?.DissolveOutEffectID" Label="@nameof(Value.DissolveOutEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DissolveOutEffectID))" />
+            <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Flags)))" />
+            <Input_Element T="byte" @bind-Value="Value.BloodID" ValueCompare="ValueCompare?.BloodID" Label="@nameof(Value.BloodID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.BloodID)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ParticleColorID)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ObjectEffectPackageID" ValueCompare="ValueCompare?.ObjectEffectPackageID" Label="@nameof(Value.ObjectEffectPackageID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ObjectEffectPackageID)))" />
+            <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.DissolveEffectID)))" />
+            <Input_Element T="int" @bind-Value="Value.DissolveOutEffectID" ValueCompare="ValueCompare?.DissolveOutEffectID" Label="@nameof(Value.DissolveOutEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.DissolveOutEffectID)))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.PlayerOverrideScale" ValueCompare="ValueCompare?.PlayerOverrideScale" Label="@nameof(Value.PlayerOverrideScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PlayerOverrideScale))" />
-            <Input_Element T="decimal" @bind-Value="Value.PetInstanceScale" ValueCompare="ValueCompare?.PetInstanceScale" Label="@nameof(Value.PetInstanceScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PetInstanceScale))" />
-            <Input_Element T="ushort" @bind-Value="Value.AnimReplacementSetID" ValueCompare="ValueCompare?.AnimReplacementSetID" Label="@nameof(Value.AnimReplacementSetID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AnimReplacementSetID))" />
-            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitID" ValueCompare="ValueCompare?.StateSpellVisualKitID" Label="@nameof(Value.StateSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StateSpellVisualKitID))" />
-            <Input_Element T="int" @bind-Value="Value.MountPoofSpellVisualKitID" ValueCompare="ValueCompare?.MountPoofSpellVisualKitID" Label="@nameof(Value.MountPoofSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.MountPoofSpellVisualKitID))" />
+            <Input_Element T="decimal" @bind-Value="Value.PlayerOverrideScale" ValueCompare="ValueCompare?.PlayerOverrideScale" Label="@nameof(Value.PlayerOverrideScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.PlayerOverrideScale)))" />
+            <Input_Element T="decimal" @bind-Value="Value.PetInstanceScale" ValueCompare="ValueCompare?.PetInstanceScale" Label="@nameof(Value.PetInstanceScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.PetInstanceScale)))" />
+            <Input_Element T="ushort" @bind-Value="Value.AnimReplacementSetID" ValueCompare="ValueCompare?.AnimReplacementSetID" Label="@nameof(Value.AnimReplacementSetID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.AnimReplacementSetID)))" />
+            <Input_Element T="int" @bind-Value="Value.StateSpellVisualKitID" ValueCompare="ValueCompare?.StateSpellVisualKitID" Label="@nameof(Value.StateSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.StateSpellVisualKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.MountPoofSpellVisualKitID" ValueCompare="ValueCompare?.MountPoofSpellVisualKitID" Label="@nameof(Value.MountPoofSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.MountPoofSpellVisualKitID)))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="Value.SoundID" ValueCompare="ValueCompare?.SoundID" Label="@nameof(Value.SoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SoundID))" />
+                    <Input_Element T="ushort" @bind-Value="Value.SoundID" ValueCompare="ValueCompare?.SoundID" Label="@nameof(Value.SoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.SoundID)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.NpcSoundID" ValueCompare="ValueCompare?.NpcSoundID" Label="@nameof(Value.NpcSoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.NpcSoundID))" />
+                    <Input_Element T="ushort" @bind-Value="Value.NpcSoundID" ValueCompare="ValueCompare?.NpcSoundID" Label="@nameof(Value.NpcSoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.NpcSoundID)))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID0" ValueCompare="ValueCompare?.TextureVariationFileDataID0" Label="Texture Variation File Data ID1" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureVariationFileDataID1))" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID1" ValueCompare="ValueCompare?.TextureVariationFileDataID1" Label="Texture Variation File Data ID2" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureVariationFileDataID2))" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID2" ValueCompare="ValueCompare?.TextureVariationFileDataID2" Label="Texture Variation File Data ID3" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureVariationFileDataID3))" />
-            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID3" ValueCompare="ValueCompare?.TextureVariationFileDataID3" Label="Texture Variation File Data ID4" OnInfoAdornmentClick="@(OpenInfoDialog(info.TextureVariationFileDataID4))" />
-            <Input_Element T="sbyte" @bind-Value="Value.CreatureModelMinLod" ValueCompare="ValueCompare?.CreatureModelMinLod" Label="@nameof(Value.CreatureModelMinLod).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CreatureModelMinLod))" />
+            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID0" ValueCompare="ValueCompare?.TextureVariationFileDataID0" Label="Texture Variation File Data ID0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.TextureVariationFileDataID0)))" />
+            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID1" ValueCompare="ValueCompare?.TextureVariationFileDataID1" Label="Texture Variation File Data ID1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.TextureVariationFileDataID1)))" />
+            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID2" ValueCompare="ValueCompare?.TextureVariationFileDataID2" Label="Texture Variation File Data ID2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.TextureVariationFileDataID2)))" />
+            <Input_Element T="int" @bind-Value="Value.TextureVariationFileDataID3" ValueCompare="ValueCompare?.TextureVariationFileDataID3" Label="Texture Variation File Data ID3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.TextureVariationFileDataID3)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.CreatureModelMinLod" ValueCompare="ValueCompare?.CreatureModelMinLod" Label="@nameof(Value.CreatureModelMinLod).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.CreatureModelMinLod)))" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
 
 @code {
-    CreatureDisplayInfoInfo info = new();
-
     async Task<Dictionary<sbyte, string>> GetGenders()
     {
         return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());

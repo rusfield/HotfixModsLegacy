@@ -4,5 +4,15 @@
 @inject SpellService Service
 @inherits PageBase<SpellDto>
 
-<DtoTabsContent T="SpellDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearchId_Dialog>())" />
+<DtoTabsContent T="SpellDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellSearchId_Dialog>())" RequiredTypes="required" />
 
+@code {
+
+    List<Type> required = new()
+    {
+        typeof(Spell),
+        typeof(SpellName), // Not visible
+        typeof(SpellMisc),
+
+    };
+}

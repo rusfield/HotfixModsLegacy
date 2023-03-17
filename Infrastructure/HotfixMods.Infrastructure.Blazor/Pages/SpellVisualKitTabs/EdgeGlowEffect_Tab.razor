@@ -1,39 +1,34 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, EdgeGlowEffect>
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowRed))" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowGreen))" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowBlue" ValueCompare="ValueCompare?.GlowBlue" Label="@nameof(Value.GlowBlue).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowBlue))" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowAlpha" ValueCompare="ValueCompare?.GlowAlpha" Label="@nameof(Value.GlowAlpha).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowAlpha))" />
-        <Input_Element T="decimal" @bind-Value="Value.GlowMultiplier" ValueCompare="ValueCompare?.GlowMultiplier" Label="@nameof(Value.GlowMultiplier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.GlowMultiplier))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowRed" ValueCompare="ValueCompare?.GlowRed" Label="@nameof(Value.GlowRed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.GlowRed)))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowGreen" ValueCompare="ValueCompare?.GlowGreen" Label="@nameof(Value.GlowGreen).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.GlowGreen)))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowBlue" ValueCompare="ValueCompare?.GlowBlue" Label="@nameof(Value.GlowBlue).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.GlowBlue)))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowAlpha" ValueCompare="ValueCompare?.GlowAlpha" Label="@nameof(Value.GlowAlpha).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.GlowAlpha)))" />
+        <Input_Element T="decimal" @bind-Value="Value.GlowMultiplier" ValueCompare="ValueCompare?.GlowMultiplier" Label="@nameof(Value.GlowMultiplier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.GlowMultiplier)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeIn" ValueCompare="ValueCompare?.FadeIn" Label="@nameof(Value.FadeIn).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeIn))" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeIn" ValueCompare="ValueCompare?.FadeIn" Label="@nameof(Value.FadeIn).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.FadeIn)))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Duration))" />
+                <Input_Element T="decimal" @bind-Value="Value.Duration" ValueCompare="ValueCompare?.Duration" Label="@nameof(Value.Duration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.Duration)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.FadeOut" ValueCompare="ValueCompare?.FadeOut" Label="@nameof(Value.FadeOut).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FadeOut))" />
+                <Input_Element T="decimal" @bind-Value="Value.FadeOut" ValueCompare="ValueCompare?.FadeOut" Label="@nameof(Value.FadeOut).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.FadeOut)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.CurveID" ValueCompare="ValueCompare?.CurveID" Label="@nameof(Value.CurveID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CurveID))" />
-        <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FresnelCoefficient))" />
-        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.InitialDelay))" />
-        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Priority))" />
-        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="int" @bind-Value="Value.CurveID" ValueCompare="ValueCompare?.CurveID" Label="@nameof(Value.CurveID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.CurveID)))" />
+        <Input_Element T="decimal" @bind-Value="Value.FresnelCoefficient" ValueCompare="ValueCompare?.FresnelCoefficient" Label="@nameof(Value.FresnelCoefficient).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.FresnelCoefficient)))" />
+        <Input_Element T="decimal" @bind-Value="Value.InitialDelay" ValueCompare="ValueCompare?.InitialDelay" Label="@nameof(Value.InitialDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.InitialDelay)))" />
+        <Input_Element T="uint" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.Priority)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(EdgeGlowEffect.Flags)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    EdgeGlowEffectInfo info = new();
-}

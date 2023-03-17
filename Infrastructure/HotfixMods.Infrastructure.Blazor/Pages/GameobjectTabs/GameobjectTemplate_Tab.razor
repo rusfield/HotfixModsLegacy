@@ -1,25 +1,20 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<GameobjectDto, GameobjectTemplate>
 
 <StandardDtoContent T="GameobjectTemplate" >
     <MudItem xs="3">
-        <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" OnInfoAdornmentClick="@(OpenInfoDialog(info.Type))" />
-        <Input_Element T="decimal" @bind-Value="@(Value.Size)" Label="@(nameof(Value.Size).ToDisplayName())" ValueCompare="ValueCompare?.Size" OnInfoAdornmentClick="@(OpenInfoDialog(info.Size))" />
-        <Input_Element T="string" @bind-Value="@(Value.IconName)" Label="@(nameof(Value.IconName).ToDisplayName())" ValueCompare="ValueCompare?.IconName" OnInfoAdornmentClick="@(OpenInfoDialog(info.IconName))" />
+        <Input_Element T="byte" @bind-Value="@(Value.Type)" Label="@(nameof(Value.Type).ToDisplayName())" ValueCompare="ValueCompare?.Type" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Type)))" />
+        <Input_Element T="decimal" @bind-Value="@(Value.Size)" Label="@(nameof(Value.Size).ToDisplayName())" ValueCompare="ValueCompare?.Size" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Size)))" />
+        <Input_Element T="string" @bind-Value="@(Value.IconName)" Label="@(nameof(Value.IconName).ToDisplayName())" ValueCompare="ValueCompare?.IconName" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.IconName)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.Name))" />
-        <Input_Element T="string" Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption).ToDisplayName()" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(info.Name))" />
+        <Input_Element T="string" Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
+        <Input_Element T="string" Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption).ToDisplayName()" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="string" @bind-Value="@(Value.AIName)" Label="AI Name" ValueCompare="ValueCompare?.AIName" OnInfoAdornmentClick="@(OpenInfoDialog(info.AIName))" />
-        <Input_Element T="string" @bind-Value="@(Value.ScriptName)" Label="@(nameof(Value.ScriptName).ToDisplayName())" ValueCompare="ValueCompare?.ScriptName" OnInfoAdornmentClick="@(OpenInfoDialog(info.ScriptName))" />
+        <Input_Element T="string" @bind-Value="@(Value.AIName)" Label="AI Name" ValueCompare="ValueCompare?.AIName" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.AIName)))" />
+        <Input_Element T="string" @bind-Value="@(Value.ScriptName)" Label="@(nameof(Value.ScriptName).ToDisplayName())" ValueCompare="ValueCompare?.ScriptName" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.ScriptName)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    GameobjectTemplateInfo info = new();
-}

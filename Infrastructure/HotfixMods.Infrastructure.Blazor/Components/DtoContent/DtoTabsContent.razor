@@ -3,7 +3,7 @@
 @using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.Shared;
 @using System.Diagnostics;
-@using HotfixMods.Infrastructure.InfoModels;
+@using HotfixMods.Infrastructure.Helpers;
 
 @inject ISnackbar Snackbar
 @inject IDialogService DialogService
@@ -98,18 +98,18 @@
 <MudPaper Class="mud-theme-primary d-flex flex-column align-center" Elevation="4" Style="height:48px;">
     <MudStack Justify="Justify.SpaceBetween" Row="true" Style="width:100%" Class="px-1">
         <MudStack Row="true" Spacing="0">
-            <MudIconButton Icon="@Icons.Material.Filled.Info" Disabled="@(infoModel == null)" OnClick="@(() => OpenInfoDialog(infoModel?.ModelInfo))" />
-            @if (currentInstanceData != null || infoModel == null || infoModel.IsRequired)
+            <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="@(() => OpenInfoDialog(GetTabDescription()))" />
+            @if (currentInstanceData != null || GetTabRequired())
             {
                 <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
             }
             else if (currentTab.ValueIsNull)
             {
-                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="@(() => InitValue(dtoValueType))" />
+                <MudIconButton Icon="@Icons.Material.Filled.AddCircle" OnClick="@(() => InitValue(currentTab.DtoPropertyType))" />
             }
             else
             {
-                <MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" OnClick="@(() => DeleteValue(dtoValueType))" />
+                <MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" OnClick="@(() => DeleteValue(currentTab.DtoPropertyType))" />
             }
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
             <MudIconButton Icon="@Icons.Material.Filled.CropFree" Class="invisible" /> @* Placeholder *@
@@ -139,17 +139,21 @@
     [Parameter]
     public EventCallback ValueCompare_Callback { get; set; }
 
+    [Parameter]
+    public List<Type> RequiredTypes { get; set;  } = new(); // Which DB2/MySql objects can not be deleted.
+
+    string descriptionTest = "Test";
+
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
     Dictionary<Type, InstanceData> instanceData = new();
     InstanceData? currentInstanceData;
+    DescriptionHelper descriptionHelper = new();
     int currentPage = 1;
     bool saving = false;
     bool updating = false;
-    IInfoModel? infoModel;
     Content? currentTab = null;
-    Type? dtoValueType = null;
     string name = "";
 
     protected override void OnInitialized()
@@ -201,57 +205,30 @@
         return type;
     }
 
-    IInfoModel? TryGetInfoModel(Type dtoType)
-    {
-        string infoNamespace = "HotfixMods.Infrastructure.InfoModels";
-
-        if (dtoType.IsGenericType)
-        {
-            infoNamespace += $".{dtoType.GetGenericArguments()[0].Name}Info";
-        }
-        else
-        {
-            infoNamespace += $".{dtoType.Name}Info";
-        }
-
-        var type = Assembly.Load("HotfixMods.Infrastructure").GetType(infoNamespace);
-        if (type != null && type.GetInterfaces().Contains(typeof(IInfoModel)))
-        {
-            return (IInfoModel)Activator.CreateInstance(type);
-        }
-        return null;
-    }
-
     void PanelTabChanged(int newIndex)
     {
         mudCarouselRef?.MoveTo(newIndex);
+        currentTab = tabs[newIndex];
+        currentInstanceData = GetInstanceData(currentTab.GroupType);
     }
 
     void PanelContentChanged(int newIndex)
     {
         if (newIndex >= 0 && newIndex < tabs.Count)
         {
-            var tab = tabs[newIndex];
-            currentInstanceData = GetInstanceData(tab.GroupType);
             currentPage = currentInstanceData?.CurrentInstance ?? 1;
 
-            infoModel = TryGetInfoModel(tab.DtoPropertyType);
-            dtoValueType = tab.DtoPropertyType;
-            var dtoValue = PageTab.Dto.GetDtoValue(tab.DtoPropertyType);
-            if (dtoValue == null && tab.DtoPropertyType.IsGenericType)
+            var dtoValue = PageTab.Dto.GetDtoValue(currentTab.DtoPropertyType);
+            if (dtoValue == null && currentTab.DtoPropertyType.IsGenericType)
             {
-                dtoValue = PageTab.Dto.GetDtoListValue(tab.DtoPropertyType.GetGenericArguments()[0]);
+                dtoValue = PageTab.Dto.GetDtoListValue(currentTab.DtoPropertyType.GetGenericArguments()[0]);
             }
-            tab.ValueIsNull = dtoValue == null && (currentInstanceData == null || currentInstanceData.InstanceCount <= 0);
-            currentTab = tab;
+            currentTab.ValueIsNull = dtoValue == null && (currentInstanceData == null || currentInstanceData.InstanceCount <= 0);
         }
         else
         {
             currentInstanceData = null;
-            currentTab = null;
             currentPage = 1;
-            infoModel = null;
-            dtoValueType = null;
         }
     }
 
@@ -443,5 +420,21 @@
         PageTab.TabName = newName ?? "";
         PageTab.Dto.HotfixModsEntity.Name = newName;
         RefreshIndex();
+    }
+
+    string? GetTabDescription()
+    {
+        var type = currentTab?.DtoPropertyType;
+        if (type != null && type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
+        {
+            type = type.GetGenericArguments()[0];
+        }
+
+        return descriptionHelper.TryGetDescription(type);
+    }
+
+    bool GetTabRequired()
+    {
+        return currentTab?.DtoPropertyType == null ? false : RequiredTypes.Any(t => t == currentTab.DtoPropertyType);
     }
 }

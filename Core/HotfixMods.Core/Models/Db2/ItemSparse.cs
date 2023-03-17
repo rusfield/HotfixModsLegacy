@@ -7,6 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
+        [Db2Description("The race combination that can equip this item.$There seems to be some special reserved values for All, Any Horde Race and Any Alliance Race. Combining these options with others may not work.")]
         public long AllowableRace { get; set; } = -1;
         [LocalizedString]
         public string Description { get; set; } = "";
@@ -89,6 +90,7 @@ namespace HotfixMods.Core.Models.Db2
         public byte SocketType1 { get; set; } = 0;
         public byte SocketType2 { get; set; } = 0;
         public byte SheatheType { get; set; } = 0;
+        [Db2Description("Set this value in Item tab.")]
         public byte Material { get; set; } = 0;
         public byte PageMaterialID { get; set; } = 0;
         public byte Bonding { get; set; } = 0;

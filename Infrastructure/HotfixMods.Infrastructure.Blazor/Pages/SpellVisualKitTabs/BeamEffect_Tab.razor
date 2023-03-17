@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, BeamEffect>
 
@@ -7,26 +6,26 @@
     <MudItem xs="3">
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SourceOffset" ValueCompare="ValueCompare?.SourceOffset" Label="@nameof(Value.SourceOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SourceOffset))" />
+                <Input_Element T="int" @bind-Value="Value.SourceOffset" ValueCompare="ValueCompare?.SourceOffset" Label="@nameof(Value.SourceOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.SourceOffset)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.DestOffset" ValueCompare="ValueCompare?.DestOffset" Label="@nameof(Value.DestOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DestOffset))" />
+                <Input_Element T="int" @bind-Value="Value.DestOffset" ValueCompare="ValueCompare?.DestOffset" Label="@nameof(Value.DestOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.DestOffset)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SourcePositionerID" ValueCompare="ValueCompare?.SourcePositionerID" Label="@nameof(Value.SourcePositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SourcePositionerID))" />
+                <Input_Element T="int" @bind-Value="Value.SourcePositionerID" ValueCompare="ValueCompare?.SourcePositionerID" Label="@nameof(Value.SourcePositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.SourcePositionerID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.DestPositionerID" ValueCompare="ValueCompare?.DestPositionerID" Label="@nameof(Value.DestPositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DestPositionerID))" />
+                <Input_Element T="int" @bind-Value="Value.DestPositionerID" ValueCompare="ValueCompare?.DestPositionerID" Label="@nameof(Value.DestPositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.DestPositionerID)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SourceAttachID" ValueCompare="ValueCompare?.SourceAttachID" Label="@nameof(Value.SourceAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SourceAttachID))" />
+                <Input_Element T="int" @bind-Value="Value.SourceAttachID" ValueCompare="ValueCompare?.SourceAttachID" Label="@nameof(Value.SourceAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.SourceAttachID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.DestAttachID" ValueCompare="ValueCompare?.DestAttachID" Label="@nameof(Value.DestAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DestAttachID))" />
+                <Input_Element T="int" @bind-Value="Value.DestAttachID" ValueCompare="ValueCompare?.DestAttachID" Label="@nameof(Value.DestAttachID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.DestAttachID)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
@@ -35,18 +34,14 @@
         <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.BeamID" ValueCompare="ValueCompare?.BeamID" Label="@nameof(Value.BeamID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BeamID))" />
+                <Input_Element T="int" @bind-Value="Value.BeamID" ValueCompare="ValueCompare?.BeamID" Label="@nameof(Value.BeamID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.BeamID)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.SourceMinDistance" ValueCompare="ValueCompare?.SourceMinDistance" Label="@nameof(Value.SourceMinDistance).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.SourceMinDistance))" />
-        <Input_Element T="decimal" @bind-Value="Value.FixedLength" ValueCompare="ValueCompare?.FixedLength" Label="@nameof(Value.FixedLength).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FixedLength))" />
-        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags))" />
+        <Input_Element T="decimal" @bind-Value="Value.SourceMinDistance" ValueCompare="ValueCompare?.SourceMinDistance" Label="@nameof(Value.SourceMinDistance).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.SourceMinDistance)))" />
+        <Input_Element T="decimal" @bind-Value="Value.FixedLength" ValueCompare="ValueCompare?.FixedLength" Label="@nameof(Value.FixedLength).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.FixedLength)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BeamEffect.Flags)))" />
     </MudItem>
 </InstancedDtoContentPage>
-
-@code {
-    BeamEffectInfo info = new();
-}

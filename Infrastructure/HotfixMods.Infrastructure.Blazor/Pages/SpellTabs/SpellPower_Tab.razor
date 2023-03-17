@@ -1,5 +1,4 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 @using HotfixMods.Core.Enums.Db2
 
 @inherits DtoContentBase<SpellDto, SpellPower>
@@ -7,42 +6,41 @@
 
 <StandardDtoContent T="SpellPower">
     <MudItem xs="3">
-        <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OrderIndex))" />
-        <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaCost))" />
-        <Input_Element T="int" @bind-Value="Value.ManaCostPerLevel" ValueCompare="ValueCompare?.ManaCostPerLevel" Label="@nameof(Value.ManaCostPerLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaCostPerLevel))" />
-        <Input_Element T="int" @bind-Value="Value.ManaPerSecond" ValueCompare="ValueCompare?.ManaPerSecond" Label="@nameof(Value.ManaPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ManaPerSecond))" />
-        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellID" ValueCompare="ValueCompare?.RequiredAuraSpellID" Label="@nameof(Value.RequiredAuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RequiredAuraSpellID))" />
+        <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OrderIndex)))" />
+        <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaCost)))" />
+        <Input_Element T="int" @bind-Value="Value.ManaCostPerLevel" ValueCompare="ValueCompare?.ManaCostPerLevel" Label="@nameof(Value.ManaCostPerLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaCostPerLevel)))" />
+        <Input_Element T="int" @bind-Value="Value.ManaPerSecond" ValueCompare="ValueCompare?.ManaPerSecond" Label="@nameof(Value.ManaPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaPerSecond)))" />
+        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellID" ValueCompare="ValueCompare?.RequiredAuraSpellID" Label="@nameof(Value.RequiredAuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.RequiredAuraSpellID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" GetOptionsAsync_Func="GetPowerTypes" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerType))" />
+                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" GetOptionsAsync_Func="GetPowerTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerType)))" />
 
             </MiddleContent>
             <RightContent />
         </InlineGroup>
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.AltPowerBarID" ValueCompare="ValueCompare?.AltPowerBarID" Label="@nameof(Value.AltPowerBarID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AltPowerBarID))" />
+                <Input_Element T="int" @bind-Value="Value.AltPowerBarID" ValueCompare="ValueCompare?.AltPowerBarID" Label="@nameof(Value.AltPowerBarID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.AltPowerBarID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="uint" @bind-Value="Value.PowerDisplayID" ValueCompare="ValueCompare?.PowerDisplayID" Label="@nameof(Value.PowerDisplayID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerDisplayID))" />
+                <Input_Element T="uint" @bind-Value="Value.PowerDisplayID" ValueCompare="ValueCompare?.PowerDisplayID" Label="@nameof(Value.PowerDisplayID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerDisplayID)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="Value.PowerCostPct" ValueCompare="ValueCompare?.PowerCostPct" Label="@nameof(Value.PowerCostPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerCostPct))" />
-        <Input_Element T="decimal" @bind-Value="Value.PowerCostMaxPct" ValueCompare="ValueCompare?.PowerCostMaxPct" Label="@nameof(Value.PowerCostMaxPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerCostMaxPct))" />
-        <Input_Element T="decimal" @bind-Value="Value.PowerPctPerSecond" ValueCompare="ValueCompare?.PowerPctPerSecond" Label="@nameof(Value.PowerPctPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.PowerPctPerSecond))" />
-        <Input_Element T="uint" @bind-Value="Value.OptionalCost" ValueCompare="ValueCompare?.OptionalCost" Label="@nameof(Value.OptionalCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OptionalCost))" />
-        <Input_Element T="decimal" @bind-Value="Value.OptionalCostPct" ValueCompare="ValueCompare?.OptionalCostPct" Label="@nameof(Value.OptionalCostPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.OptionalCostPct))" />
+        <Input_Element T="decimal" @bind-Value="Value.PowerCostPct" ValueCompare="ValueCompare?.PowerCostPct" Label="@nameof(Value.PowerCostPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerCostPct)))" />
+        <Input_Element T="decimal" @bind-Value="Value.PowerCostMaxPct" ValueCompare="ValueCompare?.PowerCostMaxPct" Label="@nameof(Value.PowerCostMaxPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerCostMaxPct)))" />
+        <Input_Element T="decimal" @bind-Value="Value.PowerPctPerSecond" ValueCompare="ValueCompare?.PowerPctPerSecond" Label="@nameof(Value.PowerPctPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerPctPerSecond)))" />
+        <Input_Element T="uint" @bind-Value="Value.OptionalCost" ValueCompare="ValueCompare?.OptionalCost" Label="@nameof(Value.OptionalCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OptionalCost)))" />
+        <Input_Element T="decimal" @bind-Value="Value.OptionalCostPct" ValueCompare="ValueCompare?.OptionalCostPct" Label="@nameof(Value.OptionalCostPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OptionalCostPct)))" />
     </MudItem>
 </StandardDtoContent>
 
 @code {
-    SpellPowerInfo info = new();
 
     async Task<Dictionary<sbyte, string>> GetPowerTypes()
     {

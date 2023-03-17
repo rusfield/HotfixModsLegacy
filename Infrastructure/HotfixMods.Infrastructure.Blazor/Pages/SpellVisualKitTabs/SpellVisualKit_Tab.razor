@@ -1,24 +1,19 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKit>
 
-<StandardDtoContent T="SpellVisualKit" >
-        <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.Flags0" ValueCompare="ValueCompare?.Flags0" Label="@nameof(Value.Flags0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags0))" />
-            <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.Flags1))" />
-        <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.ClutterLevel))" />
-        </MudItem>
-        <MudItem xs="6">
-            <Placeholder_Element Amount="4" />
-        </MudItem>
-        <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DelayMin))" />
-            <Input_Element T="ushort" @bind-Value="Value.DelayMax" ValueCompare="ValueCompare?.DelayMax" Label="@nameof(Value.DelayMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DelayMax))" />
-        <Input_Element T="int" @bind-Value="Value.FallbackSpellVisualKitID" ValueCompare="ValueCompare?.FallbackSpellVisualKitID" Label="@nameof(Value.FallbackSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.FallbackSpellVisualKitID))" />
-        </MudItem>
+<StandardDtoContent T="SpellVisualKit">
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.Flags0" ValueCompare="ValueCompare?.Flags0" Label="@nameof(Value.Flags0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.Flags0)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.Flags1)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.ClutterLevel)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.DelayMin)))" />
+        <Input_Element T="ushort" @bind-Value="Value.DelayMax" ValueCompare="ValueCompare?.DelayMax" Label="@nameof(Value.DelayMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.DelayMax)))" />
+        <Input_Element T="int" @bind-Value="Value.FallbackSpellVisualKitID" ValueCompare="ValueCompare?.FallbackSpellVisualKitID" Label="@nameof(Value.FallbackSpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.FallbackSpellVisualKitID)))" />
+    </MudItem>
 </StandardDtoContent>
-
-@code {
-    SpellVisualKitInfo info = new();
-}

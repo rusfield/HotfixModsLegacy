@@ -1,5 +1,4 @@
-﻿@using HotfixMods.Infrastructure.InfoModels
-@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @inherits DtoContentBase<CreatureDto, CreatureModelInfo>
 
 <StandardDtoContent T="CreatureModelInfo" >
@@ -8,16 +7,16 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="decimal" @bind-Value="Value.BoundingRadius" ValueCompare="ValueCompare?.BoundingRadius" Label="@nameof(Value.BoundingRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.BoundingRadius))" />
+                <Input_Element T="decimal" @bind-Value="Value.BoundingRadius" ValueCompare="ValueCompare?.BoundingRadius" Label="@nameof(Value.BoundingRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelInfo.BoundingRadius)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="decimal" @bind-Value="Value.CombatReach" ValueCompare="ValueCompare?.CombatReach" Label="@nameof(Value.CombatReach).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CombatReach))" />
+                <Input_Element T="decimal" @bind-Value="Value.CombatReach" ValueCompare="ValueCompare?.CombatReach" Label="@nameof(Value.CombatReach).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelInfo.CombatReach)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="uint" @bind-Value="Value.DisplayId_Other_Gender" ValueCompare="ValueCompare?.DisplayId_Other_Gender" Label="@nameof(Value.DisplayId_Other_Gender).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DisplayId_Other_Gender))" />
+                <Input_Element T="uint" @bind-Value="Value.DisplayId_Other_Gender" ValueCompare="ValueCompare?.DisplayId_Other_Gender" Label="@nameof(Value.DisplayId_Other_Gender).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelInfo.DisplayId_Other_Gender)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
@@ -25,6 +24,3 @@
     <MudItem xs="3" />
 </StandardDtoContent>
 
-@code {
-    CreatureModelInfoInfo info = new();
-}

@@ -1,37 +1,33 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels
 
 @inherits DtoContentBase<SpellDto, SpellCooldowns>
 
 <StandardDtoContent T="SpellCooldowns">
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="int" @bind-Value="Value.AuraSpellID" ValueCompare="ValueCompare?.AuraSpellID" Label="@nameof(Value.AuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.AuraSpellID))" />
+        <Input_Element T="int" @bind-Value="Value.AuraSpellID" ValueCompare="ValueCompare?.AuraSpellID" Label="@nameof(Value.AuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCooldowns.AuraSpellID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.StartRecoveryTime))" />
+                <Input_Element T="int" @bind-Value="Value.StartRecoveryTime" ValueCompare="ValueCompare?.StartRecoveryTime" Label="@nameof(Value.StartRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCooldowns.StartRecoveryTime)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.RecoveryTime))" />
+                <Input_Element T="int" @bind-Value="Value.RecoveryTime" ValueCompare="ValueCompare?.RecoveryTime" Label="@nameof(Value.RecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCooldowns.RecoveryTime)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent  />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.CategoryRecoveryTime))" />
+                <Input_Element T="int" @bind-Value="Value.CategoryRecoveryTime" ValueCompare="ValueCompare?.CategoryRecoveryTime" Label="@nameof(Value.CategoryRecoveryTime).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCooldowns.CategoryRecoveryTime)))" />
             </MiddleContent>
             <RightContent  />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <Placeholder_Element Amount="3" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(info.DifficultyID))" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCooldowns.DifficultyID)))" />
     </MudItem>
 </StandardDtoContent>
 
-@code {
-    SpellCooldownsInfo info = new();
-}

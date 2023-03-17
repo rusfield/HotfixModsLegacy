@@ -1,6 +1,5 @@
 ﻿@using HotfixMods.Core.Enums.Db2
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
-@using HotfixMods.Infrastructure.InfoModels;
 
 @inject CreatureService Service
 
@@ -102,7 +101,6 @@
     int amountOfCustomizationPages = 1;
     bool loading = true;
     List<CreatureDisplayInfoOption> values;
-    CreatureDisplayInfoOptionInfo info = new();
 
     sbyte currentCustomizationRace = -1;
     sbyte currentCustomizationGender = -1;

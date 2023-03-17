@@ -4,16 +4,13 @@
 @inject GameobjectService Service
 @inherits PageBase<GameobjectDto>
 
-<DtoTabsContent T="GameobjectDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearchId_Dialog>())" />
+<DtoTabsContent T="GameobjectDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GameobjectSearchId_Dialog>())" RequiredTypes="required" />
 
 
 @code {
-
-    // Temp
-    protected override void OnParametersSet()
+    List<Type> required = new()
     {
-        if (null == PageTab.Dto)
-            PageTab.Dto = new GameobjectDto();
-        base.OnParametersSet();
-    }
+        typeof(GameobjectTemplate),
+        typeof(GameobjectDisplayInfo)
+    };
 }

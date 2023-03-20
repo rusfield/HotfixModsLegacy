@@ -32,7 +32,7 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
 
                     if (match && line.Equals("};"))
                     {
-                        if(lastBreak)
+                        if (lastBreak)
                             break;
                         else
                             lastBreak = true;
@@ -53,7 +53,8 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
 
                         // If IndexField is -1, it means its not listed in DB2Metadata, and the default index position is 0.
                         // Add it manually as uint.
-                        results.Add((typeof(uint), false));
+                        if (indexField == -1)
+                            results.Add((typeof(uint), false));
 
                         for (int i = 0; i < fieldLines.Length; i++)
                         {
@@ -122,7 +123,7 @@ namespace HotfixMods.Tools.HotfixInitializer.Tool
         Stream GetDb2MetadataStream(string trinityCorePath)
         {
             string path = Path.Combine(trinityCorePath, "src", "server", "game", "DataStores", "DB2Metadata.h");
-            if(File.Exists(path))
+            if (File.Exists(path))
             {
                 return File.OpenRead(path);
             }

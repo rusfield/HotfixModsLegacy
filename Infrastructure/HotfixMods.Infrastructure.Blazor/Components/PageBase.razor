@@ -8,6 +8,9 @@
     [CascadingParameter(Name = "PageTab")]
     public PageTab PageTab { get; set; }
 
+    [CascadingParameter(Name = "RefreshIndex")]
+    public Action RefreshIndex { get; set; }
+
     protected async void NewAsync<TDialog>()
         where TDialog : ComponentBase
     {
@@ -33,7 +36,7 @@
         if (!result.Canceled && result.Data != null)
         {
             PageTab.DtoCompare = (T)result.Data;
-            this.StateHasChanged();
+            RefreshIndex();
         }
     }
 }

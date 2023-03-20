@@ -14,7 +14,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
         public string TrinityCorePath { get; set; } = "/";
 
 
-        public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type modelType, string propertyName)
+        public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
             where TKey : notnull
         {
             if (typeof(CreatureTemplate) == modelType)
@@ -35,16 +35,22 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Unit_Flags2) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags2", "UNIT_FLAG2_"),
                     nameof(CreatureTemplate.Unit_Flags3) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags3", "UNIT_FLAG3_"),
                     nameof(CreatureTemplate.Unit_Class) => await GetEnumAsync<TKey>(sharedDefines_path, "Classes", "CLASS_"),
-                    nameof(CreatureTemplate.HealthScalingExpansion) or nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_"),
+                    nameof(CreatureTemplate.HealthScalingExpansion) or nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_", "EXPANSION_LEVEL_CURRENT"),
+
 
                     _ => new()
                 };
 
             }
-
-            return new();
+            else
+            {
+                return propertyName switch
+                {
+                    "EquipmentSlots" => await GetEnumAsync<TKey>(player_path, "EquipmentSlots", "EQUIPMENT_SLOT_", "EQUIPMENT_SLOT_START", "EQUIPMENT_SLOT_END"),
+                    _ => new()
+                };
+            }
         }
-
 
     }
 }

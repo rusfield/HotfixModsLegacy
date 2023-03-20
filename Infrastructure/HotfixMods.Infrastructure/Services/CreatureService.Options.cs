@@ -142,24 +142,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetRequiredExpansionOptionsAsync()
         {
-            var expansions = await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.RequiredExpansion));
-            foreach(var key in expansions.Keys)
-            {
-                if (key < 0)
-                    expansions.Remove(key);
-            }
-            return expansions;
+            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.HealthScalingExpansion));
         }
 
         public async Task<Dictionary<int, string>> GetHealthScalingExpansionOptionsAsync()
         {
-            var expansions = await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.RequiredExpansion));
-            foreach (var key in expansions.Keys)
-            {
-                if (key < 0)
-                    expansions.Remove(key);
-            }
-            return expansions;
+            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.HealthScalingExpansion));
         }
 
         public async Task<Dictionary<byte, string>> GetUnitClassOptionsAsync()

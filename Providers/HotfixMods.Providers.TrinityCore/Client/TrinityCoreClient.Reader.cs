@@ -10,6 +10,14 @@ namespace HotfixMods.Providers.TrinityCore.Client
     {
         Dictionary<(string, string), object> _cache = new();
 
+        /// <summary>
+        /// Get the enum values from TrinityCore source code as a C# Dictionary.
+        /// </summary>
+        /// <typeparam name="TKey">type of Dictionary Key</typeparam>
+        /// <param name="filePath">File path to the enum (store as a string value for multiple use, don't enter directly)</param>
+        /// <param name="enumName">Name of enum. Code will look for 'enum {enumName}' and 'enum class {enumName}'</param>
+        /// <param name="enumStringValueRemoves">Parts of the enum result to remove. If an enum value matches this value exactly (resulting in a string.IsNullOrWhiteSpae == true), the entire value will be skipped.</param>
+        /// <returns></returns>
         async Task<Dictionary<TKey, string>> GetEnumAsync<TKey>(string filePath, string enumName, params string[] enumStringValueRemoves)
             where TKey : notnull
         {
@@ -49,7 +57,6 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                 if (!ValueIsValid(enumNumber))
                                     continue;
 
-
                                 // enumStringValueRemove is the beginning or end of the enum in TrinityCore (the naming convention). No need to dispaly the same over and over.
                                 foreach (var valueRemove in enumStringValueRemoves)
                                 {
@@ -62,6 +69,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                         enumString = enumString.Substring(0, enumString.Length - valueRemove.Length);
                                     }
                                 }
+
+                                // If value is stripped, skip it.
+                                // Intentional way of skipping certain values.
+                                if (string.IsNullOrWhiteSpace(enumString))
+                                    continue;
 
                                 // Check and fix if enumNumber is hex
                                 enumNumber = ConvertIfHex<TKey>(enumNumber);

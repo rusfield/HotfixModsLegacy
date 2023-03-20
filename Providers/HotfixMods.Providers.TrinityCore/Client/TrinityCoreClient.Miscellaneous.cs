@@ -15,6 +15,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
         string sharedDefines_path = Path.Combine("src", "server", "game", "Miscellaneous", "SharedDefines.h");
         string movement_path = Path.Combine("src", "server", "game", "Movement", "MovementDefines.h");
         string unitDefines_path = Path.Combine("src", "server", "game", "Entities", "Unit", "UnitDefines.h");
+        string player_path = Path.Combine("src", "server", "game", "Entities", "Player", "Player.h");
 
 
         bool Equal(string input1, string input2)

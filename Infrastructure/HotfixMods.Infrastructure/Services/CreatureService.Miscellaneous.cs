@@ -285,7 +285,7 @@ namespace HotfixMods.Infrastructure.Services
                 dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
             }
 
-            if (dto.CreatureTemplateAddon!= null)
+            if (dto.CreatureTemplateAddon != null)
             {
                 dto.CreatureTemplateAddon.Entry = (uint)creatureTemplateId;
                 //dto.CreatureTempalteAddon.VerifiedBuild = VerifiedBuild; // property does not currently exist
@@ -319,11 +319,7 @@ namespace HotfixMods.Infrastructure.Services
         }
         bool IsWeaponSlot(int slot)
         {
-            if (Enum.IsDefined(typeof(CharacterInventorySlot), slot))
-            {
-                return (CharacterInventorySlot)slot == CharacterInventorySlot.MAIN_HAND || (CharacterInventorySlot)slot == CharacterInventorySlot.OFF_HAND || (CharacterInventorySlot)slot == CharacterInventorySlot.RANGED;
-            }
-            return false;
+            return slot == 15 || slot == 16 || slot == 17; //MAIN_HAND, OFF_HAND and RANGED
         }
     }
 }

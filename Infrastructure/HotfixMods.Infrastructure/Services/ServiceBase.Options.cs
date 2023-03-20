@@ -36,7 +36,7 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetEnumOptionsAsync<TOptionKey>(Type modelType, string propertyName)
+        protected async Task<Dictionary<TOptionKey, string>> GetEnumOptionsAsync<TOptionKey>(Type? modelType, string propertyName)
             where TOptionKey : notnull
         {
             var enumValues = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);

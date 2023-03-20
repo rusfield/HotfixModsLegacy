@@ -38,8 +38,14 @@ namespace HotfixMods.Infrastructure.Services
         }
 
         #region GET (single)
+        protected async Task<DbRow?> GetSingleAsync(Action<string, string, int> callback, Func<int> progress, string schemaName, string db2Name, bool serverOnly, params DbParameter[] parameters)
+        {
+            callback.Invoke(LoadingHelper.Loading, $"Loading {db2Name}", progress());
+            return await GetSingleAsync(schemaName, db2Name, serverOnly, parameters);
+        }
+
         protected async Task<T?> GetSingleAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, params DbParameter[] parameters)
-        where T : new()
+            where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
             var result = await GetSingleAsync(GetSchemaNameOfEntity<T>()!, typeof(T).Name, serverOnly, parameters);

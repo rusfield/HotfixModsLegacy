@@ -14,18 +14,30 @@ using HotfixMods.Tools.HotfixInitializer.Tool;
 using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using static DBDefsLib.Structs;
 
 
-var value = GetTValue<uint>("0x00000001");
-
-Console.ReadKey();
 
 /*
 var tool = new Db2ImportTool();
-await tool.Db2FileToDb2MySql("10.0.5.47871", @"D:\TrinityCore\Dragonflight\dbc\enUS", "ChrCustomizationReqChoice", "hotfixes", "chr_customization_req_choice", "127.0.0.1", "3306", "root", "root");
+await tool.Db2FileToDb2MySql("10.0.5.47871", @"D:\TrinityCore\Dragonflight\dbc\enUS", "TransmogSet", "hotfixes", "chr_customization_req_choice", "127.0.0.1", "3306", "root", "root");
 Console.Read();
 */
+
+var client = new Db2Client("10.0.5.47871");
+var def = await client.GetDefinitionAsync(@"D:\TrinityCore\Dragonflight\dbc\enUS", "TransmogSet");
+var data = await client.GetAsync(@"D:\TrinityCore\Dragonflight\dbc\enUS", "TransmogSet", def);
+
+int startId = 604000;
+foreach (var d in data)
+{
+    Console.WriteLine($"replace into transmog_set values('{d.GetValueByNameAs<string>("Name").Replace("'", "")}', {d.GetIdValue()}, 0, 0, 0, 0, 0, 0, 1, {d.GetValueByNameAs<string>("ExpansionID")}, 90205, {d.GetValueByNameAs<string>("UiOrder")}, 0, -1337);");
+    //Console.WriteLine($"insert into hotfix_data values({startId++}, 0, 0x15393898, {d.GetIdValue()}, 1, -1337);");
+
+}
+
+Console.Read();
 
 /*
 int startId = 604000;

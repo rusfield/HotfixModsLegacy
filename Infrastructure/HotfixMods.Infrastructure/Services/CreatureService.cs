@@ -8,6 +8,7 @@ using HotfixMods.Infrastructure.AggregateModels;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -54,38 +55,38 @@ namespace HotfixMods.Infrastructure.Services
             {
 
 
-                var character = await GetSingleAsync<Characters>(callback, progress, new DbParameter(nameof(Characters.Name), characterName)); // TODO: Check if Deleted chars must be excluded
+                var character = await GetSingleAsync(callback, progress, _appConfig.CharactersSchema, "characters", true, new DbParameter("Name", characterName)); // TODO: Check if Deleted chars must be excluded
                 if (character == null)
                 {
-                    callback.Invoke(LoadingHelper.Loading, $"{nameof(Characters)} not found", 100);
+                    callback.Invoke(LoadingHelper.Loading, $"No character with name {characterName} found", 100);
                     return null;
                 }
                 var result = new CreatureDto()
                 {
                     CreatureTemplate = new()
                     {
-                        Name = character.Name,
-                        Minlevel = character.Level,
-                        Maxlevel = character.Level,
+                        Name = character.GetValueByNameAs<string>("Name"),
+                        Minlevel = character.GetValueByNameAs<short>("Level"),
+                        Maxlevel = character.GetValueByNameAs<short>("Level"),
                         Type = 7 // Humanoid
                     },
                     HotfixModsEntity = new()
                     {
-                        Name = character.Name,
+                        Name = character.GetValueByNameAs<string>("Name")
                     },
                     CreatureDisplayInfoOption = new(),
                     CreatureDisplayInfo = new()
                     {
-                        Gender = (sbyte)character.Gender,
-                        ModelID = 1
+                        Gender = character.GetValueByNameAs<sbyte>("Gender"),
+                        ModelID = 1 // Will be set later
                     },
                     CreatureTemplateModel = new(),
                     CreatureEquipTemplate = new(),
                     CreatureDisplayInfoExtra = new()
                     {
-                        DisplayRaceID = (sbyte)character.Race,
-                        DisplaySexID = (sbyte)character.Gender,
-                        DisplayClassID = (sbyte)character.Class
+                        DisplayRaceID = character.GetValueByNameAs<sbyte>("Race"),
+                        DisplaySexID = character.GetValueByNameAs<sbyte>("Gender"),
+                        DisplayClassID = character.GetValueByNameAs<sbyte>("Class"),
                     },
                     CreatureModelInfo = new(),
                     NpcModelItemSlotDisplayInfo = new(),
@@ -93,7 +94,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = false
                 };
 
-                var characterCustomization = await GetAsync<CharacterCustomizations>(callback, progress, new DbParameter(nameof(CharacterCustomizations.Guid), character.Guid));
+                var characterCustomization = await GetAsync<CharacterCustomizations>(callback, progress, new DbParameter(nameof(CharacterCustomizations.Guid), character.GetValueByNameAs<ulong>("guid")));
                 foreach (var customization in characterCustomization)
                 {
                     result.CreatureDisplayInfoOption.Add(new()
@@ -104,8 +105,8 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 result.CreatureDisplayInfo.ModelID = GetModelIdByRaceAndGenders(result.CreatureDisplayInfoExtra.DisplayRaceID, result.CreatureDisplayInfoExtra.DisplaySexID, result.CreatureDisplayInfoOption);
 
-                var characterItems = await GetAsync<ItemInstance>(callback, progress, new DbParameter(nameof(ItemInstance.Owner_Guid), character.Guid));
-                var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, new DbParameter(nameof(CharacterInventory.Guid), character.Guid));
+                var characterItems = await GetAsync<ItemInstance>(callback, progress, new DbParameter(nameof(ItemInstance.Owner_Guid), character.GetValueByNameAs<ulong>("guid")));
+                var characterEquipMap = await GetAsync<CharacterInventory>(callback, progress, new DbParameter(nameof(CharacterInventory.Guid), character.GetValueByNameAs<ulong>("guid")));
 
                 foreach (var equippedItem in characterEquipMap.OrderBy(c => c.Slot))
                 {

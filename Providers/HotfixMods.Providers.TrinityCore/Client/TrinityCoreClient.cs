@@ -67,7 +67,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(ItemSparse.StatModifier_BonusStat7) or
                     nameof(ItemSparse.StatModifier_BonusStat8) or
                     nameof(ItemSparse.StatModifier_BonusStat9) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemModType", "ITEM_MOD_"),
-
+                    nameof(ItemSparse.OverallQualityID) => await GetEnumAsync<TKey>(sharedDefines_path, "ItemQualities", "ITEM_QUALITY_"),
+                    nameof(ItemSparse.Bonding) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemBondingType"),
                     _ => new()
                 };
             }

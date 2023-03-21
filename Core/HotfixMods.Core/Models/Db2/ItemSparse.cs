@@ -109,6 +109,7 @@ namespace HotfixMods.Core.Models.Db2
         public byte RequiredPVPMedal { get; set; } = 0;
         public byte RequiredPVPRank { get; set; } = 0;
         public sbyte RequiredLevel { get; set; } = 0;
+        [Db2Description("Set this value in Item tab.")]
         public sbyte InventoryType { get; set; } = 0;
         public sbyte OverallQualityID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;

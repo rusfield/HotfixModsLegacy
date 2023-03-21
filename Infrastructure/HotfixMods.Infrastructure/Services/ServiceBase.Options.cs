@@ -15,6 +15,7 @@ namespace HotfixMods.Infrastructure.Services
             where TClientKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
+            results[default(TOptionKey)] = "0 - None";
             var options = await GetAsync(schemaName, db2Name, false, true);
             foreach (var option in options)
             {
@@ -30,7 +31,7 @@ namespace HotfixMods.Infrastructure.Services
 
 
                     var optionKey = (TOptionKey)Convert.ChangeType(key, typeof(TOptionKey));
-                    results.Add(optionKey, value);
+                    results[optionKey] = value;
                 }
             }
             return results;

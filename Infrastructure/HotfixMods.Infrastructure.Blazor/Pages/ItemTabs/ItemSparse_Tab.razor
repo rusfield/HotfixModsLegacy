@@ -11,10 +11,10 @@
 <PagedDtoContent T="ItemSparse">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InventoryType)))" GetOptionsAsync_Func="GetInventoryTypes" />
+            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InventoryType)))" Disabled="true"/>
             <Input_Element T="ushort" @bind-Value="@(Value.ItemLevel)" Label="@(nameof(Value.ItemLevel).ToDisplayName())" ValueCompare="ValueCompare?.ItemLevel" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemLevel)))" />
             <Input_Element T="sbyte" @bind-Value="@(Value.RequiredLevel)" Label="@(nameof(Value.RequiredLevel).ToDisplayName())" ValueCompare="ValueCompare?.RequiredLevel" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredLevel)))" />
-            <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityID)" Label="@(nameof(Value.OverallQualityID).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.OverallQualityID)))" GetOptionsAsync_Func="GetOverallQualityIds" />
+            <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityID)" Label="@(nameof(Value.OverallQualityID).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.OverallQualityID)))" GetOptionsAsync_Func="Service.GetOverallQualityIdOptionsAsync" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -28,9 +28,9 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="@(Value.Bonding)" Label="@(nameof(Value.Bonding).ToDisplayName())" ValueCompare="ValueCompare?.Bonding" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.Bonding)))"  GetOptionsAsync_Func="GetBondings"/>
-            <Input_Element T="ushort" @bind-Value="@(Value.ItemSet)" Label="@(nameof(Value.ItemSet).ToDisplayName())" ValueCompare="ValueCompare?.ItemSet" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemSet)))" />
-            <Input_Element T="ushort" @bind-Value="@(Value.ItemNameDescriptionID)" Label="@(nameof(Value.ItemNameDescriptionID).ToDisplayName())" ValueCompare="ValueCompare?.ItemNameDescriptionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemNameDescriptionID)))" />
+            <Input_Element T="byte" @bind-Value="@(Value.Bonding)" Label="@(nameof(Value.Bonding).ToDisplayName())" ValueCompare="ValueCompare?.Bonding" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.Bonding)))"  GetOptionsAsync_Func="Service.GetBondingOptionsAsync"/>
+            <Input_Element T="ushort" @bind-Value="@(Value.ItemSet)" Label="@(nameof(Value.ItemSet).ToDisplayName())" ValueCompare="ValueCompare?.ItemSet" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemSet)))" GetOptionsAsync_Func="Service.GetItemSetOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="@(Value.ItemNameDescriptionID)" Label="@(nameof(Value.ItemNameDescriptionID).ToDisplayName())" ValueCompare="ValueCompare?.ItemNameDescriptionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemNameDescriptionID)))" GetOptionsAsync_Func="Service.GetItemNameDescriptionIdOptionsAsync" />
             <Input_Element T="byte" @bind-Value="@(Value.Material)" Label="@(nameof(Value.Material).ToDisplayName())" ValueCompare="ValueCompare?.Material" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.Material)))" Disabled="true" />
         </MudItem>
     </PagedDtoContentPage>
@@ -335,20 +335,5 @@
         });
 
         return resultList.ToDictionary(pair => pair.Key, pair => pair.Value);
-    }
-
-    async Task<Dictionary<sbyte, string>> GetInventoryTypes()
-    {
-        return Enum.GetValues<ItemInventoryType>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<sbyte, string>> GetOverallQualityIds()
-    {
-        return Enum.GetValues<ItemSparseOverallQualityId>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<byte, string>> GetBondings()
-    {
-        return Enum.GetValues<ItemSparseBonding>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
     }
 }

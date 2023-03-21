@@ -1,5 +1,7 @@
 ﻿namespace HotfixMods.Core.Enums.Db2
 {
+    // These values are guessed from the flags and name of the sounds being played.
+    // See Material.db2
     public enum Item_Material : byte
     {
         None = 0,

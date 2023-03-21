@@ -85,7 +85,11 @@ namespace HotfixMods.Infrastructure.Services
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
 
             if (null == definition)
-                throw new Exception($"Unable to get definition for {db2Name}.");
+            {
+                _exceptionHandler.Handle(new Exception($"Unable to get definition for {db2Name}."));
+                return null;
+            }
+                
 
             result = await _serverDbProvider.GetSingleAsync(schemaName, tableName, definition, parameters);
 

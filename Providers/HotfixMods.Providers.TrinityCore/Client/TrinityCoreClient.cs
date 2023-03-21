@@ -38,11 +38,20 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Unit_Class) => await GetEnumAsync<TKey>(sharedDefines_path, "Classes", "CLASS_"),
                     nameof(CreatureTemplate.HealthScalingExpansion) or 
                     nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_", "EXPANSION_LEVEL_CURRENT"),
-
+                    
 
                     _ => new()
                 };
 
+            }
+            else if(typeof(Item) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(Item.SheatheType) => await GetEnumAsync<TKey>(sharedDefines_path, "SheathTypes", "SHEATHETYPE_"),
+                    nameof(Item.InventoryType) => await GetEnumAsync<TKey>(itemTemplate_path, "InventoryType", "INVTYPE_"),
+                    _ => new()
+                };
             }
             else if(typeof(ItemSparse) == modelType)
             {

@@ -6,7 +6,15 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ItemService
     {
-
+        #region Item
+        public async Task<Dictionary<sbyte, string>> GetInventoryTypeOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<sbyte>(typeof(Item), nameof(Item.InventoryType));
+        }
+        public async Task<Dictionary<byte, string>> GetSheatheTypeOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<byte>(typeof(Item), nameof(Item.SheatheType));
+        }
         public async Task<Dictionary<byte, string>> GetItemClassOptionsAsync()
         {
             var results = new Dictionary<byte, string>();
@@ -22,11 +30,11 @@ namespace HotfixMods.Infrastructure.Services
         {
             var results = new Dictionary<byte, string>();
             var subClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemSubClass", false, true);
-            foreach(var subClass in subClasses)
+            foreach (var subClass in subClasses)
             {
                 var classIdOfSubClass = subClass.GetValueByNameAs<sbyte>("ClassID");
 
-                if(classId == classIdOfSubClass)
+                if (classId == classIdOfSubClass)
                 {
                     var subClassId = subClass.GetValueByNameAs<byte>("SubClassID");
                     var displayName = subClass.GetValueByNameAs<string>("DisplayName");
@@ -50,11 +58,14 @@ namespace HotfixMods.Infrastructure.Services
             }
             return results;
         }
+        #endregion
 
+        #region ItemSparse
         public async Task<Dictionary<sbyte, string>> GetStatModifierBonusStatOptionsAsync()
         {
             // All returns the same, 0-9
             return await GetEnumOptionsAsync<sbyte>(typeof(ItemSparse), nameof(ItemSparse.StatModifier_BonusStat0));
         }
+        #endregion
     }
 }

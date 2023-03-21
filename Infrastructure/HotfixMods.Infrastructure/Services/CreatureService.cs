@@ -150,7 +150,7 @@ namespace HotfixMods.Infrastructure.Services
                             var bonusListIds = item.BonusListIds.Trim().Split(' ').Select(int.Parse).ToList();
                             if (bonusListIds != null && bonusListIds.Any())
                             {
-                                var itemBonuses = await GetAsync<ItemBonus>(new DbParameter(nameof(ItemBonus.Type), 7));
+                                var itemBonuses = await GetAsync<ItemBonus>(DefaultCallback, DefaultProgress, false, true, new DbParameter(nameof(ItemBonus.Type), 7));
                                 var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListID)).FirstOrDefault();
                                 if (itemBonus != null)
                                 {

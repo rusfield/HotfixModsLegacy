@@ -9,6 +9,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ID { get; set; } = 0;
         public byte ClassID { get; set; } = 0;
         public byte SubclassID { get; set; } = 0;
+        [Db2Description("Material will decide what kind of sound this item makes in various situations, for example during sheathing or unsheathing a weapon.")]
         public byte Material { get; set; } = 0;
         public sbyte InventoryType { get; set; } = 0;
         public byte SheatheType { get; set; } = 0;

@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Extensions;
 
@@ -51,10 +52,16 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<byte, string>> GetItemMaterialOptionsAsync()
         {
             var results = new Dictionary<byte, string>();
+            results[0] = "0 - None";
             var materials = await GetAsync(_appConfig.HotfixesSchema, "Material", false, true);
             foreach (var material in materials)
             {
-                results.Add(material.GetValueByNameAs<byte>("ID"), material.GetValueByNameAs<string>("ID"));
+                var key = material.GetValueByNameAs<byte>("ID");
+                var value = key.ToString();
+                if (Enum.IsDefined(typeof(Item_Material), key))
+                    value += $" - {((Item_Material)key).ToDisplayString()}";
+
+                results[key] = value;
             }
             return results;
         }

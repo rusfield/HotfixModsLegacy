@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.IO.Enumeration;
+using System.Reflection;
 
 namespace HotfixMods.Providers.Listfile.Client
 {
@@ -12,9 +13,14 @@ namespace HotfixMods.Providers.Listfile.Client
         /// <param name="partialPath">Filter out a specific path in the file content.</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
+
+        Dictionary<(string, string), object> _cache = new();
         async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null)
             where TKey : notnull
         {
+            if (_cache.ContainsKey((filename, partialPath ?? "")))
+                return (Dictionary<TKey, string>)_cache[(filename, partialPath ?? "")];
+
             var results = new Dictionary<TKey, string>();
             results[default(TKey)] = "0 - None";
             await Task.Run(() =>
@@ -50,6 +56,10 @@ namespace HotfixMods.Providers.Listfile.Client
                     }
                 }
             });
+
+            if (CacheResults)
+                _cache[(filename, partialPath ?? "")] = results;
+
             return results;
         }
     }

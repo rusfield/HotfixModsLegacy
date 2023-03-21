@@ -73,11 +73,17 @@ namespace HotfixMods.Apps.MauiBlazor
             });
             builder.Services.AddSingleton<IServerEnumProvider, TrinityCoreClient>(provider =>
             {
-                return new TrinityCoreClient(appConfig.TrinityCorePath);
+                return new TrinityCoreClient(appConfig.TrinityCorePath)
+                {
+                    CacheResults = appConfig.CacheFileResults
+                };
             });
             builder.Services.AddSingleton<IListfileProvider, ListfileClient>(provider =>
             {
-                return new ListfileClient();
+                return new ListfileClient()
+                {
+                    CacheResults = appConfig.CacheFileResults
+                };
             });
 
             builder.Services.AddSingleton<HotfixService>();

@@ -13,7 +13,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
         }
 
         public string TrinityCorePath { get; set; } = "/";
-
+        public bool CacheResults { get; set; } = true;
 
         public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
             where TKey : notnull

@@ -9,6 +9,7 @@ namespace HotfixMods.Providers.Listfile.Client
 {
     public partial class ListfileClient : IListfileProvider
     {
+        public bool CacheResults { get; set; } = true;
         public async Task<Dictionary<TKey, string>> GetIconsAsync<TKey>() where TKey : notnull
         {
             return await ReadFileAsync<TKey>("interface", "interface/icons");

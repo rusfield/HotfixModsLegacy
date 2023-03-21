@@ -94,7 +94,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     }
                 }
 
-                _cache.Add((filePath, enumName), results);
+                _cache[(filePath, enumName)] = results;
             }
 
             return results;

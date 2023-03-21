@@ -50,5 +50,11 @@ namespace HotfixMods.Infrastructure.Services
             }
             return results;
         }
+
+        public async Task<Dictionary<sbyte, string>> GetStatModifierBonusStatOptionsAsync()
+        {
+            // All returns the same, 0-9
+            return await GetEnumOptionsAsync<sbyte>(typeof(ItemSparse), nameof(ItemSparse.StatModifier_BonusStat0));
+        }
     }
 }

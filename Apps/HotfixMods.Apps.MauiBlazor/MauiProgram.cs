@@ -5,6 +5,7 @@ using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Handlers;
 //using HotfixMods.Infrastructure.Razor.Handlers;
 using HotfixMods.Infrastructure.Services;
+using HotfixMods.Providers.Listfile.Client;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
@@ -73,6 +74,10 @@ namespace HotfixMods.Apps.MauiBlazor
             builder.Services.AddSingleton<IServerEnumProvider, TrinityCoreClient>(provider =>
             {
                 return new TrinityCoreClient(appConfig.TrinityCorePath);
+            });
+            builder.Services.AddSingleton<IListfileProvider, ListfileClient>(provider =>
+            {
+                return new ListfileClient();
             });
 
             builder.Services.AddSingleton<HotfixService>();

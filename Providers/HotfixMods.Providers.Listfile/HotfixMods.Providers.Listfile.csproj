@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Listfiles\interface.csv" />
+    <None Remove="Listfiles\sound.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Listfiles\interface.csv" />
+    <EmbeddedResource Include="Listfiles\sound.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
+  </ItemGroup>
+
+</Project>

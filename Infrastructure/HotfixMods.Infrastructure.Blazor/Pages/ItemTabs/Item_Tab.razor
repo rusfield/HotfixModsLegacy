@@ -21,10 +21,10 @@
                 <Input_Element T="byte" @ref="subClassIdRef" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SubclassID)))" GetOptionsAsync_Func="GetItemSubClasses" />
             </RightContent>
         </InlineGroup>
-        <InlineGroup LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50" Merged="false">
+        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.IconFileDataID" ValueCompare="ValueCompare?.IconFileDataID" Label="@nameof(Value.IconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.IconFileDataID)))" />
+                <Input_Element T="int" @bind-Value="Value.IconFileDataID" ValueCompare="ValueCompare?.IconFileDataID" Label="@nameof(Value.IconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.IconFileDataID)))" GetOptionsAsync_Func="Service.GetIconFileDataIdOptionsAsync" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>

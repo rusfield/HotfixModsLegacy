@@ -7,15 +7,15 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey>(string db2Name, string valueColumnName)
             where TOptionKey : notnull
         {
-            return await GetOptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
+            return await GetClientOptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
+        protected async Task<Dictionary<TOptionKey, string>> GetClientOptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
             where TOptionKey : notnull
             where TClientKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            results[default(TOptionKey)] = "0 - None";
+            results.InitializeDefaultValue();
             var options = await GetAsync(schemaName, db2Name, false, true);
             foreach (var option in options)
             {
@@ -42,8 +42,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var enumValues = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
             var results = new Dictionary<TOptionKey, string>();
-            if (!enumValues.ContainsKey(default(TOptionKey)))
-                results.Add(default(TOptionKey), $"0 - None");
+            results.InitializeDefaultValue();
 
             for(int i = 0; i < enumValues.Count; i++)
             {

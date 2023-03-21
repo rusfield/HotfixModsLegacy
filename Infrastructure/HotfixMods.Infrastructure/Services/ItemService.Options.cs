@@ -19,7 +19,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetModifiedCraftingReagentItemIdOptionsAsync()
         {
-            return await GetOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "ModifiedCraftingReagentItem", "Description");
+            return await GetClientOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "ModifiedCraftingReagentItem", "Description");
+        }
+
+        public async Task<Dictionary<int, string>> GetIconFileDataIdOptionsAsync()
+        {
+            return await _listfileProvider.GetIconsAsync<int>();
         }
 
         public async Task<Dictionary<byte, string>> GetItemClassOptionsAsync()
@@ -133,12 +138,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<ushort, string>> GetItemNameDescriptionIdOptionsAsync()
         {
-            return await GetOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemNameDescription", "Description");
+            return await GetClientOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemNameDescription", "Description");
         }
 
         public async Task<Dictionary<ushort, string>> GetItemSetOptionsAsync()
         {
-            return await GetOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemSet", "Name");
+            return await GetClientOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemSet", "Name");
         }
         #endregion
     }

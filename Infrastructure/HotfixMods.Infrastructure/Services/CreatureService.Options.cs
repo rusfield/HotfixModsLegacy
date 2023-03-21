@@ -65,12 +65,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<byte, string>> GetTypeOptionsAsync()
         {
-            return await GetOptionsAsync<byte, uint>(_appConfig.HotfixesSchema, "CreatureType", "Name");
+            return await GetClientOptionsAsync<byte, uint>(_appConfig.HotfixesSchema, "CreatureType", "Name");
         }
 
         public async Task<Dictionary<int, string>> GetFamilyOptionsAsync()
         {
-            var options = await GetOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "CreatureFamily", "Name");
+            var options = await GetClientOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "CreatureFamily", "Name");
             if(!options.ContainsKey(0))
             {
                 options[0] = "0 - None";

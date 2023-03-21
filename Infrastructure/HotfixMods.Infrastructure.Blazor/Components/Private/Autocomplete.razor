@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="null" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" CoerceValue="true" Strict="false">
+    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="maxItems" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" CoerceValue="true" Strict="false">
         <NoItemsTemplate>
             <MudList Clickable="true">
                 <MudListItem>
@@ -17,6 +17,9 @@ else
                 </MudListItem>
             </MudList>
         </NoItemsTemplate>
+        <MoreItemsTemplate>
+            <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
+        </MoreItemsTemplate>
     </MudAutocomplete>
 }
 
@@ -63,6 +66,8 @@ else
     Dictionary<T, string>? options;
     bool refreshElement = false;
     int previousPageIndex = 0;
+    int maxItems = 50;
+    int searchResultCount = 0;
 
     protected override void OnParametersSet()
     {
@@ -79,6 +84,7 @@ else
         if (firstRender || refreshElement != RefreshElement)
         {
             options = await GetOptionsAsync_Func.Invoke();
+            searchResultCount = options.Count;
             refreshElement = RefreshElement;
             this.StateHasChanged();
         }
@@ -173,6 +179,7 @@ else
                 results = filteredOptions.Distinct().ToList();
             }
         });
+        searchResultCount = results.Count;
         return results;
     }
 

@@ -60,11 +60,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
                                 // enumStringValueRemove is the beginning or end of the enum in TrinityCore (the naming convention). No need to dispaly the same over and over.
                                 foreach (var valueRemove in enumStringValueRemoves)
                                 {
-                                    if(enumString.StartsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase))
+                                    if (enumString.StartsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase))
                                     {
                                         enumString = enumString.Substring(valueRemove.Length);
                                     }
-                                    if(enumString.EndsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase) )
+                                    if (enumString.EndsWith(valueRemove, StringComparison.InvariantCultureIgnoreCase))
                                     {
                                         enumString = enumString.Substring(0, enumString.Length - valueRemove.Length);
                                     }
@@ -94,7 +94,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     }
                 }
 
-                _cache.Add((filePath, enumName), results);
+                if (CacheResults)
+                    _cache[(filePath, enumName)] = results;
             }
 
             return results;

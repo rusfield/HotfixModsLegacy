@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Interfaces;
+using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using System.Security.Cryptography.X509Certificates;
 
@@ -12,7 +13,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
         }
 
         public string TrinityCorePath { get; set; } = "/";
-
+        public bool CacheResults { get; set; } = true;
 
         public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
             where TKey : notnull
@@ -35,12 +36,41 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Unit_Flags2) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags2", "UNIT_FLAG2_"),
                     nameof(CreatureTemplate.Unit_Flags3) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags3", "UNIT_FLAG3_"),
                     nameof(CreatureTemplate.Unit_Class) => await GetEnumAsync<TKey>(sharedDefines_path, "Classes", "CLASS_"),
-                    nameof(CreatureTemplate.HealthScalingExpansion) or nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_", "EXPANSION_LEVEL_CURRENT"),
-
+                    nameof(CreatureTemplate.HealthScalingExpansion) or 
+                    nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_", "EXPANSION_LEVEL_CURRENT"),
+                    
 
                     _ => new()
                 };
 
+            }
+            else if(typeof(Item) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(Item.SheatheType) => await GetEnumAsync<TKey>(sharedDefines_path, "SheathTypes", "SHEATHETYPE_"),
+                    nameof(Item.InventoryType) => await GetEnumAsync<TKey>(itemTemplate_path, "InventoryType", "INVTYPE_"),
+                    _ => new()
+                };
+            }
+            else if(typeof(ItemSparse) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(ItemSparse.StatModifier_BonusStat0) or
+                    nameof(ItemSparse.StatModifier_BonusStat1) or
+                    nameof(ItemSparse.StatModifier_BonusStat2) or
+                    nameof(ItemSparse.StatModifier_BonusStat3) or
+                    nameof(ItemSparse.StatModifier_BonusStat4) or
+                    nameof(ItemSparse.StatModifier_BonusStat5) or
+                    nameof(ItemSparse.StatModifier_BonusStat6) or
+                    nameof(ItemSparse.StatModifier_BonusStat7) or
+                    nameof(ItemSparse.StatModifier_BonusStat8) or
+                    nameof(ItemSparse.StatModifier_BonusStat9) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemModType", "ITEM_MOD_"),
+                    nameof(ItemSparse.OverallQualityID) => await GetEnumAsync<TKey>(sharedDefines_path, "ItemQualities", "ITEM_QUALITY_"),
+                    nameof(ItemSparse.Bonding) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemBondingType"),
+                    _ => new()
+                };
             }
             else
             {

@@ -17,22 +17,24 @@ namespace HotfixMods.Infrastructure.Services
         public int FromId { get; set; }
         public int ToId { get; set; }
 
-
         IServerDbDefinitionProvider _serverDbDefinitionProvider;
         IClientDbDefinitionProvider _clientDbDefinitionProvider;
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
         IServerEnumProvider _serverEnumProvider;
         IExceptionHandler _exceptionHandler;
+
+        protected IListfileProvider _listfileProvider;
         protected AppConfig _appConfig;
 
-        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
+        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
             _clientDbDefinitionProvider = clientDbDefinitionProvider;
             _serverDbProvider = serverDbProvider;
             _clientDbProvider = clientDbProvider;
             _serverEnumProvider = serverEnumProvider;
+            _listfileProvider = listfileProvider;
             _exceptionHandler = exceptionHandler;
             _appConfig = appConfig;
         }
@@ -85,7 +87,11 @@ namespace HotfixMods.Infrastructure.Services
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
 
             if (null == definition)
-                throw new Exception($"Unable to get definition for {db2Name}.");
+            {
+                _exceptionHandler.Handle(new Exception($"Unable to get definition for {db2Name}."));
+                return null;
+            }
+                
 
             result = await _serverDbProvider.GetSingleAsync(schemaName, tableName, definition, parameters);
 

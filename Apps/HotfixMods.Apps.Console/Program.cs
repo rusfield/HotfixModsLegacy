@@ -7,6 +7,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Providers.Listfile.Client;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.WowDev.Client;
 using HotfixMods.Tools.Dev.Business;
@@ -18,6 +19,15 @@ using System.Xml.Linq;
 using static DBDefsLib.Structs;
 
 
+
+var listfilePRovider = new ListfileClient();
+var icons = await listfilePRovider.GetIconsAsync<int>();
+
+foreach (var icon in icons)
+    Console.WriteLine(icon.Value);
+
+Console.WriteLine("Done");
+Console.ReadLine();
 
 /*
 var tool = new Db2ImportTool();

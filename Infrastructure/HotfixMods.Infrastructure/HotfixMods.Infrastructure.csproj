@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
+    <ProjectReference Include="..\..\Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj" />
     <ProjectReference Include="..\..\Providers\HotfixMods.Providers.MySqlConnector\HotfixMods.Providers.MySqlConnector.csproj" />
     <ProjectReference Include="..\..\Providers\HotfixMods.Providers.TrinityCore\HotfixMods.Providers.TrinityCore.csproj" />
     <ProjectReference Include="..\..\Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj" />

@@ -35,5 +35,11 @@ namespace HotfixMods.Infrastructure.Extensions
 
             return sortedDict;
         }
+
+        public static void InitializeDefaultValue<T>(this Dictionary<T, string> dict)
+            where T : notnull
+        {
+            dict[default(T)] = "0 - None";
+        }
     }
 }

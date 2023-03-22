@@ -2,7 +2,15 @@
 {
     if (IsNested)
     {
-        <MudSkeleton Height="56px" Width="100%" SkeletonType="SkeletonType.Rectangle" Class="@(Visible ? "" : "invisible")" Style="margin-bottom:16.91px;margin-top:6px;" />
+        if (Skeleton)
+        {
+            <MudSkeleton Height="56px" Width="100%" SkeletonType="SkeletonType.Rectangle" Class="@(Visible ? "" : "invisible")" Style="margin-bottom:16.91px;margin-top:6px;" />
+        }
+        else
+        {
+            <MudProgressCircular Size="Size.Small" Color="Color.Default" Indeterminate="true" Style="position:absolute;left:calc(50% - 12px);top:38px;" />
+            <MudTextField T="string" Value="@(" ")" Label="@Label" Variant="Variant.Outlined" HelperText="Loading" HelperTextOnFocus="true" Disabled="true" />
+        }
     }
     else
     {
@@ -24,4 +32,10 @@
 
     [Parameter]
     public bool IsNested { get; set; } = false; // Used for when its a placeholder for Autocomplete, Single select etc, and uses different paddings and margins.
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public bool Skeleton { get; set; } = true;
 }

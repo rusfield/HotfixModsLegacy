@@ -4,6 +4,7 @@ using HotfixMods.Core.Flags.Db2;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Providers.Listfile;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -77,7 +78,7 @@ namespace HotfixMods.Infrastructure.Services
                 var key = material.GetValueByNameAs<byte>("ID");
                 var value = key.ToString();
                 if (Enum.IsDefined(typeof(Item_Material), key))
-                    value += $" - {((Item_Material)key).ToDisplayString()}";
+                    value += $" ➜ {((Item_Material)key).ToDisplayString()}";
 
                 results[key] = value;
             }
@@ -95,7 +96,7 @@ namespace HotfixMods.Infrastructure.Services
                 var key = itemGroupSound.GetValueByNameAs<byte>("ID");
                 var value = key.ToString();
                 if (Enum.IsDefined(typeof(Item_ItemGroupSoundsId), key))
-                    value += $" - {((Item_ItemGroupSoundsId)key).ToDisplayString()}";
+                    value += $" ➜ {((Item_ItemGroupSoundsId)key).ToDisplayString()}";
 
                 results[key] = value;
             }
@@ -113,7 +114,7 @@ namespace HotfixMods.Infrastructure.Services
                 var key = craftingQuality.GetValueByNameAs<int>("ID");
                 var value = key.ToString();
                 if (Enum.IsDefined(typeof(Item_CraftingQualityId), key))
-                    value += $" - {((Item_CraftingQualityId)key).ToDisplayString()}";
+                    value += $" ➜ {((Item_CraftingQualityId)key).ToDisplayString()}";
 
                 results[key] = value;
             }
@@ -154,7 +155,7 @@ namespace HotfixMods.Infrastructure.Services
             races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ANY_HORDE_RACE), 0);
             races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ANY_ALLIANCE_RACE), 0);
             races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ALL), 0);
-            return races.ToDictionary(key => (long)key, value => value.ToDisplayString());
+            return races.ToDictionary(key => (long)key, value => $"{(long)value} ➜ {value.ToDisplayString()}");
         }
 
         public async Task<List<long>> GetExclusiveAllowableRaceOptionsAsync()
@@ -166,7 +167,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var classes = Enum.GetValues<ItemSparse_AllowableClass>().ToList();
             classes.MoveElement(classes.IndexOf(ItemSparse_AllowableClass.ALL), 0);
-            return classes.ToDictionary(key => (short)key, value => value.ToDisplayString());
+            return classes.ToDictionary(key => (short)key, value => $"{(short)value} ➜ {value.ToDisplayString()}");
         }
 
         public async Task<List<short>> GetExclusiveAllowableClassOptionsAsync()

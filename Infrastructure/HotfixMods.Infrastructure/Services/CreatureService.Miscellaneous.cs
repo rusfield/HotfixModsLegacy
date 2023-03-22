@@ -30,12 +30,12 @@ namespace HotfixMods.Infrastructure.Services
                         {
                             var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
                             var race = (ChrRaceId)(int)creatureDisplayInfoExtra.DisplayRaceID;
-                            name += $" - {race.ToDisplayString()} {gender.ToDisplayString()}";
+                            name += $" ➜ {race.ToDisplayString()} {gender.ToDisplayString()}";
                         }
                     }
                     else
                     {
-                        name += $" - {model.CreatureDisplayID}";
+                        name += $" ➜ {model.CreatureDisplayID}";
                     }
                     result.Add(model.Idx, name);
                 }

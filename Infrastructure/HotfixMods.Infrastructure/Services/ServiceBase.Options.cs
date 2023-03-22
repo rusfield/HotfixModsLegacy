@@ -27,7 +27,7 @@ namespace HotfixMods.Infrastructure.Services
                     if (string.IsNullOrWhiteSpace(value))
                         value = key;
                     else
-                        value = $"{key} - {value}";
+                        value = $"{key} ➜ {value}";
 
 
                     var optionKey = (TOptionKey)Convert.ChangeType(key, typeof(TOptionKey));
@@ -47,7 +47,7 @@ namespace HotfixMods.Infrastructure.Services
             for(int i = 0; i < enumValues.Count; i++)
             {
                 var item = enumValues.ElementAt(i);
-                results[item.Key] = $"{item.Key} - {item.Value}";
+                results[item.Key] = $"{item.Key} ➜ {item.Value}";
             }
             return results;
         }

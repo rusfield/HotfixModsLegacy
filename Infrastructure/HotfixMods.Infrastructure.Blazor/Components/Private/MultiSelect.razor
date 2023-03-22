@@ -149,7 +149,7 @@ else
         {
             0 => "None",
             1 => selection.First().ToDisplayName(),
-            _ => $"{Value?.ToString()} - {count} selected"
+            _ => $"{Value?.ToString()} ➜ {count} selected"
         };
     }
 
@@ -212,7 +212,7 @@ else
 
             if (!options.ContainsKey(default(T)))
             {
-                options[default(T)] = "0 - (Undefined)";
+                options[default(T)] = "0 ➜ (Undefined)";
                 zeroIsDefined = false;
             }
             
@@ -221,14 +221,14 @@ else
                 var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
                 if (!options.ContainsKey(positiveKey))
                 {
-                    options.Add(positiveKey, $"{positiveKey} - (Undefined)");
+                    options.Add(positiveKey, $"{positiveKey} ➜ (Undefined)");
                 }
                 if (minValue < 0)
                 {
                     var negativeKey = (T)Convert.ChangeType((signedItterationValue * -1).ToString(), typeof(T));
                     if (!options.ContainsKey(negativeKey))
                     {
-                        options[negativeKey] = $"{negativeKey} - (Undefined)";
+                        options[negativeKey] = $"{negativeKey} ➜ (Undefined)";
                     }
                     signedItterationValue *= 2;
                 }

@@ -11,9 +11,9 @@ namespace HotfixMods.Infrastructure.Services
         {
             var options = await GetOptionsAsync<ushort>("AnimKitPriority", "Priority");
             foreach (var key in options.Keys)
-                options[key] = $"{key} - Pri {options[key].Split(" - ")[1]}";
+                options[key] = $"{key} ➜ Pri {options[key].Split(" ➜ ")[1]}";
 
-            options[0] = "0 - Disabled";
+            options[0] = "0 ➜ Disabled";
             return options.SortByValue<ushort>(false);
         }
 

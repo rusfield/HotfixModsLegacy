@@ -36,12 +36,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)
         {
             var group = this.GetDtoGroup(groupType);
-            if (oldIndex >= 0 && oldIndex < group.Count && newIndex >= 0 && newIndex < group.Count)
-            {
-                var item = group[oldIndex];
-                group.RemoveAt(oldIndex);
-                group.Insert(newIndex, item);
-            }
+            group.MoveElement(oldIndex, newIndex);
         }
 
         public virtual void CloneInGroup(Type groupType, int index)

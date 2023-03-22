@@ -36,8 +36,8 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableRace)))" GetOptionsAsync_Func="GetAllowableRaces" />
-            <Input_Element T="short" @bind-Value="@(Value.AllowableClass)" Label="@(nameof(Value.AllowableClass).ToDisplayName())" ValueCompare="ValueCompare?.AllowableClass" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableClass)))" />
+            <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableRace)))" GetOptionsAsync_Func="Service.GetAllowableRaceOptionsAsync" MultiSelection="true" GetExclusiveOptionsAsync_Func="Service.GetExclusiveAllowableRaceOptionsAsync" />
+            <Input_Element T="short" @bind-Value="@(Value.AllowableClass)" Label="@(nameof(Value.AllowableClass).ToDisplayName())" ValueCompare="ValueCompare?.AllowableClass" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableClass)))" GetOptionsAsync_Func="Service.GetAllowableClassOptionsAsync" MultiSelection="true" GetExclusiveOptionsAsync_Func="Service.GetExclusiveAllowableClassOptionsAsync" />
             <Input_Element T="ushort" @bind-Value="@(Value.InstanceBound)" Label="@(nameof(Value.InstanceBound).ToDisplayName())" ValueCompare="ValueCompare?.InstanceBound" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InstanceBound)))" />
             <InlineGroup>
                 <RightContent>
@@ -312,28 +312,3 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
-
-@code {
-    async Task<Dictionary<long, string>> GetAllowableRaces()
-    {
-        var resultList = Enum.GetValues<ItemSparseAllowableRace>().ToDictionary(key => (long)key, value => value.ToDisplayString()).ToList();
-
-        resultList.Sort((firstPair, nextPair) =>
-        {
-            if (firstPair.Key == (long)ItemSparseAllowableRace.ALL || firstPair.Key == (long)ItemSparseAllowableRace.ANY_ALLIANCE_RACE || firstPair.Key == (long)ItemSparseAllowableRace.ANY_HORDE_RACE)
-            {
-                return -1;
-            }
-            else if (nextPair.Key == (long)ItemSparseAllowableRace.ALL || nextPair.Key == (long)ItemSparseAllowableRace.ANY_ALLIANCE_RACE || nextPair.Key == (long)ItemSparseAllowableRace.ANY_HORDE_RACE)
-            {
-                return 1;
-            }
-            else
-            {
-                return firstPair.Key.CompareTo(nextPair.Key);
-            }
-        });
-
-        return resultList.ToDictionary(pair => pair.Key, pair => pair.Value);
-    }
-}

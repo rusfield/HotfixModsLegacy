@@ -1,4 +1,6 @@
 ﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Flags.Db2;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Extensions;
@@ -144,6 +146,32 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetItemSetOptionsAsync()
         {
             return await GetClientOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemSet", "Name");
+        }
+
+        public async Task<Dictionary<long, string>> GetAllowableRaceOptionsAsync()
+        {
+            var races = Enum.GetValues<ItemSparse_AllowableRace>().ToList();
+            races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ANY_HORDE_RACE), 0);
+            races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ANY_ALLIANCE_RACE), 0);
+            races.MoveElement(races.IndexOf(ItemSparse_AllowableRace.ALL), 0);
+            return races.ToDictionary(key => (long)key, value => value.ToDisplayString());
+        }
+
+        public async Task<List<long>> GetExclusiveAllowableRaceOptionsAsync()
+        {
+            return new() { (long)ItemSparse_AllowableRace.ALL, (long)ItemSparse_AllowableRace.ANY_ALLIANCE_RACE, (long)ItemSparse_AllowableRace.ANY_HORDE_RACE };
+        }
+
+        public async Task<Dictionary<short, string>> GetAllowableClassOptionsAsync()
+        {
+            var classes = Enum.GetValues<ItemSparse_AllowableClass>().ToList();
+            classes.MoveElement(classes.IndexOf(ItemSparse_AllowableClass.ALL), 0);
+            return classes.ToDictionary(key => (short)key, value => value.ToDisplayString());
+        }
+
+        public async Task<List<short>> GetExclusiveAllowableClassOptionsAsync()
+        {
+            return new() { (short)ItemSparse_AllowableClass.ALL };
         }
         #endregion
     }

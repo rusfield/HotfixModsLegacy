@@ -1,15 +1,12 @@
-﻿namespace HotfixMods.Core.Flags.Db2
+﻿namespace HotfixMods.Core.Enums.TrinityCore
 {
     [Flags]
-    public enum ItemSparseAllowableRace : long
+    public enum ItemSparse_AllowableRace : long
     {
-        // Some are probably missing here...
-
         ANY_HORDE_RACE = -6184943489809468494,
         ALL = -1,
-        UNK_0 = 0,
         HUMAN = 1,
-        UNK_2 = 2,
+        ORC = 2,
         DWARF = 4,
         NIGHT_ELF = 8,
         UNDEAD = 16,
@@ -23,17 +20,17 @@
         VULPERA = 4096,
         MAGHAR_ORC = 8192,
         MECHAGNOME = 16384,
-        UNK_32768 = 32768, // Dracthyr Horde or ALly
-        UNK_65536 = 65536, // Dracthyr Horde or Ally (the other one)
-        UNK_131072 = 131072,
-        UNK_262144 = 262144,
-        UNK_524288 = 524288,
-        UNK_1048576 = 1048576,
+        DRACTHYR_ALLIANCE = 32768,
+        DRACTHYR_HORDE = 65536,
+        // UNK_131072 = 131072,
+        // UNK_262144 = 262144,
+        // UNK_524288 = 524288,
+        // UNK_1048576 = 1048576,
         WORGEN = 2097152,
-        UNK_4194304 = 4194304,
-        UNK_8388608 = 8388608,
-        UNK_16777216 = 16777216, // Pandaren Horde or Ally
-        PANDAREN = 33554432, // Pandaren Horde or Ally (the other one)
+        // UNK_4194304 = 4194304,
+        // UNK_8388608 = 8388608,
+        PANDAREN_ALLIANCE = 16777216,
+        PANDAREN_HORDE = 33554432,
         NIGHTBORNE = 67108864,
         HIGHMOUNTAIN_TAUREN = 134217728,
         VOID_ELF = 268435456,

@@ -82,7 +82,7 @@ namespace HotfixMods.Core.Models.Db2
         public ushort RequiredSkillRank { get; set; } = 0;
         public ushort RequiredSkill { get; set; } = 0;
         public ushort ItemLevel { get; set; } = 0;
-        public short AllowableClass { get; set; } = 0;
+        public short AllowableClass { get; set; } = -1;
         public byte ArtifactID { get; set; } = 0;
         public byte SpellWeight { get; set; } = 0;
         public byte SpellWeightCategory { get; set; } = 0;

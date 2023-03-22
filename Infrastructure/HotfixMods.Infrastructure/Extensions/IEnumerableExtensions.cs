@@ -1,4 +1,6 @@
-﻿namespace HotfixMods.Infrastructure.Extensions
+﻿using System.Collections;
+
+namespace HotfixMods.Infrastructure.Extensions
 {
     public static class IEnumerableExtensions
     {

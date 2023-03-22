@@ -9,7 +9,7 @@
             <CascadingValue Name="RefreshElement" Value="refreshElement">
                 @if (MultiSelection && GetOptionsAsync_Func != null)
                 {
-                    <MultiSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
+                    <MultiSelect T="T" Label="@Label" Value="Value" ValueChanged="SetValueAsync" GetOptionsAsync_Func="GetOptionsAsync_Func" GetExclusiveOptionsAsync_Func="GetExclusiveOptionsAsync_Func" Variant="Variant" OnAdornmentClick="GetOnAdornmentClick()" AdornmentIcon="@GetAdornmentIcon()" Adornment="GetAdornment()" Error="error" Disabled="Disabled" />
                 }
                 else if (!AllowUndefinedValues && GetOptionsAsync_Func != null)
                 {
@@ -45,6 +45,9 @@
 
     [Parameter]
     public Func<Task<Dictionary<T, string>>>? GetOptionsAsync_Func { get; set; }
+
+    [Parameter]
+    public Func<Task<List<T>>>? GetExclusiveOptionsAsync_Func { get; set; } // For options that will reset all other options in multiselect
 
     [Parameter]
     public EventCallback<T?> ValueChanged { get; set; }

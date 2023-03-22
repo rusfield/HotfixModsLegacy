@@ -12,7 +12,11 @@ else
     <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
-            <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>
+            if(!zeroIsDefined && option.Key.ToString() == default(T).ToString())
+            {
+                continue;
+            }
+            <MudSelectItem T="T" Style="@GetOptionStyle(option)" Value="@option.Key">@option.Value</MudSelectItem>
         }
     </MudSelect>
 }
@@ -42,6 +46,9 @@ else
     public Func<Task<Dictionary<T, string>>> GetOptionsAsync_Func { get; set; }
 
     [Parameter]
+    public Func<Task<List<T>>>? GetExclusiveOptionsAsync_Func { get; set; }
+
+    [Parameter]
     public string? AdornmentIcon { get; set; }
 
     [Parameter]
@@ -60,6 +67,9 @@ else
     Dictionary<T, string>? options;
     List<T> selectedValues = new();
     int previousPageIndex = 0;
+    bool valueIsSigned = true;
+    bool zeroIsDefined = true;
+    List<T> exclusiveSelectValues = new();
 
     protected override void OnParametersSet()
     {
@@ -84,9 +94,41 @@ else
     async Task SetValuesAsync(IEnumerable<T> newValues)
     {
         SetError(false);
-        selectedValues = newValues.ToList();
-        var sum = selectedValues.Sum(x => Convert.ToInt64(x));
-        Value = (T)Convert.ChangeType(sum, typeof(T));
+        bool valueIsAdded = newValues.Except(selectedValues).Any();
+        bool valueIsRemoved = selectedValues.Except(newValues).Any();
+
+        if (!valueIsAdded && !valueIsRemoved)
+        {
+            // No changes
+            return;
+        }
+        
+        bool valueIsAddedAndExclusive = valueIsAdded && exclusiveSelectValues.Any(e => e.ToString() == newValues.Except(selectedValues).First().ToString());
+
+        if (valueIsAddedAndExclusive)
+        {
+            var addedValue = newValues.Except(selectedValues).First();
+            selectedValues.Clear();
+            selectedValues.Add(addedValue);
+            Value = addedValue;
+        }
+        else
+        {
+            
+
+            selectedValues = newValues.Except(exclusiveSelectValues).ToList();
+            if (valueIsSigned)
+            {
+                var sum = selectedValues.Sum(x => Convert.ToInt64(x));
+                Value = (T)Convert.ChangeType(sum, typeof(T));
+            }
+            else
+            {
+                var sum = selectedValues.Sum(x => Convert.ToInt64(x));
+                Value = (T)Convert.ChangeType(sum, typeof(T));
+            }
+        }
+
         await ValueChanged.InvokeAsync(Value);
     }
 
@@ -111,39 +153,100 @@ else
         };
     }
 
-    List<T> GetFlagValues(long flag)
+    List<T> GetFlagValues(T flag)
     {
-        List<T> result = new();
-        for (int i = 0; i < sizeof(long) * 8; i++)
+        List<T> results = new();
+        var type = typeof(T);
+        valueIsSigned = type == typeof(sbyte) || type == typeof(short) || type == typeof(int) || type == typeof(long);
+
+        if (valueIsSigned)
         {
-            long value = 1L << i;
-            if ((flag & value) == value)
+            // If value is signed, it means it could have a negative value.
+            // Flags are hard to work with when negative values are supported and used, so force value to be only the flag of the negative value if it is less than 0.
+            long flagValue = (long)Convert.ChangeType(flag, typeof(long));
+
+            if (flagValue <= 0)
             {
-                result.Add((T)Convert.ChangeType(value, typeof(T)));
+                results.Add(flag);
             }
         }
-        return result;
+        if (results.Count == 0)
+        {
+            ulong flagValue = (ulong)Convert.ChangeType(flag, typeof(ulong));
+            if (flagValue == 0)
+            {
+                results.Add(flag);
+            }
+            else
+            {
+                for (int i = 0; i < sizeof(ulong) * 8; i++)
+                {
+                    ulong value = 1UL << i;
+                    if ((flagValue & value) == value)
+                    {
+                        results.Add((T)Convert.ChangeType(value, typeof(T)));
+                    }
+                }
+            }
+        }
+
+        return results;
     }
 
     async Task InitOptions()
     {
         options = await GetOptionsAsync_Func.Invoke();
 
+        if (GetExclusiveOptionsAsync_Func != null)
+            exclusiveSelectValues = await GetExclusiveOptionsAsync_Func.Invoke();
+
+        // Init undefined values, in case they exist but are are just not yet supported by app
         if (typeof(T).IsPrimitive && typeof(T).IsValueType)
         {
+            var minValueObject = typeof(T).GetField("MinValue").GetValue(null);
             var maxValueObject = typeof(T).GetField("MaxValue").GetValue(null);
-            ulong flagValue = 1;
+            long signedItterationValue = 1;
+            ulong unsignedItterationValue = 1;
             var maxValue = (ulong)Convert.ChangeType(maxValueObject, typeof(ulong));
+            var minValue = (long)Convert.ChangeType(minValueObject, typeof(long));
+
+            if (!options.ContainsKey(default(T)))
+            {
+                options[default(T)] = "0 - (Undefined)";
+                zeroIsDefined = false;
+            }
+            
             do
             {
-                var key = (T)Convert.ChangeType(flagValue.ToString(), typeof(T));
-                if (!options.ContainsKey(key))
-                    options.Add(key, $"{key} - (Undefined)");
-                flagValue *= 2;
+                var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
+                if (!options.ContainsKey(positiveKey))
+                {
+                    options.Add(positiveKey, $"{positiveKey} - (Undefined)");
+                }
+                if (minValue < 0)
+                {
+                    var negativeKey = (T)Convert.ChangeType((signedItterationValue * -1).ToString(), typeof(T));
+                    if (!options.ContainsKey(negativeKey))
+                    {
+                        options[negativeKey] = $"{negativeKey} - (Undefined)";
+                    }
+                    signedItterationValue *= 2;
+                }
+                unsignedItterationValue *= 2;
             }
-            while (flagValue < (maxValue / 2)); 
+            while (unsignedItterationValue < (maxValue / 2));
         }
 
-        selectedValues = GetFlagValues((long)Convert.ChangeType(Value, typeof(long)));
+        selectedValues = GetFlagValues(Value);
+    }
+
+    string GetOptionStyle(KeyValuePair<T, string> option)
+    {
+        if (option.Value.Contains("(Undefined)"))
+            return "color:var(--mud-palette-action-disabled) !important";
+        else if (exclusiveSelectValues.Contains(option.Key))
+            return "color:var(--mud-palette-info) !important";
+        else
+            return "color:var(--mud-palette-text-primary) !important";
     }
 }

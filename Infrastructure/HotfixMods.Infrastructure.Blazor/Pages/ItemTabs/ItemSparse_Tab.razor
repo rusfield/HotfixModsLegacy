@@ -40,12 +40,12 @@
             <Input_Element T="short" @bind-Value="@(Value.AllowableClass)" Label="@(nameof(Value.AllowableClass).ToDisplayName())" ValueCompare="ValueCompare?.AllowableClass" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableClass)))" GetOptionsAsync_Func="Service.GetAllowableClassOptionsAsync" MultiSelection="true" GetExclusiveOptionsAsync_Func="Service.GetExclusiveAllowableClassOptionsAsync" />
             <Input_Element T="ushort" @bind-Value="@(Value.InstanceBound)" Label="@(nameof(Value.InstanceBound).ToDisplayName())" ValueCompare="ValueCompare?.InstanceBound" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InstanceBound)))" />
             <InlineGroup>
-                <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound0)" Label="@(nameof(Value.ZoneBound0).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound0)))" />
-                </RightContent>
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound1)" Label="@(nameof(Value.ZoneBound1).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound1)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound0)" Label="@(nameof(Value.ZoneBound0).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound0)))" />
                 </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound1)" Label="@(nameof(Value.ZoneBound1).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound1)))" />
+                </RightContent>
             </InlineGroup>
             <Input_Element T="uint" @bind-Value="@(Value.DurationInInventory)" Label="@(nameof(Value.DurationInInventory).ToDisplayName())" ValueCompare="ValueCompare?.DurationInInventory" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DurationInInventory)))" />
         </MudItem>
@@ -96,10 +96,10 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredHoliday)" Label="@(nameof(Value.RequiredHoliday).ToDisplayName())" ValueCompare="ValueCompare?.RequiredHoliday" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredHoliday)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredHoliday)" Label="@(nameof(Value.RequiredHoliday).ToDisplayName())" ValueCompare="ValueCompare?.RequiredHoliday" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredHoliday)))" GetOptionsAsync_Func="Service.GetRequiredHolidayOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredTransmogHoliday)" Label="@(nameof(Value.RequiredTransmogHoliday).ToDisplayName())" ValueCompare="ValueCompare?.RequiredTransmogHoliday" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredTransmogHoliday)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredTransmogHoliday)" Label="@("Transmog")" ValueCompare="ValueCompare?.RequiredTransmogHoliday" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredTransmogHoliday)))" GetOptionsAsync_Func="Service.GetRequiredTransmogHolidayOptionsAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>

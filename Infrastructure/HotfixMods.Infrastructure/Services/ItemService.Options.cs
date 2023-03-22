@@ -173,6 +173,16 @@ namespace HotfixMods.Infrastructure.Services
         {
             return new() { (short)ItemSparse_AllowableClass.ALL };
         }
+
+        public async Task<Dictionary<ushort, string>> GetRequiredHolidayOptionsAsync()
+        {
+            return await GetOptionsAsync<ushort>("HolidayNames", "Name");
+        }
+
+        public async Task<Dictionary<ushort, string>> GetRequiredTransmogHolidayOptionsAsync()
+        {
+            return await GetOptionsAsync<ushort>("HolidayNames", "Name");
+        }
         #endregion
     }
 }

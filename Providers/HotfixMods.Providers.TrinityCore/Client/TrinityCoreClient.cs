@@ -69,6 +69,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(ItemSparse.StatModifier_BonusStat9) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemModType", "ITEM_MOD_"),
                     nameof(ItemSparse.OverallQualityID) => await GetEnumAsync<TKey>(sharedDefines_path, "ItemQualities", "ITEM_QUALITY_"),
                     nameof(ItemSparse.Bonding) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemBondingType"),
+                    nameof(ItemSparse.MinReputation) => await GetEnumAsync<TKey>(sharedDefines_path, "ReputationRank", "REP_"),
                     _ => new()
                 };
             }

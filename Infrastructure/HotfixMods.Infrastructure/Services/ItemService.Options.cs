@@ -196,6 +196,37 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetDb2OptionsAsync<ushort>("AreaTable", "AreaName");
         }
+
+        public async Task<Dictionary<ushort, string>> GetRequiredSkillOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<ushort>("SkillLine", "DisplayName");
+        }
+
+        public async Task<Dictionary<ushort, string>> GetMinFactionIdOptionsAsync()
+        {
+            return await GetFactionOptionsAsync<ushort>();
+        }
+
+        public async Task<Dictionary<int, string>> GetMinReputationOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<int>(typeof(ItemSparse), nameof(ItemSparse.MinReputation));
+        }
+
+        public async Task<Dictionary<int, string>> GetLimitCategoryOptionsAsync()
+        {
+            var results = new Dictionary<int, string>();
+            var categories = await GetAsync(_appConfig.HotfixesSchema, "ItemLimitCategory", false, true);
+            foreach(var category in categories)
+            {
+                results.Add(category.GetIdValue(), $"{category.GetValueByNameAs<string>("Name")} ({category.GetValueByNameAs<string>("Quantity")})");
+            }
+            return results;
+        }
+
+        public async Task<Dictionary<uint, string>> GetRequiredAbilityOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<uint>("SpellName", "Name");
+        }
         #endregion
     }
 }

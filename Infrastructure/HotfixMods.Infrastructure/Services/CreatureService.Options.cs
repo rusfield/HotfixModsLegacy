@@ -8,25 +8,7 @@ namespace HotfixMods.Infrastructure.Services
     {
         public async Task<Dictionary<ushort, string>> GetFactionOptionsAsync()
         {
-            var results = new Dictionary<ushort, string>();
-
-            await Task.Run(async () =>
-            {
-                var factions = (await GetAsync(_appConfig.HotfixesSchema, "Faction", false, true)).ToDictionary(k => k.GetIdValue(), v => v.GetValueByNameAs<string>("Name"));
-                var factionTemplates = await GetAsync(_appConfig.HotfixesSchema, "FactionTemplate", false, true);
-
-                foreach (var factionTemplate in factionTemplates)
-                {
-                    var id = factionTemplate.GetIdValue();
-                    string displayName = "";
-                    if (factions.ContainsKey(id))
-                        displayName = $"{factions[id]}";
-
-                    results.Add((ushort)id, displayName);
-                }
-            });
-
-            return results;
+            return await GetFactionOptionsAsync<ushort>();
         }
 
         public async Task<Dictionary<ulong, string>> GetMechanicImmuneMaskOptionsAsync()

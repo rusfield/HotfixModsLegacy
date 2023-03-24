@@ -85,13 +85,13 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="@(Value.RequiredAbility)" Label="@(nameof(Value.RequiredAbility).ToDisplayName())" ValueCompare="ValueCompare?.RequiredAbility" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredAbility)))" />
+            <Input_Element T="uint" @bind-Value="@(Value.RequiredAbility)" Label="@(nameof(Value.RequiredAbility).ToDisplayName())" ValueCompare="ValueCompare?.RequiredAbility" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredAbility)))" GetOptionsAsync_Func="Service.GetRequiredAbilityOptionsAsync" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.MinFactionID)" Label="Faction ID" ValueCompare="ValueCompare?.MinFactionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.MinFactionID)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.MinFactionID)" Label="Faction ID" ValueCompare="ValueCompare?.MinFactionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.MinFactionID)))" GetOptionsAsync_Func="Service.GetMinFactionIdOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="int" @bind-Value="@(Value.MinReputation)" Label="Reputation" ValueCompare="ValueCompare?.MinReputation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.MinReputation)))" />
+                    <Input_Element T="int" @bind-Value="@(Value.MinReputation)" Label="Reputation" ValueCompare="ValueCompare?.MinReputation" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.MinReputation)))" GetOptionsAsync_Func="Service.GetMinReputationOptionsAsync" />
                 </RightContent>
             </InlineGroup>
             <InlineGroup>
@@ -104,13 +104,13 @@
             </InlineGroup>
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredSkill)" Label="Require Skill" ValueCompare="ValueCompare?.RequiredSkill" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredSkill)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.RequiredSkill)" Label="Require Skill" ValueCompare="ValueCompare?.RequiredSkill" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredSkill)))"  GetOptionsAsync_Func="Service.GetRequiredSkillOptionsAsync"/>
                 </LeftContent>
                 <RightContent>
                     <Input_Element T="ushort" @bind-Value="@(Value.RequiredSkillRank)" Label="Rank" ValueCompare="ValueCompare?.RequiredSkillRank" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredSkillRank)))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.LimitCategory)))" />
+            <Input_Element T="int" @bind-Value="@(Value.LimitCategory)" Label="@(nameof(Value.LimitCategory).ToDisplayName())" ValueCompare="ValueCompare?.LimitCategory" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.LimitCategory)))" GetOptionsAsync_Func="Service.GetLimitCategoryOptionsAsync" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>

@@ -216,6 +216,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             var results = new Dictionary<int, string>();
             var categories = await GetAsync(_appConfig.HotfixesSchema, "ItemLimitCategory", false, true);
+            results[0] = "None";
             foreach(var category in categories)
             {
                 results.Add(category.GetIdValue(), $"{category.GetValueByNameAs<string>("Name")} ({category.GetValueByNameAs<string>("Quantity")})");

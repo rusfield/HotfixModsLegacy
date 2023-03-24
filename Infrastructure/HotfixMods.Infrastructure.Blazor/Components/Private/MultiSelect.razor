@@ -63,6 +63,9 @@ else
     [Parameter]
     public bool Disabled { get; set; } = false;
 
+    [Parameter]
+    public bool ShowIdInOptions { get; set; } = true;
+
     MudSelect<T>? mudSelectRef;
     Dictionary<T, string>? options;
     List<T> selectedValues = new();
@@ -196,6 +199,8 @@ else
     async Task InitOptions()
     {
         options = await GetOptionsAsync_Func.Invoke();
+        if (ShowIdInOptions)
+            options.ShowKeyInValue<T>("➜");
 
         if (GetExclusiveOptionsAsync_Func != null)
             exclusiveSelectValues = await GetExclusiveOptionsAsync_Func.Invoke();

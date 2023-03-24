@@ -39,7 +39,17 @@ namespace HotfixMods.Infrastructure.Extensions
         public static void InitializeDefaultValue<T>(this Dictionary<T, string> dict)
             where T : notnull
         {
-            dict[default(T)] = "0 ➜ None";
+            dict[default(T)] = "None";
+        }
+
+        public static void ShowKeyInValue<T>(this Dictionary<T, string> dict, string delimiter)
+        {
+            delimiter = delimiter.Trim();
+            foreach(var key in dict.Keys)
+            {
+                if(!key.ToString().Equals(dict[key], StringComparison.InvariantCultureIgnoreCase))
+                    dict[key] = $"{key} {delimiter} {dict[key]}";
+            }
         }
     }
 }

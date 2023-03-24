@@ -18,9 +18,9 @@ namespace HotfixMods.Infrastructure.Services
                 foreach (var factionTemplate in factionTemplates)
                 {
                     var id = factionTemplate.GetIdValue();
-                    string displayName = id.ToString();
+                    string displayName = "";
                     if (factions.ContainsKey(id))
-                        displayName += $" ➜ {factions[id]}";
+                        displayName = $"{factions[id]}";
 
                     results.Add((ushort)id, displayName);
                 }
@@ -33,11 +33,11 @@ namespace HotfixMods.Infrastructure.Services
         {
             var mechanics = await GetAsync(_appConfig.HotfixesSchema, "SpellMechanic", false, true);
             var results = new Dictionary<ulong, string>();
-            results.Add(0, "0 ➜ None");
+            results.Add(0, "None");
             ulong keyIndex = 1;
             foreach(var mechanic in mechanics)
             {
-                results[keyIndex] = $"{keyIndex} ➜ {mechanic.GetValueByNameAs<string>("StateName").ToDisplayString()}";
+                results[keyIndex] = $"{mechanic.GetValueByNameAs<string>("StateName").ToDisplayString()}";
                 keyIndex *= 2;
             }
             return results;
@@ -73,7 +73,7 @@ namespace HotfixMods.Infrastructure.Services
             var options = await GetClientOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "CreatureFamily", "Name");
             if(!options.ContainsKey(0))
             {
-                options[0] = "0 ➜ None";
+                options[0] = "None";
                 options = options.SortByKey();
             }
             return options;
@@ -97,16 +97,16 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<byte, string>> GetRacialLeaderOptionsAsync()
         {
             return new Dictionary<byte, string>() {
-                { 0, "0 ➜ False" },
-                { 1, "1 ➜ True" }
+                { 0, "False" },
+                { 1, "True" }
             };
         }
 
         public async Task<Dictionary<byte, string>> GetRegenHealthOptionsAsync()
         {
             return new Dictionary<byte, string>() {
-                { 0, "0 ➜ False" },
-                { 1, "1 ➜ True" }
+                { 0, "False" },
+                { 1, "True" }
             };
         }
 

@@ -28,7 +28,7 @@
                 }
                 else
                 {
-                    <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" GetOptionsAsync_Func="GetOptionsAsync_Func" />
+                    <Autocomplete T="T" Value="@Value" ValueChanged="SetValueAsync" Label="@Label" Variant="Variant" AdornmentIcon="@GetAdornmentIcon()" OnAdornmentClick="GetOnAdornmentClick()" Adornment="GetAdornment()" Error="error" GetOptionsAsync_Func="GetOptionsAsync_Func" ShowIdInOptions="showIdInOptions" />
                 }
             </CascadingValue>
         </MudBadge>
@@ -84,6 +84,7 @@
 
     bool error = false;
     bool refreshElement = false;
+    bool showIdInOptions = true; // Simple toggle to show/hide IDs in dropdowns
 
     public void SetError(bool newError)
     {

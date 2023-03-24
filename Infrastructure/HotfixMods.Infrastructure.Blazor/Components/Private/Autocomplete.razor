@@ -61,6 +61,9 @@ else
     [Parameter]
     public bool Disabled { get; set; } = false;
 
+    [Parameter]
+    public bool ShowIdInOptions { get; set; } = true;
+
     string? _inputValue;
     MudAutocomplete<string>? mudAutocompleteRef;
     Dictionary<T, string>? options;
@@ -84,6 +87,8 @@ else
         if (firstRender || refreshElement != RefreshElement)
         {
             options = await GetOptionsAsync_Func.Invoke();
+            if (ShowIdInOptions)
+                options.ShowKeyInValue<T>("➜");
             searchResultCount = options.Count;
             refreshElement = RefreshElement;
             this.StateHasChanged();

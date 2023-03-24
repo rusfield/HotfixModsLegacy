@@ -1,6 +1,7 @@
 ﻿@typeparam T
 
 @using HotfixMods.Infrastructure.Blazor.Business
+@using HotfixMods.Infrastructure.Extensions
 
 @if (null == options)
 {
@@ -55,6 +56,9 @@ else
     [Parameter]
     public bool Disabled { get; set; } = false;
 
+    [Parameter]
+    public bool ShowIdInOptions { get; set; } = true;
+
     Dictionary<T, string>? options;
     int previousPageIndex = 0;
     MudSelect<T>? mudSelectRef;
@@ -74,6 +78,8 @@ else
         if (firstRender)
         {
             options = await GetOptionsAsync_Func.Invoke();
+            if (ShowIdInOptions)
+                options.ShowKeyInValue<T>("➜");
             this.StateHasChanged();
         }
         await base.OnAfterRenderAsync(firstRender);

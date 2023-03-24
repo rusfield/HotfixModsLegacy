@@ -21,7 +21,7 @@ namespace HotfixMods.Infrastructure.Services
                 var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
                 foreach (var model in creatureTemplateModels)
                 {
-                    string name = model.Idx.ToString();
+                    string name = "";
                     var creatureDisplayInfo = await GetSingleAsync<CreatureDisplayInfo>(new DbParameter(nameof(CreatureDisplayInfo.ID), model.CreatureDisplayID));
                     if (creatureDisplayInfo != null)
                     {
@@ -30,12 +30,12 @@ namespace HotfixMods.Infrastructure.Services
                         {
                             var gender = (Gender)(int)creatureDisplayInfoExtra.DisplaySexID;
                             var race = (ChrRaceId)(int)creatureDisplayInfoExtra.DisplayRaceID;
-                            name += $" ➜ {race.ToDisplayString()} {gender.ToDisplayString()}";
+                            name += $"{race.ToDisplayString()} {gender.ToDisplayString()}";
                         }
                     }
                     else
                     {
-                        name += $" ➜ {model.CreatureDisplayID}";
+                        name += $"{model.CreatureDisplayID}";
                     }
                     result.Add(model.Idx, name);
                 }

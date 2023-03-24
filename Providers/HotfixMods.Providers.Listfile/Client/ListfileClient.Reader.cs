@@ -22,7 +22,7 @@ namespace HotfixMods.Providers.Listfile.Client
                 return (Dictionary<TKey, string>)_cache[(filename, partialPath ?? "")];
 
             var results = new Dictionary<TKey, string>();
-            results[default(TKey)] = "0 ➜ None";
+            results[default(TKey)] = "None";
             await Task.Run(() =>
             {
                 Assembly assembly = Assembly.GetExecutingAssembly();
@@ -50,7 +50,7 @@ namespace HotfixMods.Providers.Listfile.Client
                             string keyString = line.Split(';')[0]; // 132089
                             var key = (TKey)Convert.ChangeType(keyString, typeof(TKey));
 
-                            value = $"{key} ➜ {UnderscoreToCase(value)}";
+                            value = $"{UnderscoreToCase(value)}";
                             results[key] = value;
                         }
                     }

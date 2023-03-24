@@ -9,14 +9,14 @@ namespace HotfixMods.Infrastructure.Services
     {
         public async Task<Dictionary<ushort, string>> GetPriorityOptionsAsync()
         {
-            var options = await GetOptionsAsync<ushort>("AnimKitPriority", "Priority");
+            var options = await GetDb2OptionsAsync<ushort>("AnimKitPriority", "Priority");
             options[0] = "Disabled";
             return options.SortByValue<ushort>(false);
         }
 
         public async Task<Dictionary<byte, string>> GetBoneSetOptionsAsync()
         {
-            return await GetOptionsAsync<byte>("AnimKitBoneSet", "Name");
+            return await GetDb2OptionsAsync<byte>("AnimKitBoneSet", "Name");
         }
     }
 }

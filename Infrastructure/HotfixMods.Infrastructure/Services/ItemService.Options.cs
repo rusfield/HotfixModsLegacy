@@ -22,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetModifiedCraftingReagentItemIdOptionsAsync()
         {
-            return await GetClientOptionsAsync<int, uint>(_appConfig.HotfixesSchema, "ModifiedCraftingReagentItem", "Description");
+            return await GetDb2OptionsAsync<int>("ModifiedCraftingReagentItem", "Description");
         }
 
         public async Task<Dictionary<int, string>> GetIconFileDataIdOptionsAsync()
@@ -141,12 +141,12 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<ushort, string>> GetItemNameDescriptionIdOptionsAsync()
         {
-            return await GetClientOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemNameDescription", "Description");
+            return await GetDb2OptionsAsync<ushort>("ItemNameDescription", "Description");
         }
 
         public async Task<Dictionary<ushort, string>> GetItemSetOptionsAsync()
         {
-            return await GetClientOptionsAsync<ushort, uint>(_appConfig.HotfixesSchema, "ItemSet", "Name");
+            return await GetDb2OptionsAsync<ushort>("ItemSet", "Name");
         }
 
         public async Task<Dictionary<long, string>> GetAllowableRaceOptionsAsync()
@@ -177,12 +177,24 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<ushort, string>> GetRequiredHolidayOptionsAsync()
         {
-            return await GetOptionsAsync<ushort>("HolidayNames", "Name");
+            return await GetDb2OptionsAsync<ushort>("HolidayNames", "Name");
         }
 
         public async Task<Dictionary<ushort, string>> GetRequiredTransmogHolidayOptionsAsync()
         {
-            return await GetOptionsAsync<ushort>("HolidayNames", "Name");
+            return await GetDb2OptionsAsync<ushort>("HolidayNames", "Name");
+        }
+
+        public async Task<Dictionary<ushort, string>> GetInstanceBoundOptionsAsync()
+        {
+            // TODO: Default is 0, which actually points at a map.
+            // Check whether only maps with InstanceType == Instance are valid, and if so, filter out others and set 0 as None.
+            return await GetDb2OptionsAsync<ushort>("Map", "MapName");
+        }
+
+        public async Task<Dictionary<ushort, string>> GetZoneBoundOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<ushort>("AreaTable", "AreaName");
         }
         #endregion
     }

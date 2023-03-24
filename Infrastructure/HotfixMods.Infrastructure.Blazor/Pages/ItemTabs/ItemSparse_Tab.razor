@@ -38,13 +38,13 @@
         <MudItem xs="3">
             <Input_Element T="long" @bind-Value="@(Value.AllowableRace)" Label="@(nameof(Value.AllowableRace).ToDisplayName())" ValueCompare="ValueCompare?.AllowableRace" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableRace)))" GetOptionsAsync_Func="Service.GetAllowableRaceOptionsAsync" MultiSelection="true" GetExclusiveOptionsAsync_Func="Service.GetExclusiveAllowableRaceOptionsAsync" />
             <Input_Element T="short" @bind-Value="@(Value.AllowableClass)" Label="@(nameof(Value.AllowableClass).ToDisplayName())" ValueCompare="ValueCompare?.AllowableClass" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.AllowableClass)))" GetOptionsAsync_Func="Service.GetAllowableClassOptionsAsync" MultiSelection="true" GetExclusiveOptionsAsync_Func="Service.GetExclusiveAllowableClassOptionsAsync" />
-            <Input_Element T="ushort" @bind-Value="@(Value.InstanceBound)" Label="@(nameof(Value.InstanceBound).ToDisplayName())" ValueCompare="ValueCompare?.InstanceBound" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InstanceBound)))" />
+            <Input_Element T="ushort" @bind-Value="@(Value.InstanceBound)" Label="@(nameof(Value.InstanceBound).ToDisplayName())" ValueCompare="ValueCompare?.InstanceBound" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InstanceBound)))" GetOptionsAsync_Func="Service.GetInstanceBoundOptionsAsync" />
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound0)" Label="@(nameof(Value.ZoneBound0).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound0)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound0)" Label="@(nameof(Value.ZoneBound0).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound0)))" GetOptionsAsync_Func="Service.GetZoneBoundOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound1)" Label="@(nameof(Value.ZoneBound1).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound1)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.ZoneBound1)" Label="@(nameof(Value.ZoneBound1).ToDisplayName())" ValueCompare="ValueCompare?.ZoneBound1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ZoneBound1)))" GetOptionsAsync_Func="Service.GetZoneBoundOptionsAsync" />
                 </RightContent>
             </InlineGroup>
             <Input_Element T="uint" @bind-Value="@(Value.DurationInInventory)" Label="@(nameof(Value.DurationInInventory).ToDisplayName())" ValueCompare="ValueCompare?.DurationInInventory" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DurationInInventory)))" />

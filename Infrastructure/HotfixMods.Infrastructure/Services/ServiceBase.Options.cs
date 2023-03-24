@@ -4,13 +4,13 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ServiceBase
     {
-        protected async Task<Dictionary<TOptionKey, string>> GetOptionsAsync<TOptionKey>(string db2Name, string valueColumnName)
+        protected async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey>(string db2Name, string valueColumnName)
             where TOptionKey : notnull
         {
-            return await GetClientOptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
+            return await GetDb2OptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetClientOptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
+        async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
             where TOptionKey : notnull
             where TClientKey : notnull
         {

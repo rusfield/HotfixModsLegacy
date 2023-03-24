@@ -166,7 +166,18 @@ namespace HotfixMods.Infrastructure.Services
                 if (!serverOnly && (includeClientIfServerResult || !results.Any()))
                 {
                     var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definition, parameters);
-                    results.AddRange(clientResults.Where(c => !results.Any(r => c.GetIdValue() == r.GetIdValue())));
+
+                    var resultIds = new HashSet<int>(results.Select(r => r.GetIdValue()));
+                    foreach (var clientResult in clientResults)
+                    {
+                        var idValue = clientResult.GetIdValue();
+
+                        if (!resultIds.Contains(idValue))
+                        {
+                            results.Add(clientResult);
+                            resultIds.Add(idValue);
+                        }
+                    }
                 }
             }
             catch (Exception ex)

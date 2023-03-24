@@ -228,6 +228,11 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetDb2OptionsAsync<uint>("SpellName", "Name");
         }
+
+        public async Task<Dictionary<ushort, string>> GetSocketMatchEnchantmentIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<ushort>("SpellItemEnchantment", "Name");
+        }
         #endregion
     }
 }

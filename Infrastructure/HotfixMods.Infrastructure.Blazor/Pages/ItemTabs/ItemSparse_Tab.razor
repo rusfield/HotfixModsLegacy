@@ -172,7 +172,7 @@
             <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
                 <LeftContent />
                 <MiddleContent>
-                    <Input_Element T="ushort" @bind-Value="@(Value.SocketMatchEnchantmentID)" Label="@(nameof(Value.SocketMatchEnchantmentID).ToDisplayName())" ValueCompare="ValueCompare?.SocketMatchEnchantmentID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SocketMatchEnchantmentID)))" />
+                    <Input_Element T="ushort" @bind-Value="@(Value.SocketMatchEnchantmentID)" Label="@(nameof(Value.SocketMatchEnchantmentID).ToDisplayName())" ValueCompare="ValueCompare?.SocketMatchEnchantmentID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SocketMatchEnchantmentID)))" GetOptionsAsync_Func="Service.GetSocketMatchEnchantmentIdOptionsAsync" />
                 </MiddleContent>
                 <RightContent />
             </InlineGroup>

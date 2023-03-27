@@ -25,6 +25,7 @@ using HotfixMods.Core.Enums;
 // TODO: Change to 10.0.7???
 var client = new Db2Client("10.0.5.47871");
 var path = @"C:\Program Files (x86)\World of Warcraft\dbc\enUS";
+var outputPath = Path.Combine("C:", "customizations");
 int choiceStartId = 100000;
 int elementStartId = 200000;
 int hotfixStartId = -1;
@@ -111,32 +112,61 @@ foreach (var eyeOption in eyeOptions)
 {
 
     var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
+    var modelName = model.ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase);
 
     foreach (var elements in elementData.Where(k => k.Key != (int)model))
     {
         int number = 1;
         int orderIndex = 1000;
+        var elementModelId = (ChrModelId)elements.Key;
+        var elementModelName = elementModelId.ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase);
+        var currentPath = Path.Combine(outputPath, $"{modelName} - {elementModelName} eyes.txt");
 
-        Console.WriteLine($"/* Preparing {((ChrModelId)elements.Key).ToDisplayString()} eyes for {model.ToDisplayString()} */");
-
-        foreach (var element in elements.Value)
+        using (StreamWriter sw = File.AppendText(currentPath))
         {
-            var customizationName = $"{((ChrModelId)elements.Key).ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase)} {number++}";
-            Console.WriteLine(string.Format(choiceSql, customizationName, choiceStartId, eyeOption.GetIdValue(), orderIndex, orderIndex++));
-            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, choiceHash, choiceStartId));
-            Console.WriteLine();
-
-            foreach (var data in element)
+            if (!File.Exists(currentPath))
             {
-                var (geosetId, materialId) = data;
-                Console.WriteLine(string.Format(elementSql, elementStartId, choiceStartId, geosetId, materialId));
-                Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
-                Console.WriteLine();
+                // Create the file
+
+                sw.WriteLine($"/* Preparing {elementModelName} eyes for {modelName} */");
+
             }
 
+            foreach (var element in elements.Value)
+            {
+                var customizationName = $"{elementModelName} {number++}";
+                var choiceOutput = string.Format(choiceSql, customizationName, choiceStartId, eyeOption.GetIdValue(), orderIndex, orderIndex++);
+                var choiceHotfixOutput = string.Format(hotfixSql, hotfixStartId++, choiceHash, choiceStartId);
 
-            Console.WriteLine();
-            choiceStartId++;
+                sw.WriteLine(choiceOutput);
+                sw.WriteLine(choiceHotfixOutput);
+                sw.WriteLine();
+
+                Console.WriteLine(choiceOutput);
+                Console.WriteLine(choiceHotfixOutput);
+                Console.WriteLine();
+
+                foreach (var data in element)
+                {
+                    var (geosetId, materialId) = data;
+                    var elementOutput = string.Format(elementSql, elementStartId, choiceStartId, geosetId, materialId);
+                    var elementHotfixOutput = string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++);
+
+                    sw.WriteLine(elementOutput);
+                    sw.WriteLine(elementHotfixOutput);
+                    sw.WriteLine();
+
+                    Console.WriteLine(elementOutput);
+                    Console.WriteLine(elementHotfixOutput);
+                    Console.WriteLine();
+                }
+
+
+                Console.WriteLine();
+                choiceStartId++;
+            }
+
+            sw.Flush();
         }
     }
 }

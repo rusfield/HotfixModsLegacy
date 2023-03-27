@@ -30,9 +30,19 @@ int elementStartId = 200000;
 int hotfixStartId = -1;
 int verifiedBuild = -1340;
 
+// Race, orderIndexFrom, orderIndexTo
+List<(ChrModelId, int, int)> excluded = new() {
+    (ChrModelId.WORGEN_MALE, 0, 9999),
+    //(ChrModelId.COMPANION_DRAKE, 0, 9999),
+    (ChrModelId.COMPANION_PROTODRAGON, 0, 9999),
+    (ChrModelId.COMPANION_PTERRODAX, 0, 9999),
+    (ChrModelId.COMPANION_SERPENT, 0, 9999),
+    (ChrModelId.COMPANION_WYVERN, 0, 9999),
+    (ChrModelId.DRACTHYR_DRAGON, 0, 9999)
+};
+
 string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 146, 0, {3}, {3}, 0, 90001, 0, 0, " + verifiedBuild + ");";
-string elementSql1 = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, 0, 0, {2}, 0, 0, 0, 0, 0, " + verifiedBuild + ");";
-string elementSql2 = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, 2000, 0, 0, 0, 0, 0, 0, 0, " + verifiedBuild + ");"; // Needed??
+string elementSql = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, {2}, 0, {3}, 0, 0, 0, 0, 0, " + verifiedBuild + ");";
 string hotfixSql = "INSERT INTO hotfixes.hotfix_data values({0}, 0, {1}, {2}, 1, " + verifiedBuild + ");";
 var choiceHash = (uint)TableHashes.CHR_CUSTOMIZATION_CHOICE;
 var elementHash = (uint)TableHashes.CHR_CUSTOMIZATION_ELEMENT;
@@ -42,62 +52,89 @@ var eyeOptionDef = await client.GetDefinitionAsync(path, "ChrCustomizationOption
 var eyeChoiceDef = await client.GetDefinitionAsync(path, "ChrCustomizationChoice");
 var eyeElementDef = await client.GetDefinitionAsync(path, "ChrCustomizationElement");
 
-var materialLists = new Dictionary<int, List<int>>();
+var elementData = new Dictionary<int, List<List<(int, int)>>>(); // Dictionary<ChrModelId, List<List<(geosetId, materialId)>>>
 var eyeOptions = await client.GetAsync(path, "ChrCustomizationOption", eyeOptionDef, new DbParameter("Name", "Eye Color"));
-var chrCustomizationReq = (await client.GetAsync(path, "ChrCustomizationReq", reqDef)).ToDictionary(key => key.GetIdValue(), flagValue => flagValue.GetValueByNameAs<int>("ReqType"));
+var chrCustomizationReq = (await client.GetAsync(path, "ChrCustomizationReq", reqDef));
 var eyeElements = (await client.GetAsync(path, "ChrCustomizationElement", eyeElementDef));
 
 // Step 1: Gather all data
 foreach (var eyeOption in eyeOptions)
 {
     var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
-    //Console.WriteLine($"Getting data for {model.ToString()}");
-    materialLists[(int)model] = new();
+
+    // Male and female share eyes. Skip female (duplicate)
+    if (model.ToString().EndsWith("FEMALE"))
+        continue;
+
+    elementData[(int)model] = new();
     var eyeChoices = await client.GetAsync(path, "ChrCustomizationChoice", eyeChoiceDef, new DbParameter("ChrCustomizationOptionID", eyeOption.GetIdValue()));
-    foreach(var eyeChoice in eyeChoices)
+    foreach (var eyeChoice in eyeChoices)
     {
+        var orderIndex = eyeChoice.GetValueByNameAs<int>("OrderIndex");
+        if (excluded.Any(e =>
+        {
+            var (modelId, from, to) = e;
+            return model == modelId && orderIndex >= from && orderIndex <= to;
+        }))
+        {
+            continue;
+        }
+
         var eyeChoiceReqId = eyeChoice.GetValueByNameAs<int>("ChrCustomizationReqID");
-        if ((chrCustomizationReq[eyeChoiceReqId] & 1) != 0) // Check for flag value PLAYER
+        var req = chrCustomizationReq.Where(r => r.GetIdValue() == eyeChoiceReqId).FirstOrDefault();
+
+        var classMask = req.GetValueByNameAs<int>("ClassMask");
+        if (classMask == 32)
+        {
+            // Skip Death Knight eyes (those specifically for DK only)
+            continue;
+        }
+
+        if ((req.GetValueByNameAs<int>("ReqType") & 1) != 0) // Check for flag value PLAYER
         {
             var eyeChoiceId = eyeChoice.GetIdValue();
+            var choiceList = new List<(int, int)>();
             foreach (var eyeElement in eyeElements.Where(e => e.GetValueByNameAs<int>("ChrCustomizationChoiceID") == eyeChoiceId))
             {
                 var materialId = eyeElement.GetValueByNameAs<int>("ChrCustomizationMaterialID");
-                if(materialId != 0)
-                {
-                    materialLists[(int)model].Add(materialId);
-                }
+                var geosetId = eyeElement.GetValueByNameAs<int>("ChrCustomizationGeosetID");
+                choiceList.Add((geosetId, materialId));
             }
+            if (choiceList.Any())
+                elementData[(int)model].Add(choiceList);
         }
     }
 }
-Console.WriteLine($"There is a total of {materialLists.Sum(s => s.Value.Count)} eyes to be added.");
 
 // Step2: Add values across all races, excluding those that already exist on the race by default
-foreach(var eyeOption in eyeOptions)
+foreach (var eyeOption in eyeOptions)
 {
-    
+
     var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
 
-    foreach (var materials in materialLists.Where(k => k.Key != (int)model))
+    foreach (var elements in elementData.Where(k => k.Key != (int)model))
     {
         int number = 1;
         int orderIndex = 1000;
 
-        Console.WriteLine($"/* Preparing {((ChrModelId)materials.Key).ToDisplayString()} eyes for {model.ToDisplayString()} */");
+        Console.WriteLine($"/* Preparing {((ChrModelId)elements.Key).ToDisplayString()} eyes for {model.ToDisplayString()} */");
 
-        foreach (var material in materials.Value)
+        foreach (var element in elements.Value)
         {
-            var customizationName = $"{model.ToDisplayString()} {number++}";
+            var customizationName = $"{((ChrModelId)elements.Key).ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase)} {number++}";
             Console.WriteLine(string.Format(choiceSql, customizationName, choiceStartId, eyeOption.GetIdValue(), orderIndex, orderIndex++));
             Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, choiceHash, choiceStartId));
             Console.WriteLine();
-            Console.WriteLine(string.Format(elementSql1, elementStartId, choiceStartId, material));
-            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
-            Console.WriteLine();
-            Console.WriteLine(string.Format(elementSql2, elementStartId, choiceStartId));
-            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
-            Console.WriteLine();
+
+            foreach (var data in element)
+            {
+                var (geosetId, materialId) = data;
+                Console.WriteLine(string.Format(elementSql, elementStartId, choiceStartId, geosetId, materialId));
+                Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
+                Console.WriteLine();
+            }
+
+
             Console.WriteLine();
             choiceStartId++;
         }
@@ -381,15 +418,15 @@ foreach (var model in models)
         var newDefinitions = definition.ColumnDefinitions.Where(d => !properties.Any(p => p.Equals(d.Name, StringComparison.InvariantCultureIgnoreCase)));
         var oldNames = properties.Where(p => !definition.ColumnDefinitions.Any(d => d.Name.Equals(p, StringComparison.InvariantCultureIgnoreCase)));
 
-        foreach(var prop in model.GetProperties())
+        foreach (var prop in model.GetProperties())
         {
             var defProp = definition.ColumnDefinitions.Where(d => d.Name.Equals(prop.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-            if(defProp == null)
+            if (defProp == null)
             {
                 Console.WriteLine($"{prop.Name} not found");
                 continue;
             }
-            else if(prop.PropertyType != defProp.Type)
+            else if (prop.PropertyType != defProp.Type)
             {
                 Console.WriteLine($"Property mismatch on {prop.Name}. {prop.PropertyType} should be {defProp.Type}");
                 Console.ReadKey();

@@ -3,6 +3,7 @@
 
 using DBDefsLib;
 using HotfixMods.Core.Attributes;
+using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
@@ -16,10 +17,97 @@ using HotfixMods.Tools.Initializer.Business;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using HotfixMods.Core.Models;
 using static DBDefsLib.Structs;
+using HotfixMods.Core.Enums;
 
 
+// TODO: Change to 10.0.7???
+var client = new Db2Client("10.0.5.47871");
+var path = @"C:\Program Files (x86)\World of Warcraft\dbc\enUS";
+int choiceStartId = 100000;
+int elementStartId = 200000;
+int hotfixStartId = -1;
+int verifiedBuild = -1340;
 
+string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 146, 0, {3}, {3}, 0, 90001, 0, 0, " + verifiedBuild + ");";
+string elementSql1 = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, 0, 0, {2}, 0, 0, 0, 0, 0, " + verifiedBuild + ");";
+string elementSql2 = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, 2000, 0, 0, 0, 0, 0, 0, 0, " + verifiedBuild + ");"; // Needed??
+string hotfixSql = "INSERT INTO hotfixes.hotfix_data values({0}, 0, {1}, {2}, 1, " + verifiedBuild + ");";
+var choiceHash = (uint)TableHashes.CHR_CUSTOMIZATION_CHOICE;
+var elementHash = (uint)TableHashes.CHR_CUSTOMIZATION_ELEMENT;
+
+var reqDef = await client.GetDefinitionAsync(path, "ChrCustomizationReq");
+var eyeOptionDef = await client.GetDefinitionAsync(path, "ChrCustomizationOption");
+var eyeChoiceDef = await client.GetDefinitionAsync(path, "ChrCustomizationChoice");
+var eyeElementDef = await client.GetDefinitionAsync(path, "ChrCustomizationElement");
+
+var materialLists = new Dictionary<int, List<int>>();
+var eyeOptions = await client.GetAsync(path, "ChrCustomizationOption", eyeOptionDef, new DbParameter("Name", "Eye Color"));
+var chrCustomizationReq = (await client.GetAsync(path, "ChrCustomizationReq", reqDef)).ToDictionary(key => key.GetIdValue(), flagValue => flagValue.GetValueByNameAs<int>("ReqType"));
+var eyeElements = (await client.GetAsync(path, "ChrCustomizationElement", eyeElementDef));
+
+// Step 1: Gather all data
+foreach (var eyeOption in eyeOptions)
+{
+    var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
+    //Console.WriteLine($"Getting data for {model.ToString()}");
+    materialLists[(int)model] = new();
+    var eyeChoices = await client.GetAsync(path, "ChrCustomizationChoice", eyeChoiceDef, new DbParameter("ChrCustomizationOptionID", eyeOption.GetIdValue()));
+    foreach(var eyeChoice in eyeChoices)
+    {
+        var eyeChoiceReqId = eyeChoice.GetValueByNameAs<int>("ChrCustomizationReqID");
+        if ((chrCustomizationReq[eyeChoiceReqId] & 1) != 0) // Check for flag value PLAYER
+        {
+            var eyeChoiceId = eyeChoice.GetIdValue();
+            foreach (var eyeElement in eyeElements.Where(e => e.GetValueByNameAs<int>("ChrCustomizationChoiceID") == eyeChoiceId))
+            {
+                var materialId = eyeElement.GetValueByNameAs<int>("ChrCustomizationMaterialID");
+                if(materialId != 0)
+                {
+                    materialLists[(int)model].Add(materialId);
+                }
+            }
+        }
+    }
+}
+Console.WriteLine($"There is a total of {materialLists.Sum(s => s.Value.Count)} eyes to be added.");
+
+// Step2: Add values across all races, excluding those that already exist on the race by default
+foreach(var eyeOption in eyeOptions)
+{
+    
+    var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
+
+    foreach (var materials in materialLists.Where(k => k.Key != (int)model))
+    {
+        int number = 1;
+        int orderIndex = 1000;
+
+        Console.WriteLine($"/* Preparing {((ChrModelId)materials.Key).ToDisplayString()} eyes for {model.ToDisplayString()} */");
+
+        foreach (var material in materials.Value)
+        {
+            var customizationName = $"{model.ToDisplayString()} {number++}";
+            Console.WriteLine(string.Format(choiceSql, customizationName, choiceStartId, eyeOption.GetIdValue(), orderIndex, orderIndex++));
+            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, choiceHash, choiceStartId));
+            Console.WriteLine();
+            Console.WriteLine(string.Format(elementSql1, elementStartId, choiceStartId, material));
+            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
+            Console.WriteLine();
+            Console.WriteLine(string.Format(elementSql2, elementStartId, choiceStartId));
+            Console.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId++));
+            Console.WriteLine();
+            Console.WriteLine();
+            choiceStartId++;
+        }
+    }
+}
+
+Console.WriteLine("Done");
+Console.ReadLine();
+
+/*
 var listfilePRovider = new ListfileClient();
 var icons = await listfilePRovider.GetIconsAsync<int>();
 
@@ -28,6 +116,8 @@ foreach (var icon in icons)
 
 Console.WriteLine("Done");
 Console.ReadLine();
+*/
+
 
 /*
 var tool = new Db2ImportTool();
@@ -35,6 +125,7 @@ await tool.Db2FileToDb2MySql("10.0.5.47871", @"D:\TrinityCore\Dragonflight\dbc\e
 Console.Read();
 */
 
+/*
 var client = new Db2Client("10.0.5.47871");
 var def = await client.GetDefinitionAsync(@"D:\TrinityCore\Dragonflight\dbc\enUS", "TransmogSet");
 var data = await client.GetAsync(@"D:\TrinityCore\Dragonflight\dbc\enUS", "TransmogSet", def);
@@ -48,7 +139,7 @@ foreach (var d in data)
 }
 
 Console.Read();
-
+*/
 /*
 int startId = 604000;
 var ids = new List<int>() { };

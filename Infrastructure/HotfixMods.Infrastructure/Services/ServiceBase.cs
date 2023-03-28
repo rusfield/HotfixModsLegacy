@@ -303,6 +303,12 @@ namespace HotfixMods.Infrastructure.Services
             await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
         }
 
+        protected async Task DeleteAsync(Action<string, string, int> callback, Func<int> progress, string schemaName, string tableName, params DbParameter[] parameters)
+        {
+            callback.Invoke(LoadingHelper.Deleting, $"Deleting {tableName.ToDisplayString()}", progress());
+            await _serverDbProvider.DeleteAsync(schemaName, tableName, parameters);
+        }
+
         protected async Task<bool> DeleteAsync<T>(Action<string, string, int> callback, Func<int> progress, List<T> entities)
             where T : new()
         {

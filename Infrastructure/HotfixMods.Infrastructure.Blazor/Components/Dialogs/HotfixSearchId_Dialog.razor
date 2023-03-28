@@ -6,7 +6,7 @@
 
 <DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Hotfixes))">
     <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetByIdAsync())" />
-    <MudAutocomplete T="string" Label="DB2" Strict="false" SearchFunc="SearchAsync" @bind-Value="Db2" Variant="Variant.Outlined" MaxItems="9999" />
+    <MudAutocomplete T="string" Label="DB2" Strict="false" SearchFunc="SearchAsync" @bind-Value="Db2" Variant="Variant.Outlined" MaxItems="9999" Adornment="@Adornment.None" />
 </DialogSearch>
 
 @code {
@@ -14,7 +14,7 @@
     MudDialogInstance Dialog { get; set; }
 
     [Parameter]
-    public uint? Id { get; set; }
+    public int? Id { get; set; }
 
     [Parameter]
     public string? Db2 { get; set; }
@@ -44,7 +44,7 @@
         {
             if (!string.IsNullOrWhiteSpace(Db2))
             {
-                var data = await Service.GetByIdAsync(Db2!, (uint)Id, dialogSearchRef!.SetLoaderProgress);
+                var data = await Service.GetByIdAsync(Db2!, (int)Id, dialogSearchRef!.SetLoaderProgress);
                 if (data != null || closeOnFail)
                 {
                     Dialog.Close(data);

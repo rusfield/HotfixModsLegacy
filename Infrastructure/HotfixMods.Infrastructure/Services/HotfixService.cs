@@ -24,15 +24,32 @@ namespace HotfixMods.Infrastructure.Services
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(14);
 
-            return true;
+            try { 
+            callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+            if (dto.IsUpdate)
+            {
+                await DeleteAsync(dto.HotfixModsEntity.RecordID);
+            }
+
+            callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
+            await SetIdAndVerifiedBuild(dto);
+
+            await SaveAsync(callback, progress, dto.HotfixModsEntity);
+            await SaveAsync(callback, progress, dto.DbRow);
+
+                callback.Invoke("Saving", "Saving successful", 100);
+                dto.IsUpdate = true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+                return false;
+            }
         }
 
-        public async Task<List<HotfixDto>> GetAsync(string db2Name)
-        {
-            return null;
-        }
-
-        public async Task<HotfixDto?> GetByIdAsync(string db2Name, uint id, Action<string, string, int>? callback = null)
+        public async Task<HotfixDto?> GetByIdAsync(string db2Name, int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(3);
@@ -67,11 +84,42 @@ namespace HotfixMods.Infrastructure.Services
             }
             return null;
         }
-    
 
-        public async Task<int> GetNextIdAsync(string db2Name)
+        public async Task<bool> DeleteAsync(string db2, int id, Action<string, string, int>? callback = null)
         {
-            return await base.GetNextIdAsync(db2Name);
+            callback = callback ?? DefaultCallback;
+            var progress = LoadingHelper.GetLoaderFunc(10);
+
+            try
+            {
+                var dto = await GetByIdAsync(db2, id);
+                if (null == dto)
+                {
+                    callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
+                    return false;
+                }
+
+                await DeleteAsync(callback, progress, _appConfig.HotfixesSchema, db2.ToTableName(), new DbParameter(dto.DbRow.GetIdName(), dto.DbRow.GetIdValue()));
+                await DeleteAsync(callback, progress, dto.HotfixModsEntity);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+            }
+            return false;
+        }
+
+        // Return next ID, and a bool for whether the previous ID was created by HotfixMods
+        // If it was not, it is potentially in range of being overwritten in later patches, and the next ID should be a bit higher than just +1.
+        public async Task<(int, bool)> GetNextIdAsync(string db2Name)
+        {
+            var nextId = await base.GetNextIdAsync(db2Name);
+            var hotfixMods = GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordID), nextId - 1));
+
+            return (nextId, hotfixMods != null);
         }
 
         public async Task<List<string>> GetDefinitionNamesAsync()

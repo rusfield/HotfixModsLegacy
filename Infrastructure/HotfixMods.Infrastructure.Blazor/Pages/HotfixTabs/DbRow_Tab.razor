@@ -17,7 +17,7 @@
                     }
                     else
                     {
-                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
                     }
                 }
             </MudItem>
@@ -37,7 +37,7 @@
                                 }
                                 else
                                 {
-                                    <AnonymousInput_Element Type="values[jVal - 1].Type" @bind-Value="values[jVal - 1].Value" Label="@(values[jVal - 1].Name.ToDisplayName())" />
+                                    <AnonymousInput_Element Type="values[jVal - 1].Type" @bind-Value="values[jVal - 1].Value" Label="@(values[jVal - 1].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal - 1].Name)" />
                                 }
                             </LeftContent>
                             <RightContent>
@@ -47,7 +47,7 @@
                                 }
                                 else
                                 {
-                                    <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                                    <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
                                 }
                             </RightContent>
                         </InlineGroup>
@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
                     }
                 }
             </MudItem>
@@ -78,6 +78,8 @@
 
     Dictionary<int, DbColumn> values = new();
     int amountOfPages = 1;
+    string idName = "";
+
     protected override void OnParametersSet()
     {
         foreach (var (dbColumn, index) in ((HotfixDto)PageTab.Dto).DbRow.Columns.WithIndex())
@@ -85,6 +87,21 @@
             values[index] = dbColumn;
         }
         amountOfPages = (values.Count + 15) / 16;
+        idName = ((HotfixDto)PageTab.Dto).DbRow.GetIdName();
         base.OnParametersSet();
+    }
+
+    Action? GetOnIdAdornmentClick(string propertyName)
+    {
+        if (propertyName.Equals(idName))
+        {
+            return OnIdAdornmentClick;
+        }
+        return null;
+    }
+
+    void OnIdAdornmentClick()
+    {
+        
     }
 }

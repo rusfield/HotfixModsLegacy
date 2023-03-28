@@ -95,6 +95,21 @@ namespace HotfixMods.Infrastructure.Extensions
             return value;
         }
 
+        public static string GetIdName(this DbRow dbRow)
+        {
+            string defaultIdPropertyName = "Id";
+            var idColumns = dbRow.Columns.Where(p => p.Name.Equals(defaultIdPropertyName, StringComparison.InvariantCultureIgnoreCase));
+            if (idColumns.Count() > 1)
+                throw new Exception($"DbRow for {dbRow.Db2Name} contains multiple {defaultIdPropertyName} properties.");
+
+            if (idColumns.Count() == 1)
+            {
+                return idColumns.First().Name;
+            }
+
+            throw new Exception($"DbRow for {dbRow.Db2Name} does not contain any {defaultIdPropertyName} properties.");
+        }
+
         public static string GetIdName<T>(this T entity) 
             where T : new()
         {

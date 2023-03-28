@@ -160,6 +160,18 @@
             </ChildContent>
         </MudMenu>
 
+        @* Other Hotfixes *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Other Hotfixes"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Hotfixes))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Hotfixes", typeof(HotfixDashboard))))">My Other Hotfixes</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<HotfixSearchId_Dialog>(new PageTab("", typeof(Hotfixes))))">Search by ID</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
         <MudText Color="Color.Inherit" Typo="Typo.subtitle2" Style="min-width:120px">@hover</MudText>
 
@@ -258,6 +270,8 @@
 
     string FormatTabName(string tabName)
     {
+        if (string.IsNullOrWhiteSpace(tabName))
+            tabName = "NEW TAB";
         tabName = tabName.ToUpper();
         if (tabName.Length > 10)
             tabName = tabName.Substring(0, 8) + "...";

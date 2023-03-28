@@ -48,8 +48,20 @@ namespace HotfixMods.Providers.WowDev.Client
                 throw new Exception("Db2 Name and Build must have a value.");
             }
             db2Name = TrimDb2Name(db2Name);
+            DBDefinition databaseDefinitions;
+            VersionDefinitions versionDefinition;
 
-            var (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, Build);
+            try
+            {
+                // Will crash if definition is missing or does not contain the specified version
+                (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, Build);
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+
+
             var dbRowDefinition = new DbRowDefinition(db2Name);
             foreach (var fieldDefinition in versionDefinition.definitions)
             {

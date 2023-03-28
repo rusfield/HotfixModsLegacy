@@ -1,7 +1,11 @@
 ﻿using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
+using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -15,21 +19,54 @@ namespace HotfixMods.Infrastructure.Services
             VerifiedBuild = appConfig.GenericHotfixSettings.VerifiedBuild;
         }
 
-        public async Task<IEnumerable<DbRow>> GetAsync(string db2Name)
+        public async Task<bool> SaveAsync(HotfixDto dto, Action<string, string, int>? callback = null)
         {
-            return await GetAsync(db2Name);
+            callback = callback ?? DefaultCallback;
+            var progress = LoadingHelper.GetLoaderFunc(14);
+
+            return true;
         }
-        public async Task<DbRow?> GetByIdAsync(string db2Name, int id)
+
+        public async Task<List<HotfixDto>> GetAsync(string db2Name)
         {
-            return await GetSingleAsync(_appConfig.HotfixesSchema, db2Name, false, new DbParameter("id", id));
+            return null;
         }
+
+        public async Task<HotfixDto?> GetByIdAsync(string db2Name, uint id, Action<string, string, int>? callback = null)
+        {
+            callback = callback ?? DefaultCallback;
+            var progress = LoadingHelper.GetLoaderFunc(10);
+
+            try
+            {
+                var dbRow = await GetSingleAsync(_appConfig.HotfixesSchema, db2Name, false, new DbParameter("id", id));
+
+                if (null == dbRow)
+                {
+                    callback.Invoke(LoadingHelper.Loading, $"{db2Name} not found", 100);
+                    return null;
+                }
+                return new HotfixDto()
+                {
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, dbRow.GetIdValue()),
+                    DbRow = dbRow,
+                };
+            }
+            catch (Exception ex)
+            {
+                callback.Invoke("Error", ex.Message, 100);
+                HandleException(ex);
+            }
+            return null;
+        }
+    
 
         public async Task<int> GetNextIdAsync(string db2Name)
         {
             return await base.GetNextIdAsync(db2Name);
         }
 
-        public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
+        public async Task<List<string>> GetDefinitionNamesAsync()
         {
             return await GetClientDefinitionNamesAsync();
         }

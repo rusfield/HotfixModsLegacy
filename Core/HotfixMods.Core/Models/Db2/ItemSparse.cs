@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
-        [Db2Description("The race combination that can equip this item.$There seems to be some special reserved values for All, Any Horde Race and Any Alliance Race. Combining these options with others may not work.")]
+        [Db2Description("Enabling something here will make the item say \"Races: Orc\" or \"Requires any Alliance race\".")]
         public long AllowableRace { get; set; } = -1;
         [LocalizedString]
         public string Description { get; set; } = "";
@@ -66,7 +66,9 @@ namespace HotfixMods.Core.Models.Db2
         public int ContentTuningID { get; set; } = 0;
         public int PlayerLevelToItemLevelCurveID { get; set; } = 0;
         public ushort ItemNameDescriptionID { get; set; } = 0;
+        [Db2Description("Enabling something here will require the selected holiday for this item to be transmogged.")]
         public ushort RequiredTransmogHoliday { get; set; } = 0;
+        [Db2Description("Enabling something here will require the selected holiday for this item to be used.")]
         public ushort RequiredHoliday { get; set; } = 0;
         public ushort GemProperties { get; set; } = 0;
         public ushort SocketMatchEnchantmentID { get; set; } = 0;
@@ -82,6 +84,7 @@ namespace HotfixMods.Core.Models.Db2
         public ushort RequiredSkillRank { get; set; } = 0;
         public ushort RequiredSkill { get; set; } = 0;
         public ushort ItemLevel { get; set; } = 0;
+        [Db2Description("Enabling something here will make the item say \"Classes: Warrior, Paladin, Death Knight\".")]
         public short AllowableClass { get; set; } = -1;
         public byte ArtifactID { get; set; } = 0;
         public byte SpellWeight { get; set; } = 0;

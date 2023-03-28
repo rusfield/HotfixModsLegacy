@@ -1,0 +1,15 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject HotfixService Service
+@inherits PageBase<HotfixDto>
+
+<DtoTabsContent T="HotfixDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<HotfixSearchId_Dialog>())" RequiredTypes="required" />
+
+
+@code {
+    List<Type> required = new()
+    {
+        typeof(DbRow),
+    };
+}

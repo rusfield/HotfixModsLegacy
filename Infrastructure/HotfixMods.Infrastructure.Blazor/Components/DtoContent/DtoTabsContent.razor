@@ -33,7 +33,7 @@
         </MudStack>
     </MudItem>
     <MudItem xs="6">
-        <MudTextField T="string" Value="name" ValueChanged="NameChanged" Variant="Variant.Text" Style="font-size:2.5rem;position:absolute;top:-41px;width:100%;" Class="center-input" Placeholder="@(typeof(T).Name.Replace("Dto", "").ToDisplayName() + "...")" />
+        <MudTextField T="string" Value="hotfixModsEntityName" ValueChanged="NameChanged" Variant="Variant.Text" Style="font-size:2.5rem;position:absolute;top:-41px;width:100%;" Class="center-input" Placeholder="@(typeof(T).Name.Replace("Dto", "").ToDisplayName() + "...")" />
     </MudItem>
     <MudItem xs="3">
         <MudStack Row="true" Justify="Justify.FlexEnd">
@@ -142,8 +142,6 @@
     [Parameter]
     public List<Type> RequiredTypes { get; set;  } = new(); // Which DB2/MySql objects can not be deleted.
 
-    string descriptionTest = "Test";
-
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
@@ -154,7 +152,7 @@
     bool saving = false;
     bool updating = false;
     Content? currentTab = null;
-    string name = "";
+    string hotfixModsEntityName = "";
 
     protected override void OnInitialized()
     {
@@ -162,8 +160,8 @@
 
         InitTabsList(properties);
         currentTab = tabs.FirstOrDefault();
-        name = PageTab.Dto.HotfixModsEntity.Name ?? "";
-        PageTab.TabName = name;
+        hotfixModsEntityName = PageTab.Dto.HotfixModsEntity.Name ?? "";
+        PageTab.TabName = hotfixModsEntityName;
         base.OnInitialized();
     }
 
@@ -416,7 +414,7 @@
 
     void NameChanged(string newName)
     {
-        name = newName ?? "";
+        hotfixModsEntityName = newName ?? "";
         PageTab.TabName = newName ?? "";
         PageTab.Dto.HotfixModsEntity.Name = newName;
         RefreshIndex();

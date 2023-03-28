@@ -1,0 +1,73 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
+
+@inject HotfixService Service
+
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Hotfixes))">
+    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetByIdAsync())" />
+    <MudAutocomplete T="string" Label="DB2" Strict="false" SearchFunc="SearchAsync" @bind-Value="Db2" Variant="Variant.Outlined" MaxItems="9999" />
+</DialogSearch>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public uint? Id { get; set; }
+
+    [Parameter]
+    public string? Db2 { get; set; }
+
+    DialogSearch? dialogSearchRef;
+    List<string> options = new();
+    string? value;
+
+    protected override async Task OnInitializedAsync()
+    {
+        options = await Service.GetDefinitionNamesAsync();
+        await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Id != null)
+        {
+            await GetByIdAsync(true);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GetByIdAsync(bool closeOnFail = false)
+    {
+        if (Id != null)
+        {
+            if (!string.IsNullOrWhiteSpace(Db2))
+            {
+                var data = await Service.GetByIdAsync(Db2!, (uint)Id, dialogSearchRef!.SetLoaderProgress);
+                if (data != null || closeOnFail)
+                {
+                    Dialog.Close(data);
+                }
+                else
+                {
+                    dialogSearchRef.CancelLoaderWithMessage("No DB2 record found.");
+                }
+            }
+            else
+            {
+                dialogSearchRef.CancelLoaderWithMessage("Select a DB2.");
+            }
+        }
+    }
+
+    async Task<IEnumerable<string>> SearchAsync(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return options;
+
+        // Trim
+        input = input.Replace(" ", "");
+        return options.Where(x => x.Contains(input, StringComparison.InvariantCultureIgnoreCase));
+    }
+}

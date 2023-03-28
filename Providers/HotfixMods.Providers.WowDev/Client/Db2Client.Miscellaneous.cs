@@ -292,8 +292,6 @@ namespace HotfixMods.Providers.WowDev.Client
         {
             return await Task.Run(async () =>
             {
-
-
                 var results = new List<string>();
                 var assembly = Assembly.GetExecutingAssembly();
                 string[] resources = assembly.GetManifestResourceNames();

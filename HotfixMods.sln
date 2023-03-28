@@ -34,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Tools.HotfixInit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.TrinityCore", "Providers\HotfixMods.Providers.TrinityCore\HotfixMods.Providers.TrinityCore.csproj", "{35D57F7F-368C-4E10-9F2F-E5C4F421CA20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.Listfile", "Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj", "{908DDF70-D538-41CA-89A8-B3E66801E7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Listfile", "Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj", "{908DDF70-D538-41CA-89A8-B3E66801E7D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

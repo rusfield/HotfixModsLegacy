@@ -19,7 +19,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (Id != null)
+        if (firstRender && Id != null)
         {
             await GetByIdAsync(true);
         }

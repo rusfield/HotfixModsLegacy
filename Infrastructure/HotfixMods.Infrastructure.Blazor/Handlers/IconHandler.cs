@@ -26,6 +26,8 @@ namespace HotfixMods.Infrastructure.Blazor.Handlers
                 return Icons.Material.Filled.Group;
             else if (pageType == typeof(SoundKits))
                 return Icons.Material.Filled.VolumeUp;
+            else if (pageType == typeof(Hotfixes))
+                return Icons.Material.Filled.Workspaces;
             else if (pageType == typeof(Settings))
                 return Icons.Material.Filled.Settings;
             else if (pageType == typeof(Health))

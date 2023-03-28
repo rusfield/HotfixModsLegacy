@@ -188,7 +188,15 @@
                 var tabName = property.Name;
                 var tabType = TryGetTabType(tabName);
                 if (null == tabType)
+                {
                     continue;
+                }
+                if(property.PropertyType == typeof(DbRow))
+                {
+                    // If it is a hotfix tab, change tab name to DB2 name.
+                    // But do it after tabtype is loaded (a couple of lines up).
+                    tabName = ((HotfixDto)PageTab.Dto).DbRow.Db2Name.ToDisplayName();
+                }
                 tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType, PageTab.Dto, GetInstanceData(groupType)));
             }
         }

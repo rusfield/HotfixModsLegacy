@@ -35,20 +35,28 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<HotfixDto?> GetByIdAsync(string db2Name, uint id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(10);
+            var progress = LoadingHelper.GetLoaderFunc(3);
 
             try
             {
-                var dbRow = await GetSingleAsync(_appConfig.HotfixesSchema, db2Name, false, new DbParameter("id", id));
+                var dbRow = await GetSingleAsync(callback, progress, _appConfig.HotfixesSchema, db2Name, false, new DbParameter("id", id));
 
                 if (null == dbRow)
                 {
                     callback.Invoke(LoadingHelper.Loading, $"{db2Name} not found", 100);
                     return null;
                 }
+                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, dbRow.GetIdValue());
+                if (string.IsNullOrWhiteSpace(hotfixModsEntity.Name))
+                {
+                    hotfixModsEntity.Name = db2Name.ToDisplayName();
+                }
+
+                callback.Invoke(LoadingHelper.Loading, $"Loading successful", 100);
+
                 return new HotfixDto()
                 {
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, dbRow.GetIdValue()),
+                    HotfixModsEntity = hotfixModsEntity,
                     DbRow = dbRow,
                 };
             }

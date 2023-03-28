@@ -1,0 +1,90 @@
+﻿@using HotfixMods.Core.Enums.Db2
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Extensions
+
+<PagedDtoContent T="CreatureDisplayInfoOption" IsCustom="true">
+    @for (int i = 0; i < amountOfPages; i++)
+    {
+        int iVal = i;
+        <PagedDtoContentPage>
+            <MudItem xs="3">
+                @for (int j = 0; j < 6; j++)
+                {
+                    int jVal = (16 * iVal) + j;
+                    if (jVal >= values.Count)
+                    {
+                        <Placeholder_Element Amount="1" />
+                    }
+                    else
+                    {
+                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                    }
+                }
+            </MudItem>
+            <MudItem xs="6">
+                <Placeholder_Element Amount="4" />
+
+                @for (int j = 0; j < 4; j++)
+                {
+                    int jVal = (16 * iVal) + 12 + j;
+                    if (j == 1 || j == 3)
+                    {
+                        <InlineGroup Merged="false">
+                            <LeftContent>
+                                @if (jVal - 1 >= values.Count)
+                                {
+                                    <Placeholder_Element Amount="1" />
+                                }
+                                else
+                                {
+                                    <AnonymousInput_Element Type="values[jVal - 1].Type" @bind-Value="values[jVal - 1].Value" Label="@(values[jVal - 1].Name.ToDisplayName())" />
+                                }
+                            </LeftContent>
+                            <RightContent>
+                                @if (jVal >= values.Count)
+                                {
+                                    <Placeholder_Element Amount="1" />
+                                }
+                                else
+                                {
+                                    <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                                }
+                            </RightContent>
+                        </InlineGroup>
+                    }
+                }
+            </MudItem>
+            <MudItem xs="3">
+                @for (int j = 0; j < 6; j++)
+                {
+                    int jVal = (16 * iVal) + 6 + j;
+                    if (jVal >= values.Count)
+                    {
+                        <Placeholder_Element Amount="1" />
+                    }
+                    else
+                    {
+                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" />
+                    }
+                }
+            </MudItem>
+        </PagedDtoContentPage>
+    }
+</PagedDtoContent>
+
+@code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
+    Dictionary<int, DbColumn> values = new();
+    int amountOfPages = 1;
+    protected override void OnParametersSet()
+    {
+        foreach (var (dbColumn, index) in ((HotfixDto)PageTab.Dto).DbRow.Columns.WithIndex())
+        {
+            values[index] = dbColumn;
+        }
+        amountOfPages = (values.Count + 15) / 16;
+        base.OnParametersSet();
+    }
+}

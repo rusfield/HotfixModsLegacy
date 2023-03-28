@@ -4,7 +4,7 @@
 @inject HotfixService Service
 @inherits PageBase<HotfixDto>
 
-<DtoTabsContent T="HotfixDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<HotfixSearchId_Dialog>())" RequiredTypes="required" />
+<DtoTabsContent T="HotfixDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<HotfixSearchId_Dialog>())" RequiredTypes="required"  />
 
 
 @code {

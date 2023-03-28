@@ -1,0 +1,238 @@
+﻿@{
+    if (Type == typeof(sbyte))
+    {
+        <Input_Element T="sbyte" Value="sbyteValue" ValueCompare="sbyteValueCompare" ValueChanged="SByteChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+    }
+    else if (Type == typeof(byte))
+    {
+        <Input_Element T="byte" Value="byteValue" ValueCompare="byteValueCompare" ValueChanged="ByteChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+    }
+    else if (Type == typeof(short))
+    {
+        <Input_Element T="short" Value="shortValue" ValueCompare="shortValueCompare" ValueChanged="ShortChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(ushort))
+    {
+        <Input_Element T="ushort" Value="ushortValue" ValueCompare="ushortValueCompare" ValueChanged="UShortChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(int))
+    {
+        <Input_Element T="int" Value="intValue" ValueCompare="intValueCompare" ValueChanged="IntChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(uint))
+    {
+        <Input_Element T="uint" Value="uintValue" ValueCompare="uintValueCompare" ValueChanged="UIntChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(long))
+    {
+        <Input_Element T="long" Value="longValue" ValueCompare="longValueCompare" ValueChanged="LongChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(ulong))
+    {
+        <Input_Element T="ulong" Value="ulongValue" ValueCompare="ulongValueCompare" ValueChanged="ULongChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(decimal))
+    {
+        <Input_Element T="decimal" Value="decimalValue" ValueCompare="decimalValueCompare" ValueChanged="DecimalChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else if (Type == typeof(string))
+    {
+        <Input_Element T="string" Value="stringValue" ValueCompare="stringValueCompare" ValueChanged="StringChanged" Label="@Label" Variant="Variant" OnIdAdornmentClick="OnIdAdornmentClick" OnInfoAdornmentClick="OnInfoAdornmentClick" OnValueLookupClick="OnValueLookupClick" OnSearchAdornmentClick="OnSearchAdornmentClick" Disabled="Disabled" />
+
+    }
+    else
+    {
+        <Placeholder_Element /> @* Invalid type *@
+    }
+}
+
+
+
+@code
+{
+    [Parameter]
+    public Type Type { get; set; }
+    [Parameter]
+    public object Value { get; set; }
+
+    [Parameter]
+    public object? ValueCompare { get; set; }
+
+    [Parameter]
+    public EventCallback<object?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Outlined;
+
+    [Parameter]
+    public EventCallback OnIdAdornmentClick { get; set; }
+
+    [Parameter]
+    public EventCallback OnInfoAdornmentClick { get; set; }
+
+    [Parameter]
+    public EventCallback OnValueLookupClick { get; set; }
+
+    [Parameter]
+    public EventCallback OnSearchAdornmentClick { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; } = false;
+
+    protected override void OnParametersSet()
+    {
+        if (Type == typeof(sbyte))
+        {
+            sbyteValue = (sbyte)Value;
+            sbyteValueCompare = (sbyte?)ValueCompare;
+        }
+        else if (Type == typeof(byte))
+        {
+            byteValue = (byte)Value;
+            byteValueCompare = (byte?)ValueCompare;
+        }
+        if (Type == typeof(short))
+        {
+            shortValue = (short)Value;
+            shortValueCompare = (short?)ValueCompare;
+        }
+        else if (Type == typeof(ushort))
+        {
+            ushortValue = (ushort)Value;
+            ushortValueCompare = (ushort?)ValueCompare;
+        }
+        if (Type == typeof(int))
+        {
+            intValue = (int)Value;
+            intValueCompare = (int?)ValueCompare;
+        }
+        else if (Type == typeof(uint))
+        {
+            uintValue = (uint)Value;
+            uintValueCompare = (uint?)ValueCompare;
+        }
+        if (Type == typeof(long))
+        {
+            longValue = (long)Value;
+            longValueCompare = (long?)ValueCompare;
+        }
+        else if (Type == typeof(ulong))
+        {
+            ulongValue = (ulong)Value;
+            ulongValueCompare = (ulong?)ValueCompare;
+        }
+        if (Type == typeof(decimal))
+        {
+            decimalValue = (decimal)Value;
+            decimalValueCompare = (decimal?)ValueCompare;
+        }
+        else if (Type == typeof(string))
+        {
+            stringValue = (string)Value;
+            stringValueCompare = (string?)ValueCompare;
+        }
+        base.OnParametersSet();
+    }
+
+    sbyte sbyteValue = 0;
+    byte byteValue = 0;
+    short shortValue = 0;
+    ushort ushortValue = 0;
+    int intValue = 0;
+    uint uintValue = 0;
+    long longValue = 0;
+    ulong ulongValue = 0;
+    decimal decimalValue = 0;
+    string stringValue = "";
+
+    sbyte? sbyteValueCompare = 0;
+    byte? byteValueCompare = 0;
+    short? shortValueCompare = 0;
+    ushort? ushortValueCompare = 0;
+    int? intValueCompare = 0;
+    uint? uintValueCompare = 0;
+    long? longValueCompare = 0;
+    ulong? ulongValueCompare = 0;
+    decimal? decimalValueCompare = 0;
+    string? stringValueCompare = "";
+
+    void SByteChanged(sbyte value)
+    {
+        sbyteValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void ByteChanged(byte value)
+    {
+        byteValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void ShortChanged(short value)
+    {
+        shortValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void UShortChanged(ushort value)
+    {
+        ushortValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void IntChanged(int value)
+    {
+        intValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void UIntChanged(uint value)
+    {
+        uintValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void LongChanged(long value)
+    {
+        longValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void ULongChanged(ulong value)
+    {
+        ulongValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void DecimalChanged(decimal value)
+    {
+        decimalValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+
+    void StringChanged(string value)
+    {
+        stringValue = value;
+        Value = value;
+        ValueChanged.InvokeAsync(value);
+    }
+}

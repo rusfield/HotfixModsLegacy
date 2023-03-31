@@ -1,27 +1,28 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<ItemDto, ItemEffect>
+@inject ItemService Service
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.TriggerType)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.TriggerType)))" GetOptionsAsync_Func="Service.GetTriggerTypeOptionsAsync" />
         <Input_Element T="int" @bind-Value="Value.CoolDownMSec" ValueCompare="ValueCompare?.CoolDownMSec" Label="@nameof(Value.CoolDownMSec).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.CoolDownMSec)))" />
         <Input_Element T="short" @bind-Value="Value.Charges" ValueCompare="ValueCompare?.Charges" Label="@nameof(Value.Charges).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.Charges)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <InlineGroup>
+        <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SpellID" ValueCompare="ValueCompare?.SpellID" Label="@nameof(Value.SpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.SpellID)))" />
+                <Input_Element T="int" @bind-Value="Value.SpellID" ValueCompare="ValueCompare?.SpellID" Label="@nameof(Value.SpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.SpellID)))" GetOptionsAsync_Func="Service.GetSpellIdOptionsAsync" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="ushort" @bind-Value="Value.SpellCategoryID" ValueCompare="ValueCompare?.SpellCategoryID" Label="@nameof(Value.SpellCategoryID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.SpellCategoryID)))" />
+                <Input_Element T="ushort" @bind-Value="Value.SpellCategoryID" ValueCompare="ValueCompare?.SpellCategoryID" Label="@nameof(Value.SpellCategoryID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.SpellCategoryID)))" GetOptionsAsync_Func="Service.GetSpellCategoryIdOptionsAsync" />
             </RightContent>
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="Value.CategoryCoolDownMSec" ValueCompare="ValueCompare?.CategoryCoolDownMSec" Label="@nameof(Value.CategoryCoolDownMSec).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.CategoryCoolDownMSec)))" />
-        <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationID" ValueCompare="ValueCompare?.ChrSpecializationID" Label="@nameof(Value.ChrSpecializationID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.ChrSpecializationID)))" />
+        <Input_Element T="ushort" @bind-Value="Value.ChrSpecializationID" ValueCompare="ValueCompare?.ChrSpecializationID" Label="@nameof(Value.ChrSpecializationID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.ChrSpecializationID)))" GetOptionsAsync_Func="Service.GetChrSpecializationIdOptionsAsync" />
         <Input_Element T="byte" @bind-Value="Value.LegacySlotIndex" ValueCompare="ValueCompare?.LegacySlotIndex" Label="@nameof(Value.LegacySlotIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.LegacySlotIndex)))" />
     </MudItem>
 </InstancedDtoContentPage>

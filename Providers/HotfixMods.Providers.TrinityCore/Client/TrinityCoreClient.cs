@@ -70,6 +70,17 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(ItemSparse.OverallQualityID) => await GetEnumAsync<TKey>(sharedDefines_path, "ItemQualities", "ITEM_QUALITY_"),
                     nameof(ItemSparse.Bonding) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemBondingType"),
                     nameof(ItemSparse.MinReputation) => await GetEnumAsync<TKey>(sharedDefines_path, "ReputationRank", "REP_"),
+                    nameof(ItemSparse.DamageType) => await GetEnumAsync<TKey>(sharedDefines_path, "SpellSchools", "SPELL_SCHOOL_"),
+
+                    _ => new()
+                };
+            }
+            else if(typeof(ItemEffect) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(ItemEffect.TriggerType) => await GetEnumAsync<TKey>(itemTemplate_path, "ItemSpellTriggerType", "ITEM_SPELLTRIGGER_"),
+
                     _ => new()
                 };
             }

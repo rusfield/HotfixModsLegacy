@@ -93,6 +93,15 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
+            else if(typeof(SpellPower) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(SpellPower.PowerType) => await GetEnumAsync<TKey>(sharedDefines_path, "Powers", "POWER_"),
+
+                    _ => new()
+                };
+            }
             else
             {
                 return propertyName switch

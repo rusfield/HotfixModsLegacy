@@ -105,5 +105,32 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
         #endregion
+
+        #region SpellPower
+        public async Task<Dictionary<sbyte, string>> GetPowerTypeOptionsAsync()
+        {
+            var options = await GetEnumOptionsAsync<sbyte>(typeof(SpellPower), nameof(SpellPower.PowerType));
+            return options.SortByKey();
+        }
+
+        public async Task<Dictionary<uint, string>> GetPowerDisplayIdOptionsAsync()
+        {
+            var options = await GetDb2OptionsAsync<uint>("PowerDisplay", "GlobalStringBaseTag");
+            foreach(var option in options)
+                options[option.Key] = option.Value.ToDisplayString();
+
+            return options;
+        }
+
+        public async Task<Dictionary<int, string>> GetAltPowerBarIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<int>("UnitPowerBar", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetRequiredAuraSpellIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<int>("SpellName", "Name");
+        }
+        #endregion
     }
 }

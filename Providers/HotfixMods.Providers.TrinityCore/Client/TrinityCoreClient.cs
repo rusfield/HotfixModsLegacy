@@ -84,6 +84,15 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
+            else if(typeof(SpellAuraOptions) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(SpellAuraOptions.DifficultyID) => await GetEnumAsync<TKey>(dbcEnums_path, "MapTypes", "MAP_"),
+
+                    _ => new()
+                };
+            }
             else
             {
                 return propertyName switch

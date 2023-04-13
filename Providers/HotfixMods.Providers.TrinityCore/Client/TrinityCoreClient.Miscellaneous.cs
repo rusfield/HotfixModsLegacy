@@ -17,6 +17,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
         string unitDefines_path = Path.Combine("src", "server", "game", "Entities", "Unit", "UnitDefines.h");
         string player_path = Path.Combine("src", "server", "game", "Entities", "Player", "Player.h");
         string itemTemplate_path = Path.Combine("src", "server", "game", "Entities", "Item", "ItemTemplate.h");
+        string dbcEnums_path = Path.Combine("src", "server", "game", "DataStores", "DBCEnums.h");
 
         bool Equal(string input1, string input2)
         {
@@ -34,7 +35,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 else if (word.Length == 1)
                     result += $"{word.ToString().ToUpper()} ";
             }
-            return result;
+            return result.Trim();
         }
 
         bool ValueIsValid(string input)

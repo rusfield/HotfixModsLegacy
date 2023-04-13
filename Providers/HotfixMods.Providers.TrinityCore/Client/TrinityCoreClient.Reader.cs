@@ -89,7 +89,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                         var compareEnumLine = $"enum {enumName}";
                         var compareEnumClassLine = $"enum class {enumName}";
                         var lineCompare = line.Split(':')[0].Trim();
-                        if (lineCompare.Equals(compareEnumLine, StringComparison.InvariantCultureIgnoreCase) || lineCompare.Equals(compareEnumClassLine, StringComparison.InvariantCultureIgnoreCase))
+                        if (lineCompare.StartsWith(compareEnumLine, StringComparison.InvariantCultureIgnoreCase) || lineCompare.StartsWith(compareEnumClassLine, StringComparison.InvariantCultureIgnoreCase))
                             enumFound = true;
                     }
                 }

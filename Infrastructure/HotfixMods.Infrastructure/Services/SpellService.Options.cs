@@ -69,5 +69,41 @@ namespace HotfixMods.Infrastructure.Services
             return Enum.GetValues<SpellMiscSchoolMask>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
         }
         #endregion
+
+        #region SpellAuraOptions
+        public async Task<Dictionary<ushort, string>> GetSpellProcsPerMinuteIdOptionsAsync()
+        {
+            var options = await GetDb2OptionsAsync<ushort>("SpellProcsPerMinute", "BaseProcRate");
+            foreach(var option in options.Where(o => o.Key != 0))
+            {
+                options[option.Key] = $"Rate: {options[option.Key]}";
+            }
+            return options;
+        }
+
+        public async Task<Dictionary<byte, string>> GetDifficultyIdOptionsAsync()
+        {
+            var results = new Dictionary<byte, string>();
+            results[0] = "None";
+            var mapTypes = await GetEnumOptionsAsync<byte>(typeof(SpellAuraOptions), nameof(SpellAuraOptions.DifficultyID));
+            var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty", false, true);
+
+            foreach(var difficulty in difficulties)
+            {
+                var instanceType = difficulty.GetValueByNameAs<byte>("InstanceType");
+                var name = difficulty.GetValueByNameAs<string>("Name");
+                if (mapTypes.ContainsKey(instanceType))
+                {
+                    var mapType = mapTypes[instanceType] ?? "";
+                    name = name.Replace(mapType, "", StringComparison.InvariantCultureIgnoreCase);
+                    name = $"{name} {mapType}";
+                }
+
+                results.Add((byte)difficulty.GetIdValue(), name);
+            }
+
+            return results;
+        }
+        #endregion
     }
 }

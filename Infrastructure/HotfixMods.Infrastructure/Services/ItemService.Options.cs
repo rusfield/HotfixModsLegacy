@@ -3,6 +3,7 @@ using HotfixMods.Core.Enums.TrinityCore;
 using HotfixMods.Core.Flags.Db2;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
+using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.Listfile;
 
@@ -232,6 +233,46 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetSocketMatchEnchantmentIdOptionsAsync()
         {
             return await GetDb2OptionsAsync<ushort>("SpellItemEnchantment", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetStartQuestIdOptionsAsync()
+        {
+            // TODO: Check if this can be retrieved from TC tables
+            return new();
+        }
+
+        // TODO: Look for a better source
+        public async Task<Dictionary<byte, string>> GetDamageTypeOptionsAsync()
+        {
+            var results = new Dictionary<byte, string>();
+            var schoolOptions = await GetEnumOptionsAsync<byte>(typeof(ItemSparse), nameof(ItemSparse.DamageType));
+            for(byte i = 0; i < schoolOptions.Count; i++)
+            {
+                results[i] = schoolOptions.ElementAt(i).Value;
+            }
+            return results;
+        }
+        #endregion
+
+        #region ItemEffect
+        public async Task<Dictionary<sbyte, string>> GetTriggerTypeOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<sbyte>(typeof(ItemEffect), nameof(ItemEffect.TriggerType));
+        }
+
+        public async Task<Dictionary<ushort, string>> GetSpellCategoryIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<ushort>("SpellCategory", "Name");
+        }
+
+        public async Task<Dictionary<ushort, string>> GetChrSpecializationIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<ushort>("ChrCustomization", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetSpellIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<int>("SpellName", "Name");
         }
         #endregion
     }

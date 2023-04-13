@@ -1,33 +1,32 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
+@inject SpellService Service
 @inherits DtoContentBase<SpellDto, SpellPower>
-
 
 <StandardDtoContent T="SpellPower">
     <MudItem xs="3">
-        <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OrderIndex)))" />
+        <Input_Element T="byte" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OrderIndex)))" Disabled="true" />
         <Input_Element T="int" @bind-Value="Value.ManaCost" ValueCompare="ValueCompare?.ManaCost" Label="@nameof(Value.ManaCost).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaCost)))" />
         <Input_Element T="int" @bind-Value="Value.ManaCostPerLevel" ValueCompare="ValueCompare?.ManaCostPerLevel" Label="@nameof(Value.ManaCostPerLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaCostPerLevel)))" />
         <Input_Element T="int" @bind-Value="Value.ManaPerSecond" ValueCompare="ValueCompare?.ManaPerSecond" Label="@nameof(Value.ManaPerSecond).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.ManaPerSecond)))" />
-        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellID" ValueCompare="ValueCompare?.RequiredAuraSpellID" Label="@nameof(Value.RequiredAuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.RequiredAuraSpellID)))" />
+        <Input_Element T="int" @bind-Value="Value.RequiredAuraSpellID" ValueCompare="ValueCompare?.RequiredAuraSpellID" Label="@nameof(Value.RequiredAuraSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.RequiredAuraSpellID)))" GetOptionsAsync_Func="Service.GetRequiredAuraSpellIdOptionsAsync" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
+        <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" GetOptionsAsync_Func="GetPowerTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerType)))" />
-
+                <Input_Element T="sbyte" @bind-Value="Value.PowerType" ValueCompare="ValueCompare?.PowerType" Label="@nameof(Value.PowerType).ToDisplayName()" GetOptionsAsync_Func="Service.GetPowerTypeOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerType)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
-        <InlineGroup>
+        <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.AltPowerBarID" ValueCompare="ValueCompare?.AltPowerBarID" Label="@nameof(Value.AltPowerBarID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.AltPowerBarID)))" />
+                <Input_Element T="int" @bind-Value="Value.AltPowerBarID" ValueCompare="ValueCompare?.AltPowerBarID" Label="@nameof(Value.AltPowerBarID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.AltPowerBarID)))" GetOptionsAsync_Func="Service.GetAltPowerBarIdOptionsAsync" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="uint" @bind-Value="Value.PowerDisplayID" ValueCompare="ValueCompare?.PowerDisplayID" Label="@nameof(Value.PowerDisplayID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerDisplayID)))" />
+                <Input_Element T="uint" @bind-Value="Value.PowerDisplayID" ValueCompare="ValueCompare?.PowerDisplayID" Label="@nameof(Value.PowerDisplayID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.PowerDisplayID)))" GetOptionsAsync_Func="Service.GetPowerDisplayIdOptionsAsync"/>
             </RightContent>
         </InlineGroup>
     </MudItem>
@@ -39,12 +38,3 @@
         <Input_Element T="decimal" @bind-Value="Value.OptionalCostPct" ValueCompare="ValueCompare?.OptionalCostPct" Label="@nameof(Value.OptionalCostPct).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellPower.OptionalCostPct)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-
-    async Task<Dictionary<sbyte, string>> GetPowerTypes()
-    {
-        return Enum.GetValues<SpellPowerPowerType>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-}

@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
+@inject SpellService Service
 @inherits DtoContentBase<SpellDto, SpellAuraOptions>
 
 <StandardDtoContent T="SpellAuraOptions" >
@@ -11,8 +12,8 @@
     </MudItem>
     <MudItem xs="6" />
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteID" ValueCompare="ValueCompare?.SpellProcsPerMinuteID" Label="@nameof(Value.SpellProcsPerMinuteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.SpellProcsPerMinuteID)))" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.DifficultyID)))" />
+        <Input_Element T="ushort" @bind-Value="Value.SpellProcsPerMinuteID" ValueCompare="ValueCompare?.SpellProcsPerMinuteID" Label="@nameof(Value.SpellProcsPerMinuteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.SpellProcsPerMinuteID)))" GetOptionsAsync_Func="Service.GetSpellProcsPerMinuteIdOptionsAsync" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.DifficultyID)))" GetOptionsAsync_Func="Service.GetDifficultyIdOptionsAsync" />
         <Input_Element T="int" @bind-Value="Value.ProcTypeMask0" ValueCompare="ValueCompare?.ProcTypeMask0" Label="@nameof(Value.ProcTypeMask0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcTypeMask0)))" />
         <Input_Element T="int" @bind-Value="Value.ProcTypeMask1" ValueCompare="ValueCompare?.ProcTypeMask1" Label="@nameof(Value.ProcTypeMask1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellAuraOptions.ProcTypeMask1)))" />
     </MudItem>

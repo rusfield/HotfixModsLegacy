@@ -24,22 +24,22 @@ using HotfixMods.Core.Enums;
 
 // TODO: Change to 10.0.7???
 var client = new Db2Client("10.0.5.47871");
-var path = @"C:\Program Files (x86)\World of Warcraft\dbc\enUS";
-var outputPath = Path.Combine("C:", "customizations");
-int choiceStartId = 100000;
-int elementStartId = 200000;
-int hotfixStartId = -1;
+var path = @"D:\TrinityCore\Dragonflight\dbc\enUS";
+var outputPath = @"D:\TrinityCore\Customizations";
+int choiceStartId = 33000;
+int elementStartId = 120000;
+int hotfixStartId = 901000000;
 int verifiedBuild = -1340;
 
 // Race, orderIndexFrom, orderIndexTo
 List<(ChrModelId, int, int)> excluded = new() {
-    (ChrModelId.WORGEN_MALE, 0, 9999),
+    //(ChrModelId.WORGEN_MALE, 0, 9999),
     //(ChrModelId.COMPANION_DRAKE, 0, 9999),
     (ChrModelId.COMPANION_PROTODRAGON, 0, 9999),
     (ChrModelId.COMPANION_PTERRODAX, 0, 9999),
     (ChrModelId.COMPANION_SERPENT, 0, 9999),
     (ChrModelId.COMPANION_WYVERN, 0, 9999),
-    (ChrModelId.DRACTHYR_DRAGON, 0, 9999)
+    //ChrModelId.DRACTHYR_DRAGON, 0, 9999)
 };
 
 string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 146, 0, {3}, {3}, 0, 90001, 0, 0, " + verifiedBuild + ");";
@@ -114,7 +114,8 @@ foreach (var eyeOption in eyeOptions)
     var model = (ChrModelId)eyeOption.GetValueByNameAs<int>("ChrModelID");
     var modelName = model.ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase);
 
-    foreach (var elements in elementData.Where(k => k.Key != (int)model))
+    // foreach (var elements in elementData.Where(k => k.Key != (int)model))
+    foreach (var elements in elementData)
     {
         int number = 1;
         int orderIndex = 1000;

@@ -198,13 +198,13 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, params T[] entities)
             where T : new()
         {
-            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            callback.Invoke(LoadingHelper.Saving, $"Saving {typeof(T).Name}", progress());
             await SaveAsync(entities);
         }
         protected async Task SaveAsync<T>(Action<string, string, int> callback, Func<int> progress, List<T> entities)
             where T : new()
         {
-            callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
+            callback.Invoke(LoadingHelper.Saving, $"Saving {typeof(T).Name}", progress());
             await SaveAsync(entities.ToArray());
         }
 
@@ -219,6 +219,12 @@ namespace HotfixMods.Infrastructure.Services
         {
             if (entities.Any())
                 await SaveAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, entities.Where(e => e != null).EntitiesToDbRows().ToArray());
+        }
+
+        protected async Task SaveAsync(Action<string, string, int> callback, Func<int> progress, string schemaName, string db2Name, params DbRow[] dbRows)
+        {
+            callback.Invoke(LoadingHelper.Saving, $"Saving {db2Name}", progress());
+            await SaveAsync(schemaName, db2Name, dbRows);
         }
 
         protected async Task SaveAsync(string schemaName, string db2Name, params DbRow[] dbRows)

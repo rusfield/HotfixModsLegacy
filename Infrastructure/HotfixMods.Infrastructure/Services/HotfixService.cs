@@ -35,7 +35,7 @@ namespace HotfixMods.Infrastructure.Services
             await SetIdAndVerifiedBuild(dto);
 
             await SaveAsync(callback, progress, dto.HotfixModsEntity);
-            await SaveAsync(callback, progress, dto.DbRow);
+            await SaveAsync(callback, progress, _appConfig.HotfixesSchema, dto.DbRow.Db2Name, dto.DbRow);
 
                 callback.Invoke("Saving", "Saving successful", 100);
                 dto.IsUpdate = true;

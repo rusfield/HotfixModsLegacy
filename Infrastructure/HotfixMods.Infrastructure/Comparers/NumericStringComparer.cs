@@ -7,8 +7,9 @@ namespace HotfixMods.Infrastructure.Comparers
         public int Compare(string x, string y)
         {
             // Extract the number from each string using a regular expression
-            int xNum = int.Parse(Regex.Match(x, "(\\d+)").Value);
-            int yNum = int.Parse(Regex.Match(y, "(\\d+)").Value);
+            int xNum, yNum = 0;
+            int.TryParse(Regex.Match(x, "(\\d+)").Value, out xNum);
+            int.TryParse(Regex.Match(y, "(\\d+)").Value, out yNum);
 
             // Compare the numbers using the default comparer
             return Comparer<int>.Default.Compare(xNum, yNum);

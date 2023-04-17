@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Models.Db2;
+﻿using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
 
@@ -24,6 +25,18 @@ namespace HotfixMods.Infrastructure.Services
             }
             return results;
         }
+
+        #region CreatureTemplate
+        public async Task<Dictionary<string, string>> GetAiNameOptionsAsync()
+        {
+            return Enum.GetValues<CreatureTemplateAiNames>().ToDictionary(key => key.ToString(), value => value.ToString());
+        }
+
+        public async Task<Dictionary<string, string>> GetIconNameOptionsAsync()
+        {
+            return Enum.GetValues<IconNames>().ToDictionary(key => key.ToString(), value => value.ToString());
+        }
+        #endregion
 
         public async Task<Dictionary<uint, string>> GetFlagsExtraOptionsAsync()
         {

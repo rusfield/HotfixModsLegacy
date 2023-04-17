@@ -1,6 +1,6 @@
 ﻿namespace HotfixMods.Core.Enums.TrinityCore
 {
-    public enum CreatureTemplateAiName
+    public enum CreatureTemplateAiNames
     {
         NullAI,
         AggressorAI,

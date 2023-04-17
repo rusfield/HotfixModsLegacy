@@ -1,6 +1,6 @@
 ﻿namespace HotfixMods.Core.Enums.TrinityCore
 {
-    public enum CreatureTemplateIconName
+    public enum IconNames
     {
         Directions,
         Gunner,

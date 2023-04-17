@@ -50,7 +50,7 @@ namespace HotfixMods.Core.Models
         public int Data33 { get; set; } = 0;
         public int Data34 { get; set; } = 0;
         public int ContentTuningID { get; set; } = 0;
-        public string AIName { get; set; } = "";
+        public string AIName { get; set; } = "SmartGameObjectAI";
         public string ScriptName { get; set; } = "";
         public int VerifiedBuild { get; set; } = -1;
     }

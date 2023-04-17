@@ -1,4 +1,5 @@
 ﻿using HotfixMods.Core.Interfaces;
+using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using System.Security.Cryptography.X509Certificates;
@@ -98,6 +99,15 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 return propertyName switch
                 {
                     nameof(SpellPower.PowerType) => await GetEnumAsync<TKey>(sharedDefines_path, "Powers", "POWER_"),
+
+                    _ => new()
+                };
+            }
+            else if(typeof(GameobjectTemplate) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(GameobjectTemplate.Type) => await GetEnumAsync<TKey>(sharedDefines_path, "GameobjectTypes", "GAMEOBJECT_TYPE_"),
 
                     _ => new()
                 };

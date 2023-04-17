@@ -56,6 +56,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 dto.ItemSparse.Material = dto.Item.Material;
                 dto.ItemSparse.InventoryType = dto.Item.InventoryType;
+                dto.ItemSparse.SheatheType = dto.Item.SheatheType;
             }
                 
 

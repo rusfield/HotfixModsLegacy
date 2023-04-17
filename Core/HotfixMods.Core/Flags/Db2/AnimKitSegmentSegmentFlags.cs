@@ -3,7 +3,6 @@
     [Flags]
     public enum AnimKitSegmentSegmentFlags : ushort
     {
-        UNK_0 = 0,
         UNK_1 = 1,
         ENABLE_VARIATIONS = 2,
         UNK_4 = 4,

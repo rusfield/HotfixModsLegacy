@@ -105,7 +105,7 @@ else
             // No changes
             return;
         }
-        
+
         bool valueIsAddedAndExclusive = valueIsAdded && exclusiveSelectValues.Any(e => e.ToString() == newValues.Except(selectedValues).First().ToString());
 
         if (valueIsAddedAndExclusive)
@@ -117,7 +117,7 @@ else
         }
         else
         {
-            
+
 
             selectedValues = newValues.Except(exclusiveSelectValues).ToList();
             if (valueIsSigned)
@@ -205,6 +205,12 @@ else
         if (GetExclusiveOptionsAsync_Func != null)
             exclusiveSelectValues = await GetExclusiveOptionsAsync_Func.Invoke();
 
+        if(!exclusiveSelectValues.Any(v => v.ToString() == "0"))
+        {
+            var defaultValue = (T)Convert.ChangeType("0", typeof(T));
+            exclusiveSelectValues.Add(defaultValue);
+        }
+
         // Init undefined values, in case they exist but are are just not yet supported by app
         if (typeof(T).IsPrimitive && typeof(T).IsValueType)
         {
@@ -217,10 +223,10 @@ else
 
             if (!options.ContainsKey(default(T)))
             {
-                options[default(T)] = "0 ➜ (Undefined)";
+                options[default(T)] = "0 ➜ None";
                 zeroIsDefined = false;
             }
-            
+
             do
             {
                 var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
@@ -234,6 +240,7 @@ else
                     if (!options.ContainsKey(negativeKey))
                     {
                         options[negativeKey] = $"{negativeKey} ➜ (Undefined)";
+                        exclusiveSelectValues.Add(negativeKey);
                     }
                     signedItterationValue *= 2;
                 }
@@ -247,7 +254,9 @@ else
 
     string GetOptionStyle(KeyValuePair<T, string> option)
     {
-        if (option.Value.Contains("(Undefined)"))
+        if (option.Key.ToString().StartsWith("-") && option.Value.Contains("(Undefined)"))
+            return "color:#0D47A1 !important"; // primary, Darken4 version
+        else if (option.Value.Contains("(Undefined)"))
             return "color:var(--mud-palette-action-disabled) !important";
         else if (exclusiveSelectValues.Contains(option.Key))
             return "color:var(--mud-palette-info) !important";

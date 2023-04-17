@@ -92,8 +92,9 @@ namespace HotfixMods.Core.Models.Db2
         public byte SocketType0 { get; set; } = 0;
         public byte SocketType1 { get; set; } = 0;
         public byte SocketType2 { get; set; } = 0;
+        [Db2Description("Set this value on Item.")]
         public byte SheatheType { get; set; } = 0;
-        [Db2Description("Set this value in Item tab.")]
+        [Db2Description("Set this value on Item.")]
         public byte Material { get; set; } = 0;
         public byte PageMaterialID { get; set; } = 0;
         public byte Bonding { get; set; } = 0;
@@ -112,7 +113,7 @@ namespace HotfixMods.Core.Models.Db2
         public byte RequiredPVPMedal { get; set; } = 0;
         public byte RequiredPVPRank { get; set; } = 0;
         public sbyte RequiredLevel { get; set; } = 0;
-        [Db2Description("Set this value in Item tab.")]
+        [Db2Description("Set this value on Item.")]
         public sbyte InventoryType { get; set; } = 0;
         public sbyte OverallQualityID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;

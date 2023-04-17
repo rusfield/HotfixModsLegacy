@@ -225,7 +225,7 @@
             <Input_Element T="byte" @bind-Value="@(Value.DamageType)" Label="@(nameof(Value.DamageType).ToDisplayName())" ValueCompare="ValueCompare?.DamageType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DamageType)))" GetOptionsAsync_Func="Service.GetDamageTypeOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="@(Value.DmgVariance)" Label="@(nameof(Value.DmgVariance).ToDisplayName())" ValueCompare="ValueCompare?.DmgVariance" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DmgVariance)))" />
             <Input_Element T="decimal" @bind-Value="@(Value.ItemRange)" Label="@(nameof(Value.ItemRange).ToDisplayName())" ValueCompare="ValueCompare?.ItemRange" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemRange)))" />
-            <Input_Element T="byte" @bind-Value="@(Value.SheatheType)" Label="@(nameof(Value.SheatheType).ToDisplayName())" ValueCompare="ValueCompare?.SheatheType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SheatheType)))" />
+            <Input_Element T="byte" @bind-Value="@(Value.SheatheType)" Label="@(nameof(Value.SheatheType).ToDisplayName())" ValueCompare="ValueCompare?.SheatheType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SheatheType)))" Disabled="true" />
             <Input_Element T="int" @bind-Value="@(Value.StartQuestID)" Label="@(nameof(Value.StartQuestID).ToDisplayName())" ValueCompare="ValueCompare?.StartQuestID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.StartQuestID)))" GetOptionsAsync_Func="Service.GetStartQuestIdOptionsAsync" />
         </MudItem>
         <MudItem xs="6">

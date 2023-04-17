@@ -14,12 +14,12 @@ namespace HotfixMods.Providers.Listfile.Client
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
 
-        Dictionary<(string, string), object> _cache = new();
-        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null)
+        Dictionary<(string, string, Type), object> _cache = new();
+        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null, string? fileType = null)
             where TKey : notnull
         {
-            if (_cache.ContainsKey((filename, partialPath ?? "")))
-                return (Dictionary<TKey, string>)_cache[(filename, partialPath ?? "")];
+            if (_cache.ContainsKey((filename, partialPath ?? "", typeof(TKey))))
+                return (Dictionary<TKey, string>)_cache[(filename, partialPath ?? "", typeof(TKey))];
 
             var results = new Dictionary<TKey, string>();
             results[default(TKey)] = "None";
@@ -44,6 +44,10 @@ namespace HotfixMods.Providers.Listfile.Client
                             if (!string.IsNullOrWhiteSpace(partialPath) && !value.StartsWith(partialPath, StringComparison.InvariantCultureIgnoreCase))
                                 continue;
 
+                            // Check if the value has the correct fileType.
+                            if (!string.IsNullOrWhiteSpace(fileType) && !value.EndsWith(fileType, StringComparison.InvariantCultureIgnoreCase))
+                                continue;
+
                             value = value.Split('/').Last(); // ability_ambush.blp
                             value = value.Split('.').First(); // ability_ambush
 
@@ -58,7 +62,7 @@ namespace HotfixMods.Providers.Listfile.Client
             });
 
             if (CacheResults)
-                _cache[(filename, partialPath ?? "")] = results;
+                _cache[(filename, partialPath ?? "", typeof(TKey))] = results;
 
             return results;
         }

@@ -282,5 +282,14 @@ namespace HotfixMods.Infrastructure.Services
             return await GetDb2OptionsAsync<int>("SpellName", "Name");
         }
         #endregion
+
+        #region ItemDisplayInfoMaterialRes
+
+        public async Task<Dictionary<int, string>> GetMaterialResourceIdOptionsAsync()
+        {
+            return await GetMaterialResourceOptionsAsync<int>();
+        }
+
+        #endregion
     }
 }

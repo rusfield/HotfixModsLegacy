@@ -10,9 +10,16 @@ namespace HotfixMods.Providers.Listfile.Client
     public partial class ListfileClient : IListfileProvider
     {
         public bool CacheResults { get; set; } = true;
-        public async Task<Dictionary<TKey, string>> GetIconsAsync<TKey>() where TKey : notnull
+        public async Task<Dictionary<TKey, string>> GetIconsAsync<TKey>() 
+            where TKey : notnull
         {
-            return await ReadFileAsync<TKey>("interface", "interface/icons");
+            return await ReadFileAsync<TKey>("interface", "interface/icons", "blp");
+        }
+
+        public async Task<Dictionary<TKey, string>> GetItemTexturesAsync<TKey>()
+            where TKey: notnull
+        {
+            return await ReadFileAsync<TKey>("item", "item", "blp");
         }
     }
 }

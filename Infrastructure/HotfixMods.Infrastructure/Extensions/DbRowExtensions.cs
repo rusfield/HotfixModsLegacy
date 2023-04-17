@@ -80,7 +80,14 @@ namespace HotfixMods.Infrastructure.Extensions
 
         public static int GetIdValue(this DbRow dbRow)
         {
-            var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase));
+            string idName = "id";
+            // TODO: Do something smarter here...
+            if(dbRow.Db2Name.Equals("TextureFileData", StringComparison.InvariantCultureIgnoreCase))
+            {
+                idName = "filedataid";
+            }
+
+            var idColumn = dbRow.Columns.FirstOrDefault(c => c.Name.Equals(idName, StringComparison.InvariantCultureIgnoreCase));
             if (int.TryParse(idColumn?.Value?.ToString(), out int id))
             {
                 return id;

@@ -117,6 +117,24 @@ namespace HotfixMods.Infrastructure.Services
 
             return results;
         }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetMaterialResourceOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            var results = new Dictionary<TOptionKey, string>();
+            var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
+            var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
+
+            foreach (var data in textureFileData)
+            {
+                var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
+                var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
+                if (textureFiles.ContainsKey(fileDataId))
+                    results[materialResourceId] = textureFiles[fileDataId];
+            }
+
+            return results;
+        }
         #endregion
     }
 }

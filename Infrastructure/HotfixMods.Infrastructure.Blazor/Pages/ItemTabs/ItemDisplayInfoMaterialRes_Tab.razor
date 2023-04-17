@@ -1,9 +1,11 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
+@inject ItemService Service
+
 <CustomDtoContent>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="armUpper.MaterialResourcesID" ValueCompare="armUpperCompare?.MaterialResourcesID" Label="Arms Upper" />
+        <Input_Element T="int" @bind-Value="armUpper.MaterialResourcesID" ValueCompare="armUpperCompare?.MaterialResourcesID" Label="Arms Upper" GetOptionsAsync_Func="Service.GetMaterialResourceIdOptionsAsync" />
         <Input_Element T="int" @bind-Value="armLower.MaterialResourcesID" ValueCompare="armLowerCompare?.MaterialResourcesID" Label="Arms Lower" />
         <Input_Element T="int" @bind-Value="hands.MaterialResourcesID" ValueCompare="handsCompare?.MaterialResourcesID" Label="Hands" />
     </MudItem>

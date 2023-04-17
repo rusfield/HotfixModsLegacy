@@ -12,8 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Listfiles\interface.csv" />
-    <EmbeddedResource Include="Listfiles\sound.csv" />
+    <EmbeddedResource Include="Listfiles\**\*.*" />
   </ItemGroup>
 
   <ItemGroup>

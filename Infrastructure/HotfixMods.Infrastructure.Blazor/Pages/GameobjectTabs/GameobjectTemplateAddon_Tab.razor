@@ -1,12 +1,13 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Flags.TrinityCore
 
+@inject GameobjectService Service
 @inherits DtoContentBase<GameobjectDto, GameobjectTemplateAddon>
 
 <StandardDtoContent T="GameobjectTemplateAddon" >
     <MudItem xs="3">
-        <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Faction)))" />
-        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Flags)))" GetOptionsAsync_Func="GetFlags" MultiSelection="true" />
+        <Input_Element T="ushort" @bind-Value="@(Value.Faction)" Label="@(nameof(Value.Faction).ToDisplayName())" ValueCompare="ValueCompare?.Faction" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Faction)))" GetOptionsAsync_Func="Service.GetFactionOptionsAsync" />
+        <Input_Element T="uint" @bind-Value="@(Value.Flags)" Label="@(nameof(Value.Flags).ToDisplayName())" ValueCompare="ValueCompare?.Flags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Flags)))" GetOptionsAsync_Func="Service.GetFlagsOptionsAsync" MultiSelection="true" />
         <Input_Element T="uint" @bind-Value="@(Value.WorldEffectID)" Label="@(nameof(Value.WorldEffectID).ToDisplayName())" ValueCompare="ValueCompare?.WorldEffectID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.WorldEffectID)))" />
         <Input_Element T="uint" @bind-Value="@(Value.AiAnimKitID)" Label="@(nameof(Value.AiAnimKitID).ToDisplayName())" ValueCompare="ValueCompare?.AiAnimKitID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.AiAnimKitID)))" />
     </MudItem>
@@ -19,11 +20,3 @@
         <Input_Element T="int" @bind-Value="@(Value.Artkit4)" Label="@(nameof(Value.Artkit4).ToDisplayName())" ValueCompare="ValueCompare?.Artkit4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplateAddon.Artkit4)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-
-    async Task<Dictionary<uint, string>> GetFlags()
-    {
-        return Enum.GetValues<GameObjectTemplateAddonFlags>().ToDictionary(key => (uint)key, value => value.ToDisplayString());
-    }
-}

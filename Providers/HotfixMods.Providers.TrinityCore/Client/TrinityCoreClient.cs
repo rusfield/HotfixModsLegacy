@@ -112,6 +112,15 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
+            else if(typeof(GameobjectTemplateAddon) == modelType)
+            {
+                return propertyName switch
+                {
+                    nameof(GameobjectTemplateAddon.Flags) => await GetEnumAsync<TKey>(sharedDefines_path, "GameObjectFlags", "GO_FLAG_"),
+
+                    _ => new()
+                };
+            }
             else
             {
                 return propertyName switch

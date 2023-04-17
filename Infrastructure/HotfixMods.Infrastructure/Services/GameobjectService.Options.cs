@@ -24,5 +24,17 @@ namespace HotfixMods.Infrastructure.Services
         }
 
         #endregion
+
+        #region GameobjectTemplateAddon
+        public async Task<Dictionary<ushort, string>> GetFactionOptionsAsync()
+        {
+            return await GetFactionOptionsAsync<ushort>();
+        }
+
+        public async Task<Dictionary<uint, string>> GetFlagsOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<uint>(typeof(GameobjectTemplateAddon), nameof(GameobjectTemplateAddon.Flags));
+        }
+        #endregion
     }
 }

@@ -8,7 +8,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
 {
     public partial class TrinityCoreClient
     {
-        Dictionary<(string, string), object> _cache = new();
+        Dictionary<(string, string, Type), object> _cache = new();
 
         /// <summary>
         /// Get the enum values from TrinityCore source code as a C# Dictionary.
@@ -21,8 +21,8 @@ namespace HotfixMods.Providers.TrinityCore.Client
         async Task<Dictionary<TKey, string>> GetEnumAsync<TKey>(string filePath, string enumName, params string[] enumStringValueRemoves)
             where TKey : notnull
         {
-            if (_cache.ContainsKey((filePath, enumName)))
-                return (Dictionary<TKey, string>)_cache[(filePath, enumName)];
+            if (_cache.ContainsKey((filePath, enumName, typeof(TKey))))
+                return (Dictionary<TKey, string>)_cache[(filePath, enumName, typeof(TKey))];
 
             var results = new Dictionary<TKey, string>();
             /*
@@ -95,7 +95,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 }
 
                 if (CacheResults)
-                    _cache[(filePath, enumName)] = results;
+                    _cache[(filePath, enumName, typeof(TKey))] = results;
             }
 
             return results;

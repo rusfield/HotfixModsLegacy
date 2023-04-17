@@ -30,7 +30,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetIconFileDataIdOptionsAsync()
         {
-            return await _listfileProvider.GetIconsAsync<int>();
+            return await GetIconFileDataIdOptionsAsync<int>();
         }
 
         public async Task<Dictionary<byte, string>> GetItemClassOptionsAsync()
@@ -253,6 +253,11 @@ namespace HotfixMods.Infrastructure.Services
                 results[i] = schoolOptions.ElementAt(i).Value;
             }
             return results;
+        }
+
+        public async Task<Dictionary<int, string>> GetLanguageIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<int>("Languages", "Name");
         }
         #endregion
 

@@ -281,7 +281,7 @@
                 <RightContent>
                     <InlineGroup Merged="false" DefaultPadding="false">
                         <MiddleContent>
-                            <Input_Element T="int" @bind-Value="@(Value.LanguageID)" Label="@(nameof(Value.LanguageID).ToDisplayName())" ValueCompare="ValueCompare?.LanguageID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.LanguageID)))" />
+                            <Input_Element T="int" @bind-Value="@(Value.LanguageID)" Label="@(nameof(Value.LanguageID).ToDisplayName())" ValueCompare="ValueCompare?.LanguageID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.LanguageID)))" GetOptionsAsync_Func="Service.GetLanguageIdOptionsAsync" />
                         </MiddleContent>
                     </InlineGroup>
                 </RightContent>

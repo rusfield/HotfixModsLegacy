@@ -1,4 +1,6 @@
-﻿using HotfixMods.Infrastructure.Extensions;
+﻿using HotfixMods.Core.Models.Db2;
+using HotfixMods.Core.Models.TrinityCore;
+using HotfixMods.Infrastructure.Extensions;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -81,6 +83,37 @@ namespace HotfixMods.Infrastructure.Services
                     results.Add(key, displayName);
                 }
             });
+
+            return results;
+        }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetIconFileDataIdOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            return await _listfileProvider.GetIconsAsync<TOptionKey>();
+        }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetDifficultyIdOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            var results = new Dictionary<TOptionKey, string>();
+            results[default(TOptionKey)] = "None";
+            var mapTypes = await GetEnumOptionsAsync<byte>(typeof(SpellAuraOptions), nameof(SpellAuraOptions.DifficultyID));
+            var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty", false, true);
+
+            foreach (var difficulty in difficulties)
+            {
+                var instanceType = difficulty.GetValueByNameAs<byte>("InstanceType");
+                var name = difficulty.GetValueByNameAs<string>("Name");
+                if (mapTypes.ContainsKey(instanceType))
+                {
+                    var mapType = mapTypes[instanceType] ?? "";
+                    name = name.Replace(mapType, "", StringComparison.InvariantCultureIgnoreCase);
+                    name = $"{name} {mapType}";
+                }
+
+                results.Add((TOptionKey)Convert.ChangeType(difficulty.GetIdValue().ToString(), typeof(TOptionKey)), name);
+            }
 
             return results;
         }

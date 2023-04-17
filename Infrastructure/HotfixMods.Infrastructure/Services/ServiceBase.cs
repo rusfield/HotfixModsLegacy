@@ -23,8 +23,8 @@ namespace HotfixMods.Infrastructure.Services
         IClientDbProvider _clientDbProvider;
         IServerEnumProvider _serverEnumProvider;
         IExceptionHandler _exceptionHandler;
+        IListfileProvider _listfileProvider;
 
-        protected IListfileProvider _listfileProvider;
         protected AppConfig _appConfig;
 
         public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)

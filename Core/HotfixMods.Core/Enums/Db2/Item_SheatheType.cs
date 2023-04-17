@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace HotfixMods.Core.Enums.Db2
 {
-    public enum ItemSheatheTypes
+    public enum Item_SheatheTypes
     {
         NONE = 0,
-        BACK_FACING_DOWN = 1,
-        BACK_FACING_UP = 2,
-        HIP = 3,
-        SHIELD_AND_BOW = 4,
-        GUN_AND_CROSSBOW = 5,
+        TWO_HANDED_AND_GUNS = 1,
+        STAVES_AND_POLEARMS = 2,
+        ONE_HANDED = 3,
+        SHIELDS_AND_BOWS = 4,
+        CROSSBOWS = 5,
         UNK_6 = 6,
-        INVISIBLE = 7,
+        OFF_HAND = 7,
         FIST_WEAPONS = 8
     }
 }

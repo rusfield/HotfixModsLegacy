@@ -42,7 +42,10 @@
                 else if (word.Length == 1)
                     result += $"{word.ToString().ToUpper()} ";
             }
-            return result.Replace("I D", "ID").Trim();
+            result = result.Replace("I D", "ID");
+            result = result.Replace(" And ", " and ");
+            result = result.Replace(" Or ", " or ");
+            return result.Trim();
         }
     }
 }

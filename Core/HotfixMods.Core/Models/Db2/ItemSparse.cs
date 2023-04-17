@@ -9,6 +9,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ID { get; set; } = 0;
         [Db2Description("Enabling something here will make the item say \"Races: Orc\" or \"Requires any Alliance race\".")]
         public long AllowableRace { get; set; } = -1;
+        [Db2Description("The yellow or golden text in the bottom in the item stats, on some items.")]
         [LocalizedString]
         public string Description { get; set; } = "";
         [LocalizedString]
@@ -17,6 +18,7 @@ namespace HotfixMods.Core.Models.Db2
         public string Display2 { get; set; } = "";
         [LocalizedString]
         public string Display1 { get; set; } = "";
+        [Db2Description("The name of the item.")]
         [LocalizedString]
         public string Display { get; set; } = "";
         public int ExpansionID { get; set; } = 0;

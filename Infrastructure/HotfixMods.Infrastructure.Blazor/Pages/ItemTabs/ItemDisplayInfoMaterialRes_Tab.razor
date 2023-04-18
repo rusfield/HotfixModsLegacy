@@ -5,32 +5,32 @@
 
 <CustomDtoContent>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="armUpper.MaterialResourcesID" ValueCompare="armUpperCompare?.MaterialResourcesID" Label="Arms Upper" GetOptionsAsync_Func="Service.GetMaterialResourceIdOptionsAsync" />
-        <Input_Element T="int" @bind-Value="armLower.MaterialResourcesID" ValueCompare="armLowerCompare?.MaterialResourcesID" Label="Arms Lower" />
-        <Input_Element T="int" @bind-Value="hands.MaterialResourcesID" ValueCompare="handsCompare?.MaterialResourcesID" Label="Hands" />
+        <Input_Element T="int" @bind-Value="armUpper.MaterialResourcesID" ValueCompare="armUpperCompare?.MaterialResourcesID" Label="Arms Upper" GetOptionsAsync_Func="GetOptionsAsync" />
+        <Input_Element T="int" @bind-Value="armLower.MaterialResourcesID" ValueCompare="armLowerCompare?.MaterialResourcesID" Label="Arms Lower" GetOptionsAsync_Func="GetOptionsAsync" />
+        <Input_Element T="int" @bind-Value="hands.MaterialResourcesID" ValueCompare="handsCompare?.MaterialResourcesID" Label="Hands" GetOptionsAsync_Func="GetOptionsAsync" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="torsoUpper.MaterialResourcesID" ValueCompare="torsoUpperCompare?.MaterialResourcesID" Label="Chest Upper" />
+                <Input_Element T="int" @bind-Value="torsoUpper.MaterialResourcesID" ValueCompare="torsoUpperCompare?.MaterialResourcesID" Label="Chest Upper" GetOptionsAsync_Func="GetOptionsAsync" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="torsoLower.MaterialResourcesID" ValueCompare="torsoLowerCompare?.MaterialResourcesID" Label="Chest Lower" />
+                <Input_Element T="int" @bind-Value="torsoLower.MaterialResourcesID" ValueCompare="torsoLowerCompare?.MaterialResourcesID" Label="Chest Lower" GetOptionsAsync_Func="GetOptionsAsync" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false" LeftContentWidth="25" RightContentWidth="25" MiddleContentWidth="50">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="accessory.MaterialResourcesID" ValueCompare="accessoryCompare?.MaterialResourcesID" Label="Accessories" />
+                <Input_Element T="int" @bind-Value="accessory.MaterialResourcesID" ValueCompare="accessoryCompare?.MaterialResourcesID" Label="Accessories" GetOptionsAsync_Func="GetOptionsAsync" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="legUpper.MaterialResourcesID" ValueCompare="legUpperCompare?.MaterialResourcesID" Label="Legs Upper" />
-        <Input_Element T="int" @bind-Value="legLower.MaterialResourcesID" ValueCompare="legLowerCompare?.MaterialResourcesID" Label="Legs Lower" />
-        <Input_Element T="int" @bind-Value="foot.MaterialResourcesID" ValueCompare="footCompare?.MaterialResourcesID" Label="Feet" />
+        <Input_Element T="int" @bind-Value="legUpper.MaterialResourcesID" ValueCompare="legUpperCompare?.MaterialResourcesID" Label="Legs Upper" GetOptionsAsync_Func="GetOptionsAsync" />
+        <Input_Element T="int" @bind-Value="legLower.MaterialResourcesID" ValueCompare="legLowerCompare?.MaterialResourcesID" Label="Legs Lower" GetOptionsAsync_Func="GetOptionsAsync" />
+        <Input_Element T="int" @bind-Value="foot.MaterialResourcesID" ValueCompare="footCompare?.MaterialResourcesID" Label="Feet" GetOptionsAsync_Func="GetOptionsAsync" />
     </MudItem>
 </CustomDtoContent>
 
@@ -41,6 +41,8 @@
     [CascadingParameter(Name = "ValueIsNull")]
     public bool ValueIsNull { get; set; }
 
+    Dictionary<int, string>? options = null;
+    SemaphoreSlim loaderLock = new SemaphoreSlim(1);
 
     ItemDisplayInfoMaterialRes armUpper;
     ItemDisplayInfoMaterialRes armLower;
@@ -127,5 +129,14 @@
             valueList.Add(value);
         }
         return value;
+    }
+
+    async Task<Dictionary<int, string>> GetOptionsAsync()
+    {
+        await loaderLock.WaitAsync();
+        if (null == options)
+            options = await Service.GetMaterialResourceIdOptionsAsync();
+        loaderLock.Release();
+        return options;
     }
 }

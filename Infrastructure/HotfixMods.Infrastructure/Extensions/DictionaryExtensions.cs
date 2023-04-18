@@ -45,6 +45,12 @@ namespace HotfixMods.Infrastructure.Extensions
         public static void ShowKeyInValue<T>(this Dictionary<T, string> dict, string delimiter)
         {
             delimiter = delimiter.Trim();
+
+            // Check if Value already is updated. This can happen if the option dictionary is shared and updated elsewhere.
+            var alreadySet = dict?.FirstOrDefault().Value.Contains(delimiter) ?? false;
+            if (alreadySet)
+                return;
+
             foreach(var key in dict.Keys)
             {
                 if(!key.ToString().Equals(dict[key], StringComparison.InvariantCultureIgnoreCase))

@@ -30,7 +30,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetIconFileDataIdOptionsAsync()
         {
-            return await GetIconFileDataIdOptionsAsync<int>();
+            return await GetIconOptionsAsync<int>();
         }
 
         public async Task<Dictionary<byte, string>> GetItemClassOptionsAsync()

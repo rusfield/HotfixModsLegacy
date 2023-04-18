@@ -1,4 +1,5 @@
-﻿using System.IO.Enumeration;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System.IO.Enumeration;
 using System.Reflection;
 
 namespace HotfixMods.Providers.Listfile.Client
@@ -14,12 +15,12 @@ namespace HotfixMods.Providers.Listfile.Client
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
 
-        Dictionary<(string, string, Type), object> _cache = new();
-        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null, string? fileType = null)
+        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null, string? fileType = null, bool formatValue = true)
             where TKey : notnull
         {
-            if (_cache.ContainsKey((filename, partialPath ?? "", typeof(TKey))))
-                return (Dictionary<TKey, string>)_cache[(filename, partialPath ?? "", typeof(TKey))];
+            string cacheKey = $"{filename}{partialPath}{typeof(TKey).Name}";
+            if (_cache.TryGetValue(cacheKey, out var cachedResults))
+                return (Dictionary<TKey, string>)cachedResults;
 
             var results = new Dictionary<TKey, string>();
             results[default(TKey)] = "None";
@@ -54,7 +55,9 @@ namespace HotfixMods.Providers.Listfile.Client
                             string keyString = line.Split(';')[0]; // 132089
                             var key = (TKey)Convert.ChangeType(keyString, typeof(TKey));
 
-                            value = $"{UnderscoreToCase(value)}";
+                            if(formatValue)
+                                value = $"{UnderscoreToCase(value)}";
+
                             results[key] = value;
                         }
                     }
@@ -62,7 +65,7 @@ namespace HotfixMods.Providers.Listfile.Client
             });
 
             if (CacheResults)
-                _cache[(filename, partialPath ?? "", typeof(TKey))] = results;
+                _cache.Set(cacheKey, results, _cacheOptions);
 
             return results;
         }

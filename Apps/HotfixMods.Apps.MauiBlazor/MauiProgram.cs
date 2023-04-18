@@ -9,6 +9,7 @@ using HotfixMods.Providers.Listfile.Client;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;

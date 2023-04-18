@@ -83,7 +83,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<byte, string>> GetDifficultyIdOptionsAsync()
         {
-            return await GetDifficultyIdOptionsAsync<byte>();
+            return await GetDifficultyOptionsAsync<byte>();
         }
         #endregion
 

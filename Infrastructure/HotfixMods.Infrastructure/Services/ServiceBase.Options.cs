@@ -62,11 +62,13 @@ namespace HotfixMods.Infrastructure.Services
 
 
         #region Shared Special Options
+
         protected async Task<Dictionary<TOptionKey, string>> GetFactionOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
             results.InitializeDefaultValue();
+
             await Task.Run(async () =>
             {
                 var factions = (await GetAsync(_appConfig.HotfixesSchema, "Faction", false, true)).ToDictionary(k => k.GetIdValue(), v => v.GetValueByNameAs<string>("Name"));
@@ -84,36 +86,41 @@ namespace HotfixMods.Infrastructure.Services
                 }
             });
 
+
             return results;
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetIconFileDataIdOptionsAsync<TOptionKey>()
+        protected async Task<Dictionary<TOptionKey, string>> GetIconOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
             return await _listfileProvider.GetIconsAsync<TOptionKey>();
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetDifficultyIdOptionsAsync<TOptionKey>()
+        protected async Task<Dictionary<TOptionKey, string>> GetDifficultyOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            results[default(TOptionKey)] = "None";
-            var mapTypes = await GetEnumOptionsAsync<byte>(typeof(SpellAuraOptions), nameof(SpellAuraOptions.DifficultyID));
-            var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty", false, true);
+            results.InitializeDefaultValue();
 
-            foreach (var difficulty in difficulties)
+            await Task.Run(async () =>
             {
-                var instanceType = difficulty.GetValueByNameAs<byte>("InstanceType");
-                var name = difficulty.GetValueByNameAs<string>("Name");
-                if (mapTypes.ContainsKey(instanceType))
-                {
-                    var mapType = mapTypes[instanceType] ?? "";
-                    name = name.Replace(mapType, "", StringComparison.InvariantCultureIgnoreCase);
-                    name = $"{name} {mapType}";
-                }
+                var mapTypes = await GetEnumOptionsAsync<byte>(typeof(SpellAuraOptions), nameof(SpellAuraOptions.DifficultyID));
+                var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty", false, true);
 
-                results.Add((TOptionKey)Convert.ChangeType(difficulty.GetIdValue().ToString(), typeof(TOptionKey)), name);
-            }
+                foreach (var difficulty in difficulties)
+                {
+                    var instanceType = difficulty.GetValueByNameAs<byte>("InstanceType");
+                    var name = difficulty.GetValueByNameAs<string>("Name");
+                    if (mapTypes.ContainsKey(instanceType))
+                    {
+                        var mapType = mapTypes[instanceType] ?? "";
+                        name = name.Replace(mapType, "", StringComparison.InvariantCultureIgnoreCase);
+                        name = $"{name} {mapType}";
+                    }
+
+                    results.Add((TOptionKey)Convert.ChangeType(difficulty.GetIdValue().ToString(), typeof(TOptionKey)), name);
+                }
+            });
 
             return results;
         }
@@ -122,16 +129,22 @@ namespace HotfixMods.Infrastructure.Services
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
-            var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
+            results.InitializeDefaultValue();
 
-            foreach (var data in textureFileData)
+            await Task.Run(async () =>
             {
-                var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
-                var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
-                if (textureFiles.ContainsKey(fileDataId))
-                    results[materialResourceId] = textureFiles[fileDataId];
-            }
+                var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
+                var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
+
+                foreach (var data in textureFileData)
+                {
+                    var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
+                    var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
+                    if (textureFiles.ContainsKey(fileDataId))
+                        results[materialResourceId] = textureFiles[fileDataId];
+                }
+            });
+
 
             return results;
         }

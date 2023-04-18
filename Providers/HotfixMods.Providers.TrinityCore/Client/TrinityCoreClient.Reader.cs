@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,6 @@ namespace HotfixMods.Providers.TrinityCore.Client
 {
     public partial class TrinityCoreClient
     {
-        Dictionary<(string, string, Type), object> _cache = new();
-
         /// <summary>
         /// Get the enum values from TrinityCore source code as a C# Dictionary.
         /// </summary>
@@ -21,8 +20,9 @@ namespace HotfixMods.Providers.TrinityCore.Client
         async Task<Dictionary<TKey, string>> GetEnumAsync<TKey>(string filePath, string enumName, params string[] enumStringValueRemoves)
             where TKey : notnull
         {
-            if (_cache.ContainsKey((filePath, enumName, typeof(TKey))))
-                return (Dictionary<TKey, string>)_cache[(filePath, enumName, typeof(TKey))];
+            string cacheKey = $"{filePath}{enumName}{typeof(TKey)}";
+            if (_cache.TryGetValue(cacheKey, out var cachedResults))
+                return (Dictionary<TKey, string>)cachedResults;
 
             var results = new Dictionary<TKey, string>();
             /*
@@ -95,7 +95,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                 }
 
                 if (CacheResults)
-                    _cache[(filePath, enumName, typeof(TKey))] = results;
+                    _cache.Set(cacheKey, results, _cacheOptions);
             }
 
             return results;

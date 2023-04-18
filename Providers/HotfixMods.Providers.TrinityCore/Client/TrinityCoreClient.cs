@@ -2,15 +2,26 @@
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.Security.Cryptography.X509Certificates;
 
 namespace HotfixMods.Providers.TrinityCore.Client
 {
     public partial class TrinityCoreClient : IServerEnumProvider
     {
-        public TrinityCoreClient(string trinityCorePath) 
+        IMemoryCache _cache;
+        MemoryCacheEntryOptions _cacheOptions;
+        public TrinityCoreClient(string trinityCorePath)
         {
             TrinityCorePath = trinityCorePath;
+            _cache = new MemoryCache(new MemoryCacheOptions()
+            {
+                TrackLinkedCacheEntries = true
+            });
+            _cacheOptions = new()
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(15)
+            };
         }
 
         public string TrinityCorePath { get; set; } = "/";
@@ -37,15 +48,15 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     nameof(CreatureTemplate.Unit_Flags2) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags2", "UNIT_FLAG2_"),
                     nameof(CreatureTemplate.Unit_Flags3) => await GetEnumAsync<TKey>(unitDefines_path, "UnitFlags3", "UNIT_FLAG3_"),
                     nameof(CreatureTemplate.Unit_Class) => await GetEnumAsync<TKey>(sharedDefines_path, "Classes", "CLASS_"),
-                    nameof(CreatureTemplate.HealthScalingExpansion) or 
+                    nameof(CreatureTemplate.HealthScalingExpansion) or
                     nameof(CreatureTemplate.RequiredExpansion) => await GetEnumAsync<TKey>(sharedDefines_path, "Expansions", "EXPANSION_", "LEVEL_CURRENT"),
-                    
+
 
                     _ => new()
                 };
 
             }
-            else if(typeof(Item) == modelType)
+            else if (typeof(Item) == modelType)
             {
                 return propertyName switch
                 {
@@ -54,7 +65,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(ItemSparse) == modelType)
+            else if (typeof(ItemSparse) == modelType)
             {
                 return propertyName switch
                 {
@@ -76,7 +87,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(ItemEffect) == modelType)
+            else if (typeof(ItemEffect) == modelType)
             {
                 return propertyName switch
                 {
@@ -85,7 +96,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(SpellAuraOptions) == modelType)
+            else if (typeof(SpellAuraOptions) == modelType)
             {
                 return propertyName switch
                 {
@@ -94,7 +105,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(SpellPower) == modelType)
+            else if (typeof(SpellPower) == modelType)
             {
                 return propertyName switch
                 {
@@ -103,7 +114,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(GameobjectTemplate) == modelType)
+            else if (typeof(GameobjectTemplate) == modelType)
             {
                 return propertyName switch
                 {
@@ -112,7 +123,7 @@ namespace HotfixMods.Providers.TrinityCore.Client
                     _ => new()
                 };
             }
-            else if(typeof(GameobjectTemplateAddon) == modelType)
+            else if (typeof(GameobjectTemplateAddon) == modelType)
             {
                 return propertyName switch
                 {

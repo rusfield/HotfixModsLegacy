@@ -144,6 +144,9 @@ namespace HotfixMods.Infrastructure.Services
                 result.ItemSparse = await GetSingleAsync<ItemSparse>(callback, progress, new DbParameter(nameof(ItemSparse.ID), id));
                 result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(callback, progress, new DbParameter(nameof(ItemModifiedAppearance.ItemID), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
 
+                if (string.IsNullOrWhiteSpace(result.HotfixModsEntity.Name) && !string.IsNullOrWhiteSpace(result.ItemSparse?.Display))
+                    result.HotfixModsEntity.Name = result.ItemSparse.Display;
+
                 var itemXItemEffect = await GetAsync<ItemXItemEffect>(callback, progress, new DbParameter(nameof(ItemXItemEffect.ItemID), id));
 
                 callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemEffect)}", progress());

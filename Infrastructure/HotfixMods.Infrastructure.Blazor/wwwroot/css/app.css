@@ -141,3 +141,8 @@
     justify-content: center;
     flex-direction: column;
 }
+
+/* Display Helper Text on hover too */
+.helper-text-hover:hover .mud-input-helper-text{
+    transform: translateY(0);
+}

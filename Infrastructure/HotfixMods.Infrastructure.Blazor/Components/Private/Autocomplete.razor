@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="string" Value="@ShowValue()" Text="@ShowValue()" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@(ComponentHelper.GetHelperText<T>())" HelperTextOnFocus="true" MaxItems="maxItems" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable" CoerceValue="true" Strict="false">
+    <MudAutocomplete @ref="mudAutocompleteRef" T="KeyValuePair<T, string>" Value="@ShowValue()" ToStringFunc="ShowText" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@((Value?.ToString() ?? "null") + $" {ComponentHelper.GetHelperText<T>()}")" HelperTextOnFocus="true" MaxItems="maxItems" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable helper-text-hover" CoerceValue="true" Strict="false">
         <NoItemsTemplate>
             <MudList Clickable="true">
                 <MudListItem>
@@ -20,6 +20,19 @@ else
         <MoreItemsTemplate>
             <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
         </MoreItemsTemplate>
+        <ItemTemplate Context="item">
+            <MudStack Spacing="0">
+                <MudText>
+                    @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value)
+                </MudText>
+                @if (ShowIdInOptions)
+                {
+                    <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
+                        @item.Key
+                    </MudText>
+                }
+            </MudStack>
+        </ItemTemplate>
     </MudAutocomplete>
 }
 
@@ -65,7 +78,7 @@ else
     public bool ShowIdInOptions { get; set; } = true;
 
     string? _inputValue;
-    MudAutocomplete<string>? mudAutocompleteRef;
+    MudAutocomplete<KeyValuePair<T, string>>? mudAutocompleteRef;
     Dictionary<T, string>? options;
     bool refreshElement = false;
     int previousPageIndex = 0;
@@ -87,8 +100,10 @@ else
         if (firstRender || refreshElement != RefreshElement)
         {
             options = await GetOptionsAsync_Func.Invoke();
+            /*
             if (ShowIdInOptions)
                 options.ShowKeyInValue<T>("➜");
+            */
             searchResultCount = options.Count;
             refreshElement = RefreshElement;
             this.StateHasChanged();
@@ -96,12 +111,12 @@ else
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task InputValueChanged(string input)
+    async Task InputValueChanged(KeyValuePair<T, string> input)
     {
         mudAutocompleteRef?.ToggleMenu();
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
-        var listItem = options.Where(x => x.Value.Equals(input, StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString() == input);
-        var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input;
+        var listItem = options.Where(x => x.Key.ToString().Equals(input.Key.ToString(), StringComparison.InvariantCultureIgnoreCase));
+        var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input.Value;
 
         if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
         {
@@ -151,19 +166,19 @@ else
         await ValueChanged.InvokeAsync(Value);
     }
 
-    async Task<IEnumerable<string>> Search(string value)
+    async Task<IEnumerable<KeyValuePair<T, string>>> Search(string value)
     {
         SetError(false);
-        var results = new List<string>();
+        var results = new List<KeyValuePair<T, string>>();
         await Task.Run(() =>
         {
             if (string.IsNullOrEmpty(value))
             {
-                results = options.Select(o => o.Value).Distinct().ToList(); // Read reason for .Distinct() below
+                results = options.ToList();
             }
             else
             {
-                var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).Select(o => o.Value).ToList();
+                var filteredOptions = options.Where(o => o.Value.Contains(value, StringComparison.InvariantCultureIgnoreCase) || o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)).ToList();
                 if (!options.Any(o => o.Key.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase) || o.Value.ToString().Equals(value, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     // Add value to list to support options that are not loaded.
@@ -171,7 +186,7 @@ else
                     {
                         var converter = TypeDescriptor.GetConverter(typeof(T));
                         var convertedValue = converter.ConvertFromInvariantString(value);
-                        filteredOptions.Add(value);
+                        filteredOptions.Add(new((T)convertedValue, value));
                     }
                     catch
                     {
@@ -179,22 +194,34 @@ else
                     }
                 }
 
-                // MudAutocomplete does not support search results with the same display value.
-                // To counter this, consider naming the display string differently.
-                results = filteredOptions.Distinct().ToList();
+                results = filteredOptions.ToList();
             }
         });
         searchResultCount = results.Count;
         return results;
     }
 
-    string? ShowValue()
+    KeyValuePair<T, string> ShowValue()
     {
+        if (null == Value)
+            return new();
+
+        var option = options!.Where(x => x.Value.Equals(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString().Equals(Value.ToString())).FirstOrDefault();
+        return option;
+    }
+
+    string ShowText(KeyValuePair<T, string> value)
+    {
+        // Note to dev: Are Value here ever really null?
+
+        /*
         if (null == Value)
             return "";
 
-        var option = options!.Where(x => x.Value.Equals(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString().Equals(Value.ToString())).Select(x => x.Value).FirstOrDefault();
-        return (option ?? Value.ToString()) ?? "Error loading value";
+        var option = options!.Where(x => x.Value.Equals(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString().Equals(Value.ToString())).FirstOrDefault();
+        return option.Value;
+        */
+        return string.IsNullOrWhiteSpace(value.Value) ? Value.ToString() : value.Value;
     }
 
     public void SetError(bool newError)

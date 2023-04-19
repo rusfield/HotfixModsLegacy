@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
             if(!zeroIsDefined && option.Key.ToString() == default(T).ToString())

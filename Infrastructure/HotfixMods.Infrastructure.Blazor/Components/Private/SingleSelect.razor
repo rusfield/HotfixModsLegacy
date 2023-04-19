@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Value="Value" Label="@Label" ValueChanged="SetValueAsync" HelperText="@((Value?.ToString() ?? "null" + $" {ComponentHelper.GetHelperText<T>()}"))" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover">
         @foreach (var option in options)
         {
             <MudSelectItem T="T" Value="@option.Key">@option.Value</MudSelectItem>

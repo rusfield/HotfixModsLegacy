@@ -43,6 +43,9 @@ namespace HotfixMods.Infrastructure.Services
                 dto.SpellXSpellVisual.ID = spellXSpellVisualId;
                 dto.SpellXSpellVisual.SpellID = (int)spellId;
                 dto.SpellXSpellVisual.SpellVisualID = (uint)spellVisualId;
+                dto.SpellXSpellVisual.ActiveIconFileID = dto.SpellMisc.ActiveIconFileDataID;
+                dto.SpellXSpellVisual.SpellIconFileID = dto.SpellMisc.SpellIconFileDataID;
+                dto.SpellXSpellVisual.DifficultyID = dto.SpellMisc.DifficultyID;
                 dto.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
 
                 if (dto.SpellVisual != null)
@@ -70,6 +73,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 dto.SpellAuraOptions.ID = spellAuraOptionsId;
                 dto.SpellAuraOptions.SpellID = (int)spellId;
+                dto.SpellAuraOptions.DifficultyID = dto.SpellMisc.DifficultyID;
                 dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
             }
 

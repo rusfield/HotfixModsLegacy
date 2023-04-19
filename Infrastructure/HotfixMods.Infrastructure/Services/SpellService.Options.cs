@@ -64,10 +64,26 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        public async Task<Dictionary<byte, string>> GetSchoolMaskOptions()
+        public async Task<Dictionary<byte, string>> GetSchoolMaskOptionsAsync()
         {
             return Enum.GetValues<SpellMiscSchoolMask>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
         }
+
+        public async Task<Dictionary<byte, string>> GetDifficultyIdOptionsAsync()
+        {
+            return await GetDifficultyOptionsAsync<byte>();
+        }
+
+        public async Task<Dictionary<int, string>> GetActiveIconFileDataIdOptionsAsync()
+        {
+            return await GetIconOptionsAsync<int>();
+        }
+
+        public async Task<Dictionary<int, string>> GetSpellIconFileDataIdOptionsAsync()
+        {
+            return await GetIconOptionsAsync<int>();
+        }
+
         #endregion
 
         #region SpellAuraOptions
@@ -81,10 +97,7 @@ namespace HotfixMods.Infrastructure.Services
             return options;
         }
 
-        public async Task<Dictionary<byte, string>> GetDifficultyIdOptionsAsync()
-        {
-            return await GetDifficultyOptionsAsync<byte>();
-        }
+
         #endregion
 
         #region SpellPower

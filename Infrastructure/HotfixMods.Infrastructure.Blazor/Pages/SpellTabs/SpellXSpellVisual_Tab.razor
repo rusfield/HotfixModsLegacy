@@ -7,16 +7,16 @@
         <Input_Element T="decimal" @bind-Value="Value.Probability" ValueCompare="ValueCompare?.Probability" Label="@nameof(Value.Probability).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Probability)))" />
         <Input_Element T="int" @bind-Value="Value.Priority" ValueCompare="ValueCompare?.Priority" Label="@nameof(Value.Priority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Priority)))" />
         <Input_Element T="int" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.Flags2)))" />
-        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.DifficultyID)))" />
+        <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.DifficultyID)))" Disabled="true" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.SpellIconFileID" ValueCompare="ValueCompare?.SpellIconFileID" Label="@nameof(Value.SpellIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.SpellIconFileID)))" />
+                <Input_Element T="int" @bind-Value="Value.SpellIconFileID" ValueCompare="ValueCompare?.SpellIconFileID" Label="@nameof(Value.SpellIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.SpellIconFileID)))" Disabled="true" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.ActiveIconFileID" ValueCompare="ValueCompare?.ActiveIconFileID" Label="@nameof(Value.ActiveIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.ActiveIconFileID)))" />
+                <Input_Element T="int" @bind-Value="Value.ActiveIconFileID" ValueCompare="ValueCompare?.ActiveIconFileID" Label="@nameof(Value.ActiveIconFileID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellXSpellVisual.ActiveIconFileID)))" Disabled="true" />
             </RightContent>
         </InlineGroup>
     </MudItem>

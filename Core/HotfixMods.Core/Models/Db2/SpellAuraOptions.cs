@@ -7,6 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
+        [Db2Description("Set this value on SpellMisc.")]
         public byte DifficultyID { get; set; } = 0;
         public ushort CumulativeAura { get; set; } = 0;
         public int ProcCategoryRecovery { get; set; } = 0;

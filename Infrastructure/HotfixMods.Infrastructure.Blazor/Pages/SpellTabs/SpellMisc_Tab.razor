@@ -11,7 +11,7 @@
             <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.CastingTimeIndex)))" GetOptionsAsync_Func="(Service.GetCastingTimeIndexOptionsAsync)" />
             <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DurationIndex)))" GetOptionsAsync_Func="(Service.GetDurationIndexOptionsAsync)" />
             <Input_Element T="ushort" @bind-Value="Value.RangeIndex" ValueCompare="ValueCompare?.RangeIndex" Label="@nameof(Value.RangeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.RangeIndex)))" GetOptionsAsync_Func="(Service.GetRangeIndexOptionsAsync)" />
-            <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.SchoolMask)))" GetOptionsAsync_Func="(Service.GetSchoolMaskOptions)" MultiSelection="true" />
+            <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.SchoolMask)))" GetOptionsAsync_Func="(Service.GetSchoolMaskOptionsAsync)" MultiSelection="true" />
             <Input_Element T="decimal" @bind-Value="Value.Speed" ValueCompare="ValueCompare?.Speed" Label="@nameof(Value.Speed).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.Speed)))" />
             <Input_Element T="decimal" @bind-Value="Value.LaunchDelay" ValueCompare="ValueCompare?.LaunchDelay" Label="@nameof(Value.LaunchDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.LaunchDelay)))" />
         </MudItem>
@@ -19,15 +19,15 @@
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="int" @bind-Value="Value.SpellIconFileDataID" ValueCompare="ValueCompare?.SpellIconFileDataID" Label="@nameof(Value.SpellIconFileDataID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.SpellIconFileDataID)))" />
+                    <Input_Element T="int" @bind-Value="Value.SpellIconFileDataID" ValueCompare="ValueCompare?.SpellIconFileDataID" Label="@nameof(Value.SpellIconFileDataID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.SpellIconFileDataID)))" GetOptionsAsync_Func="Service.GetSpellIconFileDataIdOptionsAsync" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="int" @bind-Value="Value.ActiveIconFileDataID" ValueCompare="ValueCompare?.ActiveIconFileDataID" Label="@nameof(Value.ActiveIconFileDataID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ActiveIconFileDataID)))" />
+                    <Input_Element T="int" @bind-Value="Value.ActiveIconFileDataID" ValueCompare="ValueCompare?.ActiveIconFileDataID" Label="@nameof(Value.ActiveIconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ActiveIconFileDataID)))" GetOptionsAsync_Func="Service.GetActiveIconFileDataIdOptionsAsync" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DifficultyID)))" />
+            <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DifficultyID)))" GetOptionsAsync_Func="Service.GetDifficultyIdOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="Value.MinDuration" ValueCompare="ValueCompare?.MinDuration" Label="@nameof(Value.MinDuration).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.MinDuration)))" />
             <Input_Element T="int" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ContentTuningID)))" />
             <Input_Element T="int" @bind-Value="Value.ShowFutureSpellPlayerConditionID" ValueCompare="ValueCompare?.ShowFutureSpellPlayerConditionID" Label="@nameof(Value.ShowFutureSpellPlayerConditionID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ShowFutureSpellPlayerConditionID)))" />

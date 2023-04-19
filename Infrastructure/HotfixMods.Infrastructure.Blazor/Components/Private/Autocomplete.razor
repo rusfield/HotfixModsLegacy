@@ -2,6 +2,7 @@
 
 @using HotfixMods.Infrastructure.Blazor.Business
 @using System.ComponentModel;
+@using Microsoft.AspNetCore.Components.Web
 
 @if (null == options)
 {
@@ -23,7 +24,7 @@ else
         <ItemTemplate Context="item">
             <MudStack Spacing="0">
                 <MudText>
-                    @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value)
+                    @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value.Replace("_", "_\u200B"))
                 </MudText>
                 @if (ShowIdInOptions)
                 {

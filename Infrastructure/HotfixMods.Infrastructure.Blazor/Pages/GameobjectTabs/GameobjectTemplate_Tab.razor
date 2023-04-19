@@ -11,8 +11,8 @@
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <Input_Element T="string" Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
-        <Input_Element T="string" Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption).ToDisplayName()" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
+        <Input_Element T="string" @bind-Value="Value.Name" Label="@nameof(Value.Name)" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
+        <Input_Element T="string" @bind-Value="Value.CastBarCaption" Label="@nameof(Value.CastBarCaption).ToDisplayName()" Variant="Variant.Text" ValueCompare="ValueCompare?.Name" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.Name)))" />
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="string" @bind-Value="@(Value.AIName)" Label="AI Name" ValueCompare="ValueCompare?.AIName" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectTemplate.AIName)))" GetOptionsAsync_Func="Service.GetAiNameOptionsAsync" />

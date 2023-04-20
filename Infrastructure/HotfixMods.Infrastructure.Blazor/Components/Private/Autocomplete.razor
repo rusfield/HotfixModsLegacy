@@ -4,58 +4,73 @@
 @using System.ComponentModel;
 @using Microsoft.AspNetCore.Components.Web
 
+
 @if (null == options)
 {
     <Placeholder_Element Visible="true" IsNested="true" Skeleton="false" Label="@Label" />
 }
 else
 {
-    <MudAutocomplete @ref="mudAutocompleteRef" T="KeyValuePair<T, string>" Value="@ShowValue()" ToStringFunc="ShowText" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@((Value?.ToString() ?? "null") + $" {ComponentHelper.GetHelperText<T>()}")" HelperTextOnFocus="true" MaxItems="maxItems" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable helper-text-hover" CoerceValue="true" Strict="false">
-        <NoItemsTemplate>
-            <MudList Clickable="true">
-                <MudListItem>
-                    @Value
-                </MudListItem>
-            </MudList>
-        </NoItemsTemplate>
-        <MoreItemsTemplate>
-            @if(searchResultCount < 2000)
-            {
-                <MudText @onclick="ShowAllOptions" Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled); cursor:pointer;" Align="Align.Center">@(searchResultCount - maxItems) more options... Click to load all.</MudText>
-
-            }
-            else
-            {
-                <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
-            }
-        </MoreItemsTemplate>
-        <ItemTemplate Context="item">
-            <MudStack Spacing="0">
-                @if (item.Value.Contains("#"))
+    <div class="color-selection-input">
+        <MudAutocomplete @onkeydown="(() => inputFocus = true)" @onblur="(() => inputFocus = false)" @ref="mudAutocompleteRef" T="KeyValuePair<T, string>" Value="@ShowValue()" ToStringFunc="ShowText" ValueChanged="InputValueChanged" Label="@Label" SelectValueOnTab="true" Variant="@Variant" SearchFunc="@Search" HelperText="@((Value?.ToString() ?? "null") + $" {ComponentHelper.GetHelperText<T>()}")" HelperTextOnFocus="true" MaxItems="maxItems" ShowProgressIndicator="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" Error="Error" ErrorText="Enter a valid value." Disabled="Disabled" Class="adornment-clickable helper-text-hover" CoerceValue="true" Strict="false">
+            <NoItemsTemplate>
+                <MudList Clickable="true">
+                    <MudListItem>
+                        @Value
+                    </MudListItem>
+                </MudList>
+            </NoItemsTemplate>
+            <MoreItemsTemplate>
+                @if (searchResultCount < 2000)
                 {
-                    @* Value is a color *@
-                    <MudStack Row="true" Spacing="1">
-                        @foreach(var color in item.Value.Split(", "))
-                        {
-                            <MudIcon Icon="@Icons.Material.Filled.WaterDrop" Style=@($"color: {color}") />
-                        }
-                    </MudStack>
+                    <MudText @onclick="ShowAllOptions" Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled); cursor:pointer;" Align="Align.Center">@(searchResultCount - maxItems) more options... Click to load all.</MudText>
+
                 }
                 else
                 {
-                    <MudText>
-                        @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value.Replace("_", "_\u200B"))
-                    </MudText>
+                    <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
                 }
-                @if (ShowIdInOptions)
+            </MoreItemsTemplate>
+            <ItemTemplate Context="item">
+                <MudStack Spacing="0">
+                    @if (item.Value.Contains("#"))
+                    {
+                        @* Value is a color *@
+                        <MudStack Row="true" Spacing="1">
+                            @foreach (var color in item.Value.Split(", "))
+                            {
+                                <MudIcon Icon="@Icons.Material.Filled.WaterDrop" Style=@($"color: {color}") />
+                            }
+                        </MudStack>
+                    }
+                    else
+                    {
+                        <MudText>
+                            @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value.Replace("_", "_\u200B"))
+                        </MudText>
+                    }
+                    @if (ShowIdInOptions)
+                    {
+                        <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
+                            @item.Key
+                        </MudText>
+                    }
+                </MudStack>
+            </ItemTemplate>
+        </MudAutocomplete>
+    </div>
+
+    @if (valueIsColor && options.ContainsKey(Value) && !inputFocus)
+    {
+        <div class="color-selection-icons">
+            <MudStack Row="true" Spacing="1">
+                @foreach (var color in options[Value].Split(", "))
                 {
-                    <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
-                        @item.Key
-                    </MudText>
+                    <MudIcon Icon="@Icons.Material.Filled.WaterDrop" Style=@($"color: {color}") />
                 }
             </MudStack>
-        </ItemTemplate>
-    </MudAutocomplete>
+        </div>
+    }
 }
 
 
@@ -105,6 +120,8 @@ else
     int previousPageIndex = 0;
     int? maxItems = 50;
     int searchResultCount = 0;
+    bool valueIsColor = false;
+    bool inputFocus = false;
 
     protected override void OnParametersSet()
     {
@@ -113,6 +130,7 @@ else
             mudAutocompleteRef.ToggleMenu();
         }
         previousPageIndex = CurrentPageIndex;
+
         base.OnParametersSet();
     }
 
@@ -121,10 +139,10 @@ else
         if (firstRender || refreshElement != RefreshElement)
         {
             options = await GetOptionsAsync_Func.Invoke();
-            /*
-            if (ShowIdInOptions)
-                options.ShowKeyInValue<T>("➜");
-            */
+
+            if (options.ContainsKey(Value) && options[Value].Contains("#"))
+                valueIsColor = true;
+
             searchResultCount = options.Count;
             refreshElement = RefreshElement;
             this.StateHasChanged();
@@ -138,6 +156,7 @@ else
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
         var listItem = options.Where(x => x.Key.ToString().Equals(input.Key.ToString(), StringComparison.InvariantCultureIgnoreCase));
         var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input.Value;
+        valueIsColor = input.Value.Contains("#");
 
         if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
         {

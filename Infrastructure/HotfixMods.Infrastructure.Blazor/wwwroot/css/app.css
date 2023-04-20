@@ -60,8 +60,8 @@
     font-size: 96px !important;
 }
 
-.center-input .mud-input-slot{
-    text-align:center !important;
+.center-input .mud-input-slot {
+    text-align: center !important;
 }
 
 .transition-instance {
@@ -126,7 +126,6 @@
 
 .mud-dialog {
     padding-bottom: 25px;
-
     /* Revert a MudBlazor brekaing change */
     overflow-y: visible !important;
 }
@@ -143,6 +142,25 @@
 }
 
 /* Display Helper Text on hover too */
-.helper-text-hover:hover .mud-input-helper-text{
+.helper-text-hover:hover .mud-input-helper-text {
     transform: translateY(0);
+}
+
+.color-selection-icons {
+    position: absolute;
+    top: 30px;
+    left: 4px;
+    width: calc(100% - 8px);
+    height: 44px;
+    background-color: var(--mud-palette-surface);
+    z-index: 1;
+    padding: 0 5px;
+    opacity: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+
+.color-selection-input:hover + .color-selection-icons {
+    opacity: 0;
 }

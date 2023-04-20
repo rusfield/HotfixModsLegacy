@@ -5,18 +5,30 @@
 
 @if (null == options)
 {
-    <Placeholder_Element Visible="true" IsNested="true" Skeleton="false" Label="@Label"/>
+    <Placeholder_Element Visible="true" IsNested="true" Skeleton="false" Label="@Label" />
 }
 else
 {
-    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="KeyValuePair<T, string>" Label="@Label" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
-            if(!zeroIsDefined && option.Key.ToString() == default(T).ToString())
+            if (!zeroIsDefined && option.Key.ToString() == default(T).ToString())
             {
                 continue;
             }
-            <MudSelectItem T="T" Style="@GetOptionStyle(option)" Value="@option.Key">@option.Value</MudSelectItem>
+            <MudSelectItem T="T" Style="@GetOptionStyle(option)" Value="@option.Key">
+                <MudStack Spacing="0">
+                    <MudText>
+                        @(string.IsNullOrWhiteSpace(option.Value) ? option.Key : option.Value.Replace("_", "_\u200B"))
+                    </MudText>
+                    @if (ShowIdInOptions)
+                    {
+                        <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
+                            @option.Key
+                        </MudText>
+                    }
+                </MudStack>
+            </MudSelectItem>
         }
     </MudSelect>
 }
@@ -66,9 +78,9 @@ else
     [Parameter]
     public bool ShowIdInOptions { get; set; } = true;
 
-    MudSelect<T>? mudSelectRef;
+    MudSelect<KeyValuePair<T, string>>? mudSelectRef;
     Dictionary<T, string>? options;
-    List<T> selectedValues = new();
+    List<KeyValuePair<T, string>> selectedValues = new();
     int previousPageIndex = 0;
     bool valueIsSigned = true;
     bool zeroIsDefined = true;
@@ -94,7 +106,7 @@ else
         await base.OnAfterRenderAsync(firstRender);
     }
 
-    async Task SetValuesAsync(IEnumerable<T> newValues)
+    async Task SetValuesAsync(IEnumerable<KeyValuePair<T, string>> newValues)
     {
         SetError(false);
         bool valueIsAdded = newValues.Except(selectedValues).Any();
@@ -113,13 +125,11 @@ else
             var addedValue = newValues.Except(selectedValues).First();
             selectedValues.Clear();
             selectedValues.Add(addedValue);
-            Value = addedValue;
+            Value = addedValue.Key;
         }
         else
         {
-
-
-            selectedValues = newValues.Except(exclusiveSelectValues).ToList();
+            selectedValues = newValues.Where(v => !exclusiveSelectValues.Contains(v.Key)).ToList();
             if (valueIsSigned)
             {
                 var sum = selectedValues.Sum(x => Convert.ToInt64(x));
@@ -173,7 +183,7 @@ else
                 results.Add(flag);
             }
         }
-        if (results.Count == 0)
+        else
         {
             ulong flagValue = (ulong)Convert.ChangeType(flag, typeof(ulong));
             if (flagValue == 0)
@@ -199,13 +209,11 @@ else
     async Task InitOptions()
     {
         options = await GetOptionsAsync_Func.Invoke();
-        if (ShowIdInOptions)
-            options.ShowKeyInValue<T>("➜");
 
         if (GetExclusiveOptionsAsync_Func != null)
             exclusiveSelectValues = await GetExclusiveOptionsAsync_Func.Invoke();
 
-        if(!exclusiveSelectValues.Any(v => v.ToString() == "0"))
+        if (!exclusiveSelectValues.Any(v => v.ToString() == "0"))
         {
             var defaultValue = (T)Convert.ChangeType("0", typeof(T));
             exclusiveSelectValues.Add(defaultValue);
@@ -223,7 +231,7 @@ else
 
             if (!options.ContainsKey(default(T)))
             {
-                options[default(T)] = "0 ➜ None";
+                options[default(T)] = "None";
                 zeroIsDefined = false;
             }
 
@@ -232,14 +240,14 @@ else
                 var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
                 if (!options.ContainsKey(positiveKey))
                 {
-                    options.Add(positiveKey, $"{positiveKey} ➜ (Undefined)");
+                    options.Add(positiveKey, $"{positiveKey} (Undefined)");
                 }
                 if (minValue < 0)
                 {
                     var negativeKey = (T)Convert.ChangeType((signedItterationValue * -1).ToString(), typeof(T));
                     if (!options.ContainsKey(negativeKey))
                     {
-                        options[negativeKey] = $"{negativeKey} ➜ (Undefined)";
+                        options[negativeKey] = $"{negativeKey} (Undefined)";
                         exclusiveSelectValues.Add(negativeKey);
                     }
                     signedItterationValue *= 2;
@@ -249,7 +257,8 @@ else
             while (unsignedItterationValue < (maxValue / 2));
         }
 
-        selectedValues = GetFlagValues(Value);
+        var flagValues = GetFlagValues(Value);
+        selectedValues = flagValues.Where(x => options.ContainsKey(x)).Select(x => new KeyValuePair<T, string>(x, options[x])).ToList();
     }
 
     string GetOptionStyle(KeyValuePair<T, string> option)

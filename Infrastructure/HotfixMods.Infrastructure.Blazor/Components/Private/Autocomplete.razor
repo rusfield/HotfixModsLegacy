@@ -19,13 +19,34 @@ else
             </MudList>
         </NoItemsTemplate>
         <MoreItemsTemplate>
-            <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
+            @if(searchResultCount < 2000)
+            {
+                <MudText @onclick="ShowAllOptions" Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled); cursor:pointer;" Align="Align.Center">@(searchResultCount - maxItems) more options... Click to load all.</MudText>
+
+            }
+            else
+            {
+                <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)" Align="Align.Center">@(searchResultCount - maxItems) more options...</MudText>
+            }
         </MoreItemsTemplate>
         <ItemTemplate Context="item">
             <MudStack Spacing="0">
-                <MudText>
-                    @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value.Replace("_", "_\u200B"))
-                </MudText>
+                @if (item.Value.Contains("#"))
+                {
+                    @* Value is a color *@
+                    <MudStack Row="true" Spacing="1">
+                        @foreach(var color in item.Value.Split(", "))
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.WaterDrop" Style=@($"color: {color}") />
+                        }
+                    </MudStack>
+                }
+                else
+                {
+                    <MudText>
+                        @(string.IsNullOrWhiteSpace(item.Value) ? item.Key : item.Value.Replace("_", "_\u200B"))
+                    </MudText>
+                }
                 @if (ShowIdInOptions)
                 {
                     <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
@@ -78,12 +99,11 @@ else
     [Parameter]
     public bool ShowIdInOptions { get; set; } = true;
 
-    string? _inputValue;
     MudAutocomplete<KeyValuePair<T, string>>? mudAutocompleteRef;
     Dictionary<T, string>? options;
     bool refreshElement = false;
     int previousPageIndex = 0;
-    int maxItems = 50;
+    int? maxItems = 50;
     int searchResultCount = 0;
 
     protected override void OnParametersSet()
@@ -213,24 +233,22 @@ else
 
     string ShowText(KeyValuePair<T, string> value)
     {
-        // Note to dev: Are Value here ever really null?
-
-        /*
-        if (null == Value)
-            return "";
-
-        var option = options!.Where(x => x.Value.Equals(Value.ToString() ?? "", StringComparison.InvariantCultureIgnoreCase) || x.Key.ToString().Equals(Value.ToString())).FirstOrDefault();
-        return option.Value;
-        */
         return string.IsNullOrWhiteSpace(value.Value) ? Value.ToString() : value.Value;
     }
 
-    public void SetError(bool newError)
+    void SetError(bool newError)
     {
         if (Error != newError)
         {
             Error = newError;
             this.StateHasChanged();
         }
+    }
+
+    void ShowAllOptions()
+    {
+        maxItems = null;
+        mudAutocompleteRef?.ToggleMenu();
+        mudAutocompleteRef?.ToggleMenu();
     }
 }

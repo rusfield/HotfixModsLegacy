@@ -1,5 +1,6 @@
 ﻿@using HotfixMods.Core.Enums.Db2
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Helpers
 
 @inject CreatureService Service
 
@@ -131,7 +132,7 @@
     {
         if (customizations.Any(k => k.Key.ID == chrCustomizationOptionId))
         {
-            return customizations.First(c => c.Key.ID == chrCustomizationOptionId).Value.ToDictionary(c => (int)c.ID, c => string.IsNullOrWhiteSpace(c.Name) ? c.ID.ToString() : $"{c.Name} ({c.ID})");
+            return customizations.First(c => c.Key.ID == chrCustomizationOptionId).Value.ToDictionary(c => (int)c.ID, c => GenerateChoiceName(c));
         }
         return new();
     }
@@ -163,7 +164,7 @@
 
             valuesChanged = true;
         }
-        else if(creatureDisplayInfoExtra == null)
+        else if (creatureDisplayInfoExtra == null)
         {
             currentCustomizationRace = -1;
             currentCustomizationGender = -1;
@@ -171,7 +172,7 @@
 
             valuesChanged = true;
         }
-        else if(loadedCustomizations.Count > customizations.Count)
+        else if (loadedCustomizations.Count > customizations.Count)
         {
             customizations = loadedCustomizations;
 
@@ -183,6 +184,27 @@
             amountOfCustomizationPages = Math.Max((int)Math.Ceiling(customizations.Count / 16.0), 1); // Minimum 1 page
             loading = false;
             this.StateHasChanged();
+        }
+    }
+
+    string GenerateChoiceName(ChrCustomizationChoice choice)
+    {
+        // string.IsNullOrWhiteSpace(c.Name) ? c.ID.ToString() : $"{c.Name} ({c.ID})"
+        if (!string.IsNullOrWhiteSpace(choice.Name))
+        {
+            return choice.Name;
+        }
+        else if (choice.SwatchColor0 != 0)
+        {
+            string value = Db2Helper.ConvertToHexColor(choice.SwatchColor0);
+            if (choice.SwatchColor1 != 0)
+                value += $", #{Db2Helper.ConvertToHexColor(choice.SwatchColor1)}";
+
+            return value;
+        }
+        else
+        {
+            return choice.ID.ToString();
         }
     }
 }

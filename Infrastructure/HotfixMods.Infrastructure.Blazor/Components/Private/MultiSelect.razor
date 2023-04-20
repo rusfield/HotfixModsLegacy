@@ -5,18 +5,30 @@
 
 @if (null == options)
 {
-    <Placeholder_Element Visible="true" IsNested="true" Skeleton="false" Label="@Label"/>
+    <Placeholder_Element Visible="true" IsNested="true" Skeleton="false" Label="@Label" />
 }
 else
 {
-    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="(select)" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="@((Value?.ToString() ?? "null" + $" {ComponentHelper.GetHelperText<T>()}"))" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
-            if(!zeroIsDefined && option.Key.ToString() == default(T).ToString())
+            if (!zeroIsDefined && option.Key.ToString() == default(T).ToString())
             {
                 continue;
             }
-            <MudSelectItem T="T" Style="@GetOptionStyle(option)" Value="@option.Key">@option.Value</MudSelectItem>
+            <MudSelectItem T="T" Style="@GetOptionStyle(option)" Value="@option.Key">
+                <MudStack Spacing="0">
+                    <MudText>
+                        @(string.IsNullOrWhiteSpace(option.Value) ? option.Key : option.Value.Replace("_", "_\u200B"))
+                    </MudText>
+                    @if (ShowIdInOptions)
+                    {
+                        <MudText Typo="Typo.subtitle2" Style="color:var(--mud-palette-action-disabled)">
+                            @option.Key
+                        </MudText>
+                    }
+                </MudStack>
+            </MudSelectItem>
         }
     </MudSelect>
 }
@@ -151,8 +163,8 @@ else
         return count switch
         {
             0 => "None",
-            1 => selection.First().ToDisplayName(),
-            _ => $"{Value?.ToString()} ➜ {count} selected"
+            1 => "1 selected",
+            _ => $"{count} selected"
         };
     }
 
@@ -199,13 +211,11 @@ else
     async Task InitOptions()
     {
         options = await GetOptionsAsync_Func.Invoke();
-        if (ShowIdInOptions)
-            options.ShowKeyInValue<T>("➜");
 
         if (GetExclusiveOptionsAsync_Func != null)
             exclusiveSelectValues = await GetExclusiveOptionsAsync_Func.Invoke();
 
-        if(!exclusiveSelectValues.Any(v => v.ToString() == "0"))
+        if (!exclusiveSelectValues.Any(v => v.ToString() == "0"))
         {
             var defaultValue = (T)Convert.ChangeType("0", typeof(T));
             exclusiveSelectValues.Add(defaultValue);
@@ -223,7 +233,7 @@ else
 
             if (!options.ContainsKey(default(T)))
             {
-                options[default(T)] = "0 ➜ None";
+                options[default(T)] = "None";
                 zeroIsDefined = false;
             }
 
@@ -232,14 +242,14 @@ else
                 var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
                 if (!options.ContainsKey(positiveKey))
                 {
-                    options.Add(positiveKey, $"{positiveKey} ➜ (Undefined)");
+                    options.Add(positiveKey, $"{positiveKey} (Undefined)");
                 }
                 if (minValue < 0)
                 {
                     var negativeKey = (T)Convert.ChangeType((signedItterationValue * -1).ToString(), typeof(T));
                     if (!options.ContainsKey(negativeKey))
                     {
-                        options[negativeKey] = $"{negativeKey} ➜ (Undefined)";
+                        options[negativeKey] = $"{negativeKey} (Undefined)";
                         exclusiveSelectValues.Add(negativeKey);
                     }
                     signedItterationValue *= 2;

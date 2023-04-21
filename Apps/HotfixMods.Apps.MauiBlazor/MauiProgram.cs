@@ -81,7 +81,7 @@ namespace HotfixMods.Apps.MauiBlazor
             });
             builder.Services.AddSingleton<IListfileProvider, ListfileClient>(provider =>
             {
-                return new ListfileClient()
+                return new ListfileClient(appConfig.ListfilePath)
                 {
                     CacheResults = appConfig.CacheFileResults
                 };

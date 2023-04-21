@@ -8,6 +8,7 @@ namespace HotfixMods.Core.Models.Db2
         [IndexField]
         public int ID { get; set; } = 0;
         public sbyte DisplayRaceID { get; set; } = 0;
+        [Db2Description("Set this value on CreatureDisplayInfo.")]
         public sbyte DisplaySexID { get; set; } = 0;
         public sbyte DisplayClassID { get; set; } = 0;
         public sbyte Flags { get; set; } = 0;

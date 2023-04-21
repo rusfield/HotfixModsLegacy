@@ -11,6 +11,7 @@ namespace HotfixMods.Infrastructure.Config
         public string WorldSchema { get; set; } = "world";
         public string Db2Path { get; set; } = @"\";
         public string TrinityCorePath { get; set; } = @"\";
+        public string ListfilePath { get; set; } = @"\";
         public int HotfixDataTableFromId { get; set; } = 15000000;
         public int HotfixDataTableToId { get; set; } = 16000000;
         public string BuildInfo { get; set; } = "10.0.5.47871";

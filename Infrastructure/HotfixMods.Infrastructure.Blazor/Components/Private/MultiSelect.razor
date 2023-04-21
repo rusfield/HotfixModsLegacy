@@ -272,14 +272,14 @@ else
                 var positiveKey = (T)Convert.ChangeType(unsignedItterationValue.ToString(), typeof(T));
                 if (!options.ContainsKey(positiveKey))
                 {
-                    options.Add(positiveKey, $"{positiveKey} (Undefined)");
+                    options.Add(positiveKey, $"(Undefined)");
                 }
                 if (minValue < 0)
                 {
                     var negativeKey = (T)Convert.ChangeType((signedItterationValue * -1).ToString(), typeof(T));
                     if (!options.ContainsKey(negativeKey))
                     {
-                        options[negativeKey] = $"{negativeKey} (Undefined)";
+                        options[negativeKey] = $"(Undefined)";
                         exclusiveSelectValues.Add(negativeKey);
                     }
                     signedItterationValue *= 2;

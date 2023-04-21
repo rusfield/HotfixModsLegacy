@@ -148,6 +148,28 @@ namespace HotfixMods.Infrastructure.Services
 
             return results;
         }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetCreatureModelDataOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData", false, true);
+            var modelFiles = await _listfileProvider.GetModelFilesAsync<int>();
+            var results = new Dictionary<TOptionKey, string>();
+            results.InitializeDefaultValue();
+
+            foreach(var data in creatureModelData)
+            {
+                var fileDataId = data.GetValueByNameAs<int>("FileDataID");
+                var key = (TOptionKey)Convert.ChangeType(data.GetIdValue(), typeof(TOptionKey));
+
+                if (modelFiles.ContainsKey(fileDataId))
+                    results[key] = modelFiles[fileDataId];
+                else
+                    results[key] = "Unknown";
+            }
+
+            return results;
+        }
         #endregion
     }
 }

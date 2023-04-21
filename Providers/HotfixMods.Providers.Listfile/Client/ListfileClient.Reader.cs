@@ -15,10 +15,12 @@ namespace HotfixMods.Providers.Listfile.Client
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
 
-        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string filename, string? partialPath = null, string? fileType = null, bool formatValue = true)
+        async Task<Dictionary<TKey, string>> ReadFileAsync<TKey>(string? partialPath, string? fileType = null, bool formatValue = false)
             where TKey : notnull
         {
-            string cacheKey = $"{filename}{partialPath}{typeof(TKey).Name}";
+            partialPath = partialPath ?? "";
+            fileType = fileType ?? "";
+            string cacheKey = $"{partialPath}{fileType}{formatValue}{typeof(TKey).Name}";
             if (_cache.TryGetValue(cacheKey, out var cachedResults))
                 return (Dictionary<TKey, string>)cachedResults;
 
@@ -26,40 +28,37 @@ namespace HotfixMods.Providers.Listfile.Client
             results[default(TKey)] = "None";
             await Task.Run(() =>
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                using (Stream? stream = assembly.GetManifestResourceStream($"HotfixMods.Providers.Listfile.Listfiles.{filename}.csv"))
+
+                if (!File.Exists(_listfilePath))
+                    throw new Exception($"Listfile not found.");
+
+                using (StreamReader reader = new StreamReader(_listfilePath))
                 {
-                    if (stream == null)
-                        throw new Exception($"Resource {filename} not found.");
+                    // Example input: 132089;interface/icons/ability_ambush.blp
 
-                    using (StreamReader reader = new StreamReader(stream))
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        // Example input: 132089;interface/icons/ability_ambush.blp
+                        string value = line.Split(';')[1]; // interface/icons/ability_ambush.blp
 
-                        string line;
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            string value = line.Split(';')[1]; // interface/icons/ability_ambush.blp
+                        // Check if the partialPath is part of the value. Example partialPath: interface/icons
+                        if (!string.IsNullOrWhiteSpace(partialPath) && !value.StartsWith(partialPath, StringComparison.InvariantCultureIgnoreCase))
+                            continue;
 
-                            // Check if the partialPath is part of the value. Example partialPath: interface/icons
-                            if (!string.IsNullOrWhiteSpace(partialPath) && !value.StartsWith(partialPath, StringComparison.InvariantCultureIgnoreCase))
-                                continue;
+                        // Check if the value has the correct fileType.
+                        if (!string.IsNullOrWhiteSpace(fileType) && !value.EndsWith(fileType, StringComparison.InvariantCultureIgnoreCase))
+                            continue;
 
-                            // Check if the value has the correct fileType.
-                            if (!string.IsNullOrWhiteSpace(fileType) && !value.EndsWith(fileType, StringComparison.InvariantCultureIgnoreCase))
-                                continue;
+                        value = value.Split('/').Last(); // ability_ambush.blp
+                        value = value.Split('.').First(); // ability_ambush
 
-                            value = value.Split('/').Last(); // ability_ambush.blp
-                            value = value.Split('.').First(); // ability_ambush
+                        string keyString = line.Split(';')[0]; // 132089
+                        var key = (TKey)Convert.ChangeType(keyString, typeof(TKey));
 
-                            string keyString = line.Split(';')[0]; // 132089
-                            var key = (TKey)Convert.ChangeType(keyString, typeof(TKey));
+                        if (formatValue)
+                            value = $"{UnderscoreToCase(value)}";
 
-                            if(formatValue)
-                                value = $"{UnderscoreToCase(value)}";
-
-                            results[key] = value;
-                        }
+                        results[key] = value;
                     }
                 }
             });

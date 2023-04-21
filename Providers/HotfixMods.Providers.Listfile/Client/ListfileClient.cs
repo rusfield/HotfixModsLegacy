@@ -14,7 +14,9 @@ namespace HotfixMods.Providers.Listfile.Client
 
         IMemoryCache _cache;
         MemoryCacheEntryOptions _cacheOptions;
-        public ListfileClient()
+        string _listfilePath;
+
+        public ListfileClient(string listfilePath)
         {
             _cache = new MemoryCache(new MemoryCacheOptions()
             {
@@ -24,18 +26,25 @@ namespace HotfixMods.Providers.Listfile.Client
             {
                 SlidingExpiration = TimeSpan.FromMinutes(15)
             };
+            _listfilePath = listfilePath;
         }
 
         public async Task<Dictionary<TKey, string>> GetIconsAsync<TKey>() 
             where TKey : notnull
         {
-            return await ReadFileAsync<TKey>("interface", "interface/icons", "blp", false);
+            return await ReadFileAsync<TKey>("interface/icons/", "blp");
         }
 
         public async Task<Dictionary<TKey, string>> GetItemTexturesAsync<TKey>()
-            where TKey: notnull
+            where TKey : notnull
         {
-            return await ReadFileAsync<TKey>("item", "item", "blp", false);
+            return await ReadFileAsync<TKey>("item/", "blp");
+        }
+
+        public async Task<Dictionary<TKey, string>> GetModelFilesAsync<TKey>()
+            where TKey : notnull
+        {
+            return await ReadFileAsync<TKey>(null, "m2", true);
         }
     }
 }

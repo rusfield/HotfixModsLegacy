@@ -2,13 +2,14 @@
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Core.Enums.Db2
 
+@inject CreatureService Service
 @inherits DtoContentBase<CreatureDto, CreatureDisplayInfoExtra>
 
 <StandardDtoContent T="CreatureDisplayInfoExtra">
     <MudItem xs="3">
-        <Input_Element T="sbyte" Value="Value.DisplayRaceID" ValueChanged="DisplayRaceIdChanged" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="GetRaces" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayRaceID)))" />
-        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="GetClasses" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayClassID)))" />
-        <Input_Element T="sbyte" Value="Value.DisplaySexID" ValueChanged="DisplaySexIdChanged" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplaySexID)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplayRaceID" ValueCompare="ValueCompare?.DisplayRaceID" Label="@nameof(Value.DisplayRaceID).ToDisplayName()" GetOptionsAsync_Func="Service.GetDisplayRaceIdOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayRaceID)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplayClassID" ValueCompare="ValueCompare?.DisplayClassID" Label="@nameof(Value.DisplayClassID).ToDisplayName()" GetOptionsAsync_Func="Service.GetDisplayClassIdOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplayClassID)))" />
+        <Input_Element T="sbyte" @bind-Value="Value.DisplaySexID" ValueCompare="ValueCompare?.DisplaySexID" Label="@nameof(Value.DisplaySexID).ToDisplayName()" GetOptionsAsync_Func="Service.GetDisplaySexIdOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.DisplaySexID)))" Disabled="true"/>
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -19,37 +20,3 @@
         <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesID" ValueCompare="ValueCompare?.BakeMaterialResourcesID" Label="@nameof(Value.BakeMaterialResourcesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.BakeMaterialResourcesID)))" />
     </MudItem>
 </StandardDtoContent>
-
-@code {
-    // Used to refresh Display Info Options
-    [CascadingParameter(Name = "RefreshIndex")]
-    public Action RefreshIndex { get; set; }
-
-    void DisplayRaceIdChanged(sbyte id)
-    {
-        Value.DisplayRaceID = id;
-        RefreshIndex();
-    }
-
-    void DisplaySexIdChanged(sbyte id)
-    {
-        Value.DisplaySexID = id;
-        RefreshIndex();
-    }
-
-    async Task<Dictionary<sbyte, string>> GetGenders()
-    {
-        return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<sbyte, string>> GetClasses()
-    {
-        return Enum.GetValues<ChrClassId>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<sbyte, string>> GetRaces()
-    {
-        return Enum.GetValues<ChrRaceId>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-}

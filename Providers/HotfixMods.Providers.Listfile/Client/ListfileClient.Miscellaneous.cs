@@ -13,7 +13,10 @@
                 else if (word.Length == 1)
                     result += $"{word.ToString().ToUpper()} ";
             }
-            return result;
+
+            result = result.Replace("Hd", "HD");
+
+            return result.Trim();
         }
     }
 }

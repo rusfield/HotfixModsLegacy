@@ -18,10 +18,10 @@
             <Placeholder_Element Amount="4" />
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="GetGenders" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Gender)))" />
+                    <Input_Element T="sbyte" @bind-Value="Value.Gender" ValueCompare="ValueCompare?.Gender" Label="@nameof(Value.Gender).ToDisplayName()" GetOptionsAsync_Func="Service.GetGenderOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Gender)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="ushort" @bind-Value="Value.ModelID" ValueCompare="ValueCompare?.ModelID" Label="@nameof(Value.ModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ModelID)))" GetOptionsAsync_Func="GetModelIds" />
+                    <Input_Element T="ushort" @bind-Value="Value.ModelID" ValueCompare="ValueCompare?.ModelID" Label="@nameof(Value.ModelID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ModelID)))" GetOptionsAsync_Func="Service.GetModelIdOptionsAsync" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
@@ -62,15 +62,3 @@
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>
-
-@code {
-    async Task<Dictionary<sbyte, string>> GetGenders()
-    {
-        return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
-    }
-
-    async Task<Dictionary<ushort, string>> GetModelIds()
-    {
-        return Service.GetModelIds();
-    }
-}

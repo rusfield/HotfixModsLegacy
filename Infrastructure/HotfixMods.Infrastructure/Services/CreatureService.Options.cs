@@ -1,4 +1,5 @@
-﻿using HotfixMods.Core.Enums.TrinityCore;
+﻿using HotfixMods.Core.Enums.Db2;
+using HotfixMods.Core.Enums.TrinityCore;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
@@ -172,6 +173,33 @@ namespace HotfixMods.Infrastructure.Services
                 results.Add((ushort)particleColor.GetIdValue(), colors);
             }
             return results;
+        }
+
+        public async Task<Dictionary<sbyte, string>> GetGenderOptionsAsync()
+        {
+            return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<ushort, string>> GetModelIdOptionsAsync()
+        {
+            return await GetCreatureModelDataOptionsAsync<ushort>();
+        }
+        #endregion
+
+        #region CreatureDisplayInfoExtra
+        public async Task<Dictionary<sbyte, string>> GetDisplaySexIdOptionsAsync()
+        {
+            return Enum.GetValues<Gender>().ToDictionary(key => (sbyte)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<sbyte, string>> GetDisplayClassIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<sbyte>("ChrClasses", "Name");
+        }
+
+        public async Task<Dictionary<sbyte, string>> GetDisplayRaceIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<sbyte>("ChrRaces", "Name");
         }
         #endregion
     }

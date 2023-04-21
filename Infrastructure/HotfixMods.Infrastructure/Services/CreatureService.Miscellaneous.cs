@@ -294,6 +294,7 @@ namespace HotfixMods.Infrastructure.Services
             if (dto.CreatureDisplayInfoExtra != null)
             {
                 dto.CreatureDisplayInfoExtra.ID = creatureDisplayInfoExtraId;
+                dto.CreatureDisplayInfoExtra.DisplaySexID = dto.CreatureDisplayInfo.Gender;
                 dto.CreatureDisplayInfoExtra.VerifiedBuild = VerifiedBuild;
 
                 if (dto.NpcModelItemSlotDisplayInfo?.Any() ?? false)

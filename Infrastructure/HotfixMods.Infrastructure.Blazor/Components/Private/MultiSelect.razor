@@ -1,7 +1,21 @@
-﻿@typeparam T
+﻿@* This is a dirty workaround (1 of 2) to correctly display custom content in MudSelect multiselect *@
+<head>
+    <style>
+        div.mud-input-slot {
+            visibility: hidden !important;
+            max-width: 0px !important;
+        }
+    </style>
+</head>
+
+@typeparam T
 
 @using HotfixMods.Infrastructure.Blazor.Business
 @using System.Linq
+@using Microsoft.JSInterop;
+
+
+@inject IJSRuntime jsRuntime
 
 @if (null == options)
 {
@@ -9,7 +23,7 @@
 }
 else
 {
-    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="@((Value?.ToString() ?? "null" + $" {ComponentHelper.GetHelperText<T>()}"))" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
+    <MudSelect @ref="mudSelectRef" Variant="@Variant" T="T" Label="@Label" @bind-Value="Value" SelectedValues="selectedValues" SelectedValuesChanged="SetValuesAsync" HelperText="@((Value?.ToString() ?? "null") + $" {ComponentHelper.GetHelperText<T>()}")" HelperTextOnFocus="true" Adornment="Adornment" AdornmentIcon="@AdornmentIcon" OnAdornmentClick="OnAdornmentClick" AnchorOrigin="Origin.BottomCenter" Error="Error" ErrorText="Select a valid value" Disabled="Disabled" Class="adornment-clickable helper-text-hover" MultiSelection="true" MultiSelectionTextFunc="@(new Func<List<string>, string>(SetSelectionText))">
         @foreach (var option in options)
         {
             if (!zeroIsDefined && option.Key.ToString() == default(T).ToString())
@@ -86,6 +100,17 @@ else
     bool zeroIsDefined = true;
     List<T> exclusiveSelectValues = new();
 
+    string javascriptCode = @"
+        (function() {
+        window.changeInputType = function() {
+            var inputs = document.getElementsByTagName('input');
+            for (var i = 0; i < inputs.length; i++) {
+            inputs[i].type = 'text';
+            }
+        }
+        })();
+    ";
+
     protected override void OnParametersSet()
     {
         if (previousPageIndex != CurrentPageIndex && mudSelectRef != null)
@@ -103,6 +128,11 @@ else
             await InitOptions();
             this.StateHasChanged();
         }
+
+        /* Woarkaround 2/2 for MudSelect */
+        await jsRuntime.InvokeAsync<object>("eval", javascriptCode);
+        await jsRuntime.InvokeAsync<object>("changeInputType");
+
         await base.OnAfterRenderAsync(firstRender);
     }
 
@@ -158,12 +188,12 @@ else
 
     string SetSelectionText(IEnumerable<string> selection)
     {
-        int count = selection.Count();
+        int count = selection.Where(s => !s.Equals("0", StringComparison.InvariantCultureIgnoreCase)).Count();
 
         return count switch
         {
             0 => "None",
-            1 => "1 selected",
+            1 => options.Where(o => o.Key.ToString().Equals(selection.First(), StringComparison.InvariantCultureIgnoreCase)).First().Value,
             _ => $"{count} selected"
         };
     }

@@ -46,16 +46,16 @@ namespace HotfixMods.Infrastructure.Services
                 effectGroup.SpellVisualKitEffect.ParentSpellVisualKitID = (int)spellVisualKitId;
                 effectGroup.SpellVisualScreenEffect.VerifiedBuild = VerifiedBuild;
 
-                if (Enum.IsDefined(typeof(SpellVisualEffectEffectType), effectGroup.SpellVisualKitEffect.EffectType))
+                if (Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), effectGroup.SpellVisualKitEffect.EffectType))
                 {
-                    var type = (SpellVisualEffectEffectType)effectGroup.SpellVisualKitEffect.EffectType;
-                    if (type == SpellVisualEffectEffectType.SPELL_PROCEDURAL_EFFECT)
+                    var type = (SpellVisualKitEffect_EffectType)effectGroup.SpellVisualKitEffect.EffectType;
+                    if (type == SpellVisualKitEffect_EffectType.SPELL_PROCEDURAL_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextSpellProceduralEffectId;
                         effectGroup.SpellProceduralEffect.ID = nextSpellProceduralEffectId++;
                         effectGroup.SpellProceduralEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_KIT_MODEL_ATTACH)
+                    else if (type == SpellVisualKitEffect_EffectType.SPELL_VISUAL_KIT_MODEL_ATTACH)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextSpellVisualKitModelAttachId;
                         effectGroup.SpellVisualKitModelAttach.SpellVisualEffectNameID = (int)nextSpellVisualEffectNameId;
@@ -66,87 +66,87 @@ namespace HotfixMods.Infrastructure.Services
                         effectGroup.SpellVisualKitModelAttach.ID = nextSpellVisualKitModelAttachId++;
                         effectGroup.SpellVisualKitModelAttach.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.CAMERA_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.CAMERA_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextCameraEffectId;
                         effectGroup.CameraEffect.ID = nextCameraEffectId++;
                         effectGroup.CameraEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.CAMERA_EFFECT_2)
+                    else if (type == SpellVisualKitEffect_EffectType.CAMERA_EFFECT_2)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextCameraEffectId;
                         effectGroup.CameraEffect2.ID = nextCameraEffectId++;
                         effectGroup.CameraEffect2.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.SOUND_KIT)
+                    else if (type == SpellVisualKitEffect_EffectType.SOUND_KIT)
                     {
                         // Nothing to do here
                     }
-                    else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_ANIM)
+                    else if (type == SpellVisualKitEffect_EffectType.SPELL_VISUAL_ANIM)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextSpellVisualAnimId;
                         effectGroup.SpellVisualAnim.ID = nextSpellVisualAnimId++;
                         effectGroup.SpellVisualAnim.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.SHADOWY_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.SHADOWY_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextShadowyEffectId;
                         effectGroup.ShadowyEffect.ID = nextShadowyEffectId++;
                         effectGroup.ShadowyEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.SPELL_EFFECT_EMISSION)
+                    else if (type == SpellVisualKitEffect_EffectType.SPELL_EFFECT_EMISSION)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextSpellEffectEmissionId;
                         effectGroup.SpellEffectEmission.ID = nextSpellEffectEmissionId++;
                         effectGroup.SpellEffectEmission.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.OUTLINE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.OUTLINE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextOutlineEffectId;
                         effectGroup.OutlineEffect.ID = nextOutlineEffectId++;
                         effectGroup.OutlineEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.UNIT_SOUND_TYPE)
+                    else if (type == SpellVisualKitEffect_EffectType.UNIT_SOUND_TYPE)
                     {
                         // Nothing to do here
                     }
-                    else if (type == SpellVisualEffectEffectType.DISSOLVE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.DISSOLVE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextDissolveEffectId;
                         effectGroup.DissolveEffect.ID = nextDissolveEffectId++;
                         effectGroup.DissolveEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.EDGE_GLOW_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.EDGE_GLOW_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextEdgeGlowEffectId;
                         effectGroup.EdgeGlowEffect.ID = nextEdgeGlowEffectId++;
                         effectGroup.EdgeGlowEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.BEAM_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.BEAM_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextBeamEffectId;
                         effectGroup.BeamEffect.ID = nextBeamEffectId++;
                         effectGroup.BeamEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.CLIENT_SCENE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.CLIENT_SCENE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextClientSceneEffectId;
                         effectGroup.ClientSceneEffect.ID = nextClientSceneEffectId++;
                         effectGroup.ClientSceneEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.CLONE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.CLONE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextCloneEffectId;
                         effectGroup.CloneEffect.ID = nextCloneEffectId++;
                         effectGroup.CloneEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.GRADIENT_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.GRADIENT_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextGradientEffectId;
                         effectGroup.GradientEffect.ID = nextGradientEffectId++;
                         effectGroup.GradientEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.BARRAGE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.BARRAGE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextBarrageEffectId;
                         effectGroup.BarrageEffect.SpellVisualEffectNameID = (int)nextSpellVisualEffectNameId;
@@ -157,13 +157,13 @@ namespace HotfixMods.Infrastructure.Services
                         effectGroup.BarrageEffect.ID = nextBarrageEffectId++;
                         effectGroup.BarrageEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.ROPE_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.ROPE_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextRopeEffectId;
                         effectGroup.RopeEffect.ID = nextRopeEffectId++;
                         effectGroup.RopeEffect.VerifiedBuild = VerifiedBuild;
                     }
-                    else if (type == SpellVisualEffectEffectType.SPELL_VISUAL_SCREEN_EFFECT)
+                    else if (type == SpellVisualKitEffect_EffectType.SPELL_VISUAL_SCREEN_EFFECT)
                     {
                         effectGroup.SpellVisualKitEffect.Effect = (int)nextSpellVisualScreenEffectId;
                         effectGroup.SpellVisualScreenEffect.ID = nextSpellVisualScreenEffectId++;

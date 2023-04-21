@@ -1,4 +1,6 @@
-﻿namespace HotfixMods.Infrastructure.Blazor.Business
+﻿using HotfixMods.Infrastructure.DtoModels;
+
+namespace HotfixMods.Infrastructure.Blazor.Business
 {
     public static class ComponentHelper
     {
@@ -20,6 +22,15 @@
                 "System.Decimal" => "(float)",
                 _ => $"({typeof(T)})"
             };
+        }
+
+        public static Type? TryGetTabType(string propertyName, Type dtoType)
+        {
+            string pagesNamespace = "HotfixMods.Infrastructure.Blazor.Pages";
+            pagesNamespace += $".{dtoType.Name.Replace("Dto", "")}Tabs";
+            var type = Type.GetType($"{pagesNamespace}.{propertyName}_Tab");
+
+            return type;
         }
     }
 }

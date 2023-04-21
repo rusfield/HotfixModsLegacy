@@ -1,20 +1,16 @@
 ﻿<MudStack Spacing="0" Style="height:100%;" Justify="Justify.SpaceBetween">
     <MudText Class="custom-mud-tabs-title" Color="@Color" Style="@(string.IsNullOrWhiteSpace(FontGlowHtmlColor) ? "" : $"text-shadow:1px 1px 1px {FontGlowHtmlColor}")">
-        @Line1.ToUpper()
+        @line1.ToUpper()
     </MudText>
-    @if (!string.IsNullOrWhiteSpace(Line2))
+    @if (!string.IsNullOrWhiteSpace(line2))
     {
     <MudText Class="custom-mud-tabs-title" Color="@Color" Style="@(string.IsNullOrWhiteSpace(FontGlowHtmlColor) ? "" : $"text-shadow:1px 1px 1px {FontGlowHtmlColor}")">
-            @Line2.ToUpper()
+            @line2.ToUpper()
         </MudText>
     }
 </MudStack>
 
 @code {
-    [Parameter]
-    public string Line1 { get; set; } = "";
-    [Parameter]
-    public string? Line2 { get; set; }
 
     [Parameter]
     public string? Title { get; set; }
@@ -25,17 +21,30 @@
     [Parameter]
     public string FontGlowHtmlColor { get; set; } // Prepared for group colors. Input should be for example #ED1C24
 
+    // Store into temp values
+    string line1 = "";
+    string line2 = "";
+
     protected override void OnParametersSet()
     {
-        if(string.IsNullOrWhiteSpace(Line1) && !string.IsNullOrWhiteSpace(Title))
+        line1 = "";
+        line2 = "";
+        if(!string.IsNullOrWhiteSpace(Title))
         {
-            (Line1, Line2) = SplitByCenterSpace(Title);
+            (line1, line2) = SplitByCenterSpace(Title);
         }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
     }
 
     public void SetTitle(string title)
     {
-        (Line1, Line2) = SplitByCenterSpace(title);
+        line1 = "";
+        line2 = "";
+        (line1, line2) = SplitByCenterSpace(title);
         this.StateHasChanged();
     }
 

@@ -1,7 +1,9 @@
 ﻿@using HotfixMods.Core.Enums.Db2;
+@using HotfixMods.Infrastructure.Blazor.Business;
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKitEffect>
+@inject SpellVisualKitService Service
 
 <InstancedDtoContentPage>
     <MudItem xs="3" />
@@ -10,7 +12,7 @@
         <InlineGroup Merged="false" LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70">
             <LeftContent />
             <MiddleContent>
-                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="GetEffectTypes" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitEffect.EffectType)))" />
+                <Input_Element T="int" Value="Value.EffectType" ValueChanged="OnEffectTypeChanged" ValueCompare="ValueCompare?.EffectType" Label="@nameof(Value.EffectType).ToDisplayName()" GetOptionsAsync_Func="Service.GetEffectOptionsAsync" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitEffect.EffectType)))" />
             </MiddleContent>
             <RightContent />
         </InlineGroup>
@@ -26,27 +28,63 @@
 </InstancedDtoContentPage>
 
 @code {
+    [CascadingParameter(Name = "SetHiddenTabs")]
+    public Action<List<Type>> SetHiddenTabs { get; set; }
+
     [Parameter]
     public EventCallback<int> EffectTypeChanged { get; set; }
+
+    Dictionary<int, Type> effectTypeComponents = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitEffects();
+        HideInactiveTabs();
+        await base.OnInitializedAsync();
+    }
 
     async void OnEffectTypeChanged(int newEffectType)
     {
         Value.EffectType = newEffectType;
+
+        HideInactiveTabs();
+
         await EffectTypeChanged.InvokeAsync(newEffectType);
     }
 
     bool EffectIsDisabled()
     {
-        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType);
-        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.UNIT_SOUND_TYPE);
-        var effectIsSoundKitType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.SOUND_KIT);
+        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType);
+        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualKitEffect_EffectType.UNIT_SOUND_TYPE);
+        var effectIsSoundKitType = (Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualKitEffect_EffectType.SOUND_KIT);
 
 
         return effectIsDefined && !effectIsUnitSoundType && !effectIsSoundKitType;
     }
 
-    async Task<Dictionary<int, string>> GetEffectTypes()
+    async Task InitEffects()
     {
-        return Enum.GetValues<SpellVisualEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+        var effects = await Service.GetEffectOptionsAsync();
+        foreach (var effect in effects)
+        {
+            var type = ComponentHelper.TryGetTabType(effect.Value.ToDisplayName().Replace(" ", ""), typeof(SpellVisualKitDto));
+            if (type != null)
+                effectTypeComponents.Add(effect.Key, type);
+        }
+        effectTypeComponents.Add(-1, typeof(SpellVisualEffectName_Tab));
+    }
+
+    void HideInactiveTabs()
+    {
+        var hiddenTabs = new List<Type>();
+        foreach (var component in effectTypeComponents)
+        {
+            if (Value.EffectType == component.Key)
+                continue;
+
+            hiddenTabs.Add(component.Value);
+        }
+
+        SetHiddenTabs.Invoke(hiddenTabs);
     }
 }

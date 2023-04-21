@@ -12,5 +12,6 @@
         public Type GroupType { get; set; }
         public int CurrentInstance { get; set; }
         public int InstanceCount { get; set; }
+        public List<Type> HiddenComponentTypes { get; set; }
     }
 }

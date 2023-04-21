@@ -1,15 +1,30 @@
-﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+﻿@using HotfixMods.Infrastructure.Blazor.Business;
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Blazor.Pages.SpellVisualKitTabs;
 
 @inject SpellVisualKitService Service
 @inherits PageBase<SpellVisualKitDto>
 
-<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearchId_Dialog>())" RequiredTypes="required" />
+<DtoTabsContent T="SpellVisualKitDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<SpellVisualKitSearchId_Dialog>())" RequiredTypes="required" HideableTypes="defaultHidden" />
 
 
 @code {
-    List<Type> required = new()
+    List<Type> required = new();
+
+    List<Type> defaultHidden = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        typeof(SpellVisualKit)
-    };
+        required.Add(typeof(SpellVisualKit));
+
+        var effects = await Service.GetEffectOptionsAsync();
+        foreach (var effect in effects)
+        {
+            var type = ComponentHelper.TryGetTabType(effect.Value.ToDisplayName().Replace(" ", ""), typeof(SpellVisualKitDto));
+            if (type != null)
+                defaultHidden.Add(type);
+        }
+        defaultHidden.Add(typeof(SpellVisualEffectName_Tab));
+    }
 }

@@ -81,7 +81,7 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.VignetteID" ValueCompare="ValueCompare?.VignetteID" Label="@nameof(Value.VignetteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.VignetteID)))" />
+            <Input_Element T="int" @bind-Value="Value.VignetteID" ValueCompare="ValueCompare?.VignetteID" Label="@nameof(Value.VignetteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.VignetteID)))" GetOptionsAsync_Func="Service.GetVignetteIdOptionsAsync" />
             <Input_Element T="int" @bind-Value="Value.WidgetSetID" ValueCompare="ValueCompare?.WidgetSetID" Label="@nameof(Value.WidgetSetID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.WidgetSetID)))" />
             <Input_Element T="int" @bind-Value="Value.WidgetSetUnitConditionID" ValueCompare="ValueCompare?.WidgetSetUnitConditionID" Label="@nameof(Value.WidgetSetUnitConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.WidgetSetUnitConditionID)))" />
         </MudItem>

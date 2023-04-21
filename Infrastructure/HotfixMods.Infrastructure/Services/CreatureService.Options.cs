@@ -152,6 +152,11 @@ namespace HotfixMods.Infrastructure.Services
             return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Unit_Class));
         }
 
+        public async Task<Dictionary<int, string>> GetVignetteIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<int>("Vignette", "Name");
+        }
+
         #region CreatureDisplayInfo
         public async Task<Dictionary<ushort, string>> GetParticleColorIdOptionsAsync()
         {

@@ -37,9 +37,9 @@
 
     bool EffectIsDisabled()
     {
-        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType);
-        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.UNIT_SOUND_TYPE);
-        var effectIsSoundKitType = (Enum.IsDefined(typeof(SpellVisualEffectEffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualEffectEffectType.SOUND_KIT);
+        var effectIsDefined = Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType);
+        var effectIsUnitSoundType = (Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualKitEffect_EffectType.UNIT_SOUND_TYPE);
+        var effectIsSoundKitType = (Enum.IsDefined(typeof(SpellVisualKitEffect_EffectType), Value.EffectType) && Value.EffectType == (int)SpellVisualKitEffect_EffectType.SOUND_KIT);
 
 
         return effectIsDefined && !effectIsUnitSoundType && !effectIsSoundKitType;
@@ -47,6 +47,6 @@
 
     async Task<Dictionary<int, string>> GetEffectTypes()
     {
-        return Enum.GetValues<SpellVisualEffectEffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+        return Enum.GetValues<SpellVisualKitEffect_EffectType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
     }
 }

@@ -93,7 +93,15 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<Dictionary<TOptionKey, string>> GetIconOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
-            return await _listfileProvider.GetIconsAsync<TOptionKey>();
+            try
+            {
+                return await _listfileProvider.GetIconsAsync<TOptionKey>();
+            }
+            catch
+            {
+                // Log?
+                return new();
+            }
         }
 
         protected async Task<Dictionary<TOptionKey, string>> GetDifficultyOptionsAsync<TOptionKey>()
@@ -133,15 +141,22 @@ namespace HotfixMods.Infrastructure.Services
 
             await Task.Run(async () =>
             {
-                var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
-                var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
-
-                foreach (var data in textureFileData)
+                try
                 {
-                    var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
-                    var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
-                    if (textureFiles.ContainsKey(fileDataId))
-                        results[materialResourceId] = textureFiles[fileDataId];
+                    var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
+                    var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
+
+                    foreach (var data in textureFileData)
+                    {
+                        var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
+                        var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
+                        if (textureFiles.ContainsKey(fileDataId))
+                            results[materialResourceId] = textureFiles[fileDataId];
+                    }
+                }
+                catch
+                {
+                    // Log?
                 }
             });
 
@@ -152,22 +167,33 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<Dictionary<TOptionKey, string>> GetCreatureModelDataOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
-            var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData", false, true);
-            var modelFiles = await _listfileProvider.GetModelFilesAsync<int>();
             var results = new Dictionary<TOptionKey, string>();
             results.InitializeDefaultValue();
 
-            foreach(var data in creatureModelData)
+            await Task.Run(async () =>
             {
-                var fileDataId = data.GetValueByNameAs<int>("FileDataID");
-                var key = (TOptionKey)Convert.ChangeType(data.GetIdValue(), typeof(TOptionKey));
+                try
+                {
+                    var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData", false, true);
+                    var modelFiles = await _listfileProvider.GetModelFilesAsync<int>();
 
-                if (modelFiles.ContainsKey(fileDataId))
-                    results[key] = modelFiles[fileDataId];
-                else
-                    results[key] = "Unknown";
-            }
 
+                    foreach (var data in creatureModelData)
+                    {
+                        var fileDataId = data.GetValueByNameAs<int>("FileDataID");
+                        var key = (TOptionKey)Convert.ChangeType(data.GetIdValue(), typeof(TOptionKey));
+
+                        if (modelFiles.ContainsKey(fileDataId))
+                            results[key] = modelFiles[fileDataId];
+                        else
+                            results[key] = "Unknown";
+                    }
+                }
+                catch
+                {
+                    // Log?
+                }
+            });
             return results;
         }
         #endregion

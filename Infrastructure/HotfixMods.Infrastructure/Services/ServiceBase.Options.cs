@@ -133,7 +133,7 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetMaterialResourceOptionsAsync<TOptionKey>()
+        protected async Task<Dictionary<TOptionKey, string>> GetTextureFileDataOptionsAsync<TOptionKey>(bool filedataAsId = false)
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
@@ -144,14 +144,14 @@ namespace HotfixMods.Infrastructure.Services
                 try
                 {
                     var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
-                    var textureFiles = await _listfileProvider.GetItemTexturesAsync<TOptionKey>();
+                    var textureFiles = await _listfileProvider.GetTexturesAsync<int>();
 
                     foreach (var data in textureFileData)
                     {
-                        var materialResourceId = data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
-                        var fileDataId = data.GetValueByNameAs<TOptionKey>("FileDataID");
+                        var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
+                        var fileDataId = data.GetValueByNameAs<int>("FileDataID");
                         if (textureFiles.ContainsKey(fileDataId))
-                            results[materialResourceId] = textureFiles[fileDataId];
+                            results[key] = textureFiles[fileDataId];
                     }
                 }
                 catch
@@ -164,7 +164,7 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        protected async Task<Dictionary<TOptionKey, string>> GetCreatureModelDataOptionsAsync<TOptionKey>()
+        protected async Task<Dictionary<TOptionKey, string>> GetCreatureModelDataOptionsAsync<TOptionKey>(bool filedataAsId = false)
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
@@ -175,13 +175,47 @@ namespace HotfixMods.Infrastructure.Services
                 try
                 {
                     var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData", false, true);
-                    var modelFiles = await _listfileProvider.GetModelFilesAsync<int>();
+                    var modelFiles = await _listfileProvider.GetModelsAsync<int>();
 
 
                     foreach (var data in creatureModelData)
                     {
                         var fileDataId = data.GetValueByNameAs<int>("FileDataID");
-                        var key = (TOptionKey)Convert.ChangeType(data.GetIdValue(), typeof(TOptionKey));
+                        var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("ID");
+
+                        if (modelFiles.ContainsKey(fileDataId))
+                            results[key] = modelFiles[fileDataId];
+                        else
+                            results[key] = "Unknown";
+                    }
+                }
+                catch
+                {
+                    // Log?
+                }
+            });
+            return results;
+        }
+
+
+        protected async Task<Dictionary<TOptionKey, string>> GetModelFileDataOptionsAsync<TOptionKey>(bool filedataAsId = false)
+            where TOptionKey : notnull
+        {
+            var results = new Dictionary<TOptionKey, string>();
+            results.InitializeDefaultValue();
+
+            await Task.Run(async () =>
+            {
+                try
+                {
+                    var modelData = await GetAsync(_appConfig.HotfixesSchema, "ModelFileData", false, true);
+                    var modelFiles = await _listfileProvider.GetModelsAsync<int>();
+
+
+                    foreach (var data in modelData)
+                    {
+                        var fileDataId = data.GetValueByNameAs<int>("FileDataID");
+                        var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("ModelResourcesID");
 
                         if (modelFiles.ContainsKey(fileDataId))
                             results[key] = modelFiles[fileDataId];

@@ -287,9 +287,21 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetMaterialResourceIdOptionsAsync()
         {
-            return await GetMaterialResourceOptionsAsync<int>();
+            return await GetTextureFileDataOptionsAsync<int>();
         }
 
+        #endregion
+
+        #region ItemDisplayInfo
+        public async Task<Dictionary<int, string>> GetModelMaterialResourcesIdOptionsAsync()
+        {
+            return await GetTextureFileDataOptionsAsync<int>();
+        }
+
+        public async Task<Dictionary<uint, string>> GetModelResourcesIdOptionsAsync()
+        {
+            return await GetModelFileDataOptionsAsync<uint>();
+        }
         #endregion
     }
 }

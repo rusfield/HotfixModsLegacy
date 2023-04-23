@@ -35,13 +35,13 @@ namespace HotfixMods.Providers.Listfile.Client
             return await ReadFileAsync<TKey>("interface/icons/", "blp");
         }
 
-        public async Task<Dictionary<TKey, string>> GetItemTexturesAsync<TKey>()
+        public async Task<Dictionary<TKey, string>> GetTexturesAsync<TKey>()
             where TKey : notnull
         {
-            return await ReadFileAsync<TKey>("item/", "blp");
+            return await ReadFileAsync<TKey>(null, "blp");
         }
 
-        public async Task<Dictionary<TKey, string>> GetModelFilesAsync<TKey>()
+        public async Task<Dictionary<TKey, string>> GetModelsAsync<TKey>()
             where TKey : notnull
         {
             return await ReadFileAsync<TKey>(null, "m2", true);

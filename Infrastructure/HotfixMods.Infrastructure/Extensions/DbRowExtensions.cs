@@ -82,7 +82,8 @@ namespace HotfixMods.Infrastructure.Extensions
         {
             string idName = "id";
             // TODO: Do something smarter here...
-            if(dbRow.Db2Name.Equals("TextureFileData", StringComparison.InvariantCultureIgnoreCase))
+            List<string> dbExceptions = new() { "TextureFileData", "ModelFileData", };
+            if(dbExceptions.Any(d => dbRow.Db2Name.Equals(d, StringComparison.InvariantCultureIgnoreCase)))
             {
                 idName = "filedataid";
             }

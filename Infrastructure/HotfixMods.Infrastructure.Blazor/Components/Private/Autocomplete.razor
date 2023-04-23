@@ -156,7 +156,7 @@ else
         string type = (Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T)).ToString();
         var listItem = options.Where(x => x.Key.ToString().Equals(input.Key.ToString(), StringComparison.InvariantCultureIgnoreCase));
         var value = listItem.Count() > 0 ? listItem.First().Key.ToString() : input.Value;
-        valueIsColor = input.Value.Contains("#");
+        valueIsColor = input.Value?.Contains("#") ?? false;
 
         if ("System.SByte" == type && sbyte.TryParse(value, out var sbyteValue))
         {

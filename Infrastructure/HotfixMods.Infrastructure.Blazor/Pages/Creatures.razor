@@ -6,7 +6,9 @@
 @inject IDialogService DialogService
 @inherits PageBase<CreatureDto>
 
-<DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="ValueCompare_Click" RequiredTypes="required" />
+<DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="ValueCompare_Click" RequiredTypes="required">
+    <ImagePlaceholder_Element />
+</DtoTabsContent>
 
 @code {
 

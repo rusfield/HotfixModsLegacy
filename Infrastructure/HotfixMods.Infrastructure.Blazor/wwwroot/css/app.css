@@ -164,3 +164,11 @@
 .color-selection-input:hover + .color-selection-icons {
     opacity: 0;
 }
+
+.tab-child-content {
+    position: absolute;
+    left: 50%;
+    top: 180px;
+    transform: translateX(-50%);
+    z-index: 5;
+}

@@ -26,9 +26,9 @@
                 <MudStack Row="true" AlignItems="AlignItems.End" Justify="Justify.FlexStart">
                     <MudIconButton Icon="@Icons.Material.Filled.KeyOff" Disabled Size="Size.Small" />
                     <MudText Typo="Typo.subtitle2" Align="Align.Center" Style="color:var(--mud-palette-action-disabled)">
-                        No ID yet
+                    No ID yet
                     </MudText>
-                </MudStack>
+                    </MudStack>
             }
         </MudStack>
     </MudItem>
@@ -71,6 +71,9 @@
     }
 </MudTabs>
 <MudPaper Style="height:640px;background-color:var(--mud-palette-surface)" Class="mx-3 rounded-0">
+    <div class="tab-child-content">
+        @ChildContent
+    </div>
     <MudCarousel @ref="mudCarouselRef" Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="PanelContentChanged">
         @foreach (var tab in tabs)
         {
@@ -140,7 +143,10 @@
     public EventCallback ValueCompare_Callback { get; set; }
 
     [Parameter]
-    public List<Type> RequiredTypes { get; set;  } = new(); // Which DB2/MySql objects can not be deleted.
+    public List<Type> RequiredTypes { get; set; } = new(); // Which DB2/MySql objects can not be deleted.
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
@@ -191,7 +197,7 @@
                 {
                     continue;
                 }
-                if(property.PropertyType == typeof(DbRow))
+                if (property.PropertyType == typeof(DbRow))
                 {
                     // If it is a hotfix tab, change tab name to DB2 name.
                     // But do it after tabtype is loaded (a couple of lines up).

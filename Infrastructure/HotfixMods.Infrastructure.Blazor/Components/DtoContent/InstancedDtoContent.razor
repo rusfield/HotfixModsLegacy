@@ -1,7 +1,7 @@
 ﻿<MudCarousel Style="position:fixed;width:100vw; height:640px;left:0" TData="object" ShowArrows="false" ShowBullets="false" AutoCycle="false" SelectedIndexChanged="NavigateInstance" SelectedIndex="InstanceData.CurrentInstance - 1">
     @if (ValueIsNull)
     {
-        <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
+        <MudCarouselItem Transition="Transition.None" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
             <MudGrid Class="px-6 mt-7">
                 <DtoContentNoValue />
             </MudGrid>
@@ -12,7 +12,7 @@
         for (int i = 0; i<InstanceData.InstanceCount; i++)
         {
             int index = i;
-            <MudCarouselItem Transition="Transition" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
+            <MudCarouselItem Transition="Transition.None" CustomTransitionEnter="transition-instance" CustomTransitionExit="transition-fade">
                 <div style="width:1232px; margin: 0 auto;">
                     <CascadingValue Name="GroupIndex" Value="index">
                         @ChildContent

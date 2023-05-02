@@ -210,11 +210,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             {
                 var fieldName = dbRowDefinition.ColumnDefinitions.ElementAt(i).Name;
                 var fieldType = CSharpTypeToMySqlDataType(dbRowDefinition.ColumnDefinitions.ElementAt(i).Type);
-                columns += $"{fieldName} {fieldType},";
+                columns += $"`{fieldName}` {fieldType},";
             }
 
-            string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS {schemaName};";
-            string createTableQuery = $"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ({columns} primary key(ID));";
+            string createSchemaQuery = $"CREATE SCHEMA IF NOT EXISTS `{schemaName}`;";
+            string createTableQuery = $"CREATE TABLE IF NOT EXISTS `{schemaName}`.`{tableName}` ({columns} primary key(ID));";
             using var mySqlConnection = new MySqlConnection(_connectionString);
             using var cmd = new MySqlCommand(createSchemaQuery + createTableQuery, mySqlConnection);
 

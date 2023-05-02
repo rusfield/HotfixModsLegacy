@@ -264,9 +264,9 @@
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.ModifiedCraftingReagentItemID)" Label="@(nameof(Value.ModifiedCraftingReagentItemID).ToDisplayName())" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ModifiedCraftingReagentItemID)))" />
-            <Input_Element T="byte" @bind-Value="@(Value.ArtifactID)" Label="@(nameof(Value.ArtifactID).ToDisplayName())" ValueCompare="ValueCompare?.ArtifactID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ArtifactID)))" />
+            <Input_Element T="byte" @bind-Value="@(Value.ArtifactID)" Label="@(nameof(Value.ArtifactID).ToDisplayName())" ValueCompare="ValueCompare?.ArtifactID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ArtifactID)))" GetOptionsAsync_Func="Service.GetArtifactIdOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="@(Value.QualityModifier)" Label="@(nameof(Value.QualityModifier).ToDisplayName())" ValueCompare="ValueCompare?.QualityModifier" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.QualityModifier)))" />
-            <Input_Element T="uint" @bind-Value="@(Value.BagFamily)" Label="@(nameof(Value.BagFamily).ToDisplayName())" ValueCompare="ValueCompare?.BagFamily" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.BagFamily)))" />
+            <Input_Element T="uint" @bind-Value="@(Value.BagFamily)" Label="@(nameof(Value.BagFamily).ToDisplayName())" ValueCompare="ValueCompare?.BagFamily" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.BagFamily)))" GetOptionsAsync_Func="Service.GetBagFamilyOptionsAsync" MultiSelection="true" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />

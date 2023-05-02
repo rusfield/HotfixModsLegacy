@@ -1,13 +1,14 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
 @using HotfixMods.Infrastructure.Blazor.Pages.CreatureTabs
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Blazor.Components.Previews
 
 @inject CreatureService Service
 @inject IDialogService DialogService
 @inherits PageBase<CreatureDto>
 
 <DtoTabsContent T="CreatureDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="ValueCompare_Click" RequiredTypes="required">
-    <ImagePlaceholder_Element />
+    <Placeholder_Preview />
 </DtoTabsContent>
 
 @code {

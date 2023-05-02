@@ -24,7 +24,26 @@ using HotfixMods.Core.Enums;
 
 
 var tool = new Db2ImportTool();
-await tool.Db2FileToDb2MySql("10.0.5.47871", @"C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS", "ItemModifiedAppearance", "hotfix_mods", "item_modified_appearance", "127.0.0.1", "3306", "root", "root");
+var db2Path = @"C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS";
+
+foreach(var file in Directory.GetFiles(db2Path))
+{
+    var split = file.Split("\\");
+    if (split.Length == 0)
+        continue;
+
+    var name = split.Last().Replace(".db2", "");
+    try
+    {
+        await tool.Db2FileToDb2MySql("10.0.5.47871", db2Path, name, "HotfixMods", name, "127.0.0.1", "3306", "root", "root");
+    }
+    catch(Exception ex)
+    {
+
+    }
+
+}
+
 Console.Read();
 
 

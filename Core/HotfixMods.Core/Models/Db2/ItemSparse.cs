@@ -24,6 +24,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ExpansionID { get; set; } = 0;
         public decimal DmgVariance { get; set; } = 0;
         public int LimitCategory { get; set; } = 0;
+        [Db2Description("The amount of time, in seconds, that this item will last in inventory before it disappears. Value 0 is forever, while any other positive value will appear as duration on the item tooltip.")]
         public uint DurationInInventory { get; set; } = 0;
         public decimal QualityModifier { get; set; } = 0;
         public uint BagFamily { get; set; } = 0;
@@ -85,7 +86,7 @@ namespace HotfixMods.Core.Models.Db2
         public ushort MinFactionID { get; set; } = 0;
         public ushort RequiredSkillRank { get; set; } = 0;
         public ushort RequiredSkill { get; set; } = 0;
-        public ushort ItemLevel { get; set; } = 0;
+        public ushort ItemLevel { get; set; } = 1;
         [Db2Description("Enabling something here will make the item say \"Classes: Warrior, Paladin, Death Knight\".")]
         public short AllowableClass { get; set; } = -1;
         public byte ArtifactID { get; set; } = 0;

@@ -255,6 +255,16 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
+        public async Task<Dictionary<byte, string>> GetArtifactIdOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<byte>("Artifact", "Name");
+        }
+
+        public async Task<Dictionary<uint, string>> GetBagFamilyOptionsAsync()
+        {
+            return await GetDb2OptionsAsync<uint>("ItemBagFamily", "Name", true);
+        }
+
         public async Task<Dictionary<int, string>> GetLanguageIdOptionsAsync()
         {
             return await GetDb2OptionsAsync<int>("Languages", "Name");
@@ -308,6 +318,11 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<int, string>> GetDisplayTypeOptionsAsync()
         {
             return Enum.GetValues<ItemAppearance_DisplayType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<int, string>> GetTransmogPlayerConditionIdOptionsAsync()
+        {
+            return await GetPlayerConditionOptionsAsync<int>();
         }
         #endregion
     }

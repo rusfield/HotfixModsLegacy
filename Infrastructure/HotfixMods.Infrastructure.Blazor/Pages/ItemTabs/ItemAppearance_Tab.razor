@@ -13,7 +13,7 @@
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.UiOrder)))" />
-        <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionID" ValueCompare="ValueCompare?.TransmogPlayerConditionID" Label="@nameof(Value.TransmogPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.TransmogPlayerConditionID)))" />
+        <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionID" ValueCompare="ValueCompare?.TransmogPlayerConditionID" Label="@nameof(Value.TransmogPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.TransmogPlayerConditionID)))" GetOptionsAsync_Func="Service.GetTransmogPlayerConditionIdOptionsAsync" />
 
     </MudItem>
 </StandardDtoContent>

@@ -6,13 +6,13 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class ServiceBase
     {
-        protected async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey>(string db2Name, string valueColumnName)
+        protected async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey>(string db2Name, string valueColumnName, bool convertToFlags = false)
             where TOptionKey : notnull
         {
-            return await GetDb2OptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName);
+            return await GetDb2OptionsAsync<TOptionKey, uint>(_appConfig.HotfixesSchema, db2Name, valueColumnName, convertToFlags);
         }
 
-        async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName)
+        async Task<Dictionary<TOptionKey, string>> GetDb2OptionsAsync<TOptionKey, TClientKey>(string schemaName, string db2Name, string valueColumnName, bool convertToFlags)
             where TOptionKey : notnull
             where TClientKey : notnull
         {
@@ -33,6 +33,13 @@ namespace HotfixMods.Infrastructure.Services
                         else
                             value = $"{value}";
 
+                        if (convertToFlags)
+                        {
+                            // ID of DB2s have so far not been negative nor bigger than int
+                            var intKey = int.Parse(key);
+                            intKey = intKey == 0 ? 0 : 1 << (intKey - 1);
+                            key = intKey.ToString();
+                        }
 
                         var optionKey = (TOptionKey)Convert.ChangeType(key, typeof(TOptionKey));
                         results[optionKey] = value;
@@ -230,6 +237,14 @@ namespace HotfixMods.Infrastructure.Services
             });
             return results;
         }
+
+        public async Task<Dictionary<TOptionKey, string>> GetPlayerConditionOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            return await GetDb2OptionsAsync<TOptionKey>("PlayerCondition", "Failure_Description");
+        }
+
         #endregion
+
     }
 }

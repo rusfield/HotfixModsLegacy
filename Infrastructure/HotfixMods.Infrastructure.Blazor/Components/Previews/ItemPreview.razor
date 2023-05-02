@@ -1,0 +1,94 @@
+﻿<MudPaper Elevation="3" Class="rounded-lg ma-5 pa-5" Style="height: 360px; width: 400px">
+    <MudStack Spacing="0">
+        <MudText Style="@(GetNameCss())">
+            <strong>
+                @GetName()
+            </strong>
+        </MudText>
+        <MudText Style="color:#FFD100">
+            @GetItemLevel()
+        </MudText>
+        <MudText>
+            @GetBonding()
+        </MudText>
+
+        <MudText Style="color:#FFD100">
+            @GetDescription()
+        </MudText>
+    </MudStack>
+</MudPaper>
+
+@code {
+    [CascadingParameter(Name = "PageTab")]
+    public PageTab PageTab { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        dto = (ItemDto)PageTab.Dto;
+        base.OnParametersSet();
+    }
+
+    ItemDto dto;
+
+
+
+
+    string GetName()
+    {
+        if (string.IsNullOrWhiteSpace(dto.ItemSparse?.Display))
+        {
+            return $"{nameof(ItemSparse.Display)} in {nameof(ItemSparse)} required to preview";
+        }
+        return dto.ItemSparse.Display;
+    }
+
+    string GetNameCss()
+    {
+        string css = "font-size:calc(var(--mud-typography-body1-size)*1.1);color:#";
+        if (string.IsNullOrWhiteSpace(dto.ItemSparse?.Display))
+        {
+            return $"{css}FF2020;";
+        }
+        css += dto.ItemSparse.OverallQualityID switch
+        {
+            0 => "9D9D9D",
+            // 1 is default
+            2 => "1EFF00",
+            3 => "0070DD",
+            4 => "A335EE",
+            5 => "FF8000",
+            6 => "E6CC80",
+            7 => "00CCFF",
+            8 => "00CCFF",
+            _ => "FFFFFF"
+        };
+
+        return css;
+    }
+
+    string GetItemLevel()
+    {
+        return dto.ItemSparse != null ? $"Item Level {dto.ItemSparse?.ItemLevel}" : "";
+    }
+
+    string GetBonding()
+    {
+        int bonding = dto.ItemSparse?.Bonding ?? 0;
+        return bonding switch
+        {
+            // 0 is hidden
+            1 => "Binds when picked up",
+            2 => "Binds when equipped",
+            3 => "Binds when used",
+            4 => "Quest Item",
+            _ => ""
+        };
+    }
+
+
+
+    string GetDescription()
+    {
+        return string.IsNullOrWhiteSpace(dto.ItemSparse?.Description) ? "" : $"\"{dto.ItemSparse.Description}\"";
+    }
+}

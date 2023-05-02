@@ -9,6 +9,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ID { get; set; } = 0;
         public int DisplayType { get; set; } = 0;
         public int ItemDisplayInfoID { get; set; } = 0;
+        [Db2Description("Set this value on Item.")]
         public int DefaultIconFileDataID { get; set; } = 0;
         public int UiOrder { get; set; } = 0;
         public int TransmogPlayerConditionID { get; set; } = 0;

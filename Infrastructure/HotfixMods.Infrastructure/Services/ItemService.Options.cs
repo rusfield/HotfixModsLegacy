@@ -303,5 +303,12 @@ namespace HotfixMods.Infrastructure.Services
             return await GetModelFileDataOptionsAsync<uint>();
         }
         #endregion
+
+        #region ItemAppearance
+        public async Task<Dictionary<int, string>> GetDisplayTypeOptionsAsync()
+        {
+            return Enum.GetValues<ItemAppearance_DisplayType>().ToDictionary(key => (int)key, value => value.ToDisplayString());
+        }
+        #endregion
     }
 }

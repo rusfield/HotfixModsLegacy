@@ -22,6 +22,13 @@ using static DBDefsLib.Structs;
 using HotfixMods.Core.Enums;
 
 
+
+var tool = new Db2ImportTool();
+await tool.Db2FileToDb2MySql("10.0.5.47871", @"C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS", "ItemModifiedAppearance", "hotfix_mods", "item_modified_appearance", "127.0.0.1", "3306", "root", "root");
+Console.Read();
+
+
+
 // TODO: Change to 10.0.7???
 var client = new Db2Client("10.0.5.47871");
 var path = @"D:\TrinityCore\Dragonflight\dbc\enUS";

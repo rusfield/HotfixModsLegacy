@@ -1,29 +1,19 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
+@inject ItemService Service
 @inherits DtoContentBase<ItemDto, ItemAppearance>
 
 <StandardDtoContent T="ItemAppearance" >
-    <MudItem xs="3" />
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.DisplayType" ValueCompare="ValueCompare?.DisplayType" Label="@nameof(Value.DisplayType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.DisplayType)))" GetOptionsAsync_Func="Service.GetDisplayTypeOptionsAsync" />
+        <Input_Element T="int" @bind-Value="Value.DefaultIconFileDataID" ValueCompare="ValueCompare?.DefaultIconFileDataID" Label="@nameof(Value.DefaultIconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.DefaultIconFileDataID)))" Disabled="true" />
+    </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
-        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.DisplayType" ValueCompare="ValueCompare?.DisplayType" Label="@nameof(Value.DisplayType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.DisplayType)))" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.DefaultIconFileDataID" ValueCompare="ValueCompare?.DefaultIconFileDataID" Label="@nameof(Value.DefaultIconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.DefaultIconFileDataID)))" />
-            </LeftContent>
-            <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.UiOrder)))" />
-            </MiddleContent>
-            <RightContent>
-                <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionID" ValueCompare="ValueCompare?.TransmogPlayerConditionID" Label="@nameof(Value.TransmogPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.TransmogPlayerConditionID)))" />
-            </RightContent>
-        </InlineGroup>
     </MudItem>
-    <MudItem xs="3" />
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.UiOrder" ValueCompare="ValueCompare?.UiOrder" Label="@nameof(Value.UiOrder).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.UiOrder)))" />
+        <Input_Element T="int" @bind-Value="Value.TransmogPlayerConditionID" ValueCompare="ValueCompare?.TransmogPlayerConditionID" Label="@nameof(Value.TransmogPlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemAppearance.TransmogPlayerConditionID)))" />
+
+    </MudItem>
 </StandardDtoContent>

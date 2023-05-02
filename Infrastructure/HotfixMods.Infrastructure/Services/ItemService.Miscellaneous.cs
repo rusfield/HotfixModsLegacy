@@ -86,6 +86,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     dto.ItemAppearance.ID = itemAppearanceId;
                     dto.ItemAppearance.ItemDisplayInfoID = (int)itemDisplayInfoId;
+                    dto.ItemAppearance.DefaultIconFileDataID = dto.Item.IconFileDataID;
                     dto.ItemAppearance.VerifiedBuild = VerifiedBuild;
 
                     if (dto.ItemDisplayInfo != null)

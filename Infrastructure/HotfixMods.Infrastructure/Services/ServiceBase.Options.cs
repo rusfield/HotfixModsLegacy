@@ -1,6 +1,7 @@
 ﻿using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Helpers;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -238,10 +239,33 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        public async Task<Dictionary<TOptionKey, string>> GetPlayerConditionOptionsAsync<TOptionKey>()
+        protected async Task<Dictionary<TOptionKey, string>> GetPlayerConditionOptionsAsync<TOptionKey>()
             where TOptionKey : notnull
         {
             return await GetDb2OptionsAsync<TOptionKey>("PlayerCondition", "Failure_Description");
+        }
+
+        protected async Task<Dictionary<TOptionKey, string>> GetParticleColorOptionsAsync<TOptionKey>()
+            where TOptionKey : notnull
+        {
+            var results = new Dictionary<TOptionKey, string>();
+            var particleColors = await GetAsync(_appConfig.HotfixesSchema, "ParticleColor", false, true);
+            foreach (var particleColor in particleColors)
+            {
+                var colors = $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start0"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start1"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start2"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID0"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID1"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID2"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End0"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End1"))}, ";
+                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End2"))}";
+
+
+                results.Add(particleColor.GetValueByNameAs<TOptionKey>("ID"), colors);
+            }
+            return results;
         }
 
         #endregion

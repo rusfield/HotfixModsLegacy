@@ -98,7 +98,7 @@
     <PagedDtoContentPage>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.ItemVisual" ValueCompare="ValueCompare?.ItemVisual" Label="@nameof(Value.ItemVisual).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ItemVisual)))" />
-            <Input_Element T="int" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ParticleColorID)))" />
+            <Input_Element T="int" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ParticleColorID)))" GetOptionsAsync_Func="Service.GetParticleColorIdOptionsAsync" />
             <Input_Element T="uint" @bind-Value="Value.ItemRangedDisplayInfoID" ValueCompare="ValueCompare?.ItemRangedDisplayInfoID" Label="@nameof(Value.ItemRangedDisplayInfoID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.ItemRangedDisplayInfoID)))" />
             <Input_Element T="uint" @bind-Value="Value.OverrideSwooshSoundKitID" ValueCompare="ValueCompare?.OverrideSwooshSoundKitID" Label="@nameof(Value.OverrideSwooshSoundKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemDisplayInfo.OverrideSwooshSoundKitID)))" />
         </MudItem>

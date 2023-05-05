@@ -20,7 +20,7 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<ulong, string>();
             results.Add(0, "None");
             ulong keyIndex = 1;
-            foreach(var mechanic in mechanics)
+            foreach (var mechanic in mechanics)
             {
                 results[keyIndex] = $"{mechanic.GetValueByNameAs<string>("StateName").ToDisplayString()}";
                 keyIndex *= 2;
@@ -67,8 +67,8 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<int, string>> GetFamilyOptionsAsync()
         {
-            var options = await GetDb2OptionsAsync<int>( "CreatureFamily", "Name");
-            if(!options.ContainsKey(0))
+            var options = await GetDb2OptionsAsync<int>("CreatureFamily", "Name");
+            if (!options.ContainsKey(0))
             {
                 options[0] = "None";
                 options = options.SortByKey();
@@ -160,24 +160,7 @@ namespace HotfixMods.Infrastructure.Services
         #region CreatureDisplayInfo
         public async Task<Dictionary<ushort, string>> GetParticleColorIdOptionsAsync()
         {
-            var results = new Dictionary<ushort, string>();
-            var particleColors = await GetAsync(_appConfig.HotfixesSchema, "ParticleColor", false, true);
-            foreach(var particleColor in particleColors)
-            {
-                var colors = $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start0"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start1"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start2"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID0"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID1"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("MID2"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End0"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End1"))}, ";
-                colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("End2"))}";
-
-
-                results.Add((ushort)particleColor.GetIdValue(), colors);
-            }
-            return results;
+            return await GetParticleColorOptionsAsync<ushort>();
         }
 
         public async Task<Dictionary<sbyte, string>> GetGenderOptionsAsync()

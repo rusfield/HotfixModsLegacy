@@ -5,6 +5,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Helpers;
 using HotfixMods.Providers.Listfile;
 
 namespace HotfixMods.Infrastructure.Services
@@ -323,6 +324,11 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<int, string>> GetTransmogPlayerConditionIdOptionsAsync()
         {
             return await GetPlayerConditionOptionsAsync<int>();
+        }
+
+        public async Task<Dictionary<int, string>> GetParticleColorIdOptionsAsync()
+        {
+            return await GetParticleColorOptionsAsync<int>();
         }
         #endregion
     }

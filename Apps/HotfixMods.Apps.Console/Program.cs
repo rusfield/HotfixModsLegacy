@@ -46,7 +46,7 @@ foreach(var file in Directory.GetFiles(db2Path))
 
 Console.Read();
 
-
+*/
 
 var client = new Db2Client("10.1.0.49474");
 var path = @"D:\TrinityCore\Dragonflight\dbc\enUS";
@@ -67,8 +67,8 @@ List<(ChrModelId, int, int)> excluded = new() {
     //ChrModelId.DRACTHYR_DRAGON, 0, 9999)
 };
 
-string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 146, 0, {3}, {3}, 0, 90001, 0, 0, " + verifiedBuild + ");";
-string elementSql = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, {2}, 0, {3}, 0, 0, 0, 0, 0, " + verifiedBuild + ");";
+string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 146, 0, {3}, {3}, 0, 90001, 0, 0, 0, " + verifiedBuild + ", null);";
+string elementSql = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, {2}, 0, {3}, 0, 0, 0, 0, 0, 0, " + verifiedBuild + ");";
 string hotfixSql = "INSERT INTO hotfixes.hotfix_data values({0}, 0, {1}, {2}, 1, " + verifiedBuild + ");";
 var choiceHash = (uint)TableHashes.CHR_CUSTOMIZATION_CHOICE;
 var elementHash = (uint)TableHashes.CHR_CUSTOMIZATION_ELEMENT;
@@ -150,11 +150,12 @@ foreach (var eyeOption in eyeOptions)
 
         using (StreamWriter sw = File.AppendText(currentPath))
         {
-            if (!File.Exists(currentPath))
+            
             {
                 // Create the file
+                // Make sure Customizations folder exists
 
-                sw.WriteLine($"Preparing {elementModelName} eyes for {modelName}");
+                sw.WriteLine($"");
 
             }
 
@@ -200,7 +201,7 @@ foreach (var eyeOption in eyeOptions)
 Console.WriteLine("Done");
 Console.ReadLine();
 
-*/
+
 
 /*
 var listfilePRovider = new ListfileClient();

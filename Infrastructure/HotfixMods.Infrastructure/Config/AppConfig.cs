@@ -14,7 +14,7 @@ namespace HotfixMods.Infrastructure.Config
         public string ListfilePath { get; set; } = @"\";
         public int HotfixDataTableFromId { get; set; } = 15000000;
         public int HotfixDataTableToId { get; set; } = 16000000;
-        public string BuildInfo { get; set; } = "10.0.5.47871";
+        public string BuildInfo { get; set; } = "10.1.0.49474";
         public bool CacheFileResults { get; set; } = true;
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
         public ServiceSettings GenericHotfixSettings { get; set; } = new(0, 0, -5501);

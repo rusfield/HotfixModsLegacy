@@ -1,0 +1,12 @@
+COLUMNS
+string Description?
+int ID?
+int Field_10_1_5_49516_002? // Mostly matches TransmogSourceTypeEnum from ItemModifiedAppearance
+int<ItemModifiedAppearance::ID> ItemModifiedAppearanceID?
+
+LAYOUT F20F935A
+BUILD 10.1.5.49516
+Description
+$id$ID<32>
+Field_10_1_5_49516_002<32>
+ItemModifiedAppearanceID<32>

@@ -36,6 +36,9 @@ namespace DBFileReaderLib
                 stream.Position = 0;
                 switch (identifier)
                 {
+                    case "WDC4":
+                        _reader = new WDC4Reader(stream);
+                        break;
                     case "WDC3":
                         _reader = new WDC3Reader(stream);
                         break;
@@ -85,7 +88,7 @@ namespace DBFileReaderLib
                 T entry = new T();
                 row.GetFields(fieldCache, entry);
                 lock (storage)
-                    storage.Add(row.Id, entry);
+                    storage.TryAdd(row.Id, entry);
             });
         }
 
@@ -100,6 +103,17 @@ namespace DBFileReaderLib
             }
 
             return reader.GetEncryptedSections().ToDictionary(s => s.TactKeyLookup, s => s.NumRecords);
+        }
+        public Dictionary<int, int[]> GetEncryptedIDs()
+        {
+            var reader = this._reader as IEncryptionSupportingReader;
+
+            if (reader == null || reader.GetEncryptedIDs() == null)
+            {
+                return new Dictionary<int, int[]>();
+            }
+
+            return reader.GetEncryptedIDs();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace HotfixMods.Core.Models.Db2
         public ushort UiOrderIndex { get; set; } = 0;
         public int Flags { get; set; } = 0;
         public int AddedInPatch { get; set; } = 0;
+        public int SoundKitID { get; set; } = 0;    
         public int SwatchColor0 { get; set; } = 0;
         public int SwatchColor1 { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;

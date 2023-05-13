@@ -22,6 +22,17 @@ ColorIndex<32>
 TextureName[3]
 Flags<32>
 
+LAYOUT 15DB31C4
+BUILD 3.4.2.49311, 3.4.2.49442, 3.4.2.49563, 3.4.2.49584
+$noninline,id$ID<32>
+RaceID<8>
+SexID<8>
+BaseSection<8>
+VariationIndex<8>
+ColorIndex<8>
+Flags<16>
+MaterialResourcesID<32>[3]
+
 BUILD 6.0.1.18179
 BUILD 4.0.0.11792
 BUILD 5.0.1.15464-5.4.8.18414

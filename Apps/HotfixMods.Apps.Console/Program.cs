@@ -21,7 +21,7 @@ using HotfixMods.Core.Models;
 using static DBDefsLib.Structs;
 using HotfixMods.Core.Enums;
 
-
+/*
 
 var tool = new Db2ImportTool();
 var db2Path = @"C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS";
@@ -35,7 +35,7 @@ foreach(var file in Directory.GetFiles(db2Path))
     var name = split.Last().Replace(".db2", "");
     try
     {
-        await tool.Db2FileToDb2MySql("10.0.5.47871", db2Path, name, "HotfixMods", name, "127.0.0.1", "3306", "root", "root");
+        await tool.Db2FileToDb2MySql("10.1.0.49474", db2Path, name, "HotfixMods", name, "127.0.0.1", "3306", "root", "root");
     }
     catch(Exception ex)
     {
@@ -48,8 +48,7 @@ Console.Read();
 
 
 
-// TODO: Change to 10.0.7???
-var client = new Db2Client("10.0.5.47871");
+var client = new Db2Client("10.1.0.49474");
 var path = @"D:\TrinityCore\Dragonflight\dbc\enUS";
 var outputPath = @"D:\TrinityCore\Customizations";
 int choiceStartId = 33000;
@@ -155,7 +154,7 @@ foreach (var eyeOption in eyeOptions)
             {
                 // Create the file
 
-                sw.WriteLine($"/* Preparing {elementModelName} eyes for {modelName} */");
+                sw.WriteLine($"Preparing {elementModelName} eyes for {modelName}");
 
             }
 
@@ -200,6 +199,8 @@ foreach (var eyeOption in eyeOptions)
 
 Console.WriteLine("Done");
 Console.ReadLine();
+
+*/
 
 /*
 var listfilePRovider = new ListfileClient();
@@ -459,7 +460,7 @@ foreach (var model in serverModels)
 
 // Compare property names to definition names
 
-string build = "10.0.5.47871";
+string build = "10.1.0.49474";
 var defHelper = new Db2Client(build);
 var assembly = Assembly.Load("HotfixMods.Core");
 var models = assembly.GetTypes().Where(t => t.Namespace == "HotfixMods.Core.Models.Db2").ToList();
@@ -497,7 +498,7 @@ foreach (var model in models)
             Console.WriteLine("New names:");
             foreach (var nd in newDefinitions)
             {
-                Console.WriteLine($"{nd.Name}");
+                Console.WriteLine($"{nd.Name} ({nd.Type})");
             }
             Console.WriteLine("Old names:");
             foreach (var on in oldNames)
@@ -517,7 +518,7 @@ foreach (var model in models)
         Console.WriteLine(e.Message);
     }
 }
-
+Console.ReadKey();
 
 /*
 

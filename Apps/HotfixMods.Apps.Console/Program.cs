@@ -20,6 +20,7 @@ using System.Xml.Linq;
 using HotfixMods.Core.Models;
 using static DBDefsLib.Structs;
 using HotfixMods.Core.Enums;
+using HotfixMods.Apps.Console.Methods;
 
 /*
 
@@ -49,6 +50,12 @@ Console.Read();
 */
 
 var client = new Db2Client("10.1.0.49474");
+
+var helper = new CustomizationHelper(client);
+await helper.GenerateAllCustomizationFiles();
+Console.WriteLine("Done");
+Console.ReadKey();
+
 var path = @"D:\TrinityCore\Dragonflight\dbc\enUS";
 var outputPath = @"D:\TrinityCore\Customizations";
 int choiceStartId = 33000;

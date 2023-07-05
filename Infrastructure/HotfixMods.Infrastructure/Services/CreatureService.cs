@@ -67,8 +67,8 @@ namespace HotfixMods.Infrastructure.Services
                     CreatureTemplate = new()
                     {
                         Name = character.GetValueByNameAs<string>("Name"),
-                        Minlevel = character.GetValueByNameAs<short>("Level"),
-                        Maxlevel = character.GetValueByNameAs<short>("Level"),
+                        //Minlevel = character.GetValueByNameAs<short>("Level"),
+                        //Maxlevel = character.GetValueByNameAs<short>("Level"),
                         Type = 7 // Humanoid
                     },
                     HotfixModsEntity = new()

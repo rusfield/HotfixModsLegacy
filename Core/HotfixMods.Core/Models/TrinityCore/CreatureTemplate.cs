@@ -18,9 +18,6 @@ namespace HotfixMods.Core.Models.TrinityCore
         public string Subname { get; set; } = "";
         public string TitleAlt { get; set; } = "";
         public string IconName { get; set; } = "";
-        public uint Gossip_Menu_ID { get; set; } = 0;
-        public short Minlevel { get; set; } = 1;
-        public short Maxlevel { get; set; } = 1;
         public int HealthScalingExpansion { get; set; } = 0;
         public int RequiredExpansion { get; set; } = 0;
         public int VignetteID { get; set; } = 0;
@@ -53,7 +50,6 @@ namespace HotfixMods.Core.Models.TrinityCore
         public uint MaxGold { get; set; } = 0;
         public string AiName { get; set; } = "SmartAI";
         public byte MovementType { get; set; } = 0;
-        public decimal HoverHeight { get; set; } = 1;
         public decimal HealthModifier { get; set; } = 1;
         public decimal HealthModifierExtra { get; set; } = 1;
         public decimal ManaModifier { get; set; } = 1;

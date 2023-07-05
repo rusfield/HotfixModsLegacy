@@ -10,10 +10,10 @@
         <MudItem xs="3">
             <InlineGroup>
                 <LeftContent>
-                    <Input_Element T="short" @bind-Value="Value.Minlevel" ValueCompare="ValueCompare?.Minlevel" Label="@nameof(Value.Minlevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Minlevel)))" />
+                    <Placeholder_Element />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="short" @bind-Value="Value.Maxlevel" ValueCompare="ValueCompare?.Maxlevel" Label="@nameof(Value.Maxlevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Maxlevel)))" />
+                    <Placeholder_Element />
                 </RightContent>
             </InlineGroup>
             <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Faction)))" GetOptionsAsync_Func="(async () => await Service.GetFactionOptionsAsync())" />
@@ -175,10 +175,10 @@
         </MudItem>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.CreatureDifficultyID" ValueCompare="ValueCompare?.CreatureDifficultyID" Label="@nameof(Value.CreatureDifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.CreatureDifficultyID)))" />
-            <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.HoverHeight)))" />
+            <Placeholder_Element />
             <Input_Element T="uint" @bind-Value="Value.VehicleID" ValueCompare="ValueCompare?.VehicleID" Label="@nameof(Value.VehicleID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.VehicleID)))" />
             <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RequiredExpansion)))" GetOptionsAsync_Func="Service.GetRequiredExpansionOptionsAsync" />
-            <Input_Element T="uint" @bind-Value="Value.Gossip_Menu_ID" ValueCompare="ValueCompare?.Gossip_Menu_ID" Label="@nameof(Value.Gossip_Menu_ID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Gossip_Menu_ID)))" />
+            <Placeholder_Element />
             <Input_Element T="string" @bind-Value="Value.StringID" ValueCompare="ValueCompare?.StringID" Label="@nameof(Value.StringID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.StringID)))" />
         </MudItem>
     </PagedDtoContentPage>

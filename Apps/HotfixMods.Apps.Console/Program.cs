@@ -22,8 +22,8 @@ using static DBDefsLib.Structs;
 using HotfixMods.Core.Enums;
 using HotfixMods.Apps.Console.Methods;
 
-/*
 
+/*
 var tool = new Db2ImportTool();
 var db2Path = @"C:\\Program Files (x86)\\World of Warcraft\\dbc\\enUS";
 
@@ -46,8 +46,8 @@ foreach(var file in Directory.GetFiles(db2Path))
 }
 
 Console.Read();
-
 */
+
 
 var client = new Db2Client("10.1.0.49474");
 
@@ -387,7 +387,7 @@ Console.ReadKey();
 */
 
 
-/*
+
 // Compare property names to db definition
 var serverDefHelper = new MySqlClient("localhost", "3306", "root", "root");
 var serverAssembly = Assembly.Load("HotfixMods.Core");
@@ -463,7 +463,7 @@ foreach (var model in serverModels)
         Console.WriteLine($"{model.Name} OK");
     }
 }
-*/
+
 
 
 // Compare property names to definition names

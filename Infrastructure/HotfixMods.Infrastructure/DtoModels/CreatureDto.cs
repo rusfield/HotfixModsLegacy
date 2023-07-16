@@ -11,6 +11,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public CreatureModelInfo CreatureModelInfo { get; set; } = new();
         public CreatureTemplateModel CreatureTemplateModel { get; set; } = new();
         public CreatureDisplayInfo CreatureDisplayInfo { get; set; } = new();
+        public CreatureTemplateScaling CreatureTemplateScaling { get; set; }
         public CreatureDisplayInfoExtra? CreatureDisplayInfoExtra { get; set; }
         public CreatureEquipTemplate? CreatureEquipTemplate { get; set; }
         public CreatureTemplateAddon? CreatureTemplateAddon { get; set; }

@@ -365,7 +365,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(CreatureDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(14);
+            var progress = LoadingHelper.GetLoaderFunc(15);
 
             try
             {
@@ -385,6 +385,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.CreatureTemplateModel);
                 await SaveAsync(callback, progress, dto.CreatureDisplayInfo);
                 await SaveAsync(callback, progress, dto.CreatureModelInfo);
+                await SaveAsync(callback, progress, dto.CreatureTemplateScaling);
 
                 if (dto.CreatureDisplayInfoExtra != null)
                 {

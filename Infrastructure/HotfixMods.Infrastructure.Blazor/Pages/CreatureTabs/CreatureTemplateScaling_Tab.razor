@@ -1,0 +1,27 @@
+﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<CreatureDto, CreatureTemplateScaling>
+
+<StandardDtoContent T="CreatureTemplateScaling">
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMin" ValueCompare="ValueCompare?.LevelScalingDeltaMin" Label="@nameof(Value.LevelScalingDeltaMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateScaling.LevelScalingDeltaMin)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMax" ValueCompare="ValueCompare?.LevelScalingDeltaMax" Label="@nameof(Value.LevelScalingDeltaMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateScaling.LevelScalingDeltaMax)))" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateScaling.ContentTuningId)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="byte" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateScaling.DifficultyId)))" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>
+

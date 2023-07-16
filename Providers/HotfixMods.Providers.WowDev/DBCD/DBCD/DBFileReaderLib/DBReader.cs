@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
-using DBDefsLib;
 using DBFileReaderLib.Common;
 using DBFileReaderLib.Readers;
 
@@ -88,7 +86,9 @@ namespace DBFileReaderLib
                 T entry = new T();
                 row.GetFields(fieldCache, entry);
                 lock (storage)
-                    storage.TryAdd(row.Id, entry);
+                {
+                    storage.Add(row.Id, entry);
+                }
             });
         }
 
@@ -104,6 +104,7 @@ namespace DBFileReaderLib
 
             return reader.GetEncryptedSections().ToDictionary(s => s.TactKeyLookup, s => s.NumRecords);
         }
+
         public Dictionary<int, int[]> GetEncryptedIDs()
         {
             var reader = this._reader as IEncryptionSupportingReader;

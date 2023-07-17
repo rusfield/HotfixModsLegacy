@@ -10,7 +10,7 @@ namespace HotfixMods.Core.Models
          */
 
         [IndexField]
-        public int Guid { get; set; }
-        public uint ID { get; set; }
+        public ulong Guid { get; set; }
+        public int ID { get; set; }
     }
 }

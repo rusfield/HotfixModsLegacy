@@ -88,7 +88,8 @@ namespace HotfixMods.Infrastructure.Services
                 callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
                 if (dto.IsUpdate)
                 {
-                    await DeleteAsync((int)dto.GameobjectTemplate.Entry);
+                    // TODO: This tries to delete existing gameobjects too. Maybe add a parameter for whether this is a real delete or update-delete?
+                    // await DeleteAsync((int)dto.GameobjectTemplate.Entry);
                 }
 
                 await SetIdAndVerifiedBuild(dto);

@@ -232,7 +232,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<CreatureDto?> GetByIdAsync(int id, int idx = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(11);
+            var progress = LoadingHelper.GetLoaderFunc(12);
 
             try
             {
@@ -268,6 +268,8 @@ namespace HotfixMods.Infrastructure.Services
 
 
                 result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
+                result.CreatureTemplateScaling = await GetSingleAsync<CreatureTemplateScaling>(callback, progress, new DbParameter(nameof(CreatureTemplateScaling.Entry), (int)result.CreatureTemplate.Entry));
+
 
                 if (result.CreatureDisplayInfoExtra != null)
                 {
@@ -338,6 +340,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
+                result.CreatureTemplateScaling = await GetSingleAsync<CreatureTemplateScaling>(callback, progress, new DbParameter(nameof(CreatureTemplateScaling.Entry), (int)result.CreatureTemplate.Entry));
 
                 if (result.CreatureDisplayInfoExtra != null)
                 {

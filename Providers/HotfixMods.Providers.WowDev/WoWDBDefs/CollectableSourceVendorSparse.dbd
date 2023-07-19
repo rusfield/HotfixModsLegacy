@@ -1,17 +1,32 @@
 COLUMNS
 int ID
-int VendorMapID?
+int<Map::ID> VendorMapID?
 float VendorPosition?
-int Field_10_1_5_49516_002?
+int VendorItemID?
 int<Creature::ID> CreatureID?
-int Field_10_1_5_49516_004?
+int<CollectableSourceInfo::ID> CollectableSourceInfoID?
+int<AreaTable::ID> AreaTableID?
+int<WMOAreaTable::WMOGroupID> WMOGroupID?
 
 LAYOUT 51E5C3DD
-BUILD 10.1.5.49516
+BUILD 10.1.5.49516, 10.1.5.49595, 10.1.5.49719, 10.1.5.49824, 10.1.5.49908, 10.1.5.50006
 COMMENT table is sparse
 $noninline,id$ID<32>
 VendorMapID<32>
 VendorPosition[3]
-Field_10_1_5_49516_002<32>
+VendorItemID<32>
 CreatureID<32>
-$noninline,relation$Field_10_1_5_49516_004<32>
+$noninline,relation$CollectableSourceInfoID<32>
+
+LAYOUT D0863376
+BUILD 10.1.7.50442, 10.1.7.50505
+BUILD 10.1.5.50130, 10.1.5.50199, 10.1.5.50232, 10.1.5.50355, 10.1.5.50379, 10.1.5.50401, 10.1.5.50438, 10.1.5.50467, 10.1.5.50469, 10.1.5.50504
+COMMENT table is sparse
+$noninline,id$ID<32>
+VendorMapID<32>
+VendorPosition[3]
+VendorItemID<32>
+CreatureID<32>
+AreaTableID<32>
+WMOGroupID<32>
+$noninline,relation$CollectableSourceInfoID<32>

@@ -97,10 +97,7 @@ namespace HotfixMods.Apps.MauiBlazor
             builder.Services.AddSingleton<SpellVisualKitService>();
 
             builder.Services.AddBlazorWebViewDeveloperTools();
-            builder.Services.AddLogging(configure =>
-            {
-                configure.AddDebug();
-            });
+
 
             return builder.Build();
         }

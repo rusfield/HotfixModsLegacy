@@ -193,7 +193,7 @@ else
         return count switch
         {
             0 => "None",
-            1 => options.Where(o => o.Key.ToString().Equals(selection.First(), StringComparison.InvariantCultureIgnoreCase)).First().Value,
+            1 => options.First().Value,
             _ => $"{count} selected"
         };
     }

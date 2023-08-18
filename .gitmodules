@@ -1,0 +1,3 @@
+[submodule "Infrastructure/HotfixMods.Infrastructure.Blazor/Libs"]
+	path = Infrastructure/HotfixMods.Infrastructure.Blazor/Libs
+	url = https://github.com/rusfield/RusBlazor.git

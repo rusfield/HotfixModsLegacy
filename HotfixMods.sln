@@ -36,6 +36,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Trinit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Listfile", "Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj", "{908DDF70-D538-41CA-89A8-B3E66801E7D6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{08CE3EB4-7145-4B54-8EB0-EE111E989CB2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RusBlazor", "Libs\RusBlazor\RusBlazor\RusBlazor.csproj", "{988157C0-5560-4D70-B8C6-5FB61463A0E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,10 @@ Global
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{988157C0-5560-4D70-B8C6-5FB61463A0E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988157C0-5560-4D70-B8C6-5FB61463A0E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988157C0-5560-4D70-B8C6-5FB61463A0E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988157C0-5560-4D70-B8C6-5FB61463A0E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

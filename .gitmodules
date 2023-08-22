@@ -1,0 +1,3 @@
+[submodule "Libs/RusBlazor"]
+	path = Libs/RusBlazor
+	url = https://github.com/rusfield/RusBlazor.git

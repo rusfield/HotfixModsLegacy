@@ -36,6 +36,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Trinit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Listfile", "Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj", "{908DDF70-D538-41CA-89A8-B3E66801E7D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.wow-listfile", "Providers\HotfixMods.Providers.wow-listfile\HotfixMods.Providers.wow-listfile.csproj", "{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers.WoWDBDefs", "Providers\HotfixMods.Providers.WoWDBDefs\HotfixMods.Providers.WoWDBDefs.csproj", "{988A73D0-E2D6-4566-BF04-76D15E5910B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +96,14 @@ Global
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{988A73D0-E2D6-4566-BF04-76D15E5910B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{988A73D0-E2D6-4566-BF04-76D15E5910B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{988A73D0-E2D6-4566-BF04-76D15E5910B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{988A73D0-E2D6-4566-BF04-76D15E5910B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +121,8 @@ Global
 		{590C1E02-6699-478C-8426-45B7E280F9D0} = {A3765169-5ADD-4807-9455-E24F3702CCB5}
 		{35D57F7F-368C-4E10-9F2F-E5C4F421CA20} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 		{908DDF70-D538-41CA-89A8-B3E66801E7D6} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
+		{351C98BB-9EF2-41C6-9EE0-5DCAB4761C26} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
+		{988A73D0-E2D6-4566-BF04-76D15E5910B0} = {78E5019C-66C8-4F27-BA92-F5FB60B699B2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

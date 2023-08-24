@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HotfixMods.Providers\HotfixMods.Providers.csproj" />
   </ItemGroup>
 

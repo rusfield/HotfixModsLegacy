@@ -1,4 +1,5 @@
-﻿using HotfixMods.Providers.Interfaces;
+﻿using DBDefsLib;
+using HotfixMods.Providers.Interfaces;
 using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Providers.WowDev.Client
@@ -7,7 +8,8 @@ namespace HotfixMods.Providers.WowDev.Client
     {
         public string Db2Folder { get; set; }
         public string DbdFolder { get; set; }
-        public Db2Client(string db2Folder, string dbdFolder)
+        public string Build { get; set; }
+        public Db2Client(string db2Folder, string dbdFolder, string build)
         {
             if (db2Folder.EndsWith("/"))
                 db2Folder = db2Folder.Substring(0, db2Folder.Length - 1);
@@ -17,6 +19,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
             Db2Folder = db2Folder;
             DbdFolder = dbdFolder;
+            Build = build;
         }
 
         public async Task<bool> Db2ExistsAsync(string db2Name)
@@ -35,7 +38,7 @@ namespace HotfixMods.Providers.WowDev.Client
 
         public Task<DbRowDefinition?> GetDefinitionAsync(string db2Name)
         {
-            throw new NotImplementedException();
+
         }
 
         public async Task<IEnumerable<string>> GetAvailableDb2Async()

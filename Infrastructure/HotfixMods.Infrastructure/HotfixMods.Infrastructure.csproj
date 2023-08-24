@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="SharpSvn" Version="1.14001.156" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Core\HotfixMods.Core\HotfixMods.Core.csproj" />
     <ProjectReference Include="..\..\Providers\HotfixMods.Providers.Listfile\HotfixMods.Providers.Listfile.csproj" />
     <ProjectReference Include="..\..\Providers\HotfixMods.Providers.MySqlConnector\HotfixMods.Providers.MySqlConnector.csproj" />

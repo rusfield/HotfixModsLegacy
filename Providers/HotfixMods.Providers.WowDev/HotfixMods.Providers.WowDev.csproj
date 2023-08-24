@@ -8,14 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="WoWDBDefs\Achievement.dbd" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="WoWDBDefs\**\*.*" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
   </ItemGroup>
 

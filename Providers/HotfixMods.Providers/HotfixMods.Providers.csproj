@@ -6,12 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Libs\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\HotfixMods.Providers\HotfixMods.Providers.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,5 @@
 ﻿using HotfixMods.Providers.MySqlConnector.Client;
-using HotfixMods.Providers.WowDev.Client;
+using HotfixMods.Providers.WowDevLegacy.Client;
 
 namespace HotfixMods.Tools.Initializer.Business
 {

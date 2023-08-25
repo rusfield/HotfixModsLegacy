@@ -17,7 +17,7 @@
         public List<DbRow> Rows { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public int TotalPageCount { get; set; }
-        public int TotalRowCount { get; set; }
+        public int TotalPageCount { get; private set; }
+        public long TotalRowCount { get; set; }
     }
 }

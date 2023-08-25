@@ -24,7 +24,7 @@ namespace HotfixMods.Providers.WowDev.Client
             );
         }
 
-        public async Task<PagedDbResult> GetAsync(string db2Name, DbRowDefinition dbRowDefinition, int pageIndex, int pageSize, params DbParameter[] parameters)
+        public async Task<PagedDbResult> GetAsync(string db2Name, DbRowDefinition dbRowDefinition, int pageIndex = 0, int pageSize = int.MaxValue, params DbParameter[] parameters)
         {
             if (!await Db2ExistsAsync(db2Name))
                 return new(pageIndex, pageSize, 0);

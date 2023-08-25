@@ -54,18 +54,18 @@ namespace HotfixMods.Apps.MauiBlazor
             {
                 return new Db2Client(appConfig.BuildInfo);
             });
-            builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
+            builder.Services.AddSingleton<IServerDbProvider, MySqlClientLegacy>(provider =>
             {
-                return new MySqlClient(
+                return new MySqlClientLegacy(
                     appConfig.MySql.Server,
                     appConfig.MySql.Port,
                     appConfig.MySql.Username,
                     appConfig.MySql.Password
                     );
             });
-            builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClient>(provider =>
+            builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClientLegacy>(provider =>
             {
-                return new MySqlClient(
+                return new MySqlClientLegacy(
                     appConfig.MySql.Server,
                     appConfig.MySql.Port,
                     appConfig.MySql.Username,

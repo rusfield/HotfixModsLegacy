@@ -1,9 +1,33 @@
-﻿using MySqlConnector;
+﻿using HotfixMods.Core.Models;
+using static HotfixMods.Core.Models.DbParameter;
 
 namespace HotfixMods.Providers.MySqlConnector.Client
 {
-    public partial class MySqlClient
+    public partial class MySqlClientLegacy
     {
+        string DbParameterToWhereClause(params DbParameter[] dbParameters)
+        {
+            if (dbParameters.Length == 0)
+                return "";
+
+            var conditions = new List<string>();
+            foreach(var dbParameter in dbParameters)
+            {
+                var queryOperator = dbParameter.Operator switch
+                {
+                    DbOperator.EQ => "= '{0}'",
+                    DbOperator.GT => "> '{0}'",
+                    DbOperator.GTE => ">= '{0}'",
+                    DbOperator.LT => "< '{0}'",
+                    DbOperator.LTE => "<= '{0}'",
+                    DbOperator.CONTAINS => "LIKE '{0}'",
+                    _ => throw new NotImplementedException()
+                };
+                conditions.Add($"{dbParameter.Property} {string.Format(queryOperator, dbParameter.Value)}");
+            }
+            return $"WHERE {string.Join(" AND ", conditions)}";
+        }
+
         string CSharpTypeToMySqlDataType(Type type)
         {
             return type.ToString() switch
@@ -43,46 +67,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 "varchar" => typeof(string),
                 "nvarchar" => typeof(string),
                 "tinytext" => typeof(string),
-                "mediumtext" => typeof(string),
+                "mediumtext" => typeof(string), 
                 "longtext" => typeof(string),
                 "float" => typeof(decimal),
                 _ => throw new Exception($"{type} not implemented.")
             };
-        }
-
-        async Task<bool> CheckIfSchemaExistsAsync(string schemaName)
-        {
-            using var mySqlConnection = new MySqlConnection(_connectionString);
-            await mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = @schemaName;", mySqlConnection);
-            cmd.Parameters.AddWithValue("@schemaName", schemaName);
-            var reader = await cmd.ExecuteReaderAsync();
-            bool exists = false;
-            while (reader.Read())
-            {
-                int count = reader.GetInt32(0);
-                exists = count > 0;
-            }
-            await mySqlConnection.CloseAsync();
-            return exists;
-        }
-
-        async Task<bool> CheckIfTableExistsAsync(string schemaName, string tableName)
-        {
-            using var mySqlConnection = new MySqlConnection(_connectionString);
-            await mySqlConnection.OpenAsync();
-            using var cmd = new MySqlCommand($"SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = @schemaName AND table_name = @tableName;", mySqlConnection);
-            cmd.Parameters.AddWithValue("schemaName", schemaName);
-            cmd.Parameters.AddWithValue("tableName", tableName);
-            var reader = await cmd.ExecuteReaderAsync();
-            bool exists = false;
-            while (reader.Read())
-            {
-                int count = reader.GetInt32(0);
-                exists = count > 0;
-            }
-            await mySqlConnection.CloseAsync();
-            return exists;
         }
     }
 }

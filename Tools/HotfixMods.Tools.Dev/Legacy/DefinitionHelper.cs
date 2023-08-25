@@ -12,8 +12,8 @@ namespace HotfixMods.Tools.Dev.Legacy
     {
         public static async Task DefinitionToCSharp(string defName, string build)
         {
-            var defHelper = new Db2Client(build);
-            var definition = await defHelper.GetDefinitionAsync("asdf", defName);
+            var defHelper = new Db2Client("", "", build);
+            var definition = await defHelper.GetDefinitionAsync(defName);
             Console.WriteLine($"public class {defName}");
             Console.WriteLine("{");
             foreach(var def in definition.ColumnDefinitions)

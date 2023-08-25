@@ -11,8 +11,8 @@ namespace HotfixMods.Tools.Dev.Business
         {
             await TextCopy.ClipboardService.SetTextAsync("");
 
-            var defHelper = new Db2Client(build, "");
-            var definition = await defHelper.GetDefinitionAsync(null, defName);
+            var defHelper = new Db2Client("", "", build);
+            var definition = await defHelper.GetDefinitionAsync(defName);
 
             await WriteToConsoleAndClipboard("[HotfixesSchema]");
             await WriteToConsoleAndClipboard($"public class {defName}");

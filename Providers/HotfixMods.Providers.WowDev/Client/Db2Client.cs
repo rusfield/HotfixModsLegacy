@@ -1,5 +1,4 @@
-﻿using DBDefsLib;
-using HotfixMods.Providers.Interfaces;
+﻿using HotfixMods.Providers.Interfaces;
 using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Providers.WowDev.Client
@@ -11,15 +10,9 @@ namespace HotfixMods.Providers.WowDev.Client
         public string Build { get; set; }
         public Db2Client(string db2Folder, string dbdFolder, string build)
         {
-            if (db2Folder.EndsWith("/"))
-                db2Folder = db2Folder.Substring(0, db2Folder.Length - 1);
-
-            if (dbdFolder.EndsWith("/"))
-                dbdFolder = dbdFolder.Substring(0, dbdFolder.Length - 1);
-
-            Db2Folder = db2Folder;
-            DbdFolder = dbdFolder;
-            Build = build;
+            Db2Folder = db2Folder.TrimEnd('/');
+            DbdFolder = dbdFolder.TrimEnd('/');
+            Build = build; 
         }
 
         public async Task<bool> Db2ExistsAsync(string db2Name)
@@ -31,26 +24,37 @@ namespace HotfixMods.Providers.WowDev.Client
             );
         }
 
-        public Task<IEnumerable<DbRow>> GetAsync(string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
+        public async Task<PagedDbResult> GetAsync(string db2Name, DbRowDefinition dbRowDefinition, int pageIndex, int pageSize, params DbParameter[] parameters)
         {
-            throw new NotImplementedException();
+            if (!await Db2ExistsAsync(db2Name))
+                return new(pageIndex, pageSize, 0);
+
+            return await ReadDb2FileAsync(db2Name, dbRowDefinition, 0, 1, parameters);
         }
 
-        public Task<DbRowDefinition?> GetDefinitionAsync(string db2Name)
+        public async Task<DbRowDefinition?> GetDefinitionAsync(string db2Name)
         {
-
+            return await GetDbDefinitionByDb2Name(db2Name);
         }
 
-        public async Task<IEnumerable<string>> GetAvailableDb2Async()
+        public async Task<IEnumerable<string>> GetAvailableNamesAsync()
         {
             return await Task.Run(() =>
                 Directory.GetFiles(Db2Folder).Select(file => Path.GetFileNameWithoutExtension(file))
             );
         }
 
-        public Task<DbRow> GetSingleAsync(string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
+        public async Task<DbRow?> GetSingleAsync(string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
         {
-            throw new NotImplementedException();
+            if (!await Db2ExistsAsync(db2Name))
+                return null;
+
+            var pagedResult = await ReadDb2FileAsync(db2Name, dbRowDefinition, 0, 1, parameters);
+            if(pagedResult.TotalRowCount > 1)
+            {
+                // Consider informing this to user. Only the first result will be returned.
+            }
+            return pagedResult.Rows.FirstOrDefault();
         }
     }
 }

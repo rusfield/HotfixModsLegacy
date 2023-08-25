@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Libs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DBDefsLib" Version="1.0.0.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
     <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />

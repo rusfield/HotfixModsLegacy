@@ -1,70 +1,115 @@
 ﻿using DBDefsLib;
+using HotfixMods.Providers.Extensions;
 using HotfixMods.Providers.Models;
-using System.Reflection;
-using static DBDefsLib.Structs;
+using HotfixMods.Providers.WowDev.Libs.Internal;
 
 namespace HotfixMods.Providers.WowDev.Client
 {
     public partial class Db2Client
     {
-        async Task<DbRowDefinition> GetDbDefinitionByDb2Name(string db2Name)
+        async Task<PagedDbResult> ReadDb2FileAsync(string db2Name, DbRowDefinition definition, int pageIndex, int pageSize, DbParameter[] parameters)
         {
-            db2Name += ".dbd";
-            var filePath = Path.Combine(DbdFolder, db2Name);
-            var dbdStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            var dbdReader = new DBDReader();
-            var dbDef = dbdReader.Read(dbdStream);
+            PagedDbResult pagedResult = new();
 
-            var dbBuild = new Build(Build);
-
-            if (Utils.GetVersionDefinitionByBuild(dbDef, dbBuild, out var versionToUse) || null == versionToUse)
+            await Task.Run(() =>
             {
-                var dbRowDefinition = new DbRowDefinition(db2Name);
-                foreach (var fieldDefinition in versionToUse.Value.definitions)
+                var dbcProvider = new DbcProvider(Db2Folder);
+                var dbdProvider = new DbdProvider(GetDbdStream(db2Name));
+
+                var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
+                var db2Results = dbcd.Load($"{db2Name}", Build);
+                var filteredResults = db2Results.Values.WhereDbParameters(parameters);
+
+                pagedResult = new PagedDbResult(pageIndex, pageSize, filteredResults.Count());
+
+                foreach (var db2Value in filteredResults.Skip(pageIndex * pageSize).Take(pageSize))
                 {
-                    var columnDefinition = dbDef.columnDefinitions[fieldDefinition.name];
-                    var definitionName = fieldDefinition.name.Replace("_lang", "");
-
-                    // Remove underscore and set uppercase
-                    // Assuming name does not start with underscore or contains two underscores after one another
-                    // Exception is for properties named Field_{patch}
-                    string name = "";
-                    if (definitionName.StartsWith("Field"))
+                    var row = new DbRow(db2Name);
+                    foreach (var columnDefinition in definition.ColumnDefinitions)
                     {
-                        name = definitionName;
-                    }
-                    else
-                    {
-                        bool isUnderscore = false;
-
-                        foreach (var c in definitionName)
+                        row.Columns.Add(new()
                         {
-                            if (isUnderscore)
+                            Definition = columnDefinition,
+                            Value = db2Value
+                        });
+                    }
+                    pagedResult.Rows.Add(row);
+                }
+            });
+
+            return pagedResult;
+        }
+
+        async Task<DbRowDefinition?> GetDbDefinitionByDb2Name(string db2Name)
+        {
+            DbRowDefinition? dbRowDefinition = null;
+            await Task.Run(() =>
+            {
+                var dbdReader = new DBDReader();
+                var dbDef = dbdReader.Read(GetDbdStream(db2Name));
+                var dbBuild = new Build(Build);
+
+                if (Utils.GetVersionDefinitionByBuild(dbDef, dbBuild, out var versionToUse) && null != versionToUse)
+                {
+                    dbRowDefinition = new DbRowDefinition(db2Name);
+                    foreach (var fieldDefinition in versionToUse.Value.definitions)
+                    {
+                        var columnDefinition = dbDef.columnDefinitions[fieldDefinition.name];
+                        var definitionName = fieldDefinition.name.Replace("_lang", "");
+
+                        // Assume name does not start with underscore or contains two underscores after one another, and remove underscore and set uppercase
+                        // Exception is for properties named Field_{patch}
+                        string name = "";
+                        if (definitionName.StartsWith("Field"))
+                        {
+                            name = definitionName;
+                        }
+                        else
+                        {
+                            bool isUnderscore = false;
+
+                            foreach (var c in definitionName)
                             {
-                                // previous was underscore
-                                name += char.ToUpper(c);
-                                isUnderscore = false;
-                            }
-                            else
-                            {
-                                isUnderscore = c == '_';
-                                if (!isUnderscore)
-                                    name += c;
+                                if (isUnderscore)
+                                {
+                                    // previous was underscore
+                                    name += char.ToUpper(c);
+                                    isUnderscore = false;
+                                }
+                                else
+                                {
+                                    isUnderscore = c == '_';
+                                    if (!isUnderscore)
+                                        name += c;
+                                }
                             }
                         }
-                    }
 
 
-                    var type = FieldDefinitionToType(fieldDefinition, columnDefinition);
+                        var type = FieldDefinitionToType(fieldDefinition, columnDefinition);
 
-                    if (fieldDefinition.arrLength != 0)
-                    {
-                        for (int i = 0; i < fieldDefinition.arrLength; i++)
+                        if (fieldDefinition.arrLength != 0)
                         {
-                            var arrayColName = $"{name}{i}";
+                            for (int i = 0; i < fieldDefinition.arrLength; i++)
+                            {
+                                var arrayColName = $"{name}{i}";
+                                dbRowDefinition.ColumnDefinitions.Add(new()
+                                {
+                                    Name = arrayColName,
+                                    Type = type,
+                                    IsIndex = fieldDefinition.isID,
+                                    IsParentIndex = fieldDefinition.isRelation,
+                                    ReferenceDb2 = columnDefinition.foreignTable,
+                                    ReferenceDb2Field = columnDefinition.foreignColumn,
+                                    IsLocalized = columnDefinition.type == "locstring"
+                                });
+                            }
+                        }
+                        else
+                        {
                             dbRowDefinition.ColumnDefinitions.Add(new()
                             {
-                                Name = arrayColName,
+                                Name = name,
                                 Type = type,
                                 IsIndex = fieldDefinition.isID,
                                 IsParentIndex = fieldDefinition.isRelation,
@@ -74,36 +119,13 @@ namespace HotfixMods.Providers.WowDev.Client
                             });
                         }
                     }
-                    else
-                    {
-                        dbRowDefinition.ColumnDefinitions.Add(new()
-                        {
-                            Name = name,
-                            Type = type,
-                            IsIndex = fieldDefinition.isID,
-                            IsParentIndex = fieldDefinition.isRelation,
-                            ReferenceDb2 = columnDefinition.foreignTable,
-                            ReferenceDb2Field = columnDefinition.foreignColumn,
-                            IsLocalized = columnDefinition.type == "locstring"
-                        });
-                    }
                 }
-                dbRowDefinition.ColumnDefinitions.Add(new()
+                else
                 {
-                    Name = "VerifiedBuild",
-                    Type = typeof(int),
-                    IsIndex = false,
-                    IsParentIndex = false,
-                    ReferenceDb2 = null,
-                    ReferenceDb2Field = null,
-                    IsLocalized = false
-                });
-                return dbRowDefinition;
-            }
-            else
-            {
-                throw new($"No definition found for DB2: {db2Name} with build: {Build}.");
-            }
+                    throw new($"No definition found for DB2: {db2Name} with build: {Build}.");
+                }
+            });
+            return dbRowDefinition;
         }
 
         Type FieldDefinitionToType(Structs.Definition field, Structs.ColumnDefinition column)
@@ -129,6 +151,13 @@ namespace HotfixMods.Providers.WowDev.Client
                 default:
                     throw new ArgumentException($"Unable to construct C# type from {column.type}");
             }
+        }
+
+        Stream GetDbdStream(string db2Name)
+        {
+            db2Name += ".dbd";
+            var filePath = Path.Combine(DbdFolder, db2Name);
+            return new FileStream(filePath, FileMode.Open, FileAccess.Read);
         }
     }
 }

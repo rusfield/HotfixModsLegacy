@@ -14,12 +14,7 @@ namespace HotfixMods.Infrastructure.Services
     public partial class AnimKitService : ServiceBase
     {
         public AnimKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig) 
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)
-        {
-            FromId = appConfig.AnimKitSettings.FromId;
-            ToId = appConfig.AnimKitSettings.ToId;
-            VerifiedBuild = appConfig.AnimKitSettings.VerifiedBuild;
-        }
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)  { }
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
@@ -59,7 +54,7 @@ namespace HotfixMods.Infrastructure.Services
                     return null;
                 }
 
-                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, animKit.ID);
+                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (ulong)animKit.ID);
                 var result = new AnimKitDto()
                 {
                     AnimKit = animKit,

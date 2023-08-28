@@ -10,14 +10,14 @@ namespace HotfixMods.Infrastructure.Services
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
-            var spellId = await GetIdByConditionsAsync<Spell>(dto.Spell.ID, dto.IsUpdate);
-            var spellMiscId = await GetIdByConditionsAsync<SpellMisc>(dto.SpellMisc.ID, dto.IsUpdate);
+            var spellId = await GetIdByConditionsAsync<Spell>((ulong)dto.Spell.ID, dto.IsUpdate);
+            var spellMiscId = await GetIdByConditionsAsync<SpellMisc>((ulong)dto.SpellMisc.ID, dto.IsUpdate);
 
-            var spellCooldownsId = await GetIdByConditionsAsync<SpellCooldowns>(dto.SpellCooldowns?.ID, dto.IsUpdate);
-            var spellPowerId = await GetIdByConditionsAsync<SpellPower>(dto.SpellPower?.ID, dto.IsUpdate);
-            var spellAuraOptionsId = await GetIdByConditionsAsync<SpellAuraOptions>(dto.SpellAuraOptions?.ID, dto.IsUpdate);
-            var spellXSpellVisualId = await GetIdByConditionsAsync<SpellXSpellVisual>(dto.SpellXSpellVisual?.ID, dto.IsUpdate);
-            var spellVisualId = await GetIdByConditionsAsync<SpellVisual>(dto.SpellVisual?.ID, dto.IsUpdate);
+            var spellCooldownsId = await GetIdByConditionsAsync<SpellCooldowns>((ulong?)dto.SpellCooldowns?.ID, dto.IsUpdate);
+            var spellPowerId = await GetIdByConditionsAsync<SpellPower>((ulong?)dto.SpellPower?.ID, dto.IsUpdate);
+            var spellAuraOptionsId = await GetIdByConditionsAsync<SpellAuraOptions>((ulong?)dto.SpellAuraOptions?.ID, dto.IsUpdate);
+            var spellXSpellVisualId = await GetIdByConditionsAsync<SpellXSpellVisual>((ulong?)dto.SpellXSpellVisual?.ID, dto.IsUpdate);
+            var spellVisualId = await GetIdByConditionsAsync<SpellVisual>((ulong?)dto.SpellVisual?.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextSpellEffectId = await GetNextIdAsync<SpellEffect>();
@@ -28,19 +28,19 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.RecordID = spellId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
-            dto.Spell.ID = spellId;
+            dto.Spell.ID = (int)spellId;
             dto.Spell.VerifiedBuild = VerifiedBuild;
 
-            dto.SpellName.ID = spellId;
+            dto.SpellName.ID = (int)spellId;
             dto.SpellName.VerifiedBuild= VerifiedBuild;
 
-            dto.SpellMisc.ID = spellMiscId;
+            dto.SpellMisc.ID = (int)spellMiscId;
             dto.SpellMisc.SpellID = (int)spellId;
             dto.SpellMisc.VerifiedBuild = VerifiedBuild;
 
             if(dto.SpellXSpellVisual != null)
             {
-                dto.SpellXSpellVisual.ID = spellXSpellVisualId;
+                dto.SpellXSpellVisual.ID = (int)spellXSpellVisualId;
                 dto.SpellXSpellVisual.SpellID = (int)spellId;
                 dto.SpellXSpellVisual.SpellVisualID = (uint)spellVisualId;
                 dto.SpellXSpellVisual.ActiveIconFileID = dto.SpellMisc.ActiveIconFileDataID;
@@ -50,28 +50,28 @@ namespace HotfixMods.Infrastructure.Services
 
                 if (dto.SpellVisual != null)
                 {
-                    dto.SpellVisual.ID = spellVisualId;
+                    dto.SpellVisual.ID = (int)spellVisualId;
                     dto.SpellVisual.VerifiedBuild = VerifiedBuild;
                 }
             }
 
             if (dto.SpellCooldowns != null)
             {
-                dto.SpellCooldowns.ID = spellCooldownsId;
+                dto.SpellCooldowns.ID = (int)spellCooldownsId;
                 dto.SpellCooldowns.SpellID = (int)spellId;
                 dto.SpellCooldowns.VerifiedBuild = VerifiedBuild;
             }
 
             if(dto.SpellPower!= null)
             {
-                dto.SpellPower.ID = spellPowerId;
+                dto.SpellPower.ID = (int)spellPowerId;
                 dto.SpellPower.SpellID = (int)spellId;
                 dto.SpellPower.VerifiedBuild= VerifiedBuild;
             }
 
             if(dto.SpellAuraOptions != null)
             {
-                dto.SpellAuraOptions.ID = spellAuraOptionsId;
+                dto.SpellAuraOptions.ID = (int)spellAuraOptionsId;
                 dto.SpellAuraOptions.SpellID = (int)spellId;
                 dto.SpellAuraOptions.DifficultyID = dto.SpellMisc.DifficultyID;
                 dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
@@ -81,14 +81,14 @@ namespace HotfixMods.Infrastructure.Services
             dto.EffectGroups.ForEach(e =>
             {
                 e.SpellEffect.EffectIndex = index++;
-                e.SpellEffect.ID = nextSpellEffectId++;
+                e.SpellEffect.ID = (int)nextSpellEffectId++;
                 e.SpellEffect.SpellID = (int)spellId;
                 e.SpellEffect.VerifiedBuild = VerifiedBuild;
             });
 
             dto.EventGroups.ForEach(v =>
             {
-                v.SpellVisualEvent.ID = nextSpellVisualEventId++;
+                v.SpellVisualEvent.ID = (int)nextSpellVisualEventId++;
                 v.SpellVisualEvent.SpellVisualID = (int)spellVisualId;
                 v.SpellVisualEvent.VerifiedBuild = VerifiedBuild;
             });

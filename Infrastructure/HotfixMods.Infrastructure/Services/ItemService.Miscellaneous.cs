@@ -2,6 +2,7 @@
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Core.Models;
+using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -36,10 +37,10 @@ namespace HotfixMods.Infrastructure.Services
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
-            var itemId = await GetIdByConditionsAsync<Item>(dto.Item.ID, dto.IsUpdate);
-            var itemModifiedAppearanceId = await GetIdByConditionsAsync<ItemModifiedAppearance>(dto.ItemModifiedAppearance?.ID, dto.IsUpdate);
-            var itemAppearanceId = await GetIdByConditionsAsync<ItemAppearance>(dto.ItemAppearance?.ID, dto.IsUpdate);
-            var itemDisplayInfoId = await GetIdByConditionsAsync<ItemDisplayInfo>(dto.ItemDisplayInfo?.ID, dto.IsUpdate);
+            var itemId = await GetIdByConditionsAsync<Item>((ulong)dto.Item.ID, dto.IsUpdate);
+            var itemModifiedAppearanceId = await GetIdByConditionsAsync<ItemModifiedAppearance>((ulong?)dto.ItemModifiedAppearance?.ID, dto.IsUpdate);
+            var itemAppearanceId = await GetIdByConditionsAsync<ItemAppearance>((ulong?)dto.ItemAppearance?.ID, dto.IsUpdate);
+            var itemDisplayInfoId = await GetIdByConditionsAsync<ItemDisplayInfo>((ulong?)dto.ItemDisplayInfo?.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextItemDisplayInfoMaterialResId = await GetNextIdAsync<ItemDisplayInfoMaterialRes>();
@@ -60,38 +61,38 @@ namespace HotfixMods.Infrastructure.Services
             }
                 
 
-            dto.Item.ID = itemId;
+            dto.Item.ID = (int)itemId;
             dto.Item.VerifiedBuild = VerifiedBuild;
 
             if (itemSearchName != null)
             {
-                itemSearchName.ID = itemId;
+                itemSearchName.ID = (int)itemId;
                 itemSearchName.VerifiedBuild = VerifiedBuild;
             }
 
             if (dto.ItemSparse != null)
             {
-                dto.ItemSparse.ID = itemId;
+                dto.ItemSparse.ID = (int)itemId;
                 dto.ItemSparse.VerifiedBuild = VerifiedBuild;
             }
 
             if (dto.ItemModifiedAppearance != null)
             {
-                dto.ItemModifiedAppearance.ID = itemModifiedAppearanceId;
+                dto.ItemModifiedAppearance.ID = (int)itemModifiedAppearanceId;
                 dto.ItemModifiedAppearance.ItemID = (int)itemId;
                 dto.ItemModifiedAppearance.ItemAppearanceID = (int)itemAppearanceId;
                 dto.ItemModifiedAppearance.VerifiedBuild = VerifiedBuild;
 
                 if (dto.ItemAppearance != null)
                 {
-                    dto.ItemAppearance.ID = itemAppearanceId;
+                    dto.ItemAppearance.ID = (int)itemAppearanceId;
                     dto.ItemAppearance.ItemDisplayInfoID = (int)itemDisplayInfoId;
                     dto.ItemAppearance.DefaultIconFileDataID = dto.Item.IconFileDataID;
                     dto.ItemAppearance.VerifiedBuild = VerifiedBuild;
 
                     if (dto.ItemDisplayInfo != null)
                     {
-                        dto.ItemDisplayInfo.ID = itemDisplayInfoId;
+                        dto.ItemDisplayInfo.ID = (int)itemDisplayInfoId;
                         dto.ItemDisplayInfo.VerifiedBuild = VerifiedBuild;
 
                         dto.ItemDisplayInfoMaterialRes?.ForEach(x =>
@@ -99,14 +100,14 @@ namespace HotfixMods.Infrastructure.Services
                             x.ItemDisplayInfoID = (int)itemDisplayInfoId;
                             x.VerifiedBuild = VerifiedBuild;
                             if (x.ID == 0 || !dto.IsUpdate)
-                                x.ID = nextItemDisplayInfoMaterialResId++;
+                                x.ID = (int)nextItemDisplayInfoMaterialResId++;
                         });
 
                         if (dto.ItemDisplayInfo.ModelMaterialResourcesID0 != 0)
                         {
                             itemDisplayInfoModelMatRes.Add(new()
                             {
-                                ID = nextItemDisplayInfoModelMatResId++,
+                                ID = (int)nextItemDisplayInfoModelMatResId++,
                                 ItemDisplayInfoID = (int)itemDisplayInfoId,
                                 ModelIndex = 0,
                                 MaterialResourcesID = dto.ItemDisplayInfo.ModelMaterialResourcesID0,
@@ -119,7 +120,7 @@ namespace HotfixMods.Infrastructure.Services
                         {
                             itemDisplayInfoModelMatRes.Add(new()
                             {
-                                ID = nextItemDisplayInfoModelMatResId++,
+                                ID = (int)nextItemDisplayInfoModelMatResId++,
                                 ItemDisplayInfoID = (int)itemDisplayInfoId,
                                 ModelIndex = 1,
                                 MaterialResourcesID = dto.ItemDisplayInfo.ModelMaterialResourcesID1,
@@ -133,7 +134,7 @@ namespace HotfixMods.Infrastructure.Services
 
             dto.EffectGroups.ForEach(eg =>
             {
-                eg.ItemEffect.ID = nextItemEffectId++;
+                eg.ItemEffect.ID = (int)nextItemEffectId++;
                 eg.ItemEffect.VerifiedBuild = VerifiedBuild;
             });
 
@@ -155,7 +156,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     itemXItemEffects.Add(new()
                     {
-                        ID = nextItemXItemEffectId++,
+                        ID = (int)nextItemXItemEffectId++,
                         ItemEffectID = (int)eg.ItemEffect.ID,
                         ItemID = (int)itemId,
                         VerifiedBuild = VerifiedBuild

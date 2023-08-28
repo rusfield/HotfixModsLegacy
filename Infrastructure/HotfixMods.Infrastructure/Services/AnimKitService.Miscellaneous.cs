@@ -29,9 +29,9 @@ namespace HotfixMods.Infrastructure.Services
             dto.SegmentGroups.ForEach(s =>
             {
                 s.AnimKitSegment.ParentAnimKitID = (ushort)animKitId;
-                s.AnimKitSegment.ID = nextAnimKitSegmentId;
+                s.AnimKitSegment.ID = (int)nextAnimKitSegmentId;
                 s.AnimKitSegment.AnimKitConfigID = (ushort)nextAnimKitConfigId;
-                s.AnimKitConfig.ID = nextAnimKitConfigId;
+                s.AnimKitConfig.ID = (int)nextAnimKitConfigId;
                 s.AnimKitSegment.OrderIndex = orderIndex;
 
 
@@ -40,7 +40,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 foreach(var boneSet in s.AnimKitConfigBoneSet)
                 {
-                    boneSet.ID = nextAnimKitConfigBoneSetId++;
+                    boneSet.ID = (int)nextAnimKitConfigBoneSetId++;
                     boneSet.ParentAnimKitConfigID = (int)nextAnimKitConfigId;
                     boneSet.VerifiedBuild = VerifiedBuild;
                 }

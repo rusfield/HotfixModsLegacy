@@ -17,6 +17,7 @@ namespace HotfixMods.Infrastructure.Config
         public string BuildInfo { get; set; } = "10.1.5.50469";
         public bool CacheFileResults { get; set; } = true;
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
+        public List<CustomRange> CustomRanges { get; set; } = new();
 
 
         public class MySqlSettings
@@ -32,6 +33,13 @@ namespace HotfixMods.Infrastructure.Config
             public string Port { get; set; }
             public string Username { get; set; }
             public string Password { get; set; }
+        }
+
+        public class CustomRange
+        {
+            public string Table { get; set; }
+            public ulong FromId { get; set; }
+            public ulong ToId { get; set; } 
         }
 
         // Set by whatever App/Frontend is handling the loading.

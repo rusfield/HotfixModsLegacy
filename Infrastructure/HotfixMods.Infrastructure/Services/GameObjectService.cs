@@ -14,12 +14,7 @@ namespace HotfixMods.Infrastructure.Services
     public partial class GameobjectService : ServiceBase
     {
         public GameobjectService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)
-        {
-            FromId = appConfig.GameobjectSettings.FromId;
-            ToId = appConfig.GameobjectSettings.ToId;
-            VerifiedBuild = appConfig.GameobjectSettings.VerifiedBuild;
-        }
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig) {}
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
@@ -31,7 +26,7 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     results.Add(new()
                     {
-                        ID = (int)dto.RecordID,
+                        ID = dto.RecordID,
                         Name = dto.Name,
                         AvatarUrl = null
                     });
@@ -63,7 +58,7 @@ namespace HotfixMods.Infrastructure.Services
                     GameobjectTemplate = gameobjectTemplate,
                     GameobjectTemplateAddon = await GetSingleAsync<GameobjectTemplateAddon>(callback, progress, new DbParameter(nameof(GameobjectTemplateAddon.Entry), id)),
                     GameobjectDisplayInfo = await GetSingleAsync<GameobjectDisplayInfo>(callback, progress, new DbParameter(nameof(GameobjectDisplayInfo.ID), gameobjectTemplate.DisplayID)) ?? new(),
-                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (int)gameobjectTemplate.Entry),
+                    HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (ulong)gameobjectTemplate.Entry),
                     IsUpdate = true
                 };
 

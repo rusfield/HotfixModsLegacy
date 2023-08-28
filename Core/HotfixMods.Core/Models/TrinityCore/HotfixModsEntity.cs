@@ -6,9 +6,9 @@ namespace HotfixMods.Core.Models.TrinityCore
     public class HotfixModsEntity
     {
         
-        public int ID { get; set; } = 0;
+        public ulong ID { get; set; } = 0;
         public string? Name { get; set; } = "";
-        public int RecordID { get; set; } = 0;
+        public ulong RecordID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

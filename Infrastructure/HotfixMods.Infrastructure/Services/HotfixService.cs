@@ -5,36 +5,33 @@ using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
 using HotfixMods.Providers.Interfaces;
+using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class HotfixService : ServiceBase
     {
         public HotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)
-        {
-            FromId = appConfig.GenericHotfixSettings.FromId;
-            ToId = appConfig.GenericHotfixSettings.ToId;
-            VerifiedBuild = appConfig.GenericHotfixSettings.VerifiedBuild;
-        }
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig) { }
 
         public async Task<bool> SaveAsync(HotfixDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(14);
 
-            try { 
-            callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
-            if (dto.IsUpdate)
+            try
             {
-                await DeleteAsync(dto.HotfixModsEntity.RecordID);
-            }
+                callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+                if (dto.IsUpdate)
+                {
+                    await DeleteAsync(dto.HotfixModsEntity.RecordID);
+                }
 
-            callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
-            await SetIdAndVerifiedBuild(dto);
+                callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());
+                await SetIdAndVerifiedBuild(dto);
 
-            await SaveAsync(callback, progress, dto.HotfixModsEntity);
-            await SaveAsync(callback, progress, _appConfig.HotfixesSchema, dto.DbRow.Db2Name, dto.DbRow);
+                await SaveAsync(callback, progress, dto.HotfixModsEntity);
+                await SaveAsync(callback, progress, _appConfig.HotfixesSchema, dto.DbRow.Db2Name, dto.DbRow);
 
                 callback.Invoke("Saving", "Saving successful", 100);
                 dto.IsUpdate = true;

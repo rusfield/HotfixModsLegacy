@@ -5,6 +5,7 @@ using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Providers.Models;
 using System.Collections;
 
 namespace HotfixMods.Infrastructure.Services
@@ -251,9 +252,9 @@ namespace HotfixMods.Infrastructure.Services
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
-            var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>((int)dto.CreatureTemplate.Entry, dto.IsUpdate);
-            var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>(dto.CreatureDisplayInfo.ID, dto.IsUpdate);
-            var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>(dto.CreatureDisplayInfoExtra?.ID, dto.IsUpdate);
+            var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>((ulong)dto.CreatureTemplate.Entry, dto.IsUpdate);
+            var creatureDisplayInfoId = await GetIdByConditionsAsync<CreatureDisplayInfo>((ulong)dto.CreatureDisplayInfo.ID, dto.IsUpdate);
+            var creatureDisplayInfoExtraId = await GetIdByConditionsAsync<CreatureDisplayInfoExtra>((ulong?)dto.CreatureDisplayInfoExtra?.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextNpcModelItemSlotDisplayInfo = await GetNextIdAsync<NpcModelItemSlotDisplayInfo>();
@@ -271,7 +272,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.CreatureTemplateModel.CreatureDisplayID = (uint)creatureDisplayInfoId;
             dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
 
-            dto.CreatureDisplayInfo.ID = creatureDisplayInfoId;
+            dto.CreatureDisplayInfo.ID = (int)creatureDisplayInfoId;
             dto.CreatureDisplayInfo.ExtendedDisplayInfoID = (int)creatureDisplayInfoExtraId;
             dto.CreatureDisplayInfo.VerifiedBuild = VerifiedBuild;
 
@@ -299,7 +300,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (dto.CreatureDisplayInfoExtra != null)
             {
-                dto.CreatureDisplayInfoExtra.ID = creatureDisplayInfoExtraId;
+                dto.CreatureDisplayInfoExtra.ID = (int)creatureDisplayInfoExtraId;
                 dto.CreatureDisplayInfoExtra.DisplaySexID = dto.CreatureDisplayInfo.Gender;
                 dto.CreatureDisplayInfoExtra.VerifiedBuild = VerifiedBuild;
 
@@ -308,7 +309,7 @@ namespace HotfixMods.Infrastructure.Services
                     dto.NpcModelItemSlotDisplayInfo.ForEach(item =>
                     {
                         item.NpcModelID = (int)creatureDisplayInfoExtraId;
-                        item.ID = nextNpcModelItemSlotDisplayInfo++;
+                        item.ID = (int)nextNpcModelItemSlotDisplayInfo++;
                         item.VerifiedBuild = VerifiedBuild;
                     });
                 }
@@ -318,7 +319,7 @@ namespace HotfixMods.Infrastructure.Services
                     dto.CreatureDisplayInfoOption.ForEach(item =>
                     {
                         item.CreatureDisplayInfoExtraID = (int)creatureDisplayInfoExtraId;
-                        item.ID = nextCreatureDisplayInfoOption++;
+                        item.ID = (int)nextCreatureDisplayInfoOption++;
                         item.VerifiedBuild = VerifiedBuild;
                     });
                 }

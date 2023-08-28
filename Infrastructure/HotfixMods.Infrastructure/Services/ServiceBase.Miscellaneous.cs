@@ -21,13 +21,13 @@ namespace HotfixMods.Infrastructure.Services
             return -1;
         }
 
-        protected string? GetSchemaNameOfEntity<T>(bool errorOnNotFound = true)
+        protected string GetSchemaNameOfEntity<T>()
             where T : new()
         {
-            return GetSchemaNameOfType(typeof(T), errorOnNotFound);
+            return GetSchemaNameOfType(typeof(T));
         }
 
-        protected string? GetSchemaNameOfType(Type type, bool errorOnNotFound = true)
+        protected string GetSchemaNameOfType(Type type)
         {
             if (type.GetCustomAttribute(typeof(HotfixesSchemaAttribute)) != null)
                 return _appConfig.HotfixesSchema;
@@ -38,16 +38,24 @@ namespace HotfixMods.Infrastructure.Services
             if (type.GetCustomAttribute(typeof(CharactersSchemaAttribute)) != null)
                 return _appConfig.CharactersSchema;
 
-            if (errorOnNotFound)
-                throw new Exception($"{type.Name} is missing Schema Attribute");
-            else
-                return null;
+            throw new Exception($"{type.Name} is missing Schema Attribute");
         }
 
-        protected string GetTableNameOfEntity<T>()
+        protected async Task<DbRowDefinition?> GetDefinitionOfEntity<T>()
             where T : new()
         {
-            return Activator.CreateInstance<T>().ToTableName();
+            var schema = GetSchemaNameOfEntity<T>();
+            var table = typeof(T).Name;
+            DbRowDefinition? rowDefinition = null;
+            if (schema.Equals(_appConfig.HotfixesSchema, StringComparison.InvariantCultureIgnoreCase))
+            {
+                rowDefinition = await GetDefinitionFromClientAsync(table);
+            }
+            else
+            {
+                rowDefinition = await GetDefinitionFromServerAsync(schema, table);
+            }
+            return rowDefinition;
         }
 
         protected string GetTableNameOfType(Type type)
@@ -55,37 +63,41 @@ namespace HotfixMods.Infrastructure.Services
             return type.Name.ToTableName();
         }
 
-        TableHashes GetTableHashOfEntity<T>()
+        protected async Task<ulong> GetNextIdAsync<T>()
             where T : new()
         {
-            return Enum.Parse<TableHashes>(GetTableNameOfEntity<T>(), true);
+            var result = await GetNextIdAsync<T>(GetSchemaNameOfEntity<T>(), typeof(T).Name);
+            return ulong.Parse(result);
         }
 
-        string GetIdPropertyNameOfEntity<T>()
+
+
+        async Task<string> GetNextIdAsync<T>(string schemaName, string tableName)
             where T : new()
         {
-                // TODO
-        }
+            var fromIdString = "1";
+            var toIdString = "1";
+            var customRange = _appConfig.CustomRanges.Where(c => c.Table.Equals(tableName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+            var definition = await GetDefinitionOfEntity<T>();
+            var idColumn = definition.ColumnDefinitions.First(p => p.IsIndex);
 
-        protected async Task<T> GetNextIdAsync<T>(T fromId, T toId)
-            where T : new()
-        {
-            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), fromId, toId, GetIdPropertyNameOfEntity<T>());
-        }
+            if (customRange != null)
+            {
+                fromIdString = customRange.FromId.ToString();
+                toIdString = customRange.ToId.ToString();
+            }
+            else
+            {
+                toIdString = GetMaxValue(typeof(T));
+            }
 
-        protected async Task<T> GetNextIdAsync(string db2Name)
-        {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, db2Name.ToTableName(), FromId, ToId, "id");
-        }
+            var highestIdString = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromIdString, toIdString, idColumn.Name);
 
-        async Task<T> GetNextIdAsync<T>(string schemaName, string tableName, string fromId, string toId, string idPropertyName)
-        {
-            var highestIdString = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
             try
             {
                 var highestId = ulong.Parse(highestIdString);
-                var from = ulong.Parse(fromId);
-                var to = ulong.Parse(toId);
+                var from = ulong.Parse(fromIdString);
+                var to = ulong.Parse(toIdString);
 
                 if (highestId > 0)
                 {
@@ -93,23 +105,18 @@ namespace HotfixMods.Infrastructure.Services
                     {
                         throw new Exception("Database is full.");
                     }
-                    return (T)Convert.ChangeType((highestId + 1), typeof(T));
+                    return (highestId + 1).ToString();
                 }
                 else
                 {
-                    return (T)Convert.ChangeType(from, typeof(T));
+                    return from.ToString();
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 // TODO
                 throw e;
             }
-        }
-
-        protected async Task<List<string>> GetClientDefinitionNamesAsync()
-        {
-            return (await _clientDbDefinitionProvider.GetDefinitionNamesAsync()).ToList();
         }
 
         protected async Task<bool> Db2ExistsAsync(string clientDbLocation, string serverSchemaName, string db2Name)
@@ -127,13 +134,13 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbProvider.SchemaExistsAsync(schemaName);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(Action<string, string, int> callback, Func<int> progress, int entityId)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(Action<string, string, int> callback, Func<int> progress, ulong entityId)
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(HotfixModsEntity).Name}", progress());
             return await GetExistingOrNewHotfixModsEntityAsync(entityId);
         }
 
-        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(int entityId)
+        protected async Task<HotfixModsEntity> GetExistingOrNewHotfixModsEntityAsync(ulong entityId)
         {
             var entity = await GetSingleAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, new DbParameter(nameof(HotfixModsEntity.RecordID), entityId), new DbParameter(nameof(HotfixModsEntity.VerifiedBuild), VerifiedBuild));
             if (null == entity)
@@ -147,11 +154,6 @@ namespace HotfixMods.Infrastructure.Services
                 };
             }
             return entity;
-        }
-
-        protected async Task<int> GetNextHotfixModsEntityIdAsync()
-        {
-            return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), 0, int.MaxValue, nameof(HotfixModsEntity.ID));
         }
 
         protected void HandleException(Exception exception)
@@ -169,7 +171,7 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
         }
 
-        protected async Task<int> GetIdByConditionsAsync<T>(int? currentId, bool isUpdate)
+        protected async Task<ulong> GetIdByConditionsAsync<T>(ulong? currentId, bool isUpdate)
             where T : new()
         {
             // Entity is null, and this ID will not be used.
@@ -177,18 +179,29 @@ namespace HotfixMods.Infrastructure.Services
                 return 0;
 
             // Entity is new, or entity should be saved as new
-            // Also check if entity is HotfixModsEntity, which does not use the FromId/ToId rules
-            if ((int)currentId == 0 || !isUpdate)
+            if (currentId == 0 || !isUpdate)
             {
-                if (typeof(T) == typeof(HotfixModsEntity))
-                    return await GetNextHotfixModsEntityIdAsync();
-                else
-                    return await GetNextIdAsync<T>();
+                return await GetNextIdAsync<T>();
             }
 
-
             // Entity is being updated
-            return (int)currentId;
+            return (ulong)currentId;
+        }
+
+        string GetMaxValue(Type type)
+        {
+            return type.ToString() switch
+            {
+                "System.SByte" => sbyte.MaxValue.ToString(),
+                "System.Int16" => short.MaxValue.ToString(),
+                "System.Int32" => int.MaxValue.ToString(),
+                "System.Int64" => long.MaxValue.ToString(),
+                "System.Byte" => byte.MaxValue.ToString(),
+                "System.UInt16" => ushort.MaxValue.ToString(),
+                "System.UInt32" => uint.MaxValue.ToString(),
+                "System.UInt64" => ulong.MaxValue.ToString(),
+                _ => throw new Exception($"Max value of {type} not implemented.")
+            };
         }
     }
 }

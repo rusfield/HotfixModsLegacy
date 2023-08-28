@@ -15,12 +15,7 @@ namespace HotfixMods.Infrastructure.Services
     public partial class ItemService : ServiceBase
     {
         public ItemService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)
-        {
-            FromId = appConfig.ItemSettings.FromId;
-            ToId = appConfig.ItemSettings.ToId;
-            VerifiedBuild = appConfig.ItemSettings.VerifiedBuild;
-        }
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig) { }
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {
@@ -140,7 +135,7 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = true
                 };
 
-                result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, item.ID);
+                result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (ulong)item.ID);
                 result.ItemSparse = await GetSingleAsync<ItemSparse>(callback, progress, new DbParameter(nameof(ItemSparse.ID), id));
                 result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(callback, progress, new DbParameter(nameof(ItemModifiedAppearance.ItemID), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
 
@@ -300,6 +295,6 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-     
+
     }
 }

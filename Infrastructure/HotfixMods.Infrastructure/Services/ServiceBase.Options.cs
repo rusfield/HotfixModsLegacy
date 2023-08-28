@@ -24,8 +24,8 @@ namespace HotfixMods.Infrastructure.Services
                 var options = await GetAsync(schemaName, db2Name, false, true);
                 foreach (var option in options)
                 {
-                    var key = option.Columns.Where(c => c.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value?.ToString();
-                    var value = option.Columns.Where(c => c.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
+                    var key = option.Columns.Where(c => c.Definition.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value?.ToString();
+                    var value = option.Columns.Where(c => c.Definition.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
 
                     if (key != null)
                     {
@@ -56,7 +56,7 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<TOptionKey, string>();
             await Task.Run(async () =>
             {
-                var enumValues = await _serverValuesProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+                var enumValues = await _serverValuesProvider.GetServerValuesAsync<TOptionKey>(modelType, propertyName);
                 results.InitializeDefaultValue();
 
                 for (int i = 0; i < enumValues.Count; i++)

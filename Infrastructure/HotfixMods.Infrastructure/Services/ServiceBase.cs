@@ -217,7 +217,8 @@ namespace HotfixMods.Infrastructure.Services
         {
             if (entities.Any())
             {
-                await SaveAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, entities.Where(e => e != null).EntitiesToDbRows().ToArray());
+                var definition = await GetDefinitionOfEntity<T>();
+                await SaveAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, entities.Where(e => e != null).EntitiesToDbRows(definition).ToArray());
             }
         }
 
@@ -356,7 +357,7 @@ namespace HotfixMods.Infrastructure.Services
                     }
                 }
             }
-            await _serverDbProvider.DeleteAsync(schemaName, GetTableNameOfEntity<T>(), parameters);
+            await _serverDbProvider.DeleteAsync(schemaName, typeof(T).Name, parameters);
             return true;
         }
         #endregion

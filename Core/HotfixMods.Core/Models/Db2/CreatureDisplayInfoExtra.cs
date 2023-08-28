@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class CreatureDisplayInfoExtra
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public sbyte DisplayRaceID { get; set; } = 0;
         [Db2Description("Set this value on CreatureDisplayInfo.")]

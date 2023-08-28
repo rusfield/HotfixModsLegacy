@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using System.IO.Enumeration;
+﻿using System.IO.Enumeration;
 using System.Reflection;
 
 namespace HotfixMods.Providers.Listfile.Client
@@ -21,18 +20,16 @@ namespace HotfixMods.Providers.Listfile.Client
             partialPath = partialPath ?? "";
             fileType = fileType ?? "";
             string cacheKey = $"{partialPath}{fileType}{formatValue}{typeof(TKey).Name}";
-            if (_cache.TryGetValue(cacheKey, out var cachedResults))
-                return (Dictionary<TKey, string>)cachedResults;
 
             var results = new Dictionary<TKey, string>();
             results[default(TKey)] = "None";
             await Task.Run(() =>
             {
 
-                if (!File.Exists(_listfilePath))
+                if (!File.Exists(ListFilePath))
                     throw new Exception($"Listfile not found.");
 
-                using (StreamReader reader = new StreamReader(_listfilePath))
+                using (StreamReader reader = new StreamReader(ListFilePath))
                 {
                     // Example input: 132089;interface/icons/ability_ambush.blp
 
@@ -62,9 +59,6 @@ namespace HotfixMods.Providers.Listfile.Client
                     }
                 }
             });
-
-            if (CacheResults)
-                _cache.Set(cacheKey, results, _cacheOptions);
 
             return results;
         }

@@ -1,39 +1,37 @@
 ﻿using HotfixMods.Core.Attributes;
 using HotfixMods.Core.Enums;
-using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
-using static DBDefsLib.Structs;
+using HotfixMods.Providers.Interfaces;
+using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class ServiceBase
     {
         public int VerifiedBuild { get; set; }
-        public int FromId { get; set; }
-        public int ToId { get; set; }
 
         IServerDbDefinitionProvider _serverDbDefinitionProvider;
         IClientDbDefinitionProvider _clientDbDefinitionProvider;
         IServerDbProvider _serverDbProvider;
         IClientDbProvider _clientDbProvider;
-        IServerEnumProvider _serverEnumProvider;
+        IServerValuesProvider _serverValuesProvider;
         IExceptionHandler _exceptionHandler;
         IListfileProvider _listfileProvider;
 
         protected AppConfig _appConfig;
 
-        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
+        public ServiceBase(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
         {
             _serverDbDefinitionProvider = serverDbDefinitionProvider;
             _clientDbDefinitionProvider = clientDbDefinitionProvider;
             _serverDbProvider = serverDbProvider;
             _clientDbProvider = clientDbProvider;
-            _serverEnumProvider = serverEnumProvider;
+            _serverValuesProvider = serverValuesProvider;
             _listfileProvider = listfileProvider;
             _exceptionHandler = exceptionHandler;
             _appConfig = appConfig;
@@ -82,7 +80,7 @@ namespace HotfixMods.Infrastructure.Services
                 && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase);
 
             if (useClientDefinition)
-                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(db2Name);
             else
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
 
@@ -97,7 +95,7 @@ namespace HotfixMods.Infrastructure.Services
 
             if (null == result && !serverOnly)
             {
-                result = await _clientDbProvider.GetSingleAsync(_appConfig.Db2Path, db2Name, definition, parameters);
+                result = await _clientDbProvider.GetSingleAsync(db2Name, definition, parameters);
             }
 
             return result;
@@ -145,7 +143,7 @@ namespace HotfixMods.Infrastructure.Services
                 && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase);
 
             if (useClientDefinition)
-                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(db2Name);
             else
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
 
@@ -165,7 +163,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 if (!serverOnly && (includeClientIfServerResult || !results.Any()))
                 {
-                    var clientResults = await _clientDbProvider.GetAsync(_appConfig.Db2Path, db2Name, definition, parameters);
+                    var clientResults = await _clientDbProvider.GetAsync(db2Name, definition, parameters);
 
                     var resultIds = new HashSet<int>(results.Select(r => r.GetIdValue()));
                     foreach (var clientResult in clientResults)
@@ -218,7 +216,9 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             if (entities.Any())
+            {
                 await SaveAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, entities.Where(e => e != null).EntitiesToDbRows().ToArray());
+            }
         }
 
         protected async Task SaveAsync(Action<string, string, int> callback, Func<int> progress, string schemaName, string db2Name, params DbRow[] dbRows)
@@ -259,25 +259,19 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     var dbColumn = new DbColumn()
                     {
-                        Name = def.Name,
-                        Type = def.Type,
                         Value = Activator.CreateInstance(def.Type)!,
-                        IsIndex = def.IsIndex,
-                        IsLocalized = def.IsLocalized,
-                        IsParentIndex = def.IsParentIndex,
-                        ReferenceDb2 = def.ReferenceDb2,
-                        ReferenceDb2Field = def.ReferenceDb2Field
+                        Definition = def
                     };
 
-                    if (dbColumn.Name.Equals(nameof(HotfixData.RecordID), StringComparison.CurrentCultureIgnoreCase))
+                    if (dbColumn.Definition.Name.Equals(nameof(HotfixData.RecordID), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = dbRow.GetIdValue();
-                    else if (dbColumn.Name.Equals(nameof(HotfixData.Status), StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Definition.Name.Equals(nameof(HotfixData.Status), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (byte)HotfixStatuses.VALID;
-                    else if (dbColumn.Name.Equals(nameof(HotfixData.TableHash), StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Definition.Name.Equals(nameof(HotfixData.TableHash), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (uint)tableHash;
-                    else if (dbColumn.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Definition.Name.Equals("id", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = newHotfixDataId;
-                    else if (dbColumn.Name.Equals("verifiedbuild", StringComparison.CurrentCultureIgnoreCase))
+                    else if (dbColumn.Definition.Name.Equals("verifiedbuild", StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = VerifiedBuild;
 
                     hotfixDbRow.Columns.Add(dbColumn);

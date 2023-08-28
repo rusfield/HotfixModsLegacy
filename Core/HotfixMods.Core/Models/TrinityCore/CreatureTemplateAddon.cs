@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [WorldSchema]
     public class CreatureTemplateAddon
     {
-        [IndexField]
+        
         public uint Entry { get; set; } = 0;
         public uint Path_ID { get; set; } = 0;
         public uint Mount { get; set; } = 0;

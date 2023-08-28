@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class EdgeGlowEffect
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public decimal Duration { get; set; } = 0;
         public decimal FadeIn { get; set; } = 0;

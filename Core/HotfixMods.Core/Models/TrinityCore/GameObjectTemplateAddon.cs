@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models
     [WorldSchema]
     public class GameobjectTemplateAddon
     {
-        [IndexField]
+        
         public uint Entry { get; set; } = 0;
         public ushort Faction { get; set; } = 0;
         public uint Flags { get; set; } = 0;

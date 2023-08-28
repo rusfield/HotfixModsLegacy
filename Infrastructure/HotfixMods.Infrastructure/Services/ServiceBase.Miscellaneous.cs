@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Helpers;
+using HotfixMods.Providers.Models;
 using System.Reflection;
 
 namespace HotfixMods.Infrastructure.Services
@@ -63,54 +64,46 @@ namespace HotfixMods.Infrastructure.Services
         string GetIdPropertyNameOfEntity<T>()
             where T : new()
         {
-            string idPropertyName = "id";
-            var idProperties = typeof(T).GetProperties().Where(p => p.Name.Equals(idPropertyName, StringComparison.InvariantCultureIgnoreCase));
-            if (idProperties.Count() > 1)
-                throw new Exception($"{typeof(T).Name} contains multiple {idPropertyName} properties.");
-
-            if (idProperties.Count() == 1)
-            {
-                return idProperties.First().Name;
-            }
-
-            var idAttributeProperties = typeof(T).GetProperties().Where(p => p.GetCustomAttributes(false).Any(a => a.GetType() == typeof(IndexFieldAttribute)));
-            if (idAttributeProperties.Count() > 1)
-                throw new Exception($"{typeof(T).Name} contains multiple column attributes named {idPropertyName}.");
-
-            if (idAttributeProperties.Count() == 1)
-            {
-                return idAttributeProperties.First().Name;
-            }
-
-            throw new Exception($"{typeof(T)} does not contain any {idPropertyName} properties");
+                // TODO
         }
 
-        protected async Task<int> GetNextIdAsync<T>()
+        protected async Task<T> GetNextIdAsync<T>(T fromId, T toId)
             where T : new()
         {
-            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId, GetIdPropertyNameOfEntity<T>());
+            return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), fromId, toId, GetIdPropertyNameOfEntity<T>());
         }
 
-        protected async Task<int> GetNextIdAsync(string db2Name)
+        protected async Task<T> GetNextIdAsync(string db2Name)
         {
             return await GetNextIdAsync(_appConfig.HotfixesSchema, db2Name.ToTableName(), FromId, ToId, "id");
         }
 
-        async Task<int> GetNextIdAsync(string schemaName, string tableName, int fromId, int toId, string idPropertyName)
+        async Task<T> GetNextIdAsync<T>(string schemaName, string tableName, string fromId, string toId, string idPropertyName)
         {
-            var highestId = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
+            var highestIdString = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
+            try
+            {
+                var highestId = ulong.Parse(highestIdString);
+                var from = ulong.Parse(fromId);
+                var to = ulong.Parse(toId);
 
-            if (highestId > 0)
-            {
-                if (highestId == ToId)
+                if (highestId > 0)
                 {
-                    throw new Exception("Database is full.");
+                    if (highestId == to)
+                    {
+                        throw new Exception("Database is full.");
+                    }
+                    return (T)Convert.ChangeType((highestId + 1), typeof(T));
                 }
-                return highestId + 1;
+                else
+                {
+                    return (T)Convert.ChangeType(from, typeof(T));
+                }
             }
-            else
+            catch(Exception e)
             {
-                return FromId;
+                // TODO
+                throw e;
             }
         }
 
@@ -121,7 +114,7 @@ namespace HotfixMods.Infrastructure.Services
 
         protected async Task<bool> Db2ExistsAsync(string clientDbLocation, string serverSchemaName, string db2Name)
         {
-            return await _clientDbProvider.Db2ExistsAsync(clientDbLocation, db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
+            return await _clientDbProvider.Db2ExistsAsync(db2Name) || await _serverDbProvider.TableExistsAsync(serverSchemaName, db2Name);
         }
 
         protected async Task<bool> TableExistsAsync(string schemaName, string tableName)
@@ -166,12 +159,12 @@ namespace HotfixMods.Infrastructure.Services
             _exceptionHandler.Handle(exception);
         }
 
-        protected async Task<DbRowDefinition> GetDefinitionFromClientAsync(string db2Name)
+        protected async Task<DbRowDefinition?> GetDefinitionFromClientAsync(string db2Name)
         {
-            return await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+            return await _clientDbDefinitionProvider.GetDefinitionAsync(db2Name);
         }
 
-        protected async Task<DbRowDefinition> GetDefinitionFromServerAsync(string schemaName, string tableName)
+        protected async Task<DbRowDefinition?> GetDefinitionFromServerAsync(string schemaName, string tableName)
         {
             return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
         }

@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemEffect
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public byte LegacySlotIndex { get; set; } = 0;
         public sbyte TriggerType { get; set; } = 0;

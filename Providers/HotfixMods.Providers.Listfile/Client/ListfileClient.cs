@@ -1,5 +1,4 @@
-﻿using HotfixMods.Core.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
+﻿using HotfixMods.Providers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,23 +9,11 @@ namespace HotfixMods.Providers.Listfile.Client
 {
     public partial class ListfileClient : IListfileProvider
     {
-        public bool CacheResults { get; set; } = true;
-
-        IMemoryCache _cache;
-        MemoryCacheEntryOptions _cacheOptions;
-        string _listfilePath;
+        public string ListFilePath { get; set; } = "/";
 
         public ListfileClient(string listfilePath)
         {
-            _cache = new MemoryCache(new MemoryCacheOptions()
-            {
-                TrackLinkedCacheEntries = true
-            });
-            _cacheOptions = new()
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(15)
-            };
-            _listfilePath = listfilePath;
+            ListFilePath = listfilePath;
         }
 
         public async Task<Dictionary<TKey, string>> GetIconsAsync<TKey>() 

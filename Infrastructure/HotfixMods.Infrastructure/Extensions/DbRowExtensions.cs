@@ -1,8 +1,4 @@
-﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Models;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Common;
-using System.Text.RegularExpressions;
+﻿using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.Extensions
 {

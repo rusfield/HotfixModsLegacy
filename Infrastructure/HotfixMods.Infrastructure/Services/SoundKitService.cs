@@ -1,25 +1,19 @@
-﻿using HotfixMods.Core.Interfaces;
-using HotfixMods.Core.Models;
-using HotfixMods.Core.Models.Db2;
+﻿using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.AggregateModels;
 using HotfixMods.Infrastructure.DtoModels;
-using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
+using HotfixMods.Providers.Interfaces;
+using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class SoundKitService : ServiceBase
     {
-        public SoundKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverEnumProvider, listfileProvider, exceptionHandler, appConfig)
-        {
-            FromId = appConfig.SoundKitSettings.FromId;
-            ToId = appConfig.SoundKitSettings.ToId;
-            VerifiedBuild = appConfig.SoundKitSettings.VerifiedBuild;
-        }
+        public SoundKitService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig){}
 
         public async Task<List<DashboardModel>> GetDashboardModelsAsync()
         {

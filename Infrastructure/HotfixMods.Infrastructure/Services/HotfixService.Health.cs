@@ -1,12 +1,9 @@
 ﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Enums.TrinityCore;
-using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.AggregateModels;
 using HotfixMods.Infrastructure.DtoModels;
-using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Providers.Models;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -177,10 +174,6 @@ namespace HotfixMods.Infrastructure.Services
             var types = GetAllModels();
             foreach (var type in types)
             {
-                // Devs will check Client Only models before releases.
-                if (Attribute.IsDefined(type, typeof(ClientOnlyAttribute)))
-                    continue;
-
                 var healthModel = await CheckSingleModelHealthAsync(type);
                 if (healthModel != null)
                     result.Add(healthModel);

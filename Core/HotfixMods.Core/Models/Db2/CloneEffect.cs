@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class CloneEffect
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public int DurationMs { get; set; } = 0;
         public int DelayMs { get; set; } = 0;

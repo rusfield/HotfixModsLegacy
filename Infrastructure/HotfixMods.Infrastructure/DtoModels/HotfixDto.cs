@@ -1,5 +1,4 @@
-﻿using HotfixMods.Core.Models;
-using HotfixMods.Core.Models.TrinityCore;
+﻿using HotfixMods.Providers.Models;
 
 namespace HotfixMods.Infrastructure.DtoModels
 {

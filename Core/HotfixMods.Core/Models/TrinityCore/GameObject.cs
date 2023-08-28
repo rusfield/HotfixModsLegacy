@@ -9,7 +9,7 @@ namespace HotfixMods.Core.Models
          * Placeholder object for delete
          */
 
-        [IndexField]
+        
         public ulong Guid { get; set; }
         public int ID { get; set; }
     }

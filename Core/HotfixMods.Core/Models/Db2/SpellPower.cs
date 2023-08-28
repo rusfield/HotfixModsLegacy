@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellPower
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         [Db2Description("The order of the Spell Power when multiple exists.$Currently unsupported (Dev's note: TODO)")]
         public byte OrderIndex { get; set; } = 0;
@@ -21,7 +21,7 @@ namespace HotfixMods.Core.Models.Db2
         public sbyte PowerType { get; set; } = 0;
         public int RequiredAuraSpellID { get; set; } = 0;
         public uint OptionalCost { get; set; } = 0;
-        [ParentIndexField]
+        
         public int SpellID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

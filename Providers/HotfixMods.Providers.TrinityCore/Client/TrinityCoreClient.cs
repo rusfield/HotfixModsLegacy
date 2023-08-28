@@ -1,33 +1,20 @@
-﻿using HotfixMods.Core.Interfaces;
-using HotfixMods.Core.Models;
+﻿using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
-using Microsoft.Extensions.Caching.Memory;
-using System.Security.Cryptography.X509Certificates;
+using HotfixMods.Providers.Interfaces;
 
 namespace HotfixMods.Providers.TrinityCore.Client
 {
-    public partial class TrinityCoreClient : IServerEnumProvider
+    public partial class TrinityCoreClient : IServerValuesProvider
     {
-        IMemoryCache _cache;
-        MemoryCacheEntryOptions _cacheOptions;
         public TrinityCoreClient(string trinityCorePath)
         {
             TrinityCorePath = trinityCorePath;
-            _cache = new MemoryCache(new MemoryCacheOptions()
-            {
-                TrackLinkedCacheEntries = true
-            });
-            _cacheOptions = new()
-            {
-                SlidingExpiration = TimeSpan.FromMinutes(15)
-            };
         }
 
         public string TrinityCorePath { get; set; } = "/";
-        public bool CacheResults { get; set; } = true;
 
-        public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
+        public async Task<Dictionary<TKey, string>> GetServerValuesAsync<TKey>(Type? modelType, string propertyName)
             where TKey : notnull
         {
             if (typeof(CreatureTemplate) == modelType)

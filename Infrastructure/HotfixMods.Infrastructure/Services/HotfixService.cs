@@ -1,18 +1,17 @@
-﻿using HotfixMods.Core.Interfaces;
-using HotfixMods.Core.Models;
-using HotfixMods.Core.Models.TrinityCore;
+﻿using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Handlers;
 using HotfixMods.Infrastructure.Helpers;
+using HotfixMods.Providers.Interfaces;
 
 namespace HotfixMods.Infrastructure.Services
 {
     public partial class HotfixService : ServiceBase
     {
-        public HotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerEnumProvider serverEnumProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
-            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverEnumProvider, listfileProvider, exceptionHandler, appConfig)
+        public HotfixService(IServerDbDefinitionProvider serverDbDefinitionProvider, IClientDbDefinitionProvider clientDbDefinitionProvider, IServerDbProvider serverDbProvider, IClientDbProvider clientDbProvider, IServerValuesProvider serverValuesProvider, IListfileProvider listfileProvider, IExceptionHandler exceptionHandler, AppConfig appConfig)
+            : base(serverDbDefinitionProvider, clientDbDefinitionProvider, serverDbProvider, clientDbProvider, serverValuesProvider, listfileProvider, exceptionHandler, appConfig)
         {
             FromId = appConfig.GenericHotfixSettings.FromId;
             ToId = appConfig.GenericHotfixSettings.ToId;

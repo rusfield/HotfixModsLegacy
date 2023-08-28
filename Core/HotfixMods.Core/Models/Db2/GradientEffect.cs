@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class GradientEffect
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public decimal Colors0R { get; set; } = 0;
         public decimal Colors0G { get; set; } = 0;

@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisual
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public decimal MissileCastOffset0 { get; set; } = 0;
         public decimal MissileCastOffset1 { get; set; } = 0;

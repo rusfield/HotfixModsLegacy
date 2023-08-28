@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellEffect
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public short EffectAura { get; set; } = 0;
         public int DifficultyID { get; set; } = 0;
@@ -41,7 +41,7 @@ namespace HotfixMods.Core.Models.Db2
         public int EffectSpellClassMask3 { get; set; } = 0;
         public short ImplicitTarget0 { get; set; } = 0;
         public short ImplicitTarget1 { get; set; } = 0;
-        [ParentIndexField]
+        
         public int SpellID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

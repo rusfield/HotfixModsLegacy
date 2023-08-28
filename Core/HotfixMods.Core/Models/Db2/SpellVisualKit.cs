@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisualKit
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public sbyte ClutterLevel { get; set; } = 0;
         public int FallbackSpellVisualKitID { get; set; } = 0;

@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class SpellVisualKitModelAttach
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         [Db2Description("The position of the attachment relative to the user.$A positive value will move the attachment forward and a negative value will move the attachment backward.$Value 0.5 will be quite noticable.")]
         public decimal Offset0 { get; set; } = 0;
@@ -35,7 +35,7 @@ namespace HotfixMods.Core.Models.Db2
         public int LowDefModelAttachID { get; set; } = 0;
         public decimal StartDelay { get; set; } = 0;
         public decimal Field_9_0_1_33978_021 { get; set; } = 0;
-        [ParentIndexField]
+        
         public int ParentSpellVisualKitID { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }

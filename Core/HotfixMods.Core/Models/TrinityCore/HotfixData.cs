@@ -1,6 +1,4 @@
 ﻿using HotfixMods.Core.Attributes;
-using HotfixMods.Core.Enums;
-using HotfixMods.Core.Interfaces;
 
 namespace HotfixMods.Core.Models.TrinityCore
 {

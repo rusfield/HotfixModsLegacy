@@ -9,7 +9,6 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
         string _connectionString;
         public int AddBatchSize { get; set; } = 2000; // Run this in MySql and then restart the server:      SET GLOBAL max_allowed_packet=1073741824; 
-        public int VerifiedBuild { get; set; }
 
         public MySqlClient(string server, string port, string user, string password)
         {

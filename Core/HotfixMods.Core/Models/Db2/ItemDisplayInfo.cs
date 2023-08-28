@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class ItemDisplayInfo
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
         public int Field_3_4_1_46917_000 { get; set; } = 0;
         public int ItemVisual { get; set; } = 0;

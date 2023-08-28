@@ -1,11 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotfixMods.Providers.TrinityCore.Client
+﻿namespace HotfixMods.Providers.TrinityCore.Client
 {
     public partial class TrinityCoreClient
     {
@@ -21,8 +14,6 @@ namespace HotfixMods.Providers.TrinityCore.Client
             where TKey : notnull
         {
             string cacheKey = $"{filePath}{enumName}{typeof(TKey)}";
-            if (_cache.TryGetValue(cacheKey, out var cachedResults))
-                return (Dictionary<TKey, string>)cachedResults;
 
             var results = new Dictionary<TKey, string>();
             /*
@@ -93,9 +84,6 @@ namespace HotfixMods.Providers.TrinityCore.Client
                             enumFound = true;
                     }
                 }
-
-                if (CacheResults)
-                    _cache.Set(cacheKey, results, _cacheOptions);
             }
 
             return results;

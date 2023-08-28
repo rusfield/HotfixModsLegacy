@@ -56,7 +56,7 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<TOptionKey, string>();
             await Task.Run(async () =>
             {
-                var enumValues = await _serverEnumProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
+                var enumValues = await _serverValuesProvider.GetEnumValues<TOptionKey>(modelType, propertyName);
                 results.InitializeDefaultValue();
 
                 for (int i = 0; i < enumValues.Count; i++)

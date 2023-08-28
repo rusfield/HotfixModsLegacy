@@ -5,7 +5,7 @@ namespace HotfixMods.Core.Models
     [WorldSchema]
     public class GameobjectTemplate
     {
-        [IndexField]
+        
         public uint Entry { get; set; } = 0;
         public byte Type { get; set; } = 0;
         public uint DisplayID { get; set; } = 0;

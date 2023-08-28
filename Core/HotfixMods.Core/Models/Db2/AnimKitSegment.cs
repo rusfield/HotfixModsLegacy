@@ -5,9 +5,9 @@ namespace HotfixMods.Core.Models.Db2
     [HotfixesSchema]
     public class AnimKitSegment
     {
-        [IndexField]
+        
         public int ID { get; set; } = 0;
-        [ParentIndexField]
+        
         public ushort ParentAnimKitID { get; set; } = 0;
         [Db2Description("Order Index works as an ID for a group of segments linked to an AnimKit.$The order does not always matter, but can do based on the condition values.$To edit this value, move the segment using the controllers in the footer.")]
         public byte OrderIndex { get; set; } = 0;

@@ -62,10 +62,36 @@ namespace HotfixMods.Infrastructure.Extensions
             return entity;
         }
 
-        public static IEnumerable<T> DbRowsToEntities<T>(this IEnumerable<DbRow> dbRows)
+        public static List<T> DbRowsToEntities<T>(this PagedDbResult pagedDbResult)
             where T : new()
         {
-            return dbRows.Where(d => d != null).Select(d => d.DbRowToEntity<T>()!);
+            return pagedDbResult.Rows.Select(d => d.DbRowToEntity<T>()!).ToList();
+        }
+
+        public static PagedDbResult<T> DbRowsToPagedEntities<T>(this PagedDbResult pagedDbResult)
+            where T : new()
+        {
+            var result = new PagedDbResult<T>(pagedDbResult.PageIndex, pagedDbResult.PageSize, pagedDbResult.TotalRowCount)
+            {
+                Rows = pagedDbResult.Rows.Select(d => d.DbRowToEntity<T>()!).ToList()
+            };
+
+            return result;
+        }
+
+        public static string GetIdColumnName(this DbRow row)
+        {
+            return row.GetIdColumn().Definition.Name;
+        }
+
+        public static object GetIdColumnValue(this DbRow row)
+        {
+            return row.GetIdColumn().Value;
+        }
+
+        public static DbColumn GetIdColumn(this DbRow row)
+        {
+            return row.Columns.Where(p => p.Definition.IsIndex).First();
         }
     }
 }

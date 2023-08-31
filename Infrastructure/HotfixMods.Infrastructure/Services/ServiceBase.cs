@@ -105,36 +105,40 @@ namespace HotfixMods.Infrastructure.Services
 
 
         #region GET (many)
-        protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
+        protected async Task<PagedDbResult<T>> GetPagedAsync<T>(Action<string, string, int> callback, Func<int> progress, bool serverOnly, bool includeClientIfServerResult, int pageIndex, int pageSize, params DbParameter[] parameters)
             where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
-            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, includeClientIfServerResult, parameters);
-            return result.DbRowsToEntities<T>().ToList();
+            var result = await GetPagedAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, serverOnly, includeClientIfServerResult, pageIndex, pageSize, parameters);
+            return result.DbRowsToPagedEntities<T>();
         }
 
         protected async Task<List<T>> GetAsync<T>(Action<string, string, int> callback, Func<int> progress, params DbParameter[] parameters)
             where T : new()
         {
             callback.Invoke(LoadingHelper.Loading, $"Loading {typeof(T).Name}", progress());
-            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, parameters);
-            return result.DbRowsToEntities<T>().ToList();
+            var result = await GetPagedAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, -1, -1, parameters);
+            return result.DbRowsToEntities<T>();
         }
 
         protected async Task<List<T>> GetAsync<T>(params DbParameter[] parameters)
             where T : new()
         {
-            var result = await GetAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, parameters);
-            return result.DbRowsToEntities<T>().ToList();
+            var result = await GetPagedAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name, false, false, -1, -1, parameters);
+            return result.DbRowsToEntities<T>();
         }
 
-        protected async Task<List<DbRow>> GetAsync(string schemaName, string db2Name, bool serverOnly, bool includeClientIfServerResult, params DbParameter[] parameters)
+        protected async Task<PagedDbResult> GetAsync(string schemaName, string db2Name, params DbParameter[] parameters)
+        {
+            return await GetPagedAsync(schemaName, db2Name, false, true, -1, -1, parameters);
+        }
+        protected async Task<PagedDbResult> GetPagedAsync(string schemaName, string db2Name, bool serverOnly, bool includeClientIfServerResult, int pageIndex, int pageSize, params DbParameter[] parameters)
         {
             DbRowDefinition? definition;
             string serverEx = "";
             string clientEx = "";
             string tableName = db2Name.ToTableName();
-            var results = new List<DbRow>();
+            var results = new PagedDbResult(pageIndex, pageSize, 0);
 
             // TODO: Check if serverOnly parameter is needed anymore now that HotfixData and Entity is hardcoded here.
             var useClientDefinition = !serverOnly
@@ -152,8 +156,9 @@ namespace HotfixMods.Infrastructure.Services
 
             try
             {
-                var serverResults = await _serverDbProvider.GetAsync(schemaName, tableName, definition, parameters);
-                results.AddRange(serverResults);
+                var serverResults = await _serverDbProvider.GetAsync(schemaName, tableName, definition, -1, -1, parameters);
+                results.Rows.AddRange(serverResults.Rows);
+                results.TotalRowCount += serverResults.TotalRowCount;
             }
             catch (Exception ex)
             {
@@ -161,18 +166,19 @@ namespace HotfixMods.Infrastructure.Services
             }
             try
             {
-                if (!serverOnly && (includeClientIfServerResult || !results.Any()))
+                if (!serverOnly && (includeClientIfServerResult || !results.Rows.Any()))
                 {
-                    var clientResults = await _clientDbProvider.GetAsync(db2Name, definition, parameters);
+                    var clientResults = await _clientDbProvider.GetAsync(db2Name, definition, pageIndex, pageSize, parameters);
 
-                    var resultIds = new HashSet<int>(results.Select(r => r.GetIdValue()));
-                    foreach (var clientResult in clientResults)
+                    var resultIds = new HashSet<string>(results.Rows.Select(r => r.GetIdColumnValue().ToString()));
+                    foreach (var clientResult in clientResults.Rows)
                     {
-                        var idValue = clientResult.GetIdValue();
+                        var idValue = clientResult.GetIdColumnValue().ToString();
 
                         if (!resultIds.Contains(idValue))
                         {
-                            results.Add(clientResult);
+                            results.Rows.Add(clientResult);
+                            results.TotalRowCount += clientResults.TotalRowCount;
                             resultIds.Add(idValue);
                         }
                     }
@@ -234,7 +240,8 @@ namespace HotfixMods.Infrastructure.Services
             var hotfixDataDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName());
 
             var hotfixDbRows = new List<DbRow>();
-            var newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName(), _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");
+            var newHotfixDataIdString = await GetNextIdAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName());
+            var newHotfixDataId = ulong.Parse(newHotfixDataIdString);
 
             foreach (var dbRow in dbRows)
             {
@@ -244,7 +251,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 var dbParameters = new DbParameter[3];
-                dbParameters[0] = new DbParameter(nameof(HotfixData.RecordID), dbRow.GetIdValue());
+                dbParameters[0] = new DbParameter(nameof(HotfixData.RecordID), dbRow.GetIdColumnValue());
                 dbParameters[1] = new DbParameter(nameof(HotfixData.Status), (byte)HotfixStatuses.VALID);
                 dbParameters[2] = new DbParameter(nameof(HotfixData.TableHash), (uint)tableHash);
 
@@ -265,7 +272,7 @@ namespace HotfixMods.Infrastructure.Services
                     };
 
                     if (dbColumn.Definition.Name.Equals(nameof(HotfixData.RecordID), StringComparison.CurrentCultureIgnoreCase))
-                        dbColumn.Value = dbRow.GetIdValue();
+                        dbColumn.Value = dbRow.GetIdColumnValue();
                     else if (dbColumn.Definition.Name.Equals(nameof(HotfixData.Status), StringComparison.CurrentCultureIgnoreCase))
                         dbColumn.Value = (byte)HotfixStatuses.VALID;
                     else if (dbColumn.Definition.Name.Equals(nameof(HotfixData.TableHash), StringComparison.CurrentCultureIgnoreCase))
@@ -332,9 +339,9 @@ namespace HotfixMods.Infrastructure.Services
             if (null == entity)
                 return false;
 
-            var idName = entity.GetIdName();
-            var idValue = entity.GetIdValue();
-            return await DeleteAsync<T>(new DbParameter(idName, idValue));
+            var definition = await GetDefinitionOfEntity<T>();
+            var idColumn = entity.EntityToDbRow(definition).GetIdColumn();
+            return await DeleteAsync<T>(new DbParameter(idColumn.Definition.Name, idColumn.Value));
         }
 
         protected async Task<bool> DeleteAsync<T>(params DbParameter[] parameters)
@@ -344,10 +351,13 @@ namespace HotfixMods.Infrastructure.Services
             if (schemaName == _appConfig.HotfixesSchema)
             {
                 var entities = await GetAsync<T>(parameters);
+                var definition = await GetDefinitionOfEntity<T>();
 
-                foreach (var entity in entities)
+                var dbRows = entities.EntitiesToDbRows(definition);
+
+                foreach (var dbRow in dbRows)
                 {
-                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
+                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), dbRow.GetIdColumnValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
 
                     var hotfixData = await GetSingleAsync<HotfixData>(DefaultCallback, DefaultProgress, true, dbParameters);
                     if (hotfixData != null)

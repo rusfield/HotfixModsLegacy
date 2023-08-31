@@ -16,11 +16,11 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<ulong, string>> GetMechanicImmuneMaskOptionsAsync()
         {
-            var mechanics = await GetAsync(_appConfig.HotfixesSchema, "SpellMechanic", false, true);
+            var mechanics = await GetAsync(_appConfig.HotfixesSchema, "SpellMechanic");
             var results = new Dictionary<ulong, string>();
             results.Add(0, "None");
             ulong keyIndex = 1;
-            foreach (var mechanic in mechanics)
+            foreach (var mechanic in mechanics.Rows)
             {
                 results[keyIndex] = $"{mechanic.GetValueByNameAs<string>("StateName").ToDisplayString()}";
                 keyIndex *= 2;

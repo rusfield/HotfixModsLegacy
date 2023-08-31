@@ -19,7 +19,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -39,7 +39,7 @@ namespace HotfixMods.Infrastructure.Services
             return new();
         }
 
-        public async Task<SoundKitDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<SoundKitDto?> GetByIdAsync(ulong id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);
@@ -112,7 +112,7 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(ulong id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(4);

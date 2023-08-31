@@ -1,23 +1,30 @@
 ﻿namespace HotfixMods.Providers.Models
 {
-    public class PagedDbResult
+    public class PagedDbResult : PagedDbResult<DbRow>
     {
-        public PagedDbResult() 
+        public PagedDbResult() : base() { }
+        public PagedDbResult(int pageIndex, int pageSize, ulong totalRowCount) : base(pageIndex, pageSize, totalRowCount) { }
+    }
+
+
+    public class PagedDbResult<T>
+    {
+        public PagedDbResult()
         {
-            Rows = new();
         }
-        public PagedDbResult(int pageIndex, int pageSize, int totalRowCount) 
+
+        public PagedDbResult(int pageIndex, int pageSize, ulong totalRowCount)
         {
-            Rows = new();
             PageIndex = pageIndex;
             PageSize = pageSize;
             TotalRowCount = totalRowCount;
-            TotalPageCount = (int)Math.Ceiling((double)totalRowCount / pageSize);
         }
-        public List<DbRow> Rows { get; set; }
+
+        public List<T> Rows { get; set; } = new();
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public int TotalPageCount { get; private set; }
-        public long TotalRowCount { get; set; }
+        public ulong TotalRowCount { get; set; }
+
+        public ulong TotalPageCount => (ulong)Math.Ceiling((double)TotalRowCount / PageSize);
     }
 }

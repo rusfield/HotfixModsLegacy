@@ -1,15 +1,14 @@
 ﻿using HotfixMods.Apps.MauiBlazor.Config;
-using HotfixMods.Core.Interfaces;
 using HotfixMods.Infrastructure.Blazor.Handlers;
 using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.Handlers;
 //using HotfixMods.Infrastructure.Razor.Handlers;
 using HotfixMods.Infrastructure.Services;
+using HotfixMods.Providers.Interfaces;
 using HotfixMods.Providers.Listfile.Client;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
@@ -46,45 +45,40 @@ namespace HotfixMods.Apps.MauiBlazor
                 return appConfig;
             });
 
+            var db2Client = new Db2Client(appConfig.Db2Path, appConfig.DbdPath, appConfig.BuildInfo);
             builder.Services.AddSingleton<IClientDbProvider, Db2Client>(provider =>
             {
-                return new Db2Client(appConfig.BuildInfo);
+                return db2Client;
             });
             builder.Services.AddSingleton<IClientDbDefinitionProvider, Db2Client>(provider =>
             {
-                return new Db2Client(appConfig.BuildInfo);
+                return db2Client;
             });
-            builder.Services.AddSingleton<IServerDbProvider, MySqlClientLegacy>(provider =>
+            builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
             {
-                return new MySqlClientLegacy(
+                return new MySqlClient(
                     appConfig.MySql.Server,
                     appConfig.MySql.Port,
                     appConfig.MySql.Username,
                     appConfig.MySql.Password
                     );
             });
-            builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClientLegacy>(provider =>
+            builder.Services.AddSingleton<IServerDbDefinitionProvider, MySqlClient>(provider =>
             {
-                return new MySqlClientLegacy(
+                return new MySqlClient(
                     appConfig.MySql.Server,
                     appConfig.MySql.Port,
                     appConfig.MySql.Username,
                     appConfig.MySql.Password
                     );
             });
-            builder.Services.AddSingleton<IServerEnumProvider, TrinityCoreClient>(provider =>
+            builder.Services.AddSingleton<IServerValuesProvider, TrinityCoreClient>(provider =>
             {
-                return new TrinityCoreClient(appConfig.TrinityCorePath)
-                {
-                    CacheResults = appConfig.CacheFileResults
-                };
+                return new TrinityCoreClient(appConfig.TrinityCorePath);
             });
             builder.Services.AddSingleton<IListfileProvider, ListfileClient>(provider =>
             {
-                return new ListfileClient(appConfig.ListfilePath)
-                {
-                    CacheResults = appConfig.CacheFileResults
-                };
+                return new ListfileClient(appConfig.ListfilePath);
             });
 
             builder.Services.AddSingleton<HotfixService>();

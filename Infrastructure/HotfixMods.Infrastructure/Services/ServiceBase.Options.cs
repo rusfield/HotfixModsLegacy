@@ -21,8 +21,8 @@ namespace HotfixMods.Infrastructure.Services
             await Task.Run(async () =>
             {
                 results.InitializeDefaultValue();
-                var options = await GetAsync(schemaName, db2Name, false, true);
-                foreach (var option in options)
+                var options = await GetAsync(schemaName, db2Name);
+                foreach (var option in options.Rows)
                 {
                     var key = option.Columns.Where(c => c.Definition.Name.Equals("id", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault()?.Value?.ToString();
                     var value = option.Columns.Where(c => c.Definition.Name.Equals(valueColumnName, StringComparison.InvariantCultureIgnoreCase))?.FirstOrDefault()?.Value?.ToString();
@@ -79,12 +79,12 @@ namespace HotfixMods.Infrastructure.Services
 
             await Task.Run(async () =>
             {
-                var factions = (await GetAsync(_appConfig.HotfixesSchema, "Faction", false, true)).ToDictionary(k => k.GetIdValue(), v => v.GetValueByNameAs<string>("Name"));
-                var factionTemplates = await GetAsync(_appConfig.HotfixesSchema, "FactionTemplate", false, true);
+                var factions = (await GetAsync(_appConfig.HotfixesSchema, "Faction")).Rows.ToDictionary(k => k.GetIdColumnValue(), v => v.GetValueByNameAs<string>("Name"));
+                var factionTemplates = await GetAsync(_appConfig.HotfixesSchema, "FactionTemplate");
 
-                foreach (var factionTemplate in factionTemplates)
+                foreach (var factionTemplate in factionTemplates.Rows)
                 {
-                    var id = factionTemplate.GetIdValue();
+                    var id = factionTemplate.GetIdColumnValue();
                     string displayName = "";
                     if (factions.ContainsKey(id))
                         displayName = $"{factions[id]}";
@@ -121,9 +121,9 @@ namespace HotfixMods.Infrastructure.Services
             await Task.Run(async () =>
             {
                 var mapTypes = await GetEnumOptionsAsync<byte>(typeof(SpellAuraOptions), nameof(SpellAuraOptions.DifficultyID));
-                var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty", false, true);
+                var difficulties = await GetAsync(_appConfig.HotfixesSchema, "Difficulty");
 
-                foreach (var difficulty in difficulties)
+                foreach (var difficulty in difficulties.Rows)
                 {
                     var instanceType = difficulty.GetValueByNameAs<byte>("InstanceType");
                     var name = difficulty.GetValueByNameAs<string>("Name");
@@ -134,7 +134,7 @@ namespace HotfixMods.Infrastructure.Services
                         name = $"{name} {mapType}";
                     }
 
-                    results.Add((TOptionKey)Convert.ChangeType(difficulty.GetIdValue().ToString(), typeof(TOptionKey)), name);
+                    results.Add((TOptionKey)Convert.ChangeType(difficulty.GetIdColumnValue().ToString(), typeof(TOptionKey)), name);
                 }
             });
 
@@ -151,10 +151,10 @@ namespace HotfixMods.Infrastructure.Services
             {
                 try
                 {
-                    var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData", false, true);
+                    var textureFileData = await GetAsync(_appConfig.HotfixesSchema, "TextureFileData");
                     var textureFiles = await _listfileProvider.GetTexturesAsync<int>();
 
-                    foreach (var data in textureFileData)
+                    foreach (var data in textureFileData.Rows)
                     {
                         var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("MaterialResourcesID");
                         var fileDataId = data.GetValueByNameAs<int>("FileDataID");
@@ -182,11 +182,11 @@ namespace HotfixMods.Infrastructure.Services
             {
                 try
                 {
-                    var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData", false, true);
+                    var creatureModelData = await GetAsync(_appConfig.HotfixesSchema, "CreatureModelData");
                     var modelFiles = await _listfileProvider.GetModelsAsync<int>();
 
 
-                    foreach (var data in creatureModelData)
+                    foreach (var data in creatureModelData.Rows)
                     {
                         var fileDataId = data.GetValueByNameAs<int>("FileDataID");
                         var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("ID");
@@ -216,11 +216,11 @@ namespace HotfixMods.Infrastructure.Services
             {
                 try
                 {
-                    var modelData = await GetAsync(_appConfig.HotfixesSchema, "ModelFileData", false, true);
+                    var modelData = await GetAsync(_appConfig.HotfixesSchema, "ModelFileData");
                     var modelFiles = await _listfileProvider.GetModelsAsync<int>();
 
 
-                    foreach (var data in modelData)
+                    foreach (var data in modelData.Rows)
                     {
                         var fileDataId = data.GetValueByNameAs<int>("FileDataID");
                         var key = filedataAsId ? data.GetValueByNameAs<TOptionKey>("FileDataID") : data.GetValueByNameAs<TOptionKey>("ModelResourcesID");
@@ -249,8 +249,8 @@ namespace HotfixMods.Infrastructure.Services
             where TOptionKey : notnull
         {
             var results = new Dictionary<TOptionKey, string>();
-            var particleColors = await GetAsync(_appConfig.HotfixesSchema, "ParticleColor", false, true);
-            foreach (var particleColor in particleColors)
+            var particleColors = await GetAsync(_appConfig.HotfixesSchema, "ParticleColor");
+            foreach (var particleColor in particleColors.Rows)
             {
                 var colors = $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start0"))}, ";
                 colors += $"{Db2Helper.ConvertToHexColor(particleColor.GetValueByNameAs<int>("Start1"))}, ";

@@ -49,6 +49,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj" />
+		<ProjectReference Include="..\..\Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />

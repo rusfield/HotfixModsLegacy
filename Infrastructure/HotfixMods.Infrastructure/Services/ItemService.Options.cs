@@ -39,8 +39,8 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<byte, string>();
             results.InitializeDefaultValue();
 
-            var itemClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemClass", false, true);
-            foreach (var itemClass in itemClasses)
+            var itemClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemClass");
+            foreach (var itemClass in itemClasses.Rows)
             {
                 results[itemClass.GetValueByNameAs<byte>("ClassID")] = itemClass.GetValueByNameAs<string>("ClassName");
             }
@@ -52,8 +52,8 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<byte, string>();
             results.InitializeDefaultValue();
 
-            var subClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemSubClass", false, true);
-            foreach (var subClass in subClasses)
+            var subClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemSubClass");
+            foreach (var subClass in subClasses.Rows)
             {
                 var classIdOfSubClass = subClass.GetValueByNameAs<sbyte>("ClassID");
 
@@ -76,8 +76,8 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<byte, string>();
             results.InitializeDefaultValue();
 
-            var materials = await GetAsync(_appConfig.HotfixesSchema, "Material", false, true);
-            foreach (var material in materials)
+            var materials = await GetAsync(_appConfig.HotfixesSchema, "Material");
+            foreach (var material in materials.Rows)
             {
                 var key = material.GetValueByNameAs<byte>("ID");
                 var value = "";
@@ -94,8 +94,8 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<byte, string>();
             results.InitializeDefaultValue();
 
-            var itemGroupSounds = await GetAsync(_appConfig.HotfixesSchema, "ItemGroupSounds", false, true);
-            foreach (var itemGroupSound in itemGroupSounds)
+            var itemGroupSounds = await GetAsync(_appConfig.HotfixesSchema, "ItemGroupSounds");
+            foreach (var itemGroupSound in itemGroupSounds.Rows)
             {
                 var key = itemGroupSound.GetValueByNameAs<byte>("ID");
                 var value = "";
@@ -112,8 +112,8 @@ namespace HotfixMods.Infrastructure.Services
             var results = new Dictionary<int, string>();
             results.InitializeDefaultValue();
 
-            var craftingQualities = await GetAsync(_appConfig.HotfixesSchema, "CraftingQuality", false, true);
-            foreach (var craftingQuality in craftingQualities)
+            var craftingQualities = await GetAsync(_appConfig.HotfixesSchema, "CraftingQuality");
+            foreach (var craftingQuality in craftingQualities.Rows)
             {
                 var key = craftingQuality.GetValueByNameAs<int>("ID");
                 var value = "";
@@ -219,11 +219,11 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<int, string>> GetLimitCategoryOptionsAsync()
         {
             var results = new Dictionary<int, string>();
-            var categories = await GetAsync(_appConfig.HotfixesSchema, "ItemLimitCategory", false, true);
+            var categories = await GetAsync(_appConfig.HotfixesSchema, "ItemLimitCategory");
             results[0] = "None";
-            foreach(var category in categories)
+            foreach(var category in categories.Rows)
             {
-                results.Add(category.GetIdValue(), $"{category.GetValueByNameAs<string>("Name")} ({category.GetValueByNameAs<string>("Quantity")})");
+                results.Add((int)category.GetIdColumnValue(), $"{category.GetValueByNameAs<string>("Name")} ({category.GetValueByNameAs<string>("Quantity")})");
             }
             return results;
         }

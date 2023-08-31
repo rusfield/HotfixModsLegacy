@@ -79,7 +79,7 @@ namespace HotfixMods.Infrastructure.Services
             }
 
             var tableName = GetTableNameOfType(type);
-            var schemaName = GetSchemaNameOfType(type, false);
+            var schemaName = GetSchemaNameOfType(type);
             var properties = type.GetProperties();
 
             DbRowDefinition serverDefinition = new(type.Name);

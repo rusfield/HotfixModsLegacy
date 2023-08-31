@@ -10,12 +10,12 @@ namespace HotfixMods.Infrastructure.Config
         public string CharactersSchema { get; set; } = "characters";
         public string WorldSchema { get; set; } = "world";
         public string Db2Path { get; set; } = @"\";
+        public string DbdPath { get; set; } = @"\";
         public string TrinityCorePath { get; set; } = @"\";
         public string ListfilePath { get; set; } = @"\";
         public int HotfixDataTableFromId { get; set; } = 15000000;
         public int HotfixDataTableToId { get; set; } = 16000000;
         public string BuildInfo { get; set; } = "10.1.5.50469";
-        public bool CacheFileResults { get; set; } = true;
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
         public List<CustomRange> CustomRanges { get; set; } = new();
 

@@ -11,8 +11,8 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetCastingTimeIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellCastTimes = await GetAsync(_appConfig.HotfixesSchema, "SpellCastTimes", false, true);
-            foreach(var spellCastTime in spellCastTimes)
+            var spellCastTimes = await GetAsync(_appConfig.HotfixesSchema, "SpellCastTimes");
+            foreach(var spellCastTime in spellCastTimes.Rows)
             {
                 var spellCastTimeBase = spellCastTime.GetValueByNameAs<int>("Base");
                 var spellCastTimeMinimum = spellCastTime.GetValueByNameAs<int>("Minimum");
@@ -21,7 +21,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (spellCastTimeBase != spellCastTimeMinimum)
                     value += $" (min {spellCastTimeMinimum} ms)";
 
-                results.Add((ushort)spellCastTime.GetIdValue(), value);
+                results.Add((ushort)spellCastTime.GetIdColumnValue(), value);
             }
             return results;
         }
@@ -29,8 +29,8 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetDurationIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellDuration", false, true);
-            foreach (var spellDuration in spellDurations)
+            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellDuration");
+            foreach (var spellDuration in spellDurations.Rows)
             {
                 var duration = spellDuration.GetValueByNameAs<int>("Duration");
                 var maxDuration = spellDuration.GetValueByNameAs<int>("MaxDuration");
@@ -39,7 +39,7 @@ namespace HotfixMods.Infrastructure.Services
                 if (duration != maxDuration)
                     value += $" (min {maxDuration} ms)";
 
-                results.Add((ushort)spellDuration.GetIdValue(), value);
+                results.Add((ushort)spellDuration.GetIdColumnValue(), value);
             }
             return results;
         }
@@ -47,8 +47,8 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetRangeIndexOptionsAsync()
         {
             var results = new Dictionary<ushort, string>();
-            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellRange", false, true);
-            foreach (var spellDuration in spellDurations)
+            var spellDurations = await GetAsync(_appConfig.HotfixesSchema, "SpellRange");
+            foreach (var spellDuration in spellDurations.Rows)
             {
                 var rangeMin0 = spellDuration.GetValueByNameAs<decimal>("RangeMin0");
                 var rangeMin1 = spellDuration.GetValueByNameAs<decimal>("RangeMin1");
@@ -59,7 +59,7 @@ namespace HotfixMods.Infrastructure.Services
                 if(rangeMin0 != rangeMin1 || rangeMax0 != rangeMax1)
                     value = $"{rangeMin0}/{rangeMin1} to {rangeMax0}/{rangeMax1} yards";
 
-                results.Add((ushort)spellDuration.GetIdValue(), value);
+                results.Add((ushort)spellDuration.GetIdColumnValue(), value);
             }
             return results;
         }

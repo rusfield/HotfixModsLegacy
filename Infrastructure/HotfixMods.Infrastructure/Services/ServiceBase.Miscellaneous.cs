@@ -66,19 +66,18 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task<ulong> GetNextIdAsync<T>()
             where T : new()
         {
-            var result = await GetNextIdAsync<T>(GetSchemaNameOfEntity<T>(), typeof(T).Name);
+            var result = await GetNextIdAsync(GetSchemaNameOfEntity<T>(), typeof(T).Name);
             return ulong.Parse(result);
         }
 
 
 
-        async Task<string> GetNextIdAsync<T>(string schemaName, string tableName)
-            where T : new()
+        async Task<string> GetNextIdAsync(string schemaName, string tableName)
         {
             var fromIdString = "1";
             var toIdString = "1";
             var customRange = _appConfig.CustomRanges.Where(c => c.Table.Equals(tableName, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-            var definition = await GetDefinitionOfEntity<T>();
+            var definition = await GetDefinitionFromServerAsync(schemaName, tableName);
             var idColumn = definition.ColumnDefinitions.First(p => p.IsIndex);
 
             if (customRange != null)
@@ -88,7 +87,7 @@ namespace HotfixMods.Infrastructure.Services
             }
             else
             {
-                toIdString = GetMaxValue(typeof(T));
+                toIdString = GetMaxValue(idColumn.Type);
             }
 
             var highestIdString = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromIdString, toIdString, idColumn.Name);
@@ -186,6 +185,11 @@ namespace HotfixMods.Infrastructure.Services
 
             // Entity is being updated
             return (ulong)currentId;
+        }
+
+        protected async Task<IEnumerable<string>> GetAvailableDb2sAsync()
+        {
+            return await _clientDbProvider.GetAvailableNamesAsync();
         }
 
         string GetMaxValue(Type type)

@@ -20,7 +20,7 @@ namespace HotfixMods.Providers.WowDev.Client
                 var db2Results = dbcd.Load($"{db2Name}", Build);
                 var filteredResults = db2Results.Values.WhereDbParameters(parameters);
 
-                pagedResult = new PagedDbResult(pageIndex, pageSize, filteredResults.Count());
+                pagedResult = new PagedDbResult(pageIndex, pageSize, (ulong)filteredResults.Count());
 
                 foreach (var db2Value in filteredResults.Skip(pageIndex * pageSize).Take(pageSize))
                 {

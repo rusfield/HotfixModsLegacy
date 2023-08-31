@@ -59,7 +59,7 @@ namespace HotfixMods.Infrastructure.Services
                     callback.Invoke(LoadingHelper.Loading, $"{db2Name} not found", 100);
                     return null;
                 }
-                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, dbRow.GetIdValue());
+                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (ulong)dbRow.GetIdColumnValue());
                 if (string.IsNullOrWhiteSpace(hotfixModsEntity.Name))
                 {
                     hotfixModsEntity.Name = db2Name.ToDisplayName();
@@ -95,7 +95,7 @@ namespace HotfixMods.Infrastructure.Services
                     return false;
                 }
 
-                await DeleteAsync(callback, progress, _appConfig.HotfixesSchema, db2.ToTableName(), new DbParameter(dto.DbRow.GetIdName(), dto.DbRow.GetIdValue()));
+                await DeleteAsync(callback, progress, _appConfig.HotfixesSchema, db2.ToTableName(), new DbParameter(dto.DbRow.GetIdColumnName(), dto.DbRow.GetIdColumnValue()));
                 await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
                 return true;
@@ -108,19 +108,10 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        // Return next ID, and a bool for whether the previous ID was created by HotfixMods
-        // If it was not, it is potentially in range of being overwritten in later patches, and the next ID should be a bit higher than just +1.
-        public async Task<(int, bool)> GetNextIdAsync(string db2Name)
-        {
-            var nextId = await base.GetNextIdAsync(db2Name);
-            var hotfixMods = GetAsync<HotfixModsEntity>(new DbParameter(nameof(HotfixModsEntity.RecordID), nextId - 1));
-
-            return (nextId, hotfixMods != null);
-        }
-
         public async Task<List<string>> GetDefinitionNamesAsync()
         {
-            return await GetClientDefinitionNamesAsync();
+            var results = await GetAvailableDb2sAsync();
+            return results.ToList();
         }
 
         public async Task<bool> Db2Exists(string db2Name)

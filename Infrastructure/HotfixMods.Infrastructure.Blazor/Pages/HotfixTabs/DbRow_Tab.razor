@@ -1,6 +1,7 @@
 ﻿@using HotfixMods.Core.Enums.Db2
 @using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 @using HotfixMods.Infrastructure.Extensions
+@using HotfixMods.Providers.Models;
 
 <PagedDtoContent T="CreatureDisplayInfoOption" IsCustom="true">
     @for (int i = 0; i < amountOfPages; i++)
@@ -17,7 +18,7 @@
                     }
                     else
                     {
-                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
+                        <AnonymousInput_Element Type="values[jVal].Definition.Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Definition.Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Definition.Name)" />
                     }
                 }
             </MudItem>
@@ -37,7 +38,7 @@
                                 }
                                 else
                                 {
-                                    <AnonymousInput_Element Type="values[jVal - 1].Type" @bind-Value="values[jVal - 1].Value" Label="@(values[jVal - 1].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal - 1].Name)" />
+                                    <AnonymousInput_Element Type="values[jVal - 1].Definition.Type" @bind-Value="values[jVal - 1].Value" Label="@(values[jVal - 1].Definition.Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal - 1].Definition.Name)" />
                                 }
                             </LeftContent>
                             <RightContent>
@@ -47,7 +48,7 @@
                                 }
                                 else
                                 {
-                                    <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
+                                    <AnonymousInput_Element Type="values[jVal].Definition.Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Definition.Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Definition.Name)" />
                                 }
                             </RightContent>
                         </InlineGroup>
@@ -64,7 +65,7 @@
                     }
                     else
                     {
-                        <AnonymousInput_Element Type="values[jVal].Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Name)" />
+                        <AnonymousInput_Element Type="values[jVal].Definition.Type" @bind-Value="values[jVal].Value" Label="@(values[jVal].Definition.Name.ToDisplayName())" OnIdAdornmentClick="GetOnIdAdornmentClick(values[jVal].Definition.Name)" />
                     }
                 }
             </MudItem>
@@ -87,7 +88,7 @@
             values[index] = dbColumn;
         }
         amountOfPages = (values.Count + 15) / 16;
-        idName = ((HotfixDto)PageTab.Dto).DbRow.GetIdName();
+        idName = ((HotfixDto)PageTab.Dto).DbRow.GetIdColumnName();
         base.OnParametersSet();
     }
 

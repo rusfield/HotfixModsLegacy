@@ -2,7 +2,6 @@
 @using Microsoft.JSInterop;
 @using HotfixMods.Infrastructure.Services
 @using HotfixMods.Infrastructure.Blazor.Components.Private
-@using HotfixMods.Tools.HotfixInitializer.Tool;
 
 @inject HotfixService Service
 @inject AppConfig AppConfig
@@ -124,6 +123,7 @@
 
     protected async override Task OnInitializedAsync()
     {
+        /*
         var tool = new HotfixInitializerTool();
         foreach (var db2 in Db2s)
         {
@@ -133,6 +133,7 @@
             db2StoresCpp1.Add(tool.GenerateDb2StoresCpp1(db2));
             db2StoresCpp2.Add(tool.GenerateDb2StoresCpp2(db2));
         }
+        */
         await base.OnInitializedAsync();
     }
 }

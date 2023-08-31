@@ -9,6 +9,7 @@ using HotfixMods.Infrastructure.Helpers;
 using System.Text.Json;
 using HotfixMods.Providers.Interfaces;
 using HotfixMods.Providers.Models;
+using System.Net.WebSockets;
 
 namespace HotfixMods.Infrastructure.Services
 {
@@ -21,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -115,7 +116,7 @@ namespace HotfixMods.Infrastructure.Services
             return null;
         }
 
-        public async Task<ItemDto?> GetByIdAsync(int id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
+        public async Task<ItemDto?> GetByIdAsync(ulong id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);
@@ -200,7 +201,11 @@ namespace HotfixMods.Infrastructure.Services
                 var itemXItemEffects = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemID), dto.Item.ID));
                 var itemDisplayInfoModelMatRes = new List<ItemDisplayInfoModelMatRes>();
                 if (dto.ItemDisplayInfo != null)
-                    itemDisplayInfoModelMatRes = await GetAsync<ItemDisplayInfoModelMatRes>(new DbParameter(nameof(ItemDisplayInfoModelMatRes.ItemDisplayInfoID), dto.ItemDisplayInfo.ID));
+                {
+                    var result  = await GetAsync<ItemDisplayInfoModelMatRes>(new DbParameter(nameof(ItemDisplayInfoModelMatRes.ItemDisplayInfoID), dto.ItemDisplayInfo.ID));
+                    itemDisplayInfoModelMatRes = result;
+                }
+                    
 
                 callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
                 if (dto.IsUpdate)
@@ -252,7 +257,7 @@ namespace HotfixMods.Infrastructure.Services
             return false;
         }
 
-        public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
+        public async Task<bool> DeleteAsync(ulong id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
             var progress = LoadingHelper.GetLoaderFunc(11);

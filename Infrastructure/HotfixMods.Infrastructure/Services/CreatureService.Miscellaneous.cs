@@ -19,7 +19,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var result = new Dictionary<uint, string>();
-                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
+                var creatureTemplateModels = await GetAsync<CreatureTemplateModel>(DefaultCallback, DefaultProgress, new DbParameter(nameof(CreatureTemplateModel.CreatureID), creatureId));
                 foreach (var model in creatureTemplateModels)
                 {
                     string name = "";
@@ -66,10 +66,10 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 else
                 {
-                    var options = await GetAsync<ChrCustomizationOption>(DefaultCallback, DefaultProgress, false, true, new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
+                    var options = await GetAsync<ChrCustomizationOption>(DefaultCallback, DefaultProgress, new DbParameter(nameof(ChrCustomizationOption.ChrModelID), chrRaceXChrModel.ChrModelID));
                     foreach (var option in options)
                     {
-                        var choices = await GetAsync<ChrCustomizationChoice>(DefaultCallback, DefaultProgress, false, true, new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
+                        var choices = await GetAsync<ChrCustomizationChoice>(DefaultCallback, DefaultProgress, new DbParameter(nameof(ChrCustomizationChoice.ChrCustomizationOptionID), option.ID));
                         result.Add(option, choices);
                     }
 

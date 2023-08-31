@@ -10,7 +10,7 @@ namespace HotfixMods.Infrastructure.Services
         {
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
-            var animKitId = await GetIdByConditionsAsync<AnimKit>(dto.AnimKit.ID, dto.IsUpdate);
+            var animKitId = await GetIdByConditionsAsync<AnimKit>((ulong)dto.AnimKit.ID, dto.IsUpdate);
 
             // Step 2: Prepare IDs of list entities
             var nextAnimKitSegmentId = await GetNextIdAsync<AnimKitSegment>();
@@ -22,7 +22,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.RecordID = animKitId;
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
-            dto.AnimKit.ID = animKitId;
+            dto.AnimKit.ID = (int)animKitId;
             dto.AnimKit.VerifiedBuild = VerifiedBuild;
 
             byte orderIndex = 0;

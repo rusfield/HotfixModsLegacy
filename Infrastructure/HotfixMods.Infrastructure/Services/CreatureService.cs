@@ -23,7 +23,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
 
-                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
+                var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
@@ -147,7 +147,7 @@ namespace HotfixMods.Infrastructure.Services
                             var bonusListIds = item.BonusListIds.Trim().Split(' ').Select(int.Parse).ToList();
                             if (bonusListIds != null && bonusListIds.Any())
                             {
-                                var itemBonuses = await GetAsync<ItemBonus>(DefaultCallback, DefaultProgress, false, true, new DbParameter(nameof(ItemBonus.Type), 7));
+                                var itemBonuses = await GetAsync<ItemBonus>(DefaultCallback, DefaultProgress, new DbParameter(nameof(ItemBonus.Type), 7));
                                 var itemBonus = itemBonuses.Where(b => bonusListIds.Contains(b.ParentItemBonusListID)).FirstOrDefault();
                                 if (itemBonus != null)
                                 {

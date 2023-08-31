@@ -8,7 +8,7 @@
 
 @code
 {
-    async Task<CreatureDto?> GetByIdAsync(int id)
+    async Task<CreatureDto?> GetByIdAsync(ulong id)
     {
         var parameters = new DialogParameters();
         parameters.Add(nameof(CreatureSearchId_Dialog.Idx), 0);
@@ -17,7 +17,7 @@
         return (CreatureDto)result.Data;
     }
 
-    async Task<bool> DeleteByIdAsync(int id)
+    async Task<bool> DeleteByIdAsync(ulong id)
     {
         return await Service.DeleteAsync(id);
     }

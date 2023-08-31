@@ -12,7 +12,8 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-                return await GetAsync<ItemModifiedAppearance>(DefaultCallback, DefaultProgress, false, true, new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
+                var result = await GetAsync<ItemModifiedAppearance>(DefaultCallback, DefaultProgress, new DbParameter(nameof(ItemModifiedAppearance.ItemID), itemId));
+                return result;
             }
             catch (Exception ex)
             {

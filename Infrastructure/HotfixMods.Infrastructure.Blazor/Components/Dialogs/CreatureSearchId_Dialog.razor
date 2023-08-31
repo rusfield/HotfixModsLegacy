@@ -52,7 +52,7 @@
     {
         if (Id != null)
         {
-            var data = await Service.GetByIdAsync((int)Id, idx, dialogSearchRef!.SetLoaderProgress);
+            var data = await Service.GetByIdAsync((ulong)Id, idx, dialogSearchRef!.SetLoaderProgress);
             if (data != null || closeOnFail)
             {
                 Dialog.Close(data);

@@ -113,7 +113,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             while (countReader.Read())
             {
                 if (!countReader.IsDBNull(0))
-                    results.TotalRowCount = countReader.GetInt64(0);
+                    results.TotalRowCount = countReader.GetUInt64(0);
                 break;
             }
 

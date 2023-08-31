@@ -30,7 +30,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.Listfi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.WowDev", "Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj", "{0A3D5965-2DD9-43BB-A74B-E5C99B38647C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotfixMods.Providers", "Providers\HotfixMods.Providers\HotfixMods.Providers.csproj", "{1068625E-878C-463D-BEAA-CF89D3995677}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers", "Providers\HotfixMods.Providers\HotfixMods.Providers.csproj", "{1068625E-878C-463D-BEAA-CF89D3995677}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{494665FB-0746-4769-A241-4A866D6AA410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

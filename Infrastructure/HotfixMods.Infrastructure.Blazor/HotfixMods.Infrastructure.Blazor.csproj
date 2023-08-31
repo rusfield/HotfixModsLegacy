@@ -13,6 +13,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Libs\**" />
+	  <Content Remove="Libs\**" />
+	  <EmbeddedResource Remove="Libs\**" />
+	  <None Remove="Libs\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Content Remove="wwwroot\images\placeholder.png" />
 	</ItemGroup>
 
@@ -30,19 +37,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Libs\RusBlazor\RusBlazor\RusBlazor.csproj" />
     <ProjectReference Include="..\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Libs\" />
+    <None Include="RusBlazor.csproj" />
   </ItemGroup>
-
-	<ItemGroup>
-		<None Update="StaticWebAssets.xml">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</None>
-	</ItemGroup>
 
 
 </Project>

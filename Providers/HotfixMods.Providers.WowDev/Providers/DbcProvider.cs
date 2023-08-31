@@ -1,11 +1,11 @@
 ﻿using DBCD.Providers;
 
-namespace HotfixMods.Providers.WowDev.Libs.Internal
+namespace HotfixMods.Providers.WowDev.Providers
 {
     internal class DbcProvider : IDBCProvider
     {
-        public DbcProvider(string db2FolderPath) 
-        { 
+        public DbcProvider(string db2FolderPath)
+        {
             _db2FolderPath = db2FolderPath;
         }
 

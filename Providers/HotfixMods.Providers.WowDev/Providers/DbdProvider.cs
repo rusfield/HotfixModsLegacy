@@ -1,6 +1,6 @@
 ﻿using DBCD.Providers;
 
-namespace HotfixMods.Providers.WowDev.Libs.Internal
+namespace HotfixMods.Providers.WowDev.Providers
 {
     internal class DbdProvider : IDBDProvider
     {

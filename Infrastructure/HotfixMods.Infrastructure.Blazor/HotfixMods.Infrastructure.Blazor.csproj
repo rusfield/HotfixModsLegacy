@@ -41,9 +41,5 @@
     <ProjectReference Include="..\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="RusBlazor.csproj" />
-  </ItemGroup>
-
 
 </Project>

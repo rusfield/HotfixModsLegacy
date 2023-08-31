@@ -1,7 +1,7 @@
 ﻿using DBDefsLib;
 using HotfixMods.Providers.Extensions;
 using HotfixMods.Providers.Models;
-using HotfixMods.Providers.WowDev.Libs.Internal;
+using HotfixMods.Providers.WowDev.Providers;
 
 namespace HotfixMods.Providers.WowDev.Client
 {

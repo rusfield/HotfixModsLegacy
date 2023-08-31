@@ -1,6 +1,6 @@
 [submodule "Libs/RusBlazor"]
 	path = Libs/RusBlazor
-	url = https://github.com/rusfield/RusBlazor.git
+	url = https://github.com/rusfield/RusBlazor
 [submodule "Libs/DBCD"]
 	path = Libs/DBCD
 	url = https://github.com/wowdev/DBCD.git

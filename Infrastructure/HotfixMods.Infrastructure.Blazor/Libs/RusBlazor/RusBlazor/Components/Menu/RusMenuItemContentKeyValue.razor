@@ -1,4 +1,6 @@
-﻿<div class="@($"rus-menu-content {(Checked ? "checked" : "")}")">
+﻿@using RusBlazor.Components.Checkbox
+
+<div class="@($"rus-menu-content {(Checked ? "checked" : "")}")">
     @if (Multiselect)
     {
         <div class="multiselect-checkbox">

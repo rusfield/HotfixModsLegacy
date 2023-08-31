@@ -1,5 +1,7 @@
 ﻿@using RusBlazor.Enums
 @using RusBlazor.Handlers
+@using RusBlazor.Components.Button
+@using RusBlazor.Components.Icon
 
 <div class=@($"rus-compare-button {ActiveClass()}") onmouseover="@(() => HandleHover(true))" onmouseout="@(() => HandleHover(false))">
     <RusButton DefaultPadding="false" Style="@($"border-radius: 50%; height: 24px;")" OnClick="HandleClick" Color="Color.TERTIARY">

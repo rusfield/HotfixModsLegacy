@@ -8,6 +8,22 @@
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellName.Name)))" />
+        <RusBlazor.Components.MultiSelect.RusMultiSelect Label="Test" @bind-Value="@test" GetOptionsAsync="GetOptions" />
     </MudItem>
     <MudItem xs="3" />
 </StandardDtoContent>
+
+@code{
+    List<string> test = new();
+
+    //     public Func<List<T>, string?, int, int, CancellationToken, Task<(SortedDictionary<T, string>, int)>> GetOptionsAsync { get; set; }
+
+
+    async Task<(SortedDictionary<string, string>, int)> GetOptions(List<string> selectedOptions, string search, int pageIndex, int pageSize, CancellationToken token)
+    {
+        var options = new SortedDictionary<string, string>();
+        options.Add("Test 1", "Test1");
+        return (options, 5);
+
+    }
+}

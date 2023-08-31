@@ -13,20 +13,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Libs\**" />
-	  <Content Remove="Libs\**" />
-	  <EmbeddedResource Remove="Libs\**" />
-	  <None Remove="Libs\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Content Remove="wwwroot\images\placeholder.png" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="Components\DtoContent\PagedDtoContent.razor~RF2f67ecb1.TMP" />
-	</ItemGroup>
-	
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>

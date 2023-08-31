@@ -1,0 +1,107 @@
+﻿<div>
+    <br />
+<RusButton OnClick="(() => displayDbValue = !displayDbValue)">Toggle Display</RusButton>
+<CascadingValue Name="DisplayDbValue" Value="displayDbValue">
+    <RusSelect GetOptionsAsync="GetFruitsAsync" GetPageIndexByIdAsync="GetPageIndexByIdAsync" @bind-Value="selectValue" Label="Single Select" CompareValue="new(2)" />
+    <RusFlagSelect T="int" GetOptionsAsync="GetFruitsMultiselectAsync" @bind-Value="flagSelectValue" Label="Flag Select" CompareValue="new(5)" />
+    <RusBlazor.Components.MultiSelect.RusMultiSelect T="int" GetOptionsAsync="GetFruitsMultiselectAsync" @bind-Value="multiSelectValue" Label="Multiselect" CompareValue="new(new(){ 5 })" />
+</CascadingValue>
+</div>
+
+@code {
+    string test = "";
+    bool displayDbValue = false;
+    int selectedItem = 0;
+    IEnumerable<string> selectedItems = new List<string>();
+
+    int selectValue = 2;
+    List<int> multiSelectValue = new();
+    int flagSelectValue = 2;
+
+    async Task<(SortedDictionary<int, string>, int)> GetFruitsAsync(int selectedValue, string? search, int pageIndex, int pageSize, CancellationToken token)
+    {
+        await Task.Delay(1000, token);
+        var results = new SortedDictionary<int, string>();
+        int id = 1;
+
+        foreach (var item in items)
+        {
+            token.ThrowIfCancellationRequested();
+
+            if (item.Contains(search, StringComparison.InvariantCultureIgnoreCase))
+                results.Add(id, item);
+
+            if (search.TryParseAsT<int>(out var value) && id == value && !results.ContainsKey(value))
+                results.Add(id, item);
+
+            id++;
+        }
+
+        return (new SortedDictionary<int, string>(results.Skip(pageIndex * pageSize).Take(pageSize).ToDictionary(k => k.Key, v => v.Value)), results.Count);
+    }
+
+    async Task<int> GetPageIndexByIdAsync(int id, int pageSize)
+    {
+        var results = await GetFruitsAsync(id, "", 0, 99999, CancellationToken.None);
+        var pageIndex = results.Item1
+            .Select((value, index) => new { value.Key, Index = index })
+            .FirstOrDefault(x => x.Key == id)?.Index / pageSize;
+
+        return pageIndex ?? 0;
+    }
+
+    async Task<(SortedDictionary<int, string>, int)> GetSelectedFruitsMultiselectAsync(List<int> selectedValues, int pageIndex, int pageSize, CancellationToken token)
+    {
+        var allValues = await GetFruitsMultiselectAsync(selectedValues, "", pageIndex, pageSize, token);
+        var results = allValues.Item1.Where(v => selectedValues.Contains(v.Key)).ToDictionary(k => k.Key, v => v.Value);
+        foreach (var undefined in selectedValues.Where(v => !results.ContainsKey(v)))
+            results.Add(undefined, $"Undefined ({undefined})");
+        return (new SortedDictionary<int, string>(results), results.Count);
+    }
+
+    async Task<(SortedDictionary<int, string>, int)> GetFruitsMultiselectAsync(List<int> selectedValues, string? search, int pageIndex, int pageSize, CancellationToken token)
+    {
+        await Task.Delay(500, token);
+        var results = new Dictionary<int, string>();
+        int id = 1;
+        foreach (var item in items)
+        {
+            token.ThrowIfCancellationRequested();
+            if (search == null)
+            {
+                results[id] = item;
+                continue;
+            }
+
+
+            if (item.Contains(search, StringComparison.InvariantCultureIgnoreCase))
+                results[id] = item;
+
+            if (search.TryParseAsT<int>(out var value) && id == value && !results.ContainsKey(value))
+                results[id] = item;
+
+            id = id * 2;
+        }
+        return (new SortedDictionary<int, string>(results.Skip(pageIndex * pageSize).Take(pageSize).ToDictionary(k => (int)k.Key, v => v.Value)), results.Count);
+    }
+
+    private List<string> items = new List<string>
+    {
+        "Apple",
+        "Banana",
+        "Cherry",
+        "Date",
+        "Fig",
+        "Grape",
+        "Kiwi",
+        "Lemon",
+        "Mango",
+        "Nectarine",
+        "Orange",
+        "Papaya",
+        "Pineapple",
+        "Raspberry",
+        "Strawberry",
+        "Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon Watermelon"
+    };
+}

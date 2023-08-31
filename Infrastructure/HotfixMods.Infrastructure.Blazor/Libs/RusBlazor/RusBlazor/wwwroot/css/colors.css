@@ -1,0 +1,183 @@
+:root {
+    --color-primary-lighten: #a399ff;
+    --color-primary: #7e6fff;
+    --color-primary-darken: #5a47ff;
+    --color-secondary-lighten: #ff6699;
+    --color-secondary: #ff4081;
+    --color-secondary-darken: #ff1f69;
+    --color-tertiary-lighten: #2adfbb;
+    --color-tertiary: #1ec8a5;
+    --color-tertiary-darken: #19a98c;
+    --color-info-lighten: #70a0ff;
+    --color-info: #4a86ff;
+    --color-info-darken: #2970ff;
+    --color-success-lighten: #5ed485;
+    --color-success: #3dcb6c;
+    --color-success-darken: #2fb15b;
+    --color-warning-lighten: #ffc670;
+    --color-warning: #ffb545;
+    --color-warning-darken: #ffa724;
+    --color-error-lighten: #ff6680;
+    --color-error: #ff3f5f;
+    --color-error-darken: #ff1a40;
+    --color-dark: #27272f;
+    --color-dark-lighten: #383843;
+    --color-dark-darken: #17171c;
+    --color-light: #D3D3D3;
+    --color-light-lighten: #f0f0f0;
+    --color-light-darken: #696969;
+    /* Enable Gradients */
+    /*
+    --gradient-primary: radial-gradient(100% 100% at 100% 0, var(--color-primary-lighten) 0, var(--color-primary) 50%, var(--color-primary-darken) 100%);
+    --gradient-secondary: radial-gradient(100% 100% at 100% 0, var(--color-secondary-lighten) 0, var(--color-secondary) 50%, var(--color-secondary-darken) 100%);
+    --gradient-tertiary: radial-gradient(100% 100% at 100% 0, var(--color-tertiary-lighten) 0, var(--color-tertiary) 50%, var(--color-tertiary-darken) 100%);
+    --gradient-info: radial-gradient(100% 100% at 100% 0, var(--color-info-lighten) 0, var(--color-info) 50%, var(--color-info-darken) 100%);
+    --gradient-warning: radial-gradient(100% 100% at 100% 0, var(--color-warning-lighten) 0, var(--color-warning) 50%, var(--color-warning-darken) 100%);
+    --gradient-error: radial-gradient(100% 100% at 100% 0, var(--color-error-lighten) 0, var(--color-error) 50%, var(--color-error-darken) 100%);
+    --gradient-dark: radial-gradient(100% 100% at 100% 0, var(--color-dark-lighten) 0, var(--color-dark) 50%, var(--color-dark-darken) 100%);
+    --gradient-light: radial-gradient(100% 100% at 100% 0, var(--color-light-lighten) 0, var(--color-light) 50%, var(--color-light-darken) 100%);
+        */
+    /* Disable Gradients */
+    --gradient-primary: radial-gradient(100% 100% at 100% 0, var(--color-primary-darken) 0, var(--color-primary-darken) 50%, var(--color-primary-darken) 100%);
+    --gradient-secondary: radial-gradient(100% 100% at 100% 0, var(--color-secondary-darken) 0, var(--color-secondary-darken) 50%, var(--color-secondary-darken) 100%);
+    --gradient-tertiary: radial-gradient(100% 100% at 100% 0, var(--color-tertiary-darken) 0, var(--color-tertiary-darken) 50%, var(--color-tertiary-darken) 100%);
+    --gradient-info: radial-gradient(100% 100% at 100% 0, var(--color-info-darken) 0, var(--color-info-darken) 50%, var(--color-info-darken) 100%);
+    --gradient-warning: radial-gradient(100% 100% at 100% 0, var(--color-warning-darken) 0, var(--color-warning-darken) 50%, var(--color-warning-darken) 100%);
+    --gradient-error: radial-gradient(100% 100% at 100% 0, var(--color-error-darken) 0, var(--color-error-darken) 50%, var(--color-error-darken) 100%);
+    --gradient-dark: radial-gradient(100% 100% at 100% 0, var(--color-dark-darken) 0, var(--color-dark-darken) 50%, var(--color-dark-darken) 100%);
+    --gradient-light: radial-gradient(100% 100% at 100% 0, var(--color-light-darken) 0, var(--color-light-darken) 50%, var(--color-light-darken) 100%);
+}
+
+.transparent,
+.transparent-gradient {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+
+.primary {
+    background-color: var(--color-primary);
+}
+
+.primary-gradient {
+    background: var(--gradient-primary);
+}
+
+.primary-lighten {
+    background-color: var(--color-primary-lighten);
+}
+
+.primary-darken {
+    background-color: var(--color-primary-darken);
+}
+
+.secondary {
+    background-color: var(--color-secondary);
+}
+
+.secondary-gradient {
+    background: var(--gradient-secondary);
+}
+
+.secondary-lighten {
+    background-color: var(--color-secondary-lighten);
+}
+
+.secondary-darken {
+    background-color: var(--color-secondary-darken);
+}
+
+.tertiary {
+    background-color: var(--color-tertiary);
+}
+
+.tertiary-gradient {
+    background: var(--gradient-tertiary);
+}
+
+.tertiary-lighten {
+    background-color: var(--color-tertiary-lighten);
+}
+
+.tertiary-darken {
+    background-color: var(--color-tertiary-darken);
+}
+
+.info {
+    background-color: var(--color-info);
+}
+
+.info-gradient {
+    background: var(--gradient-info);
+}
+
+.info-lighten {
+    background-color: var(--color-info-lighten);
+}
+
+.info-darken {
+    background-color: var(--color-info-darken);
+}
+
+.warning {
+    background-color: var(--color-warning);
+}
+
+.warning-gradient {
+    background: var(--gradient-warning);
+}
+
+.warning-lighten {
+    background-color: var(--color-warning-lighten);
+}
+
+.warning-darken {
+    background-color: var(--color-warning-darken);
+}
+
+.error {
+    background-color: var(--color-error);
+}
+
+.error-gradient {
+    background: var(--gradient-error);
+}
+
+.error-lighten {
+    background-color: var(--color-error-lighten);
+}
+
+.error-darken {
+    background-color: var(--color-error-darken);
+}
+
+.dark {
+    background-color: var(--color-dark);
+}
+
+.dark-gradient {
+    background: var(--gradient-dark);
+}
+
+.dark-lighten {
+    background-color: var(--color-dark-lighten);
+}
+
+.dark-darken {
+    background-color: var(--color-dark-darken);
+}
+
+.light {
+    background-color: var(--color-light);
+}
+
+.light-gradient {
+    background: var(--gradient-light);
+}
+
+.light-lighten {
+    background-color: var(--color-light-lighten);
+}
+
+.light-darken {
+    background-color: var(--color-light-darken);
+}

@@ -1,0 +1,97 @@
+﻿@using RusBlazor.Components.Helpers
+@using RusBlazor.Enums
+
+@if (_component != null)
+{
+    <RusBackgroundOverlay CloseOnClick="false" @ref="_backgroundOverlay" FixedPosition="false">
+        <div style="height:80%;">
+            <div class="@($"rus-dialog {TransitionClass()}")">
+                <div class="rus-dialog-content">
+                    <div class="rus-dialog-exit">
+                        <RusButton DefaultPadding="false" Style="border-radius: 50%; height:48px;" OnClick="CloseAsync">
+                            <RusIcon IconName="close" Style="font-size: 48px;" />
+                        </RusButton>
+                    </div>
+                    <DynamicComponent Type="@_component" Parameters="_parameters" />
+                    @if (_buttons.Count > 0)
+                    {
+                        <div class="rus-dialog-buttons">
+                            @foreach (var button in _buttons)
+                            {
+                                <RusButton OnClick="@button.Item2" Color="@button.Item3">
+                                    @button.Item1
+                                </RusButton>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </RusBackgroundOverlay>
+}
+
+@code {
+    bool _opening = false;
+    bool _closing = false;
+    RusBackgroundOverlay? _backgroundOverlay;
+    Type? _component;
+    Dictionary<string, object?> _parameters = new();
+    List<(string, EventCallback, Color)> _buttons;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_opening)
+        {
+            // This "hack" is needed because keeping the CSS Scale property applied causes nested CSS positions to be messed up
+            await Task.Delay(200);
+            _opening = false;
+            this.StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    public async Task OpenAsync(Type component, Dictionary<string, object?>? parameters = null)
+    {
+        _component = component;
+        if (parameters != null)
+            _parameters = parameters;
+        _opening = true;
+        this.StateHasChanged();
+    }
+
+    public async Task OpenWithButtonsAsync(Type component, List<(string, EventCallback, Color)> buttons)
+    {
+        _component = component;
+        _buttons = buttons;
+        _opening = true;
+        this.StateHasChanged();
+    }
+
+    void Reset()
+    {
+        _component = null;
+        _parameters = new();
+        _buttons = new();
+        _closing = false;
+        _opening = false;
+        this.StateHasChanged();
+    }
+
+    public async Task CloseAsync()
+    {
+        _closing = true;
+        _backgroundOverlay?.Close();
+        this.StateHasChanged();
+        await Task.Delay(200);
+        Reset();
+    }
+
+    string TransitionClass()
+    {
+        if (_opening)
+            return "opening";
+        else if (_closing)
+            return "closing";
+        return "";
+    }
+}

@@ -1,0 +1,11 @@
+.rus-menu-content {
+    color: var(--color-light);
+    display: flex;
+    align-items: center;
+}
+
+.rus-menu-content-text {
+    padding-left: 8px;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}

@@ -1,0 +1,28 @@
+.rus-menu-grid-content {
+    padding: 12px;
+    color: var(--color-light-darken);
+    background-color: var(--color-dark);
+}
+.rus-menu-grid-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+.rus-menu-grid-content-description {
+    display: grid;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    padding: 8px 24px 12px 24px;
+    box-sizing: border-box;
+}
+.rus-menu-grid-content-header {
+    display: grid;
+    place-items: center;
+    font-size: 36px;
+    width: 100%;
+    padding-bottom: 12px;
+}
+
+.rus-menu-grid-content-items {
+    color: var(--color-light);
+}

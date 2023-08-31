@@ -1,0 +1,19 @@
+.rus-select {
+    position: relative;
+    display: inline-block;
+}
+
+.rus-select-pagination-group {
+    display: flex;
+}
+
+.rus-select-button-group {
+    display: flex;
+    gap: 8px;
+}
+
+.rus-select-pagination-text {
+    width: 50%;
+    text-align: center;
+    color: var(--color-light);
+}

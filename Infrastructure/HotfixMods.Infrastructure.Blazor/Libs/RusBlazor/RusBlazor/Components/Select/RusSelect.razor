@@ -1,0 +1,360 @@
+﻿@using RusBlazor.Enums
+@using RusBlazor.Components.Helpers
+@using RusBlazor.Wrappers
+
+@typeparam T
+@inject IJSRuntime JSRuntime
+
+<div class="rus-select">
+    <RusInput TValue="string" @ref="rusInput" @bind-Value="displayValue" @bind-CompareButtonHovered="compareButtonHover" ValueText="@(Value.ToString())" OnFocus="OnFocus" OnBlur="OnBlur" InputChanged="InputChanged" Loading="loadingComponent" Active="inputActive" Label="@Label" BorderRadius="BorderRadius" />
+    <RusMenu @ref="rusMenu" IsOpenChanged="ShowMenuChanged">
+        <MenuTopContent>
+            <RusMenuItem Hoverable="false">
+                <div class="@("rus-select-button-group")">
+                    <RusButton Style="width: 25%;" OnClick="ShowSelectedAsync" DefaultPadding="false" HoverTooltipText="@_showSelectedTooltip">
+                        <RusIcon IconName="done" />
+                    </RusButton>
+                    <RusButton Style="width: 25%;" OnClick="ResetFilterAsync" DefaultPadding="false" HoverTooltipText="@_resetFilterTooltip">
+                        <RusIcon IconName="filter_alt_off" />
+                    </RusButton>
+                </div>
+            </RusMenuItem>
+        </MenuTopContent>
+        <MenuListContent>
+            @if (loadingSearch)
+            {
+                <RusMenuItem Hoverable="false" Style="height: 80%;">
+                    <RusMenuItemContentLoading />
+                </RusMenuItem>
+            }
+            else if (!filteredItems.Any())
+            {
+                <RusMenuItem Hoverable="false" Style="height: 80%;">
+                    <RusMenuItemContentNoResults />
+                </RusMenuItem>
+            }
+            else
+            {
+                int itterator = 1;
+                foreach (var item in filteredItems)
+                {
+                    bool isChecked = Value.Equals(item.Key);
+                    <RusMenuItem OnItemClick="@(async () => await SelectItemAsync(item.Key, item.Value))" Id="@($"{rusMenu!.GetId()}-{item.Key.ToString()}")" Class="@(isChecked ? "selected" : "")" Separator="@(itterator++ < filteredItems.Count)">
+                        <RusMenuItemContentKeyValue Key="@item.Key.ToString()" Value="@item.Value" Checked="isChecked" />
+                    </RusMenuItem>
+                }
+            }
+        </MenuListContent>
+        <MenuBottomContent>
+            <RusMenuItem Hoverable="false">
+                <div class="rus-select-pagination-group">
+                    <RusButton Style="width: 25%;" OnClick="PreviousPage" Disabled="IsFirstPageIndex()" DefaultPadding="false">
+                        <RusIcon IconName="navigate_before" />
+                    </RusButton>
+                    <div class="rus-select-pagination-text">
+                        @(new MarkupString(GetPaginationText()))
+                    </div>
+                    <RusButton Style="width: 25%;" OnClick="NextPage" Disabled="IsLastPageIndex()" DefaultPadding="false">
+                        <RusIcon IconName="navigate_next" />
+                    </RusButton>
+                </div>
+            </RusMenuItem>
+        </MenuBottomContent>
+    </RusMenu>
+    @if (DisplayCompareValueButton())
+    {
+        <RusCompareButton OnClick="CompareButtonClick" OnHover="OnCompareButtonHover" Active="inputActive" TooltipText="@TooltipText()" />
+    }
+</div>
+
+@code {
+    [CascadingParameter(Name = "DisplayDbValue")]
+    public bool DisplayDbValue { get; set; } = false;
+
+    [Parameter]
+    public T Value { get; set; }
+
+    [Parameter]
+    public EventCallback<T> ValueChanged { get; set; }
+
+    [Parameter]
+    public CompareWrapper<T>? CompareValue { get; set; }
+
+    [Parameter]
+    public Func<T, string, int, int, CancellationToken, Task<(SortedDictionary<T, string>, int)>> GetOptionsAsync { get; set; }
+
+    [Parameter] // Used to navigate to the page where selected value is.
+    public Func<T, int, Task<int>> GetPageIndexByIdAsync { get; set; } = (_, __) => Task.FromResult(0);
+
+    [Parameter] // Label over component
+    public string Label { get; set; } = "";
+
+    [Parameter]
+    public BorderRadius BorderRadius { get; set; } = Enums.BorderRadius.ALL;
+
+    bool loadingComponent = true;
+    bool loadingSearch = false;
+    bool compareButtonHover = false;
+    bool inputActive;
+    string displayValue = "";
+    string? lastVerifiedDisplayValue;
+    string lastInput = "";
+    bool closing = false;
+    CancellationTokenSource? searchTokenSource;
+    SortedDictionary<T, string> filteredItems = new();
+    RusMenu? rusMenu;
+    RusInput<string>? rusInput;
+    int pageSize = 15;
+    int currentPageIndex = -1;
+    int resultCount = -1;
+    string? rusInputId;
+    bool previouslyDisplayDbValue = false;
+    string _showSelectedTooltip = "Show selected value";
+    string _resetFilterTooltip = "Reset filter";
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (GetOptionsAsync == null)
+            throw new ParameterRequiredException(nameof(GetOptionsAsync));
+
+        if (DisplayDbValue != previouslyDisplayDbValue)
+        {
+            previouslyDisplayDbValue = DisplayDbValue;
+            if (!DisplayDbValue)
+                displayValue = "Loading";
+
+            await SetDisplayTextAsync();
+        }
+        await base.OnParametersSetAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Init default option
+        if (firstRender)
+        {
+            rusInputId = rusInput?.GetId() ?? "";
+            await SetDisplayTextAsync();
+            loadingComponent = false;
+            this.StateHasChanged();
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    void OnFocus()
+    {
+        if (!inputActive)
+        {
+            InitSearch(0);
+        }
+    }
+
+    void OnBlur()
+    {
+        if (!rusMenu?.IsOpen ?? true)
+            searchTokenSource?.Cancel();
+    }
+
+    void InputChanged(string input)
+    {
+        lastInput = input;
+        InitSearch(150);
+    }
+
+    void NextPage()
+    {
+        currentPageIndex++;
+        InitSearch(0);
+    }
+
+    void PreviousPage()
+    {
+        currentPageIndex--;
+        InitSearch(0);
+    }
+
+    async Task ResetFilterAsync()
+    {
+        lastInput = "";
+        InitSearch(0);
+        await JSRuntime.InvokeVoidAsync("selectElement", rusInputId);
+    }
+
+    async Task ShowSelectedAsync()
+    {
+        currentPageIndex = -1;
+        lastInput = "";
+        InitSearch(0);
+    }
+
+    async void InitSearch(int searchDelayMs)
+    {
+        searchTokenSource?.Cancel();
+        searchTokenSource = new CancellationTokenSource();
+        CancellationToken cancellationToken = searchTokenSource.Token;
+
+        try
+        {
+            if (searchDelayMs > 0)
+                await Task.Delay(searchDelayMs, cancellationToken);
+
+            if (!cancellationToken.IsCancellationRequested)
+            {
+                await SearchAsync(cancellationToken);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            // Search cancelled cancelled
+        }
+    }
+
+    async Task SearchAsync(CancellationToken token)
+    {
+        loadingSearch = true;
+        resultCount = -1;
+        await rusMenu.OpenAsync();
+        string search = lastInput;
+        try
+        {
+            // Happens on new searches
+            if (currentPageIndex < 0)
+                currentPageIndex = GetPageIndexByIdAsync != null ? await GetPageIndexByIdAsync(Value, pageSize) : 0;
+
+            if (GetOptionsAsync != null)
+                (filteredItems, resultCount) = await GetOptionsAsync.Invoke(Value, search, currentPageIndex, pageSize, token);
+
+            // Adjust search so that a potential custom value is retrieved
+            if (string.IsNullOrWhiteSpace(search))
+                search = lastVerifiedDisplayValue ?? "";
+
+            // TODO: Remove this, undefined values are returned in backend
+            if (search.TryParseAsT<T>(out var value) && !filteredItems.ContainsKey(value))
+                filteredItems.Add(value, $"Undefined ({value})");
+
+            loadingSearch = false;
+            await InvokeAsync(StateHasChanged);
+            if (filteredItems.ContainsKey(Value))
+            {
+                await JSRuntime.InvokeVoidAsync("scrollToElementInContainer", rusMenu!.GetId(), $"{rusMenu!.GetId()}-{Value.ToString()}", 150);
+            }
+        }
+        catch (OperationCanceledException e)
+        {
+            // Search cancelled
+        }
+    }
+
+    async Task SelectItemAsync(T key, string value)
+    {
+        if (!closing) // prevent double select conflict
+        {
+            closing = true;
+            Value = key;
+            await SetDisplayTextAsync();
+            await Task.Delay(200); // Select-animation play
+            await rusMenu.CloseAsync();
+            await ValueChanged.InvokeAsync(Value);
+            closing = false;
+        }
+    }
+
+    async Task ShowMenuChanged((bool, int) data)
+    {
+        bool showMenu = data.Item1;
+        int animationDelay = data.Item2;
+        inputActive = showMenu;
+        if (!showMenu)
+        {
+            displayValue = lastVerifiedDisplayValue;
+            lastInput = "";
+            resultCount = -1;
+            currentPageIndex = -1;
+            this.StateHasChanged();
+            await Task.Delay(animationDelay);
+        }
+    }
+
+    string GetPaginationText()
+    {
+        if (resultCount == -1)
+            return "&nbsp;<br />&nbsp;";
+        else if (resultCount == 0)
+            return "No<br />results";
+
+        int from = currentPageIndex * pageSize + 1;
+        int to = (currentPageIndex + 1) * pageSize;
+
+        to = to > resultCount ? resultCount : to;
+
+        return $"{from} to {to}<br />of {resultCount}";
+    }
+
+    bool IsLastPageIndex()
+    {
+        return ((currentPageIndex + 1) * pageSize) >= resultCount;
+    }
+
+    bool IsFirstPageIndex()
+    {
+        return currentPageIndex <= 0;
+    }
+
+    async Task SetDisplayTextAsync()
+    {
+        if (DisplayDbValue)
+        {
+            displayValue = Value.ToString();
+        }
+        else if (filteredItems.ContainsKey(Value))
+        {
+            displayValue = filteredItems[Value];
+        }
+        else
+        {
+            (var currentValue, int tempCount) = await GetOptionsAsync(Value, Value.ToString(), 0, 1, CancellationToken.None);
+            if (currentValue.ContainsKey(Value))
+            {
+                displayValue = currentValue[Value];
+            }
+            else
+            {
+                // Fallback, but backend should return a value
+                displayValue = $"Unknown ({Value})";
+            }
+        }
+
+        lastVerifiedDisplayValue = displayValue;
+    }
+
+    bool DisplayCompareValueButton()
+    {
+        return CompareValue != null && !Value.Equals(CompareValue.Value);
+    }
+
+    async void CompareButtonClick()
+    {
+        compareButtonHover = false;
+        if (CompareValue != null)
+        {
+            loadingComponent = true;
+            Value = CompareValue.Value;
+            await SetDisplayTextAsync();
+            loadingComponent = false;
+            await ValueChanged.InvokeAsync(Value);
+        }
+    }
+
+    void OnCompareButtonHover(bool isHovering)
+    {
+        compareButtonHover = isHovering;
+    }
+
+    string TooltipText()
+    {
+        return $"Change value <strong>{Value.ToString()}</strong> to <strong>{CompareValue?.Value.ToString()}</strong>";
+    }
+}
+

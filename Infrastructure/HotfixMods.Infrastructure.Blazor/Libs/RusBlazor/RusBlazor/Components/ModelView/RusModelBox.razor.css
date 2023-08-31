@@ -1,0 +1,59 @@
+.rus-modelbox-container {
+    /* Variables are also used in component */
+    --rus-modelbox-container-width: calc(var(--modelview-box-width) + var(--modelview-box-reference-length));
+    --rus-modelbox-container-height: calc(var(--modelview-box-height) + var(--modelview-box-reference-length));
+    width: var(--rus-modelbox-container-width);
+    height: var(--rus-modelbox-container-height);
+    position: absolute;
+}
+
+.rus-modelbox {
+    width: var(--modelview-box-width);
+    height: var(--modelview-box-height);
+    z-index: 3;
+}
+
+.rus-modelbox-reference {
+    position: absolute;
+    width: var(--modelview-box-reference-length);
+    height: var(--modelview-box-reference-length);
+    z-index: 1;
+}
+
+    .rus-modelbox-reference.left {
+        top: 50%;
+        left: 0;
+        transform: translate(-50%, -50%);
+        height: calc(var(--modelview-box-reference-length) / 10);
+    }
+
+    .rus-modelbox-reference.right {
+        top: 50%;
+        right: 0;
+        transform: translate(50%, -50%);
+        background-size: 100% 10%;
+        height: calc(var(--modelview-box-reference-length) / 10);
+    }
+
+    .rus-modelbox-reference.top {
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, -50%);
+        background-size: 10% 100%;
+        width: calc(var(--modelview-box-reference-length) / 10);
+    }
+
+    .rus-modelbox-reference.bottom {
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 50%);
+        background-size: 10% 100%;
+        width: calc(var(--modelview-box-reference-length) / 10);
+    }
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

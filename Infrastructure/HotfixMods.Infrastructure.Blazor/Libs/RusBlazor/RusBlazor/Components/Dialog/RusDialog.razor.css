@@ -1,0 +1,57 @@
+.rus-dialog {
+    padding: 4px;
+    position: relative;
+    z-index: 100;
+    background: var(--gradient-primary);
+    border-radius: 4px;
+}
+
+    .rus-dialog.opening {
+        animation: open 0.2s forwards;
+    }
+
+    .rus-dialog.closing {
+        animation: close 0.2s forwards;
+    }
+
+.rus-dialog-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: var(--color-dark);
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.rus-dialog-exit {
+    position: absolute;
+    right: -26px;
+    top: -26px;
+}
+
+.rus-dialog-buttons {
+    position: absolute;
+    right: 12px;
+    bottom: -12px;
+}
+
+@keyframes open {
+    from {
+        transform: scale(0);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes close {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(0);
+    }
+}

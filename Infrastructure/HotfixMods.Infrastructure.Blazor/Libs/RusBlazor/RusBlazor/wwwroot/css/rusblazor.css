@@ -1,0 +1,54 @@
+@import url("scrollbar.css");
+@import url("zindex.css");
+@import url("colors.css");
+@import url("icons.css");
+
+
+:root {
+    background-color: var(--color-dark-darken);
+    --modelview-box-width: 120px;
+    --modelview-box-height: 80px;
+    --modelview-box-reference-length: 80px;
+}
+
+* {
+    user-select: none;
+}
+
+::selection {
+    background-color: var(--color-primary-darken);
+    color: var(--color-light);
+}
+
+.allow-select {
+    user-select: auto;
+}
+
+
+ripple:not(:disabled) {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple:not(:disabled):after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #000 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10,10);
+    opacity: 0;
+    transition: transform .3s, opacity 1s;
+}
+
+.ripple:not(:disabled):active:after {
+    transform: scale(0,0);
+    opacity: 0.1;
+    transition: 0s;
+}

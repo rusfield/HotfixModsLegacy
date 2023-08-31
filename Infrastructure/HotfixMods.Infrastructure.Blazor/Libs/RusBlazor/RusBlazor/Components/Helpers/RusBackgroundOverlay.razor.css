@@ -1,0 +1,39 @@
+.rus-background-overlay {
+    z-index: var(--zindex-background-overlay);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+    .rus-background-overlay.visible {
+        animation: fadein 0.2s ease forwards;
+    }
+
+    .rus-background-overlay.invisible {
+        pointer-events:none;
+        animation: fadeout 0.2s ease forwards;
+    }
+
+@keyframes fadein {
+    from {
+        background-color: rgb(0, 0, 0, 0);
+    }
+
+    to {
+        background-color: rgb(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes fadeout {
+    from {
+        background-color: rgb(0, 0, 0, 0.5);
+    }
+
+    to {
+        background-color: rgb(0, 0, 0, 0);
+    }
+}

@@ -1,0 +1,42 @@
+﻿
+<div @onclick="OnClick" class="@($"rus-menu-item {HoverClass()} {Class} {SeparatorClass()}")" id="@Id" style="@Style">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnItemClick { get; set; }
+
+    [Parameter]
+    public bool Hoverable { get; set; } = true;
+
+    [Parameter]
+    public string Id { get; set; } = "";
+
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public bool Separator { get; set; } = false;
+
+    [Parameter]
+    public string Style { get; set; }
+
+    void OnClick()
+    {
+        OnItemClick.InvokeAsync();
+    }
+
+    string HoverClass()
+    {
+        return Hoverable ? "hoverable" : "";
+    }
+
+    string SeparatorClass()
+    {
+        return Separator ? "separator" : "";
+    }
+}

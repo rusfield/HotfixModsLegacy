@@ -1,0 +1,30 @@
+.rus-button {
+    color: var(--color-light);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    transition: filter 0.2s ease, box-shadow 0.2s ease;
+}
+
+    .rus-button.padding {
+        padding: 10px 20px;
+    }
+
+    .rus-button.no-padding {
+        padding: 0px;
+    }
+
+    .rus-button:disabled {
+        filter: grayscale(100%);
+        opacity: 0.6;
+        cursor: auto;
+    }
+
+    .rus-button:not(:disabled):hover {
+        filter: brightness(120%);
+        box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
+    }

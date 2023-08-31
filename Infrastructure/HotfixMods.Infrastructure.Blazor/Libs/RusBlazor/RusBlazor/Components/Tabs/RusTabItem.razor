@@ -1,0 +1,74 @@
+﻿@using RusBlazor.Components.Dialog
+
+<div class="rus-tab-item-container" style="@(DisplayStyle())">
+    <RusDialog @ref="_dialog" />
+    <div class="rus-tab-item">
+        <div class="rus-tab-item-header">
+            <div class="rus-tab-item-header-content">
+                @Name
+            </div>
+        </div>
+        <div class="rus-tab-item-background">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter(Name = "TabsContainer")]
+    public RusTabs TabsContainer { get; set; }
+
+    [Parameter]
+    public string? Name { get; set; } = "";
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string? IconName { get; set; } = null;
+
+    [Parameter]
+    public bool IsClosable { get; set; } = true;
+
+    // Used by RusTabs
+    public bool IsClosed { get; set; } = false;
+
+    RusDialog _dialog;
+    bool currentTab = false;
+
+
+    protected override void OnInitialized()
+    {
+        TabsContainer.TabItems.Add(this);
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        currentTab = TabsContainer.ActiveTab == this;
+        base.OnParametersSet();
+    }
+
+    async void OpenDialog()
+    {
+        var buttons = new List<(string, EventCallback, RusBlazor.Enums.Color)>();
+        buttons.Add(("Test", new(this, new Action(Nothing)), RusBlazor.Enums.Color.PRIMARY));
+        await _dialog.OpenWithButtonsAsync(typeof(Test), buttons);
+    }
+
+    async void Nothing()
+    {
+        await _dialog.CloseAsync();
+    }
+
+    string DisplayStyle()
+    {
+        return currentTab ? "" : "display:none;";
+    }
+
+    public async Task OpenDialogAsync()
+    {
+        OpenDialog();
+    }
+}

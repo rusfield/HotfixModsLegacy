@@ -33,4 +33,8 @@
     <ProjectReference Include="..\HotfixMods.Infrastructure\HotfixMods.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Libs\" />
+  </ItemGroup>
+
 </Project>

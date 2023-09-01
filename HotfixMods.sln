@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.Console", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Apps.MauiBlazor", "Apps\HotfixMods.Apps.MauiBlazor\HotfixMods.Apps.MauiBlazor.csproj", "{616687E2-19C1-44ED-B245-121BFA49D413}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.Blazor", "Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj", "{466B979A-529F-477C-9BC3-B9B03EB67A3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Infrastructure.BlazorLegacy", "Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.BlazorLegacy.csproj", "{466B979A-529F-477C-9BC3-B9B03EB67A3E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotfixMods.Providers.TrinityCore", "Providers\HotfixMods.Providers.TrinityCore\HotfixMods.Providers.TrinityCore.csproj", "{35D57F7F-368C-4E10-9F2F-E5C4F421CA20}"
 EndProject

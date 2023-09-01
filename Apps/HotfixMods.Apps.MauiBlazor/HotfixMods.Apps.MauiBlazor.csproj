@@ -48,7 +48,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.Blazor.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\HotfixMods.Infrastructure.Blazor\HotfixMods.Infrastructure.BlazorLegacy.csproj" />
 		<ProjectReference Include="..\..\Providers\HotfixMods.Providers.WowDev\HotfixMods.Providers.WowDev.csproj" />
 	</ItemGroup>
 	<ItemGroup>

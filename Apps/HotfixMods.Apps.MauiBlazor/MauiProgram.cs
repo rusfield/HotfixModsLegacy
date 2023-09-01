@@ -9,8 +9,6 @@ using HotfixMods.Providers.Listfile.Client;
 using HotfixMods.Providers.MySqlConnector.Client;
 using HotfixMods.Providers.TrinityCore.Client;
 using HotfixMods.Providers.WowDev.Client;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 
 namespace HotfixMods.Apps.MauiBlazor
@@ -91,7 +89,6 @@ namespace HotfixMods.Apps.MauiBlazor
             builder.Services.AddSingleton<SpellVisualKitService>();
 
             builder.Services.AddBlazorWebViewDeveloperTools();
-
 
             return builder.Build();
         }

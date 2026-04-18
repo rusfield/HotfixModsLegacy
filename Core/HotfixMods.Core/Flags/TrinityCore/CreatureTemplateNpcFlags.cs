@@ -12,7 +12,7 @@ namespace HotfixMods.Core.Flags.TrinityCore
         NONE = 0x00000000,
         GOSSIP = 0x00000001,     // TITLE has gossip menu DESCRIPTION 100%
         QUESTGIVER = 0x00000002,     // TITLE is quest giver DESCRIPTION 100%
-        UNK1 = 0x00000004,
+        ACCOUNT_BANKER = 0x00000004,     // TITLE is account banker
         UNK2 = 0x00000008,
         TRAINER = 0x00000010,     // TITLE is trainer DESCRIPTION 100%
         TRAINER_CLASS = 0x00000020,     // TITLE is class trainer DESCRIPTION 100%
@@ -24,8 +24,8 @@ namespace HotfixMods.Core.Flags.TrinityCore
         VENDOR_REAGENT = 0x00000800,     // TITLE is vendor (reagents) DESCRIPTION 100%
         REPAIR = 0x00001000,     // TITLE can repair DESCRIPTION 100%
         FLIGHTMASTER = 0x00002000,     // TITLE is flight master DESCRIPTION 100%
-        SPIRITHEALER = 0x00004000,     // TITLE is spirit healer DESCRIPTION guessed
-        SPIRITGUIDE = 0x00008000,     // TITLE is spirit guide DESCRIPTION guessed
+        SPIRIT_HEALER = 0x00004000,     // TITLE is spirit healer
+        AREA_SPIRIT_HEALER = 0x00008000,     // TITLE is area spirit healer
         INNKEEPER = 0x00010000,     // TITLE is innkeeper
         BANKER = 0x00020000,     // TITLE is banker DESCRIPTION 100%
         PETITIONER = 0x00040000,     // TITLE handles guild/arena petitions DESCRIPTION 100% 0xC0000 = guild petitions, 0x40000 = arena team petitions

@@ -13,7 +13,7 @@
         NO_XP = 0x00000040,       // creature kill does not provide XP
         TRIGGER = 0x00000080,       // trigger creature
         NO_TAUNT = 0x00000100,       // creature is immune to taunt auras and 'attack me' effects
-        NO_MOVE_FLAGS_UPDATE = 0x00000200,       // creature won't update movement flags
+        UNUSED_9 = 0x00000200,
         GHOST_VISIBILITY = 0x00000400,       // creature will only be visible to dead players
         USE_OFFHAND_ATTACK = 0x00000800,       // creature will use offhand attacks
         NO_SELL_VENDOR = 0x00001000,       // players can't sell items to this vendor
@@ -32,7 +32,7 @@
         UNUSED_25 = 0x02000000,
         UNUSED_26 = 0x04000000,
         UNUSED_27 = 0x08000000,
-        DUNGEON_BOSS = 0x10000000,       // creature is a dungeon boss (SET DYNAMICALLY, DO NOT ADD IN DB)
+        DUNGEON_BOSS = 0x10000000,       // creature is a dungeon boss
         IGNORE_PATHFINDING = 0x20000000,       // creature ignore pathfinding
         IMMUNITY_KNOCKBACK = 0x40000000,       // creature is immune to knockback effects
         UNUSED_31 = 0x80000000,

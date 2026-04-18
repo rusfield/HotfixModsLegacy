@@ -4,14 +4,20 @@ namespace HotfixMods.Tools.Dev.Business
 {
     public class TrinityCoreCodeTool
     {
+        private readonly string _metadataHeaderPath;
+
+        public TrinityCoreCodeTool(string metadataHeaderPath)
+        {
+            _metadataHeaderPath = metadataHeaderPath;
+        }
+
         public void GetFields(string db2Name)
         {
             List<(string, int, bool)> values = new();
             var pattern = $@"^(?:.*\s+)?struct\s+{db2Name}Meta\s*{{\s*(.*?)\s*}}";
             var structRegex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            var filePath = @"C:\Users\Disconnected\source\repos\TrinityCore\src\server\game\DataStores\DB2Metadata.h";
 
-            using (var reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(_metadataHeaderPath))
             {
                 var content = reader.ReadToEnd();
 
@@ -51,9 +57,8 @@ namespace HotfixMods.Tools.Dev.Business
         {
             var pattern = $@"(?:.*\s+)?struct\s+{db2Name}Meta\s*{{\s*(.*?)\s*(static\s+constexpr\s+DB2Meta\s+Instance{{\s*(.*?)\s*}};)\s*}}";
             var structRegex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Singleline);
-            var filePath = @"C:\Users\Disconnected\source\repos\TrinityCore\src\server\game\DataStores\DB2Metadata.h";
 
-            using (var reader = new StreamReader(filePath))
+            using (var reader = new StreamReader(_metadataHeaderPath))
             {
                 var content = reader.ReadToEnd();
                 var structMatch = structRegex.Match(content);

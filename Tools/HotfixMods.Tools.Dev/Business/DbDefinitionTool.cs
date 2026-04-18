@@ -7,11 +7,11 @@ namespace HotfixMods.Tools.Dev.Business
 
     public class DbDefinitionTool
     {
-        public async Task<string> DefinitionToCSharp(string defName, string build)
+        public async Task<string> DefinitionToCSharp(string defName, string build, string definitionsPath)
         {
             await TextCopy.ClipboardService.SetTextAsync("");
 
-            var defHelper = new Db2Client(build, "");
+            var defHelper = new Db2Client(build, definitionsPath);
             var definition = await defHelper.GetDefinitionAsync(null, defName);
 
             await WriteToConsoleAndClipboard("[HotfixesSchema]");

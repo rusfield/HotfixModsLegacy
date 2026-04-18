@@ -84,7 +84,11 @@ namespace HotfixMods.Infrastructure.Services
             if (useClientDefinition)
                 definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
             else
+            {
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+                if (definition == null)
+                    definition = await EnsureManagedServerDefinitionAsync(schemaName, db2Name);
+            }
 
             if (null == definition)
             {
@@ -147,7 +151,11 @@ namespace HotfixMods.Infrastructure.Services
             if (useClientDefinition)
                 definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
             else
+            {
                 definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+                if (definition == null)
+                    definition = await EnsureManagedServerDefinitionAsync(schemaName, db2Name);
+            }
 
             if (null == definition)
                 throw new Exception($"Unable to get definition for {db2Name}.");
@@ -230,7 +238,11 @@ namespace HotfixMods.Infrastructure.Services
         protected async Task SaveAsync(string schemaName, string db2Name, params DbRow[] dbRows)
         {
             var tableName = db2Name.ToTableName();
-            var hotfixDataDefinition = await _serverDbDefinitionProvider.GetDefinitionAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName());
+            await EnsureServerTableForSaveAsync(schemaName, db2Name);
+
+            var hotfixDataDefinition = await EnsureManagedServerDefinitionAsync(_appConfig.HotfixesSchema, nameof(HotfixData));
+            if (hotfixDataDefinition == null)
+                throw new Exception($"Unable to get definition for {nameof(HotfixData)}.");
 
             var hotfixDbRows = new List<DbRow>();
             var newHotfixDataId = await GetNextIdAsync(_appConfig.HotfixesSchema, nameof(HotfixData).ToTableName(), _appConfig.HotfixDataTableFromId, _appConfig.HotfixDataTableToId, "id");

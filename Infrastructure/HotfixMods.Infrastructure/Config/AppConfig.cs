@@ -10,6 +10,7 @@ namespace HotfixMods.Infrastructure.Config
         public string CharactersSchema { get; set; } = "characters";
         public string WorldSchema { get; set; } = "world";
         public string Db2Path { get; set; } = @"\";
+        public string DbdDefinitionsPath { get; set; } = @"\";
         public string TrinityCorePath { get; set; } = @"\";
         public string ListfilePath { get; set; } = @"\";
         public int HotfixDataTableFromId { get; set; } = 15000000;

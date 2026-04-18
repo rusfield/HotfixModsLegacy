@@ -176,6 +176,77 @@ namespace HotfixMods.Infrastructure.Services
             return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
         }
 
+        DbRowDefinition BuildDefinitionFromType(Type type)
+        {
+            var definition = new DbRowDefinition(type.Name.ToTableName());
+
+            foreach (var property in type.GetProperties())
+            {
+                var propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+                definition.ColumnDefinitions.Add(new()
+                {
+                    Name = property.Name,
+                    Type = propertyType,
+                    IsIndex = property.GetCustomAttribute<IndexFieldAttribute>() != null
+                        || property.Name.Equals("ID", StringComparison.InvariantCultureIgnoreCase),
+                    IsLocalized = false,
+                    IsParentIndex = false,
+                    ReferenceDb2 = null,
+                    ReferenceDb2Field = null
+                });
+            }
+
+            return definition;
+        }
+
+        DbRowDefinition? GetManagedServerDefinition(string schemaName, string db2Name)
+        {
+            if (!_appConfig.HotfixesSchema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase))
+                return null;
+
+            if (db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase))
+                return BuildDefinitionFromType(typeof(HotfixModsEntity));
+
+            if (db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase))
+                return BuildDefinitionFromType(typeof(HotfixData));
+
+            return null;
+        }
+
+        protected async Task<DbRowDefinition?> EnsureManagedServerDefinitionAsync(string schemaName, string db2Name)
+        {
+            var tableName = db2Name.ToTableName();
+            var definition = await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName);
+            if (definition != null)
+                return definition;
+
+            definition = GetManagedServerDefinition(schemaName, db2Name);
+            if (definition == null)
+                return null;
+
+            await _serverDbProvider.CreateTableIfNotExistsAsync(schemaName, tableName, definition);
+            return await _serverDbDefinitionProvider.GetDefinitionAsync(schemaName, tableName) ?? definition;
+        }
+
+        protected async Task EnsureServerTableForSaveAsync(string schemaName, string db2Name)
+        {
+            var tableName = db2Name.ToTableName();
+            if (await _serverDbProvider.TableExistsAsync(schemaName, tableName))
+                return;
+
+            var definition = GetManagedServerDefinition(schemaName, db2Name);
+            if (definition == null
+                && _appConfig.HotfixesSchema.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixData), StringComparison.InvariantCultureIgnoreCase)
+                && !db2Name.Equals(nameof(HotfixModsEntity), StringComparison.InvariantCultureIgnoreCase))
+            {
+                definition = await _clientDbDefinitionProvider.GetDefinitionAsync(_appConfig.Db2Path, db2Name);
+            }
+
+            if (definition != null)
+                await _serverDbProvider.CreateTableIfNotExistsAsync(schemaName, tableName, definition);
+        }
+
         protected async Task<int> GetIdByConditionsAsync<T>(int? currentId, bool isUpdate)
             where T : new()
         {

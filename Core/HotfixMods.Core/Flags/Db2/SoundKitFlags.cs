@@ -4,7 +4,7 @@
     [Flags]
     public enum SoundkitFlags : int
     {
-        // UNK1 = 1,
+        UNK1 = 1,
         // UNK_2 = 2,
         // UNK_4 = 4,
         // UNK_8 = 8,

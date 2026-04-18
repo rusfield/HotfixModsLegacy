@@ -1,5 +1,5 @@
 ﻿/*
- * This client is getting data from the <a href="https://github.com/wowdev/WoWDBDefs">WoWDBDefs repository in GitHub, by wowdev</a>.
+ * This client is getting data from a configured WoWDBDefs definitions directory.
  * Code is mostly from <a href="https://github.com/wowdev/DBCD>WoWDev's DBCD repository</a>.
  * Helper methods are based on <a href="https://github.com/MaxtorCoder/Wow.DB2DefinitionDumper>MaxtorCoder's Wow.DB2DefinitionDumper</a>.
  */
@@ -8,23 +8,19 @@ using DBDefsLib;
 using HotfixMods.Core.Interfaces;
 using HotfixMods.Core.Models;
 using static DBDefsLib.Structs;
-using System.Reflection.Metadata;
 
 namespace HotfixMods.Providers.WowDev.Client
 {
     public partial class Db2Client : IClientDbProvider, IClientDbDefinitionProvider
     {
-        HttpClient _httpClient;
+        readonly string _definitionsPath;
 
         public string Build { get; set; }
 
-        public Db2Client(string build, string? githubAccessToken = null)
+        public Db2Client(string build, string definitionsPath)
         {
             Build = build;
-            _httpClient = new();
-            _httpClient.DefaultRequestHeaders.Add("User-Agent", "HotfixMods");
-            if (!string.IsNullOrWhiteSpace(githubAccessToken))
-                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {githubAccessToken}");
+            _definitionsPath = definitionsPath;
         }
 
         public async Task<IEnumerable<DbRow>> GetAsync(string location, string db2Name, DbRowDefinition dbRowDefinition, params DbParameter[] parameters)
@@ -56,7 +52,7 @@ namespace HotfixMods.Providers.WowDev.Client
                 // Will crash if definition is missing or does not contain the specified version
                 (databaseDefinitions, versionDefinition) = await GetDbDefinitionAndVersionDefinitionsByDb2Name(db2Name, Build);
             }
-            catch(Exception e)
+            catch
             {
                 return null;
             }
@@ -147,7 +143,6 @@ namespace HotfixMods.Providers.WowDev.Client
         public async Task<IEnumerable<string>> GetDefinitionNamesAsync()
         {
             return await GetAllDefinitionsFromPathAsync();
-            //return await GetAllDefinitionsFromUrlAsync();
         }
 
         public async Task<IEnumerable<string>> GetAvailableBuildsForDefinitionAsync(string db2Name)

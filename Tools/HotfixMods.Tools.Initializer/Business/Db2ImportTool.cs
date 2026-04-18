@@ -5,10 +5,10 @@ namespace HotfixMods.Tools.Initializer.Business
 {
     public class Db2ImportTool
     {
-        public async Task Db2FileToDb2MySql(string db2Build, string db2FilePath, string db2Name, string mySqlSchemaName, string mySqlTableName, string mySqlServer, string mySqlPort, string mySqlUsername, string mySqlPassword)
+        public async Task Db2FileToDb2MySql(string db2Build, string definitionsPath, string db2FilePath, string db2Name, string mySqlSchemaName, string mySqlTableName, string mySqlServer, string mySqlPort, string mySqlUsername, string mySqlPassword)
         {
             var mySqlClient = new MySqlClient(mySqlServer, mySqlPort, mySqlUsername, mySqlPassword);
-            var db2Client = new Db2Client(db2Build);
+            var db2Client = new Db2Client(db2Build, definitionsPath);
 
             var dbDefinition = await db2Client.GetDefinitionAsync(db2FilePath, db2Name);
             await mySqlClient.CreateTableIfNotExistsAsync(mySqlSchemaName, mySqlTableName, dbDefinition);

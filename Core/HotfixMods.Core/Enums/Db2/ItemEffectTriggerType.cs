@@ -17,5 +17,7 @@ namespace HotfixMods.Core.Enums.Db2
         ON_LEARN = 6,
         ON_LOOTED = 7,
         TEACH_MOUNT = 8,
+        ON_PICKUP_FORCED = 9,
+        ON_LOOTED_FORCED = 10,
     }
 }

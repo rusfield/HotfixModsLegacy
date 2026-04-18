@@ -10,9 +10,9 @@ namespace HotfixMods.Tools.Dev.Legacy
 {
     public static class DefinitionHelper
     {
-        public static async Task DefinitionToCSharp(string defName, string build)
+        public static async Task DefinitionToCSharp(string defName, string build, string definitionsPath)
         {
-            var defHelper = new Db2Client(build);
+            var defHelper = new Db2Client(build, definitionsPath);
             var definition = await defHelper.GetDefinitionAsync("asdf", defName);
             Console.WriteLine($"public class {defName}");
             Console.WriteLine("{");

@@ -3,7 +3,6 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using Microsoft.Extensions.Caching.Memory;
-using System.Security.Cryptography.X509Certificates;
 
 namespace HotfixMods.Providers.TrinityCore.Client
 {
@@ -11,6 +10,11 @@ namespace HotfixMods.Providers.TrinityCore.Client
     {
         IMemoryCache _cache;
         MemoryCacheEntryOptions _cacheOptions;
+        public TrinityCoreClient()
+            : this("/")
+        {
+        }
+
         public TrinityCoreClient(string trinityCorePath)
         {
             TrinityCorePath = trinityCorePath;
@@ -27,7 +31,18 @@ namespace HotfixMods.Providers.TrinityCore.Client
         public string TrinityCorePath { get; set; } = "/";
         public bool CacheResults { get; set; } = true;
 
-        public async Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
+        public Task<Dictionary<TKey, string>> GetEnumValues<TKey>(Type? modelType, string propertyName)
+            where TKey : notnull
+        {
+            var enumType = GetLocalEnumType(modelType, propertyName);
+            if (enumType == null)
+                return Task.FromResult(new Dictionary<TKey, string>());
+
+            return Task.FromResult(GetEnumValuesFromLocalEnum<TKey>(enumType));
+        }
+
+        [Obsolete("Reading runtime enum values from a TrinityCore source checkout is deprecated. Use GetEnumValues instead.")]
+        public async Task<Dictionary<TKey, string>> GetEnumValuesFromTrinityCoreAsync<TKey>(Type? modelType, string propertyName)
             where TKey : notnull
         {
             if (typeof(CreatureTemplate) == modelType)

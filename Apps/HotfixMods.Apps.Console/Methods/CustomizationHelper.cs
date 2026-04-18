@@ -13,43 +13,42 @@ namespace HotfixMods.Apps.Console.Methods
 {
     public class CustomizationHelper
     {
-        Db2Client _db2Client;
-        string path = @"D:\TrinityCore\Dragonflight\dbc\enUS";
-        string outputPath = @"D:\TrinityCore\Customizations";
-        int optionStartId = 10000;
-        int choiceStartId = 33000;
-        int elementStartId = 120000;
-        int hotfixStartId = 901000000;
-        int verifiedBuild = -1340;
-        uint choiceHash = (uint)TableHashes.CHR_CUSTOMIZATION_CHOICE;
-        uint elementHash = (uint)TableHashes.CHR_CUSTOMIZATION_ELEMENT;
-        uint optionHash = (uint)TableHashes.CHR_CUSTOMIZATION_OPTION;
-        List<ChrModelId> models;
-        public CustomizationHelper(Db2Client client)
+        private readonly Db2Client _db2Client;
+        private readonly CustomizationHelperOptions _options;
+        private readonly uint _choiceHash = (uint)TableHashes.CHR_CUSTOMIZATION_CHOICE;
+        private readonly uint _elementHash = (uint)TableHashes.CHR_CUSTOMIZATION_ELEMENT;
+        private readonly uint _optionHash = (uint)TableHashes.CHR_CUSTOMIZATION_OPTION;
+
+        public CustomizationHelper(Db2Client client, CustomizationHelperOptions options)
         {
             _db2Client = client;
-            models = new()
-            {
-                ChrModelId.LIGHTFORGED_DRAENEI_FEMALE,
-                ChrModelId.DRAENEI_FEMALE,
-                ChrModelId.NIGHTBORNE_FEMALE
-            };
+            _options = options;
         }
 
         public async Task GenerateAllCustomizationFiles()
         {
-            string optionSql = "INSERT INTO hotfixes.chr_customization_option values('{0}', {1}, {1}, 0, {2}, 1000, {3}, {4}, 0, 0, 0, 1000, 90001, " + verifiedBuild + ");";
-            string choiceSql = "INSERT INTO hotfixes.chr_customization_choice values('{0}', {1}, {2}, 0, 0, 1000, 1000, 0, 90001, 0, 0, 0, " + verifiedBuild + ", null);";
-            string elementSql = "INSERT INTO hotfixes.chr_customization_element values({0}, {1}, 0, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, " + verifiedBuild + ");";
-            string hotfixSql = "INSERT INTO hotfixes.hotfix_data values({0}, 0, {1}, {2}, 1, " + verifiedBuild + ");";
+            Directory.CreateDirectory(_options.OutputPath);
 
-            var optionDef = await _db2Client.GetDefinitionAsync(path, "ChrCustomizationOption");
-            var choiceDef = await _db2Client.GetDefinitionAsync(path, "ChrCustomizationChoice");
-            var elementDef = await _db2Client.GetDefinitionAsync(path, "ChrCustomizationElement");
+            string optionSql = "INSERT INTO hotfixes.chr_customization_option values('{0}', {1}, {1}, 0, {2}, 1000, {3}, {4}, 0, 0, 0, 1000, 90001, " + _options.VerifiedBuild + ");";
+            const string choiceSql = """
+                INSERT INTO hotfixes.chr_customization_choice
+                (Name, ID, ChrCustomizationOptionID, ChrCustomizationReqID, ChrCustomizationVisReqID, SortOrder, UiOrderIndex, Flags, AddedInPatch, SoundKitID, SwatchColor1, SwatchColor2, VerifiedBuild)
+                VALUES ('{0}', {1}, {2}, 0, 0, 1000, 1000, 0, 90001, 0, 0, 0, {3});
+                """;
+            const string elementSql = """
+                INSERT INTO hotfixes.chr_customization_element
+                (ID, ChrCustomizationChoiceID, RelatedChrCustomizationChoiceID, ChrCustomizationGeosetID, ChrCustomizationSkinnedModelID, ChrCustomizationMaterialID, ChrCustomizationBoneSetID, ChrCustomizationCondModelID, ChrCustomizationDisplayInfoID, ChrCustItemGeoModifyID, ChrCustomizationVoiceID, AnimKitID, ParticleColorID, ChrCustGeoComponentLinkID, VerifiedBuild)
+                VALUES ({0}, {1}, 0, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, 0, 0, {11});
+                """;
+            string hotfixSql = "INSERT INTO hotfixes.hotfix_data values({0}, 0, {1}, {2}, 1, " + _options.VerifiedBuild + ");";
 
-            var allOptions = await _db2Client.GetAsync(path, "ChrCustomizationOption", optionDef);
-            var allChoices = await _db2Client.GetAsync(path, "ChrCustomizationChoice", choiceDef);
-            var allElements = await _db2Client.GetAsync(path, "ChrCustomizationElement", elementDef);
+            var optionDef = await _db2Client.GetDefinitionAsync(_options.Db2DataPath, "ChrCustomizationOption");
+            var choiceDef = await _db2Client.GetDefinitionAsync(_options.Db2DataPath, "ChrCustomizationChoice");
+            var elementDef = await _db2Client.GetDefinitionAsync(_options.Db2DataPath, "ChrCustomizationElement");
+
+            var allOptions = await _db2Client.GetAsync(_options.Db2DataPath, "ChrCustomizationOption", optionDef);
+            var allChoices = await _db2Client.GetAsync(_options.Db2DataPath, "ChrCustomizationChoice", choiceDef);
+            var allElements = await _db2Client.GetAsync(_options.Db2DataPath, "ChrCustomizationElement", elementDef);
 
             var sortedChoices = new Dictionary<int, List<DbRow>>();
             var sortedElements = new Dictionary<int, List<DbRow>>();
@@ -78,9 +77,9 @@ namespace HotfixMods.Apps.Console.Methods
                 if (string.IsNullOrWhiteSpace(optionName))
                     continue;
 
-                foreach (var model in models)
+                foreach (var model in _options.Models)
                 {
-                    var currentPath = Path.Combine(outputPath, $"{model.ToString()} - {((ChrModelId)option.GetValueByNameAs<int>("ChrModelID")).ToString()} - {option.GetValueByNameAs<string>("Name")}.txt");
+                    var currentPath = Path.Combine(_options.OutputPath, $"{model.ToString()} - {((ChrModelId)option.GetValueByNameAs<int>("ChrModelID")).ToString()} - {option.GetValueByNameAs<string>("Name")}.txt");
                     var modelOption = allOptions.Where(o => o.GetValueByNameAs<int>("ChrModelID") == (int)model && o.GetValueByNameAs<string>("Name") == optionName);
                     int categoryId = modelOption.Any() ? modelOption.First().GetValueByNameAs<int>("ChrCustomizationCategoryID") : option.GetValueByNameAs<int>("ChrCustomizationCategoryID");
                     int optionId = -1; // set later
@@ -93,9 +92,9 @@ namespace HotfixMods.Apps.Console.Methods
                         // Create option, if not already existing 
                         if (!modelOption.Any())
                         {
-                            sw.WriteLine(string.Format(optionSql, optionName, optionStartId, (int)model, categoryId, option.GetValueByNameAs<int>("OptionType")));
-                            sw.WriteLine(string.Format(hotfixSql, hotfixStartId++, optionHash, optionStartId));
-                            optionId = optionStartId++;
+                            sw.WriteLine(string.Format(optionSql, optionName, _options.OptionStartId, (int)model, categoryId, option.GetValueByNameAs<int>("OptionType")));
+                            sw.WriteLine(string.Format(hotfixSql, _options.HotfixStartId++, _optionHash, _options.OptionStartId));
+                            optionId = _options.OptionStartId++;
                         }
                         else
                         {
@@ -110,14 +109,14 @@ namespace HotfixMods.Apps.Console.Methods
                             if (!sortedElements.ContainsKey(choiceId))
                                 continue;
 
-                            sw.WriteLine(string.Format(choiceSql, choice.GetValueByNameAs<string>("Name"), choiceStartId, optionId));
-                            sw.WriteLine(string.Format(hotfixSql, hotfixStartId++, choiceHash, choiceStartId));
+                            sw.WriteLine(string.Format(choiceSql, choice.GetValueByNameAs<string>("Name"), _options.ChoiceStartId, optionId, _options.VerifiedBuild));
+                            sw.WriteLine(string.Format(hotfixSql, _options.HotfixStartId++, _choiceHash, _options.ChoiceStartId));
 
                             foreach (var element in sortedElements[choiceId])
                             {
                                 sw.WriteLine(string.Format(elementSql,
-                                    elementStartId,
-                                    choiceStartId,
+                                    _options.ElementStartId,
+                                    _options.ChoiceStartId,
                                     element.GetValueByNameAs<int>("ChrCustomizationGeosetID"),
                                     element.GetValueByNameAs<int>("ChrCustomizationSkinnedModelID"),
                                     element.GetValueByNameAs<int>("ChrCustomizationMaterialID"),
@@ -126,18 +125,36 @@ namespace HotfixMods.Apps.Console.Methods
                                     element.GetValueByNameAs<int>("ChrCustomizationDisplayInfoID"),
                                     element.GetValueByNameAs<int>("ChrCustItemGeoModifyID"),
                                     element.GetValueByNameAs<int>("ChrCustomizationVoiceID"),
-                                    element.GetValueByNameAs<int>("AnimKitID")
+                                    element.GetValueByNameAs<int>("AnimKitID"),
+                                    _options.VerifiedBuild
                                     ));
-                                sw.WriteLine(string.Format(hotfixSql, hotfixStartId++, elementHash, elementStartId));
+                                sw.WriteLine(string.Format(hotfixSql, _options.HotfixStartId++, _elementHash, _options.ElementStartId));
 
-                                elementStartId++;
+                                _options.ElementStartId++;
                             }
-                            choiceStartId++;
+                            _options.ChoiceStartId++;
                         }
                     }
                 }
 
             }
         }
+    }
+
+    public sealed class CustomizationHelperOptions
+    {
+        public string Db2DataPath { get; set; } = string.Empty;
+        public string OutputPath { get; set; } = string.Empty;
+        public int OptionStartId { get; set; } = 10000;
+        public int ChoiceStartId { get; set; } = 33000;
+        public int ElementStartId { get; set; } = 120000;
+        public int HotfixStartId { get; set; } = 901000000;
+        public int VerifiedBuild { get; set; } = -1340;
+        public List<ChrModelId> Models { get; set; } =
+        [
+            ChrModelId.LIGHTFORGED_DRAENEI_FEMALE,
+            ChrModelId.DRAENEI_FEMALE,
+            ChrModelId.NIGHTBORNE_FEMALE
+        ];
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum ChrClassId
     {
+        NONE = 0,
         WARRIOR = 1,
         PALADIN = 2,
         HUNTER = 3,
@@ -15,6 +16,7 @@
         DRUID = 11,
         DEMON_HUNTER = 12,
         EVOKER = 13,
-        ADVENTURER = 14
+        ADVENTURER = 14,
+        TRAVELER = 15
     }
 }

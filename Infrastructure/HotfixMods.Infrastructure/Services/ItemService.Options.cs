@@ -19,9 +19,7 @@ namespace HotfixMods.Infrastructure.Services
         }
         public async Task<Dictionary<byte, string>> GetSheatheTypeOptionsAsync()
         {
-            // Enum exists in TC, but it is currently wrong.
-            // return await GetEnumOptionsAsync<byte>(typeof(Item), nameof(Item.SheatheType));
-            return Enum.GetValues<Item_SheatheTypes>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
+            return await GetEnumOptionsAsync<byte>(typeof(Item), nameof(Item.SheatheType));
         }
 
         public async Task<Dictionary<int, string>> GetModifiedCraftingReagentItemIdOptionsAsync()

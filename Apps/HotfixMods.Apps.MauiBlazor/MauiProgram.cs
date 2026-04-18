@@ -48,11 +48,11 @@ namespace HotfixMods.Apps.MauiBlazor
 
             builder.Services.AddSingleton<IClientDbProvider, Db2Client>(provider =>
             {
-                return new Db2Client(appConfig.BuildInfo);
+                return new Db2Client(appConfig.BuildInfo, appConfig.DbdDefinitionsPath);
             });
             builder.Services.AddSingleton<IClientDbDefinitionProvider, Db2Client>(provider =>
             {
-                return new Db2Client(appConfig.BuildInfo);
+                return new Db2Client(appConfig.BuildInfo, appConfig.DbdDefinitionsPath);
             });
             builder.Services.AddSingleton<IServerDbProvider, MySqlClient>(provider =>
             {
@@ -74,7 +74,7 @@ namespace HotfixMods.Apps.MauiBlazor
             });
             builder.Services.AddSingleton<IServerEnumProvider, TrinityCoreClient>(provider =>
             {
-                return new TrinityCoreClient(appConfig.TrinityCorePath)
+                return new TrinityCoreClient()
                 {
                     CacheResults = appConfig.CacheFileResults
                 };

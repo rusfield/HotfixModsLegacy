@@ -9,13 +9,12 @@ namespace HotfixMods.Core.Enums.Db2
     public enum Item_SheatheTypes
     {
         NONE = 0,
-        TWO_HANDED_AND_GUNS = 1,
-        STAVES_AND_POLEARMS = 2,
-        ONE_HANDED = 3,
-        SHIELDS_AND_BOWS = 4,
-        CROSSBOWS = 5,
-        UNK_6 = 6,
-        OFF_HAND = 7,
-        FIST_WEAPONS = 8
+        MAINHAND = 1,
+        OFFHAND = 2,
+        LARGEWEAPONLEFT = 3,
+        LARGEWEAPONRIGHT = 4,
+        HIPWEAPONLEFT = 5,
+        HIPWEAPONRIGHT = 6,
+        SHIELD = 7
     }
 }

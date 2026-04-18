@@ -1,16 +1,11 @@
-﻿using DBDefsLib;
-using HotfixMods.Providers.Db2.WoWDev.Providers;
+using DBDefsLib;
+using DBCD.Providers;
 using HotfixMods.Core.Models;
-using System.Text.Json;
-using System.Reflection;
 
 namespace HotfixMods.Providers.WowDev.Client
 {
     public partial class Db2Client
     {
-        readonly string defUrl = @"https://api.github.com/repos/wowdev/WoWDBDefs/git/trees/1488972b2d701cec80c9b71b63046e7694df6d0e";
-        readonly string singleDefUrl = @"https://raw.githubusercontent.com/wowdev/WoWDBDefs/master/definitions/{0}.dbd";
-
         string TrimDb2Name(string db2Name)
         {
             db2Name = db2Name.Trim();
@@ -21,7 +16,6 @@ namespace HotfixMods.Providers.WowDev.Client
 
         async Task<Structs.DBDefinition> GetDbDefinitionByDb2Name(string db2Name)
         {
-            //var stream = await GetDb2StreamFromUrlByDb2Name(db2Name);
             var stream = await GetDb2StreamFromPathByDb2Name(db2Name);
             return await GetDbDefinitionByDb2Stream(stream);
         }
@@ -54,41 +48,10 @@ namespace HotfixMods.Providers.WowDev.Client
             return (databaseDefinitions, versionToUse.Value);
         }
 
-        async Task<Stream> GetDb2StreamFromUrlByDb2Name(string db2Name)
-        {
-            // GitHub is case-sensitive. Get the DB2 name correct before attempting to query with it.
-            // TODO: Check if the API supports a parameter or something to make it case insensitive.
-            var definitions = await GetAllDefinitionsFromUrlAsync();
-            var definition = definitions.Where(d => d.Equals(db2Name.Trim(), StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-            if (null == definition)
-                throw new Exception($"No DB2 with name {db2Name} found.");
-
-            var url = string.Format(singleDefUrl, definition);
-            var data = await _httpClient.GetAsync(url);
-            if (data.IsSuccessStatusCode)
-            {
-                return await data.Content.ReadAsStreamAsync();
-            }
-            throw new Exception($"Unable to load definition columns from URL {url}.");
-        }
-
         async Task<Stream> GetDb2StreamFromPathByDb2Name(string db2Name)
         {
-            var definitions = await GetAllDefinitionsFromPathAsync();
-            var definition = definitions.Where(d => d.Equals(db2Name.Trim(), StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
-            if (null == definition)
-                throw new Exception($"No DB2 with name {db2Name} found.");
-
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceNames = assembly.GetManifestResourceNames();
-            foreach (var resourceName in resourceNames)
-            {
-                if (string.Equals(resourceName, $"HotfixMods.Providers.WowDev.WoWDBDefs.{db2Name}.dbd", StringComparison.OrdinalIgnoreCase))
-                {
-                    return assembly.GetManifestResourceStream(resourceName);
-                }
-            }
-            throw new Exception($"No DB2 with name {db2Name} found.");
+            var filePath = await GetDb2DefinitionPathByDb2Name(db2Name);
+            return File.OpenRead(filePath);
         }
 
         Type FieldDefinitionToType(Structs.Definition field, Structs.ColumnDefinition column)
@@ -121,18 +84,12 @@ namespace HotfixMods.Providers.WowDev.Client
             return await Task.Run(async () =>
             {
                 var results = new List<DbRow>();
-                //var streamForStructs = await GetDb2StreamFromUrlByDb2Name(db2Name);
                 var streamForStructs = await GetDb2StreamFromPathByDb2Name(db2Name);
-                var streamForProvider = new MemoryStream();
-
-                // Need to make 2 because the DBCD closes the one it uses.
-                streamForStructs.CopyTo(streamForProvider);
                 streamForStructs.Position = 0;
-                streamForProvider.Position = 0;
 
                 var (dbDef, versionDef) = await GetDbDefinitionAndVersionDefinitionsByDb2Stream(streamForStructs, build);
-                var dbcProvider = new DbcProvider(location);
-                var dbdProvider = new DbDefProvider(streamForProvider);
+                var dbcProvider = new FilesystemDBCProvider(location);
+                var dbdProvider = new FilesystemDBDProvider(GetDefinitionsDirectoryPath());
                 var dbcd = new DBCD.DBCD(dbcProvider, dbdProvider);
                 var db2Results = dbcd.Load($"{db2Name}", build);
 
@@ -270,39 +227,52 @@ namespace HotfixMods.Providers.WowDev.Client
             return true;
         }
 
-        async Task<IEnumerable<string>> GetAllDefinitionsFromUrlAsync()
+        string GetDefinitionsDirectoryPath()
         {
-            var data = await _httpClient.GetAsync(defUrl);
-            if (data.IsSuccessStatusCode)
+            if (string.IsNullOrWhiteSpace(_definitionsPath))
+                throw new InvalidOperationException("The DBD definitions path has not been configured.");
+
+            var resolvedPath = Path.GetFullPath(_definitionsPath);
+            if (!Directory.Exists(resolvedPath))
             {
-                var content = await data.Content.ReadAsStreamAsync();
-                var jsonData = await JsonSerializer.DeserializeAsync<JsonElement>(content);
-                var results = new List<string>();
-                foreach (var jObject in jsonData.GetProperty("tree").EnumerateArray())
-                {
-                    var definition = jObject.GetProperty("path").ToString();
-                    results.Add(definition.Replace(".dbd", ""));
-                }
-                return results;
+                throw new DirectoryNotFoundException(
+                    $"Unable to find the configured DBD definitions directory: {resolvedPath}");
             }
-            throw new Exception($"Unable to load definitions from URL {defUrl}");
+
+            return resolvedPath;
+        }
+
+        async Task<string> GetDb2DefinitionPathByDb2Name(string db2Name)
+        {
+            return await Task.Run(() =>
+            {
+                var definitionsDirectory = GetDefinitionsDirectoryPath();
+                var definition = Directory
+                    .EnumerateFiles(definitionsDirectory, "*.dbd", SearchOption.TopDirectoryOnly)
+                    .FirstOrDefault(file =>
+                        string.Equals(
+                            Path.GetFileNameWithoutExtension(file),
+                            db2Name.Trim(),
+                            StringComparison.InvariantCultureIgnoreCase));
+
+                if (null == definition)
+                    throw new Exception($"No DB2 with name {db2Name} found in {definitionsDirectory}.");
+
+                return definition;
+            });
         }
 
         async Task<IEnumerable<string>> GetAllDefinitionsFromPathAsync()
         {
-            return await Task.Run(async () =>
+            return await Task.Run(() =>
             {
-                var results = new List<string>();
-                var assembly = Assembly.GetExecutingAssembly();
-                string[] resources = assembly.GetManifestResourceNames();
-                string folder = $"{assembly.GetName().Name}.WoWDBDefs.";
-                string[] filesInFolder = Array.FindAll(resources, item => item.StartsWith(folder));
-
-                foreach (var file in filesInFolder)
-                {
-                    results.Add(file.Replace(folder, "").Replace(".dbd", ""));
-                }
-                return results;
+                var definitionsDirectory = GetDefinitionsDirectoryPath();
+                return Directory
+                    .EnumerateFiles(definitionsDirectory, "*.dbd", SearchOption.TopDirectoryOnly)
+                    .Select(Path.GetFileNameWithoutExtension)
+                    .OfType<string>()
+                    .ToList()
+                    .AsEnumerable();
             });
         }
 

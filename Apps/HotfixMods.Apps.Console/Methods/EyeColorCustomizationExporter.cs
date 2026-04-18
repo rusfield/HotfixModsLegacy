@@ -22,7 +22,8 @@ namespace HotfixMods.Apps.Console.Methods
 
         public async Task GenerateAsync()
         {
-            Directory.CreateDirectory(_options.OutputPath);
+            var outputDirectory = GetOutputDirectory();
+            Directory.CreateDirectory(outputDirectory);
 
             const string choiceSql = """
                 INSERT INTO hotfixes.chr_customization_choice
@@ -105,7 +106,7 @@ namespace HotfixMods.Apps.Console.Methods
                     var orderIndex = 1000;
                     var elementModelId = (ChrModelId)elements.Key;
                     var elementModelName = elementModelId.ToDisplayString().Replace(" male", "", StringComparison.InvariantCultureIgnoreCase);
-                    var currentPath = Path.Combine(_options.OutputPath, $"{modelName} - {elementModelName} eyes.txt");
+                    var currentPath = Path.Combine(outputDirectory, $"{modelName} - {elementModelName} eyes.txt");
 
                     using var sw = File.AppendText(currentPath);
                     sw.WriteLine();
@@ -147,6 +148,11 @@ namespace HotfixMods.Apps.Console.Methods
                     sw.Flush();
                 }
             }
+        }
+
+        private string GetOutputDirectory()
+        {
+            return Path.Combine(_options.OutputPath, $"{nameof(EyeColorCustomizationExporter)}.{nameof(GenerateAsync)}");
         }
     }
 

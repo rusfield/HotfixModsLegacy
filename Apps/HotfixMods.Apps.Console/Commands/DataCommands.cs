@@ -79,6 +79,34 @@ internal sealed class ExportEyeColorsCommand : IConsoleCommand
     }
 }
 
+internal sealed class ExportCustomizationRequirementOverridesCommand : IConsoleCommand
+{
+    public string Name => "export-customization-requirement-overrides";
+    public string Description => "Generate customization choice overrides that clear nonzero ChrCustomizationReqID values.";
+    public string Usage => "export-customization-requirement-overrides --db2-path <path> --output-path <path> [--hotfix-start-id <int>] [--verified-build <int>] [--build <client-build>]";
+
+    public async Task ExecuteAsync(ConsoleCommandContext context)
+    {
+        var configuredOptions = context.CustomizationRequirementOverride;
+        var options = new CustomizationRequirementOverrideOptions
+        {
+            Db2DataPath = context.Arguments.GetOrDefault("db2-path", configuredOptions.Db2Path),
+            OutputPath = context.Arguments.GetOrDefault("output-path", configuredOptions.OutputPath),
+            HotfixStartId = context.Arguments.GetInt("hotfix-start-id", configuredOptions.HotfixStartId),
+            VerifiedBuild = context.Arguments.GetInt("verified-build", configuredOptions.VerifiedBuild),
+        };
+
+        if (string.IsNullOrWhiteSpace(options.Db2DataPath))
+            throw new ConsoleCommandException("Missing DB2 path. Pass '--db2-path <path>' or set 'CustomizationRequirementOverride:Db2Path' in appsettings.json.");
+
+        if (string.IsNullOrWhiteSpace(options.OutputPath))
+            throw new ConsoleCommandException("Missing output path. Pass '--output-path <path>' or set 'CustomizationRequirementOverride:OutputPath' in appsettings.json.");
+
+        var exporter = new CustomizationRequirementOverrideExporter(context.CreateDb2Client(), options);
+        await exporter.GenerateAsync();
+    }
+}
+
 internal sealed class ImportDb2DirectoryCommand : IConsoleCommand
 {
     public string Name => "import-db2-directory";

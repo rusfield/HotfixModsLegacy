@@ -27,7 +27,8 @@ namespace HotfixMods.Apps.Console.Methods
 
         public async Task GenerateAllCustomizationFiles()
         {
-            Directory.CreateDirectory(_options.OutputPath);
+            var outputDirectory = GetOutputDirectory();
+            Directory.CreateDirectory(outputDirectory);
 
             string optionSql = "INSERT INTO hotfixes.chr_customization_option values('{0}', {1}, {1}, 0, {2}, 1000, {3}, {4}, 0, 0, 0, 1000, 90001, " + _options.VerifiedBuild + ");";
             const string choiceSql = """
@@ -79,7 +80,7 @@ namespace HotfixMods.Apps.Console.Methods
 
                 foreach (var model in _options.Models)
                 {
-                    var currentPath = Path.Combine(_options.OutputPath, $"{model.ToString()} - {((ChrModelId)option.GetValueByNameAs<int>("ChrModelID")).ToString()} - {option.GetValueByNameAs<string>("Name")}.txt");
+                    var currentPath = Path.Combine(outputDirectory, $"{model.ToString()} - {((ChrModelId)option.GetValueByNameAs<int>("ChrModelID")).ToString()} - {option.GetValueByNameAs<string>("Name")}.txt");
                     var modelOption = allOptions.Where(o => o.GetValueByNameAs<int>("ChrModelID") == (int)model && o.GetValueByNameAs<string>("Name") == optionName);
                     int categoryId = modelOption.Any() ? modelOption.First().GetValueByNameAs<int>("ChrCustomizationCategoryID") : option.GetValueByNameAs<int>("ChrCustomizationCategoryID");
                     int optionId = -1; // set later
@@ -138,6 +139,11 @@ namespace HotfixMods.Apps.Console.Methods
                 }
 
             }
+        }
+
+        private string GetOutputDirectory()
+        {
+            return Path.Combine(_options.OutputPath, $"{nameof(CustomizationHelper)}.{nameof(GenerateAllCustomizationFiles)}");
         }
     }
 

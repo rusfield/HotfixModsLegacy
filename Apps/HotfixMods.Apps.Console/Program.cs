@@ -30,6 +30,7 @@ internal static class Program
             new ConvertDb2HashEnumClipboardCommand(),
             new ConvertWowToolsClipboardCommand(),
             new DumpTransmogSetCommand(),
+            new ExportCustomizationRequirementOverridesCommand(),
             new ExportEyeColorsCommand(),
             new GenerateCustomizationsCommand(),
             new GenerateDb2DefinitionClassCommand(),

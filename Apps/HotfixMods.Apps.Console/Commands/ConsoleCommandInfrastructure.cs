@@ -146,6 +146,7 @@ internal sealed class ConsoleCommandContext
         return listfilePath;
     }
 
+    public CustomizationRequirementOverrideSettings CustomizationRequirementOverride => Settings.CustomizationRequirementOverride;
     public EyeColorExportSettings EyeColorExport => Settings.EyeColorExport;
 
     public Db2Client CreateDb2Client()

@@ -1,6 +1,6 @@
 ﻿namespace HotfixMods.Core.Enums.TrinityCore
 {
-    public enum CreatureTemplateRequiredExpansion
+    public enum CreatureTemplateDifficultyRequiredExpansion
     {
         CLASSIC = 0,
         THE_BURNING_CRUSADE = 1,

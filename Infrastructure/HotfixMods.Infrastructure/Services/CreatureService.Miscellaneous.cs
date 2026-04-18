@@ -291,9 +291,9 @@ namespace HotfixMods.Infrastructure.Services
                 //dto.CreatureTempalteAddon.VerifiedBuild = VerifiedBuild; // property does not currently exist
             }
 
-            if(dto.CreatureTemplateScaling != null)
+            if(dto.CreatureTemplateDifficulty != null)
             {
-                dto.CreatureTemplateScaling.Entry =  (uint)creatureTemplateId;
+                dto.CreatureTemplateDifficulty.Entry =  (uint)creatureTemplateId;
                 dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
             }
 

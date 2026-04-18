@@ -268,7 +268,7 @@ namespace HotfixMods.Infrastructure.Services
 
 
                 result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
-                result.CreatureTemplateScaling = await GetSingleAsync<CreatureTemplateScaling>(callback, progress, new DbParameter(nameof(CreatureTemplateScaling.Entry), (int)result.CreatureTemplate.Entry));
+                result.CreatureTemplateDifficulty = await GetSingleAsync<CreatureTemplateDifficulty>(callback, progress, new DbParameter(nameof(CreatureTemplateDifficulty.Entry), (int)result.CreatureTemplate.Entry));
 
 
                 if (result.CreatureDisplayInfoExtra != null)
@@ -340,7 +340,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 result.CreatureDisplayInfoExtra = await GetSingleAsync<CreatureDisplayInfoExtra>(callback, progress, new DbParameter(nameof(CreatureDisplayInfoExtra.ID), result.CreatureDisplayInfo.ExtendedDisplayInfoID));
-                result.CreatureTemplateScaling = await GetSingleAsync<CreatureTemplateScaling>(callback, progress, new DbParameter(nameof(CreatureTemplateScaling.Entry), (int)result.CreatureTemplate.Entry));
+                result.CreatureTemplateDifficulty = await GetSingleAsync<CreatureTemplateDifficulty>(callback, progress, new DbParameter(nameof(CreatureTemplateDifficulty.Entry), (int)result.CreatureTemplate.Entry));
 
                 if (result.CreatureDisplayInfoExtra != null)
                 {
@@ -388,7 +388,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.CreatureTemplateModel);
                 await SaveAsync(callback, progress, dto.CreatureDisplayInfo);
                 await SaveAsync(callback, progress, dto.CreatureModelInfo);
-                await SaveAsync(callback, progress, dto.CreatureTemplateScaling);
+                await SaveAsync(callback, progress, dto.CreatureTemplateDifficulty);
 
                 if (dto.CreatureDisplayInfoExtra != null)
                 {

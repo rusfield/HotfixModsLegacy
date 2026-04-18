@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     {
         [IndexField]
         public uint Entry { get; set; } = 0;
-        public uint Path_ID { get; set; } = 0;
+        public uint PathId { get; set; } = 0;
         public uint Mount { get; set; } = 0;
         public uint MountCreatureID { get; set; } = 0;
         public byte StandState { get; set; } = 0;

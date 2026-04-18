@@ -17,7 +17,6 @@
                 </RightContent>
             </InlineGroup>
             <Input_Element T="ushort" @bind-Value="Value.Faction" ValueCompare="ValueCompare?.Faction" Label="@nameof(Value.Faction).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Faction)))" GetOptionsAsync_Func="(async () => await Service.GetFactionOptionsAsync())" />
-            <Input_Element T="byte" @bind-Value="Value.Rank" ValueCompare="ValueCompare?.Rank" Label="@nameof(Value.Rank).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Rank)))" GetOptionsAsync_Func="Service.GetRankOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="Value.Scale" ValueCompare="ValueCompare?.Scale" Label="@nameof(Value.Scale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Scale)))" />
             <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Type)))" GetOptionsAsync_Func="Service.GetTypeOptionsAsync" />
             <Input_Element T="byte" @bind-Value="Value.RacialLeader" ValueCompare="ValueCompare?.RacialLeader" Label="@nameof(Value.RacialLeader).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RacialLeader)))" GetOptionsAsync_Func="Service.GetRacialLeaderOptionsAsync" />
@@ -52,11 +51,8 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.DynamicFlags" ValueCompare="ValueCompare?.DynamicFlags" Label="@nameof(Value.DynamicFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.DynamicFlags)))" GetOptionsAsync_Func="Service.GetDynamicFlagsOptionsAsync" MultiSelection="true" />
             <Input_Element T="uint" @bind-Value="Value.Flags_Extra" ValueCompare="ValueCompare?.Flags_Extra" Label="@nameof(Value.Flags_Extra).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Flags_Extra)))" GetOptionsAsync_Func="Service.GetFlagsExtraOptionsAsync" MultiSelection="true" />
             <Input_Element T="ulong" @bind-Value="Value.NpcFlag" ValueCompare="ValueCompare?.NpcFlag" Label="@nameof(Value.NpcFlag).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.NpcFlag)))" GetOptionsAsync_Func="Service.GetNpcFlagOptionsAsync" MultiSelection="true" />
-            <Input_Element T="uint" @bind-Value="Value.Spell_School_Immune_Mask" ValueCompare="ValueCompare?.Spell_School_Immune_Mask" Label="@nameof(Value.Spell_School_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Spell_School_Immune_Mask)))" GetOptionsAsync_Func="Service.GetSpellSchoolImmuneMaskOptionsAsync" MultiSelection="true" />
-            <Input_Element T="ulong" @bind-Value="Value.Mechanic_Immune_Mask" ValueCompare="ValueCompare?.Mechanic_Immune_Mask" Label="@nameof(Value.Mechanic_Immune_Mask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Mechanic_Immune_Mask)))" GetOptionsAsync_Func="Service.GetMechanicImmuneMaskOptionsAsync" MultiSelection="true" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -71,14 +67,6 @@
                     <Input_Element T="uint" @bind-Value="Value.Unit_Flags3" ValueCompare="ValueCompare?.Unit_Flags3" Label="@nameof(Value.Unit_Flags3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Unit_Flags3)))" GetOptionsAsync_Func="Service.GetUnitFlags3OptionsAsync" MultiSelection="true" />
                 </RightContent>
             </InlineGroup>
-            <InlineGroup>
-                <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Type_Flags" ValueCompare="ValueCompare?.Type_Flags" Label="@nameof(Value.Type_Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Type_Flags)))" GetOptionsAsync_Func="Service.GetTypeFlagsOptionsAsync" MultiSelection="true" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Type_Flags2" ValueCompare="ValueCompare?.Type_Flags2" Label="@nameof(Value.Type_Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Type_Flags2)))" GetOptionsAsync_Func="Service.GetTypeFlags2OptionsAsync" MultiSelection="true" />
-                </RightContent>
-            </InlineGroup>
         </MudItem>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="Value.VignetteID" ValueCompare="ValueCompare?.VignetteID" Label="@nameof(Value.VignetteID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.VignetteID)))" GetOptionsAsync_Func="Service.GetVignetteIdOptionsAsync" />
@@ -88,26 +76,9 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.ArmorModifier)))" />
-            <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.DamageModifier)))" />
+            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Family)))" GetOptionsAsync_Func="Service.GetFamilyOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Trainer_Class)))" GetOptionsAsync_Func="Service.GetTrainerClassOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="Value.ExperienceModifier" ValueCompare="ValueCompare?.ExperienceModifier" Label="@nameof(Value.ExperienceModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.ExperienceModifier)))" />
-            <InlineGroup>
-                <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.HealthModifier)))" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.HealthModifierExtra" ValueCompare="ValueCompare?.HealthModifierExtra" Label="Extra" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.HealthModifierExtra)))" />
-                </RightContent>
-            </InlineGroup>
-            <InlineGroup>
-                <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.ManaModifier)))" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ManaModifierExtra" ValueCompare="ValueCompare?.ManaModifierExtra" Label="Extra" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.ManaModifierExtra)))" />
-                </RightContent>
-            </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.HealthScalingExpansion" ValueCompare="ValueCompare?.HealthScalingExpansion" Label="@nameof(Value.HealthScalingExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.HealthScalingExpansion)))" GetOptionsAsync_Func="Service.GetHealthScalingExpansionOptionsAsync" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -130,40 +101,16 @@
                     <Input_Element T="decimal" @bind-Value="Value.RangeVariance" ValueCompare="ValueCompare?.RangeVariance" Label="Variance" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RangeVariance)))" />
                 </RightContent>
             </InlineGroup>
-            <Input_Element T="int" @bind-Value="Value.Family" ValueCompare="ValueCompare?.Family" Label="@nameof(Value.Family).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Family)))" GetOptionsAsync_Func="Service.GetFamilyOptionsAsync" />
-            <Input_Element T="byte" @bind-Value="Value.Trainer_Class" ValueCompare="ValueCompare?.Trainer_Class" Label="@nameof(Value.Trainer_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Trainer_Class)))" GetOptionsAsync_Func="Service.GetTrainerClassOptionsAsync" />
-            <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RegenHealth)))" GetOptionsAsync_Func="Service.GetRegenHealthOptionsAsync" />
+           <Input_Element T="byte" @bind-Value="Value.RegenHealth" ValueCompare="ValueCompare?.RegenHealth" Label="@nameof(Value.RegenHealth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RegenHealth)))" GetOptionsAsync_Func="Service.GetRegenHealthOptionsAsync" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <InlineGroup>
-                <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.MinGold" ValueCompare="ValueCompare?.MinGold" Label="@nameof(Value.MinGold).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.MinGold)))" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.MaxGold" ValueCompare="ValueCompare?.MaxGold" Label="@nameof(Value.MaxGold).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.MaxGold)))" />
-                </RightContent>
-            </InlineGroup>
-            <Input_Element T="uint" @bind-Value="Value.LootID" ValueCompare="ValueCompare?.LootID" Label="@nameof(Value.LootID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.LootID)))" />
-            <Input_Element T="uint" @bind-Value="Value.PickpocketLoot" ValueCompare="ValueCompare?.PickpocketLoot" Label="@nameof(Value.PickpocketLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.PickpocketLoot)))" />
-            <Input_Element T="uint" @bind-Value="Value.SkinLoot" ValueCompare="ValueCompare?.SkinLoot" Label="@nameof(Value.SkinLoot).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.SkinLoot)))" />
             <Input_Element T="byte" @bind-Value="Value.Unit_Class" ValueCompare="ValueCompare?.Unit_Class" Label="@nameof(Value.Unit_Class).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Unit_Class)))" GetOptionsAsync_Func="Service.GetUnitClassOptionsAsync" />
             <Input_Element T="string" @bind-Value="Value.IconName" ValueCompare="ValueCompare?.IconName" Label="@nameof(Value.IconName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.IconName)))" GetOptionsAsync_Func="Service.GetIconNameOptionsAsync" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
-            <InlineGroup>
-                <LeftContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_1" ValueCompare="ValueCompare?.Difficulty_Entry_1" Label="@nameof(Value.Difficulty_Entry_1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Difficulty_Entry_1)))" />
-                </LeftContent>
-                <MiddleContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_2" ValueCompare="ValueCompare?.Difficulty_Entry_2" Label="@nameof(Value.Difficulty_Entry_2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Difficulty_Entry_2)))" />
-                </MiddleContent>
-                <RightContent>
-                    <Input_Element T="uint" @bind-Value="Value.Difficulty_Entry_3" ValueCompare="ValueCompare?.Difficulty_Entry_3" Label="@nameof(Value.Difficulty_Entry_3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.Difficulty_Entry_3)))" />
-                </RightContent>
-            </InlineGroup>
             <InlineGroup>
                 <LeftContent>
                     <Input_Element T="uint" @bind-Value="Value.KillCredit1" ValueCompare="ValueCompare?.KillCredit1" Label="@nameof(Value.KillCredit1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.KillCredit1)))" />
@@ -174,11 +121,8 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.CreatureDifficultyID" ValueCompare="ValueCompare?.CreatureDifficultyID" Label="@nameof(Value.CreatureDifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.CreatureDifficultyID)))" />
-            <Placeholder_Element />
             <Input_Element T="uint" @bind-Value="Value.VehicleID" ValueCompare="ValueCompare?.VehicleID" Label="@nameof(Value.VehicleID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.VehicleID)))" />
             <Input_Element T="int" @bind-Value="Value.RequiredExpansion" ValueCompare="ValueCompare?.RequiredExpansion" Label="@nameof(Value.RequiredExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.RequiredExpansion)))" GetOptionsAsync_Func="Service.GetRequiredExpansionOptionsAsync" />
-            <Placeholder_Element />
             <Input_Element T="string" @bind-Value="Value.StringID" ValueCompare="ValueCompare?.StringID" Label="@nameof(Value.StringID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplate.StringID)))" />
         </MudItem>
     </PagedDtoContentPage>

@@ -17,22 +17,17 @@ namespace HotfixMods.Providers.TrinityCore.Client
             {
                 return propertyName switch
                 {
-                    nameof(CreatureTemplate.Rank) => typeof(CreatureTemplateRank),
+                    nameof(CreatureTemplate.Classification) => typeof(CreatureTemplateRank),
                     nameof(CreatureTemplate.MovementType) => typeof(CreatureTemplateMovementType),
                     nameof(CreatureTemplate.Trainer_Class) => typeof(ChrClassId),
-                    nameof(CreatureTemplate.Type_Flags) => typeof(CreatureTemplateTypeFlags),
-                    nameof(CreatureTemplate.Type_Flags2) => typeof(CreatureTemplateTypeFlags2),
                     nameof(CreatureTemplate.Dmgschool) => typeof(SpellSchool),
-                    nameof(CreatureTemplate.Spell_School_Immune_Mask) => typeof(SpellMiscSchoolMask),
-                    nameof(CreatureTemplate.DynamicFlags) => typeof(CreatureDynamicFlags),
                     nameof(CreatureTemplate.NpcFlag) => typeof(CreatureTemplateNpcFlags),
                     nameof(CreatureTemplate.Flags_Extra) => typeof(CreatureTemplateFlagsExtra),
                     nameof(CreatureTemplate.Unit_Flags) => typeof(CreatureTemplateUnitFlags1),
                     nameof(CreatureTemplate.Unit_Flags2) => typeof(CreatureTemplateUnitFlags2),
                     nameof(CreatureTemplate.Unit_Flags3) => typeof(CreatureTemplateUnitFlags3),
                     nameof(CreatureTemplate.Unit_Class) => typeof(CreatureTemplateUnitClass),
-                    nameof(CreatureTemplate.HealthScalingExpansion) or
-                    nameof(CreatureTemplate.RequiredExpansion) => typeof(CreatureTemplateRequiredExpansion),
+                    nameof(CreatureTemplate.RequiredExpansion) => typeof(CreatureTemplateDifficultyRequiredExpansion),
                     _ => null
                 };
             }

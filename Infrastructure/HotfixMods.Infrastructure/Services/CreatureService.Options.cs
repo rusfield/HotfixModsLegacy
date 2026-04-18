@@ -78,7 +78,7 @@ namespace HotfixMods.Infrastructure.Services
 
         public async Task<Dictionary<byte, string>> GetRankOptionsAsync()
         {
-            return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Rank));
+            return await GetEnumOptionsAsync<byte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Classification));
         }
 
         public async Task<Dictionary<byte, string>> GetTrainerClassOptionsAsync()
@@ -112,39 +112,9 @@ namespace HotfixMods.Infrastructure.Services
             return await GetEnumOptionsAsync<sbyte>(typeof(CreatureTemplate), nameof(CreatureTemplate.Dmgschool));
         }
 
-        public async Task<Dictionary<uint, string>> GetSpellSchoolImmuneMaskOptionsAsync()
-        {
-            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Spell_School_Immune_Mask));
-        }
-
-        public async Task<Dictionary<uint, string>> GetTypeFlagsOptionsAsync()
-        {
-            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags));
-        }
-
-        public async Task<Dictionary<uint, string>> GetTypeFlags2OptionsAsync()
-        {
-            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.Type_Flags2));
-        }
-
-        public async Task<Dictionary<uint, string>> GetDynamicFlagsOptionsAsync()
-        {
-            return await GetEnumOptionsAsync<uint>(typeof(CreatureTemplate), nameof(CreatureTemplate.DynamicFlags));
-        }
-
         public async Task<Dictionary<ulong, string>> GetNpcFlagOptionsAsync()
         {
             return await GetEnumOptionsAsync<ulong>(typeof(CreatureTemplate), nameof(CreatureTemplate.NpcFlag));
-        }
-
-        public async Task<Dictionary<int, string>> GetRequiredExpansionOptionsAsync()
-        {
-            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.HealthScalingExpansion));
-        }
-
-        public async Task<Dictionary<int, string>> GetHealthScalingExpansionOptionsAsync()
-        {
-            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.HealthScalingExpansion));
         }
 
         public async Task<Dictionary<byte, string>> GetUnitClassOptionsAsync()
@@ -155,6 +125,11 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<int, string>> GetVignetteIdOptionsAsync()
         {
             return await GetDb2OptionsAsync<int>("Vignette", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetRequiredExpansionOptionsAsync()
+        {
+            return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.RequiredExpansion));
         }
 
         #region CreatureDisplayInfo
@@ -190,5 +165,6 @@ namespace HotfixMods.Infrastructure.Services
             return await GetDb2OptionsAsync<sbyte>("ChrRaces", "Name");
         }
         #endregion
+
     }
 }

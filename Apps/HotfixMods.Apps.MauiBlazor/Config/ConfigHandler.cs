@@ -24,7 +24,7 @@ namespace HotfixMods.Apps.MauiBlazor.Config
 
                 appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath));
             }
-            catch(Exception ex)
+            catch
             {
                 appConfig.LoadedCorrectly = false;
             }

@@ -40,35 +40,201 @@
     </MudItem>
 </MudGrid>
 
-
-<MudPaper Height="684px" Class="pt-4 mx-3 px-6">
-    <MudGrid>
-        <MudItem xs="5">
+<MudPaper Class="pt-4 mx-3 px-6" Style="height:684px; overflow-y:auto;">
+    <MudGrid Spacing="3">
+        <MudItem xs="12" lg="6">
             <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
-                MySql
+                Database
             </MudText>
             <MudDivider />
-            <MudStack Row="true" Class="py-2">
-                <MudTextField @bind-Value="Config.MySql.Server" Variant="Variant.Outlined" Label="Server" />
-                <MudTextField @bind-Value="Config.MySql.Port" Variant="Variant.Outlined" Label="Port" />
-                <MudTextField @bind-Value="Config.MySql.Username" Variant="Variant.Outlined" Label="Username" />
-                <MudTextField @bind-Value="Config.MySql.Password" Variant="Variant.Outlined" Label="Password" />
-            </MudStack>
-            <MudStack Row="true" Class="py-2">
-                <MudTextField @bind-Value="Config.CharactersSchema" Variant="Variant.Outlined" Label="Characters Schema" />
-                <MudTextField @bind-Value="Config.WorldSchema" Variant="Variant.Outlined" Label="World Schema" />
-                <MudTextField @bind-Value="Config.HotfixesSchema" Variant="Variant.Outlined" Label="Hotfixes Schema" />
-            </MudStack>
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Config.MySql.Server" Variant="Variant.Outlined" Label="Server" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Config.MySql.Port" Variant="Variant.Outlined" Label="Port" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Config.MySql.Username" Variant="Variant.Outlined" Label="Username" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Config.MySql.Password" Variant="Variant.Outlined" Label="Password" InputType="InputType.Password" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="Config.CharactersSchema" Variant="Variant.Outlined" Label="Characters Schema" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="Config.WorldSchema" Variant="Variant.Outlined" Label="World Schema" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudTextField @bind-Value="Config.HotfixesSchema" Variant="Variant.Outlined" Label="Hotfixes Schema" />
+                </MudItem>
+            </MudGrid>
         </MudItem>
-        <MudItem xs="2" />
-        <MudItem xs="5">
+
+        <MudItem xs="12" lg="6">
             <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
-                DB2
+                Files And Build
             </MudText>
             <MudDivider />
-            <MudStack Row="true" Class="py-2">
-                <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
-            </MudStack>
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Config.Db2Path" Variant="Variant.Outlined" Label="DB2 Path" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Config.TrinityCorePath" Variant="Variant.Outlined" Label="TrinityCore Path" />
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField @bind-Value="Config.ListfilePath" Variant="Variant.Outlined" Label="Listfile Path" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudTextField @bind-Value="Config.BuildInfo" Variant="Variant.Outlined" Label="Build Info" />
+                </MudItem>
+                <MudItem xs="12" sm="6" Class="d-flex align-center">
+                    <MudCheckBox @bind-Checked="Config.CacheFileResults" Color="Color.Primary" Label="Cache File Results" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int" @bind-Value="Config.HotfixDataTableFromId" Variant="Variant.Outlined" Label="Hotfix Data Table From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudNumericField T="int" @bind-Value="Config.HotfixDataTableToId" Variant="Variant.Outlined" Label="Hotfix Data Table To ID" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12">
+            <MudText Typo="Typo.h5" Style="color:var(--mud-palette-action-disabled); width:100%" Align="Align.Center">
+                Service Settings
+            </MudText>
+            <MudDivider Class="mb-2" />
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Generic Hotfix</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GenericHotfixSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GenericHotfixSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GenericHotfixSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">AnimKit</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.AnimKitSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.AnimKitSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.AnimKitSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Gameobject</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GameobjectSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GameobjectSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.GameobjectSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">SoundKit</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SoundKitSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SoundKitSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SoundKitSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Item</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.ItemSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.ItemSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.ItemSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Creature</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Spell</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Spell Visual Kit</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellVisualKitSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellVisualKitSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.SpellVisualKitSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
         </MudItem>
     </MudGrid>
 </MudPaper>

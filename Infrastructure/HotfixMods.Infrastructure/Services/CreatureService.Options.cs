@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Flags.TrinityCore;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
@@ -131,6 +132,34 @@ namespace HotfixMods.Infrastructure.Services
         {
             return await GetEnumOptionsAsync<int>(typeof(CreatureTemplate), nameof(CreatureTemplate.RequiredExpansion));
         }
+
+        #region CreatureTemplateDifficulty
+        public async Task<Dictionary<int, string>> GetDifficultyIdOptionsAsync()
+        {
+            return await GetDifficultyOptionsAsync<int>();
+        }
+
+        public async Task<Dictionary<int, string>> GetHealthScalingExpansionOptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureTemplateDifficultyRequiredExpansion>()
+                .ToDictionary(key => (int)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetTypeFlagsOptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureTemplateTypeFlags>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetTypeFlags2OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureTemplateTypeFlags2>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+        #endregion
 
         #region CreatureDisplayInfo
         public async Task<Dictionary<ushort, string>> GetParticleColorIdOptionsAsync()

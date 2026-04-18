@@ -1,27 +1,85 @@
-﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject CreatureService Service
+
 @inherits DtoContentBase<CreatureDto, CreatureTemplateDifficulty>
 
-<StandardDtoContent T="CreatureTemplateDifficulty">
-    <MudItem xs="3" />
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMin" ValueCompare="ValueCompare?.LevelScalingDeltaMin" Label="@nameof(Value.LevelScalingDeltaMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.LevelScalingDeltaMin)))" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMax" ValueCompare="ValueCompare?.LevelScalingDeltaMax" Label="@nameof(Value.LevelScalingDeltaMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.LevelScalingDeltaMax)))" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup Merged="false">
-            <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ContentTuningId)))" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="int" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.DifficultyId)))" />
-            </RightContent>
-        </InlineGroup>
-    </MudItem>
-    <MudItem xs="3" />
-</StandardDtoContent>
-
+<PagedDtoContent T="CreatureTemplateDifficulty">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.DifficultyId" ValueCompare="ValueCompare?.DifficultyId" Label="@nameof(Value.DifficultyId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.DifficultyId)))" GetOptionsAsync_Func="Service.GetDifficultyIdOptionsAsync" />
+            <Input_Element T="int" @bind-Value="Value.HealthScalingExpansion" ValueCompare="ValueCompare?.HealthScalingExpansion" Label="@nameof(Value.HealthScalingExpansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.HealthScalingExpansion)))" GetOptionsAsync_Func="Service.GetHealthScalingExpansionOptionsAsync" />
+            <Input_Element T="int" @bind-Value="Value.ContentTuningId" ValueCompare="ValueCompare?.ContentTuningId" Label="@nameof(Value.ContentTuningId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ContentTuningId)))" />
+            <Input_Element T="int" @bind-Value="Value.CreatureDifficultyID" ValueCompare="ValueCompare?.CreatureDifficultyID" Label="@nameof(Value.CreatureDifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.CreatureDifficultyID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMin" ValueCompare="ValueCompare?.LevelScalingDeltaMin" Label="@nameof(Value.LevelScalingDeltaMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.LevelScalingDeltaMin)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.LevelScalingDeltaMax" ValueCompare="ValueCompare?.LevelScalingDeltaMax" Label="@nameof(Value.LevelScalingDeltaMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.LevelScalingDeltaMax)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.HealthModifier)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ManaModifier)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ArmorModifier)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.DamageModifier)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.GoldMin" ValueCompare="ValueCompare?.GoldMin" Label="@nameof(Value.GoldMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMin)))" />
+            <Input_Element T="uint" @bind-Value="Value.GoldMax" ValueCompare="ValueCompare?.GoldMax" Label="@nameof(Value.GoldMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMax)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.LootID" ValueCompare="ValueCompare?.LootID" Label="@nameof(Value.LootID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.LootID)))" />
+            <Input_Element T="uint" @bind-Value="Value.PickPocketLootID" ValueCompare="ValueCompare?.PickPocketLootID" Label="@nameof(Value.PickPocketLootID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.PickPocketLootID)))" />
+            <Input_Element T="uint" @bind-Value="Value.SkinLootID" ValueCompare="ValueCompare?.SkinLootID" Label="@nameof(Value.SkinLootID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.SkinLootID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.TypeFlags" ValueCompare="ValueCompare?.TypeFlags" Label="Type Flags" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.TypeFlags)))" GetOptionsAsync_Func="Service.GetTypeFlagsOptionsAsync" MultiSelection="true" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.TypeFlags2" ValueCompare="ValueCompare?.TypeFlags2" Label="Type Flags 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.TypeFlags2)))" GetOptionsAsync_Func="Service.GetTypeFlags2OptionsAsync" MultiSelection="true" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.TypeFlags3" ValueCompare="ValueCompare?.TypeFlags3" Label="Type Flags 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.TypeFlags3)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags1" ValueCompare="ValueCompare?.StaticFlags1" Label="Static Flags 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags1)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags2" ValueCompare="ValueCompare?.StaticFlags2" Label="Static Flags 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags2)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags3" ValueCompare="ValueCompare?.StaticFlags3" Label="Static Flags 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags3)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags4" ValueCompare="ValueCompare?.StaticFlags4" Label="Static Flags 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags4)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags5" ValueCompare="ValueCompare?.StaticFlags5" Label="Static Flags 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags5)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags6" ValueCompare="ValueCompare?.StaticFlags6" Label="Static Flags 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags6)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags7" ValueCompare="ValueCompare?.StaticFlags7" Label="Static Flags 7" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags7)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags8" ValueCompare="ValueCompare?.StaticFlags8" Label="Static Flags 8" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags8)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

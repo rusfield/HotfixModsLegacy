@@ -56,7 +56,25 @@ namespace HotfixMods.Infrastructure.Extensions
                 {
                     var existingProperty = typeof(T).GetProperties().Where(p => p.Name.Equals(column.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
                     if (existingProperty != null)
-                        existingProperty.SetValue(entity, column.Value);
+                    {
+                        var targetType = Nullable.GetUnderlyingType(existingProperty.PropertyType) ?? existingProperty.PropertyType;
+                        var propertyValue = column.Value;
+
+                        if (propertyValue != null && !targetType.IsAssignableFrom(propertyValue.GetType()))
+                        {
+                            if (targetType.IsEnum)
+                            {
+                                var enumUnderlyingType = Enum.GetUnderlyingType(targetType);
+                                propertyValue = Enum.ToObject(targetType, Convert.ChangeType(propertyValue, enumUnderlyingType)!);
+                            }
+                            else
+                            {
+                                propertyValue = Convert.ChangeType(propertyValue, targetType);
+                            }
+                        }
+
+                        existingProperty.SetValue(entity, propertyValue);
+                    }
                 }
                 catch(Exception e)
                 {

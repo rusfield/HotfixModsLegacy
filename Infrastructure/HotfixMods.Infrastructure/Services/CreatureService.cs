@@ -26,14 +26,20 @@ namespace HotfixMods.Infrastructure.Services
         {
             try
             {
-
                 var dtos = await GetAsync<HotfixModsEntity>(DefaultCallback, DefaultProgress, true, false, new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild));
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
+                    var creatureTemplateModel = await GetSingleAsync<CreatureTemplateModel>(
+                        DefaultCallback,
+                        DefaultProgress,
+                        new DbParameter(nameof(CreatureTemplateModel.CreatureID), (int)dto.RecordID),
+                        new DbParameter(nameof(CreatureTemplateModel.Idx), 0));
+
                     results.Add(new()
                     {
                         ID = (int)dto.RecordID,
+                        AdditionalID = creatureTemplateModel?.CreatureDisplayID,
                         Name = dto.Name,
                         AvatarUrl = null
                     });

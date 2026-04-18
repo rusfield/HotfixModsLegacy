@@ -15,7 +15,7 @@
         <Placeholder_Element Amount="4" />
     </MudItem>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.Flags)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.Flags)))" />
         <Input_Element T="int" @bind-Value="Value.HDBakeMaterialResourcesID" ValueCompare="ValueCompare?.HDBakeMaterialResourcesID" Label="HD Bake Material Resources ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.HDBakeMaterialResourcesID)))" />
         <Input_Element T="int" @bind-Value="Value.BakeMaterialResourcesID" ValueCompare="ValueCompare?.BakeMaterialResourcesID" Label="@nameof(Value.BakeMaterialResourcesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfoExtra.BakeMaterialResourcesID)))" />
     </MudItem>

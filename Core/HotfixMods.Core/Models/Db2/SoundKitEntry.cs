@@ -12,6 +12,7 @@ namespace HotfixMods.Core.Models.Db2
         public int FileDataID { get; set; }
         public byte Frequency { get; set; }
         public decimal Volume { get; set; }
+        public int PlayerConditionID { get; set; }
         public int VerifiedBuild { get; set; }
     }
 }

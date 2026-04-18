@@ -13,6 +13,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal MissileImpactOffset0 { get; set; } = 0;
         public decimal MissileImpactOffset1 { get; set; } = 0;
         public decimal MissileImpactOffset2 { get; set; } = 0;
+        public int StateKit { get; set; } = 0;
         public uint AnimEventSoundID { get; set; } = 0;
         public int Flags { get; set; } = 0;
         public sbyte MissileAttachment { get; set; } = -1;

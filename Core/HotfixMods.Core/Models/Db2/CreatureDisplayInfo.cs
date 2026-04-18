@@ -21,7 +21,7 @@ namespace HotfixMods.Core.Models.Db2
         public int PortraitTextureFileDataID { get; set; } = 0;
         public ushort ObjectEffectPackageID { get; set; } = 0;
         public ushort AnimReplacementSetID { get; set; } = 0;
-        public byte Flags { get; set; } = 0;
+        public int Flags { get; set; } = 0;
         public int StateSpellVisualKitID { get; set; } = 0;
         public decimal PlayerOverrideScale { get; set; } = 0;
         public decimal PetInstanceScale { get; set; } = 1;
@@ -31,6 +31,9 @@ namespace HotfixMods.Core.Models.Db2
         public sbyte Gender { get; set; } = 0;
         public int DissolveOutEffectID { get; set; } = 0;
         public sbyte CreatureModelMinLod { get; set; } = 0;
+        public ushort ConditionalCreatureModelID { get; set; } = 0;
+        public decimal MountMaxBankingAngle { get; set; } = 0;
+        public ushort Field_11_0_0_54210_026 { get; set; } = 0;
         public int TextureVariationFileDataID0 { get => 0; set { } } // Should always be 0
         public int TextureVariationFileDataID1 { get => 0; set { } } // Should always be 0
         public int TextureVariationFileDataID2 { get => 0; set { } } // Should always be 0

@@ -11,7 +11,7 @@
             <Input_Element T="uint" @bind-Value="Value.Effect" ValueCompare="ValueCompare?.Effect" Label="@nameof(Value.Effect).ToDisplayName()" GetOptionsAsync_Func="GetEffects" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.Effect)))" />
             <Input_Element T="decimal" @bind-Value="Value.EffectAmplitude" ValueCompare="ValueCompare?.EffectAmplitude" Label="@nameof(Value.EffectAmplitude).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.EffectAmplitude)))" />
             <Input_Element T="int" @bind-Value="Value.EffectAttributes" ValueCompare="ValueCompare?.EffectAttributes" Label="@nameof(Value.EffectAttributes).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.EffectAttributes)))" />
-            <Input_Element T="int" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.DifficultyID)))" />
+            <Input_Element T="short" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.DifficultyID)))" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
@@ -44,6 +44,7 @@
             <Input_Element T="decimal" @bind-Value="Value.GroupSizeBasePointsCoefficient" ValueCompare="ValueCompare?.GroupSizeBasePointsCoefficient" Label="@nameof(Value.GroupSizeBasePointsCoefficient).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.GroupSizeBasePointsCoefficient)))" />
             <Input_Element T="decimal" @bind-Value="Value.EffectBasePointsF" ValueCompare="ValueCompare?.EffectBasePointsF" Label="@nameof(Value.EffectBasePointsF).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.EffectBasePointsF)))" />
             <Input_Element T="int" @bind-Value="Value.ScalingClass" ValueCompare="ValueCompare?.ScalingClass" Label="@nameof(Value.ScalingClass).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.ScalingClass)))" />
+            <Input_Element T="int" @bind-Value="Value.Node_Field120063534001" ValueCompare="ValueCompare?.Node_Field120063534001" Label="@nameof(Value.Node_Field120063534001).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellEffect.Node_Field120063534001)))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>

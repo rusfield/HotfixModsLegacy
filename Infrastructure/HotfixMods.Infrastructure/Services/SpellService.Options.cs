@@ -69,9 +69,9 @@ namespace HotfixMods.Infrastructure.Services
             return Enum.GetValues<SpellMiscSchoolMask>().ToDictionary(key => (byte)key, value => value.ToDisplayString());
         }
 
-        public async Task<Dictionary<byte, string>> GetDifficultyIdOptionsAsync()
+        public async Task<Dictionary<short, string>> GetDifficultyIdOptionsAsync()
         {
-            return await GetDifficultyOptionsAsync<byte>();
+            return await GetDifficultyOptionsAsync<short>();
         }
 
         public async Task<Dictionary<int, string>> GetActiveIconFileDataIdOptionsAsync()

@@ -35,17 +35,17 @@ namespace HotfixMods.Infrastructure.Services
             dto.SpellName.VerifiedBuild= VerifiedBuild;
 
             dto.SpellMisc.ID = spellMiscId;
-            dto.SpellMisc.SpellID = (int)spellId;
+            dto.SpellMisc.SpellID = spellId;
             dto.SpellMisc.VerifiedBuild = VerifiedBuild;
 
             if(dto.SpellXSpellVisual != null)
             {
                 dto.SpellXSpellVisual.ID = spellXSpellVisualId;
-                dto.SpellXSpellVisual.SpellID = (int)spellId;
+                dto.SpellXSpellVisual.SpellID = spellId;
                 dto.SpellXSpellVisual.SpellVisualID = (uint)spellVisualId;
                 dto.SpellXSpellVisual.ActiveIconFileID = dto.SpellMisc.ActiveIconFileDataID;
                 dto.SpellXSpellVisual.SpellIconFileID = dto.SpellMisc.SpellIconFileDataID;
-                dto.SpellXSpellVisual.DifficultyID = dto.SpellMisc.DifficultyID;
+                dto.SpellXSpellVisual.DifficultyID = (byte)dto.SpellMisc.DifficultyID;
                 dto.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
 
                 if (dto.SpellVisual != null)

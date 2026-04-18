@@ -32,20 +32,20 @@ namespace HotfixMods.Infrastructure.Services
             return await GetIconOptionsAsync<int>();
         }
 
-        public async Task<Dictionary<byte, string>> GetItemClassOptionsAsync()
+        public async Task<Dictionary<int, string>> GetItemClassOptionsAsync()
         {
-            var results = new Dictionary<byte, string>();
+            var results = new Dictionary<int, string>();
             results.InitializeDefaultValue();
 
             var itemClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemClass", false, true);
             foreach (var itemClass in itemClasses)
             {
-                results[itemClass.GetValueByNameAs<byte>("ClassID")] = itemClass.GetValueByNameAs<string>("ClassName");
+                results[itemClass.GetValueByNameAs<int>("ClassID")] = itemClass.GetValueByNameAs<string>("ClassName");
             }
             return results;
         }
 
-        public async Task<Dictionary<byte, string>> GetItemSubClassOptionsAsync(sbyte classId)
+        public async Task<Dictionary<byte, string>> GetItemSubClassOptionsAsync(int classId)
         {
             var results = new Dictionary<byte, string>();
             results.InitializeDefaultValue();
@@ -53,7 +53,7 @@ namespace HotfixMods.Infrastructure.Services
             var subClasses = await GetAsync(_appConfig.HotfixesSchema, "ItemSubClass", false, true);
             foreach (var subClass in subClasses)
             {
-                var classIdOfSubClass = subClass.GetValueByNameAs<sbyte>("ClassID");
+                var classIdOfSubClass = subClass.GetValueByNameAs<int>("ClassID");
 
                 if (classId == classIdOfSubClass)
                 {
@@ -87,18 +87,18 @@ namespace HotfixMods.Infrastructure.Services
             return results;
         }
 
-        public async Task<Dictionary<byte, string>> GetItemGroupSoundsIdOptionsAsync()
+        public async Task<Dictionary<uint, string>> GetItemGroupSoundsIdOptionsAsync()
         {
-            var results = new Dictionary<byte, string>();
+            var results = new Dictionary<uint, string>();
             results.InitializeDefaultValue();
 
             var itemGroupSounds = await GetAsync(_appConfig.HotfixesSchema, "ItemGroupSounds", false, true);
             foreach (var itemGroupSound in itemGroupSounds)
             {
-                var key = itemGroupSound.GetValueByNameAs<byte>("ID");
+                var key = itemGroupSound.GetValueByNameAs<uint>("ID");
                 var value = "";
-                if (Enum.IsDefined(typeof(Item_ItemGroupSoundsId), key))
-                    value += $"{((Item_ItemGroupSoundsId)key).ToDisplayString()}";
+                if (Enum.IsDefined(typeof(Item_ItemGroupSoundsId), (int)key))
+                    value += $"{((Item_ItemGroupSoundsId)(int)key).ToDisplayString()}";
 
                 results[key] = value;
             }
@@ -271,9 +271,9 @@ namespace HotfixMods.Infrastructure.Services
         #endregion
 
         #region ItemEffect
-        public async Task<Dictionary<sbyte, string>> GetTriggerTypeOptionsAsync()
+        public async Task<Dictionary<byte, string>> GetTriggerTypeOptionsAsync()
         {
-            return await GetEnumOptionsAsync<sbyte>(typeof(ItemEffect), nameof(ItemEffect.TriggerType));
+            return await GetEnumOptionsAsync<byte>(typeof(ItemEffect), nameof(ItemEffect.TriggerType));
         }
 
         public async Task<Dictionary<ushort, string>> GetSpellCategoryIdOptionsAsync()

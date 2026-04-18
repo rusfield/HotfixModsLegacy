@@ -10,6 +10,7 @@
         <MudItem xs="3">
             <Input_Element T="ushort" @bind-Value="Value.CastingTimeIndex" ValueCompare="ValueCompare?.CastingTimeIndex" Label="@nameof(Value.CastingTimeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.CastingTimeIndex)))" GetOptionsAsync_Func="(Service.GetCastingTimeIndexOptionsAsync)" />
             <Input_Element T="ushort" @bind-Value="Value.DurationIndex" ValueCompare="ValueCompare?.DurationIndex" Label="@nameof(Value.DurationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DurationIndex)))" GetOptionsAsync_Func="(Service.GetDurationIndexOptionsAsync)" />
+            <Input_Element T="ushort" @bind-Value="Value.PvPDurationIndex" ValueCompare="ValueCompare?.PvPDurationIndex" Label="@nameof(Value.PvPDurationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.PvPDurationIndex)))" GetOptionsAsync_Func="(Service.GetDurationIndexOptionsAsync)" />
             <Input_Element T="ushort" @bind-Value="Value.RangeIndex" ValueCompare="ValueCompare?.RangeIndex" Label="@nameof(Value.RangeIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.RangeIndex)))" GetOptionsAsync_Func="(Service.GetRangeIndexOptionsAsync)" />
             <Input_Element T="byte" @bind-Value="Value.SchoolMask" ValueCompare="ValueCompare?.SchoolMask" Label="@nameof(Value.SchoolMask).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.SchoolMask)))" GetOptionsAsync_Func="(Service.GetSchoolMaskOptionsAsync)" MultiSelection="true" />
             <Input_Element T="decimal" @bind-Value="Value.Speed" ValueCompare="ValueCompare?.Speed" Label="@nameof(Value.Speed).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.Speed)))" />
@@ -27,7 +28,7 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="byte" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DifficultyID)))" GetOptionsAsync_Func="Service.GetDifficultyIdOptionsAsync" />
+            <Input_Element T="short" @bind-Value="Value.DifficultyID" ValueCompare="ValueCompare?.DifficultyID" Label="@nameof(Value.DifficultyID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.DifficultyID)))" GetOptionsAsync_Func="Service.GetDifficultyIdOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="Value.MinDuration" ValueCompare="ValueCompare?.MinDuration" Label="@nameof(Value.MinDuration).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.MinDuration)))" />
             <Input_Element T="int" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ContentTuningID)))" />
             <Input_Element T="int" @bind-Value="Value.ShowFutureSpellPlayerConditionID" ValueCompare="ValueCompare?.ShowFutureSpellPlayerConditionID" Label="@nameof(Value.ShowFutureSpellPlayerConditionID).ToDisplayName()"OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.ShowFutureSpellPlayerConditionID)))" />
@@ -61,6 +62,14 @@
                     <Input_Element T="int" @bind-Value="Value.Attributes14" ValueCompare="ValueCompare?.Attributes14" Label="@nameof(Value.Attributes14).ToDisplayName()" MultiSelection="true" GetOptionsAsync_Func="@(() => GetAttributes(14))" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.Attributes14)))" />
                 </MiddleContent>
                 <RightContent />
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.Attributes15" ValueCompare="ValueCompare?.Attributes15" Label="@nameof(Value.Attributes15).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.Attributes15)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.Attributes16" ValueCompare="ValueCompare?.Attributes16" Label="@nameof(Value.Attributes16).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellMisc.Attributes16)))" />
+                </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">

@@ -29,20 +29,20 @@
             </RightContent>
         </InlineGroup>
         <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Flags)))" />
-        <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AttachmentID)))" />
+        <Input_Element T="byte" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AttachmentID)))" />
         <Input_Element T="int" @bind-Value="Value.PositionerID" ValueCompare="ValueCompare?.PositionerID" Label="@nameof(Value.PositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.PositionerID)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartAnimID)))" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimID)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.EndAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.EndAnimID)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">
@@ -52,6 +52,13 @@
             <RightContent>
                 <Input_Element T="decimal" @bind-Value="Value.StartDelay" ValueCompare="ValueCompare?.StartDelay" Label="@nameof(Value.StartDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartDelay)))" />
             </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="ushort" @bind-Value="Value.Field_11_0_0_54210_022" ValueCompare="ValueCompare?.Field_11_0_0_54210_022" Label="@nameof(Value.Field_11_0_0_54210_022).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Field_11_0_0_54210_022)))" />
+            </MiddleContent>
+            <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">

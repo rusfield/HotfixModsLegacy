@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
-        public int Field_3_4_1_46917_000 { get; set; } = 0;
+        public int GeosetGroupOverride { get; set; } = 0;
         public int ItemVisual { get; set; } = 0;
         public int ParticleColorID { get; set; } = 0;
         public uint ItemRangedDisplayInfoID { get; set; } = 0;

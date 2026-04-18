@@ -1,41 +1,67 @@
-﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inject ItemService Service
 
 @inherits DtoContentBase<ItemDto, Item>
 
-<StandardDtoContent T="Item" >
-    <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.InventoryType)))" GetOptionsAsync_Func="Service.GetInventoryTypeOptionsAsync" />
-        <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SheatheType)))" GetOptionsAsync_Func="Service.GetSheatheTypeOptionsAsync" />
-        <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.Material)))" GetOptionsAsync_Func="Service.GetItemMaterialOptionsAsync" />
-        <Input_Element T="byte" @bind-Value="Value.ItemGroupSoundsID" ValueCompare="ValueCompare?.ItemGroupSoundsID" Label="@nameof(Value.ItemGroupSoundsID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ItemGroupSoundsID)))" GetOptionsAsync_Func="Service.GetItemGroupSoundsIdOptionsAsync" />
-    </MudItem>
-    <MudItem xs="6">
-        <Placeholder_Element Amount="4" />
-        <InlineGroup>
-            <LeftContent>
-                <Input_Element T="byte" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ClassID)))" GetOptionsAsync_Func="Service.GetItemClassOptionsAsync" @bind-Value:after="(() => subClassIdRef?.Refresh())" />
-            </LeftContent>
-            <RightContent>
-                <Input_Element T="byte" @ref="subClassIdRef" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SubclassID)))" GetOptionsAsync_Func="GetItemSubClasses" />
-            </RightContent>
-        </InlineGroup>
-        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
-            <LeftContent />
-            <MiddleContent>
-                <Input_Element T="int" @bind-Value="Value.IconFileDataID" ValueCompare="ValueCompare?.IconFileDataID" Label="@nameof(Value.IconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.IconFileDataID)))" GetOptionsAsync_Func="Service.GetIconFileDataIdOptionsAsync" />
-            </MiddleContent>
-            <RightContent />
-        </InlineGroup>
-    </MudItem>  
-    <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassID" ValueCompare="ValueCompare?.SoundOverrideSubclassID" Label="@nameof(Value.SoundOverrideSubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SoundOverrideSubclassID)))" />
-        <Input_Element T="int" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ContentTuningID)))" />
-        <Input_Element T="int" @bind-Value="Value.ModifiedCraftingReagentItemID" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemID" Label="@nameof(Value.ModifiedCraftingReagentItemID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ModifiedCraftingReagentItemID)))" GetOptionsAsync_Func="Service.GetModifiedCraftingReagentItemIdOptionsAsync" />
-        <Input_Element T="int" @bind-Value="Value.CraftingQualityID" ValueCompare="ValueCompare?.CraftingQualityID" Label="@nameof(Value.CraftingQualityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.CraftingQualityID)))" GetOptionsAsync_Func="Service.GetCraftingQualityIdOptionsAsync" />
-    </MudItem>
-</StandardDtoContent>
+<PagedDtoContent T="Item">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="sbyte" @bind-Value="Value.InventoryType" ValueCompare="ValueCompare?.InventoryType" Label="@nameof(Value.InventoryType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.InventoryType)))" GetOptionsAsync_Func="Service.GetInventoryTypeOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.SheatheType" ValueCompare="ValueCompare?.SheatheType" Label="@nameof(Value.SheatheType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SheatheType)))" GetOptionsAsync_Func="Service.GetSheatheTypeOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.Material" ValueCompare="ValueCompare?.Material" Label="@nameof(Value.Material).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.Material)))" GetOptionsAsync_Func="Service.GetItemMaterialOptionsAsync" />
+            <Input_Element T="uint" @bind-Value="Value.ItemGroupSoundsID" ValueCompare="ValueCompare?.ItemGroupSoundsID" Label="@nameof(Value.ItemGroupSoundsID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ItemGroupSoundsID)))" GetOptionsAsync_Func="Service.GetItemGroupSoundsIdOptionsAsync" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.ClassID" ValueCompare="ValueCompare?.ClassID" Label="@nameof(Value.ClassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ClassID)))" GetOptionsAsync_Func="Service.GetItemClassOptionsAsync" @bind-Value:after="(() => subClassIdRef?.Refresh())" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="byte" @ref="subClassIdRef" @bind-Value="Value.SubclassID" ValueCompare="ValueCompare?.SubclassID" Label="@nameof(Value.SubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SubclassID)))" GetOptionsAsync_Func="GetItemSubClasses" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.IconFileDataID" ValueCompare="ValueCompare?.IconFileDataID" Label="@nameof(Value.IconFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.IconFileDataID)))" GetOptionsAsync_Func="Service.GetIconFileDataIdOptionsAsync" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="sbyte" @bind-Value="Value.SoundOverrideSubclassID" ValueCompare="ValueCompare?.SoundOverrideSubclassID" Label="@nameof(Value.SoundOverrideSubclassID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.SoundOverrideSubclassID)))" />
+            <Input_Element T="int" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ContentTuningID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.ModifiedCraftingReagentItemID" ValueCompare="ValueCompare?.ModifiedCraftingReagentItemID" Label="@nameof(Value.ModifiedCraftingReagentItemID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ModifiedCraftingReagentItemID)))" GetOptionsAsync_Func="Service.GetModifiedCraftingReagentItemIdOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.Field_12_0_0_63534_010" ValueCompare="ValueCompare?.Field_12_0_0_63534_010" Label="@nameof(Value.Field_12_0_0_63534_010).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.Field_12_0_0_63534_010)))" />
+            <Input_Element T="int" @bind-Value="Value.CraftingQualityID" ValueCompare="ValueCompare?.CraftingQualityID" Label="@nameof(Value.CraftingQualityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.CraftingQualityID)))" GetOptionsAsync_Func="Service.GetCraftingQualityIdOptionsAsync" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="Value.ItemSquishEraID" ValueCompare="ValueCompare?.ItemSquishEraID" Label="@nameof(Value.ItemSquishEraID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.ItemSquishEraID)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="byte" @bind-Value="Value.OrderSource" ValueCompare="ValueCompare?.OrderSource" Label="@nameof(Value.OrderSource).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.OrderSource)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="decimal" @bind-Value="Value.RecraftReagentCountPercentage" ValueCompare="ValueCompare?.RecraftReagentCountPercentage" Label="@nameof(Value.RecraftReagentCountPercentage).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Item.RecraftReagentCountPercentage)))" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </PagedDtoContentPage>
+</PagedDtoContent>
 
 @code {
 
@@ -43,6 +69,6 @@
 
     async Task<Dictionary<byte, string>> GetItemSubClasses()
     {
-        return await Service.GetItemSubClassOptionsAsync((sbyte)Value.ClassID);
+        return await Service.GetItemSubClassOptionsAsync(Value.ClassID);
     }
 }

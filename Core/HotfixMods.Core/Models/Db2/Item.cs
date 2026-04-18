@@ -7,7 +7,7 @@ namespace HotfixMods.Core.Models.Db2
     {
         [IndexField]
         public int ID { get; set; } = 0;
-        public byte ClassID { get; set; } = 0;
+        public int ClassID { get; set; } = 0;
         public byte SubclassID { get; set; } = 0;
         [Db2Description("Material will decide what kind of sound this item makes in various situations, for example during sheathing or unsheathing a weapon.")]
         public byte Material { get; set; } = 0;
@@ -16,10 +16,14 @@ namespace HotfixMods.Core.Models.Db2
         public byte SheatheType { get; set; } = 0;
         public sbyte SoundOverrideSubclassID { get; set; } = 0;
         public int IconFileDataID { get; set; } = 0;
-        public byte ItemGroupSoundsID { get; set; } = 0;
+        public uint ItemGroupSoundsID { get; set; } = 0;
         public int ContentTuningID { get; set; } = 0;
         public int ModifiedCraftingReagentItemID { get; set; } = 0;
+        public byte Field_12_0_0_63534_010 { get; set; } = 0;
         public int CraftingQualityID { get; set; } = 0;
+        public int ItemSquishEraID { get; set; } = 0;
+        public decimal RecraftReagentCountPercentage { get; set; } = 0;
+        public byte OrderSource { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 }

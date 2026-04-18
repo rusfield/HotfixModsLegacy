@@ -26,6 +26,7 @@ namespace HotfixMods.Core.Models.Db2
         public int Flags1 { get; set; } = 0;
         public int Flags2 { get; set; } = 0;
         public int Flags3 { get; set; } = 0;
+        public int Flags4 { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

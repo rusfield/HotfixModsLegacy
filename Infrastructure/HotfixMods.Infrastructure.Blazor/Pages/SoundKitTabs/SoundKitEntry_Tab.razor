@@ -7,7 +7,18 @@
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="@(Value.FileDataID)" Label="@(nameof(Value.FileDataID).ToDisplayName())" ValueCompare="ValueCompare?.FileDataID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKitEntry.FileDataID)))" />
         <Input_Element T="byte" @bind-Value="@(Value.Frequency)" Label="@(nameof(Value.Frequency).ToDisplayName())" ValueCompare="ValueCompare?.Frequency" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKitEntry.Frequency)))" />
-        <Input_Element T="decimal" @bind-Value="@(Value.Volume)" Label="@(nameof(Value.Volume).ToDisplayName())" ValueCompare="ValueCompare?.Volume" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKitEntry.Volume)))" />
     </MudItem>
-    <MudItem xs="9" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="decimal" @bind-Value="@(Value.Volume)" Label="@(nameof(Value.Volume).ToDisplayName())" ValueCompare="ValueCompare?.Volume" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKitEntry.Volume)))" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="@(Value.PlayerConditionID)" Label="@(nameof(Value.PlayerConditionID).ToDisplayName())" ValueCompare="ValueCompare?.PlayerConditionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SoundKitEntry.PlayerConditionID)))" />
+    </MudItem>
 </InstancedDtoContentPage>

@@ -21,6 +21,13 @@
                     <Input_Element T="sbyte" @bind-Value="Value.MissileDestinationAttachment" ValueCompare="ValueCompare?.MissileDestinationAttachment" Label="@nameof(Value.MissileDestinationAttachment).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisual.MissileDestinationAttachment)))" />
                 </RightContent>
             </InlineGroup>
+            <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="int" @bind-Value="Value.StateKit" ValueCompare="ValueCompare?.StateKit" Label="@nameof(Value.StateKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisual.StateKit)))" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
         </MudItem>
         <MudItem xs="3">
             <Input_Element T="decimal" @bind-Value="Value.MissileImpactOffset0" ValueCompare="ValueCompare?.MissileImpactOffset0" Label="@nameof(Value.MissileImpactOffset0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisual.MissileImpactOffset0)))" />

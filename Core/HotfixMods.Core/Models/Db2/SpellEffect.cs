@@ -8,7 +8,7 @@ namespace HotfixMods.Core.Models.Db2
         [IndexField]
         public int ID { get; set; } = 0;
         public short EffectAura { get; set; } = 0;
-        public int DifficultyID { get; set; } = 0;
+        public short DifficultyID { get; set; } = 0;
         public int EffectIndex { get; set; } = 0;
         public uint Effect { get; set; } = 0;
         public decimal EffectAmplitude { get; set; } = 0;
@@ -31,6 +31,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal GroupSizeBasePointsCoefficient { get; set; } = 0;
         public decimal EffectBasePointsF { get; set; } = 0;
         public int ScalingClass { get; set; } = 0;
+        public int Node_Field120063534001 { get; set; } = 0;
         public int EffectMiscValue0 { get; set; } = 0;
         public int EffectMiscValue1 { get; set; } = 0;
         public uint EffectRadiusIndex0 { get; set; } = 0;

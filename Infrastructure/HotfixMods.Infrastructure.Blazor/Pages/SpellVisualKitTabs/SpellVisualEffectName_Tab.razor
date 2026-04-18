@@ -4,11 +4,11 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="uint" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Type)))" />
+        <Input_Element T="int" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Type)))" />
         <Input_Element T="int" @bind-Value="Value.GenericID" ValueCompare="ValueCompare?.GenericID" Label="@nameof(Value.GenericID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.GenericID)))" />
         <Input_Element T="int" @bind-Value="Value.ModelFileDataID" ValueCompare="ValueCompare?.ModelFileDataID" Label="@nameof(Value.ModelFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.ModelFileDataID)))" />
         <Input_Element T="int" @bind-Value="Value.TextureFileDataID" ValueCompare="ValueCompare?.TextureFileDataID" Label="@nameof(Value.TextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.TextureFileDataID)))" />
-        <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Flags)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Flags)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
@@ -38,5 +38,6 @@
         <Input_Element T="int" @bind-Value="Value.DissolveEffectID" ValueCompare="ValueCompare?.DissolveEffectID" Label="@nameof(Value.DissolveEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.DissolveEffectID)))" />
         <Input_Element T="int" @bind-Value="Value.ModelPosition" ValueCompare="ValueCompare?.ModelPosition" Label="@nameof(Value.ModelPosition).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.ModelPosition)))" />
         <Input_Element T="sbyte" @bind-Value="Value.Field_9_1_0_38549_014" ValueCompare="ValueCompare?.Field_9_1_0_38549_014" Label="@nameof(Value.Field_9_1_0_38549_014).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Field_9_1_0_38549_014)))" />
+        <Input_Element T="ushort" @bind-Value="Value.Field_11_0_0_54210_015" ValueCompare="ValueCompare?.Field_11_0_0_54210_015" Label="@nameof(Value.Field_11_0_0_54210_015).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Field_11_0_0_54210_015)))" />
     </MudItem>
 </InstancedDtoContentPage>

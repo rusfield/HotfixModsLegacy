@@ -15,11 +15,18 @@
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="int" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.InitialAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.InitialAnimID)))" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.LoopAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.LoopAnimID)))" />
             </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.Field_12_0_0_63967_003" ValueCompare="ValueCompare?.Field_12_0_0_63967_003" Label="@nameof(Value.Field_12_0_0_63967_003).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.Field_12_0_0_63967_003)))" />
+            </MiddleContent>
+            <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3" />

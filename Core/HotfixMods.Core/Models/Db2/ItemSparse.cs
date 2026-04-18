@@ -64,10 +64,14 @@ namespace HotfixMods.Core.Models.Db2
         public int Flags1 { get; set; } = 0;
         public int Flags2 { get; set; } = 0;
         public int Flags3 { get; set; } = 0;
+        public int Flags4 { get; set; } = 0;
         public int OppositeFactionItemID { get; set; } = 0;
         public int ModifiedCraftingReagentItemID { get; set; } = 0;
         public int ContentTuningID { get; set; } = 0;
         public int PlayerLevelToItemLevelCurveID { get; set; } = 0;
+        public int ItemLevelOffsetCurveID { get; set; } = 0;
+        public int ItemLevelOffsetItemLevel { get; set; } = 0;
+        public int ItemSquishEraID { get; set; } = 0;
         public ushort ItemNameDescriptionID { get; set; } = 0;
         [Db2Description("Enabling something here will require the selected holiday for this item to be transmogged.")]
         public ushort RequiredTransmogHoliday { get; set; } = 0;

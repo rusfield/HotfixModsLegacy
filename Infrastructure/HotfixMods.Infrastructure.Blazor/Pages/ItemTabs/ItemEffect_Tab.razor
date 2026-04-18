@@ -5,7 +5,7 @@
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="sbyte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.TriggerType)))" GetOptionsAsync_Func="Service.GetTriggerTypeOptionsAsync" />
+        <Input_Element T="byte" @bind-Value="Value.TriggerType" ValueCompare="ValueCompare?.TriggerType" Label="@nameof(Value.TriggerType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.TriggerType)))" GetOptionsAsync_Func="Service.GetTriggerTypeOptionsAsync" />
         <Input_Element T="int" @bind-Value="Value.CoolDownMSec" ValueCompare="ValueCompare?.CoolDownMSec" Label="@nameof(Value.CoolDownMSec).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.CoolDownMSec)))" />
         <Input_Element T="short" @bind-Value="Value.Charges" ValueCompare="ValueCompare?.Charges" Label="@nameof(Value.Charges).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.Charges)))" />
     </MudItem>
@@ -18,6 +18,13 @@
             <RightContent>
                 <Input_Element T="ushort" @bind-Value="Value.SpellCategoryID" ValueCompare="ValueCompare?.SpellCategoryID" Label="@nameof(Value.SpellCategoryID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.SpellCategoryID)))" GetOptionsAsync_Func="Service.GetSpellCategoryIdOptionsAsync" />
             </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.PlayerConditionID" ValueCompare="ValueCompare?.PlayerConditionID" Label="@nameof(Value.PlayerConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemEffect.PlayerConditionID)))" />
+            </MiddleContent>
+            <RightContent />
         </InlineGroup>
     </MudItem>
     <MudItem xs="3">

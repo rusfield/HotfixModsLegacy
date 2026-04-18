@@ -6,10 +6,26 @@
     <MudItem xs="3">
         <Input_Element T="int" @bind-Value="Value.Flags0" ValueCompare="ValueCompare?.Flags0" Label="@nameof(Value.Flags0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.Flags0)))" />
         <Input_Element T="int" @bind-Value="Value.Flags1" ValueCompare="ValueCompare?.Flags1" Label="@nameof(Value.Flags1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.Flags1)))" />
-        <Input_Element T="sbyte" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.ClutterLevel)))" />
+        <Input_Element T="int" @bind-Value="Value.ClutterLevel" ValueCompare="ValueCompare?.ClutterLevel" Label="@nameof(Value.ClutterLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.ClutterLevel)))" />
     </MudItem>
     <MudItem xs="6">
         <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.MinimumSpellVisualDensityFilterType" ValueCompare="ValueCompare?.MinimumSpellVisualDensityFilterType" Label="@nameof(Value.MinimumSpellVisualDensityFilterType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.MinimumSpellVisualDensityFilterType)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.MinimumSpellVisualDensityFilterParam" ValueCompare="ValueCompare?.MinimumSpellVisualDensityFilterParam" Label="@nameof(Value.MinimumSpellVisualDensityFilterParam).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.MinimumSpellVisualDensityFilterParam)))" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.ReducedSpellVisualDensityFilterType" ValueCompare="ValueCompare?.ReducedSpellVisualDensityFilterType" Label="@nameof(Value.ReducedSpellVisualDensityFilterType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.ReducedSpellVisualDensityFilterType)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.ReducedSpellVisualDensityFilterParam" ValueCompare="ValueCompare?.ReducedSpellVisualDensityFilterParam" Label="@nameof(Value.ReducedSpellVisualDensityFilterParam).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.ReducedSpellVisualDensityFilterParam)))" />
+            </RightContent>
+        </InlineGroup>
     </MudItem>
     <MudItem xs="3">
         <Input_Element T="ushort" @bind-Value="Value.DelayMin" ValueCompare="ValueCompare?.DelayMin" Label="@nameof(Value.DelayMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKit.DelayMin)))" />

@@ -13,6 +13,7 @@ namespace HotfixMods.Core.Models.Db2
         public int ItemAppearanceID { get; set; } = 0;
         public int OrderIndex { get; set; } = 0;
         public byte TransmogSourceTypeEnum { get; set; } = 0;
+        public int Flags { get; set; } = 0;
         public int VerifiedBuild { get; set; } = -1;
     }
 

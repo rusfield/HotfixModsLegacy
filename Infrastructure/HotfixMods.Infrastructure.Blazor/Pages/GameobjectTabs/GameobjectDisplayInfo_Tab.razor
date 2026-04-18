@@ -1,34 +1,56 @@
-﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<GameobjectDto, GameobjectDisplayInfo>
 
-<StandardDtoContent T="GameobjectDisplayInfo" >
-    <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="@(Value.FileDataID)" Label="@(nameof(Value.FileDataID).ToDisplayName())" ValueCompare="ValueCompare?.FileDataID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.FileDataID)))" />
-        <Input_Element T="short" @bind-Value="@(Value.ObjectEffectPackageID)" Label="@(nameof(Value.ObjectEffectPackageID).ToDisplayName())" ValueCompare="ValueCompare?.ObjectEffectPackageID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.ObjectEffectPackageID)))" />
-        <Placeholder_Element Amount="2" />
-    </MudItem>
-    <MudItem xs="6" />
-    <MudItem xs="3">
-        <Input_Element T="decimal" @bind-Value="@(Value.OverrideNameScale)" Label="@(nameof(Value.OverrideNameScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideNameScale" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.OverrideNameScale)))" />
-        <Input_Element T="decimal" @bind-Value="@(Value.OverrideLootEffectScale)" Label="@(nameof(Value.OverrideLootEffectScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideLootEffectScale" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.OverrideLootEffectScale)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox0)" Label="@(nameof(Value.GeoBox0).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox0)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox1)" Label="@(nameof(Value.GeoBox1).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox1)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox2)" Label="@(nameof(Value.GeoBox2).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox2)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox3)" Label="@(nameof(Value.GeoBox3).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox3)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox4)" Label="@(nameof(Value.GeoBox4).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox4)))" />
-    </MudItem>
-    <MudItem xs="4">
-        <Input_Element T="decimal" @bind-Value="@(Value.GeoBox5)" Label="@(nameof(Value.GeoBox5).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox5)))" />
-    </MudItem>
-</StandardDtoContent>
+<PagedDtoContent T="GameobjectDisplayInfo">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox0)" Label="@(nameof(Value.GeoBox0).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox0" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox0)))" />
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox1)" Label="@(nameof(Value.GeoBox1).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox1)))" />
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox2)" Label="@(nameof(Value.GeoBox2).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox2)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="int" @bind-Value="@(Value.FileDataID)" Label="@(nameof(Value.FileDataID).ToDisplayName())" ValueCompare="ValueCompare?.FileDataID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.FileDataID)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="@(Value.ObjectEffectPackageID)" Label="@(nameof(Value.ObjectEffectPackageID).ToDisplayName())" ValueCompare="ValueCompare?.ObjectEffectPackageID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.ObjectEffectPackageID)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="@(Value.OverrideLootEffectScale)" Label="@(nameof(Value.OverrideLootEffectScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideLootEffectScale" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.OverrideLootEffectScale)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="@(Value.OverrideNameScale)" Label="@(nameof(Value.OverrideNameScale).ToDisplayName())" ValueCompare="ValueCompare?.OverrideNameScale" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.OverrideNameScale)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox3)" Label="@(nameof(Value.GeoBox3).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox3)))" />
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox4)" Label="@(nameof(Value.GeoBox4).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox4)))" />
+            <Input_Element T="decimal" @bind-Value="@(Value.GeoBox5)" Label="@(nameof(Value.GeoBox5).ToDisplayName())" ValueCompare="ValueCompare?.GeoBox5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.GeoBox5)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.AlternateDisplayType)" Label="@(nameof(Value.AlternateDisplayType).ToDisplayName())" ValueCompare="ValueCompare?.AlternateDisplayType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.AlternateDisplayType)))" />
+            <Input_Element T="int" @bind-Value="@(Value.ClientCreatureDisplayInfoID)" Label="@(nameof(Value.ClientCreatureDisplayInfoID).ToDisplayName())" ValueCompare="ValueCompare?.ClientCreatureDisplayInfoID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.ClientCreatureDisplayInfoID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+                <LeftContent />
+                <MiddleContent>
+                    <Input_Element T="ushort" @bind-Value="@(Value.Field_11_0_0_54210_008)" Label="@(nameof(Value.Field_11_0_0_54210_008).ToDisplayName())" ValueCompare="ValueCompare?.Field_11_0_0_54210_008" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.Field_11_0_0_54210_008)))" />
+                </MiddleContent>
+                <RightContent />
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="@(Value.ClientItemID)" Label="@(nameof(Value.ClientItemID).ToDisplayName())" ValueCompare="ValueCompare?.ClientItemID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectDisplayInfo.ClientItemID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

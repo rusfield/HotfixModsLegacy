@@ -358,16 +358,24 @@ namespace HotfixMods.Infrastructure.Services
             where T : new()
         {
             var schemaName = GetSchemaNameOfEntity<T>();
-            if (schemaName == _appConfig.HotfixesSchema)
+            if (schemaName == _appConfig.HotfixesSchema
+                && typeof(T) != typeof(HotfixData)
+                && typeof(T) != typeof(HotfixModsEntity)
+                && Enum.TryParse<TableHashes>(GetTableNameOfEntity<T>(), true, out var tableHash))
             {
                 var entities = await GetAsync<T>(parameters);
 
                 foreach (var entity in entities)
                 {
-                    var dbParameters = new DbParameter[] { new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()), new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild) };
+                    var dbParameters = new DbParameter[]
+                    {
+                        new DbParameter(nameof(HotfixData.RecordID), entity.GetIdValue()),
+                        new DbParameter(nameof(HotfixData.VerifiedBuild), VerifiedBuild),
+                        new DbParameter(nameof(HotfixData.TableHash), (uint)tableHash)
+                    };
 
-                    var hotfixData = await GetSingleAsync<HotfixData>(DefaultCallback, DefaultProgress, true, dbParameters);
-                    if (hotfixData != null)
+                    var hotfixRows = await GetAsync<HotfixData>(DefaultCallback, DefaultProgress, true, false, dbParameters);
+                    foreach (var hotfixData in hotfixRows)
                     {
                         hotfixData.Status = (byte)HotfixStatuses.RECORD_REMOVED;
                         await SaveAsync(hotfixData);

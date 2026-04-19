@@ -2,7 +2,7 @@
 {
     // ItemGroupSounds.db2 holds a SoundKit ID.
     // The values below are read out of the sound file name.
-    public enum Item_ItemGroupSoundsId : byte
+    public enum Item_ItemGroupSoundsId : uint
     {
        NONE = 0,
        UNUSED_1 = 1,

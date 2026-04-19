@@ -249,6 +249,12 @@ namespace HotfixMods.Infrastructure.Services
 
         async Task SetIdAndVerifiedBuild(CreatureDto dto)
         {
+            var isCreateCreatureTemplate = IsCreateOperation(dto.IsUpdate, dto.CreatureTemplate.Entry);
+            var isCreateCreatureTemplateModel = IsCreateOperation(dto.IsUpdate, dto.CreatureTemplateModel.CreatureID);
+            var isCreateCreatureModelInfo = IsCreateOperation(dto.IsUpdate, dto.CreatureModelInfo.DisplayID);
+            var isCreateCreatureEquipTemplate = IsCreateOperation(dto.IsUpdate, dto.CreatureEquipTemplate?.CreatureID);
+            var isCreateCreatureTemplateDifficulty = IsCreateOperation(dto.IsUpdate, dto.CreatureTemplateDifficulty?.Entry);
+
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
             var creatureTemplateId = await GetIdByConditionsAsync<CreatureTemplate>((int)dto.CreatureTemplate.Entry, dto.IsUpdate);
@@ -265,11 +271,11 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
             dto.CreatureTemplate.Entry = (uint)creatureTemplateId;
-            dto.CreatureTemplate.VerifiedBuild = VerifiedBuild;
+            SetConfiguredVerifiedBuildOnCreate(dto.CreatureTemplate, isCreateCreatureTemplate);
 
             dto.CreatureTemplateModel.CreatureID = (uint)creatureTemplateId;
             dto.CreatureTemplateModel.CreatureDisplayID = (uint)creatureDisplayInfoId;
-            dto.CreatureTemplateModel.VerifiedBuild = VerifiedBuild;
+            SetConfiguredVerifiedBuildOnCreate(dto.CreatureTemplateModel, isCreateCreatureTemplateModel);
 
             dto.CreatureDisplayInfo.ID = creatureDisplayInfoId;
             dto.CreatureDisplayInfo.ExtendedDisplayInfoID = (int)creatureDisplayInfoExtraId;
@@ -277,12 +283,12 @@ namespace HotfixMods.Infrastructure.Services
 
 
             dto.CreatureModelInfo.DisplayID = (uint)creatureDisplayInfoId;
-            dto.CreatureModelInfo.VerifiedBuild = VerifiedBuild;
+            SetConfiguredVerifiedBuildOnCreate(dto.CreatureModelInfo, isCreateCreatureModelInfo);
 
             if (dto.CreatureEquipTemplate != null)
             {
                 dto.CreatureEquipTemplate.CreatureID = (uint)creatureTemplateId;
-                dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
+                SetConfiguredVerifiedBuildOnCreate(dto.CreatureEquipTemplate, isCreateCreatureEquipTemplate);
             }
 
             if (dto.CreatureTemplateAddon != null)
@@ -294,7 +300,7 @@ namespace HotfixMods.Infrastructure.Services
             if(dto.CreatureTemplateDifficulty != null)
             {
                 dto.CreatureTemplateDifficulty.Entry =  (uint)creatureTemplateId;
-                dto.CreatureEquipTemplate.VerifiedBuild = VerifiedBuild;
+                SetConfiguredVerifiedBuildOnCreate(dto.CreatureTemplateDifficulty, isCreateCreatureTemplateDifficulty);
             }
 
             if (dto.CreatureDisplayInfoExtra != null)

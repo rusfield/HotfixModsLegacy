@@ -151,7 +151,7 @@
     List<Content> tabs = new();
     MudCarousel<object>? mudCarouselRef;
     MudPagination? mudPaginationRef;
-    Dictionary<Type, InstanceData> instanceData = new();
+    Dictionary<string, InstanceData> instanceData = new();
     InstanceData? currentInstanceData;
     DescriptionHelper descriptionHelper = new();
     int currentPage = 1;
@@ -166,28 +166,25 @@
 
         InitTabsList(properties);
         currentTab = tabs.FirstOrDefault();
+        currentInstanceData = currentTab == null ? null : GetInstanceData(currentTab.GroupType, currentTab.ParentGroupType);
+        RefreshInstanceData(currentInstanceData);
+        currentPage = currentInstanceData?.CurrentInstance ?? 1;
         hotfixModsEntityName = PageTab.Dto.HotfixModsEntity.Name ?? "";
         PageTab.TabName = hotfixModsEntityName;
         base.OnInitialized();
     }
 
     // Recusrive method to extract properties from DTO and DTO group lists
-    void InitTabsList(PropertyInfo[] properties, Type? groupType = null)
+    void InitTabsList(PropertyInfo[] properties, Type? groupType = null, Type? parentGroupType = null)
     {
-        foreach (var (property, index) in properties.WithIndex())
+        foreach (var property in properties)
         {
             if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && property.Name.EndsWith("groups", StringComparison.OrdinalIgnoreCase))
             {
-                groupType = property.PropertyType.GetGenericArguments()[0];
-
-                if (!instanceData.ContainsKey(groupType))
-                {
-                    var count = PageTab.Dto.GetDtoGroup(groupType).Count;
-                    instanceData[groupType] = new(groupType, 1, count);
-                }
-
-                var groupProperties = groupType.GetProperties();
-                InitTabsList(groupProperties, groupType);
+                var nestedGroupType = property.PropertyType.GetGenericArguments()[0];
+                GetOrCreateInstanceData(nestedGroupType, groupType);
+                var groupProperties = nestedGroupType.GetProperties();
+                InitTabsList(groupProperties, nestedGroupType, groupType);
             }
             else
             {
@@ -203,7 +200,7 @@
                     // But do it after tabtype is loaded (a couple of lines up).
                     tabName = ((HotfixDto)PageTab.Dto).DbRow.Db2Name.ToDisplayName();
                 }
-                tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType, PageTab.Dto, GetInstanceData(groupType)));
+                tabs.Add(new Content(tabName, tabType, property.PropertyType, groupType, parentGroupType, PageTab.Dto, GetInstanceData(groupType, parentGroupType)));
             }
         }
     }
@@ -221,13 +218,18 @@
     {
         mudCarouselRef?.MoveTo(newIndex);
         currentTab = tabs[newIndex];
-        currentInstanceData = GetInstanceData(currentTab.GroupType);
+        currentInstanceData = GetInstanceData(currentTab.GroupType, currentTab.ParentGroupType);
+        RefreshInstanceData(currentInstanceData);
+        currentPage = currentInstanceData?.CurrentInstance ?? 1;
     }
 
     void PanelContentChanged(int newIndex)
     {
         if (newIndex >= 0 && newIndex < tabs.Count)
         {
+            currentTab = tabs[newIndex];
+            currentInstanceData = GetInstanceData(currentTab.GroupType, currentTab.ParentGroupType);
+            RefreshInstanceData(currentInstanceData);
             currentPage = currentInstanceData?.CurrentInstance ?? 1;
 
             var dtoValue = PageTab.Dto.GetDtoValue(currentTab.DtoPropertyType);
@@ -249,6 +251,7 @@
         if (currentInstanceData != null)
         {
             currentInstanceData.CurrentInstance = currentPage;
+            RefreshDependentInstanceData(currentInstanceData.GroupType);
         }
     }
 
@@ -256,14 +259,15 @@
     {
         if (currentInstanceData != null)
         {
-            PageTab.Dto.AddToGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
-            currentInstanceData.InstanceCount++;
+            PageTab.Dto.AddToGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1, currentInstanceData.ParentGroupType, currentInstanceData.ParentGroupIndex);
+            RefreshInstanceData(currentInstanceData);
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
-            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType))
+            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType && t.ParentGroupType == currentTab?.ParentGroupType))
             {
                 tab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
             }
+            RefreshDependentInstanceData(currentInstanceData.GroupType);
         }
     }
 
@@ -271,10 +275,11 @@
     {
         if (currentInstanceData != null)
         {
-            PageTab.Dto.CloneInGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
-            currentInstanceData.InstanceCount++;
+            PageTab.Dto.CloneInGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1, currentInstanceData.ParentGroupType, currentInstanceData.ParentGroupIndex);
+            RefreshInstanceData(currentInstanceData);
             currentInstanceData.CurrentInstance++;
             currentPage = currentInstanceData.CurrentInstance;
+            RefreshDependentInstanceData(currentInstanceData.GroupType);
         }
     }
 
@@ -282,8 +287,8 @@
     {
         if (currentInstanceData != null)
         {
-            PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1);
-            currentInstanceData.InstanceCount--;
+            PageTab.Dto.RemoveFromGroup(currentInstanceData.GroupType, currentInstanceData.CurrentInstance - 1, currentInstanceData.ParentGroupType, currentInstanceData.ParentGroupIndex);
+            RefreshInstanceData(currentInstanceData);
             if (currentInstanceData.InstanceCount == 0)
             {
                 currentInstanceData.CurrentInstance = 1;
@@ -297,10 +302,11 @@
                 currentInstanceData.CurrentInstance--;
             }
             currentPage = currentInstanceData.CurrentInstance;
-            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType))
+            foreach (var tab in tabs.Where(t => t.GroupType == currentTab?.GroupType && t.ParentGroupType == currentTab?.ParentGroupType))
             {
                 tab.ValueIsNull = currentInstanceData.InstanceCount <= 0;
             }
+            RefreshDependentInstanceData(currentInstanceData.GroupType);
         }
     }
 
@@ -308,25 +314,102 @@
     {
         int currentIndex = currentInstanceData.CurrentInstance - 1;
         int newIndex = currentInstanceData.CurrentInstance;
-        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex);
+        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex, currentInstanceData.ParentGroupType, currentInstanceData.ParentGroupIndex);
         currentInstanceData.CurrentInstance++;
         currentPage = currentInstanceData.CurrentInstance;
+        RefreshDependentInstanceData(currentInstanceData.GroupType);
     }
 
     void MoveInstanceBackward_Click()
     {
         int currentIndex = currentInstanceData.CurrentInstance - 1;
         int newIndex = currentInstanceData.CurrentInstance - 2;
-        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex);
+        PageTab.Dto.MoveInGroup(currentInstanceData.GroupType, currentIndex, newIndex, currentInstanceData.ParentGroupType, currentInstanceData.ParentGroupIndex);
         currentInstanceData.CurrentInstance--;
         currentPage = currentInstanceData.CurrentInstance;
+        RefreshDependentInstanceData(currentInstanceData.GroupType);
     }
 
-    InstanceData? GetInstanceData(Type? groupType)
+    InstanceData? GetInstanceData(Type? groupType, Type? parentGroupType)
     {
-        if (groupType != null && instanceData.ContainsKey(groupType))
-            return instanceData[groupType];
+        if (groupType != null)
+        {
+            var key = GetInstanceKey(groupType, parentGroupType);
+            if (instanceData.ContainsKey(key))
+            {
+                return instanceData[key];
+            }
+        }
         return null;
+    }
+
+    InstanceData? GetOrCreateInstanceData(Type? groupType, Type? parentGroupType)
+    {
+        if (groupType == null)
+        {
+            return null;
+        }
+
+        var key = GetInstanceKey(groupType, parentGroupType);
+        if (!instanceData.TryGetValue(key, out var data))
+        {
+            data = new(groupType, 1, 0, parentGroupType, GetParentGroupIndex(parentGroupType));
+            instanceData[key] = data;
+        }
+
+        RefreshInstanceData(data);
+        return data;
+    }
+
+    void RefreshInstanceData(InstanceData? data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+
+        data.ParentGroupIndex = GetParentGroupIndex(data.ParentGroupType);
+        if (data.ParentGroupType != null && PageTab.Dto.GetGroupCount(data.ParentGroupType) <= data.ParentGroupIndex)
+        {
+            data.InstanceCount = 0;
+        }
+        else
+        {
+            data.InstanceCount = PageTab.Dto.GetGroupCount(data.GroupType, data.ParentGroupType, data.ParentGroupIndex);
+        }
+
+        if (data.InstanceCount == 0)
+        {
+            data.CurrentInstance = 1;
+        }
+        else if (data.CurrentInstance > data.InstanceCount)
+        {
+            data.CurrentInstance = data.InstanceCount;
+        }
+    }
+
+    void RefreshDependentInstanceData(Type groupType)
+    {
+        foreach (var data in instanceData.Values.Where(d => d.ParentGroupType == groupType))
+        {
+            RefreshInstanceData(data);
+        }
+    }
+
+    int GetParentGroupIndex(Type? parentGroupType)
+    {
+        if (parentGroupType == null)
+        {
+            return 0;
+        }
+
+        var parent = GetInstanceData(parentGroupType, null);
+        return parent == null ? 0 : Math.Max(0, parent.CurrentInstance - 1);
+    }
+
+    static string GetInstanceKey(Type groupType, Type? parentGroupType)
+    {
+        return $"{parentGroupType?.FullName ?? "_root"}|{groupType.FullName}";
     }
 
     async Task SaveAsync_Click(bool isUpdate)
@@ -368,12 +451,13 @@
 
     class Content
     {
-        public Content(string tabPanelName, Type componentType, Type dtoPropertyType, Type? groupType, IDto dto, InstanceData? instance)
+        public Content(string tabPanelName, Type componentType, Type dtoPropertyType, Type? groupType, Type? parentGroupType, IDto dto, InstanceData? instance)
         {
             TabPanelName = tabPanelName;
             ComponentType = componentType;
             DtoPropertyType = dtoPropertyType;
             GroupType = groupType;
+            ParentGroupType = parentGroupType;
 
             Instance = instance;
 
@@ -387,6 +471,7 @@
         public Type ComponentType { get; set; }
         public Type DtoPropertyType { get; set; }
         public Type? GroupType { get; set; }
+        public Type? ParentGroupType { get; set; }
 
         public bool ValueIsNull { get; set; }
         public InstanceData? Instance { get; set; }

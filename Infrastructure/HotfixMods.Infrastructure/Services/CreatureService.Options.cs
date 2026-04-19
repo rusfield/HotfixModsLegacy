@@ -1,5 +1,6 @@
 ﻿using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Enums.TrinityCore;
+using HotfixMods.Core.Flags.Db2;
 using HotfixMods.Core.Flags.TrinityCore;
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
@@ -175,6 +176,11 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<ushort, string>> GetModelIdOptionsAsync()
         {
             return await GetCreatureModelDataOptionsAsync<ushort>();
+        }
+
+        public async Task<Dictionary<int, string>> GetDisplayInfoFlagsOptionsAsync()
+        {
+            return Enum.GetValues<CreatureDisplayInfoFlags>().ToDictionary(key => (int)key, value => value.ToDisplayString());
         }
         #endregion
 

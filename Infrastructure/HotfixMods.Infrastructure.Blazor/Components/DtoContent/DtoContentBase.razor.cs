@@ -75,7 +75,7 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
             }
             else
             {
-                Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
+                Value = PageTab.Dto.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex, InstanceData.ParentGroupType, InstanceData.ParentGroupIndex);
             }
         }
 
@@ -97,7 +97,7 @@ namespace HotfixMods.Infrastructure.Blazor.Components.DtoContent
                 }
                 else
                 {
-                    ValueCompare = PageTab.DtoCompare.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex);
+                    ValueCompare = PageTab.DtoCompare.GetDtoGroupValue<TValue>(InstanceData.GroupType, GroupIndex, InstanceData.ParentGroupType, InstanceData.ParentGroupIndex);
                 }
             }
         }

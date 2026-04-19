@@ -97,8 +97,8 @@ namespace HotfixMods.Infrastructure.Services
             {
                 var key = itemGroupSound.GetValueByNameAs<uint>("ID");
                 var value = "";
-                if (Enum.IsDefined(typeof(Item_ItemGroupSoundsId), (int)key))
-                    value += $"{((Item_ItemGroupSoundsId)(int)key).ToDisplayString()}";
+                if (Enum.IsDefined(typeof(Item_ItemGroupSoundsId), key))
+                    value += $"{((Item_ItemGroupSoundsId)key).ToDisplayString()}";
 
                 results[key] = value;
             }
@@ -267,6 +267,13 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<Dictionary<int, string>> GetLanguageIdOptionsAsync()
         {
             return await GetDb2OptionsAsync<int>("Languages", "Name");
+        }
+
+        public async Task<Dictionary<int, string>> GetExpansionIdOptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureTemplateDifficultyRequiredExpansion>()
+                .ToDictionary(key => (int)key, value => value.ToDisplayString());
         }
         #endregion
 

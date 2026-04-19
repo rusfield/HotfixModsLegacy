@@ -12,10 +12,15 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellAuraOptions? SpellAuraOptions { get; set; }
         public SpellPower? SpellPower { get; set; }
         public SpellCooldowns? SpellCooldowns { get; set; }
-        public SpellXSpellVisual? SpellXSpellVisual { get; set; }
-        public SpellVisual? SpellVisual { get; set; } 
+        public List<VisualGroup> VisualGroups { get; set; } = new();
         public List<EffectGroup> EffectGroups { get; set; } = new();
-        public List<EventGroup> EventGroups { get; set; } = new();
+
+        public class VisualGroup
+        {
+            public SpellXSpellVisual SpellXSpellVisual { get; set; } = new();
+            public SpellVisual? SpellVisual { get; set; }
+            public List<EventGroup> EventGroups { get; set; } = new();
+        }
 
         public class EffectGroup
         {

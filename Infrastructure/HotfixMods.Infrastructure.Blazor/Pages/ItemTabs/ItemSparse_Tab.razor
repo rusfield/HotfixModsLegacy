@@ -11,7 +11,7 @@
 <PagedDtoContent T="ItemSparse">
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InventoryType)))" Disabled="true"/>
+            <Input_Element T="sbyte" @bind-Value="@(Value.InventoryType)" Label="@(nameof(Value.InventoryType).ToDisplayName())" ValueCompare="ValueCompare?.InventoryType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.InventoryType)))" GetOptionsAsync_Func="Service.GetInventoryTypeOptionsAsync" Disabled="true"/>
             <Input_Element T="ushort" @bind-Value="@(Value.ItemLevel)" Label="@(nameof(Value.ItemLevel).ToDisplayName())" ValueCompare="ValueCompare?.ItemLevel" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemLevel)))" />
             <Input_Element T="sbyte" @bind-Value="@(Value.RequiredLevel)" Label="@(nameof(Value.RequiredLevel).ToDisplayName())" ValueCompare="ValueCompare?.RequiredLevel" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.RequiredLevel)))" />
             <Input_Element T="sbyte" @bind-Value="@(Value.OverallQualityID)" Label="@(nameof(Value.OverallQualityID).ToDisplayName())" ValueCompare="ValueCompare?.OverallQualityID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.OverallQualityID)))" GetOptionsAsync_Func="Service.GetOverallQualityIdOptionsAsync" />
@@ -232,7 +232,7 @@
             <Input_Element T="byte" @bind-Value="@(Value.DamageType)" Label="@(nameof(Value.DamageType).ToDisplayName())" ValueCompare="ValueCompare?.DamageType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DamageType)))" GetOptionsAsync_Func="Service.GetDamageTypeOptionsAsync" />
             <Input_Element T="decimal" @bind-Value="@(Value.DmgVariance)" Label="@(nameof(Value.DmgVariance).ToDisplayName())" ValueCompare="ValueCompare?.DmgVariance" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.DmgVariance)))" />
             <Input_Element T="decimal" @bind-Value="@(Value.ItemRange)" Label="@(nameof(Value.ItemRange).ToDisplayName())" ValueCompare="ValueCompare?.ItemRange" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ItemRange)))" />
-            <Input_Element T="byte" @bind-Value="@(Value.SheatheType)" Label="@(nameof(Value.SheatheType).ToDisplayName())" ValueCompare="ValueCompare?.SheatheType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SheatheType)))" Disabled="true" />
+            <Input_Element T="byte" @bind-Value="@(Value.SheatheType)" Label="@(nameof(Value.SheatheType).ToDisplayName())" ValueCompare="ValueCompare?.SheatheType" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.SheatheType)))" GetOptionsAsync_Func="Service.GetSheatheTypeOptionsAsync" Disabled="true" />
             <Input_Element T="int" @bind-Value="@(Value.StartQuestID)" Label="@(nameof(Value.StartQuestID).ToDisplayName())" ValueCompare="ValueCompare?.StartQuestID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.StartQuestID)))" GetOptionsAsync_Func="Service.GetStartQuestIdOptionsAsync" />
         </MudItem>
         <MudItem xs="6">
@@ -313,7 +313,7 @@
         </MudItem>
         <MudItem xs="3">
             <Input_Element T="int" @bind-Value="@(Value.OppositeFactionItemID)" Label="@(nameof(Value.OppositeFactionItemID).ToDisplayName())" ValueCompare="ValueCompare?.OppositeFactionItemID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.OppositeFactionItemID)))" />
-            <Input_Element T="int" @bind-Value="@(Value.ExpansionID)" Label="@(nameof(Value.ExpansionID).ToDisplayName())" ValueCompare="ValueCompare?.ExpansionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ExpansionID)))" />
+            <Input_Element T="int" @bind-Value="@(Value.ExpansionID)" Label="@(nameof(Value.ExpansionID).ToDisplayName())" ValueCompare="ValueCompare?.ExpansionID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ExpansionID)))" GetOptionsAsync_Func="Service.GetExpansionIdOptionsAsync" />
             <Input_Element T="int" @bind-Value="@(Value.ContentTuningID)" Label="@(nameof(Value.ContentTuningID).ToDisplayName())" ValueCompare="ValueCompare?.ContentTuningID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.ContentTuningID)))" />
             <Input_Element T="int" @bind-Value="@(Value.PlayerLevelToItemLevelCurveID)" Label="@(nameof(Value.PlayerLevelToItemLevelCurveID).ToDisplayName())" ValueCompare="ValueCompare?.PlayerLevelToItemLevelCurveID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemSparse.PlayerLevelToItemLevelCurveID)))" />
         </MudItem>

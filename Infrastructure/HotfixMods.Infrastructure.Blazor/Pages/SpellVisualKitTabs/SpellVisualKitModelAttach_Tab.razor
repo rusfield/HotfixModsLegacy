@@ -1,6 +1,7 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualKitModelAttach>
+@inject SpellVisualKitService Service
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
@@ -36,13 +37,13 @@
         <Placeholder_Element Amount="4" />
         <InlineGroup>
             <LeftContent>
-                <Input_Element T="short" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.StartAnimID" ValueCompare="ValueCompare?.StartAnimID" Label="@nameof(Value.StartAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.StartAnimID)))" GetOptionsAsync_Func="Service.GetAnimationIdOptionsAsync" />
             </LeftContent>
             <MiddleContent>
-                <Input_Element T="short" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.AnimID" ValueCompare="ValueCompare?.AnimID" Label="@nameof(Value.AnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AnimID)))" GetOptionsAsync_Func="Service.GetAnimationIdOptionsAsync" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="short" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.EndAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.EndAnimID" ValueCompare="ValueCompare?.EndAnimID" Label="@nameof(Value.EndAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.EndAnimID)))" GetOptionsAsync_Func="Service.GetAnimationIdOptionsAsync" />
             </RightContent>
         </InlineGroup>
         <InlineGroup Merged="false">

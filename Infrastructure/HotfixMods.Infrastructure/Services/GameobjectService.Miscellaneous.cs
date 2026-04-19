@@ -9,6 +9,8 @@ namespace HotfixMods.Infrastructure.Services
     {
         async Task SetIdAndVerifiedBuild(GameobjectDto dto)
         {
+            var isCreateGameobjectTemplate = IsCreateOperation(dto.IsUpdate, dto.GameobjectTemplate.Entry);
+
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
             var gameobjectTemplateId = await GetIdByConditionsAsync<GameobjectTemplate>((int)dto.GameobjectTemplate.Entry, dto.IsUpdate);
@@ -23,7 +25,7 @@ namespace HotfixMods.Infrastructure.Services
             dto.HotfixModsEntity.VerifiedBuild = VerifiedBuild;
 
             dto.GameobjectTemplate.Entry = (uint)gameobjectTemplateId;
-            dto.GameobjectTemplate.VerifiedBuild = VerifiedBuild;
+            SetConfiguredVerifiedBuildOnCreate(dto.GameobjectTemplate, isCreateGameobjectTemplate);
             dto.GameobjectTemplate.DisplayID = (uint)gameobjectDisplayInfoId;
 
             dto.GameobjectDisplayInfo.ID = gameobjectDisplayInfoId;

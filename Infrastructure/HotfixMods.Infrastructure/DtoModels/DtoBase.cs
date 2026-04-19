@@ -21,27 +21,27 @@ namespace HotfixMods.Infrastructure.DtoModels
             return _displayName;
         }
 
-        public virtual void AddToGroup(Type groupType, int index)
+        public virtual void AddToGroup(Type groupType, int index, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
-            this.GetDtoGroup(groupType).Insert(index, Activator.CreateInstance(groupType));
+            this.GetDtoGroup(groupType, parentGroupType, parentGroupIndex).Insert(index, Activator.CreateInstance(groupType));
         }
 
-        public virtual void RemoveFromGroup(Type groupType, int index)
+        public virtual void RemoveFromGroup(Type groupType, int index, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
-            var group = this.GetDtoGroup(groupType);
+            var group = this.GetDtoGroup(groupType, parentGroupType, parentGroupIndex);
             if (group.Count > index)
                 group.RemoveAt(index);
         }
 
-        public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex)
+        public virtual void MoveInGroup(Type groupType, int oldIndex, int newIndex, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
-            var group = this.GetDtoGroup(groupType);
+            var group = this.GetDtoGroup(groupType, parentGroupType, parentGroupIndex);
             group.MoveElement(oldIndex, newIndex);
         }
 
-        public virtual void CloneInGroup(Type groupType, int index)
+        public virtual void CloneInGroup(Type groupType, int index, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
-            var group = this.GetDtoGroup(groupType);
+            var group = this.GetDtoGroup(groupType, parentGroupType, parentGroupIndex);
             if(index >= 0 && index < group.Count)
             {
                 var item = group[index];
@@ -51,9 +51,9 @@ namespace HotfixMods.Infrastructure.DtoModels
             }
         }
 
-        public virtual int GetGroupCount(Type groupType)
+        public virtual int GetGroupCount(Type groupType, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
-            return this.GetDtoGroup(groupType).Count;
+            return this.GetDtoGroup(groupType, parentGroupType, parentGroupIndex).Count;
         }
     }
 }

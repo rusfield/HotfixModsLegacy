@@ -161,6 +161,42 @@ namespace HotfixMods.Infrastructure.Services
             return await GetNextIdAsync(_appConfig.HotfixesSchema, GetTableNameOfEntity<HotfixModsEntity>(), 0, int.MaxValue, nameof(HotfixModsEntity.ID));
         }
 
+        protected bool IsCreateOperation(bool isUpdate, object? currentId)
+        {
+            if (!isUpdate)
+                return true;
+
+            if (currentId == null)
+                return true;
+
+            if (long.TryParse(currentId.ToString(), out var idValue))
+                return idValue == 0;
+
+            return false;
+        }
+
+        protected void SetConfiguredVerifiedBuildOnCreate(object? entity, bool isCreate)
+        {
+            if (!isCreate || entity == null)
+                return;
+
+            var verifiedBuildProperty = entity.GetType().GetProperty(nameof(HotfixData.VerifiedBuild));
+            if (verifiedBuildProperty?.PropertyType == typeof(int))
+                verifiedBuildProperty.SetValue(entity, VerifiedBuild);
+        }
+
+        protected bool HasConfiguredVerifiedBuild(object? entity)
+        {
+            if (entity == null)
+                return false;
+
+            var verifiedBuildProperty = entity.GetType().GetProperty(nameof(HotfixData.VerifiedBuild));
+            if (verifiedBuildProperty?.PropertyType != typeof(int))
+                return false;
+
+            return (int)(verifiedBuildProperty.GetValue(entity) ?? 0) == VerifiedBuild;
+        }
+
         protected void HandleException(Exception exception)
         {
             _exceptionHandler.Handle(exception);

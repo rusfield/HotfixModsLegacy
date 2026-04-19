@@ -1,10 +1,11 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualEffectName>
+@inject SpellVisualKitService Service
 
 <InstancedDtoContentPage>
     <MudItem xs="3">
-        <Input_Element T="int" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Type)))" />
+        <Input_Element T="int" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.Type)))" GetOptionsAsync_Func="Service.GetSpellVisualEffectNameTypeOptionsAsync" />
         <Input_Element T="int" @bind-Value="Value.GenericID" ValueCompare="ValueCompare?.GenericID" Label="@nameof(Value.GenericID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.GenericID)))" />
         <Input_Element T="int" @bind-Value="Value.ModelFileDataID" ValueCompare="ValueCompare?.ModelFileDataID" Label="@nameof(Value.ModelFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.ModelFileDataID)))" />
         <Input_Element T="int" @bind-Value="Value.TextureFileDataID" ValueCompare="ValueCompare?.TextureFileDataID" Label="@nameof(Value.TextureFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualEffectName.TextureFileDataID)))" />

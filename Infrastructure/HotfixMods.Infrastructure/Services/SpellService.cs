@@ -69,23 +69,30 @@ namespace HotfixMods.Infrastructure.Services
                     SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellID), id)),
                     SpellPower = await GetSingleAsync<SpellPower>(callback, progress, new DbParameter(nameof(SpellPower.SpellID), id)),
                     SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, new DbParameter(nameof(SpellCooldowns.SpellID), id)),
-                    SpellXSpellVisual = await GetSingleAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellID), id)),
 
                     Spell = spell,
                     IsUpdate = true
                 };
 
-                if (result.SpellXSpellVisual != null)
+                var spellXSpellVisuals = await GetAsync<SpellXSpellVisual>(callback, progress, new DbParameter(nameof(SpellXSpellVisual.SpellID), id));
+                foreach (var spellXSpellVisual in spellXSpellVisuals.OrderBy(s => s.ID))
                 {
-                    result.SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, new DbParameter(nameof(SpellVisual.ID), result.SpellXSpellVisual.SpellVisualID));
-                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), result.SpellXSpellVisual.SpellVisualID));
-                    spellVisualEvents.ForEach(s =>
+                    var visualGroup = new SpellDto.VisualGroup()
                     {
-                        result.EventGroups.Add(new()
+                        SpellXSpellVisual = spellXSpellVisual,
+                        SpellVisual = await GetSingleAsync<SpellVisual>(callback, progress, new DbParameter(nameof(SpellVisual.ID), spellXSpellVisual.SpellVisualID))
+                    };
+
+                    var spellVisualEvents = await GetAsync<SpellVisualEvent>(callback, progress, new DbParameter(nameof(SpellVisualEvent.SpellVisualID), spellXSpellVisual.SpellVisualID));
+                    spellVisualEvents.OrderBy(s => s.ID).ToList().ForEach(s =>
+                    {
+                        visualGroup.EventGroups.Add(new()
                         {
                             SpellVisualEvent = s
                         });
                     });
+
+                    result.VisualGroups.Add(visualGroup);
                 }
 
                 var spellEffects = await GetAsync<SpellEffect>(callback, progress, new DbParameter(nameof(SpellEffect.SpellID), id));
@@ -133,8 +140,11 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.SpellMisc);
                 await SaveAsync(callback, progress, dto.SpellName);
                 await SaveAsync(callback, progress, dto.SpellPower);
-                await SaveAsync(callback, progress, dto.SpellXSpellVisual);
-                await SaveAsync(callback, progress, dto.SpellVisual);
+                await dto.VisualGroups.ForEachAsync(async visualGroup =>
+                {
+                    await SaveAsync(callback, progress, visualGroup.SpellXSpellVisual);
+                    await SaveAsync(callback, progress, visualGroup.SpellVisual);
+                });
 
                 callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellEffect)}", progress());
                 await dto.EffectGroups.ForEachAsync(async e =>
@@ -143,9 +153,12 @@ namespace HotfixMods.Infrastructure.Services
                 });
 
                 callback.Invoke(LoadingHelper.Saving, $"Saving {nameof(SpellVisualEvent)}", progress());
-                await dto.EventGroups.ForEachAsync(async v =>
+                await dto.VisualGroups.ForEachAsync(async visualGroup =>
                 {
-                    await SaveAsync(v.SpellVisualEvent);
+                    await visualGroup.EventGroups.ForEachAsync(async eventGroup =>
+                    {
+                        await SaveAsync(eventGroup.SpellVisualEvent);
+                    });
                 });
 
                 callback.Invoke(LoadingHelper.Saving, "Saving successful", 100);
@@ -168,6 +181,10 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var dto = await GetByIdAsync(id);
+                var spellPowers = await GetAsync<SpellPower>(new DbParameter(nameof(SpellPower.SpellID), id));
+                var spellAuraOptions = await GetAsync<SpellAuraOptions>(new DbParameter(nameof(SpellAuraOptions.SpellID), id));
+                var spellCooldowns = await GetAsync<SpellCooldowns>(new DbParameter(nameof(SpellCooldowns.SpellID), id));
+
                 if (null == dto)
                 {
                     callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
@@ -175,9 +192,12 @@ namespace HotfixMods.Infrastructure.Services
                 }
 
                 callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellXSpellVisual)}, {nameof(SpellVisual)} and {nameof(SpellVisualEvent)}", progress());
-                await dto.EventGroups.ForEachAsync(async v =>
+                await dto.VisualGroups.ForEachAsync(async visualGroup =>
                 {
-                    await DeleteAsync(v.SpellVisualEvent);
+                    await visualGroup.EventGroups.ForEachAsync(async eventGroup =>
+                    {
+                        await DeleteAsync(eventGroup.SpellVisualEvent);
+                    });
                 });
 
                 callback.Invoke(LoadingHelper.Deleting, $"Deleting {nameof(SpellEffect)}", progress());
@@ -185,13 +205,16 @@ namespace HotfixMods.Infrastructure.Services
                 {
                     await DeleteAsync(e.SpellEffect);
                 });
-                await DeleteAsync(callback, progress, dto.SpellVisual);
-                await DeleteAsync(callback, progress, dto.SpellXSpellVisual);
-                await DeleteAsync(callback, progress, dto.SpellPower);
+                await dto.VisualGroups.ForEachAsync(async visualGroup =>
+                {
+                    await DeleteAsync(visualGroup.SpellVisual);
+                    await DeleteAsync(visualGroup.SpellXSpellVisual);
+                });
+                await DeleteAsync(callback, progress, spellPowers);
                 await DeleteAsync(callback, progress, dto.SpellName);
                 await DeleteAsync(callback, progress, dto.SpellMisc);
-                await DeleteAsync(callback, progress, dto.SpellCooldowns);
-                await DeleteAsync(callback, progress, dto.SpellAuraOptions);
+                await DeleteAsync(callback, progress, spellCooldowns);
+                await DeleteAsync(callback, progress, spellAuraOptions);
                 await DeleteAsync(callback, progress, dto.Spell);
                 await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 

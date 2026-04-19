@@ -32,7 +32,7 @@
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Flags)))" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.Flags)))" GetOptionsAsync_Func="Service.GetDisplayInfoFlagsOptionsAsync" MultiSelection="true" />
             <Input_Element T="byte" @bind-Value="Value.BloodID" ValueCompare="ValueCompare?.BloodID" Label="@nameof(Value.BloodID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.BloodID)))" />
             <Input_Element T="ushort" @bind-Value="Value.ParticleColorID" ValueCompare="ValueCompare?.ParticleColorID" Label="@nameof(Value.ParticleColorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ParticleColorID)))" GetOptionsAsync_Func="Service.GetParticleColorIdOptionsAsync"/>
             <Input_Element T="ushort" @bind-Value="Value.ObjectEffectPackageID" ValueCompare="ValueCompare?.ObjectEffectPackageID" Label="@nameof(Value.ObjectEffectPackageID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureDisplayInfo.ObjectEffectPackageID)))" />

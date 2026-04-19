@@ -1,6 +1,7 @@
 ﻿@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
 
 @inherits DtoContentBase<SpellVisualKitDto, SpellVisualAnim>
+@inject SpellVisualKitService Service
 
 <InstancedDtoContentPage>
     <MudItem xs="3" />
@@ -15,10 +16,10 @@
         </InlineGroup>
         <InlineGroup Merged="false">
             <LeftContent>
-                <Input_Element T="short" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.InitialAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.InitialAnimID" ValueCompare="ValueCompare?.InitialAnimID" Label="@nameof(Value.InitialAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.InitialAnimID)))" GetOptionsAsync_Func="Service.GetAnimationIdOptionsAsync" />
             </LeftContent>
             <RightContent>
-                <Input_Element T="short" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.LoopAnimID)))" />
+                <Input_Element T="short" @bind-Value="Value.LoopAnimID" ValueCompare="ValueCompare?.LoopAnimID" Label="@nameof(Value.LoopAnimID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualAnim.LoopAnimID)))" GetOptionsAsync_Func="Service.GetAnimationIdOptionsAsync" />
             </RightContent>
         </InlineGroup>
         <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">

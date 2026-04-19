@@ -21,10 +21,12 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 throw new Exception("Nothing to add or update.");
             }
 
+            var serverDefinition = await GetDefinitionAsync(schemaName, tableName)
+                ?? throw new Exception($"Missing server definition for {schemaName}.{tableName}.");
+
             var queries = new List<string>();
-            //var columns = string.Join(",", dbRows.First().Columns.Select(d => $"`{d.Name}`"));
-            //var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
-            var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} VALUES ";
+            var columns = string.Join(",", serverDefinition.ColumnDefinitions.Select(d => $"`{d.Name}`"));
+            var replaceQuery = $"REPLACE INTO {schemaName}.{tableName} ({columns}) VALUES ";
 
             using var mySqlConnection = new MySqlConnection(_connectionString);
             await mySqlConnection.OpenAsync();
@@ -33,8 +35,11 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             {
                 foreach (var dbColumn in dbRows)
                 {
-
-                    string values = string.Join(",", dbColumn.Columns.Select(d => $"'{MySqlHelper.EscapeString(d.Value.ToString()!)}'"));
+                    string values = string.Join(",", serverDefinition.ColumnDefinitions.Select(def =>
+                    {
+                        var value = GetValueForServerColumn(dbColumn, def.Name, def.Type);
+                        return $"'{MySqlHelper.EscapeString(value.ToString()!)}'";
+                    }));
                     queries.Add($"({values})");
 
                     if (queries.Count == AddBatchSize)
@@ -101,40 +106,28 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                 {
                     var column = dbRowDefinition.ColumnDefinitions.ElementAt(i);
                     var fieldName = column.Name;
+                    var ordinal = FindReaderOrdinal(reader, tableName, fieldName);
 
                     object propertyValue;
 
-                    if (reader.IsDBNull(i))
+                    if (ordinal < 0 || reader.IsDBNull(ordinal))
                     {
-                        propertyValue = column.GetServerType().ToString() switch
-                        {
-                            "System.SByte" => (sbyte)0,
-                            "System.Int16" => (short)0,
-                            "System.Int32" => (int)0,
-                            "System.Int64" => (long)0,
-                            "System.Byte" => (byte)0,
-                            "System.UInt16" => (ushort)0,
-                            "System.UInt32" => (uint)0,
-                            "System.UInt64" => (ulong)0,
-                            "System.String" => "",
-                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
-                            _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
-                        };
+                        propertyValue = GetDefaultValueForType(column.GetServerType());
                     }
                     else
                     {
                         propertyValue = column.GetServerType().ToString() switch
                         {
-                            "System.SByte" => reader.GetSByte(i),
-                            "System.Int16" => reader.GetInt16(i),
-                            "System.Int32" => reader.GetInt32(i),
-                            "System.Int64" => reader.GetInt64(i),
-                            "System.Byte" => reader.GetByte(i),
-                            "System.UInt16" => reader.GetUInt16(i),
-                            "System.UInt32" => reader.GetUInt32(i),
-                            "System.UInt64" => reader.GetUInt64(i),
-                            "System.String" => reader.GetString(i),
-                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(i)),
+                            "System.SByte" => reader.GetSByte(ordinal),
+                            "System.Int16" => reader.GetInt16(ordinal),
+                            "System.Int32" => reader.GetInt32(ordinal),
+                            "System.Int64" => reader.GetInt64(ordinal),
+                            "System.Byte" => reader.GetByte(ordinal),
+                            "System.UInt16" => reader.GetUInt16(ordinal),
+                            "System.UInt32" => reader.GetUInt32(ordinal),
+                            "System.UInt64" => reader.GetUInt64(ordinal),
+                            "System.String" => reader.GetString(ordinal),
+                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(ordinal)),
                             _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
                         };
                     }

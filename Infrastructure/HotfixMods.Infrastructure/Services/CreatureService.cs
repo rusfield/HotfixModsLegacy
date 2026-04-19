@@ -423,6 +423,11 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var dto = await GetByIdAsync(id);
+                var ownsCreatureTemplate = HasConfiguredVerifiedBuild(dto?.CreatureTemplate);
+                var ownsCreatureTemplateModel = HasConfiguredVerifiedBuild(dto?.CreatureTemplateModel);
+                var ownsCreatureModelInfo = HasConfiguredVerifiedBuild(dto?.CreatureModelInfo);
+                var ownsCreatureEquipTemplate = HasConfiguredVerifiedBuild(dto?.CreatureEquipTemplate);
+                var ownsCreatureTemplateDifficulty = HasConfiguredVerifiedBuild(dto?.CreatureTemplateDifficulty);
                 if (null == dto)
                 {
                     callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
@@ -431,13 +436,20 @@ namespace HotfixMods.Infrastructure.Services
 
                 await DeleteAsync(callback, progress, dto.CreatureDisplayInfoExtra);
                 await DeleteAsync(callback, progress, dto.CreatureDisplayInfo);
-                await DeleteAsync(callback, progress, dto.CreatureModelInfo);
-                await DeleteAsync(callback, progress, dto.CreatureTemplateModel);
-                await DeleteAsync(callback, progress, dto.CreatureEquipTemplate);
-                await DeleteAsync(callback, progress, dto.CreatureTemplateAddon);
+                if (ownsCreatureModelInfo)
+                    await DeleteAsync(callback, progress, dto.CreatureModelInfo);
+                if (ownsCreatureTemplateModel)
+                    await DeleteAsync(callback, progress, dto.CreatureTemplateModel);
+                if (ownsCreatureEquipTemplate)
+                    await DeleteAsync(callback, progress, dto.CreatureEquipTemplate);
+                if (ownsCreatureTemplate)
+                    await DeleteAsync(callback, progress, dto.CreatureTemplateAddon);
                 await DeleteAsync(callback, progress, dto.NpcModelItemSlotDisplayInfo ?? new());
                 await DeleteAsync(callback, progress, dto.CreatureDisplayInfoOption ?? new());
-                await DeleteAsync(callback, progress, dto.CreatureTemplate);
+                if (ownsCreatureTemplateDifficulty)
+                    await DeleteAsync(callback, progress, dto.CreatureTemplateDifficulty);
+                if (ownsCreatureTemplate)
+                    await DeleteAsync(callback, progress, dto.CreatureTemplate);
                 await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
                 return true;

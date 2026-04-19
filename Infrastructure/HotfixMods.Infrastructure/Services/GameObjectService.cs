@@ -119,6 +119,7 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 var dto = await GetByIdAsync(id);
+                var ownsGameobjectTemplate = HasConfiguredVerifiedBuild(dto?.GameobjectTemplate);
                 if (dto == null)
                 {
                     callback.Invoke(LoadingHelper.Deleting, "Nothing to delete", 100);
@@ -127,11 +128,14 @@ namespace HotfixMods.Infrastructure.Services
 
                 // Delete gameobjects placed around
                 var existingGameobjects = await GetAsync<Gameobject>(new DbParameter(nameof(Gameobject.ID), id));
-                await DeleteAsync(callback, progress, existingGameobjects);
+                if (ownsGameobjectTemplate)
+                    await DeleteAsync(callback, progress, existingGameobjects);
 
                 await DeleteAsync(callback, progress, dto.GameobjectDisplayInfo);
-                await DeleteAsync(callback, progress, dto.GameobjectTemplateAddon);
-                await DeleteAsync(callback, progress, dto.GameobjectTemplate);
+                if (ownsGameobjectTemplate)
+                    await DeleteAsync(callback, progress, dto.GameobjectTemplateAddon);
+                if (ownsGameobjectTemplate)
+                    await DeleteAsync(callback, progress, dto.GameobjectTemplate);
                 await DeleteAsync(callback, progress, dto.HotfixModsEntity);
 
                 callback.Invoke(LoadingHelper.Deleting, "Delete successful", 100);

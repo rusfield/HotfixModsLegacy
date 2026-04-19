@@ -102,6 +102,10 @@ namespace HotfixMods.Infrastructure.Services
                                 x.ID = nextItemDisplayInfoMaterialResId++;
                         });
 
+                        // Rebuild the material-resource rows from the current DTO values so
+                        // updates do not re-save stale entries loaded before deletion.
+                        itemDisplayInfoModelMatRes.Clear();
+
                         if (dto.ItemDisplayInfo.ModelMaterialResourcesID0 != 0)
                         {
                             itemDisplayInfoModelMatRes.Add(new()

@@ -47,14 +47,13 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
-        public static TValue? GetDtoGroupValue<TValue>(this IDto dto, Type groupType, int groupIndex)
+        public static TValue? GetDtoGroupValue<TValue>(this IDto dto, Type groupType, int groupIndex, Type? parentGroupType = null, int parentGroupIndex = 0)
             where TValue : class, new()
         {
-            var groupProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
-            var getMethod = groupProperty?.PropertyType.GetMethod("get_Item");
-            var group = groupProperty?.GetValue(dto);
-            var count = (int?)group?.GetType()?.GetProperty("Count")?.GetValue(group);
-            if (count != null && count > 0 && groupIndex < count)
+            var group = dto.GetDtoGroup(groupType, parentGroupType, parentGroupIndex);
+            var getMethod = group.GetType().GetMethod("get_Item");
+            var count = group.Count;
+            if (count > 0 && groupIndex < count)
             {
                 var groupValue = getMethod?.Invoke(group, new object[] { groupIndex });
                 return (TValue?)groupValue?.GetType()?.GetProperty(typeof(TValue).Name)?.GetValue(groupValue);
@@ -62,14 +61,13 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
-        public static List<TValue>? GetDtoGroupListValue<TValue>(this IDto dto, Type groupType, int groupIndex)
+        public static List<TValue>? GetDtoGroupListValue<TValue>(this IDto dto, Type groupType, int groupIndex, Type? parentGroupType = null, int parentGroupIndex = 0)
             where TValue : class, new()
         {
-            var groupProperty = dto?.GetType().GetProperties().Where(p => p.PropertyType.IsGenericType && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>) && p.PropertyType.GetGenericArguments()[0] == groupType).FirstOrDefault();
-            var getMethod = groupProperty?.PropertyType.GetMethod("get_Item");
-            var group = groupProperty?.GetValue(dto);
-            var count = (int?)group?.GetType()?.GetProperty("Count")?.GetValue(group);
-            if (count != null && count > 0 && groupIndex < count)
+            var group = dto.GetDtoGroup(groupType, parentGroupType, parentGroupIndex);
+            var getMethod = group.GetType().GetMethod("get_Item");
+            var count = group.Count;
+            if (count > 0 && groupIndex < count)
             {
                 var groupValue = getMethod?.Invoke(group, new object[] { groupIndex });
                 return (List<TValue>?)groupValue?.GetType()?.GetProperty(typeof(TValue).Name)?.GetValue(groupValue);
@@ -77,8 +75,31 @@ namespace HotfixMods.Infrastructure.Extensions
             return null;
         }
 
-        public static IList GetDtoGroup(this IDto dto, Type groupType)
+        public static IList GetDtoGroup(this IDto dto, Type groupType, Type? parentGroupType = null, int parentGroupIndex = 0)
         {
+            if (parentGroupType != null)
+            {
+                var parentGroup = dto.GetDtoGroup(parentGroupType);
+                if (parentGroup.Count > parentGroupIndex)
+                {
+                    var parentValue = parentGroup[parentGroupIndex];
+                    if (parentValue != null)
+                    {
+                        var nestedGroup = parentValue.GetType().GetProperties()
+                            .FirstOrDefault(p => p.PropertyType.IsGenericType
+                                && p.PropertyType.GetGenericTypeDefinition() == typeof(List<>)
+                                && p.PropertyType.GetGenericArguments()[0] == groupType);
+
+                        if (nestedGroup?.GetValue(parentValue) is IList nestedList)
+                        {
+                            return nestedList;
+                        }
+                    }
+                }
+
+                throw new Exception($"{dto.GetType().Name} does not have any nested lists of type {groupType.Name} under {parentGroupType.Name}.");
+            }
+
             var properties = dto.GetType().GetProperties();
             foreach (var property in properties)
             {

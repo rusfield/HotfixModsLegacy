@@ -16,8 +16,8 @@ namespace HotfixMods.Infrastructure.Services
             var spellCooldownsId = await GetIdByConditionsAsync<SpellCooldowns>(dto.SpellCooldowns?.ID, dto.IsUpdate);
             var spellPowerId = await GetIdByConditionsAsync<SpellPower>(dto.SpellPower?.ID, dto.IsUpdate);
             var spellAuraOptionsId = await GetIdByConditionsAsync<SpellAuraOptions>(dto.SpellAuraOptions?.ID, dto.IsUpdate);
-            var spellXSpellVisualId = await GetIdByConditionsAsync<SpellXSpellVisual>(dto.SpellXSpellVisual?.ID, dto.IsUpdate);
-            var spellVisualId = await GetIdByConditionsAsync<SpellVisual>(dto.SpellVisual?.ID, dto.IsUpdate);
+            var nextSpellXSpellVisualId = await GetNextIdAsync<SpellXSpellVisual>();
+            var nextSpellVisualId = await GetNextIdAsync<SpellVisual>();
 
             // Step 2: Prepare IDs of list entities
             var nextSpellEffectId = await GetNextIdAsync<SpellEffect>();
@@ -38,22 +38,29 @@ namespace HotfixMods.Infrastructure.Services
             dto.SpellMisc.SpellID = spellId;
             dto.SpellMisc.VerifiedBuild = VerifiedBuild;
 
-            if(dto.SpellXSpellVisual != null)
+            dto.VisualGroups.ForEach(visualGroup =>
             {
-                dto.SpellXSpellVisual.ID = spellXSpellVisualId;
-                dto.SpellXSpellVisual.SpellID = spellId;
-                dto.SpellXSpellVisual.SpellVisualID = (uint)spellVisualId;
-                dto.SpellXSpellVisual.ActiveIconFileID = dto.SpellMisc.ActiveIconFileDataID;
-                dto.SpellXSpellVisual.SpellIconFileID = dto.SpellMisc.SpellIconFileDataID;
-                dto.SpellXSpellVisual.DifficultyID = (byte)dto.SpellMisc.DifficultyID;
-                dto.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
+                visualGroup.SpellXSpellVisual.ID = nextSpellXSpellVisualId++;
+                visualGroup.SpellXSpellVisual.SpellID = spellId;
+                visualGroup.SpellXSpellVisual.DifficultyID = (byte)dto.SpellMisc.DifficultyID;
+                visualGroup.SpellXSpellVisual.ActiveIconFileID = dto.SpellMisc.ActiveIconFileDataID;
+                visualGroup.SpellXSpellVisual.SpellIconFileID = dto.SpellMisc.SpellIconFileDataID;
+                visualGroup.SpellXSpellVisual.VerifiedBuild = VerifiedBuild;
 
-                if (dto.SpellVisual != null)
+                if (visualGroup.SpellVisual != null)
                 {
-                    dto.SpellVisual.ID = spellVisualId;
-                    dto.SpellVisual.VerifiedBuild = VerifiedBuild;
+                    visualGroup.SpellVisual.ID = nextSpellVisualId++;
+                    visualGroup.SpellVisual.VerifiedBuild = VerifiedBuild;
+                    visualGroup.SpellXSpellVisual.SpellVisualID = (uint)visualGroup.SpellVisual.ID;
                 }
-            }
+
+                visualGroup.EventGroups.ForEach(eventGroup =>
+                {
+                    eventGroup.SpellVisualEvent.ID = nextSpellVisualEventId++;
+                    eventGroup.SpellVisualEvent.SpellVisualID = visualGroup.SpellVisual?.ID ?? 0;
+                    eventGroup.SpellVisualEvent.VerifiedBuild = VerifiedBuild;
+                });
+            });
 
             if (dto.SpellCooldowns != null)
             {
@@ -84,13 +91,6 @@ namespace HotfixMods.Infrastructure.Services
                 e.SpellEffect.ID = nextSpellEffectId++;
                 e.SpellEffect.SpellID = (int)spellId;
                 e.SpellEffect.VerifiedBuild = VerifiedBuild;
-            });
-
-            dto.EventGroups.ForEach(v =>
-            {
-                v.SpellVisualEvent.ID = nextSpellVisualEventId++;
-                v.SpellVisualEvent.SpellVisualID = (int)spellVisualId;
-                v.SpellVisualEvent.VerifiedBuild = VerifiedBuild;
             });
         }
     }

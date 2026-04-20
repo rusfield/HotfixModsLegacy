@@ -30,9 +30,35 @@ namespace HotfixMods.Infrastructure.Services
                 var results = new List<DashboardModel>();
                 foreach (var dto in dtos)
                 {
+                    var itemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(
+                        DefaultCallback,
+                        DefaultProgress,
+                        new DbParameter(nameof(ItemModifiedAppearance.ItemID), dto.RecordID),
+                        new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), 0));
+
+                    if (itemModifiedAppearance == null)
+                    {
+                        var availableItemModifiedAppearances = await GetAvailableItemModifiedAppearancesAsync(dto.RecordID);
+                        itemModifiedAppearance = availableItemModifiedAppearances
+                            .OrderBy(i => i.OrderIndex)
+                            .FirstOrDefault();
+                    }
+
+                    uint? itemDisplayInfoId = null;
+                    if (itemModifiedAppearance != null)
+                    {
+                        var itemAppearance = await GetSingleAsync<ItemAppearance>(
+                            DefaultCallback,
+                            DefaultProgress,
+                            new DbParameter(nameof(ItemAppearance.ID), itemModifiedAppearance.ItemAppearanceID));
+
+                        itemDisplayInfoId = (uint?)itemAppearance?.ItemDisplayInfoID;
+                    }
+
                     results.Add(new()
                     {
                         ID = dto.RecordID,
+                        AdditionalID = itemDisplayInfoId,
                         Name = dto.Name,
                         AvatarUrl = null
                     });
@@ -143,6 +169,13 @@ namespace HotfixMods.Infrastructure.Services
                 result.HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, item.ID);
                 result.ItemSparse = await GetSingleAsync<ItemSparse>(callback, progress, new DbParameter(nameof(ItemSparse.ID), id));
                 result.ItemModifiedAppearance = await GetSingleAsync<ItemModifiedAppearance>(callback, progress, new DbParameter(nameof(ItemModifiedAppearance.ItemID), id), new DbParameter(nameof(ItemModifiedAppearance.OrderIndex), modifiedAppearanceOrderIndex));
+                if (result.ItemModifiedAppearance == null)
+                {
+                    var availableItemModifiedAppearances = await GetAvailableItemModifiedAppearancesAsync(id);
+                    result.ItemModifiedAppearance = availableItemModifiedAppearances
+                        .OrderBy(i => i.OrderIndex)
+                        .FirstOrDefault();
+                }
 
                 if (string.IsNullOrWhiteSpace(result.HotfixModsEntity.Name) && !string.IsNullOrWhiteSpace(result.ItemSparse?.Display))
                     result.HotfixModsEntity.Name = result.ItemSparse.Display;

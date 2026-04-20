@@ -21,7 +21,7 @@
                 <Input_Element T="int" @bind-Value="@(Value.StartConditionParam)" Label="@(nameof(Value.StartConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.StartConditionParam" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.StartConditionParam)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="@(Value.StartConditionDelay)" Label="@(nameof(Value.StartConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.StartConditionDelay" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.StartConditionDelay)))" />
+                <Input_Element T="int" @bind-Value="@(Value.StartConditionDelay)" Label="@(nameof(Value.StartConditionDelay).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.StartConditionDelay" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.StartConditionDelay)))" />
             </RightContent>
         </InlineGroup>
         <InlineGroup>
@@ -32,7 +32,7 @@
                 <Input_Element T="int" @bind-Value="@(Value.EndConditionParam)" Label="@(nameof(Value.EndConditionParam).ToDisplayName())" ValueCompare="ValueCompare?.EndConditionParam" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.EndConditionParam)))" />
             </MiddleContent>
             <RightContent>
-                <Input_Element T="int" @bind-Value="@(Value.EndConditionDelay)" Label="@(nameof(Value.EndConditionDelay).ToDisplayName(null, " (ms/frames? TODO)"))" ValueCompare="ValueCompare?.EndConditionDelay" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.EndConditionDelay)))" />
+                <Input_Element T="int" @bind-Value="@(Value.EndConditionDelay)" Label="@(nameof(Value.EndConditionDelay).ToDisplayName(null, " (ms)"))" ValueCompare="ValueCompare?.EndConditionDelay" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(AnimKitSegment.EndConditionDelay)))" />
             </RightContent>
         </InlineGroup>
     </MudItem>

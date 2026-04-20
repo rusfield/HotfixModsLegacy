@@ -77,7 +77,7 @@
             }
             else
             {
-                await GetByIdAsync(0);
+                await GetByIdAsync(availableItemModifiedAppearances.FirstOrDefault()?.OrderIndex ?? 0);
             }
         }
         isLoading = false;

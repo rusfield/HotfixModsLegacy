@@ -6,7 +6,7 @@ namespace HotfixMods.Core.Models.Db2
     public class AnimKit
     {
         [IndexField]
-        public int ID { get; set; } = 0;
+        public uint ID { get; set; } = 0;
         public uint OneShotDuration { get; set; } = 0;
         [Db2Description("The next AnimKit to play after current AnimKit has been played as one shot.")]
         public ushort OneShotStopAnimKitID { get; set; } = 0;

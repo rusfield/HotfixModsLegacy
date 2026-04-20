@@ -93,6 +93,44 @@ namespace HotfixMods.Providers.MySqlConnector.Client
             };
         }
 
+        object ReadValueForColumn(System.Data.Common.DbDataReader reader, int ordinal, string tableName, DbColumnDefinition column)
+        {
+            var serverType = column.GetServerType();
+
+            try
+            {
+                var value = reader.GetValue(ordinal);
+
+                if (value == DBNull.Value)
+                    return GetDefaultValueForType(serverType);
+
+                return serverType.ToString() switch
+                {
+                    "System.SByte" => Convert.ToSByte(value),
+                    "System.Int16" => Convert.ToInt16(value),
+                    "System.Int32" => Convert.ToInt32(value),
+                    "System.Int64" => Convert.ToInt64(value),
+                    "System.Byte" => Convert.ToByte(value),
+                    "System.UInt16" => Convert.ToUInt16(value),
+                    "System.UInt32" => Convert.ToUInt32(value),
+                    "System.UInt64" => Convert.ToUInt64(value),
+                    "System.String" => Convert.ToString(value) ?? string.Empty,
+                    "System.Decimal" => Convert.ToDecimal(value),
+                    _ => throw new Exception($"{column.Type} not implemented.")
+                };
+            }
+            catch (Exception ex) when (ex is InvalidCastException || ex is FormatException || ex is OverflowException)
+            {
+                var rawValue = reader.GetValue(ordinal);
+                var rawType = rawValue == DBNull.Value ? "DBNull" : rawValue.GetType().ToString();
+                var providerFieldType = reader.GetFieldType(ordinal).ToString();
+
+                throw new InvalidCastException(
+                    $"Failed to read {tableName}.{column.Name}. Expected logical type {column.Type}, server read type {serverType}, provider field type {providerFieldType}, raw CLR type {rawType}, raw value '{rawValue}'.",
+                    ex);
+            }
+        }
+
         object GetValueForServerColumn(DbRow dbRow, string serverColumnName, Type serverColumnType)
         {
             var sourceColumn = FindSourceColumn(dbRow, serverColumnName);

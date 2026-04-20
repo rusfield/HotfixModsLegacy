@@ -60,7 +60,7 @@ namespace HotfixMods.Infrastructure.Services
                     return null;
                 }
 
-                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, animKit.ID);
+                var hotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, (int)animKit.ID);
                 var result = new AnimKitDto()
                 {
                     AnimKit = animKit,
@@ -69,14 +69,15 @@ namespace HotfixMods.Infrastructure.Services
                     IsUpdate = true
                 };
 
-                var segments = await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id));
+                var segments = (await GetAsync<AnimKitSegment>(callback, progress, new DbParameter(nameof(AnimKitSegment.ParentAnimKitID), id)))
+                    .OrderBy(s => s.OrderIndex)
+                    .ThenBy(s => s.ID)
+                    .ToList();
                 callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(AnimKitConfig)} and {nameof(AnimKitConfigBoneSet)}", progress());
                 foreach (var segment in segments)
                 {
                     var animKitConfig = await GetSingleAsync<AnimKitConfig>(new DbParameter(nameof(AnimKitConfig.ID), segment.AnimKitConfigID)) ?? new();
                     var animKitConfigBoneSets = await GetAsync<AnimKitConfigBoneSet>(new DbParameter(nameof(AnimKitConfigBoneSet.ParentAnimKitConfigID), animKitConfig.ID));
-                    if (animKitConfigBoneSets.Count == 0)
-                        animKitConfigBoneSets.Add(new());
 
                     result.SegmentGroups.Add(new()
                     {
@@ -105,9 +106,10 @@ namespace HotfixMods.Infrastructure.Services
             try
             {
                 callback.Invoke(LoadingHelper.Saving, "Deleting existing data", progress());
+                NormalizeBeforeSave(dto);
                 if (dto.IsUpdate)
                 {
-                    await DeleteAsync(dto.AnimKit.ID);
+                    await DeleteAsync((int)dto.AnimKit.ID);
                 }
 
                 callback.Invoke(LoadingHelper.Saving, "Preparing to save", progress());

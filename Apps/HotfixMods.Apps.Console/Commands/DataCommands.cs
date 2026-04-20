@@ -1,4 +1,5 @@
 using HotfixMods.Apps.Console.Methods;
+using HotfixMods.Core.Enums;
 using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.Extensions;
@@ -188,20 +189,59 @@ internal sealed class DumpTransmogSetCommand : IConsoleCommand
 {
     public string Name => "dump-transmog-set";
     public string Description => "Print SQL for a TransmogSet-style DB2 export.";
-    public string Usage => "dump-transmog-set --db2-path <path> [--db2-name <name>] [--build <client-build>]";
+    public string Usage => "dump-transmog-set [--db2-path <path>] [--db2-name <name>] [--verified-build <int>] [--hotfix-start-id <int>] [--build <client-build>] [--server <host>] [--port <port>] [--user <user>] [--password <password>]";
 
     public async Task ExecuteAsync(ConsoleCommandContext context)
     {
         var db2Name = context.Arguments.GetOrDefault("db2-name", "TransmogSet");
+        var db2Path = context.RequireDb2Path();
+        var verifiedBuild = context.Arguments.GetInt("verified-build", -1337);
+        var hotfixId = await ResolveHotfixStartIdAsync(context);
         var client = context.CreateDb2Client();
-        var definition = await client.GetDefinitionAsync(context.Arguments.GetRequired("db2-path"), db2Name)
+        var definition = await client.GetDefinitionAsync(db2Path, db2Name)
             ?? throw new ConsoleCommandException($"No definition found for '{db2Name}'.");
-        var data = await client.GetAsync(context.Arguments.GetRequired("db2-path"), db2Name, definition);
+        var data = await client.GetAsync(db2Path, db2Name, definition);
+        var tableHash = (uint)TableHashes.TRANSMOG_SET;
+
+        System.Console.WriteLine($"SET @VerifiedBuild = {verifiedBuild};");
 
         foreach (var row in data)
         {
-            var name = row.GetValueByNameAs<string>("Name").Replace("'", "");
-            System.Console.WriteLine($"replace into transmog_set values('{name}', {row.GetIdValue()}, 0, 0, 0, 0, 0, 0, 1, {row.GetValueByNameAs<string>("ExpansionID")}, 90205, {row.GetValueByNameAs<string>("UiOrder")}, 0, -1337);");
+            var name = row.GetValueByNameAs<string>("Name").Replace("'", "''");
+            var recordId = row.GetIdValue();
+            System.Console.WriteLine(
+                $"replace into hotfixes.transmog_set (Name, ID, ClassMask, TrackingQuestID, Flags, TransmogSetGroupID, ItemNameDescriptionID, ParentTransmogSetID, Unknown810, ExpansionID, PatchID, UiOrder, PlayerConditionID, VerifiedBuild) values('{name}', {recordId}, 0, 0, 0, 0, 0, 0, 1, {row.GetValueByNameAs<string>("ExpansionID")}, 90205, {row.GetValueByNameAs<string>("UiOrder")}, 0, @VerifiedBuild);");
+            System.Console.WriteLine(
+                $"update hotfixes.hotfix_data set Status = 4 where TableHash = {tableHash} and RecordId = {recordId} and Status = 1;");
+            System.Console.WriteLine(
+                $"insert into hotfixes.hotfix_data (Id, UniqueId, TableHash, RecordId, Status, VerifiedBuild) values({hotfixId}, 0, {tableHash}, {recordId}, 1, @VerifiedBuild);");
+            hotfixId++;
+        }
+    }
+
+    private static async Task<int> ResolveHotfixStartIdAsync(ConsoleCommandContext context)
+    {
+        var configuredStartId = context.Arguments.Get("hotfix-start-id");
+        if (int.TryParse(configuredStartId, out var hotfixStartId))
+            return hotfixStartId;
+
+        try
+        {
+            var mySqlClient = context.CreateMySqlClient();
+            var highestHotfixId = await mySqlClient.GetHighestIdAsync("hotfixes", "hotfix_data", 0, int.MaxValue, "Id");
+            if (highestHotfixId == int.MaxValue)
+                throw new ConsoleCommandException("hotfixes.hotfix_data is full. Pass '--hotfix-start-id <int>' to override.");
+
+            return highestHotfixId + 1;
+        }
+        catch (ConsoleCommandException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw new ConsoleCommandException(
+                $"Unable to determine the next hotfix_data ID from MySQL ({ex.Message}). Pass '--hotfix-start-id <int>' or configure MySQL connection settings in appsettings.json.");
         }
     }
 }

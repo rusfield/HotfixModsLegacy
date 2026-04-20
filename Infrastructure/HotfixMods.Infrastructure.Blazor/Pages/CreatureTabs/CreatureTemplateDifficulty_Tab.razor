@@ -24,24 +24,18 @@
             </InlineGroup>
             <InlineGroup Merged="false">
                 <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.HealthModifier)))" />
+                    <Input_Element T="uint" @bind-Value="Value.GoldMin" ValueCompare="ValueCompare?.GoldMin" Label="@nameof(Value.GoldMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMin)))" />
                 </LeftContent>
                 <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ManaModifier)))" />
-                </RightContent>
-            </InlineGroup>
-            <InlineGroup Merged="false">
-                <LeftContent>
-                    <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ArmorModifier)))" />
-                </LeftContent>
-                <RightContent>
-                    <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.DamageModifier)))" />
+                    <Input_Element T="uint" @bind-Value="Value.GoldMax" ValueCompare="ValueCompare?.GoldMax" Label="@nameof(Value.GoldMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMax)))" />
                 </RightContent>
             </InlineGroup>
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.GoldMin" ValueCompare="ValueCompare?.GoldMin" Label="@nameof(Value.GoldMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMin)))" />
-            <Input_Element T="uint" @bind-Value="Value.GoldMax" ValueCompare="ValueCompare?.GoldMax" Label="@nameof(Value.GoldMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.GoldMax)))" />
+            <Input_Element T="decimal" @bind-Value="Value.HealthModifier" ValueCompare="ValueCompare?.HealthModifier" Label="@nameof(Value.HealthModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.HealthModifier)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ManaModifier" ValueCompare="ValueCompare?.ManaModifier" Label="@nameof(Value.ManaModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ManaModifier)))" />
+            <Input_Element T="decimal" @bind-Value="Value.DamageModifier" ValueCompare="ValueCompare?.DamageModifier" Label="@nameof(Value.DamageModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.DamageModifier)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ArmorModifier" ValueCompare="ValueCompare?.ArmorModifier" Label="@nameof(Value.ArmorModifier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.ArmorModifier)))" />
         </MudItem>
     </PagedDtoContentPage>
     <PagedDtoContentPage>

@@ -134,6 +134,18 @@ internal sealed class ConsoleCommandContext
         return Settings.DbdDefinitionsPath;
     }
 
+    public string RequireDb2Path()
+    {
+        var db2Path = Arguments.GetOrDefault("db2-path", GetConfiguredDb2Path());
+        if (string.IsNullOrWhiteSpace(db2Path))
+        {
+            throw new ConsoleCommandException(
+                "A DB2 path is required. Pass '--db2-path <path>' or set 'CustomizationRequirementOverride:Db2Path' or 'EyeColorExport:Db2Path' in appsettings.json.");
+        }
+
+        return db2Path;
+    }
+
     public string RequireListfilePath()
     {
         var listfilePath = Arguments.GetOrDefault("listfile-path", Settings.ListfilePath);
@@ -144,6 +156,17 @@ internal sealed class ConsoleCommandContext
         }
 
         return listfilePath;
+    }
+
+    private string GetConfiguredDb2Path()
+    {
+        if (!string.IsNullOrWhiteSpace(Settings.CustomizationRequirementOverride.Db2Path))
+            return Settings.CustomizationRequirementOverride.Db2Path;
+
+        if (!string.IsNullOrWhiteSpace(Settings.EyeColorExport.Db2Path))
+            return Settings.EyeColorExport.Db2Path;
+
+        return string.Empty;
     }
 
     public CustomizationRequirementOverrideSettings CustomizationRequirementOverride => Settings.CustomizationRequirementOverride;

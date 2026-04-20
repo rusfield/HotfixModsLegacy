@@ -7,18 +7,18 @@ namespace HotfixMods.Infrastructure.Services
 {
     public partial class AnimKitService
     {
-        public async Task<Dictionary<ushort, string>> GetPriorityOptionsAsync()
+        public async Task<Dictionary<uint, string>> GetPriorityOptionsAsync()
         {
-            var options = await GetDb2OptionsAsync<ushort>("AnimKitPriority", "Priority");
+            var options = await GetDb2OptionsAsync<uint>("AnimKitPriority", "Priority");
             options[0] = "10000"; // Sort to top
             options = options.SortByValue(false);
             options[0] = "Disabled";
             return options;
         }
 
-        public async Task<Dictionary<byte, string>> GetBoneSetOptionsAsync()
+        public async Task<Dictionary<uint, string>> GetBoneSetOptionsAsync()
         {
-            return await GetDb2OptionsAsync<byte>("AnimKitBoneSet", "Name");
+            return await GetDb2OptionsAsync<uint>("AnimKitBoneSet", "Name");
         }
     }
 }

@@ -116,20 +116,7 @@ namespace HotfixMods.Providers.MySqlConnector.Client
                     }
                     else
                     {
-                        propertyValue = column.GetServerType().ToString() switch
-                        {
-                            "System.SByte" => reader.GetSByte(ordinal),
-                            "System.Int16" => reader.GetInt16(ordinal),
-                            "System.Int32" => reader.GetInt32(ordinal),
-                            "System.Int64" => reader.GetInt64(ordinal),
-                            "System.Byte" => reader.GetByte(ordinal),
-                            "System.UInt16" => reader.GetUInt16(ordinal),
-                            "System.UInt32" => reader.GetUInt32(ordinal),
-                            "System.UInt64" => reader.GetUInt64(ordinal),
-                            "System.String" => reader.GetString(ordinal),
-                            "System.Decimal" => Convert.ToDecimal(reader.GetFloat(ordinal)),
-                            _ => throw new Exception($"{dbRowDefinition.ColumnDefinitions.ElementAt(i).Type} not implemented.")
-                        };
+                        propertyValue = ReadValueForColumn(reader, ordinal, tableName, column);
                     }
 
                     if (column.GetServerType() != column.Type)

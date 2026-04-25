@@ -1,0 +1,47 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject ConversationService Service
+@inject ISnackbar Snackbar
+@inherits PageBase<ConversationDto>
+
+<DtoTabsContent T="ConversationDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<ConversationSearchId_Dialog>())" RequiredTypes="required" />
+
+@code {
+    List<Type> required = new()
+    {
+        typeof(ConversationTemplate)
+    };
+
+    async Task<bool> SaveAsync(ConversationDto dto, Action<string, string, int> callback)
+    {
+        if (!dto.ActorGroups.Any())
+        {
+            callback.Invoke("Validation", "Add at least one actor before saving.", 100);
+            Snackbar.Add("Add at least one actor before saving.", Severity.Warning);
+            return false;
+        }
+
+        if (!dto.LineGroups.Any())
+        {
+            callback.Invoke("Validation", "Add at least one line before saving.", 100);
+            Snackbar.Add("Add at least one line before saving.", Severity.Warning);
+            return false;
+        }
+
+        var actorCount = dto.ActorGroups.Count;
+        var invalidLine = dto.LineGroups
+            .Select((group, index) => new { group, index })
+            .FirstOrDefault(x => x.group.ConversationLineTemplate.ActorIdx >= actorCount);
+
+        if (invalidLine != null)
+        {
+            var message = $"Line {invalidLine.index + 1} references actor index {invalidLine.group.ConversationLineTemplate.ActorIdx}, but only {actorCount} actor slot(s) exist.";
+            callback.Invoke("Validation", message, 100);
+            Snackbar.Add(message, Severity.Warning);
+            return false;
+        }
+
+        return await Service.SaveAsync(dto, callback);
+    }
+}

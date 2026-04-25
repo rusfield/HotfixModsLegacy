@@ -160,6 +160,20 @@
             </ChildContent>
         </MudMenu>
 
+        @* Conversations *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Conversations"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Conversations))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Conversations", typeof(ConversationDashboard))))">My Conversations</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<ConversationSearchId_Dialog>(new PageTab("", typeof(Conversations))))">Search by ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<ConversationDto>(new PageTab("New Conversation", typeof(Conversations))))">New Conversation</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         @* Other Hotfixes *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Other Hotfixes"))">
             <ActivatorContent>

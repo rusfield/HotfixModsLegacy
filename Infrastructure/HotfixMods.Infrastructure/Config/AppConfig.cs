@@ -26,6 +26,7 @@ namespace HotfixMods.Infrastructure.Config
         public ServiceSettings CreatureSettings { get; set; } = new(3200000, 3300000, -5506);
         public ServiceSettings SpellSettings { get; set; } = new(5400000, 5500000, -5507);
         public ServiceSettings SpellVisualKitSettings { get; set; } = new(900000, 910000, -5508);
+        public ServiceSettings ConversationSettings { get; set; } = new(400000, 450000, -5009);
 
         public class MySqlSettings
         {

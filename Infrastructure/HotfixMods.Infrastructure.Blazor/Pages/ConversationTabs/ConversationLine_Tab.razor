@@ -1,0 +1,34 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ConversationDto, ConversationLine>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.SpellVisualKitID" ValueCompare="ValueCompare?.SpellVisualKitID" Label="@nameof(Value.SpellVisualKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.SpellVisualKitID)))" />
+        <Input_Element T="ushort" @bind-Value="Value.AnimKitID" ValueCompare="ValueCompare?.AnimKitID" Label="@nameof(Value.AnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.AnimKitID)))" />
+        <Input_Element T="byte" @bind-Value="Value.SpeechType" ValueCompare="ValueCompare?.SpeechType" Label="@nameof(Value.SpeechType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.SpeechType)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.AdditionalDuration" ValueCompare="ValueCompare?.AdditionalDuration" Label="@nameof(Value.AdditionalDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.AdditionalDuration)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="int" @bind-Value="Value.Unused1020" ValueCompare="ValueCompare?.Unused1020" Label="@nameof(Value.Unused1020).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.Unused1020)))" />
+            </RightContent>
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="ushort" @bind-Value="Value.NextConversationLineID" ValueCompare="ValueCompare?.NextConversationLineID" Label="@nameof(Value.NextConversationLineID).ToDisplayName()" Disabled="true" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="byte" @bind-Value="Value.StartAnimation" ValueCompare="ValueCompare?.StartAnimation" Label="@nameof(Value.StartAnimation).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.StartAnimation)))" />
+        <Input_Element T="byte" @bind-Value="Value.EndAnimation" ValueCompare="ValueCompare?.EndAnimation" Label="@nameof(Value.EndAnimation).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLine.EndAnimation)))" />
+        <Input_Element T="int" @bind-Value="Value.BroadcastTextID" ValueCompare="ValueCompare?.BroadcastTextID" Label="@nameof(Value.BroadcastTextID).ToDisplayName()" Disabled="true" />
+    </MudItem>
+</InstancedDtoContentPage>

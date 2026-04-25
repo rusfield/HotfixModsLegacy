@@ -1,0 +1,33 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ConversationDto, ConversationActors>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.ConversationActorId" ValueCompare="ValueCompare?.ConversationActorId" Label="@nameof(Value.ConversationActorId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.ConversationActorId)))" />
+        <Input_Element T="int" @bind-Value="Value.CreatureId" ValueCompare="ValueCompare?.CreatureId" Label="@nameof(Value.CreatureId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.CreatureId)))" />
+        <Input_Element T="int" @bind-Value="Value.CreatureDisplayInfoId" ValueCompare="ValueCompare?.CreatureDisplayInfoId" Label="@nameof(Value.CreatureDisplayInfoId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.CreatureDisplayInfoId)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="ulong" @bind-Value="Value.ConversationActorGuid" ValueCompare="ValueCompare?.ConversationActorGuid" Label="@nameof(Value.ConversationActorGuid).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.ConversationActorGuid)))" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="int" @bind-Value="Value.ConversationId" ValueCompare="ValueCompare?.ConversationId" Label="@nameof(Value.ConversationId).ToDisplayName()" Disabled="true" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="ushort" @bind-Value="Value.Idx" ValueCompare="ValueCompare?.Idx" Label="@nameof(Value.Idx).ToDisplayName()" Disabled="true" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="byte" @bind-Value="Value.NoActorObject" ValueCompare="ValueCompare?.NoActorObject" Label="@nameof(Value.NoActorObject).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.NoActorObject)))" />
+        <Input_Element T="byte" @bind-Value="Value.ActivePlayerObject" ValueCompare="ValueCompare?.ActivePlayerObject" Label="@nameof(Value.ActivePlayerObject).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationActors.ActivePlayerObject)))" />
+    </MudItem>
+</InstancedDtoContentPage>

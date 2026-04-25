@@ -91,6 +91,23 @@ namespace HotfixMods.Infrastructure.Services
             return await GetNextIdAsync(GetSchemaNameOfEntity<T>(), GetTableNameOfEntity<T>(), FromId, ToId, GetIdPropertyNameOfEntity<T>());
         }
 
+        protected async Task<int> GetNextIdInRangeAsync(string schemaName, string tableName, int fromId, int toId, string idPropertyName)
+        {
+            var highestId = await _serverDbProvider.GetHighestIdAsync(schemaName, tableName, fromId, toId, idPropertyName);
+
+            if (highestId > 0)
+            {
+                if (highestId == toId)
+                {
+                    throw new Exception("Database is full.");
+                }
+
+                return highestId + 1;
+            }
+
+            return fromId;
+        }
+
         protected async Task<int> GetNextIdAsync(string db2Name)
         {
             return await GetNextIdAsync(_appConfig.HotfixesSchema, db2Name.ToTableName(), FromId, ToId, "id");

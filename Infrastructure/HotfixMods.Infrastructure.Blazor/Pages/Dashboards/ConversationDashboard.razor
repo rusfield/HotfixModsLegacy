@@ -1,0 +1,23 @@
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject ConversationService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="ConversationDto" IdTitle="Conversation ID" GetByIdAsync_Func="GetByIdAsync" DeleteByIdAsync_Func="DeleteByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Conversations)" />
+
+@code
+{
+    async Task<ConversationDto?> GetByIdAsync(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(ConversationSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<ConversationSearchId_Dialog>(null, parameters).Result;
+        return (ConversationDto?)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

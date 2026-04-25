@@ -1,0 +1,24 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ConversationDto, ConversationLineTemplate>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.UiCameraID" ValueCompare="ValueCompare?.UiCameraID" Label="@nameof(Value.UiCameraID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLineTemplate.UiCameraID)))" />
+        <Input_Element T="byte" @bind-Value="Value.ActorIdx" ValueCompare="ValueCompare?.ActorIdx" Label="@nameof(Value.ActorIdx).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLineTemplate.ActorIdx)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup Merged="false">
+            <LeftContent>
+                <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLineTemplate.Flags)))" />
+            </LeftContent>
+            <RightContent>
+                <Input_Element T="byte" @bind-Value="Value.ChatType" ValueCompare="ValueCompare?.ChatType" Label="@nameof(Value.ChatType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationLineTemplate.ChatType)))" />
+            </RightContent>
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.Id" ValueCompare="ValueCompare?.Id" Label="@nameof(Value.Id).ToDisplayName()" Disabled="true" />
+    </MudItem>
+</InstancedDtoContentPage>

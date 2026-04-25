@@ -1,0 +1,41 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ConversationDto, BroadcastText>
+
+<PagedDtoContent T="BroadcastText">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.LanguageID" ValueCompare="ValueCompare?.LanguageID" Label="@nameof(Value.LanguageID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.LanguageID)))" />
+            <Input_Element T="int" @bind-Value="Value.ConditionID" ValueCompare="ValueCompare?.ConditionID" Label="@nameof(Value.ConditionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.ConditionID)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmotesID" ValueCompare="ValueCompare?.EmotesID" Label="@nameof(Value.EmotesID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmotesID)))" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.Flags)))" />
+            <Input_Element T="int" @bind-Value="Value.ChatBubbleDurationMs" ValueCompare="ValueCompare?.ChatBubbleDurationMs" Label="@nameof(Value.ChatBubbleDurationMs).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.ChatBubbleDurationMs)))" />
+            <Input_Element T="int" @bind-Value="Value.VoiceOverPriorityID" ValueCompare="ValueCompare?.VoiceOverPriorityID" Label="@nameof(Value.VoiceOverPriorityID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.VoiceOverPriorityID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" Lines="5" Variant="Variant.Text" @bind-Value="Value.Text" ValueCompare="ValueCompare?.Text" Label="@nameof(Value.Text).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.Text)))" />
+            <Input_Element T="string" Lines="7" Variant="Variant.Text" @bind-Value="Value.Text1" ValueCompare="ValueCompare?.Text1" Label="@nameof(Value.Text1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.Text1)))" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.SoundKitID1" ValueCompare="ValueCompare?.SoundKitID1" Label="@nameof(Value.SoundKitID1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.SoundKitID1)))" />
+            <Input_Element T="int" @bind-Value="Value.SoundKitID2" ValueCompare="ValueCompare?.SoundKitID2" Label="@nameof(Value.SoundKitID2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.SoundKitID2)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmoteID1" ValueCompare="ValueCompare?.EmoteID1" Label="@nameof(Value.EmoteID1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteID1)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmoteID2" ValueCompare="ValueCompare?.EmoteID2" Label="@nameof(Value.EmoteID2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteID2)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.EmoteID3" ValueCompare="ValueCompare?.EmoteID3" Label="@nameof(Value.EmoteID3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteID3)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmoteDelay1" ValueCompare="ValueCompare?.EmoteDelay1" Label="@nameof(Value.EmoteDelay1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteDelay1)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmoteDelay2" ValueCompare="ValueCompare?.EmoteDelay2" Label="@nameof(Value.EmoteDelay2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteDelay2)))" />
+            <Input_Element T="ushort" @bind-Value="Value.EmoteDelay3" ValueCompare="ValueCompare?.EmoteDelay3" Label="@nameof(Value.EmoteDelay3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(BroadcastText.EmoteDelay3)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

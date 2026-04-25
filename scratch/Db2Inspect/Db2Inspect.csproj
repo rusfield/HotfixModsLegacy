@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="HotfixMods.Core">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\HotfixMods.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="HotfixMods.Infrastructure">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\HotfixMods.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="HotfixMods.Providers.WowDev">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\HotfixMods.Providers.WowDev.dll</HintPath>
+    </Reference>
+    <Reference Include="DBCD">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\DBCD.dll</HintPath>
+    </Reference>
+    <Reference Include="DBCD.IO">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\DBCD.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="DBDefsLib">
+      <HintPath>..\..\Apps\HotfixMods.Apps.Console\bin\Debug\net10.0\DBDefsLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,17 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ConversationDto, ConversationTemplate>
+
+<StandardDtoContent T="ConversationTemplate">
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.TextureKitId" ValueCompare="ValueCompare?.TextureKitId" Label="@nameof(Value.TextureKitId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationTemplate.TextureKitId)))" />
+        <Input_Element T="byte" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationTemplate.Flags)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ConversationTemplate.ScriptName)))" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.FirstLineId" ValueCompare="ValueCompare?.FirstLineId" Label="@nameof(Value.FirstLineId).ToDisplayName()" Disabled="true" />
+    </MudItem>
+</StandardDtoContent>

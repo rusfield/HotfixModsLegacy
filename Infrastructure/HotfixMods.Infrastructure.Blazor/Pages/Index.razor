@@ -59,6 +59,20 @@
         </div>
         <MudText Color="Color.Inherit" Typo="Typo.h5">|</MudText>
 
+        @* Creature Model Data *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Creature Model Data"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(CreatureModelData))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Creature Model Data", typeof(CreatureModelDataDashboard))))">My Creature Model Data</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<CreatureModelDataSearchCreatureId_Dialog>(new PageTab("", typeof(CreatureModelData))))">Search by Creature ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<CreatureModelDataDto>(new PageTab("New Creature Model Data", typeof(CreatureModelData))))">New Creature Model Data</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         @* Creatures *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Creatures"))">
             <ActivatorContent>

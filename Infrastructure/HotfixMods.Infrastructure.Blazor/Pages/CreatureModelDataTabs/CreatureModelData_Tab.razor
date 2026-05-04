@@ -1,0 +1,106 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<CreatureModelDataDto, CreatureModelData>
+
+<PagedDtoContent T="CreatureModelData">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.FileDataID" ValueCompare="ValueCompare?.FileDataID" Label="@nameof(Value.FileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FileDataID)))" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.Flags)))" />
+            <Input_Element T="uint" @bind-Value="Value.SoundID" ValueCompare="ValueCompare?.SoundID" Label="@nameof(Value.SoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.SoundID)))" />
+            <Input_Element T="uint" @bind-Value="Value.BloodID" ValueCompare="ValueCompare?.BloodID" Label="@nameof(Value.BloodID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.BloodID)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.SizeClass" ValueCompare="ValueCompare?.SizeClass" Label="@nameof(Value.SizeClass).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.SizeClass)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.WalkSpeed" ValueCompare="ValueCompare?.WalkSpeed" Label="@nameof(Value.WalkSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.WalkSpeed)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.RunSpeed" ValueCompare="ValueCompare?.RunSpeed" Label="@nameof(Value.RunSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.RunSpeed)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ModelScale" ValueCompare="ValueCompare?.ModelScale" Label="@nameof(Value.ModelScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.ModelScale)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.WorldEffectScale" ValueCompare="ValueCompare?.WorldEffectScale" Label="@nameof(Value.WorldEffectScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.WorldEffectScale)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.CollisionWidth" ValueCompare="ValueCompare?.CollisionWidth" Label="@nameof(Value.CollisionWidth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.CollisionWidth)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CollisionHeight" ValueCompare="ValueCompare?.CollisionHeight" Label="@nameof(Value.CollisionHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.CollisionHeight)))" />
+            <Input_Element T="decimal" @bind-Value="Value.MountHeight" ValueCompare="ValueCompare?.MountHeight" Label="@nameof(Value.MountHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MountHeight)))" />
+            <Input_Element T="decimal" @bind-Value="Value.HoverHeight" ValueCompare="ValueCompare?.HoverHeight" Label="@nameof(Value.HoverHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.HoverHeight)))" />
+            <Input_Element T="decimal" @bind-Value="Value.AttachedEffectScale" ValueCompare="ValueCompare?.AttachedEffectScale" Label="@nameof(Value.AttachedEffectScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.AttachedEffectScale)))" />
+            <Input_Element T="decimal" @bind-Value="Value.TamedPetBaseScale" ValueCompare="ValueCompare?.TamedPetBaseScale" Label="@nameof(Value.TamedPetBaseScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.TamedPetBaseScale)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox1" ValueCompare="ValueCompare?.GeoBox1" Label="@nameof(Value.GeoBox1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox1)))" />
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox2" ValueCompare="ValueCompare?.GeoBox2" Label="@nameof(Value.GeoBox2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox2)))" />
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox3" ValueCompare="ValueCompare?.GeoBox3" Label="@nameof(Value.GeoBox3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox3)))" />
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox4" ValueCompare="ValueCompare?.GeoBox4" Label="@nameof(Value.GeoBox4).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox4)))" />
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox5" ValueCompare="ValueCompare?.GeoBox5" Label="@nameof(Value.GeoBox5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox5)))" />
+            <Input_Element T="decimal" @bind-Value="Value.GeoBox6" ValueCompare="ValueCompare?.GeoBox6" Label="@nameof(Value.GeoBox6).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.GeoBox6)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.MissileCollisionRadius" ValueCompare="ValueCompare?.MissileCollisionRadius" Label="@nameof(Value.MissileCollisionRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MissileCollisionRadius)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.MissileCollisionPush" ValueCompare="ValueCompare?.MissileCollisionPush" Label="@nameof(Value.MissileCollisionPush).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MissileCollisionPush)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.MissileCollisionRaise" ValueCompare="ValueCompare?.MissileCollisionRaise" Label="@nameof(Value.MissileCollisionRaise).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MissileCollisionRaise)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.CreatureGeosetDataID" ValueCompare="ValueCompare?.CreatureGeosetDataID" Label="@nameof(Value.CreatureGeosetDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.CreatureGeosetDataID)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.FootprintTextureID" ValueCompare="ValueCompare?.FootprintTextureID" Label="@nameof(Value.FootprintTextureID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FootprintTextureID)))" />
+            <Input_Element T="decimal" @bind-Value="Value.FootprintTextureLength" ValueCompare="ValueCompare?.FootprintTextureLength" Label="@nameof(Value.FootprintTextureLength).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FootprintTextureLength)))" />
+            <Input_Element T="decimal" @bind-Value="Value.FootprintTextureWidth" ValueCompare="ValueCompare?.FootprintTextureWidth" Label="@nameof(Value.FootprintTextureWidth).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FootprintTextureWidth)))" />
+            <Input_Element T="decimal" @bind-Value="Value.FootprintParticleScale" ValueCompare="ValueCompare?.FootprintParticleScale" Label="@nameof(Value.FootprintParticleScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FootprintParticleScale)))" />
+            <Input_Element T="uint" @bind-Value="Value.FoleyMaterialID" ValueCompare="ValueCompare?.FoleyMaterialID" Label="@nameof(Value.FoleyMaterialID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FoleyMaterialID)))" />
+            <Input_Element T="uint" @bind-Value="Value.FootstepCameraEffectID" ValueCompare="ValueCompare?.FootstepCameraEffectID" Label="@nameof(Value.FootstepCameraEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.FootstepCameraEffectID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.DeathThudCameraEffectID" ValueCompare="ValueCompare?.DeathThudCameraEffectID" Label="@nameof(Value.DeathThudCameraEffectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.DeathThudCameraEffectID)))" />
+            <Input_Element T="decimal" @bind-Value="Value.OverrideLootEffectScale" ValueCompare="ValueCompare?.OverrideLootEffectScale" Label="@nameof(Value.OverrideLootEffectScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.OverrideLootEffectScale)))" />
+            <Input_Element T="decimal" @bind-Value="Value.OverrideNameScale" ValueCompare="ValueCompare?.OverrideNameScale" Label="@nameof(Value.OverrideNameScale).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.OverrideNameScale)))" />
+            <Input_Element T="decimal" @bind-Value="Value.OverrideSelectionRadius" ValueCompare="ValueCompare?.OverrideSelectionRadius" Label="@nameof(Value.OverrideSelectionRadius).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.OverrideSelectionRadius)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.MountScaleOtherIndex" ValueCompare="ValueCompare?.MountScaleOtherIndex" Label="@nameof(Value.MountScaleOtherIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MountScaleOtherIndex)))" />
+            <Input_Element T="decimal" @bind-Value="Value.MountScaleSelf" ValueCompare="ValueCompare?.MountScaleSelf" Label="@nameof(Value.MountScaleSelf).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MountScaleSelf)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="ushort" @bind-Value="Value.Unknown1100" ValueCompare="ValueCompare?.Unknown1100" Label="@nameof(Value.Unknown1100).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.Unknown1100)))" />
+                </LeftContent>
+                <RightContent />
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.MountScaleOther1" ValueCompare="ValueCompare?.MountScaleOther1" Label="@nameof(Value.MountScaleOther1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MountScaleOther1)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.MountScaleOther2" ValueCompare="ValueCompare?.MountScaleOther2" Label="@nameof(Value.MountScaleOther2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureModelData.MountScaleOther2)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3" />
+    </PagedDtoContentPage>
+</PagedDtoContent>

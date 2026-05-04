@@ -209,6 +209,22 @@
         </MudItem>
 
         <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Creature Model Data</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureModelDataSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureModelDataSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.CreatureModelDataSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
             <MudText Typo="Typo.h6">Spell</MudText>
             <MudDivider />
             <MudGrid Class="py-2" Spacing="2">

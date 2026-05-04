@@ -1,0 +1,31 @@
+<h2>Framework Direction</h2>
+<p class="subtitle">Windows desktop first, with the architecture kept portable for Mac/Linux later.</p>
+
+<div class="options">
+  <div class="option" data-choice="maui-blazor" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>MAUI + Blazor Hybrid</h3>
+      <p>Best fit for JS packages, CSS themes, rich searchable dropdowns, Semantic Kernel chat UI, and reusing web UI patterns. Windows first is WebView2; later Mac uses Mac Catalyst.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="avalonia" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Avalonia Desktop</h3>
+      <p>Best fit for true native cross-platform desktop. Strong theming and Linux/Mac story, but searchable data-heavy editors and JS integration take more custom work.</p>
+    </div>
+  </div>
+  <div class="option" data-choice="core-portable-ui-swappable" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Portable Core, Blazor First</h3>
+      <p>Build the domain, MySQL, settings, events, and AI contracts UI-agnostic. Ship MAUI Blazor first, but keep Avalonia possible later without rewriting business logic.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Recommendation</h3>
+  <p>Choose C in architecture and A for the first shell: a clean portable core with a MAUI Blazor Hybrid Windows app as the first UI.</p>
+</div>

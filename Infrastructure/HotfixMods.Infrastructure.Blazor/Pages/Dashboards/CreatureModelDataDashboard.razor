@@ -1,0 +1,19 @@
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject CreatureModelDataService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="CreatureModelDataDto" IdTitle="Creature Model Data ID" AdditionalIdTitle="File Data ID" GetByIdAsync_Func="GetByIdAsync" DeleteByIdAsync_Func="DeleteByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(HotfixMods.Infrastructure.Blazor.Pages.CreatureModelData)" />
+
+@code {
+    async Task<CreatureModelDataDto?> GetByIdAsync(int id)
+    {
+        return await Service.GetByIdAsync(id);
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

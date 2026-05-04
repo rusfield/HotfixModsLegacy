@@ -1,0 +1,85 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
+
+@inject CreatureModelDataService Service
+
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(HotfixMods.Infrastructure.Blazor.Pages.CreatureModelData))">
+    @if (isLoading)
+    {
+        <Placeholder_Element Amount="1" Visible="true" />
+    }
+    else
+    {
+        <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by Creature ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="GetAvailableOptionsAsync" />
+    }
+    @if (options.Count > 0)
+    {
+        for (int i = 0; i < options.Count; i++)
+        {
+            var index = i;
+            <MudButton OnClick="@(async () => await GetByCreatureIdAsync((int)options.ElementAt(index).Key))">
+                @options.ElementAt(index).Value
+            </MudButton>
+        }
+    }
+</DialogSearch>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    [Parameter]
+    public int? Idx { get; set; }
+
+    DialogSearch? dialogSearchRef;
+    Dictionary<uint, string> options = new();
+    bool isLoading = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Id != null)
+        {
+            await GetByCreatureIdAsync(Idx ?? 0, true);
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GetByCreatureIdAsync(int idx, bool closeOnFail = false)
+    {
+        if (Id != null)
+        {
+            var data = await Service.GetByCreatureIdAsync((int)Id, idx, dialogSearchRef!.SetLoaderProgress);
+            if (data != null || closeOnFail)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef.CancelLoaderWithMessage("No Creature Model Data found.");
+            }
+        }
+    }
+
+    async Task GetAvailableOptionsAsync()
+    {
+        isLoading = true;
+        if (Id != null)
+        {
+            var availableOptions = await Service.GetAvailableDisplayOptionsAsync((uint)Id);
+            if (availableOptions.Count > 1)
+            {
+                options = availableOptions;
+            }
+            else
+            {
+                await GetByCreatureIdAsync(0);
+            }
+        }
+        isLoading = false;
+    }
+}

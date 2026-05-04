@@ -37,6 +37,10 @@ namespace HotfixMods.Infrastructure.Services
                     {
                         name += $"{model.CreatureDisplayID}";
                     }
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        name = $"Display {model.CreatureDisplayID} (Idx {model.Idx})";
+                    }
                     result.Add(model.Idx, name);
                 }
                 return result;

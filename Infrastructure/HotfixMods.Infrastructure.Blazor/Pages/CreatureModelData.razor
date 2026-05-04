@@ -1,0 +1,14 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject CreatureModelDataService Service
+@inherits PageBase<CreatureModelDataDto>
+
+<DtoTabsContent T="CreatureModelDataDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<CreatureModelDataSearchCreatureId_Dialog>())" RequiredTypes="required" />
+
+@code {
+    List<Type> required = new()
+    {
+        typeof(HotfixMods.Core.Models.Db2.CreatureModelData)
+    };
+}

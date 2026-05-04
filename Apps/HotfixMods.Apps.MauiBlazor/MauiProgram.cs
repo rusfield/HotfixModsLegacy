@@ -93,6 +93,7 @@ namespace HotfixMods.Apps.MauiBlazor
             builder.Services.AddSingleton<SoundKitService>();
             builder.Services.AddSingleton<ItemService>();
             builder.Services.AddSingleton<CreatureService>();
+            builder.Services.AddSingleton<CreatureModelDataService>();
             builder.Services.AddSingleton<SpellService>();
             builder.Services.AddSingleton<SpellVisualKitService>();
             builder.Services.AddSingleton<ConversationService>();

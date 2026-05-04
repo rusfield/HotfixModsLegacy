@@ -1,0 +1,26 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<ItemDto, ItemXBonusTree>
+@inject ItemService Service
+
+<StandardDtoContent T="ItemXBonusTree">
+    <MudItem xs="3" />
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <InlineGroup LeftContentWidth="15" RightContentWidth="15" MiddleContentWidth="70" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="ushort" @bind-Value="Value.ItemBonusTreeID" ValueCompare="ValueCompare?.ItemBonusTreeID" Label="@nameof(Value.ItemBonusTreeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemXBonusTree.ItemBonusTreeID)))" GetOptionsAsync_Func="Service.GetItemBonusTreeIdOptionsAsync" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+        <InlineGroup LeftContentWidth="20" RightContentWidth="20" MiddleContentWidth="60" Merged="false">
+            <LeftContent />
+            <MiddleContent>
+                <Input_Element T="int" @bind-Value="Value.ItemID" ValueCompare="ValueCompare?.ItemID" Label="@nameof(Value.ItemID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(ItemXBonusTree.ItemID)))" Disabled="true" />
+            </MiddleContent>
+            <RightContent />
+        </InlineGroup>
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>

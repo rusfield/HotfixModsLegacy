@@ -75,7 +75,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<ItemDto?> GetByItemDisplayInfoId(int itemDisplayInfoId, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(9);
+            var progress = LoadingHelper.GetLoaderFunc(10);
 
             try
             {
@@ -110,8 +110,13 @@ namespace HotfixMods.Infrastructure.Services
                             result.IsUpdate = true;
 
                             var itemXItemEffect = await GetAsync<ItemXItemEffect>(callback, progress, new DbParameter(nameof(ItemXItemEffect.ItemID), result.Item.ID));
+                            var itemXBonusTree = await GetAsync<ItemXBonusTree>(callback, progress, new DbParameter(nameof(ItemXBonusTree.ItemID), result.Item.ID));
 
                             callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemEffect)}", progress());
+                            result.ItemXBonusTreeGroups = itemXBonusTree
+                                .Select(i => new ItemDto.ItemXBonusTreeGroup { ItemXBonusTree = i })
+                                .ToList();
+
                             await itemXItemEffect.ForEachAsync(async i =>
                             {
                                 var itemEffect = await GetSingleAsync<ItemEffect>(new DbParameter(nameof(ItemEffect.ID), i.ItemEffectID));
@@ -149,7 +154,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<ItemDto?> GetByIdAsync(int id, int modifiedAppearanceOrderIndex = 0, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(11);
+            var progress = LoadingHelper.GetLoaderFunc(12);
 
             try
             {
@@ -181,8 +186,13 @@ namespace HotfixMods.Infrastructure.Services
                     result.HotfixModsEntity.Name = result.ItemSparse.Display;
 
                 var itemXItemEffect = await GetAsync<ItemXItemEffect>(callback, progress, new DbParameter(nameof(ItemXItemEffect.ItemID), id));
+                var itemXBonusTree = await GetAsync<ItemXBonusTree>(callback, progress, new DbParameter(nameof(ItemXBonusTree.ItemID), id));
 
                 callback.Invoke(LoadingHelper.Loading, $"Loading {nameof(ItemEffect)}", progress());
+                result.ItemXBonusTreeGroups = itemXBonusTree
+                    .Select(i => new ItemDto.ItemXBonusTreeGroup { ItemXBonusTree = i })
+                    .ToList();
+
                 await itemXItemEffect.ForEachAsync(async i =>
                 {
                     var itemEffect = await GetSingleAsync<ItemEffect>(new DbParameter(nameof(ItemEffect.ID), i.ItemEffectID));
@@ -228,7 +238,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(ItemDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(14);
+            var progress = LoadingHelper.GetLoaderFunc(15);
 
             try
             {
@@ -269,6 +279,9 @@ namespace HotfixMods.Infrastructure.Services
                     }
                 }
 
+                callback.Invoke(LoadingHelper.Saving, $"Saving to {nameof(ItemXBonusTree)}", progress());
+                await SaveAsync(dto.ItemXBonusTreeGroups.Select(s => s.ItemXBonusTree).ToList());
+
                 callback.Invoke(LoadingHelper.Saving, $"Saving to {nameof(ItemEffect)} and {nameof(ItemXItemEffect)}", progress());
                 if (dto.EffectGroups.Any())
                 {
@@ -293,7 +306,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(11);
+            var progress = LoadingHelper.GetLoaderFunc(12);
 
             try
             {
@@ -305,6 +318,7 @@ namespace HotfixMods.Infrastructure.Services
                 }
                 var itemSearchName = await GetSingleAsync<ItemSearchName>(new DbParameter(nameof(ItemSearchName.ID), dto.Item.ID));
                 var itemXItemEffects = await GetAsync<ItemXItemEffect>(new DbParameter(nameof(ItemXItemEffect.ItemID), dto.Item.ID));
+                var itemXBonusTrees = await GetAsync<ItemXBonusTree>(new DbParameter(nameof(ItemXBonusTree.ItemID), dto.Item.ID));
 
                 if (dto.ItemDisplayInfo != null)
                 {
@@ -314,6 +328,7 @@ namespace HotfixMods.Infrastructure.Services
 
                 await DeleteAsync(callback, progress, itemSearchName);
                 await DeleteAsync(callback, progress, itemXItemEffects);
+                await DeleteAsync(callback, progress, itemXBonusTrees);
                 await DeleteAsync(callback, progress, dto.ItemDisplayInfoMaterialRes ?? new());
                 await DeleteAsync(callback, progress, dto.ItemDisplayInfo);
                 await DeleteAsync(callback, progress, dto.ItemAppearance);

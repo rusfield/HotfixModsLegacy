@@ -43,6 +43,7 @@ namespace HotfixMods.Infrastructure.Services
 
             // Step 2: Prepare IDs of list entities
             var nextItemDisplayInfoMaterialResId = await GetNextIdAsync<ItemDisplayInfoMaterialRes>();
+            var nextItemXBonusTreeId = await GetNextIdAsync<ItemXBonusTree>();
             var nextItemXItemEffectId = await GetNextIdAsync<ItemXItemEffect>();
             var nextItemEffectId = await GetNextIdAsync<ItemEffect>();
             var nextItemDisplayInfoModelMatResId = await GetNextIdAsync<ItemDisplayInfoModelMatRes>();
@@ -139,6 +140,15 @@ namespace HotfixMods.Infrastructure.Services
             {
                 eg.ItemEffect.ID = nextItemEffectId++;
                 eg.ItemEffect.VerifiedBuild = VerifiedBuild;
+            });
+
+            dto.ItemXBonusTreeGroups.ForEach(bg =>
+            {
+                if (bg.ItemXBonusTree.ID == 0 || !dto.IsUpdate)
+                    bg.ItemXBonusTree.ID = nextItemXBonusTreeId++;
+
+                bg.ItemXBonusTree.ItemID = (int)itemId;
+                bg.ItemXBonusTree.VerifiedBuild = VerifiedBuild;
             });
 
 

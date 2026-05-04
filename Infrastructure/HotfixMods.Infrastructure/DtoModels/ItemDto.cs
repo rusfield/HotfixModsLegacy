@@ -13,7 +13,13 @@ namespace HotfixMods.Infrastructure.DtoModels
         public ItemAppearance? ItemAppearance { get; set; }
         public ItemDisplayInfo? ItemDisplayInfo { get; set; }
         public List<ItemDisplayInfoMaterialRes>? ItemDisplayInfoMaterialRes { get; set; }
+        public List<ItemXBonusTreeGroup> ItemXBonusTreeGroups { get; set; } = new();
         public List<EffectGroup> EffectGroups { get; set; } = new();
+
+        public class ItemXBonusTreeGroup
+        {
+            public ItemXBonusTree ItemXBonusTree { get; set; } = new();
+        }
 
         public class EffectGroup
         {

@@ -5,6 +5,7 @@ namespace HotfixMods.Core.Models.TrinityCore
     [WorldSchema]
     public class CreatureEquipTemplate
     {
+        [IndexField]
         public uint CreatureID { get; set; } = 0;
         public byte ID { get; set; } = 1;
         public uint ItemId1 { get; set; } = 0;

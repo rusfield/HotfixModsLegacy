@@ -299,6 +299,23 @@ namespace HotfixMods.Infrastructure.Services
         }
         #endregion
 
+        #region ItemXBonusTree
+        public async Task<Dictionary<ushort, string>> GetItemBonusTreeIdOptionsAsync()
+        {
+            var results = new Dictionary<ushort, string>();
+            results.InitializeDefaultValue();
+
+            var itemBonusTrees = await GetAsync(_appConfig.HotfixesSchema, "ItemBonusTree", false, true);
+            foreach (var itemBonusTree in itemBonusTrees)
+            {
+                var id = itemBonusTree.GetIdValue();
+                if (id >= ushort.MinValue && id <= ushort.MaxValue)
+                    results[(ushort)id] = id.ToString();
+            }
+            return results;
+        }
+        #endregion
+
         #region ItemDisplayInfoMaterialRes
 
         public async Task<Dictionary<int, string>> GetMaterialResourceIdOptionsAsync()

@@ -1,0 +1,40 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<GossipDto, GossipNpcOption>
+
+<PagedDtoContent T="GossipNpcOption">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.GossipNpcOptionValue" ValueCompare="ValueCompare?.GossipNpcOptionValue" Label="Gossip Npc Option" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.GossipNpcOptionValue)))" />
+            <Input_Element T="int" @bind-Value="Value.LFGDungeonsID" ValueCompare="ValueCompare?.LFGDungeonsID" Label="@nameof(Value.LFGDungeonsID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.LFGDungeonsID)))" />
+            <Input_Element T="int" @bind-Value="Value.TrainerID" ValueCompare="ValueCompare?.TrainerID" Label="@nameof(Value.TrainerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.TrainerID)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.GarrFollowerTypeID" ValueCompare="ValueCompare?.GarrFollowerTypeID" Label="@nameof(Value.GarrFollowerTypeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.GarrFollowerTypeID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.CharShipmentID" ValueCompare="ValueCompare?.CharShipmentID" Label="@nameof(Value.CharShipmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.CharShipmentID)))" />
+            <Input_Element T="int" @bind-Value="Value.GarrTalentTreeID" ValueCompare="ValueCompare?.GarrTalentTreeID" Label="@nameof(Value.GarrTalentTreeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.GarrTalentTreeID)))" />
+            <Input_Element T="int" @bind-Value="Value.UiMapID" ValueCompare="ValueCompare?.UiMapID" Label="@nameof(Value.UiMapID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.UiMapID)))" />
+            <Input_Element T="int" @bind-Value="Value.UiItemInteractionID" ValueCompare="ValueCompare?.UiItemInteractionID" Label="@nameof(Value.UiItemInteractionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.UiItemInteractionID)))" />
+            <Input_Element T="int" @bind-Value="Value.CovenantID" ValueCompare="ValueCompare?.CovenantID" Label="@nameof(Value.CovenantID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.CovenantID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Unknown_1000_8" ValueCompare="ValueCompare?.Unknown_1000_8" Label="@nameof(Value.Unknown_1000_8).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.Unknown_1000_8)))" />
+            <Input_Element T="int" @bind-Value="Value.Unknown_1000_9" ValueCompare="ValueCompare?.Unknown_1000_9" Label="@nameof(Value.Unknown_1000_9).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.Unknown_1000_9)))" />
+            <Input_Element T="int" @bind-Value="Value.Unknown_1002_14" ValueCompare="ValueCompare?.Unknown_1002_14" Label="@nameof(Value.Unknown_1002_14).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.Unknown_1002_14)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.TraitTreeID" ValueCompare="ValueCompare?.TraitTreeID" Label="@nameof(Value.TraitTreeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.TraitTreeID)))" />
+            <Input_Element T="int" @bind-Value="Value.ProfessionID" ValueCompare="ValueCompare?.ProfessionID" Label="@nameof(Value.ProfessionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.ProfessionID)))" />
+            <Input_Element T="int" @bind-Value="Value.NeighborhoodMapID" ValueCompare="ValueCompare?.NeighborhoodMapID" Label="@nameof(Value.NeighborhoodMapID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.NeighborhoodMapID)))" />
+            <Input_Element T="int" @bind-Value="Value.SkillLineID" ValueCompare="ValueCompare?.SkillLineID" Label="@nameof(Value.SkillLineID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipNpcOption.SkillLineID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

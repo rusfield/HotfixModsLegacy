@@ -1,0 +1,36 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<GossipDto, GossipMenuOption>
+
+<PagedDtoContent T="GossipMenuOption">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="byte" @bind-Value="Value.OptionNpc" ValueCompare="ValueCompare?.OptionNpc" Label="@nameof(Value.OptionNpc).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.OptionNpc)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" @bind-Value="Value.OptionText" ValueCompare="ValueCompare?.OptionText" Label="@nameof(Value.OptionText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.OptionText)))" />
+            <Input_Element T="string" @bind-Value="Value.BoxText" ValueCompare="ValueCompare?.BoxText" Label="@nameof(Value.BoxText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.BoxText)))" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.Language" ValueCompare="ValueCompare?.Language" Label="@nameof(Value.Language).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.Language)))" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.Flags)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.ActionMenuID" ValueCompare="ValueCompare?.ActionMenuID" Label="@nameof(Value.ActionMenuID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.ActionMenuID)))" />
+            <Input_Element T="uint" @bind-Value="Value.ActionPoiID" ValueCompare="ValueCompare?.ActionPoiID" Label="@nameof(Value.ActionPoiID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.ActionPoiID)))" />
+            <Input_Element T="byte" @bind-Value="Value.BoxCoded" ValueCompare="ValueCompare?.BoxCoded" Label="@nameof(Value.BoxCoded).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.BoxCoded)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="ulong" @bind-Value="Value.BoxMoney" ValueCompare="ValueCompare?.BoxMoney" Label="@nameof(Value.BoxMoney).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.BoxMoney)))" />
+            <Input_Element T="uint" @bind-Value="Value.BoxBroadcastTextID" ValueCompare="ValueCompare?.BoxBroadcastTextID" Label="@nameof(Value.BoxBroadcastTextID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.BoxBroadcastTextID)))" />
+            <Input_Element T="int" @bind-Value="Value.SpellID" ValueCompare="ValueCompare?.SpellID" Label="@nameof(Value.SpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.SpellID)))" />
+            <Input_Element T="int" @bind-Value="Value.OverrideIconID" ValueCompare="ValueCompare?.OverrideIconID" Label="@nameof(Value.OverrideIconID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GossipMenuOption.OverrideIconID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

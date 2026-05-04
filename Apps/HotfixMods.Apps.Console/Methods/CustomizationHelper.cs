@@ -155,7 +155,7 @@ namespace HotfixMods.Apps.Console.Methods
         public int ChoiceStartId { get; set; } = 33000;
         public int ElementStartId { get; set; } = 120000;
         public int HotfixStartId { get; set; } = 901000000;
-        public int VerifiedBuild { get; set; } = -1340;
+        public int VerifiedBuild { get; set; } = -51340;
         public List<ChrModelId> Models { get; set; } =
         [
             ChrModelId.LIGHTFORGED_DRAENEI_FEMALE,

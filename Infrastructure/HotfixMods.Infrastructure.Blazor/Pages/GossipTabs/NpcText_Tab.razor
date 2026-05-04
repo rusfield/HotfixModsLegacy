@@ -1,0 +1,21 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<GossipDto, NpcText>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="float" @bind-Value="Value.Probability0" ValueCompare="ValueCompare?.Probability0" Label="@nameof(Value.Probability0).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability0)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability1" ValueCompare="ValueCompare?.Probability1" Label="@nameof(Value.Probability1).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability1)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability2" ValueCompare="ValueCompare?.Probability2" Label="@nameof(Value.Probability2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability2)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability3" ValueCompare="ValueCompare?.Probability3" Label="@nameof(Value.Probability3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability3)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="float" @bind-Value="Value.Probability4" ValueCompare="ValueCompare?.Probability4" Label="@nameof(Value.Probability4).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability4)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability5" ValueCompare="ValueCompare?.Probability5" Label="@nameof(Value.Probability5).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability5)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability6" ValueCompare="ValueCompare?.Probability6" Label="@nameof(Value.Probability6).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability6)))" />
+        <Input_Element T="float" @bind-Value="Value.Probability7" ValueCompare="ValueCompare?.Probability7" Label="@nameof(Value.Probability7).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(NpcText.Probability7)))" />
+    </MudItem>
+</InstancedDtoContentPage>

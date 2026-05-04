@@ -18,16 +18,17 @@ namespace HotfixMods.Infrastructure.Config
         public string BuildInfo { get; set; } = "10.1.5.50469";
         public bool CacheFileResults { get; set; } = true;
         public MySqlSettings MySql { get; set; } = new("127.0.0.1", "3306", "root", "root");
-        public ServiceSettings GenericHotfixSettings { get; set; } = new(0, 0, -5501);
-        public ServiceSettings AnimKitSettings { get; set; } = new(60000, 63000, -5502);
-        public ServiceSettings GameobjectSettings { get; set; } = new(400000, 900000, -5503);
-        public ServiceSettings SoundKitSettings { get; set; } = new(1100000, 1200000, -5504);
-        public ServiceSettings ItemSettings { get; set; } = new(2000000, 2100000, -5505);
-        public ServiceSettings CreatureSettings { get; set; } = new(3200000, 3300000, -5506);
-        public ServiceSettings CreatureModelDataSettings { get; set; } = new(36000, 37000, -5509);
-        public ServiceSettings SpellSettings { get; set; } = new(5400000, 5500000, -5507);
-        public ServiceSettings SpellVisualKitSettings { get; set; } = new(900000, 910000, -5508);
-        public ServiceSettings ConversationSettings { get; set; } = new(400000, 450000, -5009);
+        public ServiceSettings GenericHotfixSettings { get; set; } = new(0, 0, -55501);
+        public ServiceSettings AnimKitSettings { get; set; } = new(60000, 63000, -55502);
+        public ServiceSettings GameobjectSettings { get; set; } = new(400000, 900000, -55503);
+        public ServiceSettings SoundKitSettings { get; set; } = new(1100000, 1200000, -55504);
+        public ServiceSettings ItemSettings { get; set; } = new(2000000, 2100000, -55505);
+        public ServiceSettings CreatureSettings { get; set; } = new(3200000, 3300000, -55506);
+        public ServiceSettings CreatureModelDataSettings { get; set; } = new(36000, 37000, -55509);
+        public ServiceSettings SpellSettings { get; set; } = new(5400000, 5500000, -55507);
+        public ServiceSettings SpellVisualKitSettings { get; set; } = new(900000, 910000, -55508);
+        public ServiceSettings ConversationSettings { get; set; } = new(400000, 450000, -55009);
+        public ServiceSettings GossipSettings { get; set; } = new(5600000, 5700000, -55510);
 
         public class MySqlSettings
         {

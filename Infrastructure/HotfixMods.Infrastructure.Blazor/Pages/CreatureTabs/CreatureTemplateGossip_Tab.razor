@@ -1,0 +1,13 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<CreatureDto, CreatureTemplateGossip>
+
+<StandardDtoContent T="CreatureTemplateGossip">
+    <MudItem xs="3">
+        <Input_Element T="uint" @bind-Value="Value.MenuID" ValueCompare="ValueCompare?.MenuID" Label="Gossip Menu ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateGossip.MenuID)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+    <MudItem xs="3" />
+</StandardDtoContent>

@@ -1,0 +1,38 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject GossipService Service
+@inject ISnackbar Snackbar
+@inherits PageBase<GossipDto>
+
+<DtoTabsContent T="GossipDto" SaveAsync_Func="SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<GossipSearchId_Dialog>())" RequiredTypes="required" />
+
+@code {
+    List<Type> required = new();
+
+    async Task<bool> SaveAsync(GossipDto dto, Action<string, string, int> callback)
+    {
+        if (!dto.MenuGroups.Any())
+        {
+            callback.Invoke("Validation", "Add at least one menu before saving.", 100);
+            Snackbar.Add("Add at least one menu before saving.", Severity.Warning);
+            return false;
+        }
+
+        if (dto.MenuGroups.Any(g => !g.GreetingTextGroups.Any(t => !string.IsNullOrWhiteSpace(t.BroadcastText.Text) || !string.IsNullOrWhiteSpace(t.BroadcastText.Text1) || t.BroadcastText.ID > 0)))
+        {
+            callback.Invoke("Validation", "Each menu needs at least one greeting text.", 100);
+            Snackbar.Add("Each menu needs at least one greeting text.", Severity.Warning);
+            return false;
+        }
+
+        if (!dto.OptionGroups.Any())
+        {
+            callback.Invoke("Validation", "Add at least one gossip option before saving.", 100);
+            Snackbar.Add("Add at least one gossip option before saving.", Severity.Warning);
+            return false;
+        }
+
+        return await Service.SaveAsync(dto, callback);
+    }
+}

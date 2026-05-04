@@ -8,6 +8,7 @@ public sealed class ConsoleAppSettings
     public string? StartupCommand { get; set; }
     public MySqlConnectionSettings MySql { get; set; } = new();
     public CustomizationRequirementOverrideSettings CustomizationRequirementOverride { get; set; } = new();
+    public CustomizationRequirementUnlockSettings CustomizationRequirementUnlock { get; set; } = new();
     public EyeColorExportSettings EyeColorExport { get; set; } = new();
 }
 
@@ -26,7 +27,7 @@ public sealed class EyeColorExportSettings
     public int ChoiceStartId { get; set; } = 33000;
     public int ElementStartId { get; set; } = 120000;
     public int HotfixStartId { get; set; } = 901000000;
-    public int VerifiedBuild { get; set; } = -1340;
+    public int VerifiedBuild { get; set; } = -51340;
 }
 
 public sealed class CustomizationRequirementOverrideSettings
@@ -34,5 +35,13 @@ public sealed class CustomizationRequirementOverrideSettings
     public string Db2Path { get; set; } = string.Empty;
     public string OutputPath { get; set; } = string.Empty;
     public int HotfixStartId { get; set; } = 902000000;
-    public int VerifiedBuild { get; set; } = -1340;
+    public int VerifiedBuild { get; set; } = -51340;
+}
+
+public sealed class CustomizationRequirementUnlockSettings
+{
+    public string Db2Path { get; set; } = string.Empty;
+    public string OutputPath { get; set; } = string.Empty;
+    public int HotfixStartId { get; set; } = 902100000;
+    public int VerifiedBuild { get; set; } = -55500;
 }

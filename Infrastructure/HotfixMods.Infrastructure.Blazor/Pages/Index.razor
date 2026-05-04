@@ -188,6 +188,20 @@
             </ChildContent>
         </MudMenu>
 
+        @* Gossips *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Gossips"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Gossips))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Gossips", typeof(GossipDashboard))))">My Gossips</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<GossipSearchId_Dialog>(new PageTab("", typeof(Gossips))))">Search by Menu ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<GossipDto>(new PageTab("New Gossip", typeof(Gossips))))">New Gossip</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         @* Other Hotfixes *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Other Hotfixes"))">
             <ActivatorContent>

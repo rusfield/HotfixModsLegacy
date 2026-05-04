@@ -4,6 +4,7 @@ using HotfixMods.Core.Models;
 using HotfixMods.Core.Models.TrinityCore;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Infrastructure.Helpers;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace HotfixMods.Infrastructure.Services
@@ -238,7 +239,7 @@ namespace HotfixMods.Infrastructure.Services
                 var propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
                 definition.ColumnDefinitions.Add(new()
                 {
-                    Name = property.Name,
+                    Name = property.GetCustomAttribute<ColumnAttribute>()?.Name ?? property.Name,
                     Type = propertyType,
                     IsIndex = property.GetCustomAttribute<IndexFieldAttribute>() != null
                         || property.Name.Equals("ID", StringComparison.InvariantCultureIgnoreCase),

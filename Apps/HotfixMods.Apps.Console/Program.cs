@@ -33,6 +33,7 @@ internal static class Program
             new ExportCustomizationRequirementOverridesCommand(),
             new ExportEyeColorsCommand(),
             new GenerateCustomizationsCommand(),
+            new CustomizationRequirementUnlocksCommand(),
             new GenerateDb2DefinitionClassCommand(),
             new GenerateHotfixDataCommand(),
             new GenerateHotfixTableCommand(),

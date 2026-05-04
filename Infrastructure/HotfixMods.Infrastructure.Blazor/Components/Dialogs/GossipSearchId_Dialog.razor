@@ -1,0 +1,45 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Private
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Pages
+
+@inject GossipService Service
+
+<DialogSearch @ref="dialogSearchRef" Dialog="Dialog" Icon="@IconHandler.GetPageIcon(typeof(Gossips))">
+    <MudNumericField @bind-Value="@Id" Variant="Variant.Outlined" HideSpinButtons="true" Label="Search by Menu ID" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" OnAdornmentClick="(async () => await GetByIdAsync())" />
+</DialogSearch>
+
+@code {
+    [CascadingParameter]
+    MudDialogInstance Dialog { get; set; }
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    DialogSearch? dialogSearchRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && Id != null)
+        {
+            await GetByIdAsync(true);
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    async Task GetByIdAsync(bool closeOnFail = false)
+    {
+        if (Id != null)
+        {
+            var data = await Service.GetByIdAsync((int)Id, dialogSearchRef!.SetLoaderProgress);
+            if (data != null || closeOnFail)
+            {
+                Dialog.Close(data);
+            }
+            else
+            {
+                dialogSearchRef.CancelLoaderWithMessage("No gossip found.");
+            }
+        }
+    }
+}

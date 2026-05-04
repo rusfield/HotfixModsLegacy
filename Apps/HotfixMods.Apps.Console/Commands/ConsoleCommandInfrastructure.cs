@@ -163,6 +163,9 @@ internal sealed class ConsoleCommandContext
         if (!string.IsNullOrWhiteSpace(Settings.CustomizationRequirementOverride.Db2Path))
             return Settings.CustomizationRequirementOverride.Db2Path;
 
+        if (!string.IsNullOrWhiteSpace(Settings.CustomizationRequirementUnlock.Db2Path))
+            return Settings.CustomizationRequirementUnlock.Db2Path;
+
         if (!string.IsNullOrWhiteSpace(Settings.EyeColorExport.Db2Path))
             return Settings.EyeColorExport.Db2Path;
 
@@ -170,6 +173,7 @@ internal sealed class ConsoleCommandContext
     }
 
     public CustomizationRequirementOverrideSettings CustomizationRequirementOverride => Settings.CustomizationRequirementOverride;
+    public CustomizationRequirementUnlockSettings CustomizationRequirementUnlock => Settings.CustomizationRequirementUnlock;
     public EyeColorExportSettings EyeColorExport => Settings.EyeColorExport;
 
     public Db2Client CreateDb2Client()

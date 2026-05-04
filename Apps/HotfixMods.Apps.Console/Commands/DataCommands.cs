@@ -4,6 +4,7 @@ using HotfixMods.Core.Enums.Db2;
 using HotfixMods.Core.Models;
 using HotfixMods.Infrastructure.Extensions;
 using HotfixMods.Providers.Listfile.Client;
+using HotfixMods.Tools.Dev.Business;
 using HotfixMods.Tools.Initializer.Business;
 
 namespace HotfixMods.Apps.Console.Commands;
@@ -24,7 +25,7 @@ internal sealed class GenerateCustomizationsCommand : IConsoleCommand
             ChoiceStartId = context.Arguments.GetInt("choice-start-id", 33000),
             ElementStartId = context.Arguments.GetInt("element-start-id", 120000),
             HotfixStartId = context.Arguments.GetInt("hotfix-start-id", 901000000),
-            VerifiedBuild = context.Arguments.GetInt("verified-build", -1340),
+            VerifiedBuild = context.Arguments.GetInt("verified-build", -51340),
             Models = ParseModelIds(context.Arguments.GetCsv("models"))
         };
 
@@ -105,6 +106,34 @@ internal sealed class ExportCustomizationRequirementOverridesCommand : IConsoleC
 
         var exporter = new CustomizationRequirementOverrideExporter(context.CreateDb2Client(), options);
         await exporter.GenerateAsync();
+    }
+}
+
+internal sealed class CustomizationRequirementUnlocksCommand : IConsoleCommand
+{
+    public string Name => "customization-requirement-unlocks";
+    public string Description => "Generate customization requirement overrides that clear unlock and NPC-only gates.";
+    public string Usage => "customization-requirement-unlocks --db2-path <path> --output-path <path> [--hotfix-start-id <int>] [--verified-build <int>] [--build <client-build>]";
+
+    public async Task ExecuteAsync(ConsoleCommandContext context)
+    {
+        var configuredOptions = context.CustomizationRequirementUnlock;
+        var options = new CustomizationRequirementUnlockOptions
+        {
+            Db2DataPath = context.Arguments.GetOrDefault("db2-path", configuredOptions.Db2Path),
+            OutputPath = context.Arguments.GetOrDefault("output-path", configuredOptions.OutputPath),
+            HotfixStartId = context.Arguments.GetInt("hotfix-start-id", configuredOptions.HotfixStartId),
+            VerifiedBuild = context.Arguments.GetInt("verified-build", configuredOptions.VerifiedBuild),
+        };
+
+        if (string.IsNullOrWhiteSpace(options.Db2DataPath))
+            throw new ConsoleCommandException("Missing DB2 path. Pass '--db2-path <path>' or set 'CustomizationRequirementUnlock:Db2Path' in appsettings.json.");
+
+        if (string.IsNullOrWhiteSpace(options.OutputPath))
+            throw new ConsoleCommandException("Missing output path. Pass '--output-path <path>' or set 'CustomizationRequirementUnlock:OutputPath' in appsettings.json.");
+
+        var tool = new CustomizationRequirementUnlockTool(context.CreateDb2Client(), options);
+        await tool.GenerateAsync();
     }
 }
 
@@ -195,7 +224,7 @@ internal sealed class DumpTransmogSetCommand : IConsoleCommand
     {
         var db2Name = context.Arguments.GetOrDefault("db2-name", "TransmogSet");
         var db2Path = context.RequireDb2Path();
-        var verifiedBuild = context.Arguments.GetInt("verified-build", -1337);
+        var verifiedBuild = context.Arguments.GetInt("verified-build", -51337);
         var hotfixId = await ResolveHotfixStartIdAsync(context);
         var client = context.CreateDb2Client();
         var definition = await client.GetDefinitionAsync(db2Path, db2Name)
@@ -263,7 +292,7 @@ internal sealed class GenerateHotfixDataCommand : IConsoleCommand
         var hash = ParseHash(hashInput);
         foreach (var id in ids.Select(int.Parse))
         {
-            System.Console.WriteLine($"insert into hotfix_data values({startId + id}, 0, {hash}, {id}, 1, -1337);");
+            System.Console.WriteLine($"insert into hotfix_data values({startId + id}, 0, {hash}, {id}, 1, -51337);");
         }
 
         return Task.CompletedTask;

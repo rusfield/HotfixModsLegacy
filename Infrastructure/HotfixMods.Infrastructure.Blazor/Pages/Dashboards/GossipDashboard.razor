@@ -1,0 +1,23 @@
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject GossipService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="GossipDto" IdTitle="Menu ID" GetByIdAsync_Func="GetByIdAsync" DeleteByIdAsync_Func="DeleteByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Gossips)" />
+
+@code
+{
+    async Task<GossipDto?> GetByIdAsync(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(GossipSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<GossipSearchId_Dialog>(null, parameters).Result;
+        return (GossipDto?)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

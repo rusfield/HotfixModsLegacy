@@ -258,6 +258,7 @@ namespace HotfixMods.Infrastructure.Services
             var isCreateCreatureModelInfo = IsCreateOperation(dto.IsUpdate, dto.CreatureModelInfo.DisplayID);
             var isCreateCreatureEquipTemplate = IsCreateOperation(dto.IsUpdate, dto.CreatureEquipTemplate?.CreatureID);
             var isCreateCreatureTemplateDifficulty = IsCreateOperation(dto.IsUpdate, dto.CreatureTemplateDifficulty?.Entry);
+            var isCreateCreatureTemplateGossip = IsCreateOperation(dto.IsUpdate, dto.CreatureTemplateGossip?.CreatureID);
 
             // Step 1: Init IDs of single entities
             var hotfixModsEntityId = await GetIdByConditionsAsync<HotfixModsEntity>(dto.HotfixModsEntity.ID, dto.IsUpdate);
@@ -276,6 +277,12 @@ namespace HotfixMods.Infrastructure.Services
 
             dto.CreatureTemplate.Entry = (uint)creatureTemplateId;
             SetConfiguredVerifiedBuildOnCreate(dto.CreatureTemplate, isCreateCreatureTemplate);
+
+            if (dto.CreatureTemplateGossip != null)
+            {
+                dto.CreatureTemplateGossip.CreatureID = (uint)creatureTemplateId;
+                SetConfiguredVerifiedBuildOnCreate(dto.CreatureTemplateGossip, isCreateCreatureTemplateGossip);
+            }
 
             dto.CreatureTemplateModel.CreatureID = (uint)creatureTemplateId;
             dto.CreatureTemplateModel.CreatureDisplayID = (uint)creatureDisplayInfoId;

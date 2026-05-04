@@ -22,7 +22,13 @@ namespace HotfixMods.Apps.MauiBlazor.Config
                     appConfig.FirstLoad = true;
                 }
 
-                appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath));
+                appConfig = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(ConfigPath)) ?? new AppConfig();
+                if (appConfig.GossipSettings.FromId == 450000
+                    && appConfig.GossipSettings.ToId == 500000)
+                {
+                    appConfig.GossipSettings = new(5600000, 5700000, -55510);
+                    Save(appConfig);
+                }
             }
             catch
             {

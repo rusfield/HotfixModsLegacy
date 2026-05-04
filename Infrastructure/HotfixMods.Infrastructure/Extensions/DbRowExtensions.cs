@@ -19,7 +19,7 @@ namespace HotfixMods.Infrastructure.Extensions
             {
                 dbRow.Columns.Add(new()
                 {
-                    Name = property.Name,
+                    Name = property.GetCustomAttributes(false).OfType<ColumnAttribute>().FirstOrDefault()?.Name ?? property.Name,
                     Type = property.PropertyType,
                     Value = property.GetValue(entity)!
                 });
@@ -54,7 +54,9 @@ namespace HotfixMods.Infrastructure.Extensions
             {
                 try
                 {
-                    var existingProperty = typeof(T).GetProperties().Where(p => p.Name.Equals(column.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    var existingProperty = typeof(T).GetProperties()
+                        .Where(p => (p.GetCustomAttributes(false).OfType<ColumnAttribute>().FirstOrDefault()?.Name ?? p.Name).Equals(column.Name, StringComparison.InvariantCultureIgnoreCase))
+                        .FirstOrDefault();
                     if (existingProperty != null)
                     {
                         var targetType = Nullable.GetUnderlyingType(existingProperty.PropertyType) ?? existingProperty.PropertyType;

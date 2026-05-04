@@ -254,6 +254,7 @@ namespace HotfixMods.Infrastructure.Services
                     HotfixModsEntity = await GetExistingOrNewHotfixModsEntityAsync(callback, progress, id),
                     CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), id)),
                     CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), id)),
+                    CreatureTemplateGossip = (await GetAsync<CreatureTemplateGossip>(callback, progress, true, false, new DbParameter(nameof(CreatureTemplateGossip.CreatureID), id))).FirstOrDefault(),
                     CreatureTemplate = creatureTemplate,
                     IsUpdate = true
                 };
@@ -332,6 +333,7 @@ namespace HotfixMods.Infrastructure.Services
                         result.CreatureTemplate = creatureTemplate;
                         result.CreatureTemplateAddon = await GetSingleAsync<CreatureTemplateAddon>(callback, progress, new DbParameter(nameof(CreatureTemplateAddon.Entry), creatureTemplate.Entry));
                         result.CreatureEquipTemplate = await GetSingleAsync<CreatureEquipTemplate>(callback, progress, new DbParameter(nameof(CreatureEquipTemplate.CreatureID), creatureTemplate.Entry));
+                        result.CreatureTemplateGossip = (await GetAsync<CreatureTemplateGossip>(callback, progress, true, false, new DbParameter(nameof(CreatureTemplateGossip.CreatureID), creatureTemplate.Entry))).FirstOrDefault();
                         result.IsUpdate = true;
                     }
                     else
@@ -389,6 +391,10 @@ namespace HotfixMods.Infrastructure.Services
 
                 await SaveAsync(callback, progress, dto.HotfixModsEntity);
                 await SaveAsync(callback, progress, dto.CreatureTemplate);
+                if (dto.CreatureTemplateGossip?.MenuID > 0)
+                {
+                    await SaveAsync(callback, progress, dto.CreatureTemplateGossip);
+                }
                 await SaveAsync(callback, progress, dto.CreatureTemplateAddon);
                 await SaveAsync(callback, progress, dto.CreatureEquipTemplate);
                 await SaveAsync(callback, progress, dto.CreatureTemplateModel);
@@ -424,6 +430,7 @@ namespace HotfixMods.Infrastructure.Services
             {
                 var dto = await GetByIdAsync(id);
                 var ownsCreatureTemplate = HasConfiguredVerifiedBuild(dto?.CreatureTemplate);
+                var ownsCreatureTemplateGossip = HasConfiguredVerifiedBuild(dto?.CreatureTemplateGossip);
                 var ownsCreatureTemplateModel = HasConfiguredVerifiedBuild(dto?.CreatureTemplateModel);
                 var ownsCreatureModelInfo = HasConfiguredVerifiedBuild(dto?.CreatureModelInfo);
                 var ownsCreatureEquipTemplate = HasConfiguredVerifiedBuild(dto?.CreatureEquipTemplate);
@@ -448,6 +455,16 @@ namespace HotfixMods.Infrastructure.Services
                 await DeleteAsync(callback, progress, dto.CreatureDisplayInfoOption ?? new());
                 if (ownsCreatureTemplateDifficulty)
                     await DeleteAsync(callback, progress, dto.CreatureTemplateDifficulty);
+                if (ownsCreatureTemplateGossip && dto?.CreatureTemplateGossip != null)
+                {
+                    await DeleteAsync(
+                        callback,
+                        progress,
+                        _appConfig.WorldSchema,
+                        nameof(CreatureTemplateGossip).ToTableName(),
+                        new DbParameter(nameof(CreatureTemplateGossip.CreatureID), dto.CreatureTemplateGossip.CreatureID),
+                        new DbParameter(nameof(CreatureTemplateGossip.MenuID), dto.CreatureTemplateGossip.MenuID));
+                }
                 if (ownsCreatureTemplate)
                     await DeleteAsync(callback, progress, dto.CreatureTemplate);
                 await DeleteAsync(callback, progress, dto.HotfixModsEntity);

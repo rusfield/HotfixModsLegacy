@@ -114,6 +114,6 @@ namespace HotfixMods.Apps.Console.Methods
         public string Db2DataPath { get; set; } = string.Empty;
         public string OutputPath { get; set; } = string.Empty;
         public int HotfixStartId { get; set; } = 902000000;
-        public int VerifiedBuild { get; set; } = -1340;
+        public int VerifiedBuild { get; set; } = -51340;
     }
 }

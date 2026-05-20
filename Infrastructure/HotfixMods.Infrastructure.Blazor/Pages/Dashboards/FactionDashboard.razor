@@ -1,0 +1,22 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject FactionService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="FactionDto" IdTitle="Faction ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Factions)" />
+
+@code
+{
+    async Task<FactionDto?> GetByIdAsync(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(FactionSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<FactionSearchId_Dialog>(null, parameters).Result;
+        return (FactionDto?)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

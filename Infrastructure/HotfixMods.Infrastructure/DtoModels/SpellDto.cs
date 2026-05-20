@@ -12,6 +12,7 @@ namespace HotfixMods.Infrastructure.DtoModels
         public SpellAuraOptions? SpellAuraOptions { get; set; }
         public SpellPower? SpellPower { get; set; }
         public SpellCooldowns? SpellCooldowns { get; set; }
+        public HotfixMods.Core.Models.TrinityCore.SpellCustomAttr? SpellCustomAttr { get; set; }
         public List<VisualGroup> VisualGroups { get; set; } = new();
         public List<EffectGroup> EffectGroups { get; set; } = new();
 

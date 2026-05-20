@@ -89,6 +89,20 @@
             </ChildContent>
         </MudMenu>
 
+        @* Factions *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Factions"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Factions))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Factions", typeof(FactionDashboard))))">My Factions</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<FactionSearchId_Dialog>(new PageTab("", typeof(Factions))))">Search by ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<FactionDto>(new PageTab("New Faction", typeof(Factions))))">New Faction</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         @* Gameobjects *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Game Objects"))">
             <ActivatorContent>

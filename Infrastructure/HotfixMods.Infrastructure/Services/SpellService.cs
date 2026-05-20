@@ -49,7 +49,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<SpellDto?> GetByIdAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(12);
+            var progress = LoadingHelper.GetLoaderFunc(13);
 
             try
             {
@@ -69,6 +69,7 @@ namespace HotfixMods.Infrastructure.Services
                     SpellAuraOptions = await GetSingleAsync<SpellAuraOptions>(callback, progress, new DbParameter(nameof(SpellAuraOptions.SpellID), id)),
                     SpellPower = await GetSingleAsync<SpellPower>(callback, progress, new DbParameter(nameof(SpellPower.SpellID), id)),
                     SpellCooldowns = await GetSingleAsync<SpellCooldowns>(callback, progress, new DbParameter(nameof(SpellCooldowns.SpellID), id)),
+                    SpellCustomAttr = await GetSingleAsync<SpellCustomAttr>(callback, progress, new DbParameter(nameof(SpellCustomAttr.Entry), id)),
 
                     Spell = spell,
                     IsUpdate = true
@@ -120,7 +121,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> SaveAsync(SpellDto dto, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(12);
+            var progress = LoadingHelper.GetLoaderFunc(13);
 
             try
             {
@@ -137,6 +138,7 @@ namespace HotfixMods.Infrastructure.Services
                 await SaveAsync(callback, progress, dto.Spell);
                 await SaveAsync(callback, progress, dto.SpellAuraOptions);
                 await SaveAsync(callback, progress, dto.SpellCooldowns);
+                await SaveAsync(callback, progress, dto.SpellCustomAttr);
                 await SaveAsync(callback, progress, dto.SpellMisc);
                 await SaveAsync(callback, progress, dto.SpellName);
                 await SaveAsync(callback, progress, dto.SpellPower);
@@ -176,7 +178,7 @@ namespace HotfixMods.Infrastructure.Services
         public async Task<bool> DeleteAsync(int id, Action<string, string, int>? callback = null)
         {
             callback = callback ?? DefaultCallback;
-            var progress = LoadingHelper.GetLoaderFunc(10);
+            var progress = LoadingHelper.GetLoaderFunc(11);
 
             try
             {
@@ -213,6 +215,7 @@ namespace HotfixMods.Infrastructure.Services
                 await DeleteAsync(callback, progress, spellPowers);
                 await DeleteAsync(callback, progress, dto.SpellName);
                 await DeleteAsync(callback, progress, dto.SpellMisc);
+                await DeleteAsync(callback, progress, dto.SpellCustomAttr);
                 await DeleteAsync(callback, progress, spellCooldowns);
                 await DeleteAsync(callback, progress, spellAuraOptions);
                 await DeleteAsync(callback, progress, dto.Spell);

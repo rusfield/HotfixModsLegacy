@@ -30,7 +30,7 @@
             </RightContent>
         </InlineGroup>
         <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.Flags)))" />
-        <Input_Element T="byte" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AttachmentID)))" />
+        <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.AttachmentID)))" />
         <Input_Element T="int" @bind-Value="Value.PositionerID" ValueCompare="ValueCompare?.PositionerID" Label="@nameof(Value.PositionerID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellVisualKitModelAttach.PositionerID)))" />
     </MudItem>
     <MudItem xs="6">

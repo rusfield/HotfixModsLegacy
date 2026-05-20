@@ -126,5 +126,13 @@ namespace HotfixMods.Infrastructure.Services
             return await GetDb2OptionsAsync<int>("SpellName", "Name");
         }
         #endregion
+
+        #region SpellCustomAttr
+        public async Task<Dictionary<uint, string>> GetSpellCustomAttributesOptionsAsync()
+        {
+            return Enum.GetValues<HotfixMods.Core.Flags.TrinityCore.SpellCustomAttributes>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+        #endregion
     }
 }

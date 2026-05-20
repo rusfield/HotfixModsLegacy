@@ -17,7 +17,7 @@ namespace HotfixMods.Core.Models.Db2
         public decimal OffsetVariation1 { get; set; } = 0;
         public decimal OffsetVariation2 { get; set; } = 0;
         public int SpellVisualEffectNameID { get; set; } = 0;
-        public byte AttachmentID { get; set; } = 0;
+        public int AttachmentID { get; set; } = 0;
         public int PositionerID { get; set; } = 0;
         public decimal Yaw { get; set; } = 0;
         public decimal Pitch { get; set; } = 0;

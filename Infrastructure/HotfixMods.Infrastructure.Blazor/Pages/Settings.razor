@@ -225,6 +225,22 @@
         </MudItem>
 
         <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Faction</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.FactionSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.FactionSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.FactionSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
             <MudText Typo="Typo.h6">Spell</MudText>
             <MudDivider />
             <MudGrid Class="py-2" Spacing="2">

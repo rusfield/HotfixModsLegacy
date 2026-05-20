@@ -25,6 +25,7 @@ namespace HotfixMods.Infrastructure.Config
         public ServiceSettings ItemSettings { get; set; } = new(2000000, 2100000, -55505);
         public ServiceSettings CreatureSettings { get; set; } = new(3200000, 3300000, -55506);
         public ServiceSettings CreatureModelDataSettings { get; set; } = new(36000, 37000, -55509);
+        public ServiceSettings FactionSettings { get; set; } = new(65000, 65500, -55511);
         public ServiceSettings SpellSettings { get; set; } = new(5400000, 5500000, -55507);
         public ServiceSettings SpellVisualKitSettings { get; set; } = new(900000, 910000, -55508);
         public ServiceSettings ConversationSettings { get; set; } = new(400000, 450000, -55009);

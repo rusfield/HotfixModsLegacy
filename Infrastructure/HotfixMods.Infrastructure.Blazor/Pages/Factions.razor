@@ -1,0 +1,15 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject FactionService Service
+@inherits PageBase<FactionDto>
+
+<DtoTabsContent T="FactionDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<FactionSearchId_Dialog>())" RequiredTypes="required" />
+
+@code {
+    List<Type> required = new()
+    {
+        typeof(Faction),
+        typeof(FactionTemplate)
+    };
+}

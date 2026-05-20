@@ -1,0 +1,63 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject FactionService Service
+
+@inherits DtoContentBase<FactionDto, FactionTemplate>
+
+<PagedDtoContent T="FactionTemplate">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Flags)))" />
+            <Input_Element T="byte" @bind-Value="Value.FactionGroup" ValueCompare="ValueCompare?.FactionGroup" Label="@nameof(Value.FactionGroup).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.FactionGroup)))" />
+            <Input_Element T="byte" @bind-Value="Value.FriendGroup" ValueCompare="ValueCompare?.FriendGroup" Label="@nameof(Value.FriendGroup).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.FriendGroup)))" />
+            <Input_Element T="byte" @bind-Value="Value.EnemyGroup" ValueCompare="ValueCompare?.EnemyGroup" Label="@nameof(Value.EnemyGroup).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.EnemyGroup)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.Enemies1" ValueCompare="ValueCompare?.Enemies1" Label="Enemy 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies1)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Enemies2" ValueCompare="ValueCompare?.Enemies2" Label="Enemy 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies2)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Enemies3" ValueCompare="ValueCompare?.Enemies3" Label="Enemy 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies3)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Enemies4" ValueCompare="ValueCompare?.Enemies4" Label="Enemy 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies4)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="ushort" @bind-Value="Value.Enemies5" ValueCompare="ValueCompare?.Enemies5" Label="Enemy 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies5)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+                    <Input_Element T="ushort" @bind-Value="Value.Enemies6" ValueCompare="ValueCompare?.Enemies6" Label="Enemy 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies6)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="ushort" @bind-Value="Value.Enemies7" ValueCompare="ValueCompare?.Enemies7" Label="Enemy 7" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies7)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+                    <Input_Element T="ushort" @bind-Value="Value.Enemies8" ValueCompare="ValueCompare?.Enemies8" Label="Enemy 8" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Enemies8)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.Friend1" ValueCompare="ValueCompare?.Friend1" Label="Friend 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend1)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend2" ValueCompare="ValueCompare?.Friend2" Label="Friend 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend2)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend3" ValueCompare="ValueCompare?.Friend3" Label="Friend 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend3)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend4" ValueCompare="ValueCompare?.Friend4" Label="Friend 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend4)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.Friend5" ValueCompare="ValueCompare?.Friend5" Label="Friend 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend5)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend6" ValueCompare="ValueCompare?.Friend6" Label="Friend 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend6)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend7" ValueCompare="ValueCompare?.Friend7" Label="Friend 7" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend7)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="ushort" @bind-Value="Value.Friend8" ValueCompare="ValueCompare?.Friend8" Label="Friend 8" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(FactionTemplate.Friend8)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="4" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

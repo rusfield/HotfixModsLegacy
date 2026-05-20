@@ -24,9 +24,9 @@
     <MudItem xs="3">
         <Input_Element T="uint" @bind-Value="Value.Emote" ValueCompare="ValueCompare?.Emote" Label="@nameof(Value.Emote).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.Emote)))" />
         <Input_Element T="byte" @bind-Value="Value.StandState" ValueCompare="ValueCompare?.StandState" Label="@nameof(Value.StandState).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.StandState)))" />
-        <Input_Element T="short" @bind-Value="Value.AiAnimKit" ValueCompare="ValueCompare?.AiAnimKit" Label="@nameof(Value.AiAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.AiAnimKit)))" />
-        <Input_Element T="short" @bind-Value="Value.MovementAnimKit" ValueCompare="ValueCompare?.MovementAnimKit" Label="@nameof(Value.MovementAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.MovementAnimKit)))" />
-        <Input_Element T="short" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.MeleeAnimKit)))" />
+        <Input_Element T="ushort" @bind-Value="Value.AiAnimKit" ValueCompare="ValueCompare?.AiAnimKit" Label="@nameof(Value.AiAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.AiAnimKit)))" />
+        <Input_Element T="ushort" @bind-Value="Value.MovementAnimKit" ValueCompare="ValueCompare?.MovementAnimKit" Label="@nameof(Value.MovementAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.MovementAnimKit)))" />
+        <Input_Element T="ushort" @bind-Value="Value.MeleeAnimKit" ValueCompare="ValueCompare?.MeleeAnimKit" Label="@nameof(Value.MeleeAnimKit).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.MeleeAnimKit)))" />
         <Input_Element T="byte" @bind-Value="Value.AnimTier" ValueCompare="ValueCompare?.AnimTier" Label="@nameof(Value.AnimTier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateAddon.AnimTier)))" />
     </MudItem>
 </StandardDtoContent>

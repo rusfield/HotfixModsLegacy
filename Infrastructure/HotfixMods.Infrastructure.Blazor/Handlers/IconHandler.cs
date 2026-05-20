@@ -16,6 +16,8 @@ namespace HotfixMods.Infrastructure.Blazor.Handlers
                 return Icons.Material.Filled.FaceRetouchingNatural;
             else if (pageType == typeof(CreatureModelData))
                 return Icons.Material.Filled.ViewInAr;
+            else if (pageType == typeof(Factions))
+                return Icons.Material.Filled.Groups;
             else if (pageType == typeof(Gameobjects))
                 return Icons.Material.Filled.OutlinedFlag;
             else if (pageType == typeof(Items))

@@ -1,0 +1,17 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject SpellService Service
+@inherits DtoContentBase<SpellDto, SpellCustomAttr>
+
+<StandardDtoContent T="SpellCustomAttr">
+    <MudItem xs="3">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="2" />
+        <Input_Element T="uint" @bind-Value="Value.Attributes" ValueCompare="ValueCompare?.Attributes" Label="@nameof(Value.Attributes).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(SpellCustomAttr.Attributes)))" GetOptionsAsync_Func="Service.GetSpellCustomAttributesOptionsAsync" MultiSelection="true" />
+    </MudItem>
+    <MudItem xs="3">
+        <Placeholder_Element Amount="4" />
+    </MudItem>
+</StandardDtoContent>

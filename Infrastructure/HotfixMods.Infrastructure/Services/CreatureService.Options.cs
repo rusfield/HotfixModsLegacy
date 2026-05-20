@@ -160,6 +160,62 @@ namespace HotfixMods.Infrastructure.Services
                 .GetValues<CreatureTemplateTypeFlags2>()
                 .ToDictionary(key => (uint)key, value => value.ToDisplayString());
         }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags1OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags2OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags2>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags3OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags3>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags4OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags4>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags5OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags5>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags6OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags6>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags7OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags7>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
+
+        public async Task<Dictionary<uint, string>> GetStaticFlags8OptionsAsync()
+        {
+            return Enum
+                .GetValues<CreatureStaticFlags8>()
+                .ToDictionary(key => (uint)key, value => value.ToDisplayString());
+        }
         #endregion
 
         #region CreatureDisplayInfo

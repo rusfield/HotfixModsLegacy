@@ -1,0 +1,81 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject FactionService Service
+
+@inherits DtoContentBase<FactionDto, Faction>
+
+<PagedDtoContent T="Faction">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="short" @bind-Value="Value.ReputationIndex" ValueCompare="ValueCompare?.ReputationIndex" Label="@nameof(Value.ReputationIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationIndex)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ParentFactionID" ValueCompare="ValueCompare?.ParentFactionID" Label="@nameof(Value.ParentFactionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParentFactionID)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="byte" @bind-Value="Value.Expansion" ValueCompare="ValueCompare?.Expansion" Label="@nameof(Value.Expansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.Expansion)))" />
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.Flags)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="string" @bind-Value="Value.Name" ValueCompare="ValueCompare?.Name" Label="@nameof(Value.Name).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.Name)))" />
+            <Input_Element T="string" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.Description)))" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.FriendshipRepID" ValueCompare="ValueCompare?.FriendshipRepID" Label="@nameof(Value.FriendshipRepID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.FriendshipRepID)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ParagonFactionID" ValueCompare="ValueCompare?.ParagonFactionID" Label="@nameof(Value.ParagonFactionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParagonFactionID)))" GetOptionsAsync_Func="Service.GetFactionIdOptionsAsync" />
+            <Input_Element T="int" @bind-Value="Value.RenownFactionID" ValueCompare="ValueCompare?.RenownFactionID" Label="@nameof(Value.RenownFactionID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.RenownFactionID)))" />
+            <Input_Element T="int" @bind-Value="Value.RenownCurrencyID" ValueCompare="ValueCompare?.RenownCurrencyID" Label="@nameof(Value.RenownCurrencyID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.RenownCurrencyID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="long" @bind-Value="Value.ReputationRaceMask1" ValueCompare="ValueCompare?.ReputationRaceMask1" Label="Race Mask 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationRaceMask1)))" />
+            <Input_Element T="long" @bind-Value="Value.ReputationRaceMask2" ValueCompare="ValueCompare?.ReputationRaceMask2" Label="Race Mask 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationRaceMask2)))" />
+            <Input_Element T="long" @bind-Value="Value.ReputationRaceMask3" ValueCompare="ValueCompare?.ReputationRaceMask3" Label="Race Mask 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationRaceMask3)))" />
+            <Input_Element T="long" @bind-Value="Value.ReputationRaceMask4" ValueCompare="ValueCompare?.ReputationRaceMask4" Label="Race Mask 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationRaceMask4)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.ReputationClassMask1" ValueCompare="ValueCompare?.ReputationClassMask1" Label="Class Mask 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationClassMask1)))" />
+                    <Input_Element T="short" @bind-Value="Value.ReputationClassMask2" ValueCompare="ValueCompare?.ReputationClassMask2" Label="Class Mask 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationClassMask2)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.ReputationClassMask3" ValueCompare="ValueCompare?.ReputationClassMask3" Label="Class Mask 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationClassMask3)))" />
+                    <Input_Element T="short" @bind-Value="Value.ReputationClassMask4" ValueCompare="ValueCompare?.ReputationClassMask4" Label="Class Mask 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationClassMask4)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="ushort" @bind-Value="Value.ReputationFlags1" ValueCompare="ValueCompare?.ReputationFlags1" Label="Rep Flags 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationFlags1)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ReputationFlags2" ValueCompare="ValueCompare?.ReputationFlags2" Label="Rep Flags 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationFlags2)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ReputationFlags3" ValueCompare="ValueCompare?.ReputationFlags3" Label="Rep Flags 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationFlags3)))" />
+            <Input_Element T="ushort" @bind-Value="Value.ReputationFlags4" ValueCompare="ValueCompare?.ReputationFlags4" Label="Rep Flags 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationFlags4)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.ReputationBase1" ValueCompare="ValueCompare?.ReputationBase1" Label="Base 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationBase1)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationBase2" ValueCompare="ValueCompare?.ReputationBase2" Label="Base 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationBase2)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationBase3" ValueCompare="ValueCompare?.ReputationBase3" Label="Base 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationBase3)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationBase4" ValueCompare="ValueCompare?.ReputationBase4" Label="Base 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationBase4)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.ParentFactionMod1" ValueCompare="ValueCompare?.ParentFactionMod1" Label="Parent Mod 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParentFactionMod1)))" />
+                    <Input_Element T="decimal" @bind-Value="Value.ParentFactionMod2" ValueCompare="ValueCompare?.ParentFactionMod2" Label="Parent Mod 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParentFactionMod2)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="byte" @bind-Value="Value.ParentFactionCap1" ValueCompare="ValueCompare?.ParentFactionCap1" Label="Parent Cap 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParentFactionCap1)))" />
+                    <Input_Element T="byte" @bind-Value="Value.ParentFactionCap2" ValueCompare="ValueCompare?.ParentFactionCap2" Label="Parent Cap 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ParentFactionCap2)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.ReputationMax1" ValueCompare="ValueCompare?.ReputationMax1" Label="Max 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationMax1)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationMax2" ValueCompare="ValueCompare?.ReputationMax2" Label="Max 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationMax2)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationMax3" ValueCompare="ValueCompare?.ReputationMax3" Label="Max 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationMax3)))" />
+            <Input_Element T="int" @bind-Value="Value.ReputationMax4" ValueCompare="ValueCompare?.ReputationMax4" Label="Max 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Faction.ReputationMax4)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

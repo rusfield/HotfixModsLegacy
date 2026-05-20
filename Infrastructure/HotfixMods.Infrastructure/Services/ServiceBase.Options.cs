@@ -85,9 +85,7 @@ namespace HotfixMods.Infrastructure.Services
                 foreach (var factionTemplate in factionTemplates)
                 {
                     var id = factionTemplate.GetIdValue();
-                    string displayName = "";
-                    if (factions.ContainsKey(id))
-                        displayName = $"{factions[id]}";
+                    var displayName = GetFactionTemplateDisplayName(factionTemplate, factions);
 
                     var key = (TOptionKey)Convert.ChangeType(id, typeof(TOptionKey));
                     results.Add(key, displayName);
@@ -96,6 +94,15 @@ namespace HotfixMods.Infrastructure.Services
 
 
             return results;
+        }
+
+        public static string GetFactionTemplateDisplayName(HotfixMods.Core.Models.DbRow factionTemplate, IReadOnlyDictionary<int, string> factions)
+        {
+            var factionId = factionTemplate.GetValueByNameAs<int>("Faction");
+            if (factions.TryGetValue(factionId, out var factionName))
+                return factionName;
+
+            return factionId == 0 ? "" : factionId.ToString();
         }
 
         protected async Task<Dictionary<TOptionKey, string>> GetIconOptionsAsync<TOptionKey>()

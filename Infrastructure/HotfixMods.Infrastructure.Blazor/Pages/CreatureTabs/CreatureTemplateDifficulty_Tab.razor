@@ -61,19 +61,19 @@
     </PagedDtoContentPage>
     <PagedDtoContentPage>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags1" ValueCompare="ValueCompare?.StaticFlags1" Label="Static Flags 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags1)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags2" ValueCompare="ValueCompare?.StaticFlags2" Label="Static Flags 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags2)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags3" ValueCompare="ValueCompare?.StaticFlags3" Label="Static Flags 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags3)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags4" ValueCompare="ValueCompare?.StaticFlags4" Label="Static Flags 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags4)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags1" ValueCompare="ValueCompare?.StaticFlags1" Label="Static Flags 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags1)))" GetOptionsAsync_Func="Service.GetStaticFlags1OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags2" ValueCompare="ValueCompare?.StaticFlags2" Label="Static Flags 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags2)))" GetOptionsAsync_Func="Service.GetStaticFlags2OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags3" ValueCompare="ValueCompare?.StaticFlags3" Label="Static Flags 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags3)))" GetOptionsAsync_Func="Service.GetStaticFlags3OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags4" ValueCompare="ValueCompare?.StaticFlags4" Label="Static Flags 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags4)))" GetOptionsAsync_Func="Service.GetStaticFlags4OptionsAsync" MultiSelection="true" />
         </MudItem>
         <MudItem xs="6">
             <Placeholder_Element Amount="4" />
         </MudItem>
         <MudItem xs="3">
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags5" ValueCompare="ValueCompare?.StaticFlags5" Label="Static Flags 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags5)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags6" ValueCompare="ValueCompare?.StaticFlags6" Label="Static Flags 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags6)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags7" ValueCompare="ValueCompare?.StaticFlags7" Label="Static Flags 7" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags7)))" />
-            <Input_Element T="uint" @bind-Value="Value.StaticFlags8" ValueCompare="ValueCompare?.StaticFlags8" Label="Static Flags 8" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags8)))" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags5" ValueCompare="ValueCompare?.StaticFlags5" Label="Static Flags 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags5)))" GetOptionsAsync_Func="Service.GetStaticFlags5OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags6" ValueCompare="ValueCompare?.StaticFlags6" Label="Static Flags 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags6)))" GetOptionsAsync_Func="Service.GetStaticFlags6OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags7" ValueCompare="ValueCompare?.StaticFlags7" Label="Static Flags 7" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags7)))" GetOptionsAsync_Func="Service.GetStaticFlags7OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.StaticFlags8" ValueCompare="ValueCompare?.StaticFlags8" Label="Static Flags 8" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(CreatureTemplateDifficulty.StaticFlags8)))" GetOptionsAsync_Func="Service.GetStaticFlags8OptionsAsync" MultiSelection="true" />
         </MudItem>
     </PagedDtoContentPage>
 </PagedDtoContent>

@@ -16,9 +16,9 @@ namespace HotfixMods.Core.Models.TrinityCore
         public byte SheathState { get; set; } = 0;
         public byte PvPFlags { get; set; } = 0;
         public uint Emote { get; set; } = 0;
-        public short AiAnimKit { get; set; } = 0;
-        public short MovementAnimKit { get; set; } = 0;
-        public short MeleeAnimKit { get; set; } = 0;
+        public ushort AiAnimKit { get; set; } = 0;
+        public ushort MovementAnimKit { get; set; } = 0;
+        public ushort MeleeAnimKit { get; set; } = 0;
         public byte VisibilityDistanceType { get; set; } = 0;
         public string Auras { get; set; } = "";
         // VerifiedBuild missing

@@ -1,13 +1,52 @@
 using HotfixMods.Core.Models.Db2;
 using HotfixMods.Core.Models.TrinityCore;
+using HotfixMods.Core.Models;
+using HotfixMods.Core.Flags.TrinityCore;
+using HotfixMods.Infrastructure.Config;
 using HotfixMods.Infrastructure.DtoModels;
+using HotfixMods.Infrastructure.Extensions;
+using HotfixMods.Infrastructure.Services;
 using HotfixMods.Tools.Dev.Business;
 
 var dto = new GossipDto();
 var creatureDto = new CreatureDto();
+var factionDto = new FactionDto();
+var spellDto = new SpellDto();
 
 Assert(dto.MenuGroups.Count == 0, "GossipDto should start with no menu groups.");
 Assert(creatureDto.CreatureTemplateGossip == null, "CreatureDto should expose creature_template_gossip as an optional link.");
+Assert(factionDto.Faction is Faction, "FactionDto should expose the faction hotfix row.");
+Assert(factionDto.FactionTemplate is FactionTemplate, "FactionDto should expose the faction_template hotfix row.");
+Assert(factionDto.GetDisplayName() == "Faction", "FactionDto should use the Faction display name.");
+Assert(spellDto.SpellCustomAttr == null, "SpellDto should expose spell_custom_attr as an optional world table.");
+
+spellDto.SetDtoValueToDefault(typeof(SpellCustomAttr));
+Assert(spellDto.SpellCustomAttr is SpellCustomAttr, "SpellDto should let the tab system create optional spell_custom_attr rows.");
+
+spellDto.Spell.ID = 12345;
+spellDto.SpellCustomAttr!.Entry = (uint)spellDto.Spell.ID;
+spellDto.SpellCustomAttr.Attributes = (uint)(SpellCustomAttributes.SPELL_ATTR0_CU_CAN_CRIT | SpellCustomAttributes.SPELL_ATTR0_CU_DIRECT_DAMAGE);
+Assert(spellDto.SpellCustomAttr.Entry == 12345, "spell_custom_attr should use Entry as the spell ID.");
+Assert((uint)SpellCustomAttributes.SPELL_ATTR0_CU_CAN_CRIT == 0x00000080, "SpellCustomAttributes should match TrinityCore flag values.");
+Assert(spellDto.SpellCustomAttr.Attributes == 0x00000180, "spell_custom_attr attributes should store the combined flag mask.");
+Assert((uint)CreatureStaticFlags.MOUNTABLE == 0x00000001, "CreatureStaticFlags should match TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags.LARGE_AOI == 0x80000000, "CreatureStaticFlags should include the high-bit TrinityCore value.");
+Assert((uint)CreatureStaticFlags2.NO_PET_SCALING == 0x00000001, "CreatureStaticFlags2 should match TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags3.AI_CAN_AUTO_LAND_IN_COMBAT == 0x80000000, "CreatureStaticFlags3 should include the high-bit TrinityCore value.");
+Assert((uint)CreatureStaticFlags4.QUEST_BOSS == 0x80000000, "CreatureStaticFlags4 should match TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags5.GIVE_CRITERIA_KILL_CREDIT_WHEN_CHARMED == 0x80000000, "CreatureStaticFlags5 should match TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags6.APPLY_PROCEDURAL_WOUND_ANIM_TO_BASE == 0x80000000, "CreatureStaticFlags6 should match TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags7.AI_ADDITIONAL_PATHING == 0x00080000, "CreatureStaticFlags7 should preserve sparse TrinityCore flag values.");
+Assert((uint)CreatureStaticFlags8.USE_FAST_CLASSIC_HEARTBEAT == 0x00000040, "CreatureStaticFlags8 should preserve sparse TrinityCore flag values.");
+
+var config = new AppConfig();
+Assert(config.FactionSettings.VerifiedBuild < 0, "Faction settings should expose a configurable negative VerifiedBuild.");
+
+var factionTemplateRow = new DbRow("FactionTemplate");
+factionTemplateRow.Columns.Add(new DbColumn { Name = "ID", Type = typeof(int), Value = 12 });
+factionTemplateRow.Columns.Add(new DbColumn { Name = "Faction", Type = typeof(int), Value = 72 });
+var factionName = ServiceBase.GetFactionTemplateDisplayName(factionTemplateRow, new Dictionary<int, string> { [72] = "Stormwind" });
+Assert(factionName == "Stormwind", "Faction template options should display the linked faction name, not the template ID.");
 
 dto.MenuGroups.Add(new GossipDto.MenuGroup());
 dto.MenuGroups[0].GreetingTextGroups.Add(new GossipDto.GreetingTextGroup());

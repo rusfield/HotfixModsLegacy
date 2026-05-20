@@ -84,6 +84,11 @@ namespace HotfixMods.Infrastructure.Services
                 dto.SpellAuraOptions.VerifiedBuild = VerifiedBuild;
             }
 
+            if (dto.SpellCustomAttr != null)
+            {
+                dto.SpellCustomAttr.Entry = (uint)spellId;
+            }
+
             int index = 0;
             dto.EffectGroups.ForEach(e =>
             {

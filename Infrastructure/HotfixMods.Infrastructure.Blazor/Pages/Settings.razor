@@ -287,6 +287,54 @@
                 </MudItem>
             </MudGrid>
         </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Quest</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.QuestSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.QuestSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.QuestSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Vehicle</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" md="6" xl="4">
+            <MudText Typo="Typo.h6">Vehicle Seat</MudText>
+            <MudDivider />
+            <MudGrid Class="py-2" Spacing="2">
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSeatSettings.FromId" Variant="Variant.Outlined" Label="From ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSeatSettings.ToId" Variant="Variant.Outlined" Label="To ID" />
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudNumericField T="int" @bind-Value="Config.VehicleSeatSettings.VerifiedBuild" Variant="Variant.Outlined" Label="Verified Build" />
+                </MudItem>
+            </MudGrid>
+        </MudItem>
     </MudGrid>
 </MudPaper>
 

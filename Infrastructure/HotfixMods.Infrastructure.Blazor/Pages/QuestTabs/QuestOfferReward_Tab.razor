@@ -1,0 +1,21 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, QuestOfferReward>
+
+<StandardDtoContent T="QuestOfferReward">
+    <MudItem xs="3">
+        <Input_Element T="short" @bind-Value="Value.Emote1" ValueCompare="ValueCompare?.Emote1" Label="Emote 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.Emote1)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay1" ValueCompare="ValueCompare?.EmoteDelay1" Label="Emote Delay 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.EmoteDelay1)))" />
+        <Input_Element T="short" @bind-Value="Value.Emote2" ValueCompare="ValueCompare?.Emote2" Label="Emote 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.Emote2)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay2" ValueCompare="ValueCompare?.EmoteDelay2" Label="Emote Delay 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.EmoteDelay2)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="1" />
+        <Input_Element T="string" @bind-Value="Value.RewardText" ValueCompare="ValueCompare?.RewardText" Label="@nameof(Value.RewardText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.RewardText)))" Lines="4" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="short" @bind-Value="Value.Emote3" ValueCompare="ValueCompare?.Emote3" Label="Emote 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.Emote3)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay3" ValueCompare="ValueCompare?.EmoteDelay3" Label="Emote Delay 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.EmoteDelay3)))" />
+        <Input_Element T="short" @bind-Value="Value.Emote4" ValueCompare="ValueCompare?.Emote4" Label="Emote 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.Emote4)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay4" ValueCompare="ValueCompare?.EmoteDelay4" Label="Emote Delay 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestOfferReward.EmoteDelay4)))" />
+    </MudItem>
+</StandardDtoContent>

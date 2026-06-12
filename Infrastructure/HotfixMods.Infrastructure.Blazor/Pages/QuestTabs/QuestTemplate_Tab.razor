@@ -1,0 +1,188 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inject QuestService Service
+@inherits DtoContentBase<QuestDto, QuestTemplate>
+
+<PagedDtoContent T="QuestTemplate">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="byte" @bind-Value="Value.QuestType" ValueCompare="ValueCompare?.QuestType" Label="@nameof(Value.QuestType).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestType)))" GetOptionsAsync_Func="Service.GetQuestTypeOptionsAsync" />
+            <Input_Element T="uint" @bind-Value="Value.ContentTuningID" ValueCompare="ValueCompare?.ContentTuningID" Label="@nameof(Value.ContentTuningID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ContentTuningID)))" />
+            <Input_Element T="short" @bind-Value="Value.QuestSortID" ValueCompare="ValueCompare?.QuestSortID" Label="@nameof(Value.QuestSortID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestSortID)))" />
+            <Input_Element T="ushort" @bind-Value="Value.QuestInfoID" ValueCompare="ValueCompare?.QuestInfoID" Label="@nameof(Value.QuestInfoID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestInfoID)))" />
+            <Input_Element T="uint" @bind-Value="Value.QuestPackageID" ValueCompare="ValueCompare?.QuestPackageID" Label="@nameof(Value.QuestPackageID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestPackageID)))" />
+            <Input_Element T="byte" @bind-Value="Value.SuggestedGroupNum" ValueCompare="ValueCompare?.SuggestedGroupNum" Label="@nameof(Value.SuggestedGroupNum).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.SuggestedGroupNum)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="1" />
+            <Input_Element T="string" @bind-Value="Value.LogTitle" ValueCompare="ValueCompare?.LogTitle" Label="@nameof(Value.LogTitle).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.LogTitle)))" />
+            <Input_Element T="string" @bind-Value="Value.QuestDescription" ValueCompare="ValueCompare?.QuestDescription" Label="@nameof(Value.QuestDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestDescription)))" Lines="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Expansion" ValueCompare="ValueCompare?.Expansion" Label="@nameof(Value.Expansion).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.Expansion)))" />
+            <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.Flags)))" GetOptionsAsync_Func="Service.GetQuestFlagsOptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.FlagsEx" ValueCompare="ValueCompare?.FlagsEx" Label="@nameof(Value.FlagsEx).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.FlagsEx)))" GetOptionsAsync_Func="Service.GetQuestFlagsExOptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.FlagsEx2" ValueCompare="ValueCompare?.FlagsEx2" Label="@nameof(Value.FlagsEx2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.FlagsEx2)))" GetOptionsAsync_Func="Service.GetQuestFlagsEx2OptionsAsync" MultiSelection="true" />
+            <Input_Element T="uint" @bind-Value="Value.FlagsEx3" ValueCompare="ValueCompare?.FlagsEx3" Label="@nameof(Value.FlagsEx3).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.FlagsEx3)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.ResetByScheduler" ValueCompare="ValueCompare?.ResetByScheduler" Label="@nameof(Value.ResetByScheduler).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ResetByScheduler)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.RewardNextQuest" ValueCompare="ValueCompare?.RewardNextQuest" Label="@nameof(Value.RewardNextQuest).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardNextQuest)))" />
+            <Input_Element T="long" @bind-Value="Value.TimeAllowed" ValueCompare="ValueCompare?.TimeAllowed" Label="@nameof(Value.TimeAllowed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.TimeAllowed)))" />
+            <Input_Element T="ulong" @bind-Value="Value.AllowableRaces" ValueCompare="ValueCompare?.AllowableRaces" Label="@nameof(Value.AllowableRaces).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.AllowableRaces)))" GetOptionsAsync_Func="Service.GetQuestAllowableRacesOptionsAsync" MultiSelection="true" />
+            <Input_Element T="int" @bind-Value="Value.ManagedWorldStateID" ValueCompare="ValueCompare?.ManagedWorldStateID" Label="@nameof(Value.ManagedWorldStateID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ManagedWorldStateID)))" />
+            <Input_Element T="int" @bind-Value="Value.QuestSessionBonus" ValueCompare="ValueCompare?.QuestSessionBonus" Label="@nameof(Value.QuestSessionBonus).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestSessionBonus)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="1" />
+            <Input_Element T="string" @bind-Value="Value.AreaDescription" ValueCompare="ValueCompare?.AreaDescription" Label="@nameof(Value.AreaDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.AreaDescription)))" />
+            <Input_Element T="string" @bind-Value="Value.LogDescription" ValueCompare="ValueCompare?.LogDescription" Label="@nameof(Value.LogDescription).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.LogDescription)))" Lines="4" />
+        </MudItem>
+        <MudItem xs="3">
+            <Placeholder_Element Amount="1" />
+            <Input_Element T="string" @bind-Value="Value.QuestCompletionLog" ValueCompare="ValueCompare?.QuestCompletionLog" Label="@nameof(Value.QuestCompletionLog).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.QuestCompletionLog)))" Lines="4" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.RewardXPDifficulty" ValueCompare="ValueCompare?.RewardXPDifficulty" Label="@nameof(Value.RewardXPDifficulty).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardXPDifficulty)))" />
+            <Input_Element T="float" @bind-Value="Value.RewardXPMultiplier" ValueCompare="ValueCompare?.RewardXPMultiplier" Label="@nameof(Value.RewardXPMultiplier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardXPMultiplier)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardMoneyDifficulty" ValueCompare="ValueCompare?.RewardMoneyDifficulty" Label="@nameof(Value.RewardMoneyDifficulty).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardMoneyDifficulty)))" />
+            <Input_Element T="float" @bind-Value="Value.RewardMoneyMultiplier" ValueCompare="ValueCompare?.RewardMoneyMultiplier" Label="@nameof(Value.RewardMoneyMultiplier).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardMoneyMultiplier)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardBonusMoney" ValueCompare="ValueCompare?.RewardBonusMoney" Label="@nameof(Value.RewardBonusMoney).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardBonusMoney)))" />
+            <Input_Element T="int" @bind-Value="Value.RewardFavor" ValueCompare="ValueCompare?.RewardFavor" Label="@nameof(Value.RewardFavor).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFavor)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardHonor" ValueCompare="ValueCompare?.RewardHonor" Label="@nameof(Value.RewardHonor).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardHonor)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardKillHonor" ValueCompare="ValueCompare?.RewardKillHonor" Label="@nameof(Value.RewardKillHonor).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardKillHonor)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardArenaPoints" ValueCompare="ValueCompare?.RewardArenaPoints" Label="@nameof(Value.RewardArenaPoints).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardArenaPoints)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardTitle" ValueCompare="ValueCompare?.RewardTitle" Label="@nameof(Value.RewardTitle).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardTitle)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardSkillLineID" ValueCompare="ValueCompare?.RewardSkillLineID" Label="@nameof(Value.RewardSkillLineID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardSkillLineID)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardNumSkillUps" ValueCompare="ValueCompare?.RewardNumSkillUps" Label="@nameof(Value.RewardNumSkillUps).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardNumSkillUps)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.RewardItem1" ValueCompare="ValueCompare?.RewardItem1" Label="Reward Item 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardItem1)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardItem2" ValueCompare="ValueCompare?.RewardItem2" Label="Reward Item 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardItem2)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardItem3" ValueCompare="ValueCompare?.RewardItem3" Label="Reward Item 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardItem3)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardItem4" ValueCompare="ValueCompare?.RewardItem4" Label="Reward Item 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardItem4)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.RewardAmount1" ValueCompare="ValueCompare?.RewardAmount1" Label="Amount 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardAmount1)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardAmount2" ValueCompare="ValueCompare?.RewardAmount2" Label="Amount 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardAmount2)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardAmount3" ValueCompare="ValueCompare?.RewardAmount3" Label="Amount 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardAmount3)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardAmount4" ValueCompare="ValueCompare?.RewardAmount4" Label="Amount 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardAmount4)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.RewardDisplaySpell1" ValueCompare="ValueCompare?.RewardDisplaySpell1" Label="Display Spell 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardDisplaySpell1)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardDisplaySpell2" ValueCompare="ValueCompare?.RewardDisplaySpell2" Label="Display Spell 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardDisplaySpell2)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardDisplaySpell3" ValueCompare="ValueCompare?.RewardDisplaySpell3" Label="Display Spell 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardDisplaySpell3)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.RewardSpell" ValueCompare="ValueCompare?.RewardSpell" Label="@nameof(Value.RewardSpell).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardSpell)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardArtifactXPDifficulty" ValueCompare="ValueCompare?.RewardArtifactXPDifficulty" Label="Artifact XP Difficulty" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardArtifactXPDifficulty)))" />
+                    <Input_Element T="float" @bind-Value="Value.RewardArtifactXPMultiplier" ValueCompare="ValueCompare?.RewardArtifactXPMultiplier" Label="Artifact XP Multiplier" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardArtifactXPMultiplier)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardArtifactCategoryID" ValueCompare="ValueCompare?.RewardArtifactCategoryID" Label="Artifact Category" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardArtifactCategoryID)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyID1" ValueCompare="ValueCompare?.RewardCurrencyID1" Label="Currency ID 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyID1)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyQty1" ValueCompare="ValueCompare?.RewardCurrencyQty1" Label="Currency Qty 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyQty1)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyID2" ValueCompare="ValueCompare?.RewardCurrencyID2" Label="Currency ID 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyID2)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyQty2" ValueCompare="ValueCompare?.RewardCurrencyQty2" Label="Currency Qty 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyQty2)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyID3" ValueCompare="ValueCompare?.RewardCurrencyID3" Label="Currency ID 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyID3)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyQty3" ValueCompare="ValueCompare?.RewardCurrencyQty3" Label="Currency Qty 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyQty3)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyID4" ValueCompare="ValueCompare?.RewardCurrencyID4" Label="Currency ID 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyID4)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardCurrencyQty4" ValueCompare="ValueCompare?.RewardCurrencyQty4" Label="Currency Qty 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardCurrencyQty4)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID1" ValueCompare="ValueCompare?.RewardChoiceItemID1" Label="Choice Item 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID1)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity1" ValueCompare="ValueCompare?.RewardChoiceItemQuantity1" Label="Choice Qty 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity1)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID2" ValueCompare="ValueCompare?.RewardChoiceItemID2" Label="Choice Item 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID2)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity2" ValueCompare="ValueCompare?.RewardChoiceItemQuantity2" Label="Choice Qty 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity2)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID3" ValueCompare="ValueCompare?.RewardChoiceItemID3" Label="Choice Item 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID3)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity3" ValueCompare="ValueCompare?.RewardChoiceItemQuantity3" Label="Choice Qty 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity3)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID4" ValueCompare="ValueCompare?.RewardChoiceItemID4" Label="Choice Item 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID4)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity4" ValueCompare="ValueCompare?.RewardChoiceItemQuantity4" Label="Choice Qty 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity4)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID5" ValueCompare="ValueCompare?.RewardChoiceItemID5" Label="Choice Item 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID5)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity5" ValueCompare="ValueCompare?.RewardChoiceItemQuantity5" Label="Choice Qty 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity5)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemID6" ValueCompare="ValueCompare?.RewardChoiceItemID6" Label="Choice Item 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemID6)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemQuantity6" ValueCompare="ValueCompare?.RewardChoiceItemQuantity6" Label="Choice Qty 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemQuantity6)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <InlineGroup>
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionID1" ValueCompare="ValueCompare?.RewardFactionID1" Label="Faction 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionID1)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionValue1" ValueCompare="ValueCompare?.RewardFactionValue1" Label="Value 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionValue1)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionID2" ValueCompare="ValueCompare?.RewardFactionID2" Label="Faction 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionID2)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionValue2" ValueCompare="ValueCompare?.RewardFactionValue2" Label="Value 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionValue2)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionID3" ValueCompare="ValueCompare?.RewardFactionID3" Label="Faction 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionID3)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionValue3" ValueCompare="ValueCompare?.RewardFactionValue3" Label="Value 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionValue3)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionID4" ValueCompare="ValueCompare?.RewardFactionID4" Label="Faction 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionID4)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionValue4" ValueCompare="ValueCompare?.RewardFactionValue4" Label="Value 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionValue4)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionID5" ValueCompare="ValueCompare?.RewardFactionID5" Label="Faction 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionID5)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionValue5" ValueCompare="ValueCompare?.RewardFactionValue5" Label="Value 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionValue5)))" />
+                    <Input_Element T="uint" @bind-Value="Value.RewardFactionFlags" ValueCompare="ValueCompare?.RewardFactionFlags" Label="@nameof(Value.RewardFactionFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionFlags)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionOverride1" ValueCompare="ValueCompare?.RewardFactionOverride1" Label="Override 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionOverride1)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionCapIn1" ValueCompare="ValueCompare?.RewardFactionCapIn1" Label="Cap In 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionCapIn1)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionOverride2" ValueCompare="ValueCompare?.RewardFactionOverride2" Label="Override 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionOverride2)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionCapIn2" ValueCompare="ValueCompare?.RewardFactionCapIn2" Label="Cap In 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionCapIn2)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionOverride3" ValueCompare="ValueCompare?.RewardFactionOverride3" Label="Override 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionOverride3)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionCapIn3" ValueCompare="ValueCompare?.RewardFactionCapIn3" Label="Cap In 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionCapIn3)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionOverride4" ValueCompare="ValueCompare?.RewardFactionOverride4" Label="Override 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionOverride4)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionCapIn4" ValueCompare="ValueCompare?.RewardFactionCapIn4" Label="Cap In 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionCapIn4)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionOverride5" ValueCompare="ValueCompare?.RewardFactionOverride5" Label="Override 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionOverride5)))" />
+                    <Input_Element T="int" @bind-Value="Value.RewardFactionCapIn5" ValueCompare="ValueCompare?.RewardFactionCapIn5" Label="Cap In 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardFactionCapIn5)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID1" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID1" Label="Choice Display 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID1)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID2" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID2" Label="Choice Display 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID2)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID3" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID3" Label="Choice Display 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID3)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID4" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID4" Label="Choice Display 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID4)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID5" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID5" Label="Choice Display 5" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID5)))" />
+            <Input_Element T="uint" @bind-Value="Value.RewardChoiceItemDisplayID6" ValueCompare="ValueCompare?.RewardChoiceItemDisplayID6" Label="Choice Display 6" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.RewardChoiceItemDisplayID6)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.StartItem" ValueCompare="ValueCompare?.StartItem" Label="@nameof(Value.StartItem).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.StartItem)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDrop1" ValueCompare="ValueCompare?.ItemDrop1" Label="Item Drop 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDrop1)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDropQuantity1" ValueCompare="ValueCompare?.ItemDropQuantity1" Label="Drop Qty 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDropQuantity1)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDrop2" ValueCompare="ValueCompare?.ItemDrop2" Label="Item Drop 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDrop2)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDropQuantity2" ValueCompare="ValueCompare?.ItemDropQuantity2" Label="Drop Qty 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDropQuantity2)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDrop3" ValueCompare="ValueCompare?.ItemDrop3" Label="Item Drop 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDrop3)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDropQuantity3" ValueCompare="ValueCompare?.ItemDropQuantity3" Label="Drop Qty 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDropQuantity3)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDrop4" ValueCompare="ValueCompare?.ItemDrop4" Label="Item Drop 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDrop4)))" />
+            <Input_Element T="uint" @bind-Value="Value.ItemDropQuantity4" ValueCompare="ValueCompare?.ItemDropQuantity4" Label="Drop Qty 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.ItemDropQuantity4)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="2" />
+            <Input_Element T="uint" @bind-Value="Value.PortraitGiver" ValueCompare="ValueCompare?.PortraitGiver" Label="@nameof(Value.PortraitGiver).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitGiver)))" />
+            <Input_Element T="int" @bind-Value="Value.PortraitGiverMount" ValueCompare="ValueCompare?.PortraitGiverMount" Label="@nameof(Value.PortraitGiverMount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitGiverMount)))" />
+            <Input_Element T="int" @bind-Value="Value.PortraitGiverModelSceneID" ValueCompare="ValueCompare?.PortraitGiverModelSceneID" Label="@nameof(Value.PortraitGiverModelSceneID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitGiverModelSceneID)))" />
+            <Input_Element T="uint" @bind-Value="Value.PortraitTurnIn" ValueCompare="ValueCompare?.PortraitTurnIn" Label="@nameof(Value.PortraitTurnIn).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitTurnIn)))" />
+            <Input_Element T="string" @bind-Value="Value.PortraitGiverText" ValueCompare="ValueCompare?.PortraitGiverText" Label="@nameof(Value.PortraitGiverText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitGiverText)))" Lines="2" />
+            <Input_Element T="string" @bind-Value="Value.PortraitGiverName" ValueCompare="ValueCompare?.PortraitGiverName" Label="@nameof(Value.PortraitGiverName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitGiverName)))" />
+            <Input_Element T="string" @bind-Value="Value.PortraitTurnInText" ValueCompare="ValueCompare?.PortraitTurnInText" Label="@nameof(Value.PortraitTurnInText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitTurnInText)))" Lines="2" />
+            <Input_Element T="string" @bind-Value="Value.PortraitTurnInName" ValueCompare="ValueCompare?.PortraitTurnInName" Label="@nameof(Value.PortraitTurnInName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.PortraitTurnInName)))" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="uint" @bind-Value="Value.POIContinent" ValueCompare="ValueCompare?.POIContinent" Label="@nameof(Value.POIContinent).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.POIContinent)))" />
+            <Input_Element T="float" @bind-Value="Value.POIx" ValueCompare="ValueCompare?.POIx" Label="@nameof(Value.POIx).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.POIx)))" />
+            <Input_Element T="float" @bind-Value="Value.POIy" ValueCompare="ValueCompare?.POIy" Label="@nameof(Value.POIy).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.POIy)))" />
+            <Input_Element T="int" @bind-Value="Value.POIPriority" ValueCompare="ValueCompare?.POIPriority" Label="@nameof(Value.POIPriority).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.POIPriority)))" />
+            <Input_Element T="uint" @bind-Value="Value.AcceptedSoundKitID" ValueCompare="ValueCompare?.AcceptedSoundKitID" Label="@nameof(Value.AcceptedSoundKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.AcceptedSoundKitID)))" />
+            <Input_Element T="uint" @bind-Value="Value.CompleteSoundKitID" ValueCompare="ValueCompare?.CompleteSoundKitID" Label="@nameof(Value.CompleteSoundKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.CompleteSoundKitID)))" />
+            <Input_Element T="uint" @bind-Value="Value.AreaGroupID" ValueCompare="ValueCompare?.AreaGroupID" Label="@nameof(Value.AreaGroupID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplate.AreaGroupID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

@@ -30,6 +30,9 @@ namespace HotfixMods.Infrastructure.Config
         public ServiceSettings SpellVisualKitSettings { get; set; } = new(900000, 910000, -55508);
         public ServiceSettings ConversationSettings { get; set; } = new(400000, 450000, -55009);
         public ServiceSettings GossipSettings { get; set; } = new(5600000, 5700000, -55510);
+        public ServiceSettings QuestSettings { get; set; } = new(3300000, 3400000, -55512);
+        public ServiceSettings VehicleSettings { get; set; } = new(100000, 110000, -55513);
+        public ServiceSettings VehicleSeatSettings { get; set; } = new(50000, 60000, -55513);
 
         public class MySqlSettings
         {

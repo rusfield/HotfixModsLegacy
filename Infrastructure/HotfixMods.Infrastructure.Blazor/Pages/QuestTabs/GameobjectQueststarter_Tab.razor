@@ -1,0 +1,12 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, GameobjectQueststarter>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="uint" @bind-Value="Value.Id" ValueCompare="ValueCompare?.Id" Label="Gameobject Entry ID" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(GameobjectQueststarter.Id)))" />
+    </MudItem>
+    <MudItem xs="6">
+    </MudItem>
+    <MudItem xs="3">
+    </MudItem>
+</InstancedDtoContentPage>

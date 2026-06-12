@@ -34,6 +34,10 @@ namespace HotfixMods.Infrastructure.Blazor.Handlers
                 return Icons.Material.Filled.Forum;
             else if (pageType == typeof(Gossips))
                 return Icons.Material.Filled.RecordVoiceOver;
+            else if (pageType == typeof(Quests))
+                return Icons.Material.Filled.AssignmentTurnedIn;
+            else if (pageType == typeof(Vehicles))
+                return Icons.Material.Filled.DirectionsCar;
             else if (pageType == typeof(Hotfixes))
                 return Icons.Material.Filled.Workspaces;
             else if (pageType == typeof(Settings))

@@ -1,0 +1,17 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, QuestRequestItems>
+
+<StandardDtoContent T="QuestRequestItems">
+    <MudItem xs="3">
+        <Input_Element T="ushort" @bind-Value="Value.EmoteOnComplete" ValueCompare="ValueCompare?.EmoteOnComplete" Label="@nameof(Value.EmoteOnComplete).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestRequestItems.EmoteOnComplete)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteOnCompleteDelay" ValueCompare="ValueCompare?.EmoteOnCompleteDelay" Label="@nameof(Value.EmoteOnCompleteDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestRequestItems.EmoteOnCompleteDelay)))" />
+        <Input_Element T="ushort" @bind-Value="Value.EmoteOnIncomplete" ValueCompare="ValueCompare?.EmoteOnIncomplete" Label="@nameof(Value.EmoteOnIncomplete).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestRequestItems.EmoteOnIncomplete)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteOnIncompleteDelay" ValueCompare="ValueCompare?.EmoteOnIncompleteDelay" Label="@nameof(Value.EmoteOnIncompleteDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestRequestItems.EmoteOnIncompleteDelay)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="1" />
+        <Input_Element T="string" @bind-Value="Value.CompletionText" ValueCompare="ValueCompare?.CompletionText" Label="@nameof(Value.CompletionText).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestRequestItems.CompletionText)))" Lines="4" />
+    </MudItem>
+    <MudItem xs="3">
+    </MudItem>
+</StandardDtoContent>

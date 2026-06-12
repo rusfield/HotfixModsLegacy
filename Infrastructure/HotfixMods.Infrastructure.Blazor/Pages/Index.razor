@@ -216,6 +216,34 @@
             </ChildContent>
         </MudMenu>
 
+        @* Quests *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Quests"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Quests))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Quests", typeof(QuestDashboard))))">My Quests</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<QuestSearchId_Dialog>(new PageTab("", typeof(Quests))))">Search by ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<QuestDto>(new PageTab("New Quest", typeof(Quests))))">New Quest</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
+        @* Vehicles *@
+        <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Vehicles"))">
+            <ActivatorContent>
+                <MudIconButton Icon="@IconHandler.GetPageIcon(typeof(Vehicles))" Color="Color.Inherit" Size="Size.Large" Style="pointer-events: none;" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem OnClick="@(() => OpenDashboard_Click(new PageTab("Vehicles", typeof(VehicleDashboard))))">My Vehicles</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => OpenDialog_Click<VehicleSearchId_Dialog>(new PageTab("", typeof(Vehicles))))">Search by ID</MudMenuItem>
+                <MudDivider />
+                <MudMenuItem OnClick="@(() => NewDto_Click<VehicleDto>(new PageTab("New Vehicle", typeof(Vehicles))))">New Vehicle</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+
         @* Other Hotfixes *@
         <MudMenu ActivationEvent="@MouseEvent.MouseOver" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter" onmouseover="@(() => SetHover("Other Hotfixes"))">
             <ActivatorContent>

@@ -1,0 +1,24 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inject QuestService Service
+@inherits DtoContentBase<QuestDto, QuestObjectives>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="byte" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Type)))" GetOptionsAsync_Func="Service.GetQuestObjectiveTypeOptionsAsync" />
+        <Input_Element T="sbyte" @bind-Value="Value.StorageIndex" ValueCompare="ValueCompare?.StorageIndex" Label="@nameof(Value.StorageIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.StorageIndex)))" />
+        <Input_Element T="int" @bind-Value="Value.ObjectID" ValueCompare="ValueCompare?.ObjectID" Label="@nameof(Value.ObjectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.ObjectID)))" />
+        <Input_Element T="int" @bind-Value="Value.Amount" ValueCompare="ValueCompare?.Amount" Label="@nameof(Value.Amount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Amount)))" />
+        <Input_Element T="int" @bind-Value="Value.ConditionalAmount" ValueCompare="ValueCompare?.ConditionalAmount" Label="@nameof(Value.ConditionalAmount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.ConditionalAmount)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element T="string" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Description)))" Lines="4" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="uint" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Flags)))" GetOptionsAsync_Func="Service.GetQuestObjectiveFlagsOptionsAsync" MultiSelection="true" />
+        <Input_Element T="uint" @bind-Value="Value.Flags2" ValueCompare="ValueCompare?.Flags2" Label="@nameof(Value.Flags2).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Flags2)))" GetOptionsAsync_Func="Service.GetQuestObjectiveFlags2OptionsAsync" MultiSelection="true" />
+        <Input_Element T="float" @bind-Value="Value.ProgressBarWeight" ValueCompare="ValueCompare?.ProgressBarWeight" Label="@nameof(Value.ProgressBarWeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.ProgressBarWeight)))" />
+        <Input_Element T="int" @bind-Value="Value.ParentObjectiveID" ValueCompare="ValueCompare?.ParentObjectiveID" Label="@nameof(Value.ParentObjectiveID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.ParentObjectiveID)))" />
+        <Input_Element T="byte" @bind-Value="Value.Visible" ValueCompare="ValueCompare?.Visible" Label="@nameof(Value.Visible).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjectives.Visible)))" />
+    </MudItem>
+</InstancedDtoContentPage>

@@ -1,0 +1,19 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, QuestDetails>
+
+<StandardDtoContent T="QuestDetails">
+    <MudItem xs="3">
+        <Input_Element T="ushort" @bind-Value="Value.Emote1" ValueCompare="ValueCompare?.Emote1" Label="Emote 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.Emote1)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay1" ValueCompare="ValueCompare?.EmoteDelay1" Label="Emote Delay 1" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.EmoteDelay1)))" />
+        <Input_Element T="ushort" @bind-Value="Value.Emote2" ValueCompare="ValueCompare?.Emote2" Label="Emote 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.Emote2)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay2" ValueCompare="ValueCompare?.EmoteDelay2" Label="Emote Delay 2" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.EmoteDelay2)))" />
+        <Input_Element T="ushort" @bind-Value="Value.Emote3" ValueCompare="ValueCompare?.Emote3" Label="Emote 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.Emote3)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay3" ValueCompare="ValueCompare?.EmoteDelay3" Label="Emote Delay 3" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.EmoteDelay3)))" />
+        <Input_Element T="ushort" @bind-Value="Value.Emote4" ValueCompare="ValueCompare?.Emote4" Label="Emote 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.Emote4)))" />
+        <Input_Element T="uint" @bind-Value="Value.EmoteDelay4" ValueCompare="ValueCompare?.EmoteDelay4" Label="Emote Delay 4" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestDetails.EmoteDelay4)))" />
+    </MudItem>
+    <MudItem xs="6">
+    </MudItem>
+    <MudItem xs="3">
+    </MudItem>
+</StandardDtoContent>

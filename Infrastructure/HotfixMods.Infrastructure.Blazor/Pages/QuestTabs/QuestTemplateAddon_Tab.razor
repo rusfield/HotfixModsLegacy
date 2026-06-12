@@ -1,0 +1,31 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inject QuestService Service
+@inherits DtoContentBase<QuestDto, QuestTemplateAddon>
+
+<StandardDtoContent T="QuestTemplateAddon">
+    <MudItem xs="3">
+        <Input_Element T="byte" @bind-Value="Value.MaxLevel" ValueCompare="ValueCompare?.MaxLevel" Label="@nameof(Value.MaxLevel).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.MaxLevel)))" />
+        <Input_Element T="uint" @bind-Value="Value.AllowableClasses" ValueCompare="ValueCompare?.AllowableClasses" Label="@nameof(Value.AllowableClasses).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.AllowableClasses)))" GetOptionsAsync_Func="Service.GetQuestAllowableClassesOptionsAsync" MultiSelection="true" />
+        <Input_Element T="uint" @bind-Value="Value.SourceSpellID" ValueCompare="ValueCompare?.SourceSpellID" Label="@nameof(Value.SourceSpellID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.SourceSpellID)))" />
+        <Input_Element T="int" @bind-Value="Value.PrevQuestID" ValueCompare="ValueCompare?.PrevQuestID" Label="@nameof(Value.PrevQuestID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.PrevQuestID)))" />
+        <Input_Element T="uint" @bind-Value="Value.NextQuestID" ValueCompare="ValueCompare?.NextQuestID" Label="@nameof(Value.NextQuestID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.NextQuestID)))" />
+        <Input_Element T="int" @bind-Value="Value.ExclusiveGroup" ValueCompare="ValueCompare?.ExclusiveGroup" Label="@nameof(Value.ExclusiveGroup).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.ExclusiveGroup)))" />
+        <Input_Element T="int" @bind-Value="Value.BreadcrumbForQuestId" ValueCompare="ValueCompare?.BreadcrumbForQuestId" Label="@nameof(Value.BreadcrumbForQuestId).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.BreadcrumbForQuestId)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element T="string" @bind-Value="Value.ScriptName" ValueCompare="ValueCompare?.ScriptName" Label="@nameof(Value.ScriptName).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.ScriptName)))" />
+    </MudItem>
+    <MudItem xs="3">
+        <Input_Element T="uint" @bind-Value="Value.RewardMailTemplateID" ValueCompare="ValueCompare?.RewardMailTemplateID" Label="@nameof(Value.RewardMailTemplateID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RewardMailTemplateID)))" />
+        <Input_Element T="uint" @bind-Value="Value.RewardMailDelay" ValueCompare="ValueCompare?.RewardMailDelay" Label="@nameof(Value.RewardMailDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RewardMailDelay)))" />
+        <Input_Element T="ushort" @bind-Value="Value.RequiredSkillID" ValueCompare="ValueCompare?.RequiredSkillID" Label="@nameof(Value.RequiredSkillID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredSkillID)))" />
+        <Input_Element T="ushort" @bind-Value="Value.RequiredSkillPoints" ValueCompare="ValueCompare?.RequiredSkillPoints" Label="@nameof(Value.RequiredSkillPoints).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredSkillPoints)))" />
+        <Input_Element T="ushort" @bind-Value="Value.RequiredMinRepFaction" ValueCompare="ValueCompare?.RequiredMinRepFaction" Label="@nameof(Value.RequiredMinRepFaction).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredMinRepFaction)))" />
+        <Input_Element T="ushort" @bind-Value="Value.RequiredMaxRepFaction" ValueCompare="ValueCompare?.RequiredMaxRepFaction" Label="@nameof(Value.RequiredMaxRepFaction).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredMaxRepFaction)))" />
+        <Input_Element T="int" @bind-Value="Value.RequiredMinRepValue" ValueCompare="ValueCompare?.RequiredMinRepValue" Label="@nameof(Value.RequiredMinRepValue).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredMinRepValue)))" />
+        <Input_Element T="int" @bind-Value="Value.RequiredMaxRepValue" ValueCompare="ValueCompare?.RequiredMaxRepValue" Label="@nameof(Value.RequiredMaxRepValue).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.RequiredMaxRepValue)))" />
+        <Input_Element T="byte" @bind-Value="Value.ProvidedItemCount" ValueCompare="ValueCompare?.ProvidedItemCount" Label="@nameof(Value.ProvidedItemCount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.ProvidedItemCount)))" />
+        <Input_Element T="byte" @bind-Value="Value.SpecialFlags" ValueCompare="ValueCompare?.SpecialFlags" Label="@nameof(Value.SpecialFlags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestTemplateAddon.SpecialFlags)))" GetOptionsAsync_Func="Service.GetQuestSpecialFlagsOptionsAsync" MultiSelection="true" />
+    </MudItem>
+</StandardDtoContent>

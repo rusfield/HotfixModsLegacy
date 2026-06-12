@@ -1,0 +1,23 @@
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject QuestService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="QuestDto" IdTitle="Quest ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Quests)" />
+
+@code
+{
+    async Task<QuestDto?> GetByIdAsync(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(QuestSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<QuestSearchId_Dialog>(null, parameters).Result;
+        return (QuestDto)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

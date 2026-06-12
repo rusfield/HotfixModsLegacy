@@ -1,0 +1,20 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, QuestObjective>
+
+<InstancedDtoContentPage>
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.Type" ValueCompare="ValueCompare?.Type" Label="@nameof(Value.Type).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.Type)))" />
+        <Input_Element T="int" @bind-Value="Value.Amount" ValueCompare="ValueCompare?.Amount" Label="@nameof(Value.Amount).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.Amount)))" />
+        <Input_Element T="int" @bind-Value="Value.ObjectID" ValueCompare="ValueCompare?.ObjectID" Label="@nameof(Value.ObjectID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.ObjectID)))" />
+        <Input_Element T="int" @bind-Value="Value.OrderIndex" ValueCompare="ValueCompare?.OrderIndex" Label="@nameof(Value.OrderIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.OrderIndex)))" />
+        <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.Flags)))" />
+        <Input_Element T="int" @bind-Value="Value.StorageIndex" ValueCompare="ValueCompare?.StorageIndex" Label="@nameof(Value.StorageIndex).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.StorageIndex)))" />
+        <Input_Element T="int" @bind-Value="Value.Field_12_0_0_63534_007" ValueCompare="ValueCompare?.Field_12_0_0_63534_007" Label="Field 007" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.Field_12_0_0_63534_007)))" />
+    </MudItem>
+    <MudItem xs="6">
+        <Placeholder_Element Amount="4" />
+        <Input_Element T="string" @bind-Value="Value.Description" ValueCompare="ValueCompare?.Description" Label="@nameof(Value.Description).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestObjective.Description)))" Lines="4" />
+    </MudItem>
+    <MudItem xs="3">
+    </MudItem>
+</InstancedDtoContentPage>

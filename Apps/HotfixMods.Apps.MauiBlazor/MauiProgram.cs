@@ -99,6 +99,8 @@ namespace HotfixMods.Apps.MauiBlazor
             builder.Services.AddSingleton<SpellVisualKitService>();
             builder.Services.AddSingleton<ConversationService>();
             builder.Services.AddSingleton<GossipService>();
+            builder.Services.AddSingleton<QuestService>();
+            builder.Services.AddSingleton<VehicleService>();
 
             builder.Services.AddBlazorWebViewDeveloperTools();
 

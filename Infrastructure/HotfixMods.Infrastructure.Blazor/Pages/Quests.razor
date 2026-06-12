@@ -1,0 +1,22 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Pages.QuestTabs
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject QuestService Service
+@inject IDialogService DialogService
+@inherits PageBase<QuestDto>
+
+<DtoTabsContent T="QuestDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="@(async () => ValueCompareAsync<QuestSearchId_Dialog>())" RequiredTypes="required">
+    <Placeholder_Preview />
+</DtoTabsContent>
+
+@code {
+
+    List<Type> required = new()
+    {
+        typeof(QuestTemplate),
+        typeof(QuestOfferReward),
+        typeof(QuestRequestItems),
+        typeof(QuestV2),
+    };
+}

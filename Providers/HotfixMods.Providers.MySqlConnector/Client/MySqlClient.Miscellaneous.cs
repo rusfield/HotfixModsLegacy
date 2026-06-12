@@ -276,6 +276,29 @@ namespace HotfixMods.Providers.MySqlConnector.Client
 
         static readonly Dictionary<string, Dictionary<string, string>> TableSpecificColumnAliases = new(StringComparer.InvariantCultureIgnoreCase)
         {
+            [NormalizeTableName(nameof(Core.Models.Db2.Vehicle))] = new(StringComparer.InvariantCultureIgnoreCase)
+            {
+                ["SeatID1"] = "SeatID0",
+                ["SeatID2"] = "SeatID1",
+                ["SeatID3"] = "SeatID2",
+                ["SeatID4"] = "SeatID3",
+                ["SeatID5"] = "SeatID4",
+                ["SeatID6"] = "SeatID5",
+                ["SeatID7"] = "SeatID6",
+                ["SeatID8"] = "SeatID7",
+                ["PowerDisplayID1"] = "PowerDisplayID0",
+                ["PowerDisplayID2"] = "PowerDisplayID1",
+                ["PowerDisplayID3"] = "PowerDisplayID2",
+            },
+            [NormalizeTableName(nameof(Core.Models.Db2.VehicleSeat))] = new(StringComparer.InvariantCultureIgnoreCase)
+            {
+                ["AttachmentOffsetX"] = "AttachmentOffset0",
+                ["AttachmentOffsetY"] = "AttachmentOffset1",
+                ["AttachmentOffsetZ"] = "AttachmentOffset2",
+                ["CameraOffsetX"] = "CameraOffset0",
+                ["CameraOffsetY"] = "CameraOffset1",
+                ["CameraOffsetZ"] = "CameraOffset2",
+            },
             [NormalizeTableName(nameof(Core.Models.Db2.ItemDisplayInfo))] = new(StringComparer.InvariantCultureIgnoreCase)
             {
                 ["ModelResourcesID1"] = "ModelResourcesID0",

@@ -1,0 +1,23 @@
+@using HotfixMods.Infrastructure.Blazor.Handlers
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs
+
+@inject VehicleService Service
+@inject IDialogService DialogService
+
+<DtoDashboard TDto="VehicleDto" IdTitle="Vehicle ID" AdditionalIdTitle="Temp" DeleteByIdAsync_Func="DeleteByIdAsync" GetByIdAsync_Func="GetByIdAsync" GetItemsAsync_Func="Service.GetDashboardModelsAsync" LaunchType="typeof(Vehicles)" />
+
+@code
+{
+    async Task<VehicleDto?> GetByIdAsync(int id)
+    {
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(VehicleSearchId_Dialog.Id), id);
+        var result = await DialogService.Show<VehicleSearchId_Dialog>(null, parameters).Result;
+        return (VehicleDto)result.Data;
+    }
+
+    async Task<bool> DeleteByIdAsync(int id)
+    {
+        return await Service.DeleteAsync(id);
+    }
+}

@@ -1,0 +1,29 @@
+@using HotfixMods.Infrastructure.Blazor.Components.Dialogs;
+@using HotfixMods.Infrastructure.Blazor.Pages.VehicleTabs
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject VehicleService Service
+@inject IDialogService DialogService
+@inherits PageBase<VehicleDto>
+
+<DtoTabsContent T="VehicleDto" SaveAsync_Func="Service.SaveAsync" ValueCompare_Callback="ValueCompare_Click" RequiredTypes="required">
+    <Placeholder_Preview />
+</DtoTabsContent>
+
+@code {
+
+    List<Type> required = new()
+    {
+        typeof(Vehicle),
+    };
+
+    async Task ValueCompare_Click()
+    {
+        var options = new Dictionary<string, Action>();
+        options.Add("Search by Vehicle ID", (() => ValueCompareAsync<VehicleSearchId_Dialog>()));
+
+        var parameters = new DialogParameters();
+        parameters.Add(nameof(CompareOptions_Dialog.Options), options);
+        await DialogService.Show<CompareOptions_Dialog>(null, parameters).Result;
+    }
+}

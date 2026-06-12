@@ -1,0 +1,181 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inject VehicleService Service
+
+@inherits DtoContentBase<VehicleDto, VehicleSeat>
+
+<PagedDtoContent T="VehicleSeat">
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.Flags)))" GetOptionsAsync_Func="Service.GetSeatFlagsOptionsAsync" MultiSelection="true" />
+            <Input_Element T="int" @bind-Value="Value.FlagsB" ValueCompare="ValueCompare?.FlagsB" Label="@nameof(Value.FlagsB).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.FlagsB)))" GetOptionsAsync_Func="Service.GetSeatFlagsBOptionsAsync" MultiSelection="true" />
+            <Input_Element T="int" @bind-Value="Value.FlagsC" ValueCompare="ValueCompare?.FlagsC" Label="@nameof(Value.FlagsC).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.FlagsC)))" />
+            <Input_Element T="int" @bind-Value="Value.AttachmentID" ValueCompare="ValueCompare?.AttachmentID" Label="@nameof(Value.AttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.AttachmentID)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.PassengerAttachmentID" ValueCompare="ValueCompare?.PassengerAttachmentID" Label="@nameof(Value.PassengerAttachmentID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.PassengerAttachmentID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.AttachmentOffset0" ValueCompare="ValueCompare?.AttachmentOffset0" Label="Attachment Offset X" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.AttachmentOffset0)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.AttachmentOffset1" ValueCompare="ValueCompare?.AttachmentOffset1" Label="Attachment Offset Y" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.AttachmentOffset1)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.AttachmentOffset2" ValueCompare="ValueCompare?.AttachmentOffset2" Label="Attachment Offset Z" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.AttachmentOffset2)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.CameraOffset0" ValueCompare="ValueCompare?.CameraOffset0" Label="Camera Offset X" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraOffset0)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.CameraOffset1" ValueCompare="ValueCompare?.CameraOffset1" Label="Camera Offset Y" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraOffset1)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.CameraOffset2" ValueCompare="ValueCompare?.CameraOffset2" Label="Camera Offset Z" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraOffset2)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.PassengerYaw" ValueCompare="ValueCompare?.PassengerYaw" Label="@nameof(Value.PassengerYaw).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.PassengerYaw)))" />
+            <Input_Element T="decimal" @bind-Value="Value.PassengerPitch" ValueCompare="ValueCompare?.PassengerPitch" Label="@nameof(Value.PassengerPitch).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.PassengerPitch)))" />
+            <Input_Element T="decimal" @bind-Value="Value.PassengerRoll" ValueCompare="ValueCompare?.PassengerRoll" Label="@nameof(Value.PassengerRoll).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.PassengerRoll)))" />
+            <Input_Element T="sbyte" @bind-Value="Value.VehicleAbilityDisplay" ValueCompare="ValueCompare?.VehicleAbilityDisplay" Label="@nameof(Value.VehicleAbilityDisplay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleAbilityDisplay)))" />
+            <Input_Element T="int" @bind-Value="Value.UiSkinFileDataID" ValueCompare="ValueCompare?.UiSkinFileDataID" Label="@nameof(Value.UiSkinFileDataID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.UiSkinFileDataID)))" />
+            <Input_Element T="short" @bind-Value="Value.CameraModeID" ValueCompare="ValueCompare?.CameraModeID" Label="@nameof(Value.CameraModeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraModeID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.VehicleEnterAnim" ValueCompare="ValueCompare?.VehicleEnterAnim" Label="@nameof(Value.VehicleEnterAnim).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleEnterAnim)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.VehicleEnterAnimBone" ValueCompare="ValueCompare?.VehicleEnterAnimBone" Label="@nameof(Value.VehicleEnterAnimBone).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleEnterAnimBone)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.VehicleExitAnim" ValueCompare="ValueCompare?.VehicleExitAnim" Label="@nameof(Value.VehicleExitAnim).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleExitAnim)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.VehicleExitAnimBone" ValueCompare="ValueCompare?.VehicleExitAnimBone" Label="@nameof(Value.VehicleExitAnimBone).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleExitAnimBone)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.VehicleRideAnimLoop" ValueCompare="ValueCompare?.VehicleRideAnimLoop" Label="@nameof(Value.VehicleRideAnimLoop).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleRideAnimLoop)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="sbyte" @bind-Value="Value.VehicleRideAnimLoopBone" ValueCompare="ValueCompare?.VehicleRideAnimLoopBone" Label="@nameof(Value.VehicleRideAnimLoopBone).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleRideAnimLoopBone)))" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="decimal" @bind-Value="Value.VehicleEnterAnimDelay" ValueCompare="ValueCompare?.VehicleEnterAnimDelay" Label="@nameof(Value.VehicleEnterAnimDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleEnterAnimDelay)))" />
+            <Input_Element T="decimal" @bind-Value="Value.VehicleExitAnimDelay" ValueCompare="ValueCompare?.VehicleExitAnimDelay" Label="@nameof(Value.VehicleExitAnimDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleExitAnimDelay)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.EnterAnimStart" ValueCompare="ValueCompare?.EnterAnimStart" Label="@nameof(Value.EnterAnimStart).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterAnimStart)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.EnterAnimLoop" ValueCompare="ValueCompare?.EnterAnimLoop" Label="@nameof(Value.EnterAnimLoop).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterAnimLoop)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.RideAnimStart" ValueCompare="ValueCompare?.RideAnimStart" Label="@nameof(Value.RideAnimStart).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.RideAnimStart)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.RideAnimLoop" ValueCompare="ValueCompare?.RideAnimLoop" Label="@nameof(Value.RideAnimLoop).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.RideAnimLoop)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.RideUpperAnimStart" ValueCompare="ValueCompare?.RideUpperAnimStart" Label="@nameof(Value.RideUpperAnimStart).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.RideUpperAnimStart)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.RideUpperAnimLoop" ValueCompare="ValueCompare?.RideUpperAnimLoop" Label="@nameof(Value.RideUpperAnimLoop).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.RideUpperAnimLoop)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="short" @bind-Value="Value.ExitAnimStart" ValueCompare="ValueCompare?.ExitAnimStart" Label="@nameof(Value.ExitAnimStart).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitAnimStart)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="short" @bind-Value="Value.ExitAnimLoop" ValueCompare="ValueCompare?.ExitAnimLoop" Label="@nameof(Value.ExitAnimLoop).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitAnimLoop)))" />
+                </RightContent>
+            </InlineGroup>
+            <Input_Element T="short" @bind-Value="Value.ExitAnimEnd" ValueCompare="ValueCompare?.ExitAnimEnd" Label="@nameof(Value.ExitAnimEnd).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitAnimEnd)))" />
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.EnterAnimKitID" ValueCompare="ValueCompare?.EnterAnimKitID" Label="@nameof(Value.EnterAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterAnimKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.RideAnimKitID" ValueCompare="ValueCompare?.RideAnimKitID" Label="@nameof(Value.RideAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.RideAnimKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.ExitAnimKitID" ValueCompare="ValueCompare?.ExitAnimKitID" Label="@nameof(Value.ExitAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitAnimKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.VehicleEnterAnimKitID" ValueCompare="ValueCompare?.VehicleEnterAnimKitID" Label="@nameof(Value.VehicleEnterAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleEnterAnimKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.VehicleRideAnimKitID" ValueCompare="ValueCompare?.VehicleRideAnimKitID" Label="@nameof(Value.VehicleRideAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleRideAnimKitID)))" />
+            <Input_Element T="int" @bind-Value="Value.VehicleExitAnimKitID" ValueCompare="ValueCompare?.VehicleExitAnimKitID" Label="@nameof(Value.VehicleExitAnimKitID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.VehicleExitAnimKitID)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.EnterPreDelay" ValueCompare="ValueCompare?.EnterPreDelay" Label="@nameof(Value.EnterPreDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterPreDelay)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterSpeed" ValueCompare="ValueCompare?.EnterSpeed" Label="@nameof(Value.EnterSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterSpeed)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterGravity" ValueCompare="ValueCompare?.EnterGravity" Label="@nameof(Value.EnterGravity).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterGravity)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterMinDuration" ValueCompare="ValueCompare?.EnterMinDuration" Label="@nameof(Value.EnterMinDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterMinDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterMaxDuration" ValueCompare="ValueCompare?.EnterMaxDuration" Label="@nameof(Value.EnterMaxDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterMaxDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterMinArcHeight" ValueCompare="ValueCompare?.EnterMinArcHeight" Label="@nameof(Value.EnterMinArcHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterMinArcHeight)))" />
+            <Input_Element T="decimal" @bind-Value="Value.EnterMaxArcHeight" ValueCompare="ValueCompare?.EnterMaxArcHeight" Label="@nameof(Value.EnterMaxArcHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterMaxArcHeight)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="uint" @bind-Value="Value.EnterUISoundID" ValueCompare="ValueCompare?.EnterUISoundID" Label="@nameof(Value.EnterUISoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.EnterUISoundID)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="uint" @bind-Value="Value.ExitUISoundID" ValueCompare="ValueCompare?.ExitUISoundID" Label="@nameof(Value.ExitUISoundID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitUISoundID)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.ExitPreDelay" ValueCompare="ValueCompare?.ExitPreDelay" Label="@nameof(Value.ExitPreDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitPreDelay)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitSpeed" ValueCompare="ValueCompare?.ExitSpeed" Label="@nameof(Value.ExitSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitSpeed)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitGravity" ValueCompare="ValueCompare?.ExitGravity" Label="@nameof(Value.ExitGravity).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitGravity)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitMinDuration" ValueCompare="ValueCompare?.ExitMinDuration" Label="@nameof(Value.ExitMinDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitMinDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitMaxDuration" ValueCompare="ValueCompare?.ExitMaxDuration" Label="@nameof(Value.ExitMaxDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitMaxDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitMinArcHeight" ValueCompare="ValueCompare?.ExitMinArcHeight" Label="@nameof(Value.ExitMinArcHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitMinArcHeight)))" />
+            <Input_Element T="decimal" @bind-Value="Value.ExitMaxArcHeight" ValueCompare="ValueCompare?.ExitMaxArcHeight" Label="@nameof(Value.ExitMaxArcHeight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.ExitMaxArcHeight)))" />
+        </MudItem>
+    </PagedDtoContentPage>
+    <PagedDtoContentPage>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.CameraEnteringDelay" ValueCompare="ValueCompare?.CameraEnteringDelay" Label="@nameof(Value.CameraEnteringDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraEnteringDelay)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraEnteringDuration" ValueCompare="ValueCompare?.CameraEnteringDuration" Label="@nameof(Value.CameraEnteringDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraEnteringDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraExitingDelay" ValueCompare="ValueCompare?.CameraExitingDelay" Label="@nameof(Value.CameraExitingDelay).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraExitingDelay)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraExitingDuration" ValueCompare="ValueCompare?.CameraExitingDuration" Label="@nameof(Value.CameraExitingDuration).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraExitingDuration)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraPosChaseRate" ValueCompare="ValueCompare?.CameraPosChaseRate" Label="@nameof(Value.CameraPosChaseRate).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraPosChaseRate)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraFacingChaseRate" ValueCompare="ValueCompare?.CameraFacingChaseRate" Label="@nameof(Value.CameraFacingChaseRate).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraFacingChaseRate)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraEnteringZoom" ValueCompare="ValueCompare?.CameraEnteringZoom" Label="@nameof(Value.CameraEnteringZoom).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraEnteringZoom)))" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.CameraSeatZoomMin" ValueCompare="ValueCompare?.CameraSeatZoomMin" Label="@nameof(Value.CameraSeatZoomMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraSeatZoomMin)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.CameraSeatZoomMax" ValueCompare="ValueCompare?.CameraSeatZoomMax" Label="@nameof(Value.CameraSeatZoomMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(VehicleSeat.CameraSeatZoomMax)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+        </MudItem>
+    </PagedDtoContentPage>
+</PagedDtoContent>

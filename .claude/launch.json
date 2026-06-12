@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hotfixer-web",
+      "runtimeExecutable": "dotnet",
+      "runtimeArgs": ["run", "--project", "C:/Users/mariu/source/repos/Hotfixer/src/Hotfixer.Web", "--no-build"],
+      "port": 5216
+    }
+  ]
+}

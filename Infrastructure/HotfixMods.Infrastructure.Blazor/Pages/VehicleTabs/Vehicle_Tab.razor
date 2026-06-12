@@ -1,0 +1,47 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+
+@inherits DtoContentBase<VehicleDto, Vehicle>
+
+<StandardDtoContent T="Vehicle">
+    <MudItem xs="3">
+            <Input_Element T="int" @bind-Value="Value.Flags" ValueCompare="ValueCompare?.Flags" Label="@nameof(Value.Flags).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.Flags)))" />
+            <Input_Element T="int" @bind-Value="Value.FlagsB" ValueCompare="ValueCompare?.FlagsB" Label="@nameof(Value.FlagsB).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.FlagsB)))" />
+            <Input_Element T="int" @bind-Value="Value.VehicleUIIndicatorID" ValueCompare="ValueCompare?.VehicleUIIndicatorID" Label="@nameof(Value.VehicleUIIndicatorID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.VehicleUIIndicatorID)))" />
+            <Input_Element T="int" @bind-Value="Value.MissileTargetingID" ValueCompare="ValueCompare?.MissileTargetingID" Label="@nameof(Value.MissileTargetingID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.MissileTargetingID)))" />
+            <Input_Element T="int" @bind-Value="Value.VehiclePOITypeID" ValueCompare="ValueCompare?.VehiclePOITypeID" Label="@nameof(Value.VehiclePOITypeID).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.VehiclePOITypeID)))" />
+        </MudItem>
+        <MudItem xs="6">
+            <Placeholder_Element Amount="4" />
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.TurnSpeed" ValueCompare="ValueCompare?.TurnSpeed" Label="@nameof(Value.TurnSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.TurnSpeed)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.PitchSpeed" ValueCompare="ValueCompare?.PitchSpeed" Label="@nameof(Value.PitchSpeed).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.PitchSpeed)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.PitchMin" ValueCompare="ValueCompare?.PitchMin" Label="@nameof(Value.PitchMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.PitchMin)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.PitchMax" ValueCompare="ValueCompare?.PitchMax" Label="@nameof(Value.PitchMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.PitchMax)))" />
+                </RightContent>
+            </InlineGroup>
+            <InlineGroup Merged="false">
+                <LeftContent>
+                    <Input_Element T="decimal" @bind-Value="Value.FacingLimitLeft" ValueCompare="ValueCompare?.FacingLimitLeft" Label="@nameof(Value.FacingLimitLeft).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.FacingLimitLeft)))" />
+                </LeftContent>
+                <RightContent>
+                    <Input_Element T="decimal" @bind-Value="Value.FacingLimitRight" ValueCompare="ValueCompare?.FacingLimitRight" Label="@nameof(Value.FacingLimitRight).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.FacingLimitRight)))" />
+                </RightContent>
+            </InlineGroup>
+        </MudItem>
+        <MudItem xs="3">
+            <Input_Element T="decimal" @bind-Value="Value.MouseLookOffsetPitch" ValueCompare="ValueCompare?.MouseLookOffsetPitch" Label="@nameof(Value.MouseLookOffsetPitch).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.MouseLookOffsetPitch)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraFadeDistScalarMin" ValueCompare="ValueCompare?.CameraFadeDistScalarMin" Label="@nameof(Value.CameraFadeDistScalarMin).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.CameraFadeDistScalarMin)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraFadeDistScalarMax" ValueCompare="ValueCompare?.CameraFadeDistScalarMax" Label="@nameof(Value.CameraFadeDistScalarMax).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.CameraFadeDistScalarMax)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraPitchOffset" ValueCompare="ValueCompare?.CameraPitchOffset" Label="@nameof(Value.CameraPitchOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.CameraPitchOffset)))" />
+            <Input_Element T="decimal" @bind-Value="Value.CameraYawOffset" ValueCompare="ValueCompare?.CameraYawOffset" Label="@nameof(Value.CameraYawOffset).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(Vehicle.CameraYawOffset)))" />
+        </MudItem>
+</StandardDtoContent>

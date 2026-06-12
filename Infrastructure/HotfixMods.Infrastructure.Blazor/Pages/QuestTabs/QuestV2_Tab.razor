@@ -1,0 +1,13 @@
+@using HotfixMods.Infrastructure.Blazor.Components.DtoContent
+@inherits DtoContentBase<QuestDto, QuestV2>
+
+<StandardDtoContent T="QuestV2">
+    <MudItem xs="3">
+        <Input_Element T="int" @bind-Value="Value.UniqueBitFlag" ValueCompare="ValueCompare?.UniqueBitFlag" Label="@nameof(Value.UniqueBitFlag).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestV2.UniqueBitFlag)))" />
+        <Input_Element T="int" @bind-Value="Value.UiQuestDetailsTheme" ValueCompare="ValueCompare?.UiQuestDetailsTheme" Label="@nameof(Value.UiQuestDetailsTheme).ToDisplayName()" OnInfoAdornmentClick="@(OpenInfoDialog(nameof(QuestV2.UiQuestDetailsTheme)))" />
+    </MudItem>
+    <MudItem xs="6">
+    </MudItem>
+    <MudItem xs="3">
+    </MudItem>
+</StandardDtoContent>
